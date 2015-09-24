@@ -39,15 +39,30 @@ foreach (\$classes as \$class) {
     \$reflection = new ReflectionClass(\$class);
     \$classMeta = array();
     \$classMeta['name'] = \$reflection->getName();
+    \$classMeta['short_name'] = \$reflection->getShortName();
+    \$classMeta['doc'] = \$reflection->getDocComment();
+    \$classMeta['namespace'] = \$reflection->getNamespaceName();
     if (\$reflection->getParentClass()) {
         \$classMeta['parent'] = \$reflection->getParentClass()->getName();
     }
     \$classMeta['methods'] = array();
+    \$classMeta['file'] = \$reflection->getFileName();
 
     foreach (\$reflection->getMethods() as \$method) {
-        \$classMeta['methods'][] = array(
+        \$methodMeta = array(
             'name' => \$method->getName(),
+            'doc' => \$method->getDocComment()
         );
+
+        \$methodMeta['params'] = array();
+        foreach (\$method->getParameters() as \$param) {
+            \$methodMeta['params'][] = array(
+                'name' => \$param->getName(),
+                'class' => \$param->getClass() ? \$param->getClass()->getName() : null
+            );
+        }
+
+        \$classMeta['methods'][] = \$methodMeta;
     }
     \$classMetas[] = \$classMeta;
 }
@@ -56,7 +71,6 @@ echo json_encode(\$classMetas);
 exit(0);
 EOT
         ;
-
         $tmpName = tempnam(sys_get_temp_dir(), 'phpfactor_reflection');
         file_put_contents($tmpName, $script);
 
@@ -64,7 +78,7 @@ EOT
         $process->run();
 
         if (false === $process->isSuccessful()) {
-            throw new \RuntimeException(sprintf(
+            throw new ReflectorException(sprintf(
                 'Could not execute script: %s %s',
                 $process->getErrorOutput(),
                 $process->getOutput()
@@ -74,7 +88,9 @@ EOT
         $output = $process->getOutput();
 
         if ($output) {
-            $reflection = json_decode($output, true);
+            return json_decode($output, true);
         }
+
+        return null;
     }
 }

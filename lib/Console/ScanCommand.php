@@ -12,6 +12,8 @@ use BetterReflection\SourceLocator\SingleFileSourceLocator;
 use BetterReflection\Reflector\ClassReflector;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\RemoteReflector;
+use Phpactor\Repository;
+use Phpactor\ReflectorException;
 
 class ScanCommand extends Command
 {
@@ -32,17 +34,27 @@ class ScanCommand extends Command
         $iterator = $finder->in($input->getArgument('path'));
         $bootstrap = $input->getOption('bootstrap');
 
+        $repository = new Repository(getcwd() . '/phpactor.sqlite');
+
         foreach ($iterator as $file) {
             $nbFiles++;
             try {
                 $reflector = new RemoteReflector($bootstrap, $file->getPathName());
-                $reflector->reflect();
-            } catch (\RuntimeException $e) {
+                $reflections = $reflector->reflect();
+
+                if (!empty($reflections)) {
+                    foreach ($reflections as $reflection) {
+                        $repository->registerReflection($reflection);
+                    }
+                }
+                $output->write('.');
+            } catch (ReflectorException $e) {
                 $nbErrors++;
-                $output->writeln(sprintf(
-                    '<error>ERROR: </error>: %s',
-                    $file->getPathName()
-                ));
+                $output->write('<error>.</error>');
+            }
+
+            if ($nbFiles % 80 === 0) {
+                $output->writeln('');
             }
         }
 
