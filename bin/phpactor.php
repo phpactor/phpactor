@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Console\Application;
-use Phpactor\Console\ScanCommand;
+use PhpActor\Console\ScanCommand;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 

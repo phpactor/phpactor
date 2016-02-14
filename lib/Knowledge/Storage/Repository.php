@@ -1,6 +1,9 @@
 <?php
 
-namespace Phpactor;
+namespace PhpActor\Knowledge\Storage;
+
+use PhpActor\Knowledge\Reflection\ClassHierarchy;
+use PhpActor\Knowledge\Reflection\ClassReflection;
 
 class Repository
 {
@@ -22,14 +25,21 @@ class Repository
         }
     }
 
-    public function registerReflection(array $reflection)
+    public function storeClassHierachy(ClassHierarchy $hierarchy)
+    {
+        foreach ($hierarchy->getClasses() as $classReflection) {
+            $this->storeClassReflection($classReflection);
+        }
+    }
+
+    private function storeClassReflection(ClassReflection $reflection)
     {
         $this->pdo->beginTransaction();
         $classData = array(
-            'namespace' => $reflection['namespace'], 
-            'name' => $reflection['short_name'],
-            'file' => $reflection['file'],
-            'doc' => $reflection['doc']
+            'namespace' => $reflection->getNamespace(), 
+            'name' => $reflection->getShortName(),
+            'file' => $reflection->getFile(),
+            'doc' => $reflection->getDoc()
         );
         $sql = sprintf(
             'INSERT INTO classes (%s) VALUES (%s)',
@@ -40,11 +50,11 @@ class Repository
         $statement->execute(array_values($classData));
         $lastId = $this->pdo->lastInsertId();
 
-        foreach ($reflection['methods'] as $method) {
+        foreach ($reflection->getMethods() as $method) {
             $methodData = array(
-                'name' => $method['name'],
+                'name' => $method->getName(),
                 'class_id' => $lastId,
-                'doc' => $method['doc']
+                'doc' => $method->getDoc()
             );
 
             $sql = sprintf(
@@ -56,11 +66,10 @@ class Repository
             $statement->execute(array_values($methodData));
             $lastId = $this->pdo->lastInsertId();
 
-            foreach ($method['params'] as $param) {
+            foreach ($method->getParams() as $param) {
                 $paramData = array(
-                    'name' => $param['name'],
+                    'name' => $param->getName(),
                     'method_id' => $lastId,
-                    'class' => $param['class']
                 );
 
                 $sql = sprintf(

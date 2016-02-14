@@ -1,19 +1,15 @@
 <?php
 
-namespace Phpactor\Console;
+namespace PhpActor\Console;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Input\InputArgument;
-use BetterReflection\Reflection\ReflectionClass;
-use BetterReflection\SourceLocator\SingleFileSourceLocator;
-use BetterReflection\Reflector\ClassReflector;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\RemoteReflector;
-use Phpactor\Repository;
-use Phpactor\ReflectorException;
+use PhpActor\Knowledge\Storage\Repository;
+use PhpActor\Knowledge\Reflector\RemoteReflector;
 
 class ScanCommand extends Command
 {
@@ -27,6 +23,7 @@ class ScanCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $start = microtime(true);
+        $errors = [];
         $nbFiles = 0;
         $nbErrors = 0;
         $finder = new Finder();
@@ -39,18 +36,14 @@ class ScanCommand extends Command
         foreach ($iterator as $file) {
             $nbFiles++;
             try {
-                $reflector = new RemoteReflector($bootstrap, $file->getPathName());
-                $reflections = $reflector->reflect();
-
-                if (!empty($reflections)) {
-                    foreach ($reflections as $reflection) {
-                        $repository->registerReflection($reflection);
-                    }
-                }
+                $reflector = new RemoteReflector();
+                $classHierarchy = $reflector->reflect($file->getPathName(), $bootstrap);
+                $repository->storeClassHierachy($classHierarchy);
                 $output->write('.');
-            } catch (ReflectorException $e) {
+            } catch (\Exception $e) {
                 $nbErrors++;
                 $output->write('<error>.</error>');
+                $errors[] = $e;
             }
 
             if ($nbFiles % 80 === 0) {
@@ -58,11 +51,19 @@ class ScanCommand extends Command
             }
         }
 
+        $output->write(PHP_EOL);
         $output->writeln(sprintf(
             '<info>Done: </info> %s/%s files in %s',
             $nbFiles - $nbErrors,
             $nbFiles,
             number_format(microtime(true) - $start, 4)
         ));
+
+        if ($errors) {
+            $output->writeln('Errors:');
+            foreach ($errors as $error) {
+                $output->writeln('  ' . $error->getMessage());
+            }
+        }
     }
 }

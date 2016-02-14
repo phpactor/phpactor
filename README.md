@@ -1,4 +1,4 @@
-Phpactor
+PhpActor
 ========
 
 NOTE: This is a POC and certainly does not do much of anything described
@@ -18,6 +18,14 @@ What this thing aims to do:
 - Rename classes or methods, and update all references to them.
 - Move classes, and update all refering files.
 - etc.
+
+Features
+--------
+
+- [ ] Fix namespaces based on file paths.
+- [ ] Rename files / classes globally.
+- [ ] Method completion.
+- [ ] Class generation.
 
 How
 ---
