@@ -1,9 +1,10 @@
 <?php
 
-namespace PhpActor\Knowledge\Storage;
+namespace Phactor\Storage;
 
-use PhpActor\Knowledge\Reflection\ClassHierarchy;
-use PhpActor\Knowledge\Reflection\ClassReflection;
+use Phactor\Knowledge\Reflection\ClassHierarchy;
+use Phactor\Knowledge\Reflection\ClassReflection;
+use Phactor\Storage\Schema;
 
 class Repository
 {
@@ -15,6 +16,7 @@ class Repository
         if (!file_exists($path)) {
             $this->isNew = true;
         }
+
         $this->pdo = new \PDO(
             'sqlite:' . $path
         );
@@ -86,34 +88,11 @@ class Repository
 
     private function initDatabase()
     {
-        $this->pdo->query(<<<EOT
-CREATE TABLE classes (
-    id INTEGER PRIMARY KEY,
-    namespace VARCHAR,
-    name VARCHAR,
-    file VARCHAR,
-    doc VARCHAR
-);
-EOT
-    );
-        $this->pdo->query(<<<EOT
-CREATE TABLE methods (
-    id INTEGER PRIMARY KEY,
-    class_id INTEGER,
-    name VARCHAR,
-    doc VARCHAR
-);
-EOT
-        );
+        $schema = new Schema();
+        $statements = $schema->toSql($this->pdo->getDriver()->getDatabasePlatform());
 
-        $this->pdo->query(<<<EOT
-CREATE TABLE params (
-    id INTEGER PRIMARY KEY,
-    method_id INTEGER,
-    name VARCHAR,
-    class VARCHAR
-);
-EOT
-        );
+        foreach ($statements as $statement) {
+            $this->pdo->exec($statement);
+        }
     }
 }

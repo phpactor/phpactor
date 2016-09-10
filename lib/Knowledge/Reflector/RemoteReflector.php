@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpActor\Knowledge\Reflector;
+namespace Phactor\Knowledge\Reflector;
 
 use Symfony\Component\Process\Process;
-use PhpActor\Knowledge\Reflection\ReflectorInterface;
-use PhpActor\Knowledge\Reflection\ClassHierarchy;
-use PhpActor\Knowledge\Reflection\ClassReflection;
-use PhpActor\Knowledge\Reflection\MethodReflection;
-use PhpActor\Knowledge\Reflection\ParamReflection;
+use Phactor\Knowledge\Reflection\ReflectorInterface;
+use Phactor\Knowledge\Reflection\ClassHierarchy;
+use Phactor\Knowledge\Reflection\ClassReflection;
+use Phactor\Knowledge\Reflection\MethodReflection;
+use Phactor\Knowledge\Reflection\ParamReflection;
 
 class RemoteReflector implements ReflectorInterface
 {

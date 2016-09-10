@@ -26,6 +26,8 @@ Features
 - [ ] Rename files / classes globally.
 - [ ] Method completion.
 - [ ] Class generation.
+- [ ] Add properties and and assign them for class constructors, inc. type docs.
+
 
 How
 ---
