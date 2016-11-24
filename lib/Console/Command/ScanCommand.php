@@ -1,6 +1,6 @@
 <?php
 
-namespace Phactor\Console;
+namespace Phpactor\Console\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,35 +10,52 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Phactor\Knowledge\Storage\Repository;
 use Phactor\Knowledge\Reflector\RemoteReflector;
+use Phpactor\Reflection\ReflectorInterface;
+use Phpactor\Storage\Storage;
+use Phpactor\Reflection\Exception\ReflectionException;
 
 class ScanCommand extends Command
 {
+    private $storage;
+    private $reflector;
+    private $config;
+
+    public function __construct(Storage $storage, ReflectorInterface $reflector)
+    {
+        parent::__construct();
+        $this->storage = $storage;
+        $this->reflector = $reflector;
+    }
+
     public function configure()
     {
         $this->setName('scan');
         $this->addArgument('path', InputArgument::REQUIRED);
-        $this->addOption('bootstrap', 'b', InputOption::VALUE_OPTIONAL);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $verbose = $input->getOption('verbose');
         $start = microtime(true);
         $errors = [];
         $nbFiles = 0;
         $nbErrors = 0;
+
         $finder = new Finder();
         $finder->name('*.php');
-        $iterator = $finder->in($input->getArgument('path'));
-        $bootstrap = $input->getOption('bootstrap');
+        $finder->files()->filter(function (\SplFileInfo $info) {
+            return !preg_match('{vendor/.*/[tT]ests/}', $info->getPathName());
+        });
 
-        $repository = new Repository(getcwd() . '/phpactor.sqlite');
+        $iterator = $finder->in($input->getArgument('path'));
+        $total = count($finder);
+        $output->writeln(sprintf('Indexing "%s" files', $total));
 
         foreach ($iterator as $file) {
             $nbFiles++;
             try {
-                $reflector = new RemoteReflector();
-                $classHierarchy = $reflector->reflect($file->getPathName(), $bootstrap);
-                $repository->storeClassHierachy($classHierarchy);
+                $classReflection = $this->reflector->reflectFile($file->getPathName());
+                $this->storage->persistClass($classReflection);
                 $output->write('.');
             } catch (\Exception $e) {
                 $nbErrors++;
@@ -47,9 +64,13 @@ class ScanCommand extends Command
             }
 
             if ($nbFiles % 80 === 0) {
-                $output->writeln('');
+                $output->writeln(sprintf(' (%s/%s)', $nbFiles, $total));
             }
         }
+
+        $output->write(PHP_EOL);
+        $output->writeln('Flushing storage');
+        $this->storage->flush();
 
         $output->write(PHP_EOL);
         $output->writeln(sprintf(
@@ -59,7 +80,7 @@ class ScanCommand extends Command
             number_format(microtime(true) - $start, 4)
         ));
 
-        if ($errors) {
+        if ($verbose && $errors) {
             $output->writeln('Errors:');
             foreach ($errors as $error) {
                 $output->writeln('  ' . $error->getMessage());

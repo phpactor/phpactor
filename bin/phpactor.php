@@ -1,10 +1,17 @@
 <?php
 
 use Symfony\Component\Console\Application;
-use Phactor\Console\ScanCommand;
+use Phactor\Console\Command\ScanCommand;
+use Phpactor\Extension\CoreExtension;
+use PhpBench\DependencyInjection\Container;
+use Symfony\Component\Debug\Debug;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-$application = new Application();
-$application->add(new ScanCommand());
-$application->run();
+Debug::enable();
+
+$container = new Container([
+    CoreExtension::class,
+], []);
+$container->init();
+$container->get('application')->run();

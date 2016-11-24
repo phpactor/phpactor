@@ -10,7 +10,7 @@
  *
  */
 
-namespace Phactor\Storage;
+namespace Phpactor\Storage;
 
 use Doctrine\DBAL\Schema\Schema as BaseSchema;
 
@@ -42,15 +42,12 @@ class Schema extends BaseSchema
 
     private function createMethod()
     {
-        $table = $this->createTable('variant');
+        $table = $this->createTable('methods');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('class_id', 'integer');
         $table->addColumn('name', 'string');
         $table->addColumn('doc', 'text');
         $table->setPrimaryKey(['id']);
-        $table->addForeignKeyConstraint(
-            $this->runTable, ['run_id'], ['id'], ['onDelete' => 'CASCADE']
-        );
         $table->addForeignKeyConstraint(
             $this->classTable, ['class_id'], ['id'], ['onDelete' => 'CASCADE']
         );
@@ -60,6 +57,7 @@ class Schema extends BaseSchema
     private function createParam()
     {
         $table = $this->createTable('params');
+        $table->addColumn('name', 'string');
         $table->addColumn('method_id', 'integer');
         $table->addForeignKeyConstraint(
             $this->methodTable, ['method_id'], ['id'], ['onDelete' => 'CASCADE']

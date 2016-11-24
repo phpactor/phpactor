@@ -7,15 +7,15 @@
         "symfony/process": "~2.7",
         "doctrine/dbal": "^2.5",
         "roave/better-reflection": "^1.1",
-        "phpbench/container": "^1.0@dev"
+        "phpbench/container": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.2"
     },
     "autoload": {
         "psr-4": {
-            "PhpActor\\": "lib/",
-            "PhpActor\\Tests\\": "tests/"
+            "Phpactor\\": "lib/",
+            "Phpactor\\Tests\\": "tests/"
         }
     }
 }
