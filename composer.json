@@ -6,12 +6,15 @@
         "symfony/finder": "~2.7",
         "symfony/process": "~2.7",
         "doctrine/dbal": "^2.5",
-        "roave/better-reflection": "^1.1",
+        "roave/better-reflection": "dev-variable_collector",
         "phpbench/container": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.2"
     },
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/dantleech/BetterReflection" }
+    ],
     "autoload": {
         "psr-4": {
             "Phpactor\\": "lib/",

@@ -27,31 +27,14 @@ class Storage
     public function flush()
     {
         $this->connection->beginTransaction();
+
         foreach ($this->queue as $reflection) {
-            $lastId = $this->insertOrReplace('classes', [
+            $this->insertOrReplace('classes', [
                 'namespace' => $reflection->getNamespaceName(), 
                 'name' => $reflection->getShortName(),
                 'file' => $reflection->getFileName(),
                 'doc' => $reflection->getDocComment()
             ], [ 'namespace' , 'name' ]);
-
-            try {
-                foreach ($reflection->getMethods() as $method) {
-                    $lastId = $this->insertOrReplace('methods', [
-                        'name' => $method->getName(),
-                        'class_id' => $lastId,
-                        'doc' => $method->getDocComment()
-                    ], [ 'name', 'class_id' ]);
-
-                    foreach ($method->getParameters() as $param) {
-                        $this->insertOrReplace('params', [
-                            'name' => $param->getName(),
-                            'method_id' => $lastId,
-                        ], [ 'method_id', 'name' ]);
-                    }
-                }
-            } catch (\Exception $e) {
-            }
         }
 
         $this->connection->commit();
@@ -85,9 +68,5 @@ class Storage
         $this->connection->insert($tableName, $data);
 
         return $this->connection->lastInsertId();
-    }
-
-    private function storeClassReflection(ReflectionClass $reflection)
-    {
     }
 }
