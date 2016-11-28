@@ -1,5 +1,7 @@
 <?php
 
+namespace Foobar\Barfoo;
+
 $noScope = 'global scope here';
 
 function foobar() {

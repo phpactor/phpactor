@@ -7,19 +7,18 @@ use PhpParser\Node;
 
 class ScopeResolver
 {
-    const SCOPE_GLOBAL = 'global';
-    const SCOPE_CLASS = 'class';
-    const SCOPE_CLASS_METHOD = 'class_method';
-    const SCOPE_FUNCTION = 'function';
-
     private $lastEndLine;
 
-    private $classNode;
-    private $classMethodNode;
-    private $functionNode;
-
-    public function __invoke(Node $node, int $lineNb, array $scopes = [ self::SCOPE_GLOBAL ])
+    public function __invoke(Node $node, int $lineNb, array $scopes = [  ], $namespace = null)
     {
+        if (get_class($node) === Stmt\Namespace_::class) {
+            $namespace = (string) $node->name;
+        }
+
+        if (empty($scopes)) {
+            $scopes[] = new Scope($namespace, Scope::SCOPE_GLOBAL);
+        }
+
         $nodeStartLine = $node->getAttribute('startLine');
 
         if ($lineNb > $this->lastEndLine && $lineNb < $nodeStartLine) {
@@ -27,17 +26,20 @@ class ScopeResolver
         }
 
         if (get_class($node) === Stmt\Function_::class) {
-            $scopes[] = self::SCOPE_FUNCTION;
-            $this->functionNode = $node;
+            $scopes[] = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
+        }
+
+        if (get_class($node) === Stmt\Function_::class) {
+            $scopes[] = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
         }
 
         if (get_class($node) === Stmt\Class_::class) {
-            $scopes[]= self::SCOPE_CLASS;
+            $scopes[] = new Scope($namespace, Scope::SCOPE_CLASS, $node);
             $this->classNode = $node;
         }
 
         if (get_class($node) === Stmt\ClassMethod::class) {
-            $scopes[] = self::SCOPE_CLASS_METHOD;
+            $scopes[] = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node);
             $this->classMethodNode = $node;
         }
 
@@ -52,27 +54,9 @@ class ScopeResolver
         }
 
         foreach ($node->stmts as $stmt) {
-            if (null !== $scope = $this->__invoke($stmt, $lineNb, $scopes)) {
+            if (null !== $scope = $this->__invoke($stmt, $lineNb, $scopes, $namespace)) {
                 return $scope;
             }
         }
     }
-
-    public function getClassNode() 
-    {
-        return $this->classNode;
-    }
-
-    public function getFunctionNode() 
-    {
-        return $this->functionNode;
-    }
-
-    public function getClassMethodNode() 
-    {
-        return $this->classMethodNode;
-    }
-    
-    
-    
 }
