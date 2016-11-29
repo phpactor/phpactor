@@ -3,6 +3,8 @@
 namespace Phpactor\Complete;
 
 use PhpParser\Node;
+use PhpParser\Node\Stmt;
+use PhpParser\NodeAbstract;
 
 class Scope
 {
@@ -12,38 +14,49 @@ class Scope
     const SCOPE_FUNCTION = 'function';
 
     private $scope;
-    private $node;
+    private $contextNode;
     private $namespace;
+    private $nodes;
 
-    public function __construct(string $namespace = null, string $scope, Node $node = null)
+    public function __construct($namespace = null, string $scope, Node $contextNode = null)
     {
-        $this->node = $node;
+        $this->contextNode = $contextNode;
         $this->scope = $scope;
         $this->namespace = $namespace;
     }
 
-    public function getScope() 
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    public function getScope(): string
     {
         return $this->scope;
     }
 
-    public function hasNode()
+    public function hasContextNode(): bool
     {
         return null !== $this->node;
     }
 
-    public function getNode(): Node
+    public function getContextNode(): Stmt
     {
         return $this->node;
+    }
+
+    public function addNode(Node $node)
+    {
+        $this->nodes[] = $node;
+    }
+
+    public function getNode(): NodeAbstract
+    {
+        return end($this->nodes);
     }
 
     public function __toString()
     {
         return $this->scope;
-    }
-
-    public function getNamespace() 
-    {
-        return $this->namespace;
     }
 }

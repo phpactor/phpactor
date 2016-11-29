@@ -9,9 +9,11 @@ use PhpParser\Node;
 
 class ScopeResolver
 {
+    private $node;
+
     public function __invoke(Node $node, int $offset, $scope = null, $namespace = null): Scope
     {
-        if (get_class($node) === Stmt\Namespace_::class) {
+        if ($node instanceof Stmt\Namespace_) {
             $namespace = (string) $node->name;
         }
 
@@ -19,17 +21,19 @@ class ScopeResolver
             $scope = new Scope($namespace, Scope::SCOPE_GLOBAL);
         }
 
-        if (get_class($node) === Stmt\Function_::class) {
+        if ($node instanceof Stmt\Function_) {
             $scope = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
         }
 
-        if (get_class($node) === Stmt\Class_::class) {
+        if ($node instanceof Stmt\Class_) {
             $scope = new Scope($namespace, Scope::SCOPE_CLASS, $node);
         }
 
-        if (get_class($node) === Stmt\ClassMethod::class) {
+        if ($node instanceof Stmt\ClassMethod) {
             $scope = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node);
         }
+
+        $scope->addNode($node);
 
         if (false === isset($node->stmts)) {
             return $scope;
