@@ -9,31 +9,37 @@ use PhpParser\ParserFactory;
 
 class Completer
 {
-    public function complete(string $source, int $lineNb, int $columnNb)
+    /**
+     * @var ProviderInterface
+     */
+    private $providers = [];
+
+    public function __construct(array $providers)
     {
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $this->providers = $providers;
+    }
+
+    public function complete(string $source, int $offset)
+    {
+        $lexer = new Lexer([ 'usedAttributes' => [ 'startFilePos', 'endFilePos' ] ]);
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7, $lexer, []);
         $stmts = $parser->parse($source);
-
-        $lines = explode(PHP_EOL, $source);
-        $line = $lines[$lineNb - 1];
-        $line = trim(substr($line, 0, $columnNb));
-
-        $lexer = new Lexer();
-        $lexer->startLexing('<?php ' . $line);
-        $tokens = $lexer->getTokens();
-
-        // unshift "<?php"
-        array_shift($tokens);
 
         $completeContext = new CompleteContext(
             $stmts,
-            $tokens,
-            $lineNb
+            $offset
         );
-        $scope = $completeContext->getScope();
-        var_dump($scope);die();;
 
-        $varProvider = new VariableProvider();
-        $varProvider->provide($completeContext);
+        $suggestions = [];
+        foreach ($this->providers as $provider) {
+            if (false === $provider->canProvideFor($completeContext)) {
+                continue;
+            }
+
+            $suggestions = array_merge($suggestions, $provider->provide($completeContext));
+        }
+
+        return $suggestions;
     }
 }

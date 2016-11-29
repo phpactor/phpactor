@@ -14,6 +14,9 @@ use Phpactor\Storage\Storage;
 use Phpactor\Console\Command\ScanCommand;
 use Phpactor\Storage\ConnectionWrapper;
 use Doctrine\DBAL\DriverManager;
+use Phpactor\Console\Command\CompleteCommand;
+use Phpactor\Complete\Completer;
+use Phpactor\Complete\Provider\VariableProvider;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -30,9 +33,22 @@ class CoreExtension implements ExtensionInterface
 
     public function load(Container $container)
     {
+        $this->registerComplete($container);
         $this->registerConsole($container);
         $this->registerStorage($container);
         $this->registerMisc($container);
+    }
+
+    private function registerComplete(Container $container)
+    {
+        $container->register('completer.provider.variables', function ($container) {
+            return new VariableProvider($container['reflector']);
+        });
+        $container->register('completer', function (Container $container) {
+            return new Completer([
+                $container->get('completer.provider.variables')
+            ]);
+        });
     }
 
     private function registerStorage(Container $container)
@@ -56,7 +72,6 @@ class CoreExtension implements ExtensionInterface
 
     private function registerMisc(Container $container)
     {
-
         $container->register('reflector', function (Container $container) {
             $bootstrap = $container->getParameter('autoload');
 
@@ -83,10 +98,16 @@ class CoreExtension implements ExtensionInterface
             $application->addCommands([
                 $container->get('command.explain'),
                 $container->get('command.scan'),
+                $container->get('command.complete'),
             ]);
 
             return $application;
         });
+
+        $container->register('command.complete', function (Container $container) {
+            return new CompleteCommand($container->get('completer'));
+        });
+
 
         $container->register('command.explain', function (Container $container) {
             return new ExplainCommand($container->get('reflector'));

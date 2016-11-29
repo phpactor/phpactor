@@ -13,20 +13,20 @@ class CompleteContext
 
     private $stmts;
     private $tokens;
-    private $lineNb;
+    private $offset;
 
     private $parser;
 
-    public function __construct(array $stmts, int $lineNb)
+    public function __construct(array $stmts, int $offset)
     {
         $this->stmts = $stmts;
-        $this->lineNb = $lineNb;
+        $this->offset = $offset;
     }
 
     public function getScope()
     {
         foreach ($this->stmts as $stmt) {
-            $scope = (new ScopeResolver())->__invoke($stmt, $this->lineNb);
+            $scope = (new ScopeResolver())->__invoke($stmt, $this->offset);
 
             if (null !== $scope) {
                 break;
@@ -36,9 +36,17 @@ class CompleteContext
         return $scope;
     }
 
-    public function getClassReflection()
+    public function getStatementToComplete()
     {
+        foreach ($this->stmts as $stmt) {
+            $statement = (new StatementResolver())->__invoke($stmt, $this->offset);
 
+            if (null !== $statement) {
+                break;
+            }
+        }
+
+        return $statement;
     }
 
     public function getStmts() 
@@ -51,8 +59,8 @@ class CompleteContext
         return $this->toksn;
     }
 
-    public function getLineNb() 
+    public function getOffset() 
     {
-        return $this->lineNb;
+        return $this->offset;
     }
 }

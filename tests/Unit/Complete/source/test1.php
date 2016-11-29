@@ -13,6 +13,10 @@ class Foobar
     {
         $zed = 'hello';
 
+        $this->foobar
+            ->
+
+
         $this->foo('foo');
     }
 

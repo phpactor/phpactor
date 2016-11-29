@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phpactor\Complete;
 
 use PhpParser\Node\Stmt;
@@ -7,56 +9,38 @@ use PhpParser\Node;
 
 class ScopeResolver
 {
-    private $lastEndLine;
-
-    public function __invoke(Node $node, int $lineNb, array $scopes = [  ], $namespace = null)
+    public function __invoke(Node $node, int $offset, $scope = null, $namespace = null): Scope
     {
         if (get_class($node) === Stmt\Namespace_::class) {
             $namespace = (string) $node->name;
         }
 
-        if (empty($scopes)) {
-            $scopes[] = new Scope($namespace, Scope::SCOPE_GLOBAL);
-        }
-
-        $nodeStartLine = $node->getAttribute('startLine');
-
-        if ($lineNb > $this->lastEndLine && $lineNb < $nodeStartLine) {
-            return array_pop($scopes);
+        if (null === $scope) {
+            $scope = new Scope($namespace, Scope::SCOPE_GLOBAL);
         }
 
         if (get_class($node) === Stmt\Function_::class) {
-            $scopes[] = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
-        }
-
-        if (get_class($node) === Stmt\Function_::class) {
-            $scopes[] = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
+            $scope = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
         }
 
         if (get_class($node) === Stmt\Class_::class) {
-            $scopes[] = new Scope($namespace, Scope::SCOPE_CLASS, $node);
-            $this->classNode = $node;
+            $scope = new Scope($namespace, Scope::SCOPE_CLASS, $node);
         }
 
         if (get_class($node) === Stmt\ClassMethod::class) {
-            $scopes[] = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node);
-            $this->classMethodNode = $node;
+            $scope = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node);
         }
-
-        if ($nodeStartLine >= $lineNb) {
-            return array_pop($scopes);
-        }
-
-        $this->lastEndLine = $node->getAttribute('endLine');
 
         if (false === isset($node->stmts)) {
-            return;
+            return $scope;
         }
 
         foreach ($node->stmts as $stmt) {
-            if (null !== $scope = $this->__invoke($stmt, $lineNb, $scopes, $namespace)) {
-                return $scope;
+            if ($offset >= $stmt->getAttribute('startFilePos')  && $offset <= $stmt->getAttribute('endFilePos')) {
+                return $this->__invoke($stmt, $offset, $scope, $namespace);
             }
         }
+
+        return $scope;
     }
 }

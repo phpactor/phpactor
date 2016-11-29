@@ -8,6 +8,7 @@ use Phpactor\Reflection\ComposerReflector;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Reflection\ReflectorInterface;
+use Phpactor\Complete\Completer;
 
 class CompleteCommand extends Command
 {
@@ -24,27 +25,17 @@ class CompleteCommand extends Command
         $this->setName('complete');
         $this->setDescription('Explain a class by its class FQN or filename');
         $this->addArgument('fqnOrFname', InputArgument::REQUIRED, 'Fully qualified class name or filename');
-        $this->addArgument('line', InputArgument::REQUIRED);
-        $this->addArgument('col', InputArgument::REQUIRED);
+        $this->addArgument('offset', InputArgument::REQUIRED);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('fqnOrFname');
-        $lineNb = $input->getArgument('line');
-        $columnNb = $input->getArgument('col');
+        $offset = $input->getArgument('offset');
         $contents = file_get_contents($name);
 
-        $this->completer->complete($contents, $lineNb, $columnNb);
-    }
+        $completions = $this->completer->complete($contents, $offset);
 
-    private function reflect($name)
-    {
-        if (!file_exists($name)) {
-            return $this->reflector->reflectClass($name);
-        }
-
-        return $this->reflector->reflectFile($name);
+        $output->writeln(json_encode($completions));
     }
 }
-
