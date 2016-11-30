@@ -16,6 +16,9 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 class VariableProvider implements ProviderInterface
 {
+    /**
+     * @var Reflector
+     */
     private $reflector;
 
     public function __construct(Reflector $reflector)
@@ -63,7 +66,8 @@ class VariableProvider implements ProviderInterface
     private function getClassMethodVars($context, Suggestions $suggestions)
     {
         $scope = $context->getScope();
-        Suggestion::create('$this', Suggestion::TYPE_VARIABLE, Suggestion::TYPE_VARIABLE, $scope->getClassFqn());
+
+        $suggestions->add(Suggestion::create('$this', Suggestion::TYPE_VARIABLE, $scope->getClassFqn()));
 
         $reflection = $this->reflector->reflect($scope->getClassFqn());
         $method = $reflection->getMethod($scope->getScopeNode()->name);

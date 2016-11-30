@@ -18,7 +18,12 @@ use BetterReflection\Reflector\ClassReflector;
 class ScanCommand extends Command
 {
     private $storage;
+
+    /**
+     * @var ClassReflector
+     */
     private $reflector;
+
     private $config;
 
     public function __construct(Storage $storage, ClassReflector $reflector)

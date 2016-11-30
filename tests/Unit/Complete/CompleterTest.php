@@ -26,7 +26,7 @@ class CompleterTest extends \PHPUnit_Framework_TestCase
         $suggestions = $completer->complete($source, $offset);
 
         foreach ($expectedCompletions as $expectedCompletion) {
-            $this->assertContains($expectedCompletion, $suggestions->all());
+            $this->assertContains($expectedCompletion, $suggestions->all(), sprintf('Contains: "%s"', implode('", "', $suggestions->all())));
         }
     }
 
@@ -104,7 +104,24 @@ class Foobar
     }
 }
 EOT
-                , [ 'classThree', 'getClassThree(' ],
+                , [ 'classThree', 'getClassThree' ],
+            ],
+            [
+                <<<'EOT'
+class Foobar
+{
+    /**
+     * @var ClassOne
+     */
+    public $foobar;
+
+    public function getFoobar()
+    {
+        $this->foo█
+    }
+}
+EOT
+                , [ 'foobar', 'getFoobar' ],
             ],
         ];
     }

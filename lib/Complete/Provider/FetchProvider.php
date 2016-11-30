@@ -14,6 +14,9 @@ use BetterReflection\Reflection\ReflectionClass;
 use BetterReflection\Reflector\Exception\IdentifierNotFound;
 use Phpactor\Complete\Suggestion;
 use BetterReflection\Reflection\ReflectionMethod;
+use BetterReflection\Reflection\ReflectionVariable;
+use phpDocumentor\Reflection\DocBlockFactory;
+use phpDocumentor\Reflection\Types;
 
 class FetchProvider implements ProviderInterface
 {
@@ -23,7 +26,7 @@ class FetchProvider implements ProviderInterface
     public function __construct(Reflector $reflector)
     {
         $this->reflector = $reflector;
-        $this->docBlockFactory = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+        $this->docBlockFactory = DocBlockFactory::createInstance();
     }
 
     public function canProvideFor(CompleteContext $context): bool
@@ -40,26 +43,27 @@ class FetchProvider implements ProviderInterface
     {
         $scope = $context->getScope();
         $classReflection = $this->reflector->reflect($context->getScope()->getClassFqn());
-        $localVariables = $classReflection->getMethod($scope->getScopeNode()->name)->getVariables();
+        $reflectionVariables = $classReflection->getMethod($scope->getScopeNode()->name)->getVariables();
 
         $fetches = $this->flattenFetch($context->getScope()->getNode());
         $initial = array_shift($fetches);
 
-        $reflection = null;
-        foreach ($localVariables as $localVariable) {
-
-            if ($initial !== $localVariable->getName()) {
+        $reflection = $classReflection;
+        foreach ($reflectionVariables as $reflectionVariable) {
+            if ($initial !== $reflectionVariable->getName()) {
                 continue;
             }
 
-            $type = $localVariable->getTypeObject();
+            $type = $reflectionVariable->getTypeObject();
 
+            // ignore primitives (i.e. non-objects)
             if ($type->isBuiltin()) {
                 continue;
             }
 
             try {
-                $reflection = $this->reflector->reflect((string) $type);
+                $reflection = $this->reflector->reflect($type);
+                break;
             } catch (IdentifierNotFound $e) {
                 // invalid class reference -- should collect errors here
             }
@@ -86,8 +90,9 @@ class FetchProvider implements ProviderInterface
 
                 $doc = null;
                 if ($property->getDocComment()) {
-                    $doc = $this->docBlockFactory->create($property->getDocComment());
+                    $doc = $this->docBlockFactory->create($property->getDocComment())->getSummary();
                 }
+
                 $suggestions->add(Suggestion::create(
                     $property->getName(),
                     Suggestion::TYPE_PROPERTY,
@@ -113,6 +118,7 @@ class FetchProvider implements ProviderInterface
 
         $property = $reflection->getProperty($propName);
 
+        $types = [];
         if ($property->getDocComment()) {
             $types = $property->getDocBlockTypeStrings();
         }
@@ -143,7 +149,9 @@ class FetchProvider implements ProviderInterface
         $parts = [];
         foreach ($method->getParameters() as $parameter) {
             if ($parameter->getType()) {
-                $parts[] = sprintf('%s %s', (string) $parameter->getType(), $parameter->getName());
+                $type = $parameter->getType();
+                $typeString = (string) $type;
+                $parts[] = sprintf('%s $%s', $typeString, $parameter->getName());
                 continue;
             }
 
@@ -151,13 +159,18 @@ class FetchProvider implements ProviderInterface
         }
 
 
-        $doc = $method->getName() . '(' . implode(', ', $parts) . ')';
+        $doc = $method->getName() . '(' . implode(', ', $parts) . '): ' . (string) $method->getReturnType();
 
         if ($method->getDocComment()) {
             $docObject = $this->docBlockFactory->create($method->getDocComment());
-            return $doc . ': ' .$docObject->getSummary();
+
+            return $doc . PHP_EOL . '    ' . $docObject->getSummary();
         }
 
         return $doc;
+    }
+
+    private function getVariableType(Scope $scope, string $name, ReflectionVariable $reflectionVariable)
+    {
     }
 }
