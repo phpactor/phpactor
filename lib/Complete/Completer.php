@@ -31,13 +31,13 @@ class Completer
             $offset
         );
 
-        $suggestions = [];
+        $suggestions = new Suggestions();
         foreach ($this->providers as $provider) {
             if (false === $provider->canProvideFor($completeContext)) {
                 continue;
             }
 
-            $suggestions = array_merge($suggestions, $provider->provide($completeContext));
+            $provider->provide($completeContext, $suggestions);
         }
 
         return $suggestions;

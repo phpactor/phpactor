@@ -18,19 +18,19 @@ class ScopeResolver
         }
 
         if (null === $scope) {
-            $scope = new Scope($namespace, Scope::SCOPE_GLOBAL);
+            $scope = new Scope($namespace, Scope::SCOPE_GLOBAL, $node);
         }
 
         if ($node instanceof Stmt\Function_) {
-            $scope = new Scope($namespace, Scope::SCOPE_FUNCTION, $node);
+            $scope = new Scope($namespace, Scope::SCOPE_FUNCTION, $node, $scope);
         }
 
         if ($node instanceof Stmt\Class_) {
-            $scope = new Scope($namespace, Scope::SCOPE_CLASS, $node);
+            $scope = new Scope($namespace, Scope::SCOPE_CLASS, $node, $scope);
         }
 
         if ($node instanceof Stmt\ClassMethod) {
-            $scope = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node);
+            $scope = new Scope($namespace, Scope::SCOPE_CLASS_METHOD, $node, $scope);
         }
 
         $scope->addNode($node);

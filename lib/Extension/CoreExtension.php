@@ -17,6 +17,7 @@ use Doctrine\DBAL\DriverManager;
 use Phpactor\Console\Command\CompleteCommand;
 use Phpactor\Complete\Completer;
 use Phpactor\Complete\Provider\VariableProvider;
+use Phpactor\Complete\Provider\PropertyFetchProvider;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -44,9 +45,13 @@ class CoreExtension implements ExtensionInterface
         $container->register('completer.provider.variables', function ($container) {
             return new VariableProvider($container['reflector']);
         });
+        $container->register('completer.provider.property_fetch', function ($container) {
+            return new PropertyFetchProvider($container['reflector']);
+        });
         $container->register('completer', function (Container $container) {
             return new Completer([
-                $container->get('completer.provider.variables')
+                $container->get('completer.provider.variables'),
+                $container->get('completer.provider.property_fetch')
             ]);
         });
     }

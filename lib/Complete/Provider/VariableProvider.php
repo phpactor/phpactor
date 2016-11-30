@@ -7,8 +7,12 @@ use Phpactor\Complete\CompleteContext;
 use PhpParser\Node\Stmt;
 use Phpactor\Complete\Scope;
 use BetterReflection\Reflector\Reflector;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Name;
+use Phpactor\Complete\Suggestions;
+use Phpactor\Complete\ProviderInterface;
 
-class VariableProvider
+class VariableProvider implements ProviderInterface
 {
     private $reflector;
 
@@ -17,35 +21,52 @@ class VariableProvider
         $this->reflector = $reflector;
     }
 
-    public function canProvideFor($context)
+    public function canProvideFor(CompleteContext $context): bool
     {
+        return $context->getScope()->getNode() instanceof Variable;
     }
 
-    public function provide(CompleteContext $context)
+    public function provide(CompleteContext $context, Suggestions $suggestions)
     {
-        $statement = $context->getStatementToComplete();
-        var_dump($statement);
-        if (Scope::SCOPE_CLASS_METHOD === (string) $context->getScope()) {
-            return $this->getClassMethodVars($context);
+        $scope = $context->getScope();
+        $this->provideSuperGlobals($suggestions);
+
+        if (Scope::SCOPE_CLASS_METHOD === (string) $scope) {
+            return $this->getClassMethodVars($context, $suggestions);
         }
 
-        return [];
+        // TODO: Function scope
+        // TODO: Closure scope
     }
 
-    private function getClassMethodVars($context)
+    private function provideSuperGlobals(Suggestions $suggestions)
     {
-        $suggestions = [
-            '$this',
-        ];
+        foreach ([
+            '$GLOBALS',
+            '$_SERVER',
+            '$_GET',
+            '$_POST',
+            '$_FILES',
+            '$_COOKIE',
+            '$_SESSION',
+            '$_REQUEST',
+            '$_ENV'
+        ] as $superGlobal) {
+            $suggestions->add($superGlobal);
+        }
+    }
 
-        $statement = $context->getStatementToComplete();
+    private function getClassMethodVars($context, Suggestions $suggestions)
+    {
+        $suggestions->add('$this');
 
-        $reflection = $this->reflector->reflect($statement->getClassFqn());
-        $method = $reflection->getMethod($statement->getClassMethod()->name);
+        $scope = $context->getScope();
+
+        $reflection = $this->reflector->reflect($scope->getClassFqn());
+        $method = $reflection->getMethod($scope->getScopeNode()->name);
+
         foreach ($method->getVariables() as $parameter) {
-            $suggestions[] = '$' . $parameter->getName();
+            $suggestions->add('$' . $parameter->getName());
         }
-
-        return $suggestions;
     }
 }

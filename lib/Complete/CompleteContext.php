@@ -36,19 +36,6 @@ class CompleteContext
         return $scope;
     }
 
-    public function getStatementToComplete()
-    {
-        foreach ($this->stmts as $stmt) {
-            $statement = (new StatementResolver())->__invoke($stmt, $this->offset);
-
-            if (null !== $statement) {
-                break;
-            }
-        }
-
-        return $statement;
-    }
-
     public function getStmts() 
     {
         return $this->stmts;

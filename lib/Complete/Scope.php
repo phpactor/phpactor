@@ -5,6 +5,7 @@ namespace Phpactor\Complete;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeAbstract;
+use PhpParser\Node\Name;
 
 class Scope
 {
@@ -13,41 +14,48 @@ class Scope
     const SCOPE_CLASS_METHOD = 'class_method';
     const SCOPE_FUNCTION = 'function';
 
-    private $scope;
-    private $contextNode;
     private $namespace;
+    private $scopeName;
+    private $scopeNode;
+    private $parentScope;
+
     private $nodes;
 
-    public function __construct($namespace = null, string $scope, Node $contextNode = null)
+    public function __construct(
+        $namespace = null,
+        $scopeName,
+        Node $scopeNode,
+        Scope $parentScope = null
+    )
     {
-        $this->contextNode = $contextNode;
-        $this->scope = $scope;
         $this->namespace = $namespace;
+        $this->scopeName = $scopeName;
+        $this->scopeNode = $scopeNode;
+        $this->parentScope = $parentScope;
     }
 
-    public function getNamespace(): string
+    public function getNamespace()
     {
         return $this->namespace;
     }
 
-    public function getScope(): string
+    public function getScopeName(): string
     {
-        return $this->scope;
+        return $this->scopeName;
     }
 
-    public function hasContextNode(): bool
+    public function getClassFqn()
     {
-        return null !== $this->node;
+        if ($this->namespace) {
+            return Name::concat($this->namespace, $this->getClassScope()->getScopeNode()->name);
+        }
+
+        return $this->getClassScope()->getScopeNode()->name;
     }
 
-    public function getContextNode(): Stmt
+    public function getScopeNode()
     {
-        return $this->node;
-    }
-
-    public function addNode(Node $node)
-    {
-        $this->nodes[] = $node;
+        return $this->scopeNode;
     }
 
     public function getNode(): NodeAbstract
@@ -55,8 +63,28 @@ class Scope
         return end($this->nodes);
     }
 
+    public function addNode(Node $node)
+    {
+        $this->nodes[] = $node;
+    }
+
     public function __toString()
     {
-        return $this->scope;
+        return $this->scopeName;
+    }
+
+    private function getClassScope()
+    {
+        if ($this->scopeName === self::SCOPE_CLASS) {
+            return $this;
+        }
+
+        if ($this->scopeName === self::SCOPE_CLASS_METHOD) {
+            return $this->parentScope;
+        }
+
+        throw new \InvalidArgumentException(sprintf(
+            'Cannot get class for non-class scope "%s"', $this->scopeName
+        ));
     }
 }

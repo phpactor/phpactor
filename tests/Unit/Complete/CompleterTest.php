@@ -10,6 +10,7 @@ use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 use BetterReflection\SourceLocator\Type\AutoloadSourceLocator;
 use BetterReflection\Reflector\ClassReflector;
 use Phpactor\Complete\Provider\VariableProvider;
+use Phpactor\Complete\Provider\FetchProvider;
 
 class CompleterTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,13 +19,15 @@ class CompleterTest extends \PHPUnit_Framework_TestCase
      */
     public function testComplete($source, $expectedCompletions)
     {
-        $source = '<?php' . PHP_EOL . $source;
+        $source = '<?php ' . PHP_EOL . 'namespace Phpactor\\Tests\\Unit\\Complete\\Example; ' . PHP_EOL . $source;
         $offset = strpos($source, '█') - 1;
         $source = str_replace('█', '', $source);
         $completer = $this->getCompleter($source);
         $suggestions = $completer->complete($source, $offset);
 
-        $this->assertEquals($expectedCompletions, $suggestions);
+        foreach ($expectedCompletions as $expectedCompletion) {
+            $this->assertContains($expectedCompletion, $suggestions->all());
+        }
     }
 
     public function provideComplete()
@@ -62,7 +65,7 @@ class Foobar
     }
 }
 EOT
-                , [ '$this', '$foobar', '$barfoo' ],
+                , [ '$this', '$foobar', '$barfoo', '$_GET' ],
             ],
             [
                 <<<'EOT'
@@ -84,6 +87,25 @@ class Foobar
 EOT
                 , [ '$this', '$one', '$two' ],
             ],
+            [
+                <<<'EOT'
+class Foobar
+{
+    /**
+     * @var ClassOne
+     */
+    public $foobar;
+
+    public function foobar()
+    {
+        $bar = $this->foobar;
+        $bar->classTwo->bar█
+
+    }
+}
+EOT
+                , [ 'classThree', 'getClassThree(' ],
+            ],
         ];
     }
 
@@ -96,7 +118,8 @@ EOT
         $reflector = new ClassReflector($sourceLocator);
 
         return new Completer([
-            new VariableProvider($reflector)
+            new VariableProvider($reflector),
+            new FetchProvider($reflector)
         ]);
     }
 }
