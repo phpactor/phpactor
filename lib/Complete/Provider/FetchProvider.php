@@ -12,12 +12,18 @@ use PhpParser\NodeAbstract;
 use Phpactor\Complete\Scope;
 use BetterReflection\Reflection\ReflectionClass;
 use BetterReflection\Reflector\Exception\IdentifierNotFound;
+use Phpactor\Complete\Suggestion;
+use BetterReflection\Reflection\ReflectionMethod;
 
 class FetchProvider implements ProviderInterface
 {
+    private $reflector;
+    private $docBlockFactory;
+
     public function __construct(Reflector $reflector)
     {
         $this->reflector = $reflector;
+        $this->docBlockFactory = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
     }
 
     public function canProvideFor(CompleteContext $context): bool
@@ -39,6 +45,7 @@ class FetchProvider implements ProviderInterface
         $fetches = $this->flattenFetch($context->getScope()->getNode());
         $initial = array_shift($fetches);
 
+        $reflection = null;
         foreach ($localVariables as $localVariable) {
             if ($initial !== $localVariable->getName()) {
                 continue;
@@ -50,12 +57,15 @@ class FetchProvider implements ProviderInterface
                 continue;
             }
 
-            $reflection = null;
             try {
                 $reflection = $this->reflector->reflect((string) $type);
             } catch (IdentifierNotFound $e) {
                 // invalid class reference -- should collect errors here
             }
+        }
+
+        if (null === $reflection) {
+            return;
         }
 
         $this->resolveReflectionClass($reflection, $fetches, $suggestions);
@@ -67,12 +77,22 @@ class FetchProvider implements ProviderInterface
         // to complete..
         if (1 === count($fetches)) {
             foreach ($reflection->getProperties() as $property) {
-                $suggestions->add($property->getName());
+                $doc = $this->docBlockFactory->create($property->getDocComment());
+                $suggestions->add(Suggestion::create(
+                    $property->getName(),
+                    Suggestion::TYPE_PROPERTY,
+                    $doc
+                ));
             }
 
             foreach ($reflection->getMethods() as $method) {
-                $suggestions->add($method->getName() . '(');
+                $suggestions->add(Suggestion::create(
+                    $method->getName(),
+                    Suggestion::TYPE_METHOD,
+                    $this->formatMethodDoc($method)
+                ));
             }
+            return;
         }
 
         $propName = array_shift($fetches);
@@ -103,5 +123,25 @@ class FetchProvider implements ProviderInterface
         $nodes[] = $node->name;
 
         return $nodes;
+    }
+
+    private function formatMethodDoc(ReflectionMethod $method)
+    {
+        $parts = [];
+        foreach ($method->getParameters() as $parameter) {
+            if ($parameter->getType()) {
+                $parts[] = sprintf('%s %s', (string) $parameter->getType(), $parameter->getName());
+                continue;
+            }
+
+            $parts[] = '$' . $parameter->getName();
+        }
+
+
+        $doc = '(' . implode(', ', $parts) . ')';
+        $docObject = $this->docBlockFactory->create($method->getDocComment());
+
+        return $doc . ': ' .$docObject->getSummary();
+
     }
 }

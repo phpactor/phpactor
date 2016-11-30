@@ -36,6 +36,6 @@ class CompleteCommand extends Command
 
         $completions = $this->completer->complete($contents, $offset);
 
-        $output->writeln(json_encode($completions));
+        $output->writeln(json_encode($completions->all(), JSON_PRETTY_PRINT));
     }
 }

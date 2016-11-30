@@ -17,7 +17,8 @@ use Doctrine\DBAL\DriverManager;
 use Phpactor\Console\Command\CompleteCommand;
 use Phpactor\Complete\Completer;
 use Phpactor\Complete\Provider\VariableProvider;
-use Phpactor\Complete\Provider\PropertyFetchProvider;
+use BetterReflection\Reflector\ClassReflector;
+use Phpactor\Complete\Provider\FetchProvider;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -43,10 +44,10 @@ class CoreExtension implements ExtensionInterface
     private function registerComplete(Container $container)
     {
         $container->register('completer.provider.variables', function ($container) {
-            return new VariableProvider($container['reflector']);
+            return new VariableProvider($container->get('reflector'));
         });
         $container->register('completer.provider.property_fetch', function ($container) {
-            return new PropertyFetchProvider($container['reflector']);
+            return new FetchProvider($container->get('reflector'));
         });
         $container->register('completer', function (Container $container) {
             return new Completer([
@@ -92,7 +93,7 @@ class CoreExtension implements ExtensionInterface
                 throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
             }
 
-            return new ComposerReflector($autoloader);
+            return new ClassReflector(new ComposerSourceLocator($autoloader));
         });
     }
 
@@ -112,7 +113,6 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.complete', function (Container $container) {
             return new CompleteCommand($container->get('completer'));
         });
-
 
         $container->register('command.explain', function (Container $container) {
             return new ExplainCommand($container->get('reflector'));

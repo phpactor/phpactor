@@ -8,11 +8,13 @@ use Phpactor\Reflection\ComposerReflector;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Reflection\ReflectorInterface;
+use BetterReflection\Reflector\ClassReflector;
+use Phpactor\Util\ClassUtil;
 
 class ExplainCommand extends Command
 {
     public function __construct(
-        ReflectorInterface $reflector
+        ClassReflector $reflector
     )
     {
         parent::__construct();
@@ -36,10 +38,10 @@ class ExplainCommand extends Command
 
     private function reflect($name)
     {
-        if (!file_exists($name)) {
-            return $this->reflector->reflectClass($name);
+        if (false === file_exists($name)) {
+            return $this->reflector->reflect($name);
         }
 
-        return $this->reflector->reflectFile($name);
+        return $this->reflector->reflect(ClassUtil::getClassNameFromFile($file));
     }
 }

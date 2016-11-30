@@ -18,17 +18,5 @@ abstract class AbstractFileReflector implements ReflectorInterface
 {
     protected function getClassNameFromFile($file)
     {
-        $locator = new SingleFileSourceLocator($file);
-        $reflector = new ClassReflector($locator);
-
-        $classes = $reflector->getAllClasses();
-
-        if (empty($classes)) {
-            return;
-        }
-
-        $class = reset($classes);
-
-        return $class->getName();
     }
 }

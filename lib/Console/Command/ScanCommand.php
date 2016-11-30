@@ -13,6 +13,7 @@ use Phactor\Knowledge\Reflector\RemoteReflector;
 use Phpactor\Reflection\ReflectorInterface;
 use Phpactor\Storage\Storage;
 use Phpactor\Reflection\Exception\ReflectionException;
+use BetterReflection\Reflector\ClassReflector;
 
 class ScanCommand extends Command
 {
@@ -20,7 +21,7 @@ class ScanCommand extends Command
     private $reflector;
     private $config;
 
-    public function __construct(Storage $storage, ReflectorInterface $reflector)
+    public function __construct(Storage $storage, ClassReflector $reflector)
     {
         parent::__construct();
         $this->storage = $storage;

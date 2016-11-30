@@ -14,7 +14,7 @@ class Incomplete extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->foobar->barf
+        $input->a
     }
 
     public function foobar()

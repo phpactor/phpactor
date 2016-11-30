@@ -11,6 +11,8 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use Phpactor\Complete\Suggestions;
 use Phpactor\Complete\ProviderInterface;
+use Phpactor\Complete\Suggestion;
+use PhpParser\Node\Stmt\ClassMethod;
 
 class VariableProvider implements ProviderInterface
 {
@@ -23,7 +25,9 @@ class VariableProvider implements ProviderInterface
 
     public function canProvideFor(CompleteContext $context): bool
     {
-        return $context->getScope()->getNode() instanceof Variable;
+        $node = $context->getScope()->getNode();
+
+        return $node instanceof Variable || $node instanceof ClassMethod;
     }
 
     public function provide(CompleteContext $context, Suggestions $suggestions)
@@ -52,21 +56,20 @@ class VariableProvider implements ProviderInterface
             '$_REQUEST',
             '$_ENV'
         ] as $superGlobal) {
-            $suggestions->add($superGlobal);
+            $suggestions->add(Suggestion::create($superGlobal, Suggestion::TYPE_VARIABLE, '*superglobal*'));
         }
     }
 
     private function getClassMethodVars($context, Suggestions $suggestions)
     {
-        $suggestions->add('$this');
-
         $scope = $context->getScope();
+        Suggestion::create('$this', Suggestion::TYPE_VARIABLE, Suggestion::TYPE_VARIABLE, $scope->getClassFqn());
 
         $reflection = $this->reflector->reflect($scope->getClassFqn());
         $method = $reflection->getMethod($scope->getScopeNode()->name);
 
-        foreach ($method->getVariables() as $parameter) {
-            $suggestions->add('$' . $parameter->getName());
+        foreach ($method->getVariables() as $variable) {
+            $suggestions->add(Suggestion::create('$' . $variable->getName(), Suggestion::TYPE_VARIABLE, (string) $variable->getTypeObject()));
         }
     }
 }

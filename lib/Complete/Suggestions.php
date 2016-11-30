@@ -2,11 +2,13 @@
 
 namespace Phpactor\Complete;
 
+use Phpactor\Complete\Suggestion;
+
 class Suggestions implements \IteratorAggregate
 {
     private $suggestions = [];
 
-    public function add(string $suggestion)
+    public function add(Suggestion $suggestion)
     {
         $this->suggestions[] = $suggestion;
     }
