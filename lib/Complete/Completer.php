@@ -6,6 +6,8 @@ use Phpactor\Reflection\ReflectorInterface;
 use Phpactor\Complete\Provider\VariableProvider;
 use PhpParser\Lexer;
 use PhpParser\ParserFactory;
+use Phpactor\Complete\ScopeResolver;
+use Phpactor\Complete\ScopeFactory;
 
 class Completer
 {
@@ -14,30 +16,20 @@ class Completer
      */
     private $providers = [];
 
-    public function __construct(array $providers)
+    public function __construct(ScopeFactory $scopeFactory, array $providers)
     {
         $this->providers = $providers;
     }
 
     public function complete(string $source, int $offset)
     {
-        $lexer = new Lexer([ 'usedAttributes' => [ 'startFilePos', 'endFilePos' ] ]);
-
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7, $lexer, []);
-        $stmts = $parser->parse($source);
-
-        $completeContext = new CompleteContext(
-            $stmts,
-            $offset
-        );
-
         $suggestions = new Suggestions();
         foreach ($this->providers as $provider) {
-            if (false === $provider->canProvideFor($completeContext)) {
+            if (false === $provider->canProvideFor($scope)) {
                 continue;
             }
 
-            $provider->provide($completeContext, $suggestions);
+            $provider->provide($scope, $suggestions);
         }
 
         return $suggestions;

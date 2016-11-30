@@ -26,7 +26,11 @@ class CompleterTest extends \PHPUnit_Framework_TestCase
         $suggestions = $completer->complete($source, $offset);
 
         foreach ($expectedCompletions as $expectedCompletion) {
-            $this->assertContains($expectedCompletion, $suggestions->all(), sprintf('Contains: "%s"', implode('", "', $suggestions->all())));
+            $this->assertContains(
+                $expectedCompletion,
+                $suggestions->all(),
+                sprintf('Contains: "%s"', implode('", "', $suggestions->all()))
+            );
         }
     }
 

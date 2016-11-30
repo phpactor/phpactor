@@ -26,20 +26,19 @@ class VariableProvider implements ProviderInterface
         $this->reflector = $reflector;
     }
 
-    public function canProvideFor(CompleteContext $context): bool
+    public function canProvideFor(Scope $scope): bool
     {
-        $node = $context->getScope()->getNode();
+        $node = $scope->getNode();
 
         return $node instanceof Variable || $node instanceof ClassMethod;
     }
 
-    public function provide(CompleteContext $context, Suggestions $suggestions)
+    public function provide(Scope $scope, Suggestions $suggestions)
     {
-        $scope = $context->getScope();
-
         if (Scope::SCOPE_CLASS_METHOD === (string) $scope) {
-            $this->getClassMethodVars($context, $suggestions);
+            $this->getClassMethodVars($scope, $suggestions);
         }
+
         $this->provideSuperGlobals($suggestions);
 
         // TODO: Function scope
@@ -63,17 +62,19 @@ class VariableProvider implements ProviderInterface
         }
     }
 
-    private function getClassMethodVars($context, Suggestions $suggestions)
+    private function getClassMethodVars(Scope $scope, Suggestions $suggestions)
     {
-        $scope = $context->getScope();
-
         $suggestions->add(Suggestion::create('$this', Suggestion::TYPE_VARIABLE, $scope->getClassFqn()));
 
         $reflection = $this->reflector->reflect($scope->getClassFqn());
         $method = $reflection->getMethod($scope->getScopeNode()->name);
 
         foreach ($method->getVariables() as $variable) {
-            $suggestions->add(Suggestion::create('$' . $variable->getName(), Suggestion::TYPE_VARIABLE, (string) $variable->getTypeObject()));
+            $suggestions->add(Suggestion::create(
+                '$' . $variable->getName(),
+                Suggestion::TYPE_VARIABLE,
+                (string) $variable->getTypeObject()
+            ));
         }
     }
 }

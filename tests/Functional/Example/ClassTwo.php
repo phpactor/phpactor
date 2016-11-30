@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Complete\Example;
+namespace Phpactor\Tests\Functional\Example;
 
 class ClassTwo
 {

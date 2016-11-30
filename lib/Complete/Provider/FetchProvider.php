@@ -2,7 +2,6 @@
 
 namespace Phpactor\Complete\Provider;
 
-use Phpactor\Complete\CompleteContext;
 use PhpParser\Node\Expr;
 use BetterReflection\Reflector\Reflector;
 use Phpactor\Complete\ProviderInterface;
@@ -20,7 +19,9 @@ use phpDocumentor\Reflection\Types;
 
 class FetchProvider implements ProviderInterface
 {
-    private $reflector;
+    /**
+     * @var DocBlockFactory
+     */
     private $docBlockFactory;
 
     public function __construct(Reflector $reflector)
@@ -29,23 +30,22 @@ class FetchProvider implements ProviderInterface
         $this->docBlockFactory = DocBlockFactory::createInstance();
     }
 
-    public function canProvideFor(CompleteContext $context): bool
+    public function canProvideFor(Scope $scope): bool
     {
         // Currently only supporting class method fetch completion.
-        if ((string) $context->getScope() !== Scope::SCOPE_CLASS_METHOD) {
+        if ((string) $scope !== Scope::SCOPE_CLASS_METHOD) {
             return false;
         }
 
-        return $context->getScope()->getNode() instanceof Expr\PropertyFetch;
+        return $scope->getNode() instanceof Expr\PropertyFetch;
     }
 
-    public function provide(CompleteContext $context, Suggestions $suggestions)
+    public function provide(Scope $scope, Suggestions $suggestions)
     {
-        $scope = $context->getScope();
-        $classReflection = $this->reflector->reflect($context->getScope()->getClassFqn());
+        $classReflection = $this->reflector->reflect($scope->getClassFqn());
         $reflectionVariables = $classReflection->getMethod($scope->getScopeNode()->name)->getVariables();
 
-        $fetches = $this->flattenFetch($context->getScope()->getNode());
+        $fetches = $this->flattenFetch($scope->getNode());
         $initial = array_shift($fetches);
 
         $reflection = $classReflection;
@@ -168,9 +168,5 @@ class FetchProvider implements ProviderInterface
         }
 
         return $doc;
-    }
-
-    private function getVariableType(Scope $scope, string $name, ReflectionVariable $reflectionVariable)
-    {
     }
 }

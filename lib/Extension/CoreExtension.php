@@ -19,10 +19,13 @@ use Phpactor\Complete\Completer;
 use Phpactor\Complete\Provider\VariableProvider;
 use BetterReflection\Reflector\ClassReflector;
 use Phpactor\Complete\Provider\FetchProvider;
+use Phpactor\Complete\ScopeFactory;
+use BetterReflection\SourceLocator\Type\StringSourceLocator;
+use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 
 class CoreExtension implements ExtensionInterface
 {
-    const APP_NAME = 'phactor';
+    const APP_NAME = 'phpactor';
     const APP_VERSION = '0.1.0';
 
     public function getDefaultConfig()
@@ -30,6 +33,7 @@ class CoreExtension implements ExtensionInterface
         return [
             'db.path' => getcwd() . '/phpactor.sqlite',
             'autoload' => 'vendor/autoload.php',
+            'source' => null,
         ];
     }
 
@@ -43,6 +47,10 @@ class CoreExtension implements ExtensionInterface
 
     private function registerComplete(Container $container)
     {
+        $container->register('completer.scope_factory', function ($container) {
+            return new ScopeFactory();
+        });
+
         $container->register('completer.provider.variables', function ($container) {
             return new VariableProvider($container->get('reflector'));
         });
@@ -50,7 +58,8 @@ class CoreExtension implements ExtensionInterface
             return new FetchProvider($container->get('reflector'));
         });
         $container->register('completer', function (Container $container) {
-            return new Completer([
+            return new Completer(
+                $container->get('completer.scope_factory'), [
                 $container->get('completer.provider.variables'),
                 $container->get('completer.provider.property_fetch')
             ]);
@@ -93,7 +102,16 @@ class CoreExtension implements ExtensionInterface
                 throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
             }
 
-            return new ClassReflector(new ComposerSourceLocator($autoloader));
+            $locators = [];
+
+            // for testing purposes ...
+            if ($source = $container->getParameter('source')) {
+                $locators[] = new StringSourceLocator($source);
+            }
+
+            $locators[] = new ComposerSourceLocator($autoloader);
+
+            return new ClassReflector(new AggregateSourceLocator($locators));
         });
     }
 
