@@ -24,15 +24,26 @@ class CompleteCommand extends Command
     {
         $this->setName('complete');
         $this->setDescription('Explain a class by its class FQN or filename');
-        $this->addArgument('fqnOrFname', InputArgument::REQUIRED, 'Fully qualified class name or filename');
         $this->addArgument('offset', InputArgument::REQUIRED);
+        $this->addArgument('fqnOrFname', InputArgument::OPTIONAL, 'Fully qualified class name or filename');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('fqnOrFname');
         $offset = $input->getArgument('offset');
-        $contents = file_get_contents($name);
+
+        $name = $input->getArgument('fqnOrFname');
+
+        if ($name) {
+            $contents = file_get_contents($name);
+        } else {
+            $contents = '';
+            while ($line = fgets(STDIN)) {
+                $contents .= $line;
+            }
+        }
+        file_put_contents('foobar', $contents);
+
 
         $completions = $this->completer->complete($contents, $offset);
 

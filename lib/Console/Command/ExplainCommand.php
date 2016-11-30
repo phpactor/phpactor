@@ -42,6 +42,6 @@ class ExplainCommand extends Command
             return $this->reflector->reflect($name);
         }
 
-        return $this->reflector->reflect(ClassUtil::getClassNameFromFile($file));
+        return $this->reflector->reflect(ClassUtil::getClassNameFromFile($name));
     }
 }

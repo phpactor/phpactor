@@ -14,8 +14,10 @@ class Incomplete extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $input->a
+$input
+o
     }
+
 
     public function foobar()
     {

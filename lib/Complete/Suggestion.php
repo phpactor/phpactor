@@ -4,9 +4,9 @@ namespace Phpactor\Complete;
 
 class Suggestion
 {
-    const TYPE_PROPERTY = 'property';
-    const TYPE_METHOD = 'method';
-    const TYPE_VARIABLE = 'variable';
+    const TYPE_PROPERTY = 'm';
+    const TYPE_METHOD = 'f';
+    const TYPE_VARIABLE = 'v';
 
     public $name;
     public $type;

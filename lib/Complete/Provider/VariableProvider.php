@@ -33,11 +33,11 @@ class VariableProvider implements ProviderInterface
     public function provide(CompleteContext $context, Suggestions $suggestions)
     {
         $scope = $context->getScope();
-        $this->provideSuperGlobals($suggestions);
 
         if (Scope::SCOPE_CLASS_METHOD === (string) $scope) {
-            return $this->getClassMethodVars($context, $suggestions);
+            $this->getClassMethodVars($context, $suggestions);
         }
+        $this->provideSuperGlobals($suggestions);
 
         // TODO: Function scope
         // TODO: Closure scope

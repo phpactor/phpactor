@@ -47,6 +47,7 @@ class FetchProvider implements ProviderInterface
 
         $reflection = null;
         foreach ($localVariables as $localVariable) {
+
             if ($initial !== $localVariable->getName()) {
                 continue;
             }
@@ -77,7 +78,16 @@ class FetchProvider implements ProviderInterface
         // to complete..
         if (1 === count($fetches)) {
             foreach ($reflection->getProperties() as $property) {
-                $doc = $this->docBlockFactory->create($property->getDocComment());
+
+                // TODO: Allow access when in scope.
+                if ($property->isPrivate() || $property->isProtected()) {
+                    continue;
+                }
+
+                $doc = null;
+                if ($property->getDocComment()) {
+                    $doc = $this->docBlockFactory->create($property->getDocComment());
+                }
                 $suggestions->add(Suggestion::create(
                     $property->getName(),
                     Suggestion::TYPE_PROPERTY,
@@ -102,7 +112,10 @@ class FetchProvider implements ProviderInterface
         }
 
         $property = $reflection->getProperty($propName);
-        $types = $property->getDocBlockTypeStrings();
+
+        if ($property->getDocComment()) {
+            $types = $property->getDocBlockTypeStrings();
+        }
 
         foreach ($types as $type) {
             try {
@@ -138,10 +151,13 @@ class FetchProvider implements ProviderInterface
         }
 
 
-        $doc = '(' . implode(', ', $parts) . ')';
-        $docObject = $this->docBlockFactory->create($method->getDocComment());
+        $doc = $method->getName() . '(' . implode(', ', $parts) . ')';
 
-        return $doc . ': ' .$docObject->getSummary();
+        if ($method->getDocComment()) {
+            $docObject = $this->docBlockFactory->create($method->getDocComment());
+            return $doc . ': ' .$docObject->getSummary();
+        }
 
+        return $doc;
     }
 }

@@ -20,7 +20,7 @@ class ScopeResolver
         if (null === $scope) {
             $scope = new Scope($namespace, Scope::SCOPE_GLOBAL, $node);
         }
-
+        
         if ($node instanceof Stmt\Function_) {
             $scope = new Scope($namespace, Scope::SCOPE_FUNCTION, $node, $scope);
         }
