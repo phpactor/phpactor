@@ -1,6 +1,8 @@
 PhpActor
 ========
 
+[![Build Status](https://travis-ci.org/dantleech/phpactor.svg?branch=master)](https://travis-ci.org/dantleech/phpactor)
+
 PHP introspection tool and code completion tool.
 
 ```php
