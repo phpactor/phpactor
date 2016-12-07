@@ -10,6 +10,8 @@ class ScopeFactory
 {
     public function create($source, $offset): Scope
     {
+        $source = $this->fixSource($source, $offset);
+
         $lexer = new Lexer([ 'usedAttributes' => [ 'comments', 'startLine', 'endLine', 'startFilePos', 'endFilePos' ] ]);
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7, $lexer, []);
         $stmts = $parser->parse($source);
@@ -27,5 +29,43 @@ class ScopeFactory
         throw new \InvalidArgumentException(sprintf(
             'Could not resolve scope for source with offset "%s"', $offset
         ));
+    }
+
+    /**
+     * If the parser encounters a dangling object operator ("->") it
+     * will discard the variable it is associated with.
+     *
+     * This hack will try and normalize it by adding "xxx" to the object operator.
+     */
+    private function fixSource(string $source)
+    {
+        $buffer = [];
+        $inFetch = false;
+        $tokens = token_get_all($source);
+
+        foreach ($tokens as $index => $token) {
+
+            if ($token[0] === T_OBJECT_OPERATOR) {
+                $next = $tokens[$index + 1];
+
+                if (!$next) {
+                    break;
+                }
+
+                if ($next[0] !== T_STRING) {
+                    // hack -- just pretend that there is some text here which
+                    // will eba
+                    $buffer[] = '->xxx';
+                    continue;
+                }
+
+            }
+
+            $buffer[] = isset($token[1]) ? $token[1] : $token;
+        }
+
+        $source = implode('', $buffer);
+
+        return $source;
     }
 }

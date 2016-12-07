@@ -2,7 +2,6 @@ let g:phpactor#phpactor_path="/home/daniel/www/dantleech/phpactor/bin/phpactor"
 
 func! phpactor#complete(findstart, base)
 
-
     if a:findstart
         let line = getline('.')
         let start = col('.') - 1

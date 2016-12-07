@@ -43,14 +43,14 @@ class FetchProvider implements ProviderInterface
     public function provide(Scope $scope, Suggestions $suggestions)
     {
         if (null === $classReflection = $this->resolveReflectionClass(
-            $scope->getNode(),
+            $scope->getNode()->var,
             $scope
         )) { 
             return;
         }
 
         // populate the suggestions with the classes members.
-        $this->populateSuggestions($classReflection, $suggestions);
+        $this->populateSuggestions($scope, $classReflection, $suggestions);
     }
 
     private function resolveReflectionClass(Expr $node, Scope $scope, ReflectionClass $reflectionClass = null)
@@ -148,9 +148,9 @@ class FetchProvider implements ProviderInterface
             return;
         }
 
-        $method = $reflection->getMethod($name);
+        $method = $reflectionClass->getMethod($name);
 
-        var_dump('here');die();;
+        return $this->tryToReflectClass($method->getReturnType());
     }
 
     private function tryToReflectClass($classFqn)
@@ -162,33 +162,48 @@ class FetchProvider implements ProviderInterface
         }
     }
 
-    private function populateSuggestions(ReflectionClass $reflection, Suggestions $suggestions)
+    private function populateSuggestions(Scope $scope, ReflectionClass $reflectionClass, Suggestions $suggestions)
     {
-        foreach ($reflection->getProperties() as $property) {
-
-            // TODO: Allow access when in scope.
-            if ($property->isPrivate() || $property->isProtected()) {
-                continue;
-            }
-
-            $doc = null;
-            if ($property->getDocComment()) {
-                $doc = $this->docBlockFactory->create($property->getDocComment())->getSummary();
-            }
-
-            $suggestions->add(Suggestion::create(
-                $property->getName(),
-                Suggestion::TYPE_PROPERTY,
-                $doc
-            ));
-        }
-
-        foreach ($reflection->getMethods() as $method) {
+        foreach ($reflectionClass->getMethods() as $method) {
             $suggestions->add(Suggestion::create(
                 $method->getName(),
                 Suggestion::TYPE_METHOD,
                 $this->formatMethodDoc($method)
             ));
+        }
+
+        $scopeReflection = $this->reflector->reflect($scope->getClassFqn());
+
+        $classSameInstance = $reflectionClass->getName() == $scope->getClassFqn();
+
+        // inherited properties currently not returned from BR:
+        // https://github.com/Roave/BetterReflection/issues/231
+        while ($reflectionClass) {
+            foreach ($reflectionClass->getProperties() as $property) {
+                $scopeIsInstance = $scopeReflection->isSubclassOf($reflectionClass->getName());
+                $scopeIsSame = $scopeReflection->getName() === $reflectionClass->getName();
+
+                if ($property->isPrivate() && false === $scopeIsSame) {
+                    continue;
+                }
+
+                if ($property->isProtected() && (false === $scopeIsSame && false === $scopeIsInstance)) {
+                    continue;
+                }
+
+                $doc = null;
+                if ($property->getDocComment()) {
+                    $doc = $this->docBlockFactory->create($property->getDocComment())->getSummary();
+                }
+
+                $suggestions->add(Suggestion::create(
+                    $property->getName(),
+                    Suggestion::TYPE_PROPERTY,
+                    $doc
+                ));
+            }
+
+            $reflectionClass = $reflectionClass->getParentClass();
         }
     }
 

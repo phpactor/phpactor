@@ -1,33 +1,7 @@
 PhpActor
 ========
 
-NOTE: This is a POC and certainly does not do much of anything described
-below. Come back next year.
-
-PHP refactoring and introspection tool. It can be used in combination with VIM
-or any other editor to provide features similar to those found in PHPStorm.
-That is the goal.
-
-What this thing aims to do:
-
-- Create and maintain an SQlite database for your code base.
-- Provide autocompletion (given a string, and optionally a namespace and
-  class).
-- Provide the filename for any given class name (jump to a class).
-- Provide method help.
-- Rename classes or methods, and update all references to them.
-- Move classes, and update all refering files.
-- etc.
-
-Features
---------
-
-- [ ] Fix namespaces based on file paths.
-- [ ] Rename files / classes globally.
-- [ ] Method completion.
-- [ ] Class generation.
-- [ ] Add properties and and assign them for class constructors, inc. type docs.
-
+PHP introspection tool and code completion tool.
 
 How
 ---

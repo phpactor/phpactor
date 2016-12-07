@@ -11,7 +11,6 @@ use Phpactor\Console\Command\ExplainCommand;
 use Phpactor\Reflection\ComposerReflector;
 use Doctrine\DBAL\Connection;
 use Phpactor\Storage\Storage;
-use Phpactor\Console\Command\ScanCommand;
 use Phpactor\Storage\ConnectionWrapper;
 use Doctrine\DBAL\DriverManager;
 use Phpactor\Console\Command\CompleteCommand;
@@ -104,7 +103,7 @@ class CoreExtension implements ExtensionInterface
 
             $locators = [];
 
-            // for testing purposes ...
+            // HACK: for testing purposes ...
             if ($source = $container->getParameter('source')) {
                 $locators[] = new StringSourceLocator($source);
             }
@@ -121,7 +120,6 @@ class CoreExtension implements ExtensionInterface
             $application = new Application(self::APP_NAME, self::APP_VERSION);
             $application->addCommands([
                 $container->get('command.explain'),
-                $container->get('command.scan'),
                 $container->get('command.complete'),
             ]);
 
@@ -134,10 +132,6 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.explain', function (Container $container) {
             return new ExplainCommand($container->get('reflector'));
-        });
-
-        $container->register('command.scan', function (Container $container) {
-            return new ScanCommand($container->get('storage'), $container->get('reflector'));
         });
     }
 }
