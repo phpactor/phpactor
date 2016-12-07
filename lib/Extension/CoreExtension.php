@@ -21,6 +21,7 @@ use Phpactor\Complete\Provider\FetchProvider;
 use Phpactor\Complete\ScopeFactory;
 use BetterReflection\SourceLocator\Type\StringSourceLocator;
 use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
+use BetterReflection\SourceLocator\Type\PhpInternalSourceLocator;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -109,6 +110,7 @@ class CoreExtension implements ExtensionInterface
             }
 
             $locators[] = new ComposerSourceLocator($autoloader);
+            $locators[] = new PhpInternalSourceLocator($autoloader);
 
             return new ClassReflector(new AggregateSourceLocator($locators));
         });
