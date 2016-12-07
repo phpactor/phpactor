@@ -21,7 +21,10 @@ class Suggestion
         $suggestion = new Suggestion();
         $suggestion->name = $name;
         $suggestion->type = $type;
-        $suggestion->info = $info;
+
+        // do not give a NULL value to VIM, it causes this issue
+        // https://github.com/Valloric/YouCompleteMe/pull/147
+        $suggestion->info = $info ?: '<no info>';
 
         return $suggestion;
     }

@@ -8,6 +8,7 @@ use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use Phpactor\Complete\ScopeResolver;
 use Phpactor\Complete\ScopeFactory;
+use Phpactor\Complete\Suggestions;
 
 class Completer
 {
@@ -27,7 +28,7 @@ class Completer
         $this->scopeFactory = $scopeFactory;
     }
 
-    public function complete(string $source, int $offset)
+    public function complete(string $source, int $offset): Suggestions
     {
         $scope = $this->scopeFactory->create($source, $offset);
         $suggestions = new Suggestions();
