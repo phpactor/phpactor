@@ -154,10 +154,10 @@ class FetchProvider implements ProviderInterface
                 continue;
             }
 
-            $type = $reflectionVariable->getTypeObject();
+            $type = $reflectionVariable->getType();
 
             // ignore primitives (i.e. non-objects)
-            if ($type->isBuiltin()) {
+            if (null === $type || $type->isBuiltin()) {
                 continue;
             }
 
