@@ -103,9 +103,6 @@ class FetchProvider implements ProviderInterface
         if ($resolvedReflection = $this->resolveMethodReflection($reflectionClass, $node->name)) {
             return $resolvedReflection;
         }
-
-        // TODO: Should return null probably ...
-        return $reflectionClass;
     }
 
     private function resolveReflectionFromConstantFetch(Expr\ClassConstFetch $node, Scope $scope)
