@@ -28,7 +28,6 @@ class FetchProviderTest extends ContainerTestCase
         $scope = $container->get('completer.scope_factory')->create($source, $offset);
 
         $suggestions = new Suggestions();
-
         $this->assertTrue($provider->canProvideFor($scope), 'it can provide suggestions');
 
         $provider->provide($scope, $suggestions);
@@ -44,6 +43,38 @@ class FetchProviderTest extends ContainerTestCase
     public function provideProvider()
     {
         return [
+            'it resolves named static methods' => [
+                <<<'EOT'
+class Foobar
+{
+    public static function barbar()
+    {
+    }
+
+    public function getFoobar(FoobarInterface $foo)
+    {
+        Foobar::█
+    }
+}
+EOT
+                , [ 'barbar' ],
+            ],
+            'it resolves self static methods' => [
+                <<<'EOT'
+class Foobar
+{
+    public static function barbar()
+    {
+    }
+
+    public function getFoobar(FoobarInterface $foo)
+    {
+        self::█
+    }
+}
+EOT
+                , [ 'barbar' ],
+            ],
             'it should provide for empty needle' => [
                 <<<'EOT'
 class Foobar
@@ -176,6 +207,45 @@ class Foobar extends ClassOne
 }
 EOT
                 , [ 'classTwo' ],
+            ],
+            'it resolves variables after reassignment' => [
+                <<<'EOT'
+class Foobar extends ClassOne
+{
+    public function getFoobar(ClassOne $foobar)
+    {
+        $barfoo = $foobar;
+        $barfoo->classT█
+    }
+}
+EOT
+                , [ 'classTwo' ],
+            ],
+            'it resolves variables after reassignment' => [
+                <<<'EOT'
+class Foobar extends ClassOne
+{
+    public function getFoobar(ClassOne $foobar)
+    {
+        $barfoo = $foobar;
+        $zzzfoo = $barfoo;
+        $zzzfoo->classT█
+    }
+}
+EOT
+                , [ 'classTwo' ],
+            ],
+            'it resolves interfaces' => [
+                <<<'EOT'
+class Foobar
+{
+    public function getFoobar(FoobarInterface $foo)
+    {
+        $foo->█
+    }
+}
+EOT
+                , [ 'getFoobarOne' ],
             ],
         ];
     }

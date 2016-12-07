@@ -65,6 +65,7 @@ class VariableProvider implements ProviderInterface
     private function getClassMethodVars(Scope $scope, Suggestions $suggestions)
     {
         $suggestions->add(Suggestion::create('$this', Suggestion::TYPE_VARIABLE, $scope->getClassFqn()));
+        $suggestions->add(Suggestion::create('self', Suggestion::TYPE_VARIABLE, $scope->getClassFqn()));
 
         $reflection = $this->reflector->reflect($scope->getClassFqn());
         $method = $reflection->getMethod($scope->getScopeNode()->name);

@@ -53,12 +53,23 @@ class ScopeFactory
                 }
 
                 if ($next[0] !== T_STRING) {
-                    // hack -- just pretend that there is some text here which
-                    // will eba
                     $buffer[] = '->xxx';
                     continue;
                 }
 
+            }
+
+            if ($token[0] === T_DOUBLE_COLON) {
+                $next = $tokens[$index + 1];
+
+                if (!$next) {
+                    break;
+                }
+
+                if ($next[0] !== T_STRING) {
+                    $buffer[] = '::xxx';
+                    continue;
+                }
             }
 
             $buffer[] = isset($token[1]) ? $token[1] : $token;

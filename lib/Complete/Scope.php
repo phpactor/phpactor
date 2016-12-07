@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeAbstract;
 use PhpParser\Node\Name;
+use PhpParser\Node\Expr\ClassConstFetch;
 
 class Scope
 {
@@ -66,6 +67,11 @@ class Scope
     public function addNode(Node $node)
     {
         $this->nodes[] = $node;
+    }
+
+    public function isNodeStatic()
+    {
+        return $this->getNode() instanceof ClassConstFetch;
     }
 
     public function __toString()

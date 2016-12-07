@@ -13,6 +13,11 @@ use Phpactor\Util\ClassUtil;
 
 class ExplainCommand extends Command
 {
+    /**
+     * @var ClassReflector
+     */
+    private $reflector;
+
     public function __construct(
         ClassReflector $reflector
     )
@@ -30,6 +35,7 @@ class ExplainCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        // almost ...
         $name = $input->getArgument('fqnOrFname');
 
         $reflection = $this->reflect($name);

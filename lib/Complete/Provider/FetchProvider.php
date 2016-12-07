@@ -16,6 +16,8 @@ use BetterReflection\Reflection\ReflectionMethod;
 use BetterReflection\Reflection\ReflectionVariable;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Types;
+use BetterReflection\TypesFinder\FindTypeFromAst;
+use phpDocumentor\Reflection\Types\Object_;
 
 class FetchProvider implements ProviderInterface
 {
@@ -37,15 +39,29 @@ class FetchProvider implements ProviderInterface
             return false;
         }
 
-        return $scope->getNode() instanceof Expr\PropertyFetch  || $scope->getNode() instanceof Expr\MethodFetch;
+        return 
+            $scope->getNode() instanceof Expr\ClassConstFetch ||
+            $scope->getNode() instanceof Expr\PropertyFetch  || 
+            $scope->getNode() instanceof Expr\MethodCall;
     }
 
     public function provide(Scope $scope, Suggestions $suggestions)
     {
-        if (null === $classReflection = $this->resolveReflectionClass(
-            $scope->getNode()->var,
+        $node = $scope->getNode();
+        if (
+            $scope->getNode() instanceof PropertyFetch ||
+            $scope->getNode() instanceof PropertyFetch
+        ) {
+            // knock off "completion" node
+            $node = $scope->getNode()->var;
+        }
+
+        $classReflection = $this->resolveReflectionClass(
+            $node,
             $scope
-        )) { 
+        );
+
+        if (null === $classReflection) { 
             return;
         }
 
@@ -55,12 +71,26 @@ class FetchProvider implements ProviderInterface
 
     private function resolveReflectionClass(Expr $node, Scope $scope, ReflectionClass $reflectionClass = null)
     {
-        if (false === $node instanceof Expr\Variable) {
+        if ($node instanceof Expr\PropertyFetch) {
             $reflectionClass = $this->resolveReflectionClass($node->var, $scope, $reflectionClass);
+        }
+
+        if ($node instanceof Expr\MethodCall) {
+            $reflectionClass = $this->resolveReflectionClass($node->var, $scope, $reflectionClass);
+        }
+
+        // now we start from the base variable ...
+
+        if ($node instanceof Expr\ClassConstFetch) {
+            return $this->resolveReflectionFromConstantFetch($node, $scope, $reflectionClass);
         }
 
         if ($node instanceof Expr\Variable) {
             return $this->resolveReflectionFromLocalVariables($node->name, $scope);
+        }
+
+        if ($node instanceof Expr\StaticCall) {
+            return $this->resolveReflectionFromStatic($node->name, $scope);
         }
 
         if (null === $reflectionClass) {
@@ -75,7 +105,34 @@ class FetchProvider implements ProviderInterface
             return $resolvedReflection;
         }
 
+        // TODO: Should return null probably ...
         return $reflectionClass;
+    }
+
+    private function resolveReflectionFromConstantFetch(Expr\ClassConstFetch $node, Scope $scope)
+    {
+        // TODO: For god sakes generalize this...
+        $reflectionClass = $this->reflector->reflect($scope->getClassFqn());
+        $name = (string) $node->class;
+
+        if ($name === 'self') {
+            $reflectionClass = $this->reflector->reflect($scope->getClassFqn());
+            return $reflectionClass;
+        }
+
+        // TODO: Refactor this
+        $type = (new FindTypeFromAst())->__invoke(
+            $name,
+            $reflectionClass->getLocatedSource(),
+            $reflectionClass->getNamespaceName()
+        );
+
+        if (false === $type instanceof Object_) {
+            return;
+        }
+
+        return $this->reflector->reflect($type->getFqsen());
+
     }
 
     private function resolveReflectionFromLocalVariables(string $name, Scope $scope)
@@ -164,7 +221,17 @@ class FetchProvider implements ProviderInterface
 
     private function populateSuggestions(Scope $scope, ReflectionClass $reflectionClass, Suggestions $suggestions)
     {
+        $isStaticNode = $scope->isNodeStatic();
+
         foreach ($reflectionClass->getMethods() as $method) {
+            if ($method->isStatic() && false === $isStaticNode) {
+                continue;
+            }
+
+            if (false === $method->isStatic() && $isStaticNode) {
+                continue;
+            }
+
             $suggestions->add(Suggestion::create(
                 $method->getName(),
                 Suggestion::TYPE_METHOD,

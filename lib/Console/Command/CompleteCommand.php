@@ -12,6 +12,11 @@ use Phpactor\Complete\Completer;
 
 class CompleteCommand extends Command
 {
+    /**
+     * @var Completer
+     */
+    private $completer;
+
     public function __construct(
         Completer $completer
     )
