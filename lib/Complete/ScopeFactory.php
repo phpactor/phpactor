@@ -10,7 +10,7 @@ class ScopeFactory
 {
     public function create($source, $offset): Scope
     {
-        $lexer = new Lexer([ 'usedAttributes' => [ 'startFilePos', 'endFilePos' ] ]);
+        $lexer = new Lexer([ 'usedAttributes' => [ 'comments', 'startLine', 'endLine', 'startFilePos', 'endFilePos' ] ]);
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7, $lexer, []);
         $stmts = $parser->parse($source);
 

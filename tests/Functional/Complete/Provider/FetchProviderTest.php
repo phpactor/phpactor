@@ -28,24 +28,66 @@ class FetchProviderTest extends ContainerTestCase
         $scope = $container->get('completer.scope_factory')->create($source, $offset);
 
         $suggestions = new Suggestions();
+
+        $this->assertTrue($provider->canProvideFor($scope));
+
         $provider->provide($scope, $suggestions);
 
-        $this->assertEquals($expected, $suggestions->all());
+        $array = [];
+        foreach ($suggestions as $suggestion) {
+            $array[] = (string) $suggestion;
+        }
+
+        $this->assertEquals($expected, $array);
     }
 
     public function provideProvider()
     {
         return [
-            [
+            'it should provide local methods' => [
                 <<<'EOT'
 class Foobar
 {
-    /**
-     * @var ClassOne
-     */
+    public function getFoobar()
+    {
+        $this->getFoo█
+    }
+}
+EOT
+                , [ 'getFoobar' ],
+            ],
+            'it should provide inherited properties' => [
+                <<<'EOT'
+class Foobar extends ClassOne
+{
+    public function getFoobar()
+    {
+        $this->clas█
+    }
+}
+EOT
+                , [ 'classTwo', 'getFoobar', 'getClassTwo' ],
+            ],
+            'it should provide inherited methods' => [
+                <<<'EOT'
+class Foobar extends ClassOne
+{
+    public function getFoobar()
+    {
+        $this->classTwo->getClassThree()->classOne->class
+    }
+}
+EOT
+                , [ 'getFoobar', 'getClassTwo' ],
+            ],
+
+            'it should provide local private properties' => [
+                <<<'EOT'
+class Foobar
+{
     private $foobar;
 
-    public function foobar()
+    public function getBarfoo()
     {
         $this->fooba█
     }
@@ -53,7 +95,47 @@ class Foobar
 EOT
                 , [ 'foobar' ],
             ],
-            [
+            'it should provide local protected properties' => [
+                <<<'EOT'
+class Foobar
+{
+    protected $foobar;
+
+    public function getBarfoo()
+    {
+        $this->fooba█
+    }
+}
+EOT
+                , [ 'foobar' ],
+            ],
+            'it should provide local public properties' => [
+                <<<'EOT'
+class Foobar
+{
+    public $foobar;
+
+    public function getBarfoo()
+    {
+        $this->fooba█
+    }
+}
+EOT
+                ,[ 'foobar' ],
+            ],
+            'it should NOT provide private inherited properties' => [
+                <<<'EOT'
+class Foobar extends ClassOne
+{
+    public function getBarfoo()
+    {
+        $this->private█
+    }
+}
+EOT
+                , [ ],
+            ],
+            'it should provide properties on member property object' => [
                 <<<'EOT'
 class Foobar
 {
@@ -65,29 +147,11 @@ class Foobar
     public function foobar()
     {
         $bar = $this->foobar;
-        $bar->classTwo->bar█
-
+        $bar->classTwo->class█
     }
 }
 EOT
                 , [ 'classThree', 'getClassThree' ],
-            ],
-            [
-                <<<'EOT'
-class Foobar
-{
-    /**
-     * @var ClassOne
-     */
-    public $foobar;
-
-    public function getFoobar()
-    {
-        $this->foo█
-    }
-}
-EOT
-                , [ 'foobar', 'getFoobar' ],
             ],
         ];
     }

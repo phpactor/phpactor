@@ -37,20 +37,60 @@ class FetchProvider implements ProviderInterface
             return false;
         }
 
-        return $scope->getNode() instanceof Expr\PropertyFetch;
+        return $scope->getNode() instanceof Expr\PropertyFetch  || $scope->getNode() instanceof Expr\MethodFetch;
     }
 
     public function provide(Scope $scope, Suggestions $suggestions)
     {
-        $classReflection = $this->reflector->reflect($scope->getClassFqn());
-        $reflectionVariables = $classReflection->getMethod($scope->getScopeNode()->name)->getVariables();
+        if (null === $classReflection = $this->resolveReflectionClass(
+            $scope->getNode(),
+            $scope
+        )) { 
+            return;
+        }
 
-        $fetches = $this->flattenFetch($scope->getNode());
-        $initial = array_shift($fetches);
+        // populate the suggestions with the classes members.
+        $this->populateSuggestions($classReflection, $suggestions);
+    }
 
-        $reflection = $classReflection;
+    private function resolveReflectionClass(Expr $node, Scope $scope, ReflectionClass $reflectionClass = null)
+    {
+        if (false === $node instanceof Expr\Variable) {
+            $reflectionClass = $this->resolveReflectionClass($node->var, $scope, $reflectionClass);
+        }
+
+        if ($node instanceof Expr\Variable) {
+            return $this->resolveReflectionFromLocalVariables($node->name, $scope);
+        }
+
+        if (null === $reflectionClass) {
+            return;
+        }
+
+        if ($resolvedReflection = $this->resolvePropertyReflection($reflectionClass, $node->name)) {
+            return $resolvedReflection;
+        }
+
+        if ($resolvedReflection = $this->resolveMethodReflection($reflectionClass, $node->name)) {
+            return $resolvedReflection;
+        }
+
+        return $reflectionClass;
+    }
+
+    private function resolveReflectionFromLocalVariables(string $name, Scope $scope)
+    {
+        $reflectionClass = $this->reflector->reflect($scope->getClassFqn());
+
+        if ($name === 'this') {
+            return $reflectionClass;
+        }
+
+        $reflectionVariables = $reflectionClass->getMethod($scope->getScopeNode()->name)->getVariables();
+
+        $reflection = $reflectionClass;
         foreach ($reflectionVariables as $reflectionVariable) {
-            if ($initial !== $reflectionVariable->getName()) {
+            if ($name !== $reflectionVariable->getName()) {
                 continue;
             }
 
@@ -61,89 +101,100 @@ class FetchProvider implements ProviderInterface
                 continue;
             }
 
-            try {
-                $reflection = $this->reflector->reflect($type);
-                break;
-            } catch (IdentifierNotFound $e) {
-                // invalid class reference -- should collect errors here
+            $resolvedReflection = $this->tryToReflectClass($type);
+
+            if (null === $reflection) {
+                continue;
             }
-        }
 
-        if (null === $reflection) {
-            return;
+            return $resolvedReflection;
         }
-
-        $this->resolveReflectionClass($reflection, $fetches, $suggestions);
     }
 
-    private function resolveReflectionClass(ReflectionClass $reflection, array $fetches, Suggestions $suggestions)
+    private function resolvePropertyReflection(ReflectionClass $reflection, string $name)
     {
-        // if there is only one fetch left, then it is the thing we are trying
-        // to complete..
-        if (1 === count($fetches)) {
-            foreach ($reflection->getProperties() as $property) {
-
-                // TODO: Allow access when in scope.
-                if ($property->isPrivate() || $property->isProtected()) {
-                    continue;
-                }
-
-                $doc = null;
-                if ($property->getDocComment()) {
-                    $doc = $this->docBlockFactory->create($property->getDocComment())->getSummary();
-                }
-
-                $suggestions->add(Suggestion::create(
-                    $property->getName(),
-                    Suggestion::TYPE_PROPERTY,
-                    $doc
-                ));
+        if (false === $reflection->hasProperty($name)) {
+            if ($parentClass = $reflection->getParentClass()) {
+                return $this->resolvePropertyReflection($parentClass, $name);
             }
 
-            foreach ($reflection->getMethods() as $method) {
-                $suggestions->add(Suggestion::create(
-                    $method->getName(),
-                    Suggestion::TYPE_METHOD,
-                    $this->formatMethodDoc($method)
-                ));
-            }
             return;
         }
 
-        $propName = array_shift($fetches);
+        $property = $reflection->getProperty($name);
 
-        if (false === $reflection->hasProperty($propName)) {
-            return;
-        }
-
-        $property = $reflection->getProperty($propName);
-
-        $types = [];
         if ($property->getDocComment()) {
             $types = $property->getDocBlockTypeStrings();
+        } else {
+            return;
         }
 
         foreach ($types as $type) {
-            try {
-                $reflection = $this->reflector->reflect($type);
-                return $this->resolveReflectionClass($reflection, $fetches, $suggestions);
-            } catch (IdentifierNotFound $exception) {
+            if (null === $reflection = $this->tryToReflectClass($type)) {
+                continue;
             }
+
+            return $reflection;
         }
     }
 
-    private function flattenFetch(NodeAbstract $node)
+    private function resolveMethodReflection(ReflectionClass $reflectionClass, string $name)
     {
-        $nodes = [];
-        if ($node instanceof PropertyFetch && $node->var) {
-            $nodes = $this->flattenFetch($node->var);
+        if (false === $reflectionClass->hasMethod($name)) {
+            if ($parentClass = $reflectionClass->getParentClass()) {
+                return $this->resolveMethodReflection($parentClass, $name);
+            }
+
+            return;
         }
 
-        $nodes[] = $node->name;
+        $method = $reflection->getMethod($name);
 
-        return $nodes;
+        var_dump('here');die();;
     }
 
+    private function tryToReflectClass($classFqn)
+    {
+        try {
+            return $this->reflector->reflect($classFqn);
+        } catch (IdentifierNotFound $exception) {
+            // TODO: Log error here.
+        }
+    }
+
+    private function populateSuggestions(ReflectionClass $reflection, Suggestions $suggestions)
+    {
+        foreach ($reflection->getProperties() as $property) {
+
+            // TODO: Allow access when in scope.
+            if ($property->isPrivate() || $property->isProtected()) {
+                continue;
+            }
+
+            $doc = null;
+            if ($property->getDocComment()) {
+                $doc = $this->docBlockFactory->create($property->getDocComment())->getSummary();
+            }
+
+            $suggestions->add(Suggestion::create(
+                $property->getName(),
+                Suggestion::TYPE_PROPERTY,
+                $doc
+            ));
+        }
+
+        foreach ($reflection->getMethods() as $method) {
+            $suggestions->add(Suggestion::create(
+                $method->getName(),
+                Suggestion::TYPE_METHOD,
+                $this->formatMethodDoc($method)
+            ));
+        }
+    }
+
+    /**
+     * TODO: move this to formatting class
+     */
     private function formatMethodDoc(ReflectionMethod $method)
     {
         $parts = [];

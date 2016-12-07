@@ -8,4 +8,9 @@ class ClassOne
      * @var ClassTwo
      */
     public $classTwo;
+
+    /**
+     * @var string
+     */
+    private $privateProperty;
 }

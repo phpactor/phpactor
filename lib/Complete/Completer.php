@@ -16,13 +16,20 @@ class Completer
      */
     private $providers = [];
 
+    /**
+     * @var ScopeFactory
+     */
+    private $scopeFactory;
+
     public function __construct(ScopeFactory $scopeFactory, array $providers)
     {
         $this->providers = $providers;
+        $this->scopeFactory = $scopeFactory;
     }
 
     public function complete(string $source, int $offset)
     {
+        $scope = $this->scopeFactory->create($source, $offset);
         $suggestions = new Suggestions();
         foreach ($this->providers as $provider) {
             if (false === $provider->canProvideFor($scope)) {

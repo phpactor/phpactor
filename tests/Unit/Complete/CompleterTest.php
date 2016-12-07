@@ -11,6 +11,7 @@ use BetterReflection\SourceLocator\Type\AutoloadSourceLocator;
 use BetterReflection\Reflector\ClassReflector;
 use Phpactor\Complete\Provider\VariableProvider;
 use Phpactor\Complete\Provider\FetchProvider;
+use Phpactor\Complete\ScopeFactory;
 
 class CompleterTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class CompleterTest extends \PHPUnit_Framework_TestCase
         $source = '<?php ' . PHP_EOL . 'namespace Phpactor\\Tests\\Unit\\Complete\\Example; ' . PHP_EOL . $source;
         $offset = strpos($source, '█') - 1;
         $source = str_replace('█', '', $source);
-        $completer = $this->getCompleter($source);
+        $completer = $this->getCompleter($source, $offset);
         $suggestions = $completer->complete($source, $offset);
 
         foreach ($expectedCompletions as $expectedCompletion) {
@@ -130,17 +131,21 @@ EOT
         ];
     }
 
-    private function getCompleter(string $source)
+    private function getCompleter(string $source, int $offset)
     {
         $sourceLocator = new AggregateSourceLocator([
             new StringSourceLocator($source),
             new AutoloadSourceLocator(),
         ]);
         $reflector = new ClassReflector($sourceLocator);
+        $scopeFactory = new ScopeFactory();
 
-        return new Completer([
-            new VariableProvider($reflector),
-            new FetchProvider($reflector)
-        ]);
+        return new Completer(
+            $scopeFactory,
+            [
+                new VariableProvider($reflector),
+                new FetchProvider($reflector)
+            ]
+        );
     }
 }
