@@ -43,6 +43,18 @@ class FetchProviderTest extends ContainerTestCase
     public function provideProvider()
     {
         return [
+            'it resolves named static property fetches' => [
+                <<<'EOT'
+class Foobar
+{
+    public function getFoobar(FoobarInterface $foo)
+    {
+        ClassOne::createClassTwo()->classThree█
+    }
+}
+EOT
+                , [ 'getClassThree', 'classThree' ],
+            ],
             'it resolves named static methods' => [
                 <<<'EOT'
 class Foobar

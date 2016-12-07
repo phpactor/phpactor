@@ -6,7 +6,6 @@ use PhpParser\Node\Expr;
 use BetterReflection\Reflector\Reflector;
 use Phpactor\Complete\ProviderInterface;
 use Phpactor\Complete\Suggestions;
-use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\NodeAbstract;
 use Phpactor\Complete\Scope;
 use BetterReflection\Reflection\ReflectionClass;
@@ -49,8 +48,8 @@ class FetchProvider implements ProviderInterface
     {
         $node = $scope->getNode();
         if (
-            $scope->getNode() instanceof PropertyFetch ||
-            $scope->getNode() instanceof PropertyFetch
+            $scope->getNode() instanceof Expr\PropertyFetch ||
+            $scope->getNode() instanceof Expr\MethodCall
         ) {
             // knock off "completion" node
             $node = $scope->getNode()->var;
@@ -90,7 +89,7 @@ class FetchProvider implements ProviderInterface
         }
 
         if ($node instanceof Expr\StaticCall) {
-            return $this->resolveReflectionFromStatic($node->name, $scope);
+            return $this->resolveReflectionFromStaticCall($node, $scope);
         }
 
         if (null === $reflectionClass) {
@@ -120,19 +119,26 @@ class FetchProvider implements ProviderInterface
             return $reflectionClass;
         }
 
-        // TODO: Refactor this
-        $type = (new FindTypeFromAst())->__invoke(
-            $name,
-            $reflectionClass->getLocatedSource(),
-            $reflectionClass->getNamespaceName()
-        );
+        return $this->reflectionTypeFromName($reflectionClass, $name);
 
-        if (false === $type instanceof Object_) {
+    }
+
+    private function resolveReflectionFromStaticCall(Expr\StaticCall $node, Scope $scope)
+    {
+        $reflectionClass = $this->reflector->reflect($scope->getClassFqn());
+        $reflectionClass = $this->reflectionTypeFromName($reflectionClass, (string) $node->class);
+
+        if (false === $reflectionClass->hasMethod($node->name)) {
             return;
         }
 
-        return $this->reflector->reflect($type->getFqsen());
+        $method = $reflectionClass->getMethod($node->name);
 
+        if (false === $method->isStatic()) {
+            return;
+        }
+
+        return $this->tryToReflectClass($method->getReturnType());
     }
 
     private function resolveReflectionFromLocalVariables(string $name, Scope $scope)
@@ -301,5 +307,22 @@ class FetchProvider implements ProviderInterface
         }
 
         return $doc;
+    }
+
+
+    private function reflectionTypeFromName(ReflectionClass $reflectionClass, string $name)
+    {
+        // TODO: Refactor this
+        $type = (new FindTypeFromAst())->__invoke(
+            $name,
+            $reflectionClass->getLocatedSource(),
+            $reflectionClass->getNamespaceName()
+        );
+
+        if (false === $type instanceof Object_) {
+            return;
+        }
+
+        return $this->reflector->reflect($type->getFqsen());
     }
 }

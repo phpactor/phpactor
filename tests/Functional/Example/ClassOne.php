@@ -13,4 +13,8 @@ class ClassOne
      * @var string
      */
     private $privateProperty;
+
+    public static function createClassTwo(): ClassTwo
+    {
+    }
 }
