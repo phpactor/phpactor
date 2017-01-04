@@ -11,8 +11,16 @@ class ScopeResolver
 {
     private $node;
 
-    public function __invoke(Node $node, int $offset, $scope = null, $namespace = null): Scope
+    public function __invoke(Node $node, int $offset, $scope = null, $namespace = null)
     {
+        // namespace has children which may contain the offset, but the statement
+        // does not encompass the it.
+        if (
+            false === $node instanceof Stmt\Namespace_ && 
+            ($offset < $node->getAttribute('startFilePos') || $offset > $node->getAttribute('endFilePos')) ) {
+            return;
+        }
+
         if ($node instanceof Stmt\Namespace_) {
             $namespace = (string) $node->name;
         }

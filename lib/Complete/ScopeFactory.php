@@ -19,12 +19,11 @@ class ScopeFactory
         foreach ($stmts as $stmt) {
             $scope = (new ScopeResolver())->__invoke($stmt, $offset);
 
-            if (null === $scope) {
-                continue;
+            if ($scope) {
+                return $scope;
             }
-
-            return $scope;
         }
+
 
         throw new \InvalidArgumentException(sprintf(
             'Could not resolve scope for source with offset "%s"', $offset

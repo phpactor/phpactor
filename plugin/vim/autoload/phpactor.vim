@@ -21,6 +21,7 @@ func! phpactor#complete(findstart, base)
         let stdin = join(getline(1,'.'), "\n")
         let stdin = stdin . a:base
         let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
+
         let out = system(command, stdin)
 
         let suggestions = json_decode(out)

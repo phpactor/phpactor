@@ -225,8 +225,9 @@ class FetchProvider implements ProviderInterface
     private function populateSuggestions(Scope $scope, ReflectionClass $reflectionClass, Suggestions $suggestions)
     {
         $isStaticNode = $scope->isNodeStatic();
+        $methods = $reflectionClass->getMethods();
 
-        foreach ($reflectionClass->getMethods() as $method) {
+        foreach ($methods as $method) {
             if ($method->isStatic() && false === $isStaticNode) {
                 continue;
             }

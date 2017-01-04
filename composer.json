@@ -14,8 +14,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Phpactor\\": "lib/",
-            "Phpactor\\Tests\\": "tests/"
+            "Phpactor\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phpactor\\Tests\\": "tests/",
+            "Phpactor\\Benchmark\\": "benchmark/"
         }
     }
 }
