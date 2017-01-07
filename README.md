@@ -9,7 +9,7 @@ PHP introspection tool and code completion tool.
 ./bin/phpactor complete 493 lib/Complete/ScopeFactory.php
 ```
 
-Above it will try and find possible autocompletions at bye offet 493 of the
+Above it will try and find possible autocompletions at byte offset 493 of the
 given file. You can also provide source via. stdin:
 
 ```php
