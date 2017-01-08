@@ -9,6 +9,7 @@ use PhpParser\ParserFactory;
 use Phpactor\Complete\ScopeResolver;
 use Phpactor\Complete\ScopeFactory;
 use Phpactor\Complete\Suggestions;
+use Phpactor\CodeContext;
 
 class Completer
 {
@@ -28,10 +29,11 @@ class Completer
         $this->scopeFactory = $scopeFactory;
     }
 
-    public function complete(string $source, int $offset): Suggestions
+    public function complete(CodeContext $codeContext): Suggestions
     {
-        $scope = $this->scopeFactory->create($source, $offset);
+        $scope = $this->scopeFactory->create($codeContext);
         $suggestions = new Suggestions();
+
         foreach ($this->providers as $provider) {
             if (false === $provider->canProvideFor($scope)) {
                 continue;

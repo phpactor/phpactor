@@ -5,6 +5,7 @@ namespace Phpactor\Tests\Functional\Complete\Provider;
 use Phpactor\Tests\Functional\ContainerTestCase;
 use Phpactor\Complete\Provider\FetchProvider;
 use Phpactor\Complete\Suggestions;
+use Phpactor\CodeContext;
 
 class FetchProviderTest extends ContainerTestCase
 {
@@ -25,7 +26,8 @@ class FetchProviderTest extends ContainerTestCase
         ]);
 
         $provider = $container->get('completer.provider.property_fetch');
-        $scope = $container->get('completer.scope_factory')->create($source, $offset);
+        $context = CodeContext::create('file', $source, $offset);
+        $scope = $container->get('completer.scope_factory')->create($context);
 
         $suggestions = new Suggestions();
         $this->assertTrue($provider->canProvideFor($scope), 'it can provide suggestions');

@@ -1,4 +1,22 @@
 let g:phpactor#phpactor_path="/home/daniel/www/dantleech/phpactor/bin/phpactor"
+let g:phpactor#method_indent = 4
+
+func! phpactor#generate_snippet(generator)
+
+    let command = g:phpactor#phpactor_path . ' generate:snippet ' . a:generator
+    let stdin = join(getline(1,'$'), "\n")
+    let out = system(command, stdin)
+
+    " Indent is always four spaces
+    let indent = repeat(' ', g:phpactor#method_indent)
+
+    let out = split(out, '\n')
+    let out = map(out, 'indent . v:val')
+
+    call append('.', out)
+
+endfunc
+
 
 func! phpactor#complete(findstart, base)
 
@@ -13,7 +31,7 @@ func! phpactor#complete(findstart, base)
         return start
     else
         let offset = line2byte(line(".")) + col(".")
-        let command = g:phpactor#phpactor_path . ' complete ' . string(offset)
+        let command = g:phpactor#phpactor_path . ' complete --offset=' . string(offset)
 
         " TODO: We want to pass the entire source to the autocompleter, but
         "       the source retrieved above does not include the partial word

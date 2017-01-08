@@ -28,12 +28,22 @@ Features
 - Resolves variable types.
 - Resolves chained object calls (providing return / parameter types are supplied).
 - Simple omni complete VIM plugin (use it with [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+- Contextual code generation
 
-Limitations
------------
+Code Generation
+---------------
 
-- Only works for class scopes.
-- Requires composer.
+Generate code snippets for a class using the `generate:snippet` command.
+
+### Implement missing methods
+
+Implements any missing methods, e.g. abstract and interface methods.
+
+```bash
+$ phpactor generate:snippet implement_missing_methods tests/System/SystemTestCase.php
+```
+
+Will return, as a single string, the missing methods.
 
 Why?
 ----
@@ -51,6 +61,12 @@ VIM Integration
 ```
 set omnifunc=phpactor#complete
 let g:phpactor#phpactor_path="/home/daniel/www/dantleech/phpactor/bin/phpactor"
+```
+
+Key bindings:
+
+```
+nnoremap <silent><leader>mm :call phpactor#generate_snippet("implement_missing_methods")<CR>
 ```
 
 TODO

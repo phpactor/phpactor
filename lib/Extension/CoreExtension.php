@@ -22,6 +22,10 @@ use Phpactor\Complete\ScopeFactory;
 use BetterReflection\SourceLocator\Type\StringSourceLocator;
 use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 use BetterReflection\SourceLocator\Type\PhpInternalSourceLocator;
+use Phpactor\Console\Command\GenerateSnippetCommand;
+use Phpactor\Util\ClassUtil;
+use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
+use Phpactor\Generation\SnippetGeneratorRegistry;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -40,6 +44,7 @@ class CoreExtension implements ExtensionInterface
     public function load(Container $container)
     {
         $this->registerComplete($container);
+        $this->registerGeneration($container);
         $this->registerConsole($container);
         $this->registerStorage($container);
         $this->registerMisc($container);
@@ -114,6 +119,10 @@ class CoreExtension implements ExtensionInterface
 
             return new ClassReflector(new AggregateSourceLocator($locators));
         });
+
+        $container->register('util.class', function () {
+            return new ClassUtil();
+        });
     }
 
     private function registerConsole(Container $container)
@@ -123,9 +132,14 @@ class CoreExtension implements ExtensionInterface
             $application->addCommands([
                 $container->get('command.explain'),
                 $container->get('command.complete'),
+                $container->get('command.generate'),
             ]);
 
             return $application;
+        });
+
+        $container->register('command.generate', function (Container $container) {
+            return new GenerateSnippetCommand($container->get('generator.registry.snippet'));
         });
 
         $container->register('command.complete', function (Container $container) {
@@ -133,7 +147,30 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('command.explain', function (Container $container) {
-            return new ExplainCommand($container->get('reflector'));
+            return new ExplainCommand(
+                $container->get('reflector'),
+                $container->get('util.class')
+            );
+        });
+    }
+
+    private function registerGeneration(Container $container)
+    {
+        $container->register('generator.registry.snippet', function (Container $container) {
+            $registry = new SnippetGeneratorRegistry();
+            $registry->register(
+                'implement_missing_methods',
+                $container->get('generator.snippet.implement_missing_methods')
+            );
+
+            return $registry;
+        });
+
+        $container->register('generator.snippet.implement_missing_methods', function(Container $container) {
+            return new ImplementMissingMethodsGenerator(
+                $container->get('reflector'),
+                $container->get('util.class')
+            );
         });
     }
 }

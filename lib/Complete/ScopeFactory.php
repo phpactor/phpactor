@@ -5,19 +5,20 @@ namespace Phpactor\Complete;
 use Phpactor\Complete\ScopeResolver;
 use PhpParser\ParserFactory;
 use PhpParser\Lexer;
+use Phpactor\CodeContext;
 
 class ScopeFactory
 {
-    public function create($source, $offset): Scope
+    public function create(CodeContext $codeContext): Scope
     {
-        $source = $this->fixSource($source, $offset);
+        $source = $this->fixSource($codeContext->getSource());
 
         $lexer = new Lexer([ 'usedAttributes' => [ 'comments', 'startLine', 'endLine', 'startFilePos', 'endFilePos' ] ]);
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7, $lexer, []);
         $stmts = $parser->parse($source);
 
         foreach ($stmts as $stmt) {
-            $scope = (new ScopeResolver())->__invoke($stmt, $offset);
+            $scope = (new ScopeResolver())->__invoke($stmt, $codeContext->getOffset());
 
             if ($scope) {
                 return $scope;
@@ -26,7 +27,7 @@ class ScopeFactory
 
 
         throw new \InvalidArgumentException(sprintf(
-            'Could not resolve scope for source with offset "%s"', $offset
+            'Could not resolve scope for source with offset "%s"', $codeContext->getOffset()
         ));
     }
 
