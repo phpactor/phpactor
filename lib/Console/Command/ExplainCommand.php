@@ -18,12 +18,19 @@ class ExplainCommand extends Command
      */
     private $reflector;
 
+    /**
+     * @var ClassUtil
+     */
+    private $classUtil;
+
     public function __construct(
-        ClassReflector $reflector
+        ClassReflector $reflector,
+        ClassUtil $classUtil
     )
     {
         parent::__construct();
         $this->reflector = $reflector;
+        $this->classUtil = $classUtil;
     }
 
     public function configure()
@@ -48,6 +55,6 @@ class ExplainCommand extends Command
             return $this->reflector->reflect($name);
         }
 
-        return $this->reflector->reflect(ClassUtil::getClassNameFromFile($name));
+        return $this->reflector->reflect($this->classUtil->getClassNameFromFile($name));
     }
 }
