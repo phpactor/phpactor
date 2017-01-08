@@ -24,8 +24,10 @@ use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 use BetterReflection\SourceLocator\Type\PhpInternalSourceLocator;
 use Phpactor\Console\Command\GenerateSnippetCommand;
 use Phpactor\Util\ClassUtil;
-use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
+use Phpactor\Generation\Snippet\MissingMethodsGenerator;
 use Phpactor\Generation\SnippetGeneratorRegistry;
+use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
+use Phpactor\Generation\Snippet\MissingPropertiesGenerator;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -162,12 +164,23 @@ class CoreExtension implements ExtensionInterface
                 'implement_missing_methods',
                 $container->get('generator.snippet.implement_missing_methods')
             );
+            $registry->register(
+                'implement_missing_properties',
+                $container->get('generator.snippet.implement_missing_properties')
+            );
 
             return $registry;
         });
 
         $container->register('generator.snippet.implement_missing_methods', function(Container $container) {
             return new ImplementMissingMethodsGenerator(
+                $container->get('reflector'),
+                $container->get('util.class')
+            );
+        });
+
+        $container->register('generator.snippet.implement_missing_properties', function(Container $container) {
+            return new MissingPropertiesGenerator(
                 $container->get('reflector'),
                 $container->get('util.class')
             );
