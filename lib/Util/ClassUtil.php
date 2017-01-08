@@ -9,6 +9,11 @@ class ClassUtil
 {
     public static function getClassNameFromFile(string $file): string
     {
+        return $this->getClassNamesFromFile()->first();
+    }
+
+    public static function getClassNamesFromFile(string $file): \Generator
+    {
         $reflector = new ClassReflector(new SingleFileSourceLocator($file));
 
         $classes = $reflector->getAllClasses();
@@ -17,8 +22,8 @@ class ClassUtil
             return;
         }
 
-        $class = reset($classes);
-
-        return $class->getName();
+        foreach ($classes as $class) {
+            yield($class->getName());
+        }
     }
 }

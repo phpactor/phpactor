@@ -22,6 +22,8 @@ use Phpactor\Complete\ScopeFactory;
 use BetterReflection\SourceLocator\Type\StringSourceLocator;
 use BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 use BetterReflection\SourceLocator\Type\PhpInternalSourceLocator;
+use Phpactor\Console\Command\IndexCommand;
+use Phpactor\Index\Indexer;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -40,6 +42,7 @@ class CoreExtension implements ExtensionInterface
     public function load(Container $container)
     {
         $this->registerComplete($container);
+        $this->registerIndex($container);
         $this->registerConsole($container);
         $this->registerStorage($container);
         $this->registerMisc($container);
@@ -63,6 +66,13 @@ class CoreExtension implements ExtensionInterface
                 $container->get('completer.provider.variables'),
                 $container->get('completer.provider.property_fetch')
             ]);
+        });
+    }
+
+    private function registerIndex(Container $container)
+    {
+        $container->register('indexer', function(Container $container) {
+            return new Indexer();
         });
     }
 
@@ -123,6 +133,7 @@ class CoreExtension implements ExtensionInterface
             $application->addCommands([
                 $container->get('command.explain'),
                 $container->get('command.complete'),
+                $container->get('command.index'),
             ]);
 
             return $application;
@@ -134,6 +145,10 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.explain', function (Container $container) {
             return new ExplainCommand($container->get('reflector'));
+        });
+
+        $container->register('command.index', function (Container $container) {
+            return new IndexCommand($container->get('indexer'));
         });
     }
 }

@@ -4,7 +4,8 @@
     "require": {
         "symfony/console": "~2.7",
         "roave/better-reflection": "dev-variable_collector",
-        "phpbench/container": "^1.0"
+        "phpbench/container": "^1.0",
+        "symfony/finder": "^3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.2"

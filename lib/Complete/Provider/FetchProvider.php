@@ -41,7 +41,7 @@ class FetchProvider implements ProviderInterface
         return 
             $scope->getNode() instanceof Expr\ClassConstFetch ||
             $scope->getNode() instanceof Expr\PropertyFetch  || 
-            $scope->getNode() instanceof Expr\MethodCall;
+            $scope->getNode() instanceof Expr\MethodCall; // TODO: test?
     }
 
     public function provide(Scope $scope, Suggestions $suggestions)
