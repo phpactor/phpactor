@@ -45,6 +45,15 @@ $ phpactor generate:snippet implement_missing_methods tests/System/SystemTestCas
 
 Will return, as a single string, the missing methods.
 
+### Undeclared properties
+
+Generates a snippet containing property definitions any assigns to
+non-existing properties.
+
+```bash
+$ phpactor generate:snippet implement_missing_properties tests/System/SystemTestCase.php
+```
+
 Why?
 ----
 
@@ -67,6 +76,7 @@ Key bindings:
 
 ```
 nnoremap <silent><leader>mm :call phpactor#generate_snippet("implement_missing_methods")<CR>
+nnoremap <silent><leader>mm :call phpactor#generate_snippet("implement_missing_properties")<CR>
 ```
 
 TODO
