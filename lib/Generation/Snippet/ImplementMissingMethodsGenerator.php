@@ -7,6 +7,7 @@ use Phpactor\CodeContext;
 use Phpactor\Util\ClassUtil;
 use BetterReflection\Reflection\ReflectionMethod;
 use Phpactor\Generation\SnippetGeneratorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImplementMissingMethodsGenerator implements SnippetGeneratorInterface
 {
@@ -26,7 +27,7 @@ class ImplementMissingMethodsGenerator implements SnippetGeneratorInterface
         $this->classUtil = $classUtil;
     }
 
-    public function generate(CodeContext $codeContext): string
+    public function generate(CodeContext $codeContext, array $options): string
     {
         $missingMethods = $this->resolveMissingMethods($codeContext);
 
@@ -48,6 +49,10 @@ class ImplementMissingMethodsGenerator implements SnippetGeneratorInterface
         }
 
         return implode(PHP_EOL, $snippet);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
     }
 
     private function resolveMissingMethods(CodeContext $codeContext)

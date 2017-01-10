@@ -5,6 +5,7 @@ namespace Phpactor\Generation\Snippet;
 use Phpactor\Generation\SnippetGeneratorInterface;
 use Composer\Autoload\ClassLoader;
 use Phpactor\CodeContext;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ClassGenerator implements SnippetGeneratorInterface
 {
@@ -18,7 +19,7 @@ class ClassGenerator implements SnippetGeneratorInterface
         $this->classLoader = $classLoader;
     }
 
-    public function generate(CodeContext $codeContext): string
+    public function generate(CodeContext $codeContext, array $options): string
     {
         $prefixes = array_merge(
             $this->classLoader->getPrefixes(),
@@ -63,5 +64,9 @@ class ClassGenerator implements SnippetGeneratorInterface
         $className = str_replace('/', '\\', $className);
         $className = $base . $className;
         $className = preg_replace('{\.(.+)$}', '', $className);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
     }
 }

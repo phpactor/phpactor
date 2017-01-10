@@ -10,19 +10,19 @@ use BetterReflection\Reflector\ClassReflector;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Util\FileUtil;
 use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
-use Phpactor\Generation\SnippetGeneratorRegistry;
+use Phpactor\Generation\SnippetCreator;
 
 class GenerateSnippetCommand extends Command
 {
     /**
-     * @var SnippetGeneratorRegistry
+     * @var SnippetCreator
      */
-    private $registry;
+    private $creator;
 
-    public function __construct(SnippetGeneratorRegistry $registry)
+    public function __construct(SnippetCreator $creator)
     {
         parent::__construct();
-        $this->registry = $registry;
+        $this->creator = $creator;
     }
 
     public function configure()
@@ -35,8 +35,7 @@ class GenerateSnippetCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $context = Handler\CodeContextHandler::contextFromInput($input);
-        $generator = $this->registry->get($input->getArgument('generator'));
-        $snippet = $generator->generate($context);
+        $snippet = $this->creator->create($context, $input->getArgument('generator'), []);
         $output->write($snippet);
     }
 }

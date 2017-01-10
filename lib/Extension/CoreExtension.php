@@ -29,6 +29,7 @@ use Phpactor\Generation\SnippetGeneratorRegistry;
 use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
 use Phpactor\Generation\Snippet\MissingPropertiesGenerator;
 use Phpactor\Generation\Snippet\ClassGenerator;
+use Phpactor\Generation\SnippetCreator;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -146,7 +147,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('command.generate', function (Container $container) {
-            return new GenerateSnippetCommand($container->get('generator.registry.snippet'));
+            return new GenerateSnippetCommand($container->get('generator.snippet_creator'));
         });
 
         $container->register('command.complete', function (Container $container) {
@@ -163,6 +164,10 @@ class CoreExtension implements ExtensionInterface
 
     private function registerGeneration(Container $container)
     {
+        $container->register('generator.snippet_creator', function (Container $container) {
+            return new SnippetCreator($container->get('generator.registry.snippet'));
+        });
+
         $container->register('generator.registry.snippet', function (Container $container) {
             $registry = new SnippetGeneratorRegistry();
             $registry->register(

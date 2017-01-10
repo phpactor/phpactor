@@ -9,7 +9,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.2",
-        "symfony/process": "^2.7|^3.0"
+        "symfony/process": "^2.7|^3.0",
+        "symfony/options-resolver": "^2.7|^3.0"
     },
     "repositories": [
         { "type": "vcs", "url": "https://github.com/dantleech/BetterReflection" }

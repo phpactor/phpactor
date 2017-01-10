@@ -71,7 +71,7 @@ class ImplementMissingMethodsGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->classReflection->getMethods()->willReturn($methods);
 
-        $snippet = $this->generator->generate(CodeContext::create('somefile', 'somesource', 1234));
+        $snippet = $this->generator->generate(CodeContext::create('somefile', 'somesource', 1234), []);
 
         $this->assertEquals($expected . PHP_EOL, $snippet);
     }
