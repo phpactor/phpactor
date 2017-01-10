@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phpactor\Composer;
 
 use Phpactor\Generation\SnippetGeneratorInterface;
 use Composer\Autoload\ClassLoader;
 use Phpactor\CodeContext;
+use Phpactor\Composer\ClassFqn;
 
 class ClassNameResolver
 {
@@ -18,7 +21,7 @@ class ClassNameResolver
         $this->classLoader = $classLoader;
     }
 
-    public function resolve(string $filePath): string
+    public function resolve(string $filePath): ClassFqn
     {
         $prefixes = array_merge(
             $this->classLoader->getPrefixes(),
@@ -79,6 +82,6 @@ class ClassNameResolver
         $className = $base . $className;
         $className = preg_replace('{\.(.+)$}', '', $className);
 
-        return $className;
+        return ClassFqn::fromString($className);
     }
 }

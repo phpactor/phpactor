@@ -21,6 +21,7 @@ class GenerateSnippetCommandTest extends SystemTestCase
             [
                 'implement_missing_methods',
                 'implement_missing_properties',
+                'class',
             ],
         ];
     }

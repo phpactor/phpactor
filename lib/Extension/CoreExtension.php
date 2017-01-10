@@ -30,6 +30,7 @@ use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
 use Phpactor\Generation\Snippet\MissingPropertiesGenerator;
 use Phpactor\Generation\Snippet\ClassGenerator;
 use Phpactor\Generation\SnippetCreator;
+use Phpactor\Composer\ClassNameResolver;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -52,6 +53,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerConsole($container);
         $this->registerStorage($container);
         $this->registerMisc($container);
+        $this->registerComposer($container);
     }
 
     private function registerComplete(Container $container)
@@ -96,24 +98,6 @@ class CoreExtension implements ExtensionInterface
 
     private function registerMisc(Container $container)
     {
-        $container->register('composer.class_loader', function (Container $container) {
-            $bootstrap = $container->getParameter('autoload');
-
-            if (!file_exists($bootstrap)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Could not locate bootstrap file "%s"', $bootstrap
-                ));
-            }
-
-            $autoloader = require $bootstrap;
-
-            if (!$autoloader instanceof ClassLoader) {
-                throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
-            }
-
-            return $autoloader;
-        });
-
         $container->register('reflector', function (Container $container) {
             $locators = [];
 
@@ -130,6 +114,31 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('util.class', function () {
             return new ClassUtil();
+        });
+    }
+
+    private function registerComposer(Container $container)
+    {
+        $container->register('composer.class_name_resolver', function (Container $container) {
+            return new ClassNameResolver($container->get('composer.class_loader'));
+        });
+
+        $container->register('composer.class_loader', function (Container $container) {
+            $bootstrap = $container->getParameter('autoload');
+
+            if (!file_exists($bootstrap)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Could not locate bootstrap file "%s"', $bootstrap
+                ));
+            }
+
+            $autoloader = require $bootstrap;
+
+            if (!$autoloader instanceof ClassLoader) {
+                throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
+            }
+
+            return $autoloader;
         });
     }
 
@@ -202,7 +211,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('generator.snippet.class', function(Container $container) {
             return new ClassGenerator(
-                $container->get('composer.class_loader')
+                $container->get('composer.class_name_resolver')
             );
         });
     }

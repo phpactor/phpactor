@@ -6,67 +6,43 @@ use Phpactor\Generation\SnippetGeneratorInterface;
 use Composer\Autoload\ClassLoader;
 use Phpactor\CodeContext;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Phpactor\Composer\ClassNameResolver;
+use Phpactor\Composer\ClassFqn;
 
 class ClassGenerator implements SnippetGeneratorInterface
 {
     /**
      * @var ClassLoader
      */
-    private $classLoader;
+    private $resolver;
 
-    public function __construct(ClassLoader $classLoader)
+    public function __construct(ClassNameResolver $resolver)
     {
-        $this->classLoader = $classLoader;
+        $this->resolver = $resolver;
     }
 
     public function generate(CodeContext $codeContext, array $options): string
     {
-        $prefixes = array_merge(
-            $this->classLoader->getPrefixes(),
-            $this->classLoader->getPrefixesPsr4(),
-            $this->classLoader->getClassMap()
-        );
+        $classFqn = $this->resolver->resolve($codeContext->getPath());
 
-        $map = [];
-
-        $contextPath = $codeContext->getPath();
-
-        if (substr($contextPath, 0, 1) === '/') {
-            throw new \InvalidArgumentException(sprintf(
-                'Do not support absolute paths'
-            ));
-        }
-
-        $cwd = getcwd() . '/';
-
-        $bestLength = $base = $basePath = null;
-        foreach ($prefixes as $prefix => $files) {
-            if (is_string($files)) {
-                $files = [ $files ];
-            }
-
-            foreach ($files as $file) {
-                $path = str_replace($cwd, '', realpath($file));
-
-                if (strpos($contextPath, $path) === 0) {
-                    if (null !== $bestLength && strlen($path) < $bestLength) {
-                        continue;
-                    }
-
-                    $base = $prefix;
-                    $basePath = $path;
-                    $bestLength = strlen($path);
-                }
-            }
-        }
-
-        $className = substr($contextPath, strlen($basePath) + 1);
-        $className = str_replace('/', '\\', $className);
-        $className = $base . $className;
-        $className = preg_replace('{\.(.+)$}', '', $className);
+        return $this->createSnippet($classFqn);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+    }
+
+    private function createSnippet(ClassFqn $fqn)
+    {
+        $snippet = [];
+        $snippet[] = '<?php';
+        $snippet[] = '';
+        $snippet[] = 'namespace ' . $fqn->getNamespace() . ';';
+        $snippet[] = '';
+        $snippet[] = 'class ' . $fqn->getShortName();
+        $snippet[] = '{';
+        $snippet[] = '}';
+
+        return implode(PHP_EOL, $snippet);
     }
 }
