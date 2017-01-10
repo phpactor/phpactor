@@ -19,7 +19,8 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
 
     protected function exec(string $args)
     {
-        $bin = __DIR__ . '/../../bin/phpactor';
+        chdir(__DIR__ . '/../..');
+        $bin = 'bin/phpactor';
         $process = new Process(sprintf(
             '%s %s'
         , $bin, $args));

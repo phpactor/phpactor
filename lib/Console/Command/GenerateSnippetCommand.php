@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Util\FileUtil;
 use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
 use Phpactor\Generation\SnippetCreator;
+use Symfony\Component\Console\Input\InputOption;
 
 class GenerateSnippetCommand extends Command
 {
@@ -29,13 +30,28 @@ class GenerateSnippetCommand extends Command
     {
         $this->setName('generate:snippet');
         $this->addArgument('generator', InputArgument::REQUIRED, 'Name of snippet generator');
+        $this->addOption('options', null, InputOption::VALUE_REQUIRED, 'JSON encoded string of options', []);
         Handler\CodeContextHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $options = $input->getOption('options');
         $context = Handler\CodeContextHandler::contextFromInput($input);
-        $snippet = $this->creator->create($context, $input->getArgument('generator'), []);
+
+        if ($options) {
+            $decoded = json_decode($options, true);
+
+            if (false === $decoded) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Could not decode JSON option string "%s"', $options
+                ));
+            }
+
+            $options = $decoded;
+        }
+
+        $snippet = $this->creator->create($context, $input->getArgument('generator'), $options);
         $output->write($snippet);
     }
 }
