@@ -25,21 +25,23 @@ class ClassGenerator implements SnippetGeneratorInterface
     {
         $classFqn = $this->resolver->resolve($codeContext->getPath());
 
-        return $this->createSnippet($classFqn);
+        return $this->createSnippet($classFqn, $options['type']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefault('type', 'class');
+        $resolver->setAllowedValues('type', [ 'class', 'trait', 'interface' ]);
     }
 
-    private function createSnippet(ClassFqn $fqn)
+    private function createSnippet(ClassFqn $fqn, string $type)
     {
         $snippet = [];
         $snippet[] = '<?php';
         $snippet[] = '';
         $snippet[] = 'namespace ' . $fqn->getNamespace() . ';';
         $snippet[] = '';
-        $snippet[] = 'class ' . $fqn->getShortName();
+        $snippet[] = sprintf('%s %s', $type, $fqn->getShortName());
         $snippet[] = '{';
         $snippet[] = '}';
 
