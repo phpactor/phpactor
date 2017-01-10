@@ -18,6 +18,7 @@ use PhpParser\Node\Scalar\EncapsedStringPart;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Scalar\DNumber;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MissingPropertiesGenerator implements SnippetGeneratorInterface
 {
@@ -47,7 +48,7 @@ class MissingPropertiesGenerator implements SnippetGeneratorInterface
         $this->assignedPropertiesVisitor = $assignedPropertiesVisitor ?: new AssignedPropertiesVisitor();
     }
 
-    public function generate(CodeContext $codeContext): string
+    public function generate(CodeContext $codeContext, array $options): string
     {
         $reflection = $this->classReflector->reflect(
             $this->classUtil->getClassNameFromSource($codeContext->getSource())
@@ -76,7 +77,11 @@ class MissingPropertiesGenerator implements SnippetGeneratorInterface
         return implode(PHP_EOL, $snippet);
     }
 
-    public function resolveMissingProperties(AssignedPropertiesVisitor $visitor, ReflectionClass $reflection)
+    public function configureOptions(OptionsResolver $resolver)
+    {
+    }
+
+    private function resolveMissingProperties(AssignedPropertiesVisitor $visitor, ReflectionClass $reflection)
     {
 
         $assigned = $visitor->getAssignedPropertyNodes();

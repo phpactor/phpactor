@@ -28,6 +28,9 @@ use Phpactor\Generation\Snippet\MissingMethodsGenerator;
 use Phpactor\Generation\SnippetGeneratorRegistry;
 use Phpactor\Generation\Snippet\ImplementMissingMethodsGenerator;
 use Phpactor\Generation\Snippet\MissingPropertiesGenerator;
+use Phpactor\Generation\Snippet\ClassGenerator;
+use Phpactor\Generation\SnippetCreator;
+use Phpactor\Composer\ClassNameResolver;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -50,6 +53,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerConsole($container);
         $this->registerStorage($container);
         $this->registerMisc($container);
+        $this->registerComposer($container);
     }
 
     private function registerComplete(Container $container)
@@ -95,6 +99,31 @@ class CoreExtension implements ExtensionInterface
     private function registerMisc(Container $container)
     {
         $container->register('reflector', function (Container $container) {
+            $locators = [];
+
+            // HACK: for testing purposes ...
+            if ($source = $container->getParameter('source')) {
+                $locators[] = new StringSourceLocator($source);
+            }
+            $classLoader = $container->get('composer.class_loader');
+            $locators[] = new ComposerSourceLocator($classLoader);
+            $locators[] = new PhpInternalSourceLocator($classLoader);
+
+            return new ClassReflector(new AggregateSourceLocator($locators));
+        });
+
+        $container->register('util.class', function () {
+            return new ClassUtil();
+        });
+    }
+
+    private function registerComposer(Container $container)
+    {
+        $container->register('composer.class_name_resolver', function (Container $container) {
+            return new ClassNameResolver($container->get('composer.class_loader'));
+        });
+
+        $container->register('composer.class_loader', function (Container $container) {
             $bootstrap = $container->getParameter('autoload');
 
             if (!file_exists($bootstrap)) {
@@ -109,21 +138,7 @@ class CoreExtension implements ExtensionInterface
                 throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
             }
 
-            $locators = [];
-
-            // HACK: for testing purposes ...
-            if ($source = $container->getParameter('source')) {
-                $locators[] = new StringSourceLocator($source);
-            }
-
-            $locators[] = new ComposerSourceLocator($autoloader);
-            $locators[] = new PhpInternalSourceLocator($autoloader);
-
-            return new ClassReflector(new AggregateSourceLocator($locators));
-        });
-
-        $container->register('util.class', function () {
-            return new ClassUtil();
+            return $autoloader;
         });
     }
 
@@ -141,7 +156,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('command.generate', function (Container $container) {
-            return new GenerateSnippetCommand($container->get('generator.registry.snippet'));
+            return new GenerateSnippetCommand($container->get('generator.snippet_creator'));
         });
 
         $container->register('command.complete', function (Container $container) {
@@ -158,6 +173,10 @@ class CoreExtension implements ExtensionInterface
 
     private function registerGeneration(Container $container)
     {
+        $container->register('generator.snippet_creator', function (Container $container) {
+            return new SnippetCreator($container->get('generator.registry.snippet'));
+        });
+
         $container->register('generator.registry.snippet', function (Container $container) {
             $registry = new SnippetGeneratorRegistry();
             $registry->register(
@@ -167,6 +186,10 @@ class CoreExtension implements ExtensionInterface
             $registry->register(
                 'implement_missing_properties',
                 $container->get('generator.snippet.implement_missing_properties')
+            );
+            $registry->register(
+                'class',
+                $container->get('generator.snippet.class')
             );
 
             return $registry;
@@ -183,6 +206,12 @@ class CoreExtension implements ExtensionInterface
             return new MissingPropertiesGenerator(
                 $container->get('reflector'),
                 $container->get('util.class')
+            );
+        });
+
+        $container->register('generator.snippet.class', function(Container $container) {
+            return new ClassGenerator(
+                $container->get('composer.class_name_resolver')
             );
         });
     }

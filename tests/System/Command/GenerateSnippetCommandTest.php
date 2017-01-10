@@ -9,9 +9,14 @@ class GenerateSnippetCommandTest extends SystemTestCase
     /**
      * @dataProvider provideGenerate
      */
-    public function testGenerate($generator)
+    public function testGenerate($generator, array $options = [])
     {
-        $process = $this->exec('generate:snippet ' . $generator . ' ' . __DIR__ . '/../../Functional/Example/ClassOne.php');
+        $process = $this->exec(sprintf(
+            'generate:snippet %s %s --options=\'%s\'',
+            $generator,
+            'tests/Functional/Example/ClassOne.php',
+            json_encode($options)
+        ));
         $this->assertSuccess($process);
     }
 
@@ -20,7 +25,18 @@ class GenerateSnippetCommandTest extends SystemTestCase
         return [
             [
                 'implement_missing_methods',
+            ],
+            [
                 'implement_missing_properties',
+            ],
+            [
+                'class',
+            ],
+            [
+                'class',
+                [
+                    'type' => 'trait',
+                ]
             ],
         ];
     }

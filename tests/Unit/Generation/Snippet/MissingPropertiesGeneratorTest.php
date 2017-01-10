@@ -93,7 +93,7 @@ class MissingPropertiesGeneratorTest extends \PHPUnit_Framework_TestCase
             new Assign(new Variable('new'), new New_('Foobar')),
         ]);
 
-        $missing = $this->generator->generate(CodeContext::create('foofile', 'somesource', 0));
+        $missing = $this->generator->generate(CodeContext::create('foofile', 'somesource', 0), []);
 
         $this->assertEquals(<<<'EOT'
 /**
