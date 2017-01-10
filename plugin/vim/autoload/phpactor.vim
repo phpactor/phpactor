@@ -1,14 +1,16 @@
 let g:phpactor#phpactor_path="/home/daniel/www/dantleech/phpactor/bin/phpactor"
-let g:phpactor#method_indent = 4
 
-func! phpactor#generate_snippet(generator)
+func! phpactor#generate_snippet(indent, generator, ...)
+    let options = (a:0 >= 1) ? a:1 : []
+    let fpath = expand('%')
 
-    let command = g:phpactor#phpactor_path . ' generate:snippet ' . a:generator
+    let command = g:phpactor#phpactor_path . ' generate:snippet ' . a:generator . ' ' . fpath . ' --options=' . shellescape(json_encode(options))
+
     let stdin = join(getline(1,'$'), "\n")
     let out = system(command, stdin)
 
     " Indent is always four spaces
-    let indent = repeat(' ', g:phpactor#method_indent)
+    let indent = repeat(' ', a:indent)
 
     let out = split(out, '\n')
     let out = map(out, 'indent . v:val')
