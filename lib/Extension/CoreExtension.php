@@ -13,7 +13,7 @@ use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefReplacer;
 use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
 use Phpactor\Console\Command\MoveCommand;
 use Phpactor\Application\ClassMover;
-use DTL\ClassMover\Finder\Finder\RecursiveDirectoryFinder;
+use DTL\Filesystem\Adapter\Git\GitFilesystem;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -24,6 +24,7 @@ class CoreExtension implements ExtensionInterface
     {
         return [
             'autoload' => 'vendor/autoload.php',
+            'cwd' => getcwd(),
         ];
     }
 
@@ -33,7 +34,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerComposer($container);
         $this->registerClassToFile($container);
         $this->registerClassMover($container);
-        $this->registerFileFinder($container);
+        $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
     }
 
@@ -109,10 +110,10 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
-    private function registerFileFinder(Container $container)
+    private function registerSourceCodeFilesystem(Container $container)
     {
-        $container->register('file_finder.finder', function (Container $container) {
-            return new RecursiveDirectoryFinder();
+        $container->register('source_code_filesystem.git', function (Container $container) {
+            return GitFilesystem::fromRootPath($container->getParameter('cwd'));
         });
     }
 
@@ -123,7 +124,7 @@ class CoreExtension implements ExtensionInterface
                 $container->get('class_to_file.converter'),
                 $container->get('class_mover.ref_finder'),
                 $container->get('class_mover.ref_replacer'),
-                $container->get('file_finder.finder')
+                $container->get('source_code_filesystem.git')
             );
         });
     }

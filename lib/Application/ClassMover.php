@@ -12,26 +12,27 @@ use DTL\ClassMover\RefFinder\FullyQualifiedName;
 use DTL\ClassMover\Finder\Finder;
 use DTL\ClassMover\Finder\SearchPath;
 use Phpactor\Application\ClassMover\MoveLogger;
+use DTL\Filesystem\Domain\Filesystem;
 
 class ClassMover
 {
     private $fileClassConverter;
     private $refReplacer;
     private $refFinder;
-    private $fileFinder;
+    private $filesystem;
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
         CompositeTransformer $fileClassConverter,
         RefFinder $refFinder,
         RefReplacer $refReplacer,
-        Finder $finder
+        Filesystem $filesystem
     )
     {
         $this->fileClassConverter = $fileClassConverter;
         $this->refReplacer = $refReplacer;
         $this->refFinder = $refFinder;
-        $this->fileFinder = $finder;
+        $this->filesystem = $filesystem;
     }
 
     public function move(MoveLogger $logger, string $srcPath, string $destPath, array $refSearchPaths)
@@ -74,7 +75,7 @@ class ClassMover
 
     private function moveDirectory(MoveLogger $logger, string $srcPath, string $destPath)
     {
-        foreach ($this->fileFinder->findIn(SearchPath::fromString($srcPath)) as $file) {
+        foreach ($this->filesystem->findIn(SearchPath::fromString($srcPath)) as $file) {
             $suffix = substr($file->__toString(), strlen($srcPath));
             $files[$file->__toString()] = $destPath . $suffix;
         }
@@ -91,7 +92,7 @@ class ClassMover
         $dest = FullyQualifiedName::fromString($destName);
 
         foreach ($searchPaths as $searchPath) {
-            foreach ($this->fileFinder->findIn(SearchPath::fromString($searchPath)) as $filePath) {
+            foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
                 $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
                 $logger->replacing($src, $dest, $filePath);
