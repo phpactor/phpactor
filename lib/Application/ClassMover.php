@@ -79,6 +79,7 @@ class ClassMover
             $files[$file->__toString()] = $destPath . $suffix;
         }
 
+        $logger->moving($srcPath, $destPath);
         rename($srcPath, $destPath);
 
         return $files;

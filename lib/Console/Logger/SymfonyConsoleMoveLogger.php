@@ -20,7 +20,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
     public function moving(string $srcPath, string $destPath)
     {
         $this->output->writeln(sprintf(
-            'Moving <info>%s</> <comment>=></> <info>%s</>',
+            '<info>[MOVE]</info> %s <comment>=></> %s',
             Phpactor::relativizePath($srcPath), Phpactor::relativizePath($destPath)
         ));
     }
@@ -28,7 +28,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
     public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FilePath $path)
     {
         $this->output->writeln(sprintf(
-            '[REP] <comment>%s</>: %s <info>=></> %s',
+            '<info>[REPL]</info> <comment>%s</>: %s <info>=></> %s',
             Phpactor::relativizePath($path->__toString()),
             $src->__toString(),
             $dest->__toString()
