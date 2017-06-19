@@ -17,9 +17,6 @@
         "symfony/process": "^2.7|^3.0",
         "symfony/options-resolver": "^2.7|^3.0"
     },
-    "repositories": [
-        { "type": "vcs", "url": "https://github.com/dantleech/BetterReflection" }
-    ],
     "autoload": {
         "psr-4": {
             "Phpactor\\": "lib/"
