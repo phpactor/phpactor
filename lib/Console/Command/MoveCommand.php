@@ -11,6 +11,8 @@ use Phpactor\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Application\ClassMover\MoveLogger;
+use Phpactor\Console\Logger\SymfonyConsoleMoveLogger;
 
 class MoveCommand extends Command
 {
@@ -41,7 +43,8 @@ class MoveCommand extends Command
             return Phpactor::normalizePath($path);
         }, $input->getOption('path'));
 
-        $this->mover->move($srcPath, $destPath, $refSearchPaths);
+        $logger = new SymfonyConsoleMoveLogger($output);
+        $this->mover->move($logger, $srcPath, $destPath, $refSearchPaths);
     }
 
 }

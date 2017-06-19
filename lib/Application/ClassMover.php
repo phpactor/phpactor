@@ -11,6 +11,7 @@ use DTL\ClassMover\Finder\FilePath;
 use DTL\ClassMover\RefFinder\FullyQualifiedName;
 use DTL\ClassMover\Finder\Finder;
 use DTL\ClassMover\Finder\SearchPath;
+use Phpactor\Application\ClassMover\MoveLogger;
 
 class ClassMover
 {
@@ -33,7 +34,7 @@ class ClassMover
         $this->fileFinder = $finder;
     }
 
-    public function move(string $srcPath, string $destPath, array $refSearchPaths)
+    public function move(MoveLogger $logger, string $srcPath, string $destPath, array $refSearchPaths)
     {
         if (!file_exists($srcPath)) {
             throw new \InvalidArgumentException(sprintf(
@@ -48,28 +49,42 @@ class ClassMover
         }
 
         if (is_dir($srcPath)) {
-            $files = $this->moveDirectory($srcPath, $destPath);
+            $files = $this->moveDirectory($logger, $srcPath, $destPath);
         } else {
-            $files = $this->moveFile($srcPath, $destPath);
+            $files = $this->moveFile($logger, $srcPath, $destPath);
         }
 
         foreach ($files as $srcPath => $destPath) {
             $srcClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($srcPath));
             $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath));
 
-            $this->replaceReferences($srcClassName->best()->__toString(), $destClassName->best()->__toString(), $refSearchPaths);
+            $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString(), $refSearchPaths);
         }
     }
 
-    private function moveFile(string $srcPath, string $destPath)
+    private function moveFile(MoveLogger $logger, string $srcPath, string $destPath)
     {
+        $logger->moving($srcPath, $destPath);
+
         // move file
         rename($srcPath, $destPath);
 
         return [ $srcPath => $destPath ];
     }
 
-    private function replaceReferences(string $srcName, string $destName, array $searchPaths)
+    private function moveDirectory(MoveLogger $logger, string $srcPath, string $destPath)
+    {
+        foreach ($this->fileFinder->findIn(SearchPath::fromString($srcPath)) as $file) {
+            $suffix = substr($file->__toString(), strlen($srcPath));
+            $files[$file->__toString()] = $destPath . $suffix;
+        }
+
+        rename($srcPath, $destPath);
+
+        return $files;
+    }
+
+    private function replaceReferences(MoveLogger $logger, string $srcName, string $destName, array $searchPaths)
     {
         $src = FullyQualifiedName::fromString($srcName);
         $dest = FullyQualifiedName::fromString($destName);
@@ -78,6 +93,7 @@ class ClassMover
             foreach ($this->fileFinder->findIn(SearchPath::fromString($searchPath)) as $filePath) {
 
                 $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
+                $logger->replacing($src, $dest, $filePath);
 
                 $refList = $this->refFinder->findIn($source)->filterForName($src);
 
