@@ -13,12 +13,21 @@ class Phpactor
      *
      * @return string
      */
-    public static function normalizePath($path)
+    public static function normalizePath(string $path): string
     {
         if (substr($path, 0, 1) == DIRECTORY_SEPARATOR) {
             return $path;
         }
 
         return getcwd() . DIRECTORY_SEPARATOR . $path;
+    }
+
+    public static function relativizePath(string $path): string
+    {
+        if (0 === strpos($path, getcwd())) {
+            return substr($path, strlen(getcwd()) + 1);
+        }
+
+        return $path;
     }
 }

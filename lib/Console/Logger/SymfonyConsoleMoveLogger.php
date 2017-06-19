@@ -6,6 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover\MoveLogger;
 use DTL\ClassMover\RefFinder\FullyQualifiedName;
 use DTL\ClassMover\Finder\FilePath;
+use Phpactor\Phpactor;
 
 class SymfonyConsoleMoveLogger implements MoveLogger
 {
@@ -20,17 +21,17 @@ class SymfonyConsoleMoveLogger implements MoveLogger
     {
         $this->output->writeln(sprintf(
             'Moving <info>%s</> <comment>=></> <info>%s</>',
-            $srcPath, $destPath
+            Phpactor::relativizePath($srcPath), Phpactor::relativizePath($destPath)
         ));
     }
 
     public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FilePath $path)
     {
         $this->output->writeln(sprintf(
-            'Replacing <info>%s</> <comment>with</> <info>%s</> in <comment>%s</>',
+            '[REP] <comment>%s</>: %s <info>=></> %s',
+            Phpactor::relativizePath($path->__toString()),
             $src->__toString(),
-            $dest->__toString(),
-            $path->__toString()
+            $dest->__toString()
         ));
     }
 }
