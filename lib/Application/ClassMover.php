@@ -38,13 +38,13 @@ class ClassMover
         if (!file_exists($srcPath)) {
             throw new \InvalidArgumentException(sprintf(
                 'Source path "%s" does not exist'
-            ), $srcPath);
+            , $srcPath));
         }
 
         if (file_exists($destPath)) {
             throw new \InvalidArgumentException(sprintf(
                 'Destination path "%s" already exists'
-            ), $destPath);
+            , $destPath));
         }
 
         if (is_dir($srcPath)) {
