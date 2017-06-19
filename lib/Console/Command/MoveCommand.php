@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
+use Phpactor\Phpactor;
+use Symfony\Component\Console\Input\InputOption;
 
 class MoveCommand extends Command
 {
@@ -28,14 +30,18 @@ class MoveCommand extends Command
         $this->setDescription('Move file (or directory) and magically update references to class contained.');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path');
         $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path');
+        $this->addOption('path', null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'File path(s) in which to replace references');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $srcPath = $input->getArgument('src');
-        $destPath = $input->getArgument('dest');
+        $srcPath = Phpactor::normalizePath($input->getArgument('src'));
+        $destPath = Phpactor::normalizePath($input->getArgument('dest'));
+        $refSearchPaths = array_map(function($path) {
+            return Phpactor::normalizePath($path);
+        }, $input->getOption('path'));
 
-        $this->classMover->move($srcPath, $destPath);
+        $this->mover->move($srcPath, $destPath, $refSearchPaths);
     }
 
 }

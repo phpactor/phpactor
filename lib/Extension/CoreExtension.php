@@ -13,6 +13,7 @@ use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefReplacer;
 use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
 use Phpactor\Console\Command\MoveCommand;
 use Phpactor\Application\ClassMover;
+use DTL\ClassMover\Finder\Finder\RecursiveDirectoryFinder;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -32,6 +33,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerComposer($container);
         $this->registerClassToFile($container);
         $this->registerClassMover($container);
+        $this->registerFileFinder($container);
         $this->registerApplicationServices($container);
     }
 
@@ -107,13 +109,21 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
+    private function registerFileFinder(Container $container)
+    {
+        $container->register('file_finder.finder', function (Container $container) {
+            return new RecursiveDirectoryFinder();
+        });
+    }
+
     private function registerApplicationServices(Container $container)
     {
         $container->register('application.class_mover', function (Container $container) {
             return new ClassMover(
                 $container->get('class_to_file.converter'),
                 $container->get('class_mover.ref_finder'),
-                $container->get('class_mover.ref_replacer')
+                $container->get('class_mover.ref_replacer'),
+                $container->get('file_finder.finder')
             );
         });
     }
