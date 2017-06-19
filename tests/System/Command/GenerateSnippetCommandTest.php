@@ -4,7 +4,7 @@ namespace Phpactor\Tests\System\Command;
 
 use Phpactor\Tests\System\SystemTestCase;
 
-class GenerateSnippetCommandTest extends SystemTestCase
+class MoveClassCommandTest extends SystemTestCase
 {
     /**
      * @dataProvider provideGenerate
@@ -12,7 +12,7 @@ class GenerateSnippetCommandTest extends SystemTestCase
     public function testGenerate($generator, array $options = [])
     {
         $process = $this->exec(sprintf(
-            'generate:snippet %s %s --options=\'%s\'',
+            'move:class %s %s --options=\'%s\'',
             $generator,
             'tests/Functional/Example/ClassOne.php',
             json_encode($options)
