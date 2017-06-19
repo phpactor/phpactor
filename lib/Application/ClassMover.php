@@ -30,7 +30,7 @@ class ClassMover
         $this->fileClassConverter = $fileClassConverter;
         $this->refReplacer = $refReplacer;
         $this->refFinder = $refFinder;
-        $this->finder = $finder;
+        $this->fileFinder = $finder;
     }
 
     public function move(string $srcPath, string $destPath, array $refSearchPaths)
@@ -46,7 +46,6 @@ class ClassMover
                 'Destination path "%s" already exists'
             ), $destPath);
         }
-
 
         if (is_dir($srcPath)) {
             $files = $this->moveDirectory($srcPath, $destPath);
@@ -65,7 +64,7 @@ class ClassMover
     private function moveFile(string $srcPath, string $destPath)
     {
         // move file
-        //rename($srcPath, $destPath);
+        rename($srcPath, $destPath);
 
         return [ $srcPath => $destPath ];
     }
@@ -76,7 +75,7 @@ class ClassMover
         $dest = FullyQualifiedName::fromString($destName);
 
         foreach ($searchPaths as $searchPath) {
-            foreach ($this->fileFinder->findIn(SearchPath::fromString($searchPaths)) as $filePath) {
+            foreach ($this->fileFinder->findIn(SearchPath::fromString($searchPath)) as $filePath) {
 
                 $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
 
@@ -84,10 +83,12 @@ class ClassMover
 
                 $source = $this->refReplacer->replaceReferences(
                     $source,
-                    $refList
+                    $refList,
+                    $src,
+                    $dest
                 );
 
-                var_dump($source);
+                $source->writeBackToFile();
             }
         }
     }
