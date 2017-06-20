@@ -37,6 +37,9 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
         $filesystem = new Filesystem();
         $filesystem->mirror(__DIR__ . '/../Assets/Projects/' . $name, $this->workspaceDir());
         chdir($this->workspaceDir());
+        exec('git init');
+        exec('git add *');
+        exec('git commit -m "Test"');
         exec('composer install --quiet');
     }
 

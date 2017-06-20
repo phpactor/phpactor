@@ -13,6 +13,8 @@ use DTL\ClassMover\Finder\Finder;
 use DTL\ClassMover\Finder\SearchPath;
 use Phpactor\Application\ClassMover\MoveLogger;
 use DTL\Filesystem\Domain\Filesystem;
+use DTL\Filesystem\Domain\FileLocation;
+use Phpactor\Phpactor;
 
 class ClassMover
 {
@@ -49,10 +51,9 @@ class ClassMover
             , $destPath));
         }
 
+        $files = [ $srcPath => $destPath ];
         if (is_dir($srcPath)) {
             $files = $this->directoryMap($srcPath, $destPath);
-        } else {
-            $files = [ $srcPath => $destPath ];
         }
 
         foreach ($files as $srcPath => $destPath) {
@@ -61,6 +62,8 @@ class ClassMover
 
             $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
         }
+
+        $this->moveFile($logger, $srcPath, $destPath);
     }
 
     private function moveFile(MoveLogger $logger, string $srcPath, string $destPath)
@@ -71,13 +74,14 @@ class ClassMover
 
     private function directoryMap(string $srcPath, string $destPath)
     {
-        foreach ($this->filesystem->fileList() as $file) {
+        foreach ($this->filesystem->fileList()->phpFiles() as $file) {
             if (0 !== strpos($file->__toString(), $file->__toString())) {
                 continue;
             }
+            $absolutePath = Phpactor::normalizePath($file->__toString());
 
             $suffix = substr($file->__toString(), strlen($srcPath));
-            $files[$file->__toString()] = $destPath . $suffix;
+            $files[$absolutePath] = $destPath . $suffix;
         }
 
         return $files;
@@ -90,7 +94,7 @@ class ClassMover
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-            $source = FileSource::fromFilePathAndString(FilePath::none(), file_get_contents($filePath));
+            $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
             $logger->replacing($src, $dest, $filePath);
 
             $refList = $this->refFinder->findIn($source)->filterForName($src);
