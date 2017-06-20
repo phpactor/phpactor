@@ -35,7 +35,7 @@ class ClassMover
         $this->filesystem = $filesystem;
     }
 
-    public function move(MoveLogger $logger, string $srcPath, string $destPath, array $refSearchPaths)
+    public function move(MoveLogger $logger, string $srcPath, string $destPath)
     {
         if (!file_exists($srcPath)) {
             throw new \InvalidArgumentException(sprintf(
@@ -59,7 +59,7 @@ class ClassMover
             $srcClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($srcPath));
             $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath));
 
-            $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString(), $refSearchPaths);
+            $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
         }
     }
 
@@ -86,28 +86,26 @@ class ClassMover
         return $files;
     }
 
-    private function replaceReferences(MoveLogger $logger, string $srcName, string $destName, array $searchPaths)
+    private function replaceReferences(MoveLogger $logger, string $srcName, string $destName)
     {
         $src = FullyQualifiedName::fromString($srcName);
         $dest = FullyQualifiedName::fromString($destName);
 
-        foreach ($searchPaths as $searchPath) {
-            foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
+        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-                $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
-                $logger->replacing($src, $dest, $filePath);
+            $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
+            $logger->replacing($src, $dest, $filePath);
 
-                $refList = $this->refFinder->findIn($source)->filterForName($src);
+            $refList = $this->refFinder->findIn($source)->filterForName($src);
 
-                $source = $this->refReplacer->replaceReferences(
-                    $source,
-                    $refList,
-                    $src,
-                    $dest
-                );
+            $source = $this->refReplacer->replaceReferences(
+                $source,
+                $refList,
+                $src,
+                $dest
+            );
 
-                $source->writeBackToFile();
-            }
+            $source->writeBackToFile();
         }
     }
 }

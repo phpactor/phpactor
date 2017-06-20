@@ -3,9 +3,24 @@
 namespace Phpactor\Tests\System;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
 
 class SystemTestCase extends \PHPUnit_Framework_TestCase
 {
+    protected function workspaceDir()
+    {
+        return __DIR__ . '/../Assets/Workspace';
+    }
+
+    protected function initWorkspace()
+    {
+        $filesystem = new Filesystem();
+        if (file_exists($this->workspaceDir())) {
+            $filesystem->remove($this->workspaceDir());
+        }
+        $filesystem->mkdir($this->workspaceDir());
+    }
+
     protected function assertSuccess(Process $process)
     {
         if (true === $process->isSuccessful()) {
@@ -17,12 +32,20 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
         ));
     }
 
-    protected function exec(string $args)
+    protected function loadProject($name)
     {
-        chdir(__DIR__ . '/../..');
-        $bin = 'bin/phpactor';
+        $filesystem = new Filesystem();
+        $filesystem->mirror(__DIR__ . '/../Assets/Projects/' . $name, $this->workspaceDir());
+        chdir($this->workspaceDir());
+        exec('composer install --quiet');
+    }
+
+    protected function phpactor(string $args)
+    {
+        chdir($this->workspaceDir());
+        $bin = __DIR__ . '/../../bin/phpactor';
         $process = new Process(sprintf(
-            '%s %s'
+            '%s %s --verbose'
         , $bin, $args));
         $process->run();
 
