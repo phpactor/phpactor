@@ -19,5 +19,14 @@ class MoveCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('mv lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php');
         $this->assertSuccess($process);
+        var_dump($process->getOutput());
+        $this->assertEquals(<<<'EOT'
+[MOVE] lib/Badger/Carnivorous.php => lib/Aardvark/Insectarian.php
+[REPL] lib/Aardvark/Edentate.php: Animals\Badger\Carnivorous => Animals\Aardvark\Insectarian
+[REPL] lib/Aardvark/Insectarian.php: Animals\Badger\Carnivorous => Animals\Aardvark\Insectarian
+[REPL] lib/Badger.php: Animals\Badger\Carnivorous => Animals\Aardvark\Insectarian
+
+EOT
+        , $process->getOutput());
     }
 }

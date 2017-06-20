@@ -2,13 +2,13 @@
 
 namespace Animals;
 
-use Animals\Badger\Carnivorous;
+use Animals\Aardvark\Insectarian;
 
 class Badger
 {
     private $carnivorous;
 
-    public function __construct(Carnivorous $carnivorous)
+    public function __construct(Insectarian $carnivorous)
     {
         $this->carnivorous = $carnivorous;
     }

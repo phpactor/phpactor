@@ -1,7 +1,7 @@
 <?php
 
-namespace Animals\Badger;
+namespace Animals\Aardvark;
 
-class Carnivorous
+class Insectarian
 {
 }
