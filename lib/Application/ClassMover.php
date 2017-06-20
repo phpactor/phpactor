@@ -50,9 +50,9 @@ class ClassMover
         }
 
         if (is_dir($srcPath)) {
-            $files = $this->moveDirectory($logger, $srcPath, $destPath);
+            $files = $this->directoryMap($srcPath, $destPath);
         } else {
-            $files = $this->moveFile($logger, $srcPath, $destPath);
+            $files = [ $srcPath => $destPath ];
         }
 
         foreach ($files as $srcPath => $destPath) {
@@ -66,22 +66,19 @@ class ClassMover
     private function moveFile(MoveLogger $logger, string $srcPath, string $destPath)
     {
         $logger->moving($srcPath, $destPath);
-
-        // move file
-        rename($srcPath, $destPath);
-
-        return [ $srcPath => $destPath ];
+        $this->filesystem->move(FileLocation::fromString($srcPath), FileLocation::fromString($destPath));
     }
 
-    private function moveDirectory(MoveLogger $logger, string $srcPath, string $destPath)
+    private function directoryMap(string $srcPath, string $destPath)
     {
-        foreach ($this->filesystem->findIn(SearchPath::fromString($srcPath)) as $file) {
+        foreach ($this->filesystem->fileList() as $file) {
+            if (0 !== strpos($file->__toString(), $file->__toString())) {
+                continue;
+            }
+
             $suffix = substr($file->__toString(), strlen($srcPath));
             $files[$file->__toString()] = $destPath . $suffix;
         }
-
-        $logger->moving($srcPath, $destPath);
-        rename($srcPath, $destPath);
 
         return $files;
     }
@@ -93,7 +90,7 @@ class ClassMover
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-            $source = FileSource::fromFilePathAndString(FilePath::fromString($filePath), file_get_contents($filePath));
+            $source = FileSource::fromFilePathAndString(FilePath::none(), file_get_contents($filePath));
             $logger->replacing($src, $dest, $filePath);
 
             $refList = $this->refFinder->findIn($source)->filterForName($src);
