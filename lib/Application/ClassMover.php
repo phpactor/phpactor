@@ -61,9 +61,8 @@ class ClassMover
             $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath));
 
             $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
+            $this->moveFile($logger, $srcPath, $destPath);
         }
-
-        $this->moveFile($logger, $srcPath, $destPath);
     }
 
     private function moveFile(MoveLogger $logger, string $srcPath, string $destPath)
@@ -74,14 +73,14 @@ class ClassMover
 
     private function directoryMap(string $srcPath, string $destPath)
     {
+        $files = [];
         foreach ($this->filesystem->fileList()->phpFiles() as $file) {
-            if (0 !== strpos($file->__toString(), $file->__toString())) {
+            if (0 !== strpos($this->filesystem->absolutePath($file)->__toString(), $srcPath)) {
                 continue;
             }
-            $absolutePath = Phpactor::normalizePath($file->__toString());
 
-            $suffix = substr($file->__toString(), strlen($srcPath));
-            $files[$absolutePath] = $destPath . $suffix;
+            $suffix = substr($this->filesystem->absolutePath($file)->__toString(), strlen($srcPath));
+            $files[$this->filesystem->absolutePath($file)->__toString()] = $this->filesystem->absolutePath(FileLocation::fromString($destPath))->__toString() . $suffix;
         }
 
         return $files;
@@ -91,6 +90,7 @@ class ClassMover
     {
         $src = FullyQualifiedName::fromString($srcName);
         $dest = FullyQualifiedName::fromString($destName);
+        var_dump($dest);die();;
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
