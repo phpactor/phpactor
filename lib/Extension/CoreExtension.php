@@ -14,6 +14,7 @@ use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
 use Phpactor\Console\Command\MoveCommand;
 use Phpactor\Application\ClassMover;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
+use DTL\Filesystem\Domain\Cwd;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -113,7 +114,7 @@ class CoreExtension implements ExtensionInterface
     private function registerSourceCodeFilesystem(Container $container)
     {
         $container->register('source_code_filesystem.git', function (Container $container) {
-            return GitFilesystem::fromRootPath($container->getParameter('cwd'));
+            return new GitFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
         });
     }
 

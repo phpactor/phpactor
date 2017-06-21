@@ -5,9 +5,8 @@ namespace Phpactor\Console\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover\MoveLogger;
 use DTL\ClassMover\RefFinder\FullyQualifiedName;
-use DTL\ClassMover\Finder\FilePath;
 use Phpactor\Phpactor;
-use DTL\Filesystem\Domain\FileLocation;
+use DTL\Filesystem\Domain\FilePath;
 
 class SymfonyConsoleMoveLogger implements MoveLogger
 {
@@ -18,19 +17,19 @@ class SymfonyConsoleMoveLogger implements MoveLogger
         $this->output = $output;
     }
 
-    public function moving(string $srcPath, string $destPath)
+    public function moving(FilePath $srcPath, FilePath $destPath)
     {
         $this->output->writeln(sprintf(
             '<info>[MOVE]</info> %s <comment>=></> %s',
-            Phpactor::relativizePath($srcPath), Phpactor::relativizePath($destPath)
+            $srcPath->relativePath(), $destPath->relativePath()
         ));
     }
 
-    public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FileLocation $path)
+    public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FilePath $path)
     {
         $this->output->writeln(sprintf(
             '<info>[REPL]</info> <comment>%s</>: %s <info>=></> %s',
-            Phpactor::relativizePath($path->__toString()),
+            $path->relativePath(),
             $src->__toString(),
             $dest->__toString()
         ));
