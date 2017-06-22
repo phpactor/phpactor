@@ -25,8 +25,8 @@ class MoveCommand extends Command
     {
         $this->setName('mv');
         $this->setDescription('Move file (or directory) and magically update references to class contained.');
-        $this->addArgument('src', InputArgument::REQUIRED, 'Source path');
-        $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path');
+        $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
+        $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

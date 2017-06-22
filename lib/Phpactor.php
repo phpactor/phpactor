@@ -30,4 +30,12 @@ class Phpactor
 
         return $path;
     }
+
+    public static function isFile(string $string)
+    {
+        // . is illegal in namespace / classnames
+        if (0 !== strpos($string, '.')) {
+            return true;
+        }
+    }
 }
