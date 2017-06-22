@@ -1,19 +1,14 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Application\ClassMover;
 
 use DTL\ClassFileConverter\CompositeTransformer;
-use DTL\ClassMover\Finder\FileSource;
 use DTL\ClassFileConverter\FilePath as ConverterFilePath;
 use DTL\ClassMover\ClassMover as ClassMoverFacade;
-use Phpactor\Application\ClassMover\MoveLogger;
-use DTL\Filesystem\Domain\Filesystem;
-use DTL\Filesystem\Domain\FileLocation;
-use Phpactor\Phpactor;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\ClassMover\Domain\RefFinder;
-use DTL\ClassMover\Domain\RefReplacer;
 use DTL\ClassMover\Domain\FullyQualifiedName;
+use DTL\Filesystem\Domain\FilePath;
+use DTL\Filesystem\Domain\Filesystem;
+
 
 class ClassMover
 {
@@ -26,8 +21,7 @@ class ClassMover
         CompositeTransformer $fileClassConverter,
         ClassMoverFacade $classMover,
         Filesystem $filesystem
-    )
-    {
+    ) {
         $this->fileClassConverter = $fileClassConverter;
         $this->filesystem = $filesystem;
         $this->classMover = $classMover;
@@ -42,7 +36,7 @@ class ClassMover
             mkdir(dirname($destPath->absolutePath()), 0777, true);
         }
 
-        $files = [[ $srcPath, $destPath ]];
+        $files = [[$srcPath, $destPath]];
 
         if (is_dir($srcPath)) {
             $files = $this->directoryMap($srcPath, $destPath);
@@ -58,7 +52,7 @@ class ClassMover
         $files = [];
         foreach ($this->filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
             $suffix = substr($file->absolutePath(), strlen($srcPath->absolutePath()));
-            $files[] = [$file->absolutePath(), $this->filesystem->createPath($destPath . $suffix)];
+            $files[] = [$file->absolutePath(), $this->filesystem->createPath($destPath.$suffix)];
         }
 
         return $files;
@@ -85,7 +79,6 @@ class ClassMover
         $replacementName = FullyQualifiedName::fromString($destName);
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
-
             $references = $this->classMover->findReferences($this->filesystem->getContents($filePath), $targetName);
             $logger->replacing($filePath, $references, $replacementName);
 

@@ -4,7 +4,6 @@ namespace Phpactor\UserInterface\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover\MoveLogger;
-use Phpactor\Phpactor;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\ClassMover\Domain\FoundReferences;
@@ -32,7 +31,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
         if ($references->references()->isEmpty()) {
             return;
         }
-        $this->output->writeln('<comment># ' . $path . '</>');
+        $this->output->writeln('<comment># '.$path.'</>');
 
         foreach ($references->references() as $reference) {
             $this->output->writeln(sprintf(

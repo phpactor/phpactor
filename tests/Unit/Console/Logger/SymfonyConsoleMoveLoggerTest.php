@@ -69,7 +69,8 @@ EOT
             )
         );
 
-        $this->logger->replacing(FilePath::fromPathInCurrentCwd('path/to/file/Something.php'), $references);
+        $target = FullyQualifiedName::fromString('Hello\World');
+        $this->logger->replacing(FilePath::fromPathInCurrentCwd('path/to/file/Something.php'), $references, $target);
         $output = $this->output->fetch();
     }
 }

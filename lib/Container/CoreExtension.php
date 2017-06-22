@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension;
+namespace Phpactor\Container;
 
 use Composer\Autoload\ClassLoader;
 use PhpBench\DependencyInjection\Container;
@@ -10,7 +10,7 @@ use DTL\ClassFileConverter\Composer\ComposerClassToFile;
 use DTL\ClassFileConverter\Composer\ComposerFileToClass;
 use DTL\ClassFileConverter\CompositeTransformer;
 use Phpactor\UserInterface\Console\Command\MoveCommand;
-use Phpactor\Application\ClassMover as ClassMoverApp;
+use Phpactor\Application\ClassMover\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;
 use DTL\ClassMover\ClassMover;

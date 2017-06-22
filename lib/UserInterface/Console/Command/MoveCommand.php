@@ -2,16 +2,12 @@
 
 namespace Phpactor\UserInterface\Console\Command;
 
-use DTL\ClassMover\RefFinder\RefReplacer;
-use DTL\ClassMover\Finder\Finder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassMover;
+use Phpactor\Application\ClassMover\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
-use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\ClassMover\MoveLogger;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 
 class MoveCommand extends Command
@@ -20,8 +16,7 @@ class MoveCommand extends Command
 
     public function __construct(
         ClassMover $mover
-    )
-    {
+    ) {
         parent::__construct();
         $this->mover = $mover;
     }
@@ -42,5 +37,4 @@ class MoveCommand extends Command
         $logger = new SymfonyConsoleMoveLogger($output);
         $this->mover->move($logger, $srcPath, $destPath);
     }
-
 }

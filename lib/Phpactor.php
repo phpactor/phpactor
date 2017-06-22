@@ -19,7 +19,7 @@ class Phpactor
             return $path;
         }
 
-        return getcwd() . DIRECTORY_SEPARATOR . $path;
+        return getcwd().DIRECTORY_SEPARATOR.$path;
     }
 
     public static function relativizePath(string $path): string

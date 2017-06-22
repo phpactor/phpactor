@@ -4,7 +4,7 @@ namespace Phpactor\UserInterface\Console;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
 use PhpBench\DependencyInjection\Container;
-use Phpactor\Extension\CoreExtension;
+use Phpactor\Container\CoreExtension;
 
 class Application extends SymfonyApplication
 {
