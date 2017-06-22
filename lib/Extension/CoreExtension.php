@@ -9,12 +9,11 @@ use Symfony\Component\Console\Application;
 use DTL\ClassFileConverter\Composer\ComposerClassToFile;
 use DTL\ClassFileConverter\Composer\ComposerFileToClass;
 use DTL\ClassFileConverter\CompositeTransformer;
-use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefReplacer;
-use DTL\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
 use Phpactor\Console\Command\MoveCommand;
-use Phpactor\Application\ClassMover;
+use Phpactor\Application\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;
+use DTL\ClassMover\ClassMover;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -102,12 +101,8 @@ class CoreExtension implements ExtensionInterface
 
     private function registerClassMover(Container $container)
     {
-        $container->register('class_mover.ref_finder', function (Container $container) {
-            return new TolerantRefFinder();
-        });
-
-        $container->register('class_mover.ref_replacer', function (Container $container) {
-            return new TolerantRefReplacer();
+        $container->register('class_mover.class_mover', function (Container $container) {
+            return new ClassMover();
         });
     }
 
@@ -121,10 +116,9 @@ class CoreExtension implements ExtensionInterface
     private function registerApplicationServices(Container $container)
     {
         $container->register('application.class_mover', function (Container $container) {
-            return new ClassMover(
+            return new ClassMoverApp(
                 $container->get('class_to_file.converter'),
-                $container->get('class_mover.ref_finder'),
-                $container->get('class_mover.ref_replacer'),
+                $container->get('class_mover.class_mover'),
                 $container->get('source_code_filesystem.git')
             );
         });

@@ -2,13 +2,14 @@
 
 namespace Phpactor\Application\ClassMover;
 
-use DTL\ClassMover\RefFinder\FullyQualifiedName;
 use DTL\Filesystem\Domain\FileLocation;
 use DTL\Filesystem\Domain\FilePath;
+use DTL\ClassMover\Domain\FullyQualifiedName;
+use DTL\ClassMover\Domain\FoundReferences;
 
 interface MoveLogger
 {
     public function moving(FilePath $srcPath, FilePath $destPath);
 
-    public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FilePath $path);
+    public function replacing(FilePath $path, FoundReferences $references);
 }

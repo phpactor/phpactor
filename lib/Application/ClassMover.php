@@ -2,40 +2,35 @@
 
 namespace Phpactor\Application;
 
-use DTL\ClassMover\RefFinder\RefReplacer;
 use DTL\ClassFileConverter\CompositeTransformer;
 use DTL\ClassMover\Finder\FileSource;
-use DTL\ClassMover\RefFinder\RefFinder;
 use DTL\ClassFileConverter\FilePath as ConverterFilePath;
-use DTL\ClassMover\Finder\FilePath as ClassMoverFilePath;
-use DTL\ClassMover\RefFinder\FullyQualifiedName;
-use DTL\ClassMover\Finder\Finder;
-use DTL\ClassMover\Finder\SearchPath;
+use DTL\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\Application\ClassMover\MoveLogger;
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\Filesystem\Domain\FileLocation;
 use Phpactor\Phpactor;
 use DTL\Filesystem\Domain\FilePath;
+use DTL\ClassMover\Domain\RefFinder;
+use DTL\ClassMover\Domain\RefReplacer;
+use DTL\ClassMover\Domain\FullyQualifiedName;
 
 class ClassMover
 {
     private $fileClassConverter;
-    private $refReplacer;
-    private $refFinder;
+    private $classMover;
     private $filesystem;
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
         CompositeTransformer $fileClassConverter,
-        RefFinder $refFinder,
-        RefReplacer $refReplacer,
+        ClassMoverFacade $classMover,
         Filesystem $filesystem
     )
     {
         $this->fileClassConverter = $fileClassConverter;
-        $this->refReplacer = $refReplacer;
-        $this->refFinder = $refFinder;
         $this->filesystem = $filesystem;
+        $this->classMover = $classMover;
     }
 
     public function move(MoveLogger $logger, string $srcPath, string $destPath)
@@ -44,6 +39,7 @@ class ClassMover
         $destPath = $this->filesystem->createPath($destPath);
 
         $files = [[ $srcPath, $destPath ]];
+
         if (is_dir($srcPath)) {
             $files = $this->directoryMap($srcPath, $destPath);
         }
@@ -86,24 +82,20 @@ class ClassMover
 
     private function replaceReferences(MoveLogger $logger, string $srcName, string $destName)
     {
-        $src = FullyQualifiedName::fromString($srcName);
-        $dest = FullyQualifiedName::fromString($destName);
+        $targetName = FullyQualifiedName::fromString($srcName);
+        $replacementName = FullyQualifiedName::fromString($destName);
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-            $source = FileSource::fromFilePathAndString(ClassMoverFilePath::fromString($filePath), file_get_contents($filePath));
-            $logger->replacing($src, $dest, $filePath);
+            $references = $this->classMover->findReferences($this->filesystem->getContent($filePath), $targetName);
+            $logger->replacing($filePath, $references);
 
-            $refList = $this->refFinder->findIn($source)->filterForName($src);
-
-            $source = $this->refReplacer->replaceReferences(
-                $source,
-                $refList,
-                $src,
-                $dest
+            $source = $this->classMover->replaceReferences(
+                $references,
+                $replacementName
             );
 
-            $source->writeBackToFile();
+            $this->filesystem->writeContent($filePath, (string) $source);
         }
     }
 }

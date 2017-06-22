@@ -5,9 +5,7 @@
         {
             "type": "vcs",
             "url": "git@github.com:dantleech/class-mover"
-        }
-    ],
-    "repositories": [
+        },
         {
             "type": "vcs",
             "url": "git@github.com:dantleech/source-code-filesystem"

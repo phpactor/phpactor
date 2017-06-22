@@ -4,9 +4,11 @@ namespace Phpactor\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover\MoveLogger;
-use DTL\ClassMover\RefFinder\FullyQualifiedName;
 use Phpactor\Phpactor;
 use DTL\Filesystem\Domain\FilePath;
+use DTL\ClassMover\Domain\FullyQualifiedName;
+use DTL\ClassMover\Domain\FoundReferences;
+use DTL\ClassMover\Domain\Position;
 
 class SymfonyConsoleMoveLogger implements MoveLogger
 {
@@ -25,13 +27,17 @@ class SymfonyConsoleMoveLogger implements MoveLogger
         ));
     }
 
-    public function replacing(FullyQualifiedName $src, FullyQualifiedName $dest, FilePath $path)
+    public function replacing(FilePath $path, FoundReferences $references)
     {
-        $this->output->writeln(sprintf(
-            '<info>[REPL]</info> <comment>%s</>: %s <info>=></> %s',
-            $path->relativePath(),
-            $src->__toString(),
-            $dest->__toString()
-        ));
+        $this->output->writeln('<comment># ' . $path . '</>');
+
+        foreach ($references->references() as $reference) {
+            $this->output->writeln(sprintf(
+                '  %s:%s %s',
+                $reference->position()->start(),
+                $reference->position()->end(),
+                (string) $reference->name()
+            ));
+        }
     }
 }
