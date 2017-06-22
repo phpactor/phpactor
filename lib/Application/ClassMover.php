@@ -38,6 +38,10 @@ class ClassMover
         $srcPath = $this->filesystem->createPath($srcPath);
         $destPath = $this->filesystem->createPath($destPath);
 
+        if (!file_exists(dirname($destPath->absolutePath()))) {
+            mkdir(dirname($destPath->absolutePath()), null, true);
+        }
+
         $files = [[ $srcPath, $destPath ]];
 
         if (is_dir($srcPath)) {
@@ -46,10 +50,6 @@ class ClassMover
 
         $this->replaceThoseReferences($files, $logger);
         $this->moveFile($logger, $srcPath, $destPath);
-    }
-
-    private function moveFile(MoveLogger $logger, FilePath $srcPath, FilePath $destPath)
-    {
         $logger->moving($srcPath, $destPath);
         $this->filesystem->move($srcPath, $destPath);
     }
