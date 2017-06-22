@@ -87,7 +87,7 @@ class ClassMover
 
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-            $references = $this->classMover->findReferences($this->filesystem->getContent($filePath), $targetName);
+            $references = $this->classMover->findReferences($this->filesystem->getContents($filePath), $targetName);
             $logger->replacing($filePath, $references);
 
             $source = $this->classMover->replaceReferences(
@@ -95,7 +95,7 @@ class ClassMover
                 $replacementName
             );
 
-            $this->filesystem->writeContent($filePath, (string) $source);
+            $this->filesystem->writeContents($filePath, (string) $source);
         }
     }
 }
