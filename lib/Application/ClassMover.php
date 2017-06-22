@@ -49,7 +49,6 @@ class ClassMover
         }
 
         $this->replaceThoseReferences($files, $logger);
-        $this->moveFile($logger, $srcPath, $destPath);
         $logger->moving($srcPath, $destPath);
         $this->filesystem->move($srcPath, $destPath);
     }
