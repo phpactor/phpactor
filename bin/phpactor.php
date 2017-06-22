@@ -1,17 +1,19 @@
 <?php
 
-use Symfony\Component\Console\Application;
-use Phactor\Console\Command\ScanCommand;
-use Phpactor\Extension\CoreExtension;
-use PhpBench\DependencyInjection\Container;
+use Phpactor\UserInterface\Console\Application;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Debug\Debug;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 Debug::enable();
 
-$container = new Container([
-    CoreExtension::class,
-], []);
-$container->init();
-$container->get('application')->run();
+$application = new Application();
+$output = new ConsoleOutput();
+
+try { 
+    $application->initialize();
+    $application->run(null, $output);
+} catch (\Exception $e) {
+    $application->renderException($e, $output);
+}

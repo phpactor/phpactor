@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 use DTL\ClassFileConverter\Composer\ComposerClassToFile;
 use DTL\ClassFileConverter\Composer\ComposerFileToClass;
 use DTL\ClassFileConverter\CompositeTransformer;
-use Phpactor\Console\Command\MoveCommand;
+use Phpactor\UserInterface\Console\Command\MoveCommand;
 use Phpactor\Application\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;

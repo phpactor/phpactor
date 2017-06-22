@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Logger;
+namespace Phpactor\UserInterface\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover\MoveLogger;

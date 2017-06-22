@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\UserInterface\Console\Command;
 
 use DTL\ClassMover\RefFinder\RefReplacer;
 use DTL\ClassMover\Finder\Finder;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\ClassMover\MoveLogger;
-use Phpactor\Console\Logger\SymfonyConsoleMoveLogger;
+use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 
 class MoveCommand extends Command
 {
