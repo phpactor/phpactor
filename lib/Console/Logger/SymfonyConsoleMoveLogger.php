@@ -29,6 +29,9 @@ class SymfonyConsoleMoveLogger implements MoveLogger
 
     public function replacing(FilePath $path, FoundReferences $references)
     {
+        if ($references->references()->isEmpty()) {
+            return;
+        }
         $this->output->writeln('<comment># ' . $path . '</>');
 
         foreach ($references->references() as $reference) {
