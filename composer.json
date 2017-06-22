@@ -30,8 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Phpactor\\Tests\\": "tests/",
-            "Phpactor\\Benchmark\\": "benchmark/"
+            "Phpactor\\Tests\\": "tests/"
         }
     }
 }

@@ -32,6 +32,17 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
         ));
     }
 
+    protected function assertFailure(Process $process, $message)
+    {
+        if (true === $process->isSuccessful()) {
+            $this->fail('Process was a success');
+        }
+
+        if (null !== $message) {
+            $this->assertContains($message, $process->getErrorOutput());
+        }
+    }
+
     protected function loadProject($name)
     {
         $filesystem = new Filesystem();

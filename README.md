@@ -1,6 +1,8 @@
 Phpactor
 ========
 
+[![Build Status](https://travis-ci.org/dantleech/phpactor.svg?branch=master)](https://travis-ci.org/dantleech/phpactor)
+
 PHP refactoring tool.
 
 Commands
@@ -8,31 +10,34 @@ Commands
 
 ### Move classes
 
-Move classes by file or directory and update references to them.
+All of the examples below will move the class and update all references in the
+source code to it.
+
+Move the single class from one path to another:
 
 ```bash
-$ phpactor mv lib/Path/To/MyClass.php lib/NewLocation.php --path=lib --path=test
+$ phpactor mv lib/Path/To/MyClass.php lib/NewLocation.php
 ```
 
-The above will move the single class from one path to another and update all
-references in the `lib` and `test` directories.
+Relocate all classes under `Acme` to `Foobar`:
 
 ```bash
-$ phpactor mv lib/Acme lib/Foobar --path=lib --path=test
+$ phpactor mv lib/Acme lib/Foobar
 ```
 
-The above will relocate all classes under `Acme` to `Foobar`.
+Move a class by name:
+
+```bash
+$ phpactor mv "Acme\\BlogPost" "Acme\\Article"
+```
 
 ![Class mover](https://user-images.githubusercontent.com/530801/27299917-d0f6da86-5525-11e7-901e-f3881e3afd83.gif)
 
-- Moves single class *files* or *directories*.
+- Moves individual class *files* or *directories*.
+- Move by fully qualified class name of file path.
 - Updates references for all moved classes (if one or more `--path` options
   are given).
 - Use statements are updated or added when required.
-
-By default the class names (source and target) are "guessed" from the composer
-configuration the code is then searched for references to the source class
-(using a PHP parser) and then the references are replaced.
 
 About this project
 ------------------
@@ -41,5 +46,6 @@ This project aims to provide refactoring tools which can be used with editors
 such as VIM. It aims to package functionality in separate, dedicated,
 repositories, currently:
 
-- [dantleech/class-to-file](https://github.com/dantleech/class-to-file): Library to convert files to class names and vice-versa.
-- [dantleech/class-mover](https://github.com/dantleech/class-mover): Library to find and update class references.
+- [dantleech/class-to-file](https://github.com/dantleech/class-to-file): Convert files to class names and vice-versa.
+- [dantleech/class-mover](https://github.com/dantleech/class-mover): Find and update class references.
+- [dantleech/source-code-filesystem](https://github.com/dantleech/source-code-filesystem): Find and manage source code files.
