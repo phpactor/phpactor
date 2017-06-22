@@ -39,7 +39,7 @@ class ClassMover
         $destPath = $this->filesystem->createPath($destPath);
 
         if (!file_exists(dirname($destPath->absolutePath()))) {
-            mkdir(dirname($destPath->absolutePath()), null, true);
+            mkdir(dirname($destPath->absolutePath()), 0777, true);
         }
 
         $files = [[ $srcPath, $destPath ]];
