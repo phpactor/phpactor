@@ -28,7 +28,7 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->fail(sprintf(
-            'Process exited with code %d: %s', $process->getExitCode(), $process->getErrorOutput()
+            'Process exited with code %d: %s %s', $process->getExitCode(), $process->getErrorOutput(), $process->getOutput()
         ));
     }
 
