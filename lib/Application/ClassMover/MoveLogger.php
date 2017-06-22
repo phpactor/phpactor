@@ -11,5 +11,5 @@ interface MoveLogger
 {
     public function moving(FilePath $srcPath, FilePath $destPath);
 
-    public function replacing(FilePath $path, FoundReferences $references);
+    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName);
 }

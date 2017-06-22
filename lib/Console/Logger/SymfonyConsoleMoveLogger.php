@@ -27,7 +27,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
         ));
     }
 
-    public function replacing(FilePath $path, FoundReferences $references)
+    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName)
     {
         if ($references->references()->isEmpty()) {
             return;
@@ -36,10 +36,11 @@ class SymfonyConsoleMoveLogger implements MoveLogger
 
         foreach ($references->references() as $reference) {
             $this->output->writeln(sprintf(
-                '  %s:%s %s',
+                '  %s:%s %s <comment>=></> %s',
                 $reference->position()->start(),
                 $reference->position()->end(),
-                (string) $reference->name()
+                (string) $reference->name(),
+                (string) $reference->name()->transpose($replacementName)
             ));
         }
     }

@@ -71,6 +71,5 @@ EOT
 
         $this->logger->replacing(FilePath::fromPathInCurrentCwd('path/to/file/Something.php'), $references);
         $output = $this->output->fetch();
-        var_dump($output);die();;
     }
 }
