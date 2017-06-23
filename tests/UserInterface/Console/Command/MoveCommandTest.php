@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Tests\System\Console\Command;
+namespace Phpactor\Tests\UserInterface\Console\Command;
 
-use Phpactor\Tests\System\SystemTestCase;
+use Phpactor\Tests\UserInterface\SystemTestCase;
 
 class MoveCommandTest extends SystemTestCase
 {
