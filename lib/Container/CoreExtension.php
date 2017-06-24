@@ -20,11 +20,14 @@ use DTL\TypeInference\TypeInference;
 use Phpactor\UserInterface\Console\Command\InformationForOffsetCommand;
 use Phpactor\Application\ClassSearch\ClassSearch;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
+use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
 
 class CoreExtension implements ExtensionInterface
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
+
+    static $autoloader;
 
     public function getDefaultConfig()
     {
@@ -123,6 +126,9 @@ class CoreExtension implements ExtensionInterface
         $container->register('source_code_filesystem.simple', function (Container $container) {
             return new SimpleFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
         });
+        $container->register('source_code_filesystem.composer', function (Container $container) {
+            return new ComposerFilesystem(Cwd::fromCwd($container->getParameter('cwd')), $container->get('composer.class_loader'));
+        });
     }
 
     private function registerTypeInference(Container $container)
@@ -152,7 +158,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.class_search', function (Container $container) {
             return new ClassSearch(
-                $container->get('source_code_filesystem.simple'),
+                $container->get('source_code_filesystem.composer'),
                 $container->get('class_to_file.converter')
             );
         });
