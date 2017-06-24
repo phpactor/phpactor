@@ -41,6 +41,30 @@ $ phpactor mv "Acme\\BlogPost" "Acme\\Article"
 - Updates references for all moved classes in currently GIT tree.
 - Use statements are updated or added when required.
 
+### Class Search
+
+Search for a class by its (short) name and return a list of fully qualified
+names => absolute paths.
+
+```bash
+./bin/phpactor class:search Filesystem
+DTL\Filesystem\Domain\Filesystem:/.../vendor/dantleech/source-code-filesystem/lib/Domain/Filesystem.php
+Symfony\Component\Filesystem\Filesystem:/.../vendor/symfony/filesystem/Filesystem.php
+```
+
+Also returns JSON with `--format=json`
+
+### Information at offset
+
+Return the fully qualified name of the class at the offset in the given file:
+
+```php
+$ phpactor offset:info lib/Application/InformationForOffset/InformationForOffset.php 1382
+type:DTL\ClassFileConverter\ClassName
+path:/.../vendor/dtl/class-to-file/lib/ClassName.php
+```
+Also returns JSON with `--format=json`
+
 Child Libraries
 ---------------
 
