@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 use DTL\ClassFileConverter\Composer\ComposerClassToFile;
 use DTL\ClassFileConverter\Composer\ComposerFileToClass;
 use DTL\ClassFileConverter\CompositeTransformer;
-use Phpactor\UserInterface\Console\Command\MoveCommand;
+use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\Application\ClassMover\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;
@@ -55,7 +55,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('command.move', function (Container $container) {
-            return new MoveCommand(
+            return new ClassMoveCommand(
                 $container->get('application.class_mover')
             );
         });

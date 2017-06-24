@@ -11,7 +11,7 @@ use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 
-class MoveCommand extends Command
+class ClassMoveCommand extends Command
 {
     const TYPE_AUTO = 'auto';
     const TYPE_CLASS = 'class';
