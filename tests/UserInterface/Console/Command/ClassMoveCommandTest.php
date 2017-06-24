@@ -4,7 +4,7 @@ namespace Phpactor\Tests\UserInterface\Console\Command;
 
 use Phpactor\Tests\UserInterface\SystemTestCase;
 
-class MoveCommandTest extends SystemTestCase
+class ClassMoveCommandTest extends SystemTestCase
 {
     public function setUp()
     {
