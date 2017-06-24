@@ -50,10 +50,7 @@ final class InformationForOffset
 
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
-                return [
-                    'type' => $type,
-                    'path' => (string) $candidate
-                ];
+                $return['path'] = (string) $candidate;
             }
         }
 

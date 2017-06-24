@@ -38,36 +38,36 @@ class MoveCommandTest extends SystemTestCase
     {
         return [
             'Move file 1' => [
-                'mv lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
+                'class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
             ],
             'Move file 2' => [
-                'mv lib/Aardvark/Edentate.php lib/Foobar.php',
+                'class:move lib/Aardvark/Edentate.php lib/Foobar.php',
                 [
                     'lib/Foobar.php' => true,
                     'lib/Aardvark/Edentate.php' => false,
                 ],
             ],
             'Move file non-existing folder' => [
-                'mv lib/Aardvark/Edentate.php lib/Hello/World/Foobar.php',
+                'class:move lib/Aardvark/Edentate.php lib/Hello/World/Foobar.php',
                 [
                     'lib/Hello/World/Foobar.php' => true,
                 ],
             ],
             'Move file force' => [
-                'mv lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
+                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
             ],
             'Move folder 1' => [
-                'mv lib/Aardvark lib/Elephant',
+                'class:move lib/Aardvark lib/Elephant',
                 [
                     'lib/Aardvark' => false,
                     'lib/Elephant/Edentate.php' => true,
                 ],
             ],
             'Move class by name 1' => [
-                'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious"',
+                'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious"',
             ],
             'Move class by name force' => [
-                'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=class',
+                'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=class',
             ],
         ];
     }
@@ -91,11 +91,11 @@ class MoveCommandTest extends SystemTestCase
                 null,
             ],
             'Move class by file force class' => [
-                'mv lib/Aardvark/Edentate.php lib/Foobar.php --type=class',
+                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=class',
                 null,
             ],
             'Move invalid type' => [
-                'mv lib/Aardvark/Edentate.php lib/Foobar.php --type=foobar',
+                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=foobar',
                 'Invalid type "foobar", must be one of: "auto", "file", "class"',
             ],
         ];

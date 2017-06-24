@@ -14,9 +14,13 @@ use Phpactor\Application\InformationForOffset\InformationForOffset;
 
 class InformationForOffsetCommand extends Command
 {
-    const TYPE_AUTO = 'auto';
-    const TYPE_CLASS = 'class';
-    const TYPE_FILE = 'file';
+    const FORMAT_JSON = 'json';
+    const FORMAT_CONSOLE = 'console';
+
+    const VALID_FORMATS = [
+        self::FORMAT_JSON,
+        self::FORMAT_CONSOLE
+    ];
 
     private $infoForOffset;
 
@@ -30,16 +34,43 @@ class InformationForOffsetCommand extends Command
     public function configure()
     {
         $this->setName('offset:info');
-        $this->setDescription('Return information about given file at the given offset.');
+        $this->setDescription('Return information about given file at the given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
+        $this->addOption('format', null, InputOption::VALUE_REQUIRED, sprintf(
+            'Output format: "%s"', implode('", "', self::VALID_FORMATS)
+        ), 'console');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write(json_encode($this->infoForOffset->infoForOffset(
+        $info = $this->infoForOffset->infoForOffset(
             $input->getArgument('path'),
             $input->getArgument('offset')
-        )));
+        );
+
+        $format = $input->getOption('format');
+
+        switch ($format) {
+            case self::FORMAT_JSON:
+                $output->write(json_encode($info));
+                return;
+            case self::FORMAT_CONSOLE:
+                return $this->outputConsole($output, $info);
+        }
+
+        throw new \InvalidArgumentException(sprintf(
+            'Invalid format "%s", known formats: "%s"',
+            $format, implode('", "', self::VALID_FORMATS)
+        ));
+    }
+
+    private function outputConsole(OutputInterface $output, array $info)
+    {
+        foreach ($info as $key => $value) {
+            $output->writeln(sprintf(
+                '%s: %s', $key, $value
+            ));
+        }
     }
 }
