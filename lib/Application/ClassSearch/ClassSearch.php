@@ -1,11 +1,12 @@
 <?php
 
-namespace Phpactor\Application\SearchName;
+namespace Phpactor\Application\ClassSearch;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\ClassFileConverter\FileToClass;
+use DTL\ClassFileConverter\FilePath;
 
-final class SearchName
+final class ClassSearch
 {
     private $fileToClass;
     private $filesystem;
@@ -16,21 +17,20 @@ final class SearchName
         $this->fileToClass = $fileToClass;
     }
 
-    public function searchName(string $name)
+    public function classSearch(string $name)
     {
-        $files = $this->filesystem->fileList()->named($name);
-
+        $files = $this->filesystem->fileList()->named($name . '.php');
 
         $results = [];
         foreach ($files as $file) {
             $result = [
-                'path' => (string) $file,
+                'path' => (string) $file->absolutePath(),
                 'name' => null,
             ];
 
-            $candidates = $this->fileToClass((string) $file);
+            $candidates = $this->fileToClass->fileToClass(FilePath::fromString((string) $file->absolutePath()));
 
-            if (false === $candidates->hasNone()) {
+            if (false === $candidates->noneFound()) {
                 $result['name'] = (string) $candidates->best();
             }
 

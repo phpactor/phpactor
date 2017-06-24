@@ -20,7 +20,8 @@ class Application extends SymfonyApplication
         ], []);
         $container->init();
         $this->addCommands([
-            $container->get('command.move'),
+            $container->get('command.class_move'),
+            $container->get('command.class_search'),
             $container->get('command.offsetinfo'),
         ]);
     }

@@ -18,6 +18,8 @@ use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Application\InformationForOffset\InformationForOffset;
 use DTL\TypeInference\TypeInference;
 use Phpactor\UserInterface\Console\Command\InformationForOffsetCommand;
+use Phpactor\Application\ClassSearch\ClassSearch;
+use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -45,18 +47,14 @@ class CoreExtension implements ExtensionInterface
 
     private function registerConsole(Container $container)
     {
-        $container->register('application', function (Container $container) {
-            $application = new Application(self::APP_NAME, self::APP_VERSION);
-            $application->addCommands([
-                $container->get('command.move'),
-            ]);
-
-            return $application;
-        });
-
-        $container->register('command.move', function (Container $container) {
+        $container->register('command.class_move', function (Container $container) {
             return new ClassMoveCommand(
                 $container->get('application.class_mover')
+            );
+        });
+        $container->register('command.class_search', function (Container $container) {
+            return new ClassSearchCommand(
+                $container->get('application.class_search')
             );
         });
 
@@ -149,6 +147,13 @@ class CoreExtension implements ExtensionInterface
                 $container->get('type_inference.type_inference'),
                 $container->get('class_to_file.converter'),
                 $container->get('source_code_filesystem.simple')
+            );
+        });
+
+        $container->register('application.class_search', function (Container $container) {
+            return new ClassSearch(
+                $container->get('source_code_filesystem.simple'),
+                $container->get('class_to_file.converter')
             );
         });
     }
