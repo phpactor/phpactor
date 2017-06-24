@@ -9,6 +9,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:dantleech/source-code-filesystem"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:dantleech/type-inference"
         }
     ],
     "require": {
@@ -16,6 +20,7 @@
         "phpbench/container": "^1.0",
         "dantleech/class-mover": "dev-master",
         "dantleech/source-code-filesystem": "dev-master",
+        "dantleech/type-inference": "dev-master",
         "symfony/filesystem": "^3.3"
     },
     "require-dev": {

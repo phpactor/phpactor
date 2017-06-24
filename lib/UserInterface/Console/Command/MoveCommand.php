@@ -28,8 +28,8 @@ class MoveCommand extends Command
 
     public function configure()
     {
-        $this->setName('mv');
-        $this->setDescription('Move file (or directory) and magically update references to class contained.');
+        $this->setName('class:move');
+        $this->setDescription('Move class (by name or file path) and update all references to it');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
         $this->addOption('type', null, InputOption::VALUE_REQUIRED, sprintf(

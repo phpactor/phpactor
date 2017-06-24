@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\System;
+namespace Phpactor\Tests\UserInterface;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;

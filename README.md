@@ -49,6 +49,7 @@ It will package libraries in separate, decoupled libraries
 - [dantleech/class-to-file](https://github.com/dantleech/class-to-file): Convert files to class names and vice-versa.
 - [dantleech/class-mover](https://github.com/dantleech/class-mover): Find and update class references.
 - [dantleech/source-code-filesystem](https://github.com/dantleech/source-code-filesystem): Find and manage source code files.
+- [dantleech/type-inference](https://github.com/dantleech/type-inference): Determine type of thing at a given offset (very limited actually).
 
 About this project
 ------------------

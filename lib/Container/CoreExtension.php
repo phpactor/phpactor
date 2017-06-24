@@ -14,6 +14,10 @@ use Phpactor\Application\ClassMover\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;
 use DTL\ClassMover\ClassMover;
+use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Application\InformationForOffset\InformationForOffset;
+use DTL\TypeInference\TypeInference;
+use Phpactor\UserInterface\Console\Command\InformationForOffsetCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -34,6 +38,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerComposer($container);
         $this->registerClassToFile($container);
         $this->registerClassMover($container);
+        $this->registerTypeInference($container);
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
     }
@@ -52,6 +57,12 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.move', function (Container $container) {
             return new MoveCommand(
                 $container->get('application.class_mover')
+            );
+        });
+
+        $container->register('command.offsetinfo', function (Container $container) {
+            return new InformationForOffsetCommand(
+                $container->get('application.information_for_offset')
             );
         });
     }
@@ -111,6 +122,16 @@ class CoreExtension implements ExtensionInterface
         $container->register('source_code_filesystem.git', function (Container $container) {
             return new GitFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
         });
+        $container->register('source_code_filesystem.simple', function (Container $container) {
+            return new SimpleFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
+        });
+    }
+
+    private function registerTypeInference(Container $container)
+    {
+        $container->register('type_inference.type_inference', function (Container $container) {
+            return new TypeInference();
+        });
     }
 
     private function registerApplicationServices(Container $container)
@@ -120,6 +141,14 @@ class CoreExtension implements ExtensionInterface
                 $container->get('class_to_file.converter'),
                 $container->get('class_mover.class_mover'),
                 $container->get('source_code_filesystem.git')
+            );
+        });
+
+        $container->register('application.information_for_offset', function (Container $container) {
+            return new InformationForOffset(
+                $container->get('type_inference.type_inference'),
+                $container->get('class_to_file.converter'),
+                $container->get('source_code_filesystem.simple')
             );
         });
     }

@@ -16,4 +16,5 @@ try {
     $application->run(null, $output);
 } catch (\Exception $e) {
     $application->renderException($e, $output);
+    exit(255);
 }
