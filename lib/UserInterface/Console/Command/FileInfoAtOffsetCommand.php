@@ -59,7 +59,7 @@ class FileInfoAtOffsetCommand extends Command
     {
         foreach ($info as $key => $value) {
             $output->writeln(sprintf(
-                '%s: %s', $key, $value
+                '%s:%s', $key, $value
             ));
         }
     }

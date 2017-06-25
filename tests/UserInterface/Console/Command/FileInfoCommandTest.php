@@ -4,7 +4,7 @@ namespace Phpactor\Tests\UserInterface\Console\Command;
 
 use Phpactor\Tests\UserInterface\SystemTestCase;
 
-class OffsetInformationCommandTest extends SystemTestCase
+class FileInfoCommandTest extends SystemTestCase
 {
     public function setUp()
     {
@@ -13,24 +13,23 @@ class OffsetInformationCommandTest extends SystemTestCase
     }
 
     /**
-     * @testdox It provides information about the thing under the cursor.
+     * @testdox It provides information about the file.
      */
     public function testProvideInformationForOffset()
     {
-        $process = $this->phpactor('offset:info lib/Badger.php 137');
+        $process = $this->phpactor('file:info lib/Badger.php');
         $this->assertSuccess($process);
-        $this->assertContains('type: Animals\Badger\Carnivorous', $process->getOutput());
-        $this->assertContains('Badger/Carnivorous.php', $process->getOutput());
+        $this->assertContains('class:Animals\Badger', $process->getOutput());
     }
 
     /**
-     * @testdox It provides information about the thing under the cursor as JSON
+     * @testdox It provides information about the file as JSON
      */
     public function testProvideInformationForOffsetAsJson()
     {
-        $process = $this->phpactor('offset:info lib/Badger.php 137 --format=json');
+        $process = $this->phpactor('file:info lib/Badger.php --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"type":"Animals', $process->getOutput());
+        $this->assertContains('{"class":"Animals', $process->getOutput());
     }
 
     /**
@@ -38,7 +37,7 @@ class OffsetInformationCommandTest extends SystemTestCase
      */
     public function testProvideInformationForOffsetAsInvalid()
     {
-        $process = $this->phpactor('offset:info lib/Badger.php 137 --format=foobar');
+        $process = $this->phpactor('file:info lib/Badger.php --format=foobar');
         $this->assertFailure($process, 'Invalid format');
     }
 }
