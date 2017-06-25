@@ -80,8 +80,8 @@ class ClassMover
         $srcPath = $this->filesystem->createPath($srcPath);
         $destPath = $this->filesystem->createPath($destPath);
 
-        if (!file_exists(dirname($destPath->absolutePath()))) {
-            mkdir(dirname($destPath->absolutePath()), 0777, true);
+        if (!file_exists(dirname($destPath->path()))) {
+            mkdir(dirname($destPath->path()), 0777, true);
         }
 
         $files = [[$srcPath, $destPath]];
@@ -99,8 +99,8 @@ class ClassMover
     {
         $files = [];
         foreach ($this->filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
-            $suffix = substr($file->absolutePath(), strlen($srcPath->absolutePath()));
-            $files[] = [$file->absolutePath(), $this->filesystem->createPath($destPath.$suffix)];
+            $suffix = substr($file->path(), strlen($srcPath->path()));
+            $files[] = [$file->path(), $this->filesystem->createPath($destPath.$suffix)];
         }
 
         return $files;
@@ -114,8 +114,8 @@ class ClassMover
             $srcPath = $this->filesystem->createPath($srcPath);
             $destPath = $this->filesystem->createPath($destPath);
 
-            $srcClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($srcPath->absolutePath()));
-            $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath->absolutePath()));
+            $srcClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($srcPath->path()));
+            $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath->path()));
 
             $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
         }

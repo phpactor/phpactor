@@ -19,16 +19,16 @@ final class ClassSearch
 
     public function classSearch(string $name)
     {
-        $files = $this->filesystem->fileList()->named($name . '.php');
+        $files = $this->filesystem->fileList('{' . $name . '}')->named($name . '.php');
 
         $results = [];
         foreach ($files as $file) {
             $result = [
-                'path' => (string) $file->absolutePath(),
+                'path' => (string) $file->path(),
                 'name' => null,
             ];
 
-            $candidates = $this->fileToClass->fileToClass(FilePath::fromString((string) $file->absolutePath()));
+            $candidates = $this->fileToClass->fileToClass(FilePath::fromString((string) $file->path()));
 
             if (false === $candidates->noneFound()) {
                 $result['name'] = (string) $candidates->best();

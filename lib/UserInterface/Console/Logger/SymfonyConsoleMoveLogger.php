@@ -22,7 +22,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
     {
         $this->output->writeln(sprintf(
             '<info>[MOVE]</info> %s <comment>=></> %s',
-            $srcPath->relativePath(), $destPath->relativePath()
+            $srcPath->path(), $destPath->path()
         ));
     }
 

@@ -21,6 +21,7 @@ use Phpactor\UserInterface\Console\Command\InformationForOffsetCommand;
 use Phpactor\Application\ClassSearch\ClassSearch;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
 use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
+use DTL\Filesystem\Domain\FilePath;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -121,13 +122,13 @@ class CoreExtension implements ExtensionInterface
     private function registerSourceCodeFilesystem(Container $container)
     {
         $container->register('source_code_filesystem.git', function (Container $container) {
-            return new GitFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
+            return new GitFilesystem(FilePath::fromString($container->getParameter('cwd')));
         });
         $container->register('source_code_filesystem.simple', function (Container $container) {
-            return new SimpleFilesystem(Cwd::fromCwd($container->getParameter('cwd')));
+            return new SimpleFilesystem(FilePath::fromString($container->getParameter('cwd')));
         });
         $container->register('source_code_filesystem.composer', function (Container $container) {
-            return new ComposerFilesystem(Cwd::fromCwd($container->getParameter('cwd')), $container->get('composer.class_loader'));
+            return new ComposerFilesystem(FilePath::fromString($container->getParameter('cwd')), $container->get('composer.class_loader'));
         });
     }
 
