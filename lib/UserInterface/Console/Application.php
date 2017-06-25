@@ -22,7 +22,8 @@ class Application extends SymfonyApplication
         $this->addCommands([
             $container->get('command.class_move'),
             $container->get('command.class_search'),
-            $container->get('command.offsetinfo'),
+            $container->get('command.file_info'),
+            $container->get('command.file_offset'),
         ]);
     }
 }

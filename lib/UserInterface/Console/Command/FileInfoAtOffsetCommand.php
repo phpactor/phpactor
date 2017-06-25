@@ -10,14 +10,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\InformationForOffset\InformationForOffset;
+use Phpactor\Application\FileInfo\FileInfo;
 
-class InformationForOffsetCommand extends Command
+class FileInfoAtOffsetCommand extends Command
 {
     private $infoForOffset;
 
     public function __construct(
-        InformationForOffset $infoForOffset
+        FileInfo $infoForOffset
     ) {
         parent::__construct();
         $this->infoForOffset = $infoForOffset;
@@ -25,7 +25,7 @@ class InformationForOffsetCommand extends Command
 
     public function configure()
     {
-        $this->setName('offset:info');
+        $this->setName('file:offset');
         $this->setDescription('Return information about given file at the given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');

@@ -15,13 +15,14 @@ use DTL\Filesystem\Adapter\Git\GitFilesystem;
 use DTL\Filesystem\Domain\Cwd;
 use DTL\ClassMover\ClassMover;
 use DTL\Filesystem\Adapter\Simple\SimpleFilesystem;
-use Phpactor\Application\InformationForOffset\InformationForOffset;
+use Phpactor\Application\FileInfo\FileInfo;
 use DTL\TypeInference\TypeInference;
-use Phpactor\UserInterface\Console\Command\InformationForOffsetCommand;
+use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
 use Phpactor\Application\ClassSearch\ClassSearch;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
 use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
 use DTL\Filesystem\Domain\FilePath;
+use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -62,9 +63,15 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
-        $container->register('command.offsetinfo', function (Container $container) {
-            return new InformationForOffsetCommand(
-                $container->get('application.information_for_offset')
+        $container->register('command.file_offset', function (Container $container) {
+            return new FileInfoAtOffsetCommand(
+                $container->get('application.file_info')
+            );
+        });
+
+        $container->register('command.file_info', function (Container $container) {
+            return new FileInfoCommand(
+                $container->get('application.file_info')
             );
         });
     }
@@ -149,8 +156,8 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
-        $container->register('application.information_for_offset', function (Container $container) {
-            return new InformationForOffset(
+        $container->register('application.file_info', function (Container $container) {
+            return new FileInfo(
                 $container->get('type_inference.type_inference'),
                 $container->get('class_to_file.converter'),
                 $container->get('source_code_filesystem.simple')

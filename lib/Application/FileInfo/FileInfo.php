@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\InformationForOffset;
+namespace Phpactor\Application\FileInfo;
 
 use DTL\ClassFileConverter\CompositeTransformer;
 use DTL\TypeInference\TypeInference;
@@ -12,7 +12,7 @@ use DTL\ClassFileConverter\ClassName;
 use DTL\ClassFileConverter\ClassToFile;
 use DTL\TypeInference\Domain\InferredType;
 
-final class InformationForOffset
+final class FileInfo
 {
     private $inference;
     private $classToFileConverter;
@@ -27,6 +27,30 @@ final class InformationForOffset
         $this->inference = $inference;
         $this->classToFileConverter = $classToFileConverter;
         $this->filesystem = $filesystem;
+    }
+
+    public function infoForFile(string $sourcePath)
+    {
+        $path = $this->filesystem->createPath($sourcePath);
+        $classCandidates = $this->classToFileConverter->fileToClass(FilePath::fromString((string) $path));
+
+        $return = [
+            'class' => null,
+            'class_name' => null,
+            'class_namespace' => null,
+        ];
+
+        if ($classCandidates->noneFound()) {
+            return $return;
+        }
+
+        $best = $classCandidates->best();
+
+        return [
+            'class' => (string) $best,
+            'class_name' => $best->name(),
+            'class_namespace' => $best->namespace(),
+        ];
     }
 
     public function infoForOffset(string $sourcePath, int $offset): array
