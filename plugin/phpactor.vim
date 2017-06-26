@@ -14,6 +14,7 @@ function! PhactNamespaceGet()
 endfunction
 
 function! PhactUseAdd()
+    " START: Resolve FQN for class
     let word = expand("<cword>")
 
     let command = 'class:search --format=json ' . word
@@ -28,12 +29,16 @@ function! PhactUseAdd()
 
     if (len(results) > 1)
         let c = 1
+        let height = len(results) + 1
+        let originalCmdHeight = &cmdheight
+        let &cmdheight = height
         for info in results
             echo c . ": " . info['class']
             let c = c + 1
         endfor
 
         let choice = input('Choose: ')
+        let &cmdheight = originalCmdHeight
         let choice = choice - 1
 
         let classInfo = get(results, choice, {})
@@ -51,21 +56,47 @@ function! PhactUseAdd()
     call cursor(1, 1)
     let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
 
-    echo "\n"
     if (existing > 0)
-        echo "Use staement already included on line " . existing
+        echo "\n"
+        echo "Use statement already included on line:" . existing
         return
+    endif
+    "END: Resolve FQN for class
+
+    " START: Insert use statement
+    call cursor(1, 1)
+    let namespaceLineNb = search('^namespace') + 1
+
+    if (namespaceLineNb == 0)
+        let namespaceLineNb = 3
     endif
 
     call cursor(1, 1)
-    let useLineNb = search('^use')
-    while (useLineNb)
-        let useLineNb = search('^use')
-        echo useLineNb
+    let lastUseLineNb = namespaceLineNb
+
+    let result = -1
+    while (result != 0)
+        let result = search('^use', '', line("w$"))
+
+        if (result > 0)
+            let lastUseLineNb = result
+        endif
     endwhile
 
+    call cursor(lastUseLineNb, 1)
+    let line = getline(line('.') + 1)
+    if (!empty(line))
+        exec "normal! O"
+    endif
 
+    exec "normal! ouse " . classInfo['class'] . ";"
 
+    let line = getline(line('.') + 1)
+    if (!empty(line))
+        exec "normal! o"
+    endif
+
+    " END: Insert use statement
 endfunction
 
 function! PhactExec(cmd)
