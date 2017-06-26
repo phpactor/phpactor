@@ -8,6 +8,12 @@ tools which can be used with editors such as VIM.
 
 It is currently under development.
 
+VIM Plugin
+----------
+
+This application standalone, but it does include a plugin for
+VIM, see the [plugin README](https://github.com/dantleech/phpactor/tree/master/plugin/README.md).
+
 Commands
 --------
 
