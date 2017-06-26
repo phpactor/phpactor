@@ -23,6 +23,7 @@ Example key mappings
 ```
 " Include use statement
 nnoremap <silent><leader>u :call PhactUseAdd()<CR>
+nnoremap <silent><Leader>o :call PhactGotoDefinition()<CR>
 ```
 
 Include use statement
@@ -33,4 +34,14 @@ cursor:
 
 ```
 : call PhactUseAdd()
+```
+
+Goto Definition
+---------------
+
+Will attempt to go to the definition of the word (class name) under the
+cursor:
+
+```
+: call PhactGotoDefinition()
 ```

@@ -13,7 +13,12 @@ function! PhactNamespaceGet()
     return results['class_namespace']
 endfunction
 
+""""""""""""""""""""""""
+" Insert a use statement
+""""""""""""""""""""""""
 function! PhactUseAdd()
+    let savePos = getpos(".")
+
     " START: Resolve FQN for class
     let word = expand("<cword>")
 
@@ -30,15 +35,16 @@ function! PhactUseAdd()
     if (len(results) > 1)
         let c = 1
         let height = len(results) + 1
-        let originalCmdHeight = &cmdheight
-        let &cmdheight = height
+        let list = []
         for info in results
-            echo c . ": " . info['class']
+            let list = add(list, c . '. ' . info['class'])
             let c = c + 1
         endfor
 
-        let choice = input('Choose: ')
-        let &cmdheight = originalCmdHeight
+        let choice = inputlist(list)
+        if (choice == 0)
+            return
+        endif
         let choice = choice - 1
 
         let classInfo = get(results, choice, {})
@@ -67,13 +73,15 @@ function! PhactUseAdd()
     call cursor(1, 1)
     let namespaceLineNb = search('^namespace') + 1
 
+    " Find an appropriate place to put the use statement,
+    " if there is no namespace, put it after the start tag
     if (namespaceLineNb == 0)
-        let namespaceLineNb = 3
+        let namespaceLineNb = 2
     endif
 
+    " Search for the last use statement
     call cursor(1, 1)
     let lastUseLineNb = namespaceLineNb
-
     let result = -1
     while (result != 0)
         let result = search('^use', '', line("w$"))
@@ -83,21 +91,52 @@ function! PhactUseAdd()
         endif
     endwhile
 
+    " Try and put the cursor at the best place
     call cursor(lastUseLineNb, 1)
+
+    " Ensure an empty line before the use statement
+    let extraLines = 1
     let line = getline(line('.') + 1)
     if (!empty(line))
         exec "normal! O"
+        let extraLines += 1
     endif
 
-    exec "normal! ouse " . classInfo['class'] . ";"
+    " Insert use statement
+    execute "normal! ouse " . classInfo['class'] . ";"
 
+    " Ensure an empty line afterwards
     let line = getline(line('.') + 1)
     if (!empty(line))
         exec "normal! o"
+        let extraLines += 1
     endif
 
+    " Retore the cursor position
+    let savePos = [savePos[0], savePos[1] + extraLines, savePos[2], savePos[3]]
     " END: Insert use statement
+    call setpos('.', savePos)
 endfunction
+
+function! PhactGotoDefinition()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let currentPath = expand('%')
+
+    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let out = PhactExec(command)
+    let results = json_decode(out)
+
+    if (empty(results['path']))
+        echo "Could not locate class at offset: " . offset
+        return
+    endif
+
+    exec "edit " . results['path']
+
+endfunction
+
 
 function! PhactExec(cmd)
     let result = system('php ' . s:genpath . ' ' . a:cmd)

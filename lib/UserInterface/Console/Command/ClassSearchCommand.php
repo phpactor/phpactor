@@ -51,11 +51,12 @@ class ClassSearchCommand extends Command
     private function outputConsole(OutputInterface $output, array $results)
     {
         foreach ($results as $result) {
-            if (!$result['name']) {
+            if (!$result['class']) {
                 continue;
             }
 
-            $output->writeln(sprintf('<comment>%s</><info>:</>%s', $result['name'], $result['path']));
+            var_dump($result);die();;
+            $output->writeln(sprintf('<comment>%s</><info>:</>%s', $result['class'], $result['path']));
         }
     }
 }
