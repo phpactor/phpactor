@@ -1,4 +1,5 @@
 <?php
+
 namespace Phpactor\Application\ClassMover;
 
 use DTL\ClassFileConverter\CompositeTransformer;

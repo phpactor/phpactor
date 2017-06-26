@@ -24,14 +24,18 @@ final class ClassSearch
         $results = [];
         foreach ($files as $file) {
             $result = [
-                'path' => (string) $file->path(),
-                'name' => null,
+                'file_path' => (string) $file->path(),
+                'class' => null,
+                'class_name' => null,
+                'class_namespace' => null,
             ];
 
             $candidates = $this->fileToClass->fileToClass(FilePath::fromString((string) $file->path()));
 
             if (false === $candidates->noneFound()) {
-                $result['name'] = (string) $candidates->best();
+                $result['class_name'] = (string) $candidates->best()->name();
+                $result['class'] = (string) $candidates->best();
+                $result['class_namespace'] = (string) $candidates->best()->namespace();
             }
 
             $results[] = $result;
