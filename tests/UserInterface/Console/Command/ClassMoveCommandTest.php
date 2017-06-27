@@ -67,6 +67,8 @@ class ClassMoveCommandTest extends SystemTestCase
                 'class:move "lib/*" lib/Foobar',
                 [
                     'lib/Foobar/Aardvark' => true,
+                    'lib/Foobar/Badger.php' => true,
+                    'lib/Badger.php' => false,
                 ],
             ],
             'Move class by name 1' => [
