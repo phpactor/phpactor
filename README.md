@@ -34,6 +34,12 @@ Relocate all classes under `Acme` to `Foobar`:
 $ phpactor mv lib/Acme lib/Foobar
 ```
 
+Relocate all classes in the `lib` directory to a new subfolder:
+
+```bash
+$ phpactor mv lib/* lib/Core
+```
+
 Move a class by name:
 
 ```bash
