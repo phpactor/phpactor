@@ -63,6 +63,14 @@ class ClassMoveCommandTest extends SystemTestCase
                     'lib/Elephant/Edentate.php' => true,
                 ],
             ],
+            'Move wildcard' => [
+                'class:move "lib/*" lib/Foobar',
+                [
+                    'lib/Foobar/Aardvark' => true,
+                    'lib/Foobar/Badger.php' => true,
+                    'lib/Badger.php' => false,
+                ],
+            ],
             'Move class by name 1' => [
                 'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious"',
             ],

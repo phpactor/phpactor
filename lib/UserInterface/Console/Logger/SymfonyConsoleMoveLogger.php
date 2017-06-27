@@ -31,7 +31,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
         if ($references->references()->isEmpty()) {
             return;
         }
-        $this->output->writeln('<comment># '.$path.'</>');
+        $this->output->writeln('<info>[REPL]</> <comment>'.$path.'</>');
 
         foreach ($references->references() as $reference) {
             $this->output->writeln(sprintf(

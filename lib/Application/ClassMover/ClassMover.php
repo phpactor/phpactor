@@ -11,6 +11,8 @@ use DTL\ClassFileConverter\FilePath as ConverterFilePath;
 use Phpactor\Application\ClassMover\MoveOperation;
 use Phpactor\Phpactor;
 use DTL\ClassFileConverter\ClassName;
+use Webmozart\Glob\Glob;
+use Webmozart\PathUtil\Path;
 
 class ClassMover
 {
@@ -66,16 +68,26 @@ class ClassMover
 
     public function moveFile(MoveLogger $logger, string $srcPath, string $destPath)
     {
-        try {
-            $this->doMoveFile($logger, $srcPath, $destPath);
-        } catch (\Exception $e) {
-            throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+        $srcPath = Phpactor::normalizePath($srcPath);
+        foreach (Glob::glob($srcPath) as $globPath) {
+
+            $globDest = $destPath;
+            // if the src is not the same as the globbed src, then it is a wildcard
+            // and we want to append the filename to the destination
+            if ($srcPath !== $globPath) {
+                $globDest = Path::join($destPath, Path::getFilename($globPath));
+            }
+
+            try {
+                $this->doMoveFile($logger, $globPath, $globDest);
+            } catch (\Exception $e) {
+                throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+            }
         }
     }
 
     private function doMoveFile(MoveLogger $logger, string $srcPath, string $destPath)
     {
-        $srcPath = Phpactor::normalizePath($srcPath);
         $destPath = Phpactor::normalizePath($destPath);
 
         $srcPath = $this->filesystem->createPath($srcPath);
