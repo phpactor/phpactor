@@ -3,8 +3,8 @@
 namespace Phpactor\Application\ClassSearch;
 
 use DTL\Filesystem\Domain\Filesystem;
-use DTL\ClassFileConverter\FileToClass;
-use DTL\ClassFileConverter\FilePath;
+use DTL\ClassFileConverter\Domain\FileToClass;
+use DTL\ClassFileConverter\Domain\FilePath;
 
 final class ClassSearch
 {
@@ -30,7 +30,7 @@ final class ClassSearch
                 'class_namespace' => null,
             ];
 
-            $candidates = $this->fileToClass->fileToClass(FilePath::fromString((string) $file->path()));
+            $candidates = $this->fileToClass->fileToClassCandidates(FilePath::fromString((string) $file->path()));
 
             if (false === $candidates->noneFound()) {
                 $result['class_name'] = (string) $candidates->best()->name();

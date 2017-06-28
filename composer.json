@@ -8,6 +8,10 @@
         },
         {
             "type": "vcs",
+            "url": "git@github.com:dantleech/class-to-file"
+        },
+        {
+            "type": "vcs",
             "url": "git@github.com:dantleech/source-code-filesystem"
         },
         {
@@ -21,6 +25,7 @@
         "dantleech/class-mover": "dev-master",
         "dantleech/source-code-filesystem": "dev-master",
         "dantleech/type-inference": "dev-master",
+        "dantleech/class-to-file": "dev-master",
         "symfony/filesystem": "^3.3",
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",

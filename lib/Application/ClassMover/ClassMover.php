@@ -2,15 +2,15 @@
 
 namespace Phpactor\Application\ClassMover;
 
-use DTL\ClassFileConverter\CompositeTransformer;
+use DTL\ClassFileConverter\Domain\ClassName;
+use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
+use DTL\ClassFileConverter\Domain\FilePath as ConverterFilePath;
 use DTL\ClassMover\ClassMover as ClassMoverFacade;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\Filesystem;
-use DTL\ClassFileConverter\FilePath as ConverterFilePath;
 use Phpactor\Application\ClassMover\MoveOperation;
 use Phpactor\Phpactor;
-use DTL\ClassFileConverter\ClassName;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 
@@ -22,7 +22,7 @@ class ClassMover
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        CompositeTransformer $fileClassConverter,
+        ClassToFileFileToClass $fileClassConverter,
         ClassMoverFacade $classMover,
         Filesystem $filesystem
     ) {
@@ -127,8 +127,8 @@ class ClassMover
             $srcPath = $this->filesystem->createPath($srcPath);
             $destPath = $this->filesystem->createPath($destPath);
 
-            $srcClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($srcPath->path()));
-            $destClassName = $this->fileClassConverter->fileToClass(ConverterFilePath::fromString($destPath->path()));
+            $srcClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($srcPath->path()));
+            $destClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($destPath->path()));
 
             $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
         }

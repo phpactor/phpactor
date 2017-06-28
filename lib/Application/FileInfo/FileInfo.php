@@ -2,14 +2,13 @@
 
 namespace Phpactor\Application\FileInfo;
 
-use DTL\ClassFileConverter\CompositeTransformer;
 use DTL\TypeInference\TypeInference;
 use DTL\TypeInference\Domain\Offset;
 use DTL\TypeInference\Domain\SourceCode;
 use DTL\Filesystem\Domain\Filesystem;
-use DTL\ClassFileConverter\FilePath;
-use DTL\ClassFileConverter\ClassName;
-use DTL\ClassFileConverter\ClassToFile;
+use DTL\ClassFileConverter\Domain\FilePath;
+use DTL\ClassFileConverter\Domain\ClassName;
+use DTL\ClassFileConverter\Domain\ClassToFile;
 use DTL\TypeInference\Domain\InferredType;
 
 final class FileInfo
@@ -32,7 +31,7 @@ final class FileInfo
     public function infoForFile(string $sourcePath)
     {
         $path = $this->filesystem->createPath($sourcePath);
-        $classCandidates = $this->classToFileConverter->fileToClass(FilePath::fromString((string) $path));
+        $classCandidates = $this->classToFileConverter->fileToClassCandidates(FilePath::fromString((string) $path));
 
         $return = [
             'class' => null,

@@ -6,9 +6,6 @@ use Composer\Autoload\ClassLoader;
 use PhpBench\DependencyInjection\Container;
 use PhpBench\DependencyInjection\ExtensionInterface;
 use Symfony\Component\Console\Application;
-use DTL\ClassFileConverter\Composer\ComposerClassToFile;
-use DTL\ClassFileConverter\Composer\ComposerFileToClass;
-use DTL\ClassFileConverter\CompositeTransformer;
 use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\Application\ClassMover\ClassMover as ClassMoverApp;
 use DTL\Filesystem\Adapter\Git\GitFilesystem;
@@ -23,6 +20,9 @@ use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
 use DTL\Filesystem\Adapter\Composer\ComposerFilesystem;
 use DTL\Filesystem\Domain\FilePath;
 use Phpactor\UserInterface\Console\Command\FileInfoCommand;
+use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
+use DTL\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
+use DTL\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -104,7 +104,7 @@ class CoreExtension implements ExtensionInterface
     private function registerClassToFile(Container $container)
     {
         $container->register('class_to_file.converter', function (Container $container) {
-            return new CompositeTransformer(
+            return new ClassToFileFileToClass(
                 $container->get('class_to_file.class_to_file'),
                 $container->get('class_to_file.file_to_class')
             );
