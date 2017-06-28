@@ -35,7 +35,7 @@ class SymfonyConsoleMoveLogger implements MoveLogger
 
         foreach ($references->references() as $reference) {
             $this->output->writeln(sprintf(
-                '  %s:%s %s <comment>=></> %s',
+                '       %s:%s %s <comment>=></> %s',
                 $reference->position()->start(),
                 $reference->position()->end(),
                 (string) $reference->name(),

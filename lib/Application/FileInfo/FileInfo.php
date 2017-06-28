@@ -64,6 +64,7 @@ final class FileInfo
         $return = [
             'type' => (string) $type,
             'path' => null,
+
         ];
 
         if (InferredType::unknown() == $type) {

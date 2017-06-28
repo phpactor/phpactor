@@ -55,8 +55,7 @@ class ClassSearchCommand extends Command
                 continue;
             }
 
-            var_dump($result);die();;
-            $output->writeln(sprintf('<comment>%s</><info>:</>%s', $result['class'], $result['path']));
+            $output->writeln(sprintf('<comment>%s</><info>:</>%s', $result['class'], $result['file_path']));
         }
     }
 }
