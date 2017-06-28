@@ -14,6 +14,21 @@ VIM Plugin
 This application standalone, but it does include a plugin for VIM, see the
 [plugin README](https://github.com/dantleech/phpactor/tree/master/plugin/README.md).
 
+Configuration
+-------------
+
+Configuration files are merged from the XDG open base dir standard, and from
+the current working directory, for example:
+
+```
+/etc/xdg/phpactor/phpactor.yml
+/home/daniel/.config/phpactor/phpactor.yml
+<currnent directory>/.phpactor.yml
+```
+
+All configuration options are defined in the
+`Phpactor\Container\CoreExtension` class.
+
 Commands
 --------
 

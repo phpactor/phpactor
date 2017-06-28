@@ -22,7 +22,8 @@
         "dantleech/source-code-filesystem": "dev-master",
         "dantleech/type-inference": "dev-master",
         "symfony/filesystem": "^3.3",
-        "webmozart/glob": "^4.1"
+        "webmozart/glob": "^4.1",
+        "dnoegel/php-xdg-base-dir": "^0.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.2",
