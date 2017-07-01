@@ -59,9 +59,9 @@ class ClassMoveCommand extends Command
             case 'auto':
                 return $this->mover->move($logger, $src, $dest);
             case 'file':
-                return $this->mover->moveFile($logger, $src, $input->getArgument('src'), $dest);
+                return $this->mover->moveFile($logger, $src, $dest);
             case 'class':
-                return $this->mover->moveClass($logger, $src, $input->getArgument('src'), $dest);
+                return $this->mover->moveClass($logger, $src, $dest);
         }
 
         throw new \InvalidArgumentException(sprintf('Invalid type "%s", must be one of: "%s"',
