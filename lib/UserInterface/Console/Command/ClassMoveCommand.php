@@ -10,6 +10,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
+use Phpactor\UserInterface\Console\Prompt\Prompt;
 
 class ClassMoveCommand extends Command
 {
@@ -18,12 +21,15 @@ class ClassMoveCommand extends Command
     const TYPE_FILE = 'file';
 
     private $mover;
+    private $prompt;
 
     public function __construct(
-        ClassMover $mover
+        ClassMover $mover,
+        Prompt $prompt
     ) {
         parent::__construct();
         $this->mover = $mover;
+        $this->prompt = $prompt;
     }
 
     public function configure()
@@ -31,7 +37,7 @@ class ClassMoveCommand extends Command
         $this->setName('class:move');
         $this->setDescription('Move class (by name or file path) and update all references to it');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
-        $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
+        $this->addArgument('dest', InputArgument::OPTIONAL, 'Destination path or FQN');
         $this->addOption('type', null, InputOption::VALUE_REQUIRED, sprintf(
             'Type of move: "%s"',
              implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
@@ -42,14 +48,20 @@ class ClassMoveCommand extends Command
     {
         $type = $input->getOption('type');
         $logger = new SymfonyConsoleMoveLogger($output);
+        $src = $input->getArgument('src');
+        $dest = $input->getArgument('dest');
+
+        if (null === $dest) {
+            $dest = $this->prompt->prompt('Move to: ', $src);
+        }
 
         switch ($type) {
             case 'auto':
-                return $this->mover->move($logger, $input->getArgument('src'), $input->getArgument('dest'));
+                return $this->mover->move($logger, $src, $dest);
             case 'file':
-                return $this->mover->moveFile($logger, $input->getArgument('src'), $input->getArgument('dest'));
+                return $this->mover->moveFile($logger, $src, $input->getArgument('src'), $dest);
             case 'class':
-                return $this->mover->moveClass($logger, $input->getArgument('src'), $input->getArgument('dest'));
+                return $this->mover->moveClass($logger, $src, $input->getArgument('src'), $dest);
         }
 
         throw new \InvalidArgumentException(sprintf('Invalid type "%s", must be one of: "%s"',

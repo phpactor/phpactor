@@ -71,7 +71,6 @@ final class FileInfo
         }
 
         $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $type));
-
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;
@@ -79,6 +78,5 @@ final class FileInfo
         }
 
         return $return;
-
     }
 }

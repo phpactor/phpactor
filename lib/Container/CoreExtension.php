@@ -23,6 +23,12 @@ use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
 use DTL\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use DTL\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
+use DTL\ClassFileConverter\Domain\ChainFileToClass;
+use DTL\ClassFileConverter\Domain\ChainClassToFile;
+use DTL\Filesystem\Adapter\Composer\ComposerFileListProvider;
+use DTL\Filesystem\Domain\ChainFileListProvider;
+use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
+use Phpactor\UserInterface\Console\Prompt\BashPrompt;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -54,7 +60,8 @@ class CoreExtension implements ExtensionInterface
     {
         $container->register('command.class_move', function (Container $container) {
             return new ClassMoveCommand(
-                $container->get('application.class_mover')
+                $container->get('application.class_mover'),
+                $container->get('console.prompter')
             );
         });
         $container->register('command.class_search', function (Container $container) {
@@ -74,30 +81,37 @@ class CoreExtension implements ExtensionInterface
                 $container->get('application.file_info')
             );
         });
+
+        $container->register('console.prompter', function (Container $container) {
+            return new ChainPrompt([
+                new BashPrompt()
+            ]);
+        });
     }
 
     private function registerComposer(Container $container)
     {
-        $container->register('composer.class_name_resolver', function (Container $container) {
-            return new ClassNameResolver($container->get('composer.class_loader'));
-        });
+        $container->register('composer.class_loaders', function (Container $container) {
+            $autoloaderPaths = (array) $container->getParameter('autoload');
+            $autoloaders = [];
 
-        $container->register('composer.class_loader', function (Container $container) {
-            $bootstrap = $container->getParameter('autoload');
+            foreach ($autoloaderPaths as $autoloaderPath) {
+                if (!file_exists($autoloaderPath)) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Could not locate autoloaderPath file "%s"', $autoloaderPath
+                    ));
+                }
 
-            if (!file_exists($bootstrap)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Could not locate bootstrap file "%s"', $bootstrap
-                ));
+                $autoloader = require $autoloaderPath;
+
+                if (!$autoloader instanceof ClassLoader) {
+                    throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
+                }
+
+                $autoloaders[] = $autoloader;
             }
 
-            $autoloader = require $bootstrap;
-
-            if (!$autoloader instanceof ClassLoader) {
-                throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
-            }
-
-            return $autoloader;
+            return $autoloaders;
         });
     }
 
@@ -111,11 +125,20 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('class_to_file.class_to_file', function (Container $container) {
-            return new ComposerClassToFile($container->get('composer.class_loader'));
+            $classToFiles = [];
+            foreach ($container->get('composer.class_loaders') as $classLoader) {
+                $classToFiles[] = new ComposerClassToFile($classLoader);
+            }
+
+            return new ChainClassToFile($classToFiles);
         });
 
         $container->register('class_to_file.file_to_class', function (Container $container) {
-            return new ComposerFileToClass($container->get('composer.class_loader'));
+            $fileToClasses = [];
+            foreach ($container->get('composer.class_loaders') as $classLoader) {
+                $fileToClasses[] =  new ComposerFileToClass($classLoader);
+            }
+            return new ChainFileToClass($fileToClasses);
         });
     }
 
@@ -135,7 +158,12 @@ class CoreExtension implements ExtensionInterface
             return new SimpleFilesystem(FilePath::fromString($container->getParameter('cwd')));
         });
         $container->register('source_code_filesystem.composer', function (Container $container) {
-            return new ComposerFilesystem(FilePath::fromString($container->getParameter('cwd')), $container->get('composer.class_loader'));
+            $providers = [];
+            $cwd = FilePath::fromString($container->getParameter('cwd'));
+            foreach ($container->get('composer.class_loaders') as $classLoader) {
+                $providers[] = new ComposerFileListProvider($cwd, $classLoader);
+            }
+            return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
         });
     }
 
