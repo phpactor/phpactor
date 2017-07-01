@@ -29,6 +29,7 @@ use DTL\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use DTL\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
 use Phpactor\UserInterface\Console\Prompt\BashPrompt;
+use DTL\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -169,8 +170,13 @@ class CoreExtension implements ExtensionInterface
 
     private function registerTypeInference(Container $container)
     {
+        $container->register('type_inference.source_code_loader', function (Container $container) {
+            return new ClassToFileSourceCodeLoader($container->get('class_to_file.converter'));
+        });
         $container->register('type_inference.type_inference', function (Container $container) {
-            return new TypeInference();
+            return TypeInference::withSourceCodeLoader(
+                $container->get('type_inference.source_code_loader')
+            );
         });
     }
 

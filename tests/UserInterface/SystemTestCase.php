@@ -12,6 +12,22 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
         return __DIR__ . '/../Assets/Workspace';
     }
 
+    private function cacheDir(string $name)
+    {
+        return __DIR__ . '/../Assets/Cache/'.$name;
+    }
+
+    private function cacheWorkspace($name)
+    {
+        $filesystem = new Filesystem();
+        $cacheDir = $this->cacheDir($name);
+        if (file_exists($cacheDir)) {
+            $filesystem->remove($cacheDir);
+        }
+        mkdir($cacheDir, 0777, true);
+        $filesystem->mirror($this->workspaceDir(), $this->cacheDir($name));
+    }
+
     protected function initWorkspace()
     {
         $filesystem = new Filesystem();
@@ -46,12 +62,19 @@ class SystemTestCase extends \PHPUnit_Framework_TestCase
     protected function loadProject($name)
     {
         $filesystem = new Filesystem();
+
+        if (file_exists($this->cacheDir($name))) {
+            $filesystem->mirror($this->cacheDir($name), $this->workspaceDir());
+            return;
+        }
+
         $filesystem->mirror(__DIR__ . '/../Assets/Projects/' . $name, $this->workspaceDir());
         chdir($this->workspaceDir());
         exec('git init');
         exec('git add *');
         exec('git commit -m "Test"');
         exec('composer install --quiet');
+        $this->cacheWorkspace($name);
     }
 
     protected function phpactor(string $args)
