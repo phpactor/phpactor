@@ -119,6 +119,7 @@ class ClassCopy
                 $destClassName
             );
 
+            $this->filesystem->writeContents($destPath, (string) $source);
             $copyReport->destFiles()->next();
         }
     }

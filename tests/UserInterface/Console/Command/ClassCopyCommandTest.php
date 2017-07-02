@@ -17,7 +17,7 @@ class ClassCopyCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, array $fileMap = [])
+    public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = [])
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
@@ -32,6 +32,12 @@ class ClassCopyCommandTest extends SystemTestCase
 
             $this->assertFalse($exists);
         }
+
+        foreach ($contentExpectations as $filePath => $contentExpectation) {
+            $path = $this->workspaceDir() . '/' . $filePath;
+            $contents = file_get_contents($path);
+            $this->assertContains($contentExpectation, $contents);
+        }
     }
 
     public function provideSmokeSuccess()
@@ -39,6 +45,10 @@ class ClassCopyCommandTest extends SystemTestCase
         return [
             'Copy file 1' => [
                 'class:copy lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
+                [],
+                [
+                    'lib/Aardvark/Insectarian.php' => 'class Insectarian',
+                ]
             ],
             'Copy file 2' => [
                 'class:copy lib/Aardvark/Edentate.php lib/Foobar.php',
