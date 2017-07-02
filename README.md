@@ -101,6 +101,7 @@ It will package libraries in separate, decoupled libraries
 - [dantleech/class-mover](https://github.com/dantleech/class-mover): Find and update class references.
 - [dantleech/source-code-filesystem](https://github.com/dantleech/source-code-filesystem): Find and manage source code files.
 - [dantleech/type-inference](https://github.com/dantleech/type-inference): Determine type of thing at a given offset (very limited actually).
+- [dantleech/worse-reflection](https://github.com/dantleech/worse-reflection): Lightweight class reflection API
 
 About this project
 ------------------
@@ -127,8 +128,3 @@ intellisense database...).
 
 None of the child libraries are currently intended to be consumed
 independently and cannot be found on packagist.
-
-The project as a whole aims to adopt hexagonal architecture, and each of the
-child libraries use adapters to implement their functionality. This allows
-each child library (solving a specific problem) to use the most suitable
-implementations.
