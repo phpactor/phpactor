@@ -199,16 +199,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/type-inference.git",
-                "reference": "d6e2d905597bcd91a74cab201d8140e91f288d63"
+                "reference": "89f46167766930ac084f8d3346977f6d6a8f1768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/type-inference/zipball/d6e2d905597bcd91a74cab201d8140e91f288d63",
-                "reference": "d6e2d905597bcd91a74cab201d8140e91f288d63",
+                "url": "https://api.github.com/repos/dantleech/type-inference/zipball/89f46167766930ac084f8d3346977f6d6a8f1768",
+                "reference": "89f46167766930ac084f8d3346977f6d6a8f1768",
                 "shasum": ""
             },
             "require": {
                 "dantleech/class-to-file": "dev-master",
+                "dantleech/worse-reflection": "dev-master",
                 "microsoft/tolerant-php-parser": "dev-master"
             },
             "require-dev": {
@@ -244,7 +245,51 @@
                 "source": "https://github.com/dantleech/type-inference/tree/master",
                 "issues": "https://github.com/dantleech/type-inference/issues"
             },
-            "time": "2017-07-01 17:00:35"
+            "time": "2017-07-02 17:51:38"
+        },
+        {
+            "name": "dantleech/worse-reflection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantleech/worse-reflection.git",
+                "reference": "f1b6f5cd3a5f6283eade35401f120b45d5ca7e6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantleech/worse-reflection/zipball/f1b6f5cd3a5f6283eade35401f120b45d5ca7e6f",
+                "reference": "f1b6f5cd3a5f6283eade35401f120b45d5ca7e6f",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\WorseReflection\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Lazy AST reflector that is much worse than better",
+            "time": "2017-07-02 17:43:29"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

@@ -8,7 +8,14 @@ use DTL\ClassFileConverter\Domain\FilePath;
 
 final class ClassSearch
 {
+    /**
+     * @var FileToClass
+     */
     private $fileToClass;
+
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
 
     public function __construct(Filesystem $filesystem, FileToClass $fileToClass)
