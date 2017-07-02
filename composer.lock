@@ -147,12 +147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/source-code-filesystem.git",
-                "reference": "cdca06220f50a6e83e390d17859f96ebfa93ac4f"
+                "reference": "9885c8df3f40db32d621f8dda81483337850f13f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/source-code-filesystem/zipball/cdca06220f50a6e83e390d17859f96ebfa93ac4f",
-                "reference": "cdca06220f50a6e83e390d17859f96ebfa93ac4f",
+                "url": "https://api.github.com/repos/dantleech/source-code-filesystem/zipball/9885c8df3f40db32d621f8dda81483337850f13f",
+                "reference": "9885c8df3f40db32d621f8dda81483337850f13f",
                 "shasum": ""
             },
             "require": {
@@ -191,7 +191,7 @@
                 "source": "https://github.com/dantleech/source-code-filesystem/tree/master",
                 "issues": "https://github.com/dantleech/source-code-filesystem/issues"
             },
-            "time": "2017-06-28 15:37:15"
+            "time": "2017-07-02 21:08:31"
         },
         {
             "name": "dantleech/type-inference",

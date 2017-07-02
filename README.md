@@ -6,6 +6,8 @@ Phpactor
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used with editors such as VIM.
 
+The tool is currently limited to working with projects using **GIT** and **Composer**.
+
 It is currently under development.
 
 VIM Plugin
@@ -65,7 +67,7 @@ $ phpactor class:move "Acme\\BlogPost" "Acme\\Article"
 
 - Moves individual class *files* or *directories*.
 - Move by fully qualified class name of file path.
-- Updates references for all moved classes in currently GIT tree.
+- Updates references for all moved classes in currently **GIT tree**.
 - Use statements are updated or added when required.
 
 ### Copy classes
