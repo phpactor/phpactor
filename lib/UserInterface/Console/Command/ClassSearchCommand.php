@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleSearchLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\ClassSearch\ClassSearch;
+use Phpactor\Application\ClassSearch;
 
 class ClassSearchCommand extends Command
 {

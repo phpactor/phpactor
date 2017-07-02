@@ -23,12 +23,10 @@ class Application extends SymfonyApplication
             CoreExtension::class,
         ], $this->loadConfig());
         $container->init();
-        $this->addCommands([
-            $container->get('command.class_move'),
-            $container->get('command.class_search'),
-            $container->get('command.file_info'),
-            $container->get('command.file_offset'),
-        ]);
+
+        foreach ($container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
+            $this->add($container->get($commandId));
+        }
     }
 
     private function loadConfig(): array

@@ -6,6 +6,8 @@ Phpactor
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used with editors such as VIM.
 
+The tool is currently limited to working with projects using **GIT** and **Composer**.
+
 It is currently under development.
 
 VIM Plugin
@@ -40,33 +42,43 @@ source code to it.
 Move the single class from one path to another:
 
 ```bash
-$ phpactor mv lib/Path/To/MyClass.php lib/NewLocation.php
+$ phpactor class:move lib/Path/To/MyClass.php lib/NewLocation.php
 ```
 
 Relocate all classes under `Acme` to `Foobar`:
 
 ```bash
-$ phpactor mv lib/Acme lib/Foobar
+$ phpactor class:move lib/Acme lib/Foobar
 ```
 
 Relocate all classes in the `lib` directory to a new subfolder:
 
 ```bash
-$ phpactor mv lib/* lib/Core
+$ phpactor class:move lib/* lib/Core
 ```
 
 Move a class by name:
 
 ```bash
-$ phpactor mv "Acme\\BlogPost" "Acme\\Article"
+$ phpactor class:move "Acme\\BlogPost" "Acme\\Article"
 ```
 
 ![Class mover](https://user-images.githubusercontent.com/530801/27299917-d0f6da86-5525-11e7-901e-f3881e3afd83.gif)
 
 - Moves individual class *files* or *directories*.
 - Move by fully qualified class name of file path.
-- Updates references for all moved classes in currently GIT tree.
+- Updates references for all moved classes in currently **GIT tree**.
 - Use statements are updated or added when required.
+
+### Copy classes
+
+As with move, except only update the class names of the copied class(es).
+
+```bash
+$ phpactor class:copy lib/Path/To/MyClass.php lib/Path/To/CopyOfMyClass.php
+$ cat lib/Path/To/CopyOfMyClass.php | grep class
+class CopyOfMyClass
+```
 
 ### Class Search
 

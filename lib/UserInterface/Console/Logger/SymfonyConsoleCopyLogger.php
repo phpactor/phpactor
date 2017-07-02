@@ -8,8 +8,9 @@ use DTL\Filesystem\Domain\FilePath;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\ClassMover\Domain\FoundReferences;
 use DTL\ClassMover\Domain\Position;
+use Phpactor\Application\Logger\ClassCopyLogger;
 
-class SymfonyConsoleMoveLogger implements ClassMoverLogger
+class SymfonyConsoleCopyLogger implements ClassCopyLogger
 {
     private $output;
 
@@ -18,10 +19,10 @@ class SymfonyConsoleMoveLogger implements ClassMoverLogger
         $this->output = $output;
     }
 
-    public function moving(FilePath $srcPath, FilePath $destPath)
+    public function copying(FilePath $srcPath, FilePath $destPath)
     {
         $this->output->writeln(sprintf(
-            '<info>[MOVE]</info> %s <comment>=></> %s',
+            '<info>[COPY]</info> %s <comment>=></> %s',
             $srcPath->path(), $destPath->path()
         ));
     }
