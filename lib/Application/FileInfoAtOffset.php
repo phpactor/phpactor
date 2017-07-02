@@ -12,6 +12,7 @@ use DTL\ClassFileConverter\Domain\ClassToFile;
 use DTL\TypeInference\Domain\InferredType;
 use DTL\TypeInference\Domain\TypeInferer;
 use DTL\ClassFileConverter\Domain\FileToClass;
+use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
 
 final class FileInfo
 {
@@ -21,7 +22,7 @@ final class FileInfo
     private $inference;
 
     /**
-     * @var FileToClass
+     * @var ClassToFileFileToClass
      */
     private $classToFileConverter;
 
@@ -32,7 +33,7 @@ final class FileInfo
 
     public function __construct(
         TypeInferer $inference,
-        FileToClass $classToFileConverter,
+        ClassToFileFileToClass $classToFileConverter,
         Filesystem $filesystem
     )
     {
