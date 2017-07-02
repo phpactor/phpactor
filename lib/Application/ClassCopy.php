@@ -9,13 +9,14 @@ use DTL\ClassMover\ClassMover as ClassMoverFacade;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\Filesystem\Domain\Filesystem;
-use Phpactor\Application\ClassMover\MoveOperation;
+use Phpactor\Application\ClassCopy\MoveOperation;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
-use Phpactor\Application\Logger\ClassMoverLogger;
+use Phpactor\Application\Logger\ClassCopyLogger;
+use DTL\Filesystem\Domain\CopyReport;
 
-class ClassMover
+class ClassCopy
 {
     private $fileClassConverter;
     private $classMover;
@@ -35,7 +36,7 @@ class ClassMover
     /**
      * Move - guess if moving by class name or file.
      */
-    public function move(ClassMoverLogger $logger, string $src, string $dest)
+    public function copy(ClassCopyLogger $logger, string $src, string $dest)
     {
         $srcPath = $src;
         $destPath = $dest;
@@ -55,19 +56,19 @@ class ClassMover
             }
         }
 
-        return $this->moveFile($logger, $srcPath, $destPath);
+        return $this->copyFile($logger, $srcPath, $destPath);
     }
 
-    public function moveClass(ClassMoverLogger $logger, string $srcName, string $destName)
+    public function copyClass(ClassCopyLogger $logger, string $srcName, string $destName)
     {
-        return $this->moveFile(
+        return $this->copyFile(
             $logger,
             (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($srcName))->best(),
             (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($destName))->best()
         );
     }
 
-    public function moveFile(ClassMoverLogger $logger, string $srcPath, string $destPath)
+    public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath)
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (Glob::glob($srcPath) as $globPath) {
@@ -80,74 +81,45 @@ class ClassMover
             }
 
             try {
-                $this->doMoveFile($logger, $globPath, $globDest);
+                $this->doCopyFile($logger, $globPath, $globDest);
             } catch (\Exception $e) {
-                throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+                throw new \RuntimeException(sprintf('Could not copy file "%s" to "%s"', $srcPath, $destPath), null, $e);
             }
         }
     }
 
-    private function doMoveFile(ClassMoverLogger $logger, string $srcPath, string $destPath)
+    private function doCopyFile(ClassCopyLogger $logger, string $srcPath, string $destPath)
     {
         $destPath = Phpactor::normalizePath($destPath);
 
         $srcPath = $this->filesystem->createPath($srcPath);
         $destPath = $this->filesystem->createPath($destPath);
 
-        if (!file_exists(dirname($destPath->path()))) {
-            mkdir(dirname($destPath->path()), 0777, true);
-        }
-
-        $files = [[$srcPath, $destPath]];
-
-        if (is_dir($srcPath)) {
-            $files = $this->directoryMap($srcPath, $destPath);
-        }
-
-        $this->replaceThoseReferences($logger, $files);
-        $logger->moving($srcPath, $destPath);
-        $this->filesystem->move($srcPath, $destPath);
+        $report = $this->filesystem->copy($srcPath, $destPath);
+        $this->updateReferences($logger, $report);
+        $logger->copying($srcPath, $destPath);
     }
 
-    private function directoryMap(FilePath $srcPath, FilePath $destPath)
+    private function updateReferences(ClassCopyLogger $logger, CopyReport $copyReport)
     {
-        $files = [];
-        foreach ($this->filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
-            $suffix = substr($file->path(), strlen($srcPath->path()));
-            $files[] = [$file->path(), $this->filesystem->createPath($destPath.$suffix)];
-        }
+        foreach ($copyReport->srcFiles() as $srcPath) {
+            $destPath = $copyReport->destFiles()->current();
 
-        return $files;
-    }
+            $srcClassName = $this->fileClassConverter->fileToClassCandidates(
+                ConverterFilePath::fromString($srcPath->path())
+            )->best();
+            $destClassName = $this->fileClassConverter->fileToClassCandidates(
+                ConverterFilePath::fromString($destPath->path())
+            )->best();
 
-    private function replaceThoseReferences(ClassMoverLogger $logger, array $files)
-    {
-        foreach ($files as $paths) {
-            list($srcPath, $destPath) = $paths;
-
-            $srcPath = $this->filesystem->createPath($srcPath);
-            $destPath = $this->filesystem->createPath($destPath);
-
-            $srcClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($srcPath->path()));
-            $destClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($destPath->path()));
-
-            $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
-        }
-    }
-
-    private function replaceReferences(ClassMoverLogger $logger, string $srcName, string $destName)
-    {
-        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
-            $references = $this->classMover->findReferences($this->filesystem->getContents($filePath), $srcName);
-
-            $logger->replacing($filePath, $references, FullyQualifiedName::fromString($destName));
-
+            $references = $this->classMover->findReferences($this->filesystem->getContents($srcPath), $srcClassName);
+            $logger->replacing($destPath, $references, FullyQualifiedName::fromString($destClassName));
             $source = $this->classMover->replaceReferences(
                 $references,
-                $destName
+                $destClassName
             );
 
-            $this->filesystem->writeContents($filePath, (string) $source);
+            $copyReport->destFiles()->next();
         }
     }
 }

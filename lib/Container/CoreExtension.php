@@ -34,6 +34,8 @@ use DTL\TypeInference\Adapter\TolerantParser\TolerantTypeInferer;
 use DTL\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
 use DTL\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
 use DTL\WorseReflection\Reflector;
+use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
+use Phpactor\Application\ClassCopy;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -68,24 +70,32 @@ class CoreExtension implements ExtensionInterface
                 $container->get('application.class_mover'),
                 $container->get('console.prompter')
             );
-        });
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.class_copy', function (Container $container) {
+            return new ClassCopyCommand(
+                $container->get('application.class_copy'),
+                $container->get('console.prompter')
+            );
+        }, [ 'ui.console.command' => []]);
+
         $container->register('command.class_search', function (Container $container) {
             return new ClassSearchCommand(
                 $container->get('application.class_search')
             );
-        });
+        }, [ 'ui.console.command' => []]);
 
         $container->register('command.file_offset', function (Container $container) {
             return new FileInfoAtOffsetCommand(
                 $container->get('application.file_info')
             );
-        });
+        }, [ 'ui.console.command' => []]);
 
         $container->register('command.file_info', function (Container $container) {
             return new FileInfoCommand(
                 $container->get('application.file_info')
             );
-        });
+        }, [ 'ui.console.command' => []]);
 
         $container->register('console.prompter', function (Container $container) {
             return new ChainPrompt([
@@ -192,6 +202,14 @@ class CoreExtension implements ExtensionInterface
     {
         $container->register('application.class_mover', function (Container $container) {
             return new ClassMoverApp(
+                $container->get('class_to_file.converter'),
+                $container->get('class_mover.class_mover'),
+                $container->get('source_code_filesystem.git')
+            );
+        });
+
+        $container->register('application.class_copy', function (Container $container) {
+            return new ClassCopy(
                 $container->get('class_to_file.converter'),
                 $container->get('class_mover.class_mover'),
                 $container->get('source_code_filesystem.git')

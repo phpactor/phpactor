@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Application\Logger;
 
 use DTL\Filesystem\Domain\FilePath;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\ClassMover\Domain\FoundReferences;
 
-interface MoveLogger
+interface ClassMoverLogger
 {
     public function moving(FilePath $srcPath, FilePath $destPath);
 
