@@ -30,6 +30,10 @@ use DTL\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
 use Phpactor\UserInterface\Console\Prompt\BashPrompt;
 use DTL\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
+use DTL\TypeInference\Adapter\TolerantParser\TolerantTypeInferer;
+use DTL\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
+use DTL\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
+use DTL\WorseReflection\Reflector;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -174,8 +178,12 @@ class CoreExtension implements ExtensionInterface
             return new ClassToFileSourceCodeLoader($container->get('class_to_file.converter'));
         });
         $container->register('type_inference.type_inference', function (Container $container) {
-            return TypeInference::withSourceCodeLoader(
-                $container->get('type_inference.source_code_loader')
+            return new TolerantTypeInferer(null, new WorseMemberTypeResolver(
+                    new Reflector(
+                        new WorseSourceCodeLocator(
+                            $container->get('type_inference.source_code_loader'))
+                        )
+                    )
             );
         });
     }

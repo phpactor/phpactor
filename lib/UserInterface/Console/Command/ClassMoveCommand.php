@@ -20,7 +20,14 @@ class ClassMoveCommand extends Command
     const TYPE_CLASS = 'class';
     const TYPE_FILE = 'file';
 
+    /**
+     * @var ClassMover
+     */
     private $mover;
+
+    /**
+     * @var Prompt
+     */
     private $prompt;
 
     public function __construct(

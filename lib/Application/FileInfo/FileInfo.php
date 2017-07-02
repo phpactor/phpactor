@@ -10,16 +10,29 @@ use DTL\ClassFileConverter\Domain\FilePath;
 use DTL\ClassFileConverter\Domain\ClassName;
 use DTL\ClassFileConverter\Domain\ClassToFile;
 use DTL\TypeInference\Domain\InferredType;
+use DTL\TypeInference\Domain\TypeInferer;
+use DTL\ClassFileConverter\Domain\FileToClass;
 
 final class FileInfo
 {
+    /**
+     * @var TypeInference
+     */
     private $inference;
+
+    /**
+     * @var FileToClass
+     */
     private $classToFileConverter;
+
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
 
     public function __construct(
-        TypeInference $inference,
-        ClassToFile $classToFileConverter,
+        TypeInferer $inference,
+        FileToClass $classToFileConverter,
         Filesystem $filesystem
     )
     {
@@ -32,7 +45,6 @@ final class FileInfo
     {
         $path = $this->filesystem->createPath($sourcePath);
         $classCandidates = $this->classToFileConverter->fileToClassCandidates(FilePath::fromString((string) $path));
-
         $return = [
             'class' => null,
             'class_name' => null,
@@ -56,14 +68,15 @@ final class FileInfo
     {
         $path = $this->filesystem->createPath($sourcePath);
         $type = $this->inference->inferTypeAtOffset(
-            $this->filesystem->getContents($path),
-            $offset
+            SourceCode::fromString(
+                $this->filesystem->getContents($path)
+            ),
+            Offset::fromInt($offset)
         );
 
         $return = [
             'type' => (string) $type,
             'path' => null,
-
         ];
 
         if (InferredType::unknown() == $type) {
