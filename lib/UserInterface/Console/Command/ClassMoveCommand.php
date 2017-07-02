@@ -5,7 +5,7 @@ namespace Phpactor\UserInterface\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassMover\ClassMover;
+use Phpactor\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;

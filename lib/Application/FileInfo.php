@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\FileInfo;
+namespace Phpactor\Application;
 
 use DTL\TypeInference\TypeInference;
 use DTL\TypeInference\Domain\Offset;

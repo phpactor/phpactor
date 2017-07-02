@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\ClassSearch;
+namespace Phpactor\Application;
 
 use DTL\Filesystem\Domain\Filesystem;
 use DTL\ClassFileConverter\Domain\FileToClass;

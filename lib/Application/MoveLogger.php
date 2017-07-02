@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\ClassMover;
+namespace Phpactor\Application;
 
 use DTL\Filesystem\Domain\FilePath;
 use DTL\ClassMover\Domain\FullyQualifiedName;

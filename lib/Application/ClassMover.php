@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\ClassMover;
+namespace Phpactor\Application;
 
 use DTL\ClassFileConverter\Domain\ClassName;
 use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;

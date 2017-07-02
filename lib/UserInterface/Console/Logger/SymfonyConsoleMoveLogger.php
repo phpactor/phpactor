@@ -3,7 +3,7 @@
 namespace Phpactor\UserInterface\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassMover\MoveLogger;
+use Phpactor\Application\MoveLogger;
 use DTL\Filesystem\Domain\FilePath;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\ClassMover\Domain\FoundReferences;

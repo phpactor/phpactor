@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\FileInfo\FileInfo;
+use Phpactor\Application\FileInfo;
 
 class FileInfoCommand extends Command
 {
