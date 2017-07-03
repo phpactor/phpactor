@@ -24,13 +24,13 @@ class ClassFileNormalizer
             return (string) $this->classToFile($classOrFile);
         }
 
-        return $classOrFile;
+        return Phpactor::normalizePath($classOrFile);
     }
 
     public function normalizeToClass(string $classOrFile)
     {
         if (true === Phpactor::isFile($classOrFile)) {
-            return (string) $this->fileToClass($classOrFile);
+            return (string) $this->fileToClass(Phpactor::normalizePath($classOrFile));
         }
 
         return $classOrFile;

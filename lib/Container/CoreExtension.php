@@ -38,6 +38,8 @@ use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Application\FileInfoAtOffset;
 use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
+use Phpactor\Application\ClassReflector;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -63,6 +65,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerTypeInference($container);
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
+        $this->registerReflection($container);
     }
 
     private function registerConsole(Container $container)
@@ -96,6 +99,12 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.file_info', function (Container $container) {
             return new FileInfoCommand(
                 $container->get('application.file_info')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.class_reflector', function (Container $container) {
+            return new ClassReflectorCommand(
+                $container->get('application.class_reflector')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -191,12 +200,8 @@ class CoreExtension implements ExtensionInterface
         });
         $container->register('type_inference.type_inference', function (Container $container) {
             return new TolerantTypeInferer(null, new WorseMemberTypeResolver(
-                    new Reflector(
-                        new WorseSourceCodeLocator(
-                            $container->get('type_inference.source_code_loader'))
-                        )
-                    )
-            );
+                $container->get('reflection.reflector')
+            ));
         });
     }
 
@@ -241,8 +246,26 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
+        $container->register('application.class_reflector', function (Container $container) {
+            return new ClassReflector(
+                $container->get('application.helper.class_file_normalizer'),
+                $container->get('reflection.reflector')
+            );
+        });
+
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
+        });
+    }
+
+    private function registerReflection(Container $container)
+    {
+        $container->register('reflection.reflector', function (Container $container) {
+            return new Reflector(
+                new WorseSourceCodeLocator(
+                    $container->get('type_inference.source_code_loader')
+                )
+            );
         });
     }
 }
