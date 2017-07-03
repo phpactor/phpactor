@@ -14,6 +14,7 @@ use DTL\Reflector\Domain\CopyReport;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use DTL\WorseReflection\ClassName;
 use DTL\WorseReflection\Reflector;
+use DTL\WorseReflection\Type;
 
 class ClassReflector
 {
@@ -59,7 +60,7 @@ class ClassReflector
                     'has_type' => $parameter->hasType(),
                     'type' => $parameter->hasType() ? ($parameter->type()->className() ? $parameter->type()->className()->short(): (string) $parameter->type()) : null,
                     'has_default' => $parameter->hasDefault(),
-                    'default' => $parameter->hasDefault() ? (string) $parameter->default() : null,
+                    'default' => $parameter->hasDefault() ? $parameter->default() : null,
                 ];
             }
         }

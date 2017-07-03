@@ -54,7 +54,7 @@ class ClassReflectorCommand extends Command
                     return 
                         ($parameter['has_type'] ? $parameter['type'] . ' ' : '') .
                         '$' . $parameter['name'] .
-                        ($parameter['has_default'] ? ' = ' . var_export($parameter['default']) : '')
+                        ($parameter['has_default'] ? ' = ' . str_replace("\n", '', var_export($parameter['default'], true)) : '')
                     ;
                 }, $method['parameters']))
             );
