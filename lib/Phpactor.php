@@ -34,7 +34,7 @@ class Phpactor
     public static function isFile(string $string)
     {
         // . is illegal in namespace / classnames
-        if (-1 === strpos($string, '.')) {
+        if (-1 !== strpos($string, '.')) {
             return true;
         }
 

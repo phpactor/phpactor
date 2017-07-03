@@ -37,6 +37,7 @@ use DTL\WorseReflection\Reflector;
 use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -211,7 +212,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.class_copy', function (Container $container) {
             return new ClassCopy(
-                $container->get('class_to_file.converter'),
+                $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_mover'),
                 $container->get('source_code_filesystem.git')
             );
@@ -238,6 +239,10 @@ class CoreExtension implements ExtensionInterface
                 $container->get('source_code_filesystem.composer'),
                 $container->get('class_to_file.converter')
             );
+        });
+
+        $container->register('application.helper.class_file_normalizer', function (Container $container) {
+            return new ClassFileNormalizer($container->get('class_to_file.converter'));
         });
     }
 }

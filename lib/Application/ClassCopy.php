@@ -2,9 +2,6 @@
 
 namespace Phpactor\Application;
 
-use DTL\ClassFileConverter\Domain\ClassName;
-use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
-use DTL\ClassFileConverter\Domain\FilePath as ConverterFilePath;
 use DTL\ClassMover\ClassMover as ClassMoverFacade;
 use DTL\ClassMover\Domain\FullyQualifiedName;
 use DTL\Filesystem\Domain\FilePath;
@@ -15,20 +12,21 @@ use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassCopyLogger;
 use DTL\Filesystem\Domain\CopyReport;
+use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ClassCopy
 {
-    private $fileClassConverter;
+    private $classFileNormalizer;
     private $classMover;
     private $filesystem;
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        ClassToFileFileToClass $fileClassConverter,
+        ClassFileNormalizer $classFileNormalizer,
         ClassMoverFacade $classMover,
         Filesystem $filesystem
     ) {
-        $this->fileClassConverter = $fileClassConverter;
+        $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystem = $filesystem;
         $this->classMover = $classMover;
     }
@@ -38,23 +36,8 @@ class ClassCopy
      */
     public function copy(ClassCopyLogger $logger, string $src, string $dest)
     {
-        $srcPath = $src;
-        $destPath = $dest;
-
-        if (false === Phpactor::isFile($src)) {
-            $srcPathCandidates = $this->fileClassConverter->classToFileCandidates(ClassName::fromString($src));
-            if (false === $srcPathCandidates->noneFound()) {
-                $srcPath = (string) $srcPathCandidates->best();
-            }
-        }
-
-        if (false === Phpactor::isFile($dest)) {
-            $destPathCandidates = $this->fileClassConverter->classToFileCandidates(ClassName::fromString($dest));
-
-            if (false === $destPathCandidates->noneFound()) {
-                $destPath = (string) $destPathCandidates->best();
-            }
-        }
+        $srcPath = $this->classFileNormalizer->normalizeToFile($src);
+        $destPath = $this->classFileNormalizer->normalizeToFile($dest);
 
         return $this->copyFile($logger, $srcPath, $destPath);
     }
@@ -63,8 +46,8 @@ class ClassCopy
     {
         return $this->copyFile(
             $logger,
-            (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($srcName))->best(),
-            (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($destName))->best()
+            $this->classFileNormalizer->classToFile($srcName),
+            $this->classFileNormalizer->classToFile($destName)
         );
     }
 
@@ -105,12 +88,8 @@ class ClassCopy
         foreach ($copyReport->srcFiles() as $srcPath) {
             $destPath = $copyReport->destFiles()->current();
 
-            $srcClassName = $this->fileClassConverter->fileToClassCandidates(
-                ConverterFilePath::fromString($srcPath->path())
-            )->best();
-            $destClassName = $this->fileClassConverter->fileToClassCandidates(
-                ConverterFilePath::fromString($destPath->path())
-            )->best();
+            $srcClassName = $this->classFileNormalizer->fileToClass($srcPath->path());
+            $destClassName = $this->classFileNormalizer->fileToClass($destPath->path());
 
             $references = $this->classMover->findReferences($this->filesystem->getContents($srcPath), $srcClassName);
             $logger->replacing($destPath, $references, FullyQualifiedName::fromString($destClassName));
