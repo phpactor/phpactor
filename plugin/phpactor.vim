@@ -137,6 +137,27 @@ function! PhactGotoDefinition()
 
 endfunction
 
+function! PhactReflectAtOffset()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let currentPath = expand('%')
+
+    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let out = PhactExec(command)
+    let results = json_decode(out)
+
+    if (empty(results['path']))
+        echo "Could not locate class at offset: " . offset
+        return
+    endif
+
+    let command = 'class:reflect ' . results['path']
+    let out = PhactExec(command)
+    echo out
+
+endfunction
+
 function! PhactCopyFile()
     let currentPath = expand('%')
     let destPath = input("Copy to: ", currentPath, "file")

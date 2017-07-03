@@ -24,7 +24,8 @@ Example key mappings
 " Include use statement
 map <Leader>u :call PhactUseAdd()<CR>
 map <Leader>o :call PhactGotoDefinition()<CR>
-map <Leader>i :call PhactOffsetTypeInfo()<CR>
+map <Leader>pd :call PhactOffsetTypeInfo()<CR>
+map <Leader>i :call PhactReflectAtOffset()<CR>
 map <Leader>pfm :call PhactMoveFile()<CR>
 map <Leader>pfc :call PhactCopyFile()<CR>
 
@@ -70,4 +71,14 @@ copied file to be consistent with the filename.
 
 ```
 : call PhactCopyFile()
+```
+
+Reflect at offset
+-----------------
+
+Provide a synopsis of the class for the word under the cursor (if a class can
+be inferred from it).
+
+```
+:call PhactReflectAtOffset()
 ```
