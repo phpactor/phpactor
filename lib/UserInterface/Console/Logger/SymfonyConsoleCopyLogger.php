@@ -32,6 +32,7 @@ class SymfonyConsoleCopyLogger implements ClassCopyLogger
         if ($references->references()->isEmpty()) {
             return;
         }
+
         $this->output->writeln('<info>[REPL]</> <comment>'.$path.'</>');
 
         foreach ($references->references() as $reference) {

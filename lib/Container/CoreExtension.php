@@ -36,6 +36,7 @@ use DTL\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
 use DTL\WorseReflection\Reflector;
 use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\Application\ClassCopy;
+use Phpactor\Application\FileInfoAtOffset;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -87,7 +88,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.file_offset', function (Container $container) {
             return new FileInfoAtOffsetCommand(
-                $container->get('application.file_info')
+                $container->get('application.file_info_at_offset')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -218,6 +219,14 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.file_info', function (Container $container) {
             return new FileInfo(
+                $container->get('type_inference.type_inference'),
+                $container->get('class_to_file.converter'),
+                $container->get('source_code_filesystem.simple')
+            );
+        });
+
+        $container->register('application.file_info_at_offset', function (Container $container) {
+            return new FileInfoAtOffset(
                 $container->get('type_inference.type_inference'),
                 $container->get('class_to_file.converter'),
                 $container->get('source_code_filesystem.simple')

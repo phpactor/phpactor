@@ -10,14 +10,19 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\FileInfo;
+use Phpactor\Application\FileInfoAtOffset;
 
 class FileInfoAtOffsetCommand extends Command
 {
+    const PADDING = '  ';
+
+    /**
+     * @var FileInfoAtOffset
+     */
     private $infoForOffset;
 
     public function __construct(
-        FileInfo $infoForOffset
+        FileInfoAtOffset $infoForOffset
     ) {
         parent::__construct();
         $this->infoForOffset = $infoForOffset;
@@ -29,6 +34,7 @@ class FileInfoAtOffsetCommand extends Command
         $this->setDescription('Return information about given file at the given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
+        $this->addOption('frame', null, InputOption::VALUE_NONE, 'Show inferred frame state at offset');
         Handler\FormatHandler::configure($this);
     }
 
@@ -36,7 +42,8 @@ class FileInfoAtOffsetCommand extends Command
     {
         $info = $this->infoForOffset->infoForOffset(
             $input->getArgument('path'),
-            $input->getArgument('offset')
+            $input->getArgument('offset'),
+            $input->getOption('frame')
         );
 
         $format = $input->getOption('format');
@@ -55,11 +62,25 @@ class FileInfoAtOffsetCommand extends Command
         ));
     }
 
-    private function outputConsole(OutputInterface $output, array $info)
+    private function outputConsole(OutputInterface $output, array $info, int $padding = 0)
     {
+        switch ($padding) {
+            case 1:
+                $style = 'info';
+                break;
+            default:
+                $style = 'comment';
+        }
         foreach ($info as $key => $value) {
+            if (is_array($value)) {
+                $output->writeln(sprintf('%s<%s>%s</>:', str_repeat(self::PADDING, $padding), $style, $key));
+                $this->outputConsole($output, $value, ++$padding);
+                $padding--;
+                continue;
+            }
+
             $output->writeln(sprintf(
-                '%s:%s', $key, $value
+                '%s<%s>%s</>:%s', str_repeat(self::PADDING, $padding), $style, $key, $value
             ));
         }
     }

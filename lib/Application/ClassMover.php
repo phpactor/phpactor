@@ -17,8 +17,19 @@ use Phpactor\Application\Logger\ClassMoverLogger;
 
 class ClassMover
 {
+    /**
+     * @var ClassToFileFileToClass
+     */
     private $fileClassConverter;
+
+    /**
+     * @var ClassMover
+     */
     private $classMover;
+
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
 
     // rename compositetransformer => classToFileConverter

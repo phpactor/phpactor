@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdf156290ff0693c7970803193b46295",
+    "content-hash": "0343211cdce36f81d5a27e9658be3dc8",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/type-inference.git",
-                "reference": "89f46167766930ac084f8d3346977f6d6a8f1768"
+                "reference": "dcac2d601f437db04216b03fbdfcbe04feca11ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/type-inference/zipball/89f46167766930ac084f8d3346977f6d6a8f1768",
-                "reference": "89f46167766930ac084f8d3346977f6d6a8f1768",
+                "url": "https://api.github.com/repos/dantleech/type-inference/zipball/dcac2d601f437db04216b03fbdfcbe04feca11ae",
+                "reference": "dcac2d601f437db04216b03fbdfcbe04feca11ae",
                 "shasum": ""
             },
             "require": {
@@ -245,7 +245,7 @@
                 "source": "https://github.com/dantleech/type-inference/tree/master",
                 "issues": "https://github.com/dantleech/type-inference/issues"
             },
-            "time": "2017-07-02 17:51:38"
+            "time": "2017-07-03 14:58:27"
         },
         {
             "name": "dantleech/worse-reflection",
@@ -330,12 +330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "c812b148e10d9964977d07cc74f365718c361f1f"
+                "reference": "c812b14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c812b148e10d9964977d07cc74f365718c361f1f",
-                "reference": "c812b148e10d9964977d07cc74f365718c361f1f",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c812b14",
+                "reference": "c812b14",
                 "shasum": ""
             },
             "require": {
@@ -508,12 +508,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "0353f8aa5843d0cae051185514c0d877699704cc"
+                "reference": "10537916d60d2affc5d4a6d04906f431af454f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/0353f8aa5843d0cae051185514c0d877699704cc",
-                "reference": "0353f8aa5843d0cae051185514c0d877699704cc",
+                "url": "https://api.github.com/repos/symfony/console/zipball/10537916d60d2affc5d4a6d04906f431af454f63",
+                "reference": "10537916d60d2affc5d4a6d04906f431af454f63",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +570,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-24 09:47:31"
+            "time": "2017-07-03 13:31:36"
         },
         {
             "name": "symfony/debug",
@@ -742,12 +742,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f46d917c00519312152720916760ab18550c0ce5"
+                "reference": "519fb0872bb41e0f0c221ead8945eb12197bb034"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f46d917c00519312152720916760ab18550c0ce5",
-                "reference": "f46d917c00519312152720916760ab18550c0ce5",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/519fb0872bb41e0f0c221ead8945eb12197bb034",
+                "reference": "519fb0872bb41e0f0c221ead8945eb12197bb034",
                 "shasum": ""
             },
             "require": {
@@ -789,7 +789,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-30 09:07:51"
+            "time": "2017-07-03 10:20:17"
         },
         {
             "name": "webmozart/assert",
@@ -2204,12 +2204,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "201c3bd3f167804bdfba2bf6a3a26097978a854a"
+                "reference": "23d5ac279cc7b71f733daecca49782a644ef6b9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/201c3bd3f167804bdfba2bf6a3a26097978a854a",
-                "reference": "201c3bd3f167804bdfba2bf6a3a26097978a854a",
+                "url": "https://api.github.com/repos/symfony/process/zipball/23d5ac279cc7b71f733daecca49782a644ef6b9f",
+                "reference": "23d5ac279cc7b71f733daecca49782a644ef6b9f",
                 "shasum": ""
             },
             "require": {
@@ -2245,7 +2245,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-09 13:37:35"
+            "time": "2017-07-03 08:12:16"
         }
     ],
     "aliases": [],
@@ -2254,7 +2254,8 @@
         "dantleech/class-mover": 20,
         "dantleech/source-code-filesystem": 20,
         "dantleech/type-inference": 20,
-        "dantleech/class-to-file": 20
+        "dantleech/class-to-file": 20,
+        "microsoft/tolerant-php-parser": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

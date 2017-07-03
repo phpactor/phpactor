@@ -63,33 +63,4 @@ final class FileInfo
             'class_namespace' => $best->namespace(),
         ];
     }
-
-    public function infoForOffset(string $sourcePath, int $offset): array
-    {
-        $path = $this->filesystem->createPath($sourcePath);
-        $type = $this->inference->inferTypeAtOffset(
-            SourceCode::fromString(
-                $this->filesystem->getContents($path)
-            ),
-            Offset::fromInt($offset)
-        );
-
-        $return = [
-            'type' => (string) $type,
-            'path' => null,
-        ];
-
-        if (InferredType::unknown() == $type) {
-            return $return;
-        }
-
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $type));
-        foreach ($fileCandidates as $candidate) {
-            if (file_exists((string) $candidate)) {
-                $return['path'] = (string) $candidate;
-            }
-        }
-
-        return $return;
-    }
 }

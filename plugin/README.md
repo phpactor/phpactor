@@ -24,6 +24,9 @@ Example key mappings
 " Include use statement
 nnoremap <silent><leader>u :call PhactUseAdd()<CR>
 nnoremap <silent><Leader>o :call PhactGotoDefinition()<CR>
+
+" Show information about "type" under cursor including current frame
+nnoremap <silent><Leader>i :call PhactOffsetTypeInfo()<CR>
 ```
 
 Include use statement

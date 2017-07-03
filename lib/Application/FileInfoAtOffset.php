@@ -14,7 +14,7 @@ use DTL\TypeInference\Domain\TypeInferer;
 use DTL\ClassFileConverter\Domain\FileToClass;
 use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
 
-final class FileInfo
+final class FileInfoAtOffset
 {
     /**
      * @var TypeInference
@@ -65,10 +65,10 @@ final class FileInfo
         ];
     }
 
-    public function infoForOffset(string $sourcePath, int $offset): array
+    public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array
     {
         $path = $this->filesystem->createPath($sourcePath);
-        $type = $this->inference->inferTypeAtOffset(
+        $result = $this->inference->inferTypeAtOffset(
             SourceCode::fromString(
                 $this->filesystem->getContents($path)
             ),
@@ -76,15 +76,20 @@ final class FileInfo
         );
 
         $return = [
-            'type' => (string) $type,
+            'type' => (string) $result->type(),
             'path' => null,
+            'messages' => $result->log()->messages()
         ];
 
-        if (InferredType::unknown() == $type) {
+        if ($showFrame) {
+            $return['frame'] = $result->frame()->asDebugMap();
+        }
+
+        if (InferredType::unknown() == $result->type()) {
             return $return;
         }
 
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $type));
+        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->type()));
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;

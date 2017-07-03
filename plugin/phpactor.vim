@@ -137,6 +137,19 @@ function! PhactGotoDefinition()
 
 endfunction
 
+function! PhactOffsetTypeInfo()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let currentPath = expand('%')
+
+    let command = 'file:offset --frame ' . currentPath . ' ' . offset
+    let out = PhactExec(command)
+
+    echo out
+
+endfunction
+
 
 function! PhactExec(cmd)
     let result = system('php ' . s:genpath . ' ' . a:cmd)
