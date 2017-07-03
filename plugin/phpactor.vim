@@ -137,6 +137,34 @@ function! PhactGotoDefinition()
 
 endfunction
 
+function! PhactCopyFile()
+    let currentPath = expand('%')
+    let destPath = input("Copy to: ", currentPath, "file")
+    let command = 'class:copy ' . currentPath . ' ' . destPath
+    let out = PhactExec(command)
+    echo out
+    exec "edit " . destPath
+endfunction
+
+function! PhactMoveFile()
+    let currentPath = expand('%')
+    let destPath = input("Move to: ", currentPath, "file")
+    let command = 'class:move ' . currentPath . ' ' . destPath
+    echo "\nWARNING: This command will move the class and update ALL references in the git tree."
+    echo "         It is not guranteed to succeed. COMMIT YOUR WORK FIRST!"
+    echo "NOTE: Currently buffers will not be reloaded"
+    let confirm =  confirm('Do you want to proceed?', "&Yes\n&No")
+
+    if confirm == 2
+        echo "Cancelled"
+        return
+    endif
+
+    let out = PhactExec(command)
+    echo out
+    exec "edit " . destPath
+endfunction
+
 function! PhactOffsetTypeInfo()
 
     " START: Resolve FQN for class
