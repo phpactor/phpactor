@@ -204,7 +204,7 @@ class CoreExtension implements ExtensionInterface
     {
         $container->register('application.class_mover', function (Container $container) {
             return new ClassMoverApp(
-                $container->get('class_to_file.converter'),
+                $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_mover'),
                 $container->get('source_code_filesystem.git')
             );
