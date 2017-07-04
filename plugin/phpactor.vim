@@ -19,48 +19,56 @@ endfunction
 function! PhactComplete(findstart, base)
 
     if a:findstart
-        return 0
+        let line = getline('.')
+        let start = col('.') - 1
+
+        while start > 0 && (line[start - 1] =~ '\a' || line[start - 1] == '$')
+            let start -= 1
+        endwhile
+
+        return start
     endif
 
-    let matched = matchstr(a:base, "->")
+    let base = getline('.')
+    let matched = matchstr(base, "->")
 
-    if (matched == "->")
-        let offset = line2byte(line(".")) + col(".") + strlen(a:base) - 4
-        let stdin = join(getline(1,'.'), "\n")
-        let stdin = stdin . a:base
-        let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
-
-        let command = 'file:offset --format=json stdin ' . offset
-        let results = PhactExecStdIn(command, stdin)
-        let results = json_decode(results)
-
-        if (results['type'] == "<unknown>")
-            echo "Type could not be determined"
-            return -2
-        endif
-
-        let command = 'class:reflect --format=json ' . results['path']
-        let reflection = PhactExec(command)
-        let reflection = json_decode(reflection)
-
-        let completions = []
-
-        if !empty(reflection['methods'])
-            for method in values(reflection['methods'])
-                call add(completions, { 'word': a:base . method['name'], 'info': '', 'kind': 'Method'})
-            endfor
-        endif
-
-        if !empty(reflection['properties'])
-            for property in values(reflection['properties'])
-                call add(completions, { 'word': a:base . property['name'], 'info': '', 'kind': 'Prop'})
-            endfor
-        endif
-
-        return completions
+    if (matched != "->")
+        return -2
     endif
 
-    return -2
+    let offset = line2byte(line(".")) + col(".") + strlen(a:base) - 4
+    let stdin = join(getline(1,'.'), "\n")
+    let stdin = stdin . a:base
+    let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
+
+    let command = 'file:offset --format=json stdin ' . offset
+    let results = PhactExecStdIn(command, stdin)
+    let results = json_decode(results)
+
+    if (empty(results['path']))
+        echo "Type could not be determined"
+        return -2
+    endif
+
+    let command = 'class:reflect --format=json ' . results['path']
+    let reflection = PhactExec(command)
+    let reflection = json_decode(reflection)
+
+    let completions = []
+
+    if !empty(reflection['methods'])
+        for method in values(reflection['methods'])
+            call add(completions, { 'word': a:base . method['name'], 'info': '', 'kind': 'Method'})
+        endfor
+    endif
+
+    if !empty(reflection['properties'])
+        for property in values(reflection['properties'])
+            call add(completions, { 'word': a:base . property['name'], 'info': '', 'kind': 'Prop'})
+        endfor
+    endif
+
+    return completions
 endfunc
 
 """"""""""""""""""""""""

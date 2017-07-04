@@ -15,6 +15,7 @@ use Phpactor\Application\Helper\ClassFileNormalizer;
 use DTL\WorseReflection\ClassName;
 use DTL\WorseReflection\Reflector;
 use DTL\WorseReflection\Type;
+use DTL\WorseReflection\Reflection\ReflectionClass;
 
 class ClassReflector
 {
@@ -65,11 +66,13 @@ class ClassReflector
             }
         }
 
-        foreach ($reflection->properties() as $property) {
-            $return['properties'][$property->name()] = [
-                'name' => $property->name(),
-                'visibility' => (string) $property->visibility()
-            ];
+        if ($reflection instanceof ReflectionClass) {
+            foreach ($reflection->properties() as $property) {
+                $return['properties'][$property->name()] = [
+                    'name' => $property->name(),
+                    'visibility' => (string) $property->visibility()
+                ];
+            }
         }
 
         return $return;

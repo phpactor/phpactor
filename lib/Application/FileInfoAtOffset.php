@@ -17,7 +17,7 @@ use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
 final class FileInfoAtOffset
 {
     /**
-     * @var TypeInference
+     * @var TypeInferer
      */
     private $inference;
 
@@ -65,6 +65,7 @@ final class FileInfoAtOffset
             return $return;
         }
 
+        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->type()));
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;
