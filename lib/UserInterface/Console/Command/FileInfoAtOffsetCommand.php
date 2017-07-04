@@ -14,8 +14,6 @@ use Phpactor\Application\FileInfoAtOffset;
 
 class FileInfoAtOffsetCommand extends Command
 {
-    const PADDING = '  ';
-
     /**
      * @var FileInfoAtOffset
      */
@@ -47,41 +45,10 @@ class FileInfoAtOffsetCommand extends Command
         );
 
         $format = $input->getOption('format');
-
-        switch ($format) {
-            case Handler\FormatHandler::FORMAT_JSON:
-                $output->write(json_encode($info));
-                return;
-            case Handler\FormatHandler::FORMAT_CONSOLE:
-                return $this->outputConsole($output, $info);
-        }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Invalid format "%s", known formats: "%s"',
-            $format, implode('", "', Handler\FormatHandler::VALID_FORMATS)
-        ));
+        $this->dumperRegistry->get($format)->dump($output);
     }
 
     private function outputConsole(OutputInterface $output, array $info, int $padding = 0)
     {
-        switch ($padding) {
-            case 1:
-                $style = 'info';
-                break;
-            default:
-                $style = 'comment';
-        }
-        foreach ($info as $key => $value) {
-            if (is_array($value)) {
-                $output->writeln(sprintf('%s<%s>%s</>:', str_repeat(self::PADDING, $padding), $style, $key));
-                $this->outputConsole($output, $value, ++$padding);
-                $padding--;
-                continue;
-            }
-
-            $output->writeln(sprintf(
-                '%s<%s>%s</>:%s', str_repeat(self::PADDING, $padding), $style, $key, $value
-            ));
-        }
     }
 }
