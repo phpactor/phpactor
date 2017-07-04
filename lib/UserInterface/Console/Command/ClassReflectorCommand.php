@@ -14,6 +14,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\Question;
 use Phpactor\UserInterface\Console\Prompt\Prompt;
 use Symfony\Component\Console\Helper\Table;
+use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 
 class ClassReflectorCommand extends Command
 {
@@ -22,11 +23,18 @@ class ClassReflectorCommand extends Command
      */
     private $reflector;
 
+    /**
+     * @var DumperRegistry
+     */
+    private $dumperRegistry;
+
     public function __construct(
-        ClassReflector $reflector
+        ClassReflector $reflector,
+        DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->reflector = $reflector;
+        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
@@ -34,37 +42,12 @@ class ClassReflectorCommand extends Command
         $this->setName('class:reflect');
         $this->setDescription('Reflect a given class (file or FQN)');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
+        Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $reflection = $this->reflector->reflect($input->getArgument('name'));
-
-        $table = new Table($output);
-        $table->addRow([ '<info>Short</>', (string) $reflection['class_name']]);
-        $table->addRow([ '<info>Namespace</>', (string) $reflection['class_namespace']]);
-        $table->addRow([ '<info>FQN</>', (string) $reflection['class']]);
-        $table->addRow([ '<info>Methods:</>', '' ]);
-        foreach ($reflection['methods'] as $method) {
-            $header = sprintf(
-                '%s %s(%s)',
-                $method['visibility'],
-                '<comment>' . $method['name'] . '</>',
-                implode(', ', array_map(function ($parameter) {
-                    return 
-                        ($parameter['has_type'] ? $parameter['type'] . ' ' : '') .
-                        '$' . $parameter['name'] .
-                        ($parameter['has_default'] ? ' = ' . str_replace("\n", '', var_export($parameter['default'], true)) : '')
-                    ;
-                }, $method['parameters']))
-            );
-            $table->addRow([ '', $header ]);
-        }
-        $table->addRow([ '<info>Properties:</>', '' ]);
-        foreach ($reflection['properties'] as $property) {
-            $table->addRow([ '', sprintf('%s <comment>$%s</>', $property['visibility'], $property['name'])]);
-        }
-        $table->render();
-
+        $this->dumperRegistry->get($input->getOption('format'))->dump($output, $reflection);
     }
 }

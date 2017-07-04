@@ -35,8 +35,20 @@ class DumperRegistryTest extends TestCase
         $this->assertSame($dumper, $registry->get('foobar'));
     }
 
-    private function create(array $dumpers)
+    /**
+     * @testdox It should use default if no argument given.
+     */
+    public function testDefault()
     {
-        return new DumperRegistry($dumpers);
+        $registry = $this->create([
+            'foobar' => $dumper = $this->prophesize(Dumper::class)->reveal(),
+        ], 'foobar');
+
+        $this->assertSame($dumper, $registry->get());
+    }
+
+    private function create(array $dumpers, $default = 'default')
+    {
+        return new DumperRegistry($dumpers, $default);
     }
 }

@@ -34,18 +34,7 @@ class ClassSearchCommand extends Command
         $results = $this->search->classSearch($input->getArgument('name'));
         $format = $input->getOption('format');
 
-        switch ($format) {
-            case Handler\FormatHandler::FORMAT_JSON:
-                $output->write(json_encode($results));
-                return;
-            case Handler\FormatHandler::FORMAT_CONSOLE:
-                return $this->outputConsole($output, $results);
-        }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Invalid format "%s", known formats: "%s"',
-            $format, implode('", "', Handler\FormatHandler::VALID_FORMATS)
-        ));
+        $output->write(json_encode($results));
     }
 
     private function outputConsole(OutputInterface $output, array $results)

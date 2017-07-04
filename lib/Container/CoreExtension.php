@@ -40,6 +40,10 @@ use Phpactor\Application\FileInfoAtOffset;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
 use Phpactor\Application\ClassReflector;
+use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
+use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
+use Phpactor\UserInterface\Console\Dumper\JsonDumper;
+use Phpactor\UserInterface\Console\Dumper\TableDumper;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -53,6 +57,7 @@ class CoreExtension implements ExtensionInterface
         return [
             'autoload' => 'vendor/autoload.php',
             'cwd' => getcwd(),
+            'console.dumper.default' => 'indented',
         ];
     }
 
@@ -70,6 +75,9 @@ class CoreExtension implements ExtensionInterface
 
     private function registerConsole(Container $container)
     {
+        // ---------------
+        // Commands
+        // ---------------
         $container->register('command.class_move', function (Container $container) {
             return new ClassMoveCommand(
                 $container->get('application.class_mover'),
@@ -92,7 +100,8 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.file_offset', function (Container $container) {
             return new FileInfoAtOffsetCommand(
-                $container->get('application.file_info_at_offset')
+                $container->get('application.file_info_at_offset'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -104,10 +113,39 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.class_reflector', function (Container $container) {
             return new ClassReflectorCommand(
-                $container->get('application.class_reflector')
+                $container->get('application.class_reflector'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
 
+        // ---------------
+        // Dumpers
+        // ---------------
+        $container->register('console.dumper_registry', function (Container $container) {
+            $dumpers = [];
+            foreach ($container->getServiceIdsForTag('console.dumper') as $dumperId => $attrs) {
+                $dumpers[$attrs['name']] = $container->get($dumperId);
+            }
+
+            return new DumperRegistry($dumpers, $container->getParameter('console.dumper.default'));
+        });
+
+        $container->register('console.dumper.indented', function (Container $container) {
+            return new IndentedDumper();
+        }, [ 'console.dumper' => ['name' => 'indented']]);
+
+        $container->register('console.dumper.json', function (Container $container) {
+            return new JsonDumper();
+        }, [ 'console.dumper' => ['name' => 'json']]);
+
+        $container->register('console.dumper.fieldvalue', function (Container $container) {
+            return new TableDumper();
+        }, [ 'console.dumper' => ['name' => 'fieldvalue']]);
+
+
+        // ---------------
+        // Misc
+        // ---------------
         $container->register('console.prompter', function (Container $container) {
             return new ChainPrompt([
                 new BashPrompt()

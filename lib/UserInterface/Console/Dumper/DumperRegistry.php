@@ -4,17 +4,20 @@ namespace Phpactor\UserInterface\Console\Dumper;
 
 final class DumperRegistry
 {
+    private $default;
     private $dumpers = [];
 
-    public function __construct(array $dumpers)
+    public function __construct(array $dumpers, string $default)
     {
         foreach ($dumpers as $name => $dumper) {
             $this->add($name, $dumper);
         }
+        $this->default = $default;
     }
 
-    public function get(string $name)
+    public function get(string $name = null)
     {
+        $name = $name ?: $this->default;
         if (!isset($this->dumpers[$name])) {
             throw new \InvalidArgumentException(sprintf(
                 'Unknown dumper "%s", known dumpers: "%s"',

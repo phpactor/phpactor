@@ -11,6 +11,7 @@ use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 
 class FileInfoAtOffsetCommand extends Command
 {
@@ -19,11 +20,18 @@ class FileInfoAtOffsetCommand extends Command
      */
     private $infoForOffset;
 
+    /**
+     * @var DumperRegistry
+     */
+    private $dumperRegistry;
+
     public function __construct(
-        FileInfoAtOffset $infoForOffset
+        FileInfoAtOffset $infoForOffset,
+        DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->infoForOffset = $infoForOffset;
+        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
@@ -45,7 +53,7 @@ class FileInfoAtOffsetCommand extends Command
         );
 
         $format = $input->getOption('format');
-        $this->dumperRegistry->get($format)->dump($output);
+        $this->dumperRegistry->get($format)->dump($output, $info);
     }
 
     private function outputConsole(OutputInterface $output, array $info, int $padding = 0)
