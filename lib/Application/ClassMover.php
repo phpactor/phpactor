@@ -14,13 +14,14 @@ use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassMoverLogger;
+use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ClassMover
 {
     /**
      * @var ClassToFileFileToClass
      */
-    private $fileClassConverter;
+    private $classFileNormalizer;
 
     /**
      * @var ClassMover
@@ -34,11 +35,11 @@ class ClassMover
 
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        ClassToFileFileToClass $fileClassConverter,
+        ClassFileNormalizer $classFileNormalizer,
         ClassMoverFacade $classMover,
         Filesystem $filesystem
     ) {
-        $this->fileClassConverter = $fileClassConverter;
+        $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystem = $filesystem;
         $this->classMover = $classMover;
     }
@@ -48,23 +49,8 @@ class ClassMover
      */
     public function move(ClassMoverLogger $logger, string $src, string $dest)
     {
-        $srcPath = $src;
-        $destPath = $dest;
-
-        if (false === Phpactor::isFile($src)) {
-            $srcPathCandidates = $this->fileClassConverter->classToFileCandidates(ClassName::fromString($src));
-            if (false === $srcPathCandidates->noneFound()) {
-                $srcPath = (string) $srcPathCandidates->best();
-            }
-        }
-
-        if (false === Phpactor::isFile($dest)) {
-            $destPathCandidates = $this->fileClassConverter->classToFileCandidates(ClassName::fromString($dest));
-
-            if (false === $destPathCandidates->noneFound()) {
-                $destPath = (string) $destPathCandidates->best();
-            }
-        }
+        $srcPath = $this->classFileNormalizer->normalizeToFile($src);
+        $destPath = $this->classFileNormalizer->normalizeToFile($dest);
 
         return $this->moveFile($logger, $srcPath, $destPath);
     }
@@ -73,8 +59,8 @@ class ClassMover
     {
         return $this->moveFile(
             $logger,
-            (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($srcName))->best(),
-            (string) $this->fileClassConverter->classToFileCandidates(ClassName::fromString($destName))->best()
+            $this->classFileNormalizer->classToFile($srcName),
+            $this->classFileNormalizer->classToFile($destName)
         );
     }
 
@@ -139,10 +125,10 @@ class ClassMover
             $srcPath = $this->filesystem->createPath($srcPath);
             $destPath = $this->filesystem->createPath($destPath);
 
-            $srcClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($srcPath->path()));
-            $destClassName = $this->fileClassConverter->fileToClassCandidates(ConverterFilePath::fromString($destPath->path()));
+            $srcClassName = $this->classFileNormalizer->fileToClass($srcPath->path());
+            $destClassName = $this->classFileNormalizer->fileToClass($destPath->path());
 
-            $this->replaceReferences($logger, $srcClassName->best()->__toString(), $destClassName->best()->__toString());
+            $this->replaceReferences($logger, $srcClassName, $destClassName);
         }
     }
 

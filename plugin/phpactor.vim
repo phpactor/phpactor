@@ -118,6 +118,9 @@ function! PhactUseAdd()
     call setpos('.', savePos)
 endfunction
 
+""""""""""""""""
+" Goto defintion
+""""""""""""""""
 function! PhactGotoDefinition()
 
     " START: Resolve FQN for class
@@ -135,6 +138,55 @@ function! PhactGotoDefinition()
 
     exec "edit " . results['path']
 
+endfunction
+
+function! PhactReflectAtOffset()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let currentPath = expand('%')
+
+    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let out = PhactExec(command)
+    let results = json_decode(out)
+
+    if (empty(results['path']))
+        echo "Could not locate class at offset: " . offset
+        return
+    endif
+
+    let command = 'class:reflect ' . results['path']
+    let out = PhactExec(command)
+    echo out
+
+endfunction
+
+function! PhactCopyFile()
+    let currentPath = expand('%')
+    let destPath = input("Copy to: ", currentPath, "file")
+    let command = 'class:copy ' . currentPath . ' ' . destPath
+    let out = PhactExec(command)
+    echo out
+    exec "edit " . destPath
+endfunction
+
+function! PhactMoveFile()
+    let currentPath = expand('%')
+    let destPath = input("Move to: ", currentPath, "file")
+    let command = 'class:move ' . currentPath . ' ' . destPath
+    echo "\nWARNING: This command will move the class and update ALL references in the git tree."
+    echo "         It is not guranteed to succeed. COMMIT YOUR WORK FIRST!"
+    echo "NOTE: Currently buffers will not be reloaded"
+    let confirm =  confirm('Do you want to proceed?', "&Yes\n&No")
+
+    if confirm == 2
+        echo "Cancelled"
+        return
+    endif
+
+    let out = PhactExec(command)
+    echo out
+    exec "edit " . destPath
 endfunction
 
 function! PhactOffsetTypeInfo()

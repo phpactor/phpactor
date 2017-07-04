@@ -22,8 +22,12 @@ Example key mappings
 
 ```
 " Include use statement
-nnoremap <silent><leader>u :call PhactUseAdd()<CR>
-nnoremap <silent><Leader>o :call PhactGotoDefinition()<CR>
+map <Leader>u :call PhactUseAdd()<CR>
+map <Leader>o :call PhactGotoDefinition()<CR>
+map <Leader>pd :call PhactOffsetTypeInfo()<CR>
+map <Leader>i :call PhactReflectAtOffset()<CR>
+map <Leader>pfm :call PhactMoveFile()<CR>
+map <Leader>pfc :call PhactCopyFile()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>i :call PhactOffsetTypeInfo()<CR>
@@ -47,4 +51,34 @@ cursor:
 
 ```
 : call PhactGotoDefinition()
+```
+
+Move file
+---------
+
+Move the (class-containing) file in the current buffer to a new location and
+update the class name and all references to it in the current git-tree.
+
+```
+: call PhactMoveFile()
+```
+
+Copy file
+---------
+
+As with move, but simply copy the current file and updat the class name in the
+copied file to be consistent with the filename.
+
+```
+: call PhactCopyFile()
+```
+
+Reflect at offset
+-----------------
+
+Provide a synopsis of the class for the word under the cursor (if a class can
+be inferred from it).
+
+```
+:call PhactReflectAtOffset()
 ```
