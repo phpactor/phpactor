@@ -27,50 +27,25 @@ final class FileInfoAtOffset
     private $classToFileConverter;
 
     /**
-     * @var Filesystem
+     * @var Helper\FilesystemHelper
      */
-    private $filesystem;
+    private $filesystemHelper;
 
     public function __construct(
         TypeInferer $inference,
-        ClassToFileFileToClass $classToFileConverter,
-        Filesystem $filesystem
+        ClassToFileFileToClass $classToFileConverter
     )
     {
         $this->inference = $inference;
         $this->classToFileConverter = $classToFileConverter;
-        $this->filesystem = $filesystem;
-    }
-
-    public function infoForFile(string $sourcePath)
-    {
-        $path = $this->filesystem->createPath($sourcePath);
-        $classCandidates = $this->classToFileConverter->fileToClassCandidates(FilePath::fromString((string) $path));
-        $return = [
-            'class' => null,
-            'class_name' => null,
-            'class_namespace' => null,
-        ];
-
-        if ($classCandidates->noneFound()) {
-            return $return;
-        }
-
-        $best = $classCandidates->best();
-
-        return [
-            'class' => (string) $best,
-            'class_name' => $best->name(),
-            'class_namespace' => $best->namespace(),
-        ];
+        $this->filesystemHelper = new Helper\FilesystemHelper();
     }
 
     public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array
     {
-        $path = $this->filesystem->createPath($sourcePath);
         $result = $this->inference->inferTypeAtOffset(
             SourceCode::fromString(
-                $this->filesystem->getContents($path)
+                $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
             ),
             Offset::fromInt($offset)
         );
