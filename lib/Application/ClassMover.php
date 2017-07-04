@@ -24,7 +24,7 @@ class ClassMover
     private $classFileNormalizer;
 
     /**
-     * @var ClassMover
+     * @var ClassMoverFacade
      */
     private $classMover;
 

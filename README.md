@@ -16,6 +16,8 @@ VIM Plugin
 This application standalone, but it does include a plugin for VIM, see the
 [plugin README](https://github.com/dantleech/phpactor/tree/master/plugin/README.md).
 
+![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
+
 Configuration
 -------------
 
