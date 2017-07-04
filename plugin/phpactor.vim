@@ -4,10 +4,10 @@
 
 let s:genpath = expand('<sfile>:p:h') . '/../bin/phpactor'
 
-function! PhactNamespaceGet()
+function! phpactor#NamespaceGet()
     let currentPath = expand('%')
     let command = 'file:info --format=json ' . currentPath
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     let results = json_decode(out)
 
     return results['class_namespace']
@@ -16,7 +16,7 @@ endfunction
 """"""""""""""""""""""""
 " Autocomplete
 """"""""""""""""""""""""
-function! PhactComplete(findstart, base)
+function! phpactor#Complete(findstart, base)
 
     if a:findstart
         let line = getline('.')
@@ -32,7 +32,7 @@ function! PhactComplete(findstart, base)
     let base = getline('.')
     let matched = matchstr(base, "->")
 
-    if (matched != "->")
+    if (!match(base, "->" && !match(base, "::")))
         return -2
     endif
 
@@ -42,7 +42,7 @@ function! PhactComplete(findstart, base)
     let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
     let command = 'file:offset --format=json stdin ' . offset
-    let results = PhactExecStdIn(command, stdin)
+    let results = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(results)
 
     if (empty(results['path']))
@@ -51,7 +51,7 @@ function! PhactComplete(findstart, base)
     endif
 
     let command = 'class:reflect --format=json ' . results['path']
-    let reflection = PhactExec(command)
+    let reflection = phpactor#Exec(command)
     let reflection = json_decode(reflection)
 
     let completions = []
@@ -74,14 +74,14 @@ endfunc
 """"""""""""""""""""""""
 " Insert a use statement
 """"""""""""""""""""""""
-function! PhactUseAdd()
+function! phpactor#UseAdd()
     let savePos = getpos(".")
 
     " START: Resolve FQN for class
     let word = expand("<cword>")
 
     let command = 'class:search --format=json ' . word
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     let results = json_decode(out)
 
     if (len(results) == 0)
@@ -179,14 +179,14 @@ endfunction
 """"""""""""""""
 " Goto defintion
 """"""""""""""""
-function! PhactGotoDefinition()
+function! phpactor#GotoDefinition()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
     let command = 'file:offset --format=json ' . currentPath . ' ' . offset
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     let results = json_decode(out)
 
     if (empty(results['path']))
@@ -198,14 +198,14 @@ function! PhactGotoDefinition()
 
 endfunction
 
-function! PhactReflectAtOffset()
+function! phpactor#ReflectAtOffset()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
     let command = 'file:offset --format=json stdin ' . offset
-    let out = PhactExecStdIn(command, stdin)
+    let out = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(out)
 
     if (empty(results['path']))
@@ -214,21 +214,21 @@ function! PhactReflectAtOffset()
     endif
 
     let command = 'class:reflect ' . results['path']
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     echo out
 
 endfunction
 
-function! PhactCopyFile()
+function! phpactor#CopyFile()
     let currentPath = expand('%')
     let destPath = input("Copy to: ", currentPath, "file")
     let command = 'class:copy ' . currentPath . ' ' . destPath
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     echo out
     exec "edit " . destPath
 endfunction
 
-function! PhactMoveFile()
+function! phpactor#MoveFile()
     let currentPath = expand('%')
     let destPath = input("Move to: ", currentPath, "file")
     let command = 'class:move ' . currentPath . ' ' . destPath
@@ -242,29 +242,29 @@ function! PhactMoveFile()
         return
     endif
 
-    let out = PhactExec(command)
+    let out = phpactor#Exec(command)
     echo out
     exec "edit " . destPath
 endfunction
 
-function! PhactOffsetTypeInfo()
+function! phpactor#OffsetTypeInfo()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
     let command = 'file:offset --frame stdin ' . offset
-    let out = PhactExecStdIn(command, stdin)
+    let out = phpactor#ExecStdIn(command, stdin)
 
     echo out
 
 endfunction
 
-function! PhactExec(cmd)
-    return PhactExecStdIn(a:cmd, '')
+function! phpactor#Exec(cmd)
+    return phpactor#ExecStdIn(a:cmd, '')
 endfunction
 
-function! PhactExecStdIn(cmd, stdin)
+function! phpactor#ExecStdIn(cmd, stdin)
     let result = system('php ' . s:genpath . ' --verbose ' . a:cmd, a:stdin)
 
     if (v:shell_error == 0)
@@ -274,7 +274,7 @@ function! PhactExecStdIn(cmd, stdin)
     endif
 endfunction
 
-function! PhactNamespaceInsert()
-    exec "normal! i" . PhactNamespaceGet()
+function! phpactor#NamespaceInsert()
+    exec "normal! i" . phpactor#NamespaceGet()
 endfunction
 

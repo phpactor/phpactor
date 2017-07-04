@@ -21,6 +21,9 @@ Example key mappings
 --------------------
 
 ```
+" Omni-completion
+autocmd FileType php setlocal omnifunc=PhpactComplete
+
 " Include use statement
 map <Leader>u :call PhactUseAdd()<CR>
 map <Leader>o :call PhactGotoDefinition()<CR>
@@ -32,6 +35,11 @@ map <Leader>pfc :call PhactCopyFile()<CR>
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>i :call PhactOffsetTypeInfo()<CR>
 ```
+
+Omni-completion
+---------------
+
+![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
 
 Include use statement
 ---------------------
