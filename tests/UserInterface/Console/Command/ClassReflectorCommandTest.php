@@ -29,7 +29,7 @@ class ClassReflectorCommandTest extends SystemTestCase
      */
     public function testReflectCommandWithClass()
     {
-        $process = $this->phpactor('class:reflect "Animals\Badger"');
+        $process = $this->phpactor('class:reflect "Animals\\Badger"');
         $this->assertSuccess($process);
         $output = $process->getOutput();
         $this->assertContains('Animals\Badger', $output);

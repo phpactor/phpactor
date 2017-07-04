@@ -29,7 +29,7 @@ class ClassFileNormalizer
 
     public function normalizeToClass(string $classOrFile)
     {
-        if (true === Phpactor::isFile($classOrFile)) {
+        if (true === $resp = Phpactor::isFile($classOrFile)) {
             return (string) $this->fileToClass(Phpactor::normalizePath($classOrFile));
         }
 

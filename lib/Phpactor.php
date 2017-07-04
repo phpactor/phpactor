@@ -33,8 +33,13 @@ class Phpactor
 
     public static function isFile(string $string)
     {
-        // . is illegal in namespace / classnames
-        if (-1 !== strpos($string, '.')) {
+        $containsInvalidNamespaceChars = (bool) preg_match('{[\.\*/]}', $string);
+
+        if ($containsInvalidNamespaceChars) {
+            return true;
+        }
+
+        if (true === file_exists($string)) {
             return true;
         }
 

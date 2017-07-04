@@ -118,6 +118,9 @@ function! PhactUseAdd()
     call setpos('.', savePos)
 endfunction
 
+""""""""""""""""
+" Goto defintion
+""""""""""""""""
 function! PhactGotoDefinition()
 
     " START: Resolve FQN for class
