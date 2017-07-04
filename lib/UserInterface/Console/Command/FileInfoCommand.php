@@ -11,16 +11,20 @@ use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\FileInfo;
+use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 
 class FileInfoCommand extends Command
 {
     private $infoForOffset;
+    private $dumperRegistry;
 
     public function __construct(
-        FileInfo $infoForOffset
+        FileInfo $infoForOffset,
+        DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->infoForOffset = $infoForOffset;
+        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
@@ -38,27 +42,6 @@ class FileInfoCommand extends Command
         );
 
         $format = $input->getOption('format');
-
-        switch ($format) {
-            case Handler\FormatHandler::FORMAT_JSON:
-                $output->write(json_encode($info));
-                return;
-            case Handler\FormatHandler::FORMAT_CONSOLE:
-                return $this->outputConsole($output, $info);
-        }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Invalid format "%s", known formats: "%s"',
-            $format, implode('", "', Handler\FormatHandler::VALID_FORMATS)
-        ));
-    }
-
-    private function outputConsole(OutputInterface $output, array $info)
-    {
-        foreach ($info as $key => $value) {
-            $output->writeln(sprintf(
-                '<comment>%s</comment>:%s', $key, $value
-            ));
-        }
+        $this->dumperRegistry->get($format)->dump($output, $info);
     }
 }

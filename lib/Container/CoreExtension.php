@@ -107,7 +107,8 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.file_info', function (Container $container) {
             return new FileInfoCommand(
-                $container->get('application.file_info')
+                $container->get('application.file_info'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
 

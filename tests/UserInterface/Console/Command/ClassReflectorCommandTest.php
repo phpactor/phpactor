@@ -21,7 +21,7 @@ class ClassReflectorCommandTest extends SystemTestCase
         $this->assertSuccess($process);
         $output = $process->getOutput();
         $this->assertContains('Animals\Badger', $output);
-        $this->assertContains('Methods', $output);
+        $this->assertContains('methods', $output);
     }
 
     /**
@@ -33,6 +33,6 @@ class ClassReflectorCommandTest extends SystemTestCase
         $this->assertSuccess($process);
         $output = $process->getOutput();
         $this->assertContains('Animals\Badger', $output);
-        $this->assertContains('Methods', $output);
+        $this->assertContains('methods', $output);
     }
 }

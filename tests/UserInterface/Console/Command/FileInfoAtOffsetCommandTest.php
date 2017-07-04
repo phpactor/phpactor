@@ -32,13 +32,4 @@ class FileInfoAtOffsetCommandTest extends SystemTestCase
         $this->assertSuccess($process);
         $this->assertContains('{"type":"Animals', $process->getOutput());
     }
-
-    /**
-     * @testdox It throws an exception if an invalid format is passed
-     */
-    public function testProvideInformationForOffsetAsInvalid()
-    {
-        $process = $this->phpactor('file:offset lib/Badger.php 137 --format=foobar');
-        $this->assertFailure($process, 'Invalid format');
-    }
 }
