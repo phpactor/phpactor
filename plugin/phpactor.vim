@@ -14,6 +14,56 @@ function! PhactNamespaceGet()
 endfunction
 
 """"""""""""""""""""""""
+" Autocomplete
+""""""""""""""""""""""""
+function! PhactComplete(findstart, base)
+
+    if a:findstart
+        return 0
+    endif
+
+    let matched = matchstr(a:base, "->")
+
+    if (matched == "->")
+        let offset = line2byte(line(".")) + col(".") + strlen(a:base) - 4
+        let stdin = join(getline(1,'.'), "\n")
+        let stdin = stdin . a:base
+        let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
+
+        let command = 'file:offset --format=json stdin ' . offset
+        let results = PhactExecStdIn(command, stdin)
+        let results = json_decode(results)
+
+        if (results['type'] == "<unknown>")
+            echo "Type could not be determined"
+            return -2
+        endif
+
+        let command = 'class:reflect --format=json ' . results['path']
+        let reflection = PhactExec(command)
+        let reflection = json_decode(reflection)
+
+        let completions = []
+
+        if !empty(reflection['methods'])
+            for method in values(reflection['methods'])
+                call add(completions, { 'word': a:base . method['name'], 'info': '', 'kind': 'Method'})
+            endfor
+        endif
+
+        if !empty(reflection['properties'])
+            for property in values(reflection['properties'])
+                call add(completions, { 'word': a:base . property['name'], 'info': '', 'kind': 'Prop'})
+            endfor
+        endif
+
+        return completions
+    endif
+
+    return -2
+endfunc
+
+""""""""""""""""""""""""
 " Insert a use statement
 """"""""""""""""""""""""
 function! PhactUseAdd()
@@ -144,10 +194,10 @@ function! PhactReflectAtOffset()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
+    let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
-    let out = PhactExec(command)
+    let command = 'file:offset --format=json stdin ' . offset
+    let out = PhactExecStdIn(command, stdin)
     let results = json_decode(out)
 
     if (empty(results['path']))
@@ -193,23 +243,26 @@ function! PhactOffsetTypeInfo()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
+    let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --frame ' . currentPath . ' ' . offset
-    let out = PhactExec(command)
+    let command = 'file:offset --frame stdin ' . offset
+    let out = PhactExecStdIn(command, stdin)
 
     echo out
 
 endfunction
 
-
 function! PhactExec(cmd)
-    let result = system('php ' . s:genpath . ' ' . a:cmd)
+    return PhactExecStdIn(a:cmd, '')
+endfunction
+
+function! PhactExecStdIn(cmd, stdin)
+    let result = system('php ' . s:genpath . ' --verbose ' . a:cmd, a:stdin)
 
     if (v:shell_error == 0)
         return result
     else 
-        echoerr result
+        throw result
     endif
 endfunction
 

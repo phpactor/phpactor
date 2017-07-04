@@ -273,8 +273,7 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.file_info_at_offset', function (Container $container) {
             return new FileInfoAtOffset(
                 $container->get('type_inference.type_inference'),
-                $container->get('class_to_file.converter'),
-                $container->get('source_code_filesystem.simple')
+                $container->get('class_to_file.converter')
             );
         });
 

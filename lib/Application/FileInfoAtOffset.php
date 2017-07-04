@@ -52,6 +52,7 @@ final class FileInfoAtOffset
 
         $return = [
             'type' => (string) $result->type(),
+            'offset' => $offset,
             'path' => null,
             'messages' => $result->log()->messages()
         ];
@@ -64,7 +65,6 @@ final class FileInfoAtOffset
             return $return;
         }
 
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->type()));
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;
