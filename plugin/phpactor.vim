@@ -1,6 +1,10 @@
-" phpnamespace - Composer namepspace generator
-"
-" Author: Daniel Leech <daniel@dantleech.com>
+"  ______    __    __  .______      ___       ______ .___________.  ______   .______      
+" |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __  \  |   _  \     
+" |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|  |  |  | |  |_)  |    
+" |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |     |  |  |  | |      /     
+" |  |      |  |  |  | |  |     /  _____  \ |  `----.    |  |     |  `--'  | |  |\  \----.
+" | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
+"                                                                                         
 
 let s:genpath = expand('<sfile>:p:h') . '/../bin/phpactor'
 
@@ -210,6 +214,9 @@ function! phpactor#GotoDefinition()
 
 endfunction
 
+"""""""""""""""""""""""""""""""""""
+" Return type information at offset
+"""""""""""""""""""""""""""""""""""
 function! phpactor#ReflectAtOffset()
 
     " START: Resolve FQN for class
@@ -231,6 +238,9 @@ function! phpactor#ReflectAtOffset()
 
 endfunction
 
+"""""""""""""""""""""""""""
+" Interactively copy a file
+"""""""""""""""""""""""""""
 function! phpactor#CopyFile()
     let currentPath = expand('%')
     let destPath = input("Copy to: ", currentPath, "file")
@@ -240,6 +250,9 @@ function! phpactor#CopyFile()
     exec "edit " . destPath
 endfunction
 
+"""""""""""""""""""""""""""
+" Interactively move a file
+"""""""""""""""""""""""""""
 function! phpactor#MoveFile()
     let currentPath = expand('%')
     let destPath = input("Move to: ", currentPath, "file")
@@ -259,6 +272,9 @@ function! phpactor#MoveFile()
     exec "edit " . destPath
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Return debug information about the current offset
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#OffsetTypeInfo()
 
     " START: Resolve FQN for class
@@ -269,7 +285,6 @@ function! phpactor#OffsetTypeInfo()
     let out = phpactor#ExecStdIn(command, stdin)
 
     echo out
-
 endfunction
 
 function! phpactor#Exec(cmd)
