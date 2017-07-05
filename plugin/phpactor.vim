@@ -75,104 +75,115 @@ endfunc
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
+
+    ""
+    " @return int Number of extra lines added
+    ""
+    function! UseAdd(savePos)
+        " START: Resolve FQN for class
+        let word = expand("<cword>")
+
+        let out = phpactor#Exec('class:search --format=json ' . word)
+        let results = json_decode(out)
+
+        if (len(results) == 0)
+            echo "Could not find class"
+            echo results
+            return 0
+        endif
+
+        if (len(results) > 1)
+            let c = 1
+            let height = len(results) + 1
+            let list = []
+            for info in results
+                let list = add(list, c . '. ' . info['class'])
+                let c = c + 1
+            endfor
+
+            let choice = inputlist(list)
+            if (choice == 0)
+                return 0
+            endif
+            let choice = choice - 1
+
+            let classInfo = get(results, choice, {})
+
+            if ({} == classInfo)
+                echo "Invalid choice"
+                return 0
+            endif
+        endif
+
+        if (len(results) == 1)
+            let classInfo = results[0]
+        endif
+
+        call cursor(1, 1)
+        let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
+
+        if (existing > 0)
+            echo "\n"
+            echo "Use statement already included on line:" . existing
+            call setpos('.', a:savePos)
+            return 0
+        endif
+        "END: Resolve FQN for class
+
+        " START: Insert use statement
+        call cursor(1, 1)
+        let namespaceLineNb = search('^namespace') + 1
+
+        " Find an appropriate place to put the use statement,
+        " if there is no namespace, put it after the start tag
+        if (namespaceLineNb == 0)
+            let namespaceLineNb = 2
+        endif
+
+        " Search for the last use statement
+        call cursor(1, 1)
+        let lastUseLineNb = namespaceLineNb
+        let result = -1
+        while (result != 0)
+            let result = search('^use', '', line("w$"))
+
+            if (result > 0)
+                let lastUseLineNb = result
+            endif
+        endwhile
+
+        " Try and put the cursor at the best place
+        call cursor(lastUseLineNb, 1)
+
+        " Ensure an empty line before the use statement
+        let extraLines = 1
+        let line = getline(line('.') + 1)
+        if (!empty(line))
+            exec "normal! O"
+            let extraLines += 1
+        endif
+
+        " Insert use statement
+        execute "normal! ouse " . classInfo['class'] . ";"
+
+        " Ensure an empty line afterwards
+        let line = getline(line('.') + 1)
+        if (!empty(line))
+            exec "normal! o"
+            let extraLines += 1
+        endif
+
+        return extraLines
+
+    endfunc
+
     let savePos = getpos(".")
+    let extraLines = UseAdd(savePos)
 
-    " START: Resolve FQN for class
-    let word = expand("<cword>")
-
-    let command = 'class:search --format=json ' . word
-    let out = phpactor#Exec(command)
-    let results = json_decode(out)
-
-    if (len(results) == 0)
-        echo "Could not find class"
-        echo results
-        return
+    if extraLines
+        let savePos = [savePos[0], savePos[1] + extraLines, savePos[2], savePos[3]]
     endif
 
-    if (len(results) > 1)
-        let c = 1
-        let height = len(results) + 1
-        let list = []
-        for info in results
-            let list = add(list, c . '. ' . info['class'])
-            let c = c + 1
-        endfor
-
-        let choice = inputlist(list)
-        if (choice == 0)
-            return
-        endif
-        let choice = choice - 1
-
-        let classInfo = get(results, choice, {})
-
-        if ({} == classInfo)
-            echo "Invalid choice"
-            return
-        endif
-    endif
-
-    if (len(results) == 1)
-        let classInfo = results[0]
-    endif
-
-    call cursor(1, 1)
-    let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
-
-    if (existing > 0)
-        echo "\n"
-        echo "Use statement already included on line:" . existing
-        return
-    endif
-    "END: Resolve FQN for class
-
-    " START: Insert use statement
-    call cursor(1, 1)
-    let namespaceLineNb = search('^namespace') + 1
-
-    " Find an appropriate place to put the use statement,
-    " if there is no namespace, put it after the start tag
-    if (namespaceLineNb == 0)
-        let namespaceLineNb = 2
-    endif
-
-    " Search for the last use statement
-    call cursor(1, 1)
-    let lastUseLineNb = namespaceLineNb
-    let result = -1
-    while (result != 0)
-        let result = search('^use', '', line("w$"))
-
-        if (result > 0)
-            let lastUseLineNb = result
-        endif
-    endwhile
-
-    " Try and put the cursor at the best place
-    call cursor(lastUseLineNb, 1)
-
-    " Ensure an empty line before the use statement
-    let extraLines = 1
-    let line = getline(line('.') + 1)
-    if (!empty(line))
-        exec "normal! O"
-        let extraLines += 1
-    endif
-
-    " Insert use statement
-    execute "normal! ouse " . classInfo['class'] . ";"
-
-    " Ensure an empty line afterwards
-    let line = getline(line('.') + 1)
-    if (!empty(line))
-        exec "normal! o"
-        let extraLines += 1
-    endif
-
-    " Retore the cursor position
-    let savePos = [savePos[0], savePos[1] + extraLines, savePos[2], savePos[3]]
-    " END: Insert use statement
     call setpos('.', savePos)
 endfunction
 
