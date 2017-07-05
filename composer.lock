@@ -42,12 +42,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dantleech/class-mover.git",
+                "url": "https://github.com/phpactor/class-mover.git",
                 "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/class-mover/zipball/3e204b258d3e48701dee37baff3ed91a563e9e88",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/3e204b258d3e48701dee37baff3ed91a563e9e88",
                 "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88",
                 "shasum": ""
             },
@@ -96,13 +96,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dantleech/class-to-file.git",
-                "reference": "cfa16b145650e61113e97cd49e965ad0e2212a36"
+                "url": "https://github.com/phpactor/class-to-file.git",
+                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/class-to-file/zipball/cfa16b145650e61113e97cd49e965ad0e2212a36",
-                "reference": "cfa16b145650e61113e97cd49e965ad0e2212a36",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/e6a9abcc893d009cbf2f384b71c9c4328853f862",
+                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862",
                 "shasum": ""
             },
             "require-dev": {
@@ -136,22 +136,22 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/dantleech/class-to-file/tree/master",
-                "issues": "https://github.com/dantleech/class-to-file/issues"
+                "source": "https://github.com/phpactor/class-to-file/tree/master",
+                "issues": "https://github.com/phpactor/class-to-file/issues"
             },
-            "time": "2017-07-03 21:16:37"
+            "time": "2017-07-05 08:25:28"
         },
         {
             "name": "dantleech/source-code-filesystem",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dantleech/source-code-filesystem.git",
+                "url": "https://github.com/phpactor/source-code-filesystem.git",
                 "reference": "9885c8df3f40db32d621f8dda81483337850f13f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/source-code-filesystem/zipball/9885c8df3f40db32d621f8dda81483337850f13f",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/9885c8df3f40db32d621f8dda81483337850f13f",
                 "reference": "9885c8df3f40db32d621f8dda81483337850f13f",
                 "shasum": ""
             },
@@ -198,12 +198,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dantleech/type-inference.git",
+                "url": "https://github.com/phpactor/type-inference.git",
                 "reference": "76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/type-inference/zipball/76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c",
                 "reference": "76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c",
                 "shasum": ""
             },
