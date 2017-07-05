@@ -17,7 +17,12 @@ use Phpactor\Application\Helper\ClassFileNormalizer;
 class ClassCopy
 {
     private $classFileNormalizer;
+
+    /**
+     * @var ClassMoverFacade
+     */
     private $classMover;
+
     private $filesystem;
 
     // rename compositetransformer => classToFileConverter

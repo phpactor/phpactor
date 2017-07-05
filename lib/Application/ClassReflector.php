@@ -17,10 +17,18 @@ use DTL\WorseReflection\Reflector;
 use DTL\WorseReflection\Type;
 use DTL\WorseReflection\Reflection\ReflectionClass;
 use DTL\WorseReflection\Reflection\ReflectionMethod;
+use DTL\WorseReflection\Reflection\ReflectionProperty;
 
 class ClassReflector
 {
+    /**
+     * @var ClassFileNormalizer
+     */
     private $classFileNormalizer;
+
+    /**
+     * @var Reflector
+     */
     private $reflector;
 
     // rename compositetransformer => classToFileConverter
@@ -63,10 +71,11 @@ class ClassReflector
 
             $paramInfos = [];
             foreach ($method->parameters() as $parameter) {
+                $parameterType = $parameter->type();
                 // build parameter synopsis
                 $paramInfo = [];
                 if ($parameter->hasType()) {
-                    $paramInfo[] = $parameter->type()->className();
+                    $paramInfo[] = $parameterType->className() ?: (string) $parameterType;
                 }
                 $paramInfo[] = '$' . $parameter->name();
                 if ($parameter->hasDefault()) {
@@ -77,32 +86,43 @@ class ClassReflector
                 $return['methods'][$method->name()]['parameters'][$parameter->name()] = [
                     'name' => $parameter->name(),
                     'has_type' => $parameter->hasType(),
-                    'type' => $parameter->hasType() ? ($parameter->type()->className() ? $parameter->type()->className()->short(): (string) $parameter->type()) : null,
+                    'type' => $parameter->hasType() ? ($parameterType->className() ? $parameterType->className()->short(): (string) $parameterType) : null,
                     'has_default' => $parameter->hasDefault(),
                     'default' => $parameter->hasDefault() ? $parameter->default() : null,
                 ];
             }
 
             $methodInfo[] = '(' . implode(', ', $paramInfos) . ')';
+            $methodType = $method->type();
 
-            if (Type::unknown() != $method->type()) {
-                $methodInfo[] = ': ' . ($method->type()->className() ?: (string) $method->type());
+
+            if (Type::unknown() != $methodType) {
+                $methodInfo[] = ': ' . ($methodType->className() ?: (string) $methodType);
             }
 
-            $return['methods'][$method->name()]['type'] = $method->type()->className() ? $method->type()->className()->short(): (string) $method->type();
+            $return['methods'][$method->name()]['type'] = $methodType->className() ? $methodType->className()->short(): (string) $methodType;
 
             $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }
 
 
-        if ($reflection instanceof ReflectionClass) {
-            foreach ($reflection->properties() as $property) {
-                $return['properties'][$property->name()] = [
-                    'name' => $property->name(),
-                    'visibility' => (string) $property->visibility()
-                ];
-            }
+        if (!$reflection instanceof ReflectionClass) {
+            return $return;
+        }
+
+        /** @var $property ReflectionProperty */
+        foreach ($reflection->properties() as $property) {
+            $return['properties'][$property->name()] = [
+                'name' => $property->name(),
+                'visibility' => (string) $property->visibility(),
+                'info' => sprintf(
+                    '%s %s $%s',
+                    (string) $property->visibility(),
+                    (string) $property->type()->className() ?: (string) $property->type(),
+                    $property->name()
+                ),
+            ];
         }
 
         return $return;

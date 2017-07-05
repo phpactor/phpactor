@@ -63,13 +63,13 @@ function! phpactor#Complete(findstart, base)
     if !empty(reflection['methods'])
         for method in values(reflection['methods'])
             let info = method['synopsis']
-            call add(completions, { 'word': a:base . method['name'], 'info': info, 'kind': 'Method'})
+            call add(completions, { 'word': a:base . method['name'], 'info': info, 'kind': 'f'})
         endfor
     endif
 
     if !empty(reflection['properties'])
         for property in values(reflection['properties'])
-            call add(completions, { 'word': a:base . property['name'], 'info': '', 'kind': 'Prop'})
+            call add(completions, { 'word': a:base . property['name'], 'info': property['info'], 'kind': 'm'})
         endfor
     endif
 
