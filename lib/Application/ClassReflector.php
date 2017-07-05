@@ -16,6 +16,7 @@ use DTL\WorseReflection\ClassName;
 use DTL\WorseReflection\Reflector;
 use DTL\WorseReflection\Type;
 use DTL\WorseReflection\Reflection\ReflectionClass;
+use DTL\WorseReflection\Reflection\ReflectionMethod;
 
 class ClassReflector
 {
@@ -47,7 +48,12 @@ class ClassReflector
             'properties' => [],
         ];
 
+        /** @var $method ReflectionMethod */
         foreach ($reflection->methods() as $method) {
+            $methodInfo = [
+                (string) $method->visibility() . ' function ' . $method->name()
+            ];
+
             $return['methods'][$method->name()] = [
                 'name' => $method->name(),
                 'abstract' => $method->isAbstract(),
@@ -55,7 +61,22 @@ class ClassReflector
                 'parameters' => []
             ];
 
+            $paramInfos = [];
             foreach ($method->parameters() as $parameter) {
+                $paramInfo = [];
+
+                if ($parameter->hasType()) {
+                    $paramInfo[] = $parameter->type()->className();
+                }
+
+                $paramInfo[] = '$' . $parameter->name();
+
+                if ($parameter->hasDefault()) {
+                    $paramInfo[] = ' = ' . var_export($parameter->default(), true);
+                }
+
+                $paramInfos[] = implode(' ', $paramInfo);
+
                 $return['methods'][$method->name()]['parameters'][$parameter->name()] = [
                     'name' => $parameter->name(),
                     'has_type' => $parameter->hasType(),
@@ -64,7 +85,18 @@ class ClassReflector
                     'default' => $parameter->hasDefault() ? $parameter->default() : null,
                 ];
             }
+
+            $methodInfo[] = '(' . implode(', ', $paramInfos) . ')';
+
+            if (Type::unknown() != $method->type()) {
+                $methodInfo[] = ': ' . ($method->type()->className() ?: (string) $method->type());
+            }
+
+            $return['methods'][$method->name()]['type'] = $method->type()->className() ? $method->type()->className()->short(): (string) $method->type();
+            $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
+            $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }
+
 
         if ($reflection instanceof ReflectionClass) {
             foreach ($reflection->properties() as $property) {

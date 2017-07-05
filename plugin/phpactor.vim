@@ -58,7 +58,8 @@ function! phpactor#Complete(findstart, base)
 
     if !empty(reflection['methods'])
         for method in values(reflection['methods'])
-            call add(completions, { 'word': a:base . method['name'], 'info': '', 'kind': 'Method'})
+            let info = method['synopsis']
+            call add(completions, { 'word': a:base . method['name'], 'info': info, 'kind': 'Method'})
         endfor
     endif
 
