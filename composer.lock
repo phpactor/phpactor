@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0343211cdce36f81d5a27e9658be3dc8",
+    "content-hash": "19ef3da583e2e3ef988b0e0ff0edc541",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -86,8 +86,7 @@
             ],
             "description": "Library for moving classes",
             "support": {
-                "source": "https://github.com/dantleech/class-mover/tree/master",
-                "issues": "https://github.com/dantleech/class-mover/issues"
+                "source": "https://github.com/phpactor/class-mover/tree/master"
             },
             "time": "2017-06-28 13:39:05"
         },
@@ -136,8 +135,7 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/master",
-                "issues": "https://github.com/phpactor/class-to-file/issues"
+                "source": "https://github.com/phpactor/class-to-file/tree/master"
             },
             "time": "2017-07-05 08:25:28"
         },
@@ -188,8 +186,7 @@
             ],
             "description": "Filesystem library for working with source code files",
             "support": {
-                "source": "https://github.com/dantleech/source-code-filesystem/tree/master",
-                "issues": "https://github.com/dantleech/source-code-filesystem/issues"
+                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
             "time": "2017-07-02 21:08:31"
         },
@@ -199,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/type-inference.git",
-                "reference": "76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c"
+                "reference": "67d9512e254831abdbc96ac951011f24a74391f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c",
-                "reference": "76bbe6226904c4e81b9ce34a19e5bbae34cc4c2c",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/67d9512e254831abdbc96ac951011f24a74391f1",
+                "reference": "67d9512e254831abdbc96ac951011f24a74391f1",
                 "shasum": ""
             },
             "require": {
@@ -242,23 +239,22 @@
             ],
             "description": "Infer types in file offsets",
             "support": {
-                "source": "https://github.com/dantleech/type-inference/tree/master",
-                "issues": "https://github.com/dantleech/type-inference/issues"
+                "source": "https://github.com/phpactor/type-inference/tree/master"
             },
-            "time": "2017-07-03 21:17:21"
+            "time": "2017-07-05 13:00:28"
         },
         {
             "name": "dantleech/worse-reflection",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dantleech/worse-reflection.git",
-                "reference": "f745fca333e6a10b7d71b0bda7ef01b6ce61d851"
+                "url": "https://github.com/phpactor/worse-reflection.git",
+                "reference": "a65741679f648ed9cecccfe67659c9b322e16398"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/worse-reflection/zipball/f745fca333e6a10b7d71b0bda7ef01b6ce61d851",
-                "reference": "f745fca333e6a10b7d71b0bda7ef01b6ce61d851",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a65741679f648ed9cecccfe67659c9b322e16398",
+                "reference": "a65741679f648ed9cecccfe67659c9b322e16398",
                 "shasum": ""
             },
             "require": {
@@ -278,7 +274,11 @@
                     "DTL\\WorseReflection\\": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "DTL\\WorseReflection\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -289,7 +289,10 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-07-03 23:07:13"
+            "support": {
+                "source": "https://github.com/phpactor/worse-reflection/tree/master"
+            },
+            "time": "2017-07-05 15:48:30"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

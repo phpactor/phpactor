@@ -63,18 +63,15 @@ class ClassReflector
 
             $paramInfos = [];
             foreach ($method->parameters() as $parameter) {
+                // build parameter synopsis
                 $paramInfo = [];
-
                 if ($parameter->hasType()) {
                     $paramInfo[] = $parameter->type()->className();
                 }
-
                 $paramInfo[] = '$' . $parameter->name();
-
                 if ($parameter->hasDefault()) {
                     $paramInfo[] = ' = ' . var_export($parameter->default(), true);
                 }
-
                 $paramInfos[] = implode(' ', $paramInfo);
 
                 $return['methods'][$method->name()]['parameters'][$parameter->name()] = [
@@ -93,6 +90,7 @@ class ClassReflector
             }
 
             $return['methods'][$method->name()]['type'] = $method->type()->className() ? $method->type()->className()->short(): (string) $method->type();
+
             $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }

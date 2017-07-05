@@ -1,22 +1,26 @@
 {
-    "name": "dantleech/phpactor",
+    "name": "phpactor/phpactor",
     "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:dantleech/class-mover"
+            "url": "git@github.com:phpactor/class-mover"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:dantleech/class-to-file"
+            "url": "git@github.com:phpactor/class-to-file"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:dantleech/source-code-filesystem"
+            "url": "git@github.com:phpactor/source-code-filesystem"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:dantleech/type-inference"
+            "url": "git@github.com:phpactor/worse-reflection"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:phpactor/type-inference"
         }
     ],
     "require": {

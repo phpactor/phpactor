@@ -2,6 +2,8 @@
 
 namespace Phpactor\UserInterface\Console\Dumper;
 
+use Phpactor\UserInterface\Console\Dumper\Dumper;
+
 final class DumperRegistry
 {
     private $default;
@@ -15,7 +17,7 @@ final class DumperRegistry
         $this->default = $default;
     }
 
-    public function get(string $name = null)
+    public function get(string $name = null): Dumper
     {
         $name = $name ?: $this->default;
         if (!isset($this->dumpers[$name])) {
