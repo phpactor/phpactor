@@ -302,6 +302,7 @@ function! phpactor#CompleteConstructor()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
     let out = phpactor#ExecStdIn('class:transform stdin --transform=complete_constructor', stdin)
+    let savePos = getpos(".")
 
     if (empty(out))
         echo "No transformation made"
@@ -311,6 +312,8 @@ function! phpactor#CompleteConstructor()
     let @+ = out
     exec "%d"
     exec ":0 put +"
+
+    call setpos('.', savePos)
 endfunction
 
 function! phpactor#Exec(cmd)

@@ -106,6 +106,59 @@ path:/.../vendor/dtl/class-to-file/lib/ClassName.php
 ```
 Also returns JSON with `--format=json`
 
+### Transformations
+
+The transformation command accepts either a file name or `stdin` and applies
+the specified transformations.
+
+```bash
+$ phpactor class:transform lib/MyClass.php --transform=complete_constructor
+```
+
+#### Complete Constructor
+
+Name: `complete_constructor`
+
+This transformation will add any missing assignments in a constructor and add
+the class properties required.
+
+In:
+
+```
+<?php
+
+class Post
+{
+    public function __construct(string $hello, Foobar $foobar)
+    {
+    }
+}
+```
+
+Out:
+
+```
+<?php
+
+class Post
+{
+    /**
+     * @var string
+     */
+    private $hello;
+
+    /**
+     * @var Foobar
+     */
+    private $foobar;
+
+    public function __construct(string $hello, Foobar $foobar)
+    {
+        $this->hello = $hello;
+        $this->foobar = $foobar;
+    }
+}
+
 Child Libraries
 ---------------
 

@@ -16,6 +16,9 @@ use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ClassCopy
 {
+    /**
+     * @var ClassFileNormalizer
+     */
     private $classFileNormalizer;
 
     /**
@@ -23,6 +26,9 @@ class ClassCopy
      */
     private $classMover;
 
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
 
     // rename compositetransformer => classToFileConverter
@@ -32,8 +38,8 @@ class ClassCopy
         Filesystem $filesystem
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystem = $filesystem;
         $this->classMover = $classMover;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -108,3 +114,7 @@ class ClassCopy
         }
     }
 }
+
+
+
+
