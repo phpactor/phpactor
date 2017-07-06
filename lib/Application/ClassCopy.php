@@ -2,16 +2,16 @@
 
 namespace Phpactor\Application;
 
-use DTL\ClassMover\ClassMover as ClassMoverFacade;
-use DTL\ClassMover\Domain\FullyQualifiedName;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
+use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Application\ClassCopy\MoveOperation;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassCopyLogger;
-use DTL\Filesystem\Domain\CopyReport;
+use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ClassCopy

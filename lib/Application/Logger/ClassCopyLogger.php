@@ -2,9 +2,9 @@
 
 namespace Phpactor\Application\Logger;
 
-use DTL\Filesystem\Domain\FilePath;
-use DTL\ClassMover\Domain\FullyQualifiedName;
-use DTL\ClassMover\Domain\FoundReferences;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\FoundReferences;
 
 interface ClassCopyLogger
 {

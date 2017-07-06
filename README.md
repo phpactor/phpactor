@@ -1,7 +1,7 @@
 Phpactor
 ========
 
-[![Build Status](https://travis-ci.org/dantleech/phpactor.svg?branch=master)](https://travis-ci.org/dantleech/phpactor)
+[![Build Status](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used with editors such as VIM.
@@ -14,7 +14,7 @@ VIM Plugin
 ----------
 
 This application standalone, but it does include a plugin for VIM, see the
-[plugin README](https://github.com/dantleech/phpactor/tree/master/plugin/README.md).
+[plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
 ![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
 
@@ -89,7 +89,7 @@ names => absolute paths.
 
 ```bash
 ./bin/phpactor class:search Filesystem
-DTL\Filesystem\Domain\Filesystem:/.../vendor/dantleech/source-code-filesystem/lib/Domain/Filesystem.php
+Phpactor\Filesystem\Domain\Filesystem:/.../vendor/phpactor/source-code-filesystem/lib/Domain/Filesystem.php
 Symfony\Component\Filesystem\Filesystem:/.../vendor/symfony/filesystem/Filesystem.php
 ```
 
@@ -101,7 +101,7 @@ Return the fully qualified name of the class at the offset in the given file:
 
 ```php
 $ phpactor offset:info lib/Application/InformationForOffset/InformationForOffset.php 1382
-type:DTL\ClassFileConverter\ClassName
+type:Phpactor\ClassFileConverter\ClassName
 path:/.../vendor/dtl/class-to-file/lib/ClassName.php
 ```
 Also returns JSON with `--format=json`
@@ -111,11 +111,11 @@ Child Libraries
 
 It will package libraries in separate, decoupled libraries
 
-- [dantleech/class-to-file](https://github.com/dantleech/class-to-file): Convert files to class names and vice-versa.
-- [dantleech/class-mover](https://github.com/dantleech/class-mover): Find and update class references.
-- [dantleech/source-code-filesystem](https://github.com/dantleech/source-code-filesystem): Find and manage source code files.
-- [dantleech/type-inference](https://github.com/dantleech/type-inference): Determine type of thing at a given offset (very limited actually).
-- [dantleech/worse-reflection](https://github.com/dantleech/worse-reflection): Lightweight class reflection API
+- [phpactor/class-to-file](https://github.com/phpactor/class-to-file): Convert files to class names and vice-versa.
+- [phpactor/class-mover](https://github.com/phpactor/class-mover): Find and update class references.
+- [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code files.
+- [phpactor/type-inference](https://github.com/phpactor/type-inference): Determine type of thing at a given offset (very limited actually).
+- [phpactor/worse-reflection](https://github.com/phpactor/worse-reflection): Lightweight class reflection API
 
 About this project
 ------------------

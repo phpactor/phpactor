@@ -2,7 +2,7 @@
 
 namespace Phpactor\Application\Helper;
 
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 final class FilesystemHelper
 {

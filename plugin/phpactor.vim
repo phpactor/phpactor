@@ -73,6 +73,12 @@ function! phpactor#Complete(findstart, base)
         endfor
     endif
 
+    if !empty(reflection['constants'])
+        for constant in values(reflection['constants'])
+            call add(completions, { 'word': a:base . constant['name'], 'info': '', 'kind': 'm'})
+        endfor
+    endif
+
     return completions
 endfunc
 

@@ -5,17 +5,17 @@ namespace Phpactor\Tests\Unit\Console\Logger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
-use DTL\ClassMover\Domain\SourceCode;
-use DTL\ClassMover\Domain\FullyQualifiedName;
-use DTL\ClassMover\Domain\NamespacedClassRefList;
-use DTL\ClassMover\Domain\NamespaceRef;
-use DTL\ClassMover\Domain\Position;
-use DTL\ClassMover\Domain\QualifiedName;
-use DTL\ClassMover\Domain\ImportedNameRef;
-use DTL\ClassMover\Domain\FoundReferences;
-use DTL\ClassMover\Domain\SourceNamespace;
-use DTL\ClassMover\Domain\ClassRef;
-use DTL\Filesystem\Domain\FilePath;
+use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\NamespacedClassRefList;
+use Phpactor\ClassMover\Domain\NamespaceRef;
+use Phpactor\ClassMover\Domain\Position;
+use Phpactor\ClassMover\Domain\QualifiedName;
+use Phpactor\ClassMover\Domain\ImportedNameRef;
+use Phpactor\ClassMover\Domain\FoundReferences;
+use Phpactor\ClassMover\Domain\SourceNamespace;
+use Phpactor\ClassMover\Domain\ClassRef;
+use Phpactor\Filesystem\Domain\FilePath;
 
 class SymfonyConsoleMoveLoggerTest extends TestCase
 {

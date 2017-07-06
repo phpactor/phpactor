@@ -2,9 +2,9 @@
 
 namespace Phpactor\Application\Helper;
 
-use DTL\ClassFileConverter\Domain\ClassName;
-use DTL\ClassFileConverter\Domain\FilePath;
-use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\ClassFileConverter\Domain\ClassName;
+use Phpactor\ClassFileConverter\Domain\FilePath;
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\Phpactor;
 
 class ClassFileNormalizer

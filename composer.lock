@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "19ef3da583e2e3ef988b0e0ff0edc541",
+    "content-hash": "4c92c504f27ee32420a567a3513083cf",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -36,263 +36,6 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "time": "2017-02-14T19:40:03+00:00"
-        },
-        {
-            "name": "dantleech/class-mover",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/3e204b258d3e48701dee37baff3ed91a563e9e88",
-                "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88",
-                "shasum": ""
-            },
-            "require": {
-                "microsoft/tolerant-php-parser": "@dev",
-                "symfony/filesystem": "^2.7|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2",
-                "symfony/console": "^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\ClassMover\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\ClassMover\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Library for moving classes",
-            "support": {
-                "source": "https://github.com/phpactor/class-mover/tree/master"
-            },
-            "time": "2017-06-28 13:39:05"
-        },
-        {
-            "name": "dantleech/class-to-file",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/e6a9abcc893d009cbf2f384b71c9c4328853f862",
-                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.1",
-                "symfony/filesystem": "^3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\ClassFileConverter\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\ClassFileConverter\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Library to covert class names to file paths and vice-versa",
-            "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/master"
-            },
-            "time": "2017-07-05 08:25:28"
-        },
-        {
-            "name": "dantleech/source-code-filesystem",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "9885c8df3f40db32d621f8dda81483337850f13f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/9885c8df3f40db32d621f8dda81483337850f13f",
-                "reference": "9885c8df3f40db32d621f8dda81483337850f13f",
-                "shasum": ""
-            },
-            "require": {
-                "webmozart/path-util": "^2.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\Filesystem\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\Filesystem\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Filesystem library for working with source code files",
-            "support": {
-                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
-            },
-            "time": "2017-07-02 21:08:31"
-        },
-        {
-            "name": "dantleech/type-inference",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/type-inference.git",
-                "reference": "67d9512e254831abdbc96ac951011f24a74391f1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/67d9512e254831abdbc96ac951011f24a74391f1",
-                "reference": "67d9512e254831abdbc96ac951011f24a74391f1",
-                "shasum": ""
-            },
-            "require": {
-                "dantleech/class-to-file": "dev-master",
-                "dantleech/worse-reflection": "dev-master",
-                "microsoft/tolerant-php-parser": "dev-master"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\TypeInference\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\TypeInference\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Infer types in file offsets",
-            "support": {
-                "source": "https://github.com/phpactor/type-inference/tree/master"
-            },
-            "time": "2017-07-05 13:00:28"
-        },
-        {
-            "name": "dantleech/worse-reflection",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "a65741679f648ed9cecccfe67659c9b322e16398"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a65741679f648ed9cecccfe67659c9b322e16398",
-                "reference": "a65741679f648ed9cecccfe67659c9b322e16398",
-                "shasum": ""
-            },
-            "require": {
-                "microsoft/tolerant-php-parser": "dev-master"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\WorseReflection\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\WorseReflection\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Lazy AST reflector that is much worse than better",
-            "support": {
-                "source": "https://github.com/phpactor/worse-reflection/tree/master"
-            },
-            "time": "2017-07-05 15:48:30"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -367,6 +110,264 @@
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
             "time": "2017-06-19 03:11:27"
+        },
+        {
+            "name": "phpactor/class-mover",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/class-mover.git",
+                "reference": "f6c679402d458a035d3f6580b5f19592cfd4fe6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/f6c679402d458a035d3f6580b5f19592cfd4fe6f",
+                "reference": "f6c679402d458a035d3f6580b5f19592cfd4fe6f",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "@dev",
+                "symfony/filesystem": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2",
+                "symfony/console": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\ClassMover\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\ClassMover\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Library for moving classes",
+            "support": {
+                "source": "https://github.com/phpactor/class-mover/tree/master"
+            },
+            "time": "2017-07-06 11:55:11"
+        },
+        {
+            "name": "phpactor/class-to-file",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/class-to-file.git",
+                "reference": "790823977652c2a6ff07eae917ac6034dfbdc26c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/790823977652c2a6ff07eae917ac6034dfbdc26c",
+                "reference": "790823977652c2a6ff07eae917ac6034dfbdc26c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "symfony/filesystem": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Library to covert class names to file paths and vice-versa",
+            "support": {
+                "source": "https://github.com/phpactor/class-to-file/tree/master"
+            },
+            "time": "2017-07-06 11:56:48"
+        },
+        {
+            "name": "phpactor/source-code-filesystem",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/source-code-filesystem.git",
+                "reference": "8cd156ed024897d9b5d3d858c81e4e48f77aeca3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/8cd156ed024897d9b5d3d858c81e4e48f77aeca3",
+                "reference": "8cd156ed024897d9b5d3d858c81e4e48f77aeca3",
+                "shasum": ""
+            },
+            "require": {
+                "webmozart/path-util": "^2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2",
+                "symfony/filesystem": "^3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Filesystem\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\Filesystem\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Filesystem library for working with source code files",
+            "support": {
+                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
+            },
+            "time": "2017-07-06 11:57:59"
+        },
+        {
+            "name": "phpactor/type-inference",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/type-inference.git",
+                "reference": "b539113a1298c5e92fd262767b04e95557764930"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/b539113a1298c5e92fd262767b04e95557764930",
+                "reference": "b539113a1298c5e92fd262767b04e95557764930",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "dev-master",
+                "phpactor/class-to-file": "dev-master",
+                "phpactor/worse-reflection": "dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\TypeInference\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\TypeInference\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Infer types in file offsets",
+            "support": {
+                "source": "https://github.com/phpactor/type-inference/tree/master"
+            },
+            "time": "2017-07-06 11:42:25"
+        },
+        {
+            "name": "phpactor/worse-reflection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/worse-reflection.git",
+                "reference": "e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea",
+                "reference": "e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\WorseReflection\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\WorseReflection\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Lazy AST reflector that is much worse than better",
+            "support": {
+                "source": "https://github.com/phpactor/worse-reflection/tree/master"
+            },
+            "time": "2017-07-06 11:52:01"
         },
         {
             "name": "phpbench/container",
@@ -939,6 +940,256 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "dantleech/class-mover",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/class-mover.git",
+                "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/3e204b258d3e48701dee37baff3ed91a563e9e88",
+                "reference": "3e204b258d3e48701dee37baff3ed91a563e9e88",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "@dev",
+                "symfony/filesystem": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2",
+                "symfony/console": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\ClassMover\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DTL\\ClassMover\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Library for moving classes",
+            "support": {
+                "source": "https://github.com/phpactor/class-mover/tree/master"
+            },
+            "time": "2017-06-28T13:39:05+00:00"
+        },
+        {
+            "name": "dantleech/class-to-file",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/class-to-file.git",
+                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/e6a9abcc893d009cbf2f384b71c9c4328853f862",
+                "reference": "e6a9abcc893d009cbf2f384b71c9c4328853f862",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "symfony/filesystem": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\ClassFileConverter\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DTL\\ClassFileConverter\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Library to covert class names to file paths and vice-versa",
+            "support": {
+                "source": "https://github.com/phpactor/class-to-file/tree/master"
+            },
+            "time": "2017-07-05T08:25:28+00:00"
+        },
+        {
+            "name": "dantleech/source-code-filesystem",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/source-code-filesystem.git",
+                "reference": "9885c8df3f40db32d621f8dda81483337850f13f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/9885c8df3f40db32d621f8dda81483337850f13f",
+                "reference": "9885c8df3f40db32d621f8dda81483337850f13f",
+                "shasum": ""
+            },
+            "require": {
+                "webmozart/path-util": "^2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\Filesystem\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DTL\\Filesystem\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Filesystem library for working with source code files",
+            "support": {
+                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
+            },
+            "time": "2017-07-02T21:08:31+00:00"
+        },
+        {
+            "name": "dantleech/type-inference",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/type-inference.git",
+                "reference": "67d9512e254831abdbc96ac951011f24a74391f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/67d9512e254831abdbc96ac951011f24a74391f1",
+                "reference": "67d9512e254831abdbc96ac951011f24a74391f1",
+                "shasum": ""
+            },
+            "require": {
+                "dantleech/class-to-file": "dev-master",
+                "dantleech/worse-reflection": "dev-master",
+                "microsoft/tolerant-php-parser": "dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\TypeInference\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DTL\\TypeInference\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Infer types in file offsets",
+            "support": {
+                "source": "https://github.com/phpactor/type-inference/tree/master"
+            },
+            "time": "2017-07-05T13:00:28+00:00"
+        },
+        {
+            "name": "dantleech/worse-reflection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantleech/worse-reflection.git",
+                "reference": "f745fca333e6a10b7d71b0bda7ef01b6ce61d851"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantleech/worse-reflection/zipball/f745fca333e6a10b7d71b0bda7ef01b6ce61d851",
+                "reference": "f745fca333e6a10b7d71b0bda7ef01b6ce61d851",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\WorseReflection\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Lazy AST reflector that is much worse than better",
+            "time": "2017-07-03T23:07:13+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "dev-master",
@@ -2254,10 +2505,10 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dantleech/class-mover": 20,
-        "dantleech/source-code-filesystem": 20,
-        "dantleech/type-inference": 20,
-        "dantleech/class-to-file": 20,
+        "phpactor/class-mover": 20,
+        "phpactor/source-code-filesystem": 20,
+        "phpactor/type-inference": 20,
+        "phpactor/class-to-file": 20,
         "microsoft/tolerant-php-parser": 20
     },
     "prefer-stable": false,

@@ -2,17 +2,17 @@
 
 namespace Phpactor\Application;
 
-use DTL\TypeInference\TypeInference;
-use DTL\TypeInference\Domain\Offset;
-use DTL\TypeInference\Domain\SourceCode;
-use DTL\Filesystem\Domain\Filesystem;
-use DTL\ClassFileConverter\Domain\FilePath;
-use DTL\ClassFileConverter\Domain\ClassName;
-use DTL\ClassFileConverter\Domain\ClassToFile;
-use DTL\TypeInference\Domain\InferredType;
-use DTL\TypeInference\Domain\TypeInferer;
-use DTL\ClassFileConverter\Domain\FileToClass;
-use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\TypeInference\TypeInference;
+use Phpactor\TypeInference\Domain\Offset;
+use Phpactor\TypeInference\Domain\SourceCode;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\ClassFileConverter\Domain\FilePath;
+use Phpactor\ClassFileConverter\Domain\ClassName;
+use Phpactor\ClassFileConverter\Domain\ClassToFile;
+use Phpactor\TypeInference\Domain\InferredType;
+use Phpactor\TypeInference\Domain\TypeInferer;
+use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 
 final class FileInfoAtOffset
 {

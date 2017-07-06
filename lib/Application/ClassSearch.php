@@ -2,9 +2,9 @@
 
 namespace Phpactor\Application;
 
-use DTL\Filesystem\Domain\Filesystem;
-use DTL\ClassFileConverter\Domain\FileToClass;
-use DTL\ClassFileConverter\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\ClassFileConverter\Domain\FilePath;
 
 final class ClassSearch
 {

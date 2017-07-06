@@ -2,13 +2,13 @@
 
 namespace Phpactor\Application;
 
-use DTL\ClassFileConverter\Domain\ClassName;
-use DTL\ClassFileConverter\Domain\ClassToFileFileToClass;
-use DTL\ClassFileConverter\Domain\FilePath as ConverterFilePath;
-use DTL\ClassMover\ClassMover as ClassMoverFacade;
-use DTL\ClassMover\Domain\FullyQualifiedName;
-use DTL\Filesystem\Domain\FilePath;
-use DTL\Filesystem\Domain\Filesystem;
+use Phpactor\ClassFileConverter\Domain\ClassName;
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\ClassFileConverter\Domain\FilePath as ConverterFilePath;
+use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
+use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Application\ClassMover\MoveOperation;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;

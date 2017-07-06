@@ -2,25 +2,28 @@
 
 namespace Phpactor\Application;
 
-use DTL\ClassMover\ClassMover as ClassMoverFacade;
-use DTL\ClassMover\Domain\FullyQualifiedName;
-use DTL\Reflector\Domain\FilePath;
+use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
+use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\Reflector\Domain\FilePath;
 use Phpactor\Application\ClassCopy\MoveOperation;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassCopyLogger;
-use DTL\Reflector\Domain\CopyReport;
+use Phpactor\Reflector\Domain\CopyReport;
 use Phpactor\Application\Helper\ClassFileNormalizer;
-use DTL\WorseReflection\ClassName;
-use DTL\WorseReflection\Reflector;
-use DTL\WorseReflection\Type;
-use DTL\WorseReflection\Reflection\ReflectionClass;
-use DTL\WorseReflection\Reflection\ReflectionMethod;
-use DTL\WorseReflection\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\ClassName;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Type;
+use Phpactor\WorseReflection\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Reflection\ReflectionConstant;
 
 class ClassReflector
 {
+    const FOOBAR = 'foo';
+
     /**
      * @var ClassFileNormalizer
      */
@@ -54,6 +57,7 @@ class ClassReflector
             'class_name' => (string) $reflection->name()->short(),
             'methods' => [],
             'properties' => [],
+            'constants' => [],
         ];
 
         /** @var $method ReflectionMethod */
@@ -104,6 +108,13 @@ class ClassReflector
 
             $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
+        }
+
+        /** @var $constant ReflectionConstant */
+        foreach ($reflection->constants() as $constant) {
+            $return['constants'][$constant->name()] = [
+                'name' => $constant->name()
+            ];
         }
 
 
