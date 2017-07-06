@@ -26,7 +26,7 @@ autocmd FileType php setlocal omnifunc=PhpactComplete
 
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
-map <Leader>o :call phpactor#GotoDefinition()<CR>
+map <Leader>o :call phpactor#GotoType()<CR>
 map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
@@ -59,14 +59,15 @@ cursor:
 : call phpactor#UseAdd()
 ```
 
-Goto Definition
----------------
+Goto Type
+---------
 
-Will attempt to go to the definition of the word (class name) under the
-cursor:
+Will attempt to go to the type of the word under the
+cursor - the word could be anything for which a type (or return type) can be
+inferred (e.g. class names, variables, methods, etc):
 
 ```
-: call phpactor#GotoDefinition()
+:call phpactor#GotoType()
 ```
 
 Move file

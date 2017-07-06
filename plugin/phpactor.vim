@@ -201,7 +201,7 @@ endfunction
 """"""""""""""""
 " Goto defintion
 """"""""""""""""
-function! phpactor#GotoDefinition()
+function! phpactor#GotoType()
 
     " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
