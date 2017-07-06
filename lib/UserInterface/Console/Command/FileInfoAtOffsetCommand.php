@@ -55,8 +55,4 @@ class FileInfoAtOffsetCommand extends Command
         $format = $input->getOption('format');
         $this->dumperRegistry->get($format)->dump($output, $info);
     }
-
-    private function outputConsole(OutputInterface $output, array $info, int $padding = 0)
-    {
-    }
 }

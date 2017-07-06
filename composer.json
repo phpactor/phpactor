@@ -4,6 +4,10 @@
     "repositories": [
         {
             "type": "vcs",
+            "url": "git@github.com:phpactor/code-transform"
+        },
+        {
+            "type": "vcs",
             "url": "git@github.com:phpactor/class-mover"
         },
         {
@@ -30,6 +34,7 @@
         "phpactor/source-code-filesystem": "dev-master",
         "phpactor/type-inference": "dev-master",
         "phpactor/class-to-file": "dev-master",
+        "phpactor/code-transform": "dev-master",
         "symfony/filesystem": "^3.3",
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",

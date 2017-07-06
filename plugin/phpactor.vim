@@ -293,6 +293,26 @@ function! phpactor#OffsetTypeInfo()
     echo out
 endfunction
 
+"""""""""""""""""""""
+" Complete contructor
+"""""""""""""""""""""
+function! phpactor#CompleteConstructor()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let stdin = join(getline(1,'$'), "\n")
+    let out = phpactor#ExecStdIn('class:transform stdin --transform=complete_constructor', stdin)
+
+    if (empty(out))
+        echo "No transformation made"
+        return
+    endif
+
+    let @+ = out
+    exec "%d"
+    exec ":0 put +"
+endfunction
+
 function! phpactor#Exec(cmd)
     return phpactor#ExecStdIn(a:cmd, '')
 endfunction
@@ -308,6 +328,6 @@ function! phpactor#ExecStdIn(cmd, stdin)
 endfunction
 
 function! phpactor#NamespaceInsert()
-    exec "normal! i" . phpactor#NamespaceGet()
+    exec ":normal! i" . phpactor#NamespaceGet()
 endfunction
 

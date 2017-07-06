@@ -44,6 +44,11 @@ use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
 use Phpactor\UserInterface\Console\Dumper\JsonDumper;
 use Phpactor\UserInterface\Console\Dumper\TableDumper;
+use Phpactor\Application\Transformer;
+use Phpactor\CodeTransform\CodeTransform;
+use Phpactor\CodeTransform\Domain\Transformers;
+use Phpactor\UserInterface\Console\Command\ClassTransformCommand;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Transformer\CompleteConstructor;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -71,6 +76,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
         $this->registerReflection($container);
+        $this->registerTransform($container);
     }
 
     private function registerConsole(Container $container)
@@ -116,6 +122,12 @@ class CoreExtension implements ExtensionInterface
             return new ClassReflectorCommand(
                 $container->get('application.class_reflector'),
                 $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.transform', function (Container $container) {
+            return new ClassTransformCommand(
+                $container->get('application.transform')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -294,6 +306,10 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
         });
+
+        $container->register('application.transform', function (Container $container) {
+            return new Transformer($container->get('code_transform.transform'));
+        });
     }
 
     private function registerReflection(Container $container)
@@ -305,5 +321,21 @@ class CoreExtension implements ExtensionInterface
                 )
             );
         });
+    }
+
+    private function registerTransform(Container $container)
+    {
+        $container->register('code_transform.transform', function (Container $container) {
+            $transformers = [];
+            foreach ($container->getServiceIdsForTag('code_transform.transformer') as $serviceId => $attrs) {
+                $transformers[$attrs['name']] = $container->get($serviceId);
+            }
+
+            return CodeTransform::fromTransformers(Transformers::fromArray($transformers));
+        });
+
+        $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
+            return new CompleteConstructor();
+        }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
     }
 }
