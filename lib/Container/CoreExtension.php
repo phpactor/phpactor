@@ -52,6 +52,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Transformer\CompleteConstructo
 use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
+use Phpactor\CodeTransform\Adapter\WorseReflection\ImplementContracts;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -360,5 +361,9 @@ class CoreExtension implements ExtensionInterface
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
             return new CompleteConstructor();
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
+
+        $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
+            return new ImplementContracts($container->get('reflection.reflector'));
+        }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
     }
 }

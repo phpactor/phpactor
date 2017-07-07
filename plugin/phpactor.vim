@@ -317,6 +317,26 @@ function! phpactor#CompleteConstructor()
     call setpos('.', savePos)
 endfunction
 
+function! phpactor#ImplementContracts()
+
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let stdin = join(getline(1,'$'), "\n")
+    let out = phpactor#ExecStdIn('class:transform stdin --transform=implement_contracts', stdin)
+    let savePos = getpos(".")
+
+    if (empty(out))
+        echo "No transformation made"
+        return
+    endif
+
+    let @+ = out
+    exec "%d"
+    exec ":0 put +"
+
+    call setpos('.', savePos)
+endfunction
+
 function! phpactor#Exec(cmd)
     return phpactor#ExecStdIn(a:cmd, '')
 endfunction

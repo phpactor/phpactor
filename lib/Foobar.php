@@ -2,7 +2,7 @@
 
 namespace Phpactor;
 
-class Foobar
+class Foobar implements \Iterator
 {
     /**
      * @var Barfoo
