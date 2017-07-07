@@ -49,12 +49,12 @@ function! phpactor#Complete(findstart, base)
     let results = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(results)
 
-    if (empty(results['path']))
+    if (results['type'] == '<unknown>')
         echo "Type could not be determined"
         return -2
     endif
 
-    let command = 'class:reflect --format=json ' . results['path']
+    let command = 'class:reflect --format=json ' . shellescape(results['type'])
     let reflection = phpactor#Exec(command)
     let reflection = json_decode(reflection)
 
@@ -233,12 +233,13 @@ function! phpactor#ReflectAtOffset()
     let out = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(out)
 
-    if (empty(results['path']))
+    echo results
+    if (results['type'] == "<unknown>")
         echo "Could not locate class at offset: " . offset
         return
     endif
 
-    let command = 'class:reflect ' . results['path']
+    let command = 'class:reflect ' . shellescape(results['type'])
     let out = phpactor#Exec(command)
     echo out
 

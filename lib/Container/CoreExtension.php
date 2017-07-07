@@ -49,6 +49,9 @@ use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\UserInterface\Console\Command\ClassTransformCommand;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Transformer\CompleteConstructor;
+use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
+use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
+use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -62,7 +65,9 @@ class CoreExtension implements ExtensionInterface
         return [
             'autoload' => 'vendor/autoload.php',
             'cwd' => getcwd(),
-            'console.dumper.default' => 'indented',
+            'console_dumper_default' => 'indented',
+            'reflector_stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
+            'cache_dir' => __DIR__ . '/../../cache',
         ];
     }
 
@@ -140,7 +145,7 @@ class CoreExtension implements ExtensionInterface
                 $dumpers[$attrs['name']] = $container->get($dumperId);
             }
 
-            return new DumperRegistry($dumpers, $container->getParameter('console.dumper.default'));
+            return new DumperRegistry($dumpers, $container->getParameter('console_dumper_default'));
         });
 
         $container->register('console.dumper.indented', function (Container $container) {
@@ -315,12 +320,30 @@ class CoreExtension implements ExtensionInterface
     private function registerReflection(Container $container)
     {
         $container->register('reflection.reflector', function (Container $container) {
-            return new Reflector(
-                new WorseSourceCodeLocator(
-                    $container->get('type_inference.source_code_loader')
-                )
-            );
+            $locators = [];
+
+            foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
+                $locators[] = $container->get($locatorId);
+            }
+            return new Reflector(new ChainSourceLocator($locators));
         });
+
+        $container->register('reflection.locator.stub', function (Container $container) {
+            return new StubSourceLocator(
+                // TODO: we do not need the location facility of the reflector in this case
+                //       need to separate responsiblities
+                new Reflector(new StringSourceLocator(\Phpactor\WorseReflection\SourceCode::fromString(''))),
+                $container->getParameter('reflector_stub_directory'),
+                $container->getParameter('cache_dir')
+            );
+        }, [ 'reflection.source_locator' => []]);
+
+        $container->register('reflection.locator.worse', function (Container $container) {
+            return new WorseSourceCodeLocator(
+                $container->get('type_inference.source_code_loader')
+            );
+        }, [ 'reflection.source_locator' => []]);
+
     }
 
     private function registerTransform(Container $container)

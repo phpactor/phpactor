@@ -71,6 +71,39 @@
             "time": "2014-10-24T07:27:01+00:00"
         },
         {
+            "name": "jetbrains/phpstorm-stubs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JetBrains/phpstorm-stubs.git",
+                "reference": "38e7c38fd35c04833480115e6ce0b00a4dc80b5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/38e7c38fd35c04833480115e6ce0b00a4dc80b5f",
+                "reference": "38e7c38fd35c04833480115e6ce0b00a4dc80b5f",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "PHP runtime & extensions header files for PhpStorm",
+            "homepage": "https://www.jetbrains.com/phpstorm",
+            "keywords": [
+                "autocomplete",
+                "code",
+                "inference",
+                "inspection",
+                "jetbrains",
+                "phpstorm",
+                "stubs",
+                "type"
+            ],
+            "time": "2017-06-29 13:43:22"
+        },
+        {
             "name": "microsoft/tolerant-php-parser",
             "version": "dev-master",
             "source": {
@@ -324,12 +357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/type-inference.git",
-                "reference": "6519c0172efe6849981ca9edd6a2dfda8ce23cda"
+                "reference": "def6f4e500035337e00ceee1c166998b9ed06b14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/6519c0172efe6849981ca9edd6a2dfda8ce23cda",
-                "reference": "6519c0172efe6849981ca9edd6a2dfda8ce23cda",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/def6f4e500035337e00ceee1c166998b9ed06b14",
+                "reference": "def6f4e500035337e00ceee1c166998b9ed06b14",
                 "shasum": ""
             },
             "require": {
@@ -369,7 +402,7 @@
             "support": {
                 "source": "https://github.com/phpactor/type-inference/tree/master"
             },
-            "time": "2017-07-06 12:30:22"
+            "time": "2017-07-07 14:30:03"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -377,19 +410,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea"
+                "reference": "26f66fee69958c0184d20e925022fba89728d441"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea",
-                "reference": "e55b7d1cab71e2d92c2d1861e93a0cd9072c02ea",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/26f66fee69958c0184d20e925022fba89728d441",
+                "reference": "26f66fee69958c0184d20e925022fba89728d441",
                 "shasum": ""
             },
             "require": {
+                "jetbrains/phpstorm-stubs": "dev-master",
                 "microsoft/tolerant-php-parser": "dev-master"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "phpunit/phpunit": "^5.7",
+                "symfony/filesystem": "^3.3"
             },
             "type": "library",
             "extra": {
@@ -420,7 +455,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-06 11:52:01"
+            "time": "2017-07-07 13:52:45"
         },
         {
             "name": "phpbench/container",

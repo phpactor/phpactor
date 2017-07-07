@@ -9,7 +9,10 @@ use Phpactor\Phpactor;
 
 class ClassFileNormalizer
 {
-    private $fileToClassConverter;
+    /**
+     * @var ClassToFileFileToClass
+     */
+    private $fileClassConverter;
 
     public function __construct(
         ClassToFileFileToClass $fileClassConverter
@@ -54,3 +57,5 @@ class ClassFileNormalizer
         return (string) $classCandidates->best();
     }
 }
+
+
