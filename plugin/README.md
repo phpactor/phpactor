@@ -99,3 +99,17 @@ be inferred from it).
 ```
 :call phpactor#ReflectAtOffset()
 ```
+
+Transformations
+---------------
+
+![recording](https://user-images.githubusercontent.com/530801/27984415-92800230-63cd-11e7-8492-d5a7a93bb6f0.gif)
+
+Apply transformations to the current buffer:
+
+```
+: call phpactor#Transform
+1: complete_constructor
+2: implement_contracts
+Type number and <Enter> or click with mouse (empty cancels): 
+``
