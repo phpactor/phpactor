@@ -70,7 +70,7 @@ class CoreExtension implements ExtensionInterface
             'console_dumper_default' => 'indented',
             'reflector_stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
             'cache_dir' => __DIR__ . '/../../cache',
-            'indentation_string' => '    ',
+            'indentation' => '    ',
         ];
     }
 
@@ -361,7 +361,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('code_transform.editor', function (Container $container) {
-            return new Editor($container->getParameter('indentation_string'));
+            return new Editor($container->getParameter('indentation'));
         });
 
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
