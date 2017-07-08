@@ -31,10 +31,14 @@ map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
+map <Leader>tt :call phpactor#Transform()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>i :call phpactor#OffsetTypeInfo()<CR>
 ```
+
+**NOTE**: The above mappings are probably sub-optimal, feel free to find a
+something that works for you.
 
 Omni-completion
 ---------------
@@ -99,3 +103,17 @@ be inferred from it).
 ```
 :call phpactor#ReflectAtOffset()
 ```
+
+Transformations
+---------------
+
+![recording](https://user-images.githubusercontent.com/530801/27984415-92800230-63cd-11e7-8492-d5a7a93bb6f0.gif)
+
+Apply transformations to the current buffer:
+
+```
+: call phpactor#Transform
+1: complete_constructor
+2: implement_contracts
+Type number and <Enter> or click with mouse (empty cancels): 
+``
