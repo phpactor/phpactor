@@ -294,11 +294,12 @@ function! phpactor#OffsetTypeInfo()
     echo out
 endfunction
 
-"""""""""""""""""""""
-" Complete contructor
-"""""""""""""""""""""
+""""""""""""""""""""""""
+" Apply a transformation
+""""""""""""""""""""""""
 function! phpactor#Transform()
 
+    " TODO: Get the list of transforms from the PHP application
     let transformations = [ 'complete_constructor', 'implement_contracts' ]
 
     let list = []
@@ -310,30 +311,9 @@ function! phpactor#Transform()
     let choice = inputlist(list)
     let transform = transformations[choice - 1]
 
-    " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
     let out = phpactor#ExecStdIn('class:transform stdin --transform=' . transform, stdin)
-    let savePos = getpos(".")
-
-    if (empty(out))
-        echo "No transformation made"
-        return
-    endif
-
-    let @+ = out
-    exec "%d"
-    exec ":0 put +"
-
-    call setpos('.', savePos)
-endfunction
-
-function! phpactor#ImplementContracts()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-    let out = phpactor#ExecStdIn('class:transform stdin --transform=implement_contracts', stdin)
     let savePos = getpos(".")
 
     if (empty(out))

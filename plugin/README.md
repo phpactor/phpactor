@@ -31,10 +31,14 @@ map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
+map <Leader>tt :call phpactor#Transform()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>i :call phpactor#OffsetTypeInfo()<CR>
 ```
+
+**NOTE**: The above mappings are probably sub-optimal, feel free to find a
+something that works for you.
 
 Omni-completion
 ---------------
