@@ -357,12 +357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/type-inference.git",
-                "reference": "def6f4e500035337e00ceee1c166998b9ed06b14"
+                "reference": "e9cebeb4776dc372414bf7060bcc98a788357dd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/def6f4e500035337e00ceee1c166998b9ed06b14",
-                "reference": "def6f4e500035337e00ceee1c166998b9ed06b14",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/e9cebeb4776dc372414bf7060bcc98a788357dd7",
+                "reference": "e9cebeb4776dc372414bf7060bcc98a788357dd7",
                 "shasum": ""
             },
             "require": {
@@ -402,7 +402,7 @@
             "support": {
                 "source": "https://github.com/phpactor/type-inference/tree/master"
             },
-            "time": "2017-07-07 14:30:03"
+            "time": "2017-07-09 12:25:12"
         },
         {
             "name": "phpactor/worse-reflection",
