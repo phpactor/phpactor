@@ -1,6 +1,27 @@
 Phpactor VIM Plugin
 ===================
 
+![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
+
+The Phpactor VIM plugin intends to close the gap between VIM and PHP IDEs such
+as PHPStorm while remaining lightweight.
+
+Prerequisites
+-------------
+
+- Projects MUST use Composer and GIT.
+- PHP 7.
+
+Features
+--------
+
+- [Omni-completion](#omni-completion): Intelligent auto-completion with *no indexing!*.
+- [Insert use statement](#include-use-statement): Automatically search for and include the use
+  statement for class under cursor.
+- [Tranformations](#transformations): Apply transformations (implement contracts, etc).
+- [Move and copy classes](#move-class): Move/copy classes and update references to them.
+- [Go-to type](#goto-type): Open the class for the type under the cursor.
+
 Installation
 ------------
 
@@ -16,16 +37,6 @@ and then you will need to composer install:
 $ cd ~/.vim/bundles/phpactor
 $ composer install
 ```
-
-Features
---------
-
-- [Omni-completion](#omni-completion): Intelligent auto-completion with *no indexing!*.
-- [Insert use statement](#include-use-statement): Automatically search for and include the use
-  statement for class under cursor.
-- [Tranformations](#transformations): Apply transformations (implement contracts, etc).
-- [Move and copy classes](#move-class): Move/copy classes and update references to them.
-- [Go-to type](#goto-type): Open the class for the type under the cursor.
 
 Example configuration
 ---------------------
@@ -61,7 +72,8 @@ reflection API.
 
 ![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
 
-To invoke omni complete in insert mode `<ctrl>-n <ctrl-o>`.
+To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
+See `:help compl-omni`.
 
 Include use statement
 ---------------------

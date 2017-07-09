@@ -28,6 +28,7 @@
         }
     ],
     "require": {
+        "php": "^7.0",
         "symfony/console": "~2.7|^3.0",
         "phpbench/container": "^1.0",
         "phpactor/class-mover": "dev-master",
