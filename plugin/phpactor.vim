@@ -40,13 +40,14 @@ function! phpactor#Complete(findstart, base)
         return -2
     endif
 
-    let offset = line2byte(line(".")) + col(".") + strlen(a:base) - 4
+
+    " *base* is the line up until the completion point. We back-up 3 chars so
+    " that the offset is the variable that precedes it
+    let offset = line2byte(line(".")) + strlen(base) - 3
     let stdin = join(getline(1,'.'), "\n")
-    let stdin = stdin . a:base
     let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let command = 'file:offset --format=json stdin ' . offset
-    let results = phpactor#ExecStdIn(command, stdin)
+    let results = phpactor#ExecStdIn('file:offset --format=json stdin ' . offset, stdin)
     let results = json_decode(results)
 
     if (results['type'] == '<unknown>')
@@ -63,13 +64,13 @@ function! phpactor#Complete(findstart, base)
     if !empty(reflection['methods'])
         for method in values(reflection['methods'])
             let info = method['synopsis']
-            call add(completions, { 'word': a:base . method['name'], 'info': info, 'kind': 'f'})
+            call add(completions, { 'word': method['name'], 'info': info, 'kind': 'f'})
         endfor
     endif
 
     if !empty(reflection['properties'])
         for property in values(reflection['properties'])
-            call add(completions, { 'word': a:base . property['name'], 'info': property['info'], 'kind': 'm'})
+            call add(completions, { 'word': property['name'], 'info': property['info'], 'kind': 'm'})
         endfor
     endif
 

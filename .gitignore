@@ -2,3 +2,6 @@ vendor
 tests/Assets/Workspace
 tests/Assets/Cache
 cache
+
+# File frequently used for testing
+lib/Foobar.php
