@@ -177,6 +177,7 @@ class CoreExtension implements ExtensionInterface
     private function registerComposer(Container $container)
     {
         $container->register('composer.class_loaders', function (Container $container) {
+            $currentAutoloaders = spl_autoload_functions();
             $autoloaderPaths = (array) $container->getParameter('autoload');
             $autoloaders = [];
 
@@ -194,6 +195,14 @@ class CoreExtension implements ExtensionInterface
                 }
 
                 $autoloaders[] = $autoloader;
+            }
+
+            foreach (spl_autoload_functions() as $autoloadFunction) {
+                spl_autoload_unregister($autoloadFunction);
+            }
+
+            foreach ($currentAutoloaders as $autoloader) {
+                spl_autoload_register($autoloader);
             }
 
             return $autoloaders;
