@@ -43,7 +43,7 @@ Example configuration
 
 ```
 " Omni-completion
-autocmd FileType php setlocal omnifunc=PhpactComplete
+autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
