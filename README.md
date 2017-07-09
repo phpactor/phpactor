@@ -124,7 +124,7 @@ the class properties required.
 
 In:
 
-```
+```php
 <?php
 
 class Post
@@ -137,7 +137,7 @@ class Post
 
 Out:
 
-```
+```php
 <?php
 
 class Post
@@ -158,6 +158,7 @@ class Post
         $this->foobar = $foobar;
     }
 }
+```
 
 Child Libraries
 ---------------
@@ -167,7 +168,7 @@ It will package libraries in separate, decoupled libraries
 - [phpactor/class-to-file](https://github.com/phpactor/class-to-file): Convert files to class names and vice-versa.
 - [phpactor/class-mover](https://github.com/phpactor/class-mover): Find and update class references.
 - [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code files.
-- [phpactor/type-inference](https://github.com/phpactor/type-inference): Determine type of thing at a given offset (very limited actually).
+- [phpactor/type-inference](https://github.com/phpactor/type-inference): Determine type of thing at a given offset.
 - [phpactor/worse-reflection](https://github.com/phpactor/worse-reflection): Lightweight class reflection API
 
 About this project

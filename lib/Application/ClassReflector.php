@@ -70,7 +70,8 @@ class ClassReflector
                 'name' => $method->name(),
                 'abstract' => $method->isAbstract(),
                 'visibility' => (string) $method->visibility(),
-                'parameters' => []
+                'parameters' => [],
+                'static' => $method->isStatic() ? 1 : 0
             ];
 
             $paramInfos = [];
@@ -127,6 +128,7 @@ class ClassReflector
             $return['properties'][$property->name()] = [
                 'name' => $property->name(),
                 'visibility' => (string) $property->visibility(),
+                'static' => $property->isStatic() ? 1 : 0,
                 'info' => sprintf(
                     '%s %s $%s',
                     (string) $property->visibility(),

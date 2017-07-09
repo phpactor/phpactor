@@ -40,6 +40,10 @@ function! phpactor#Complete(findstart, base)
         return -2
     endif
 
+    let static = 0
+    if "::" == matchstr(base, "::")
+        let static = 1
+    endif
 
     " *base* is the line up until the completion point. We back-up 3 chars so
     " that the offset is the variable that precedes it
@@ -64,19 +68,25 @@ function! phpactor#Complete(findstart, base)
     if !empty(reflection['methods'])
         for method in values(reflection['methods'])
             let info = method['synopsis']
-            call add(completions, { 'word': method['name'], 'info': info, 'kind': 'f'})
+
+            if (1 == static && method['static']) || (empty(static) && empty(method['static']))
+                call add(completions, { 'word': method['name'], 'info': info, 'kind': 'f'})
+            endif
+
         endfor
     endif
 
     if !empty(reflection['properties'])
         for property in values(reflection['properties'])
-            call add(completions, { 'word': property['name'], 'info': property['info'], 'kind': 'm'})
+            if (1 == static && property['static']) || (empty(static) && empty(property['static']))
+                call add(completions, { 'word': property['name'], 'info': property['info'], 'kind': 'm'})
+            endif
         endfor
     endif
 
-    if !empty(reflection['constants'])
+    if static == 1 && !empty(reflection['constants'])
         for constant in values(reflection['constants'])
-            call add(completions, { 'word': a:base . constant['name'], 'info': '', 'kind': 'm'})
+            call add(completions, { 'word': constant['name'], 'info': '', 'kind': 'm'})
         endfor
     endif
 
@@ -339,7 +349,8 @@ function! phpactor#ExecStdIn(cmd, stdin)
     if (v:shell_error == 0)
         return result
     else 
-        throw result
+        echo result
+        throw "Could not execute command"
     endif
 endfunction
 
