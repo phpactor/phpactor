@@ -244,7 +244,6 @@ function! phpactor#ReflectAtOffset()
     let out = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(out)
 
-    echo results
     if (results['type'] == "<unknown>")
         echo "Could not locate class at offset: " . offset
         return
@@ -340,15 +339,24 @@ function! phpactor#Transform()
 endfunction
 
 function! phpactor#Exec(cmd)
-    return phpactor#ExecStdIn(a:cmd, '')
-endfunction
-
-function! phpactor#ExecStdIn(cmd, stdin)
-    let result = system('php ' . s:genpath . ' --verbose ' . a:cmd, a:stdin)
+    let cmd = 'php ' . s:genpath . ' --verbose ' . a:cmd
+    let result = system(cmd)
 
     if (v:shell_error == 0)
         return result
-    else 
+    else
+        echo result
+        throw "Could not execute command"
+    endif
+endfunction
+
+function! phpactor#ExecStdIn(cmd, stdin)
+    let cmd = 'php ' . s:genpath . ' --verbose ' . a:cmd
+    let result = system(cmd, a:stdin)
+
+    if (v:shell_error == 0)
+        return result
+    else
         echo result
         throw "Could not execute command"
     endif
