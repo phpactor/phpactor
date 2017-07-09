@@ -7,7 +7,7 @@ Installation
 Using Vundle:
 
 ```
-Plugin 'dantleech/phpactor'
+Plugin 'phpactor/phpactor'
 ```
 
 and then you will need to composer install:
@@ -16,6 +16,16 @@ and then you will need to composer install:
 $ cd ~/.vim/bundles/phpactor
 $ composer install
 ```
+
+Features
+--------
+
+- [Omni-completion](#omni-completion): Intelligent auto-completion with *no indexing!*.
+- [Insert use statement](#include-use-statement): Automatically search for and include the use
+  statement for class under cursor.
+- [Tranformations](#transformations): Apply transformations (implement contracts, etc).
+- [Move and copy classes](#move-class): Move/copy classes and update references to them.
+- [Go-to type](#goto-type): Open the class for the type under the cursor.
 
 Example configuration
 ---------------------
@@ -34,7 +44,7 @@ map <Leader>pfc :call phpactor#CopyFile()<CR>
 map <Leader>tt :call phpactor#Transform()<CR>
 
 " Show information about "type" under cursor including current frame
-nnoremap <silent><Leader>i :call phpactor#OffsetTypeInfo()<CR>
+nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
 ```
 
 **NOTE**: The above mappings are probably sub-optimal, feel free to find a
@@ -59,8 +69,8 @@ Include use statement
 Will attempt to include the use statement for the word (class name) under the
 cursor:
 
-```
-: call phpactor#UseAdd()
+```bash
+:call phpactor#UseAdd()
 ```
 
 Goto Type
@@ -70,28 +80,28 @@ Will attempt to go to the type of the word under the
 cursor - the word could be anything for which a type (or return type) can be
 inferred (e.g. class names, variables, methods, etc):
 
-```
+```bash
 :call phpactor#GotoType()
 ```
 
-Move file
----------
+Move class
+----------
 
 Move the (class-containing) file in the current buffer to a new location and
 update the class name and all references to it in the current git-tree.
 
-```
-: call phpactor#MoveFile()
+```bash
+:call phpactor#MoveFile()
 ```
 
-Copy file
----------
+Copy class
+----------
 
 As with move, but simply copy the current file and updat the class name in the
 copied file to be consistent with the filename.
 
-```
-: call phpactor#CopyFile()
+```bash
+:call phpactor#CopyFile()
 ```
 
 Reflect at offset
@@ -100,7 +110,7 @@ Reflect at offset
 Provide a synopsis of the class for the word under the cursor (if a class can
 be inferred from it).
 
-```
+```bash
 :call phpactor#ReflectAtOffset()
 ```
 
@@ -111,9 +121,9 @@ Transformations
 
 Apply transformations to the current buffer:
 
-```
-: call phpactor#Transform
+```bash
+:call phpactor#Transform
 1: complete_constructor
 2: implement_contracts
 Type number and <Enter> or click with mouse (empty cancels): 
-``
+```

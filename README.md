@@ -1,40 +1,65 @@
 Phpactor
 ========
 
+![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
+
 [![Build Status](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
-tools which can be used with editors such as VIM.
+tools which can be used standalone or as the backend for a text editor to
+provide intelligent code completion.
 
-The tool is currently limited to working with projects using **GIT** and **Composer**.
+Features
+--------
 
-It is currently under development.
-
-VIM Plugin
-----------
-
-This application standalone, but it does include a plugin for VIM, see the
-[plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
-
-![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
+- **No indexing**: [Composer](https://getcomposer.org) is used to determine where things should be.
+- **Reflection API**: Get reflection data for a given class or file.
+- **Type inference**: Determine the type of something at a given offset.
+- **Transformation**: Apply "transformations" to code (e.g. implement
+  interfaces, add missing properties).
+- **Class search**: Search for a class by its name.
+- **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
 Configuration
 -------------
 
-Configuration files are merged from the XDG open base dir standard, and from
-the current working directory, for example:
+Configuration files are loaded and merged from the following locations:
 
-```
-/etc/xdg/phpactor/phpactor.yml
-/home/daniel/.config/phpactor/phpactor.yml
-<currnent directory>/.phpactor.yml
+1. `/etc/xdg/phpactor/phpactor.yml`
+2. `/home/daniel/.config/phpactor/phpactor.yml`
+3. `<current directory>/.phpactor.yml`
+
+For example, to change the default indentation for your current project:
+
+```yaml
+# <path to your project>/.phpactor.yml
+indentation: "  " # use 2 spaces instead of 4
 ```
 
-All configuration options are defined in the
-`Phpactor\Container\CoreExtension` class.
+Change for all projects:
+
+```yaml
+# $HOME/.config/phpactor/.phpactor.yml
+indentation: "  "
+```
+
+The full list of configuration options can be found in this
+[file](https://github.com/phpactor/phpactor/blob/master/lib/Container/CoreExtension.php).
 
 Commands
 --------
+
+- [Move classes](#move-classes): Move a class, or a glob of classes, to a new
+  location and update all reference to it/them.
+- [Copy classes](#copy-classes): As with move but copy to a new file.
+- [Class search](#class-search): Search for a class by it's short name.
+- [Information at offset](#information-at-offset): Return the type information
+- [Reflect class](#reflect-class): Return reflection data for a given class
+  or file.
+- [Transform](#transform): Apply a transformation to a given file or from
+  STDIN.
+    - [Implement Contracts](#implement-contracts): Implement interface/abstract methods.
+    - [Complete Constructor](#complete-constructor): Finish off constructor definition.
 
 ### Move classes
 
@@ -65,7 +90,7 @@ Move a class by name:
 $ phpactor class:move "Acme\\BlogPost" "Acme\\Article"
 ```
 
-![Class mover](https://user-images.githubusercontent.com/530801/27299917-d0f6da86-5525-11e7-901e-f3881e3afd83.gif)
+![recording](https://user-images.githubusercontent.com/530801/27604530-7357d9d2-5b71-11e7-86ad-1921462b2f43.gif)
 
 - Moves individual class *files* or *directories*.
 - Move by fully qualified class name of file path.
@@ -99,14 +124,45 @@ Also returns JSON with `--format=json`
 
 Return the fully qualified name of the class at the offset in the given file:
 
-```php
+```bash
 $ phpactor offset:info lib/Application/InformationForOffset/InformationForOffset.php 1382
 type:Phpactor\ClassFileConverter\ClassName
 path:/.../vendor/dtl/class-to-file/lib/ClassName.php
 ```
 Also returns JSON with `--format=json`
 
-### Transformations
+### Reflect class
+
+Return reflection information for a given class name or file:
+
+```bash
+$ phpactor class:reflect lib/Application/Transformer.php
+class:Phpactor\Application\Transformer
+class_namespace:Phpactor\Application
+class_name:Transformer
+methods:
+  __construct:
+    name:__construct
+    abstract:
+    visibility:public
+    parameters:
+      transform:
+        name:transform
+        has_type:1
+        type:CodeTransform
+        has_default:
+        default:
+    static:0
+    type:<unknown>
+    synopsis:public function __construct(Phpactor\CodeTransform\CodeTransform $transform)
+    docblock:
+  transform:
+# ...
+```
+
+Also returns JSON with `--format=json`
+
+### Transform
 
 The transformation command accepts either a file name or `stdin` and applies
 the specified transformations.
@@ -160,6 +216,39 @@ class Post
 }
 ```
 
+#### Implement contracts
+
+Name: `implement_contracts`
+
+This transformer will implement any missing interface methods or abstract
+methods:
+
+In:
+
+```php
+<?php
+
+class Post implements \Countable
+{
+}
+```
+
+Out:
+
+```php
+<?php
+
+class Post implements \Countable
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+    }
+}
+```
+
 Child Libraries
 ---------------
 
@@ -169,30 +258,17 @@ It will package libraries in separate, decoupled libraries
 - [phpactor/class-mover](https://github.com/phpactor/class-mover): Find and update class references.
 - [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code files.
 - [phpactor/type-inference](https://github.com/phpactor/type-inference): Determine type of thing at a given offset.
+- [phpactor/code-transform](https://github.com/phpactor/code-transform): Transform code.
 - [phpactor/worse-reflection](https://github.com/phpactor/worse-reflection): Lightweight class reflection API
 
 About this project
 ------------------
 
-Previous attempts at writing this tool involved building a single
-"intellisense" core which is a database containing meta information about all
-the code in the project. Whilst this approach would provide a solid core, it
-is also very ambitious and offers little immediate payback (and continuing
-instability) to justify the investment in time required.
+This project attempts to close the gap between text editors such as VIM and
+IDEs such as PHPStorm.
 
-The approach taken this time around is to design libraries which do *one thing
-and do one thing well*. 
-
-Some of the these libraries (e.g. class mover) may later be superceded by a
-"reference replacer" which handles, f.e. refactoring method names. But as the
-pre-requisite for this is writing an type inference system, it may be a long
-way off, whereas replacing class references is comparatively easy and provides
-a large value return in a short amount of time.
-
-Other libraries are more generic (e.g. class to file, source code filesystem)
-and can be used by other future libraries (e.g. go-to-definition,
-use-statement include, snippet generation, interface implementation,
-intellisense database...).
-
-None of the child libraries are currently intended to be consumed
-independently and cannot be found on packagist.
+One of the interesting things about Phpactor is that it does not require any
+indexing before it is used. It leverages the Composer to determine class
+locations and to determine class FQNs from file locations. Introspection is
+done in realtime (using the excellent [Tolereant PHP
+Parser](https://github.com/Microsoft/tolerant-php-parser).
