@@ -13,12 +13,19 @@ Features
 --------
 
 - **No indexing**: [Composer](https://getcomposer.org) is used to determine where things should be.
+- **Move and copy**: Move and copy classes, updating PHP references to them.
 - **Reflection API**: Get reflection data for a given class or file.
 - **Type inference**: Determine the type of something at a given offset.
 - **Transformation**: Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
 - **Class search**: Search for a class by its name.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
+
+Prerequisites
+-------------
+
+- Projects MUST use Composer and GIT.
+- PHP 7.
 
 Configuration
 -------------
@@ -249,10 +256,8 @@ class Post implements \Countable
 }
 ```
 
-Child Libraries
----------------
-
-It will package libraries in separate, decoupled libraries
+Packages
+--------
 
 - [phpactor/class-to-file](https://github.com/phpactor/class-to-file): Convert files to class names and vice-versa.
 - [phpactor/class-mover](https://github.com/phpactor/class-mover): Find and update class references.
@@ -271,4 +276,12 @@ One of the interesting things about Phpactor is that it does not require any
 indexing before it is used. It leverages the Composer to determine class
 locations and to determine class FQNs from file locations. Introspection is
 done in realtime (using the excellent [Tolereant PHP
-Parser](https://github.com/Microsoft/tolerant-php-parser).
+Parser](https://github.com/Microsoft/tolerant-php-parser)).
+
+Using Composer we can locate a file using a fully qualified class name, when
+we have located the file we can parse it. This is enough for common
+auto-completion.
+
+For other use cases, such as searching for a class, we simply perform a file
+search, but only in those directories mapped by Composer. Even in large
+projects searching for a class by its (short) name is pretty fast.

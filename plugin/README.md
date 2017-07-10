@@ -6,12 +6,6 @@ Phpactor VIM Plugin
 The Phpactor VIM plugin intends to close the gap between VIM and PHP IDEs such
 as PHPStorm while remaining lightweight.
 
-Prerequisites
--------------
-
-- Projects MUST use Composer and GIT.
-- PHP 7.
-
 Features
 --------
 

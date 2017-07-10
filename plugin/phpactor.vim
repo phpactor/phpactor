@@ -67,7 +67,7 @@ function! phpactor#Complete(findstart, base)
 
     if !empty(reflection['methods'])
         for method in values(reflection['methods'])
-            let info = method['synopsis']
+            let info = method['docblock'] . "\n" . method['synopsis']
 
             if (1 == static && method['static']) || (empty(static) && empty(method['static']))
                 call add(completions, { 'word': method['name'], 'info': info, 'kind': 'f'})
