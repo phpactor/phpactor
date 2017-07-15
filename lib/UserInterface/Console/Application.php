@@ -8,6 +8,7 @@ use Phpactor\Container\CoreExtension;
 use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
 use Symfony\Component\Yaml\Yaml;
+use Phpactor\Container\CodeTransformExtension;
 
 class Application extends SymfonyApplication
 {
@@ -21,6 +22,7 @@ class Application extends SymfonyApplication
         $config = $this->loadConfig();
         $container = new Container([
             CoreExtension::class,
+            CodeTransformExtension::class,
         ], $this->loadConfig());
         $container->init();
 
