@@ -338,6 +338,31 @@ function! phpactor#Transform()
     call setpos('.', savePos)
 endfunction
 
+""""""""""""""""""""""""
+" Create new class
+""""""""""""""""""""""""
+function! phpactor#ClassNew()
+
+    let currentPath = expand('%')
+    let variants = phpactor#Exec('class:new --list --format=json ' . currentPath)
+    let variants = json_decode(variants)
+
+    let list = []
+    let c = 1
+    for variant in variants
+        let list = add(list, c . ': ' . variant)
+        let c = c + 1
+    endfor
+
+    let choice = inputlist(list)
+    let variant = variants[choice - 1]
+
+    let out = phpactor#Exec('class:new --variant=' . variant . ' ' . currentPath)
+    let @+ = out
+    exec "%d"
+    exec ":silent 0 put +"
+endfunction
+
 function! phpactor#Exec(cmd)
     let cmd = 'php ' . s:genpath . ' --verbose ' . a:cmd
     let result = system(cmd)
