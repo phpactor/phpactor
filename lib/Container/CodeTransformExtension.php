@@ -28,8 +28,6 @@ class CodeTransformExtension implements ExtensionInterface
     {
         return [
             'new_class_variants' => [
-                'value_object' => 'value_object',
-                'symfony_command' => 'symfony_command',
             ],
             'template_paths' => [],
         ];

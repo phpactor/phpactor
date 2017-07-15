@@ -15,6 +15,8 @@ Features
 - [Tranformations](#transformations): Apply transformations (implement contracts, etc).
 - [Move and copy classes](#move-class): Move/copy classes and update references to them.
 - [Go-to type](#goto-type): Open the class for the type under the cursor.
+- [Create class](#create-class): New class in an empty file, or generate in a
+  new tab for a class name under the cursor.
 
 Installation
 ------------
@@ -47,6 +49,7 @@ map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
 map <Leader>tt :call phpactor#Transform()<CR>
+map <Leader>cc :call phpactor#CreateNew()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
@@ -133,3 +136,12 @@ Apply transformations to the current buffer:
 2: implement_contracts
 Type number and <Enter> or click with mouse (empty cancels): 
 ```
+
+Create Class
+------------
+
+Prompt for the create of a new class in an empty file, or, if the cursor is on
+a word, attempt to determine the type at the cursor and generate the class in
+a new tab.
+
+See the documentation for the `class:new` command.

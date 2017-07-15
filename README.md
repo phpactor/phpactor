@@ -169,6 +169,59 @@ methods:
 
 Also returns JSON with `--format=json`
 
+### Create class
+
+Generates a new class for a given file path or class name:
+
+```bash
+$ phpactor class:new lib/Registry/Generator.php
+<?php
+
+namespace Vendor\Registry;
+
+class Generator
+{
+}
+```
+
+Different variants can be specified (contrived example):
+
+$ phpactor class:new tests/Registry/GeneratorTest.php --variant=test
+<?php
+
+namespace Vendor\Tests\Registry;
+
+use PHPUnit\Framework\TestCase
+
+class GeneratorTest extends TestCase
+{
+}
+```
+
+Variants are registered in `.phpactor.yml`:
+
+```yaml
+new_class_variants:
+    phpunit_test: phpunit_test
+```
+
+In order to create the above variant we need to create a template locally in
+`.phpactor/templates` (note you can also create them globally in the XDG
+directories, in a `templates` folder):
+
+```twig
+{# /path/to/project/.phpactor/templates/SourceCode.php.twig #}
+namespace {{ prototype.namespace }};
+
+use PHPUnit\Framework\TestCase;
+
+{% for class in prototype.classes %}
+class {{ class.name }} extends TestCase
+{
+}
+{% endfor %}
+```
+
 ### Transform
 
 The transformation command accepts either a file name or `stdin` and applies
@@ -276,7 +329,7 @@ One of the interesting things about Phpactor is that it does not require any
 indexing before it is used. It leverages the Composer to determine class
 locations and to determine class FQNs from file locations. Introspection is
 done in realtime (using the excellent [Tolereant PHP
-Parser](https://github.com/Microsoft/tolerant-php-parser)).
+Parser](https://github.com/Microsoft/tolerant-php-parser).
 
 Using Composer we can locate a file using a fully qualified class name, when
 we have located the file we can parse it. This is enough for common
