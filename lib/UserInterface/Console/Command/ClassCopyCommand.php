@@ -53,6 +53,7 @@ class ClassCopyCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        
         $type = $input->getOption('type');
         $logger = new SymfonyConsoleCopyLogger($output);
         $src = $input->getArgument('src');

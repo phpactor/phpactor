@@ -304,6 +304,17 @@ function! phpactor#OffsetTypeInfo()
     echo out
 endfunction
 
+function! phpactor#_OffsetTypeInfo()
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let stdin = join(getline(1,'$'), "\n")
+
+    let command = 'file:offset --format=json stdin ' . offset
+    let out = phpactor#ExecStdIn(command, stdin)
+
+    return json_decode(out)
+endfunction
+
 """"""""""""""""""""""""
 " Apply a transformation
 """"""""""""""""""""""""
@@ -344,7 +355,19 @@ endfunction
 function! phpactor#ClassNew()
 
     let currentPath = expand('%')
-    let variants = phpactor#Exec('class:new --list --format=json ' . currentPath)
+    let directory = fnamemodify(currentPath, ':h')
+    let classOrPath = currentPath
+
+    let word = expand("<cword>")
+
+    if !empty(word)
+        let offsetInfo = phpactor#_OffsetTypeInfo()
+        if !empty(offsetInfo['type'])
+            let classOrPath = offsetInfo['type']
+        endif
+    endif
+
+    let variants = phpactor#Exec('class:new --list --format=json ' . classOrPath)
     let variants = json_decode(variants)
 
     let list = []
@@ -357,8 +380,12 @@ function! phpactor#ClassNew()
     let choice = inputlist(list)
     let variant = variants[choice - 1]
 
-    let out = phpactor#Exec('class:new --variant=' . variant . ' ' . currentPath)
+    let out = phpactor#Exec('class:new --variant=' . variant . ' ' . shellescape(classOrPath))
     let @+ = out
+
+    if !empty(word)
+        exec 'tabnew ' . directory . '/' . word . '.php'
+    endif
     exec "%d"
     exec ":silent 0 put +"
 endfunction
