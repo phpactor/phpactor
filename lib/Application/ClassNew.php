@@ -25,6 +25,11 @@ class ClassNew
         $this->generators = $generators;
     }
 
+    public function availableGenerators()
+    {
+        return $this->generators->names();
+    }
+
     public function generate(string $src, string $variant = 'default')
     {
         $className = $this->normalizer->normalizeToClass($src);

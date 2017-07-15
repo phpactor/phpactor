@@ -17,6 +17,10 @@ use Phpactor\Application\ClassSearch;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\Application\ClassNew;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
+use Twig\Loader\ChainLoader;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -24,7 +28,10 @@ class CodeTransformExtension implements ExtensionInterface
     {
         return [
             'new_class_variants' => [
+                'value_object' => 'value_object',
+                'symfony_command' => 'symfony_command',
             ],
+            'template_paths' => [],
         ];
     }
 
@@ -61,7 +68,8 @@ class CodeTransformExtension implements ExtensionInterface
 
         $container->register('command.class_new', function (Container $container) {
             return new ClassNewCommand(
-                $container->get('application.class_new')
+                $container->get('application.class_new'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
     }
@@ -112,8 +120,25 @@ class CodeTransformExtension implements ExtensionInterface
 
     private function registerRenderer(Container $container)
     {
+        $container->register('code_transform.twig_loader', function (Container $container) {
+            $loaders = [];
+            $loaders[] = new FilesystemLoader(__DIR__ . '/../../vendor/phpactor/code-builder/templates');
+
+            foreach ($container->getParameter('template_paths') as $templatePath) {
+                $loaders[] = new FilesystemLoader($templatePath);
+            }
+
+            return new ChainLoader($loaders);
+        });
+
         $container->register('code_transform.renderer', function (Container $container) {
-            return new TwigRenderer();
+            $twig = new Environment($container->get('code_transform.twig_loader'), [
+                'strict_variables' => true,
+            ]);
+            $renderer = new TwigRenderer($twig);
+            $twig->addExtension(new TwigExtension($renderer, $container->getParameter('indentation')));
+
+            return $renderer;
         });
     }
 }

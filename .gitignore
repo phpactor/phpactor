@@ -5,3 +5,5 @@ cache
 
 # File frequently used for testing
 lib/Foobar.php
+.phpactor.yml
+.phpactor/

@@ -23,7 +23,7 @@ class ClassNewCommandTest extends SystemTestCase
     {
         return [
             'New class' => [
-                'class:new lib/Badger/Carnivorous.php',
+                'class:new lib/Badger/Carnivorous.php --no-interaction',
                 <<<'EOT'
 <?php
 

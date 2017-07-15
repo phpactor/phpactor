@@ -2,6 +2,10 @@
 
 namespace Phpactor;
 
+use XdgBaseDir\Xdg;
+use Webmozart\PathUtil\Path;
+use Symfony\Component\Yaml\Yaml;
+
 class Phpactor
 {
     /**
@@ -44,5 +48,39 @@ class Phpactor
         }
 
         return false;
+    }
+
+    public static function loadConfig(): array
+    {
+        $xdg = new Xdg();
+        $configDirs = $xdg->getConfigDirs();
+
+        $configPaths = array_map(function ($configPath) {
+            return Path::join($configPath, '/phpactor/phpactor.yml');
+        }, $configDirs);
+        $configPaths[] = Path::join(getcwd(), '.phpactor.yml');
+
+        $config = [];
+        foreach ($configPaths as $configPath) {
+            if (file_exists($configPath)) {
+                $config = array_merge(
+                    $config,
+                    Yaml::parse(file_get_contents($configPath))
+                );
+            }
+        }
+
+        $templatePaths = array_map(function ($configPath) {
+            return Path::join($configPath, '/phpactor/templates');
+        }, $configDirs);
+        $templatePaths[] = Path::join(getcwd(), '.phpactor/templates');
+        $templatePaths[] = __DIR__ . '/../../../templates';
+
+        $templatePaths = array_filter($templatePaths, function ($templatePath) {
+            return file_exists($templatePath);
+        });
+        $config['template_paths'] = $templatePaths;
+
+        return $config;
     }
 }
