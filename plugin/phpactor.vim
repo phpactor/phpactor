@@ -363,10 +363,14 @@ function! phpactor#ClassNew()
     if !empty(word)
         let offsetInfo = phpactor#_OffsetTypeInfo()
         if !empty(offsetInfo['type'])
-            let classOrPath = offsetInfo['type']
+            if offsetInfo['type'] != '<unknown>'
+                let classOrPath = offsetInfo['type']
+            endif
         endif
     endif
 
+    let classOrPath = input("Create class: ", classOrPath, "file")
+    echo "\n"
     let variants = phpactor#Exec('class:new --list --format=json ' . classOrPath)
     let variants = json_decode(variants)
 
@@ -380,14 +384,24 @@ function! phpactor#ClassNew()
     let choice = inputlist(list)
     let variant = variants[choice - 1]
 
-    let out = phpactor#Exec('class:new --variant=' . variant . ' ' . shellescape(classOrPath))
-    let @+ = out
+    let out = phpactor#Exec('class:new --format=json --variant=' . variant . ' ' . shellescape(classOrPath))
+    let out = json_decode(out)
 
-    if !empty(word)
-        exec 'tabnew ' . directory . '/' . word . '.php'
+    if out['exists'] == 1
+        let confirm = confirm('File exists, overwrite?', "&Yes\n&No")
+
+        if confirm == 2
+            echo "Cancelled"
+            return
+        endif
+
+        let out = phpactor#Exec('class:new --force --format=json --variant=' . variant . ' ' . shellescape(classOrPath))
+        let out = json_decode(out)
     endif
-    exec "%d"
-    exec ":silent 0 put +"
+
+    if !empty(out)
+        exec ":edit " . out['path']
+    endif
 endfunction
 
 function! phpactor#Exec(cmd)

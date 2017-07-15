@@ -16,6 +16,8 @@ use Phpactor\UserInterface\Console\Prompt\Prompt;
 use Phpactor\Application\ClassNew;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
+use Phpactor\Application\Exception\FileAlreadyExists;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ClassNewCommand extends Command
 {
@@ -45,6 +47,7 @@ class ClassNewCommand extends Command
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addOption('variant', null, InputOption::VALUE_REQUIRED, 'Variant', 'default');
         $this->addOption('list', null, InputOption::VALUE_NONE, 'List variants');
+        $this->addOption('force', null, InputOption::VALUE_NONE, 'Force overwriting');
         Handler\FormatHandler::configure($this);
     }
 
@@ -54,10 +57,36 @@ class ClassNewCommand extends Command
             return $this->listGenerators($input, $output);
         }
 
+        $out = $this->process($input, $output);
+        $this->dumperRegistry->get($input->getOption('format'))->dump($output, $out);
+    }
+
+    private function process(InputInterface $input, OutputInterface $output)
+    {
         $src = $input->getArgument('src');
         $variant = $input->getOption('variant');
+        $response = [
+            'src' => $src,
+            'path' => null,
+            'exists' => false,
+        ];
 
-        $output->writeln($this->classNew->generate($src, $variant));
+        try {
+            $response['path'] = $this->classNew->generate($src, $variant, $input->getOption('force'));
+        } catch (FileAlreadyExists $exception) {
+            $questionHelper = new QuestionHelper();
+            $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
+
+            if (false === $questionHelper->ask($input, $output, $question)) {
+                $response['exists'] = true;
+                return $response;
+            }
+
+            $filePath = $this->classNew->generate($src, $variant, true);
+            $response['path'] = $filePath;
+        }
+
+        return $response;
     }
 
     private function listGenerators(InputInterface $input, OutputInterface $output)

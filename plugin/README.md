@@ -140,8 +140,14 @@ Type number and <Enter> or click with mouse (empty cancels):
 Create Class
 ------------
 
-Prompt for the create of a new class in an empty file, or, if the cursor is on
-a word, attempt to determine the type at the cursor and generate the class in
-a new tab.
+![recording](https://user-images.githubusercontent.com/530801/28240939-2d17c42c-6982-11e7-9ddb-9ecddf55ac87.gif)
 
-See the documentation for the `class:new` command.
+Prompt for the create of a new class. If the cursor is on
+a class name, it will suggest to create that class.
+
+```bash
+Create class: lib/Container/Bar
+1: default
+2: exception
+Type number and <Enter> or click with mouse (empty cancels): 1
+```

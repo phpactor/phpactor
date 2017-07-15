@@ -6,32 +6,34 @@ use Phpactor\Tests\UserInterface\SystemTestCase;
 
 class ClassNewCommandTest extends SystemTestCase
 {
+    public function setUp()
+    {
+        $this->initWorkspace();
+        $this->loadProject('Animals');
+    }
+
     /**
      * Application level smoke tests
      *
-     * @dataProvider provideSmokeSuccess
+     * @dataProvider provideNewClass
      */
     public function testNewClass($command, $expected)
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
 
-        $this->assertEquals($expected, trim($process->getOutput()));
+        $this->assertContains($expected, trim($process->getOutput()));
+        $this->assertFileExists($this->workspaceDir() . '/lib/Badger/Teeth.php');
     }
 
-    public function provideSmokeSuccess()
+    public function provideNewClass()
     {
         return [
             'New class' => [
-                'class:new lib/Badger/Carnivorous.php --no-interaction',
+                'class:new lib/Badger/Teeth.php --no-interaction --force',
                 <<<'EOT'
-<?php
-
-namespace Animals\Badger;
-
-class Carnivorous
-{
-}
+src:lib/Badger/Teeth.php
+path:/home/daniel/www/phpactor/phpactor/tests/Assets/Workspace/lib/Badger/Teeth.php
 EOT
             ],
         ];

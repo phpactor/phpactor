@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "38e7c38fd35c04833480115e6ce0b00a4dc80b5f"
+                "reference": "4564e78289247523e094d8641dd1c042d1ad4733"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/38e7c38fd35c04833480115e6ce0b00a4dc80b5f",
-                "reference": "38e7c38fd35c04833480115e6ce0b00a4dc80b5f",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/4564e78289247523e094d8641dd1c042d1ad4733",
+                "reference": "4564e78289247523e094d8641dd1c042d1ad4733",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-06-29 13:43:22"
+            "time": "2017-07-14 13:12:28"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "c087bd3509b01a065b0e3ece6ecda8fb288bcf23"
+                "reference": "d4d49e4866075c393171b0e8e78d56f0e66850a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/c087bd3509b01a065b0e3ece6ecda8fb288bcf23",
-                "reference": "c087bd3509b01a065b0e3ece6ecda8fb288bcf23",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/d4d49e4866075c393171b0e8e78d56f0e66850a8",
+                "reference": "d4d49e4866075c393171b0e8e78d56f0e66850a8",
                 "shasum": ""
             },
             "require": {
@@ -297,7 +297,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-07-15 10:39:01"
+            "time": "2017-07-15 13:46:34"
         },
         {
             "name": "phpactor/code-transform",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "9066b2a81f9e0e8c0468473c5069d9f6fbf0d209"
+                "reference": "7599b24b1d7dc25ede10644b276998f8ef63f2cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/9066b2a81f9e0e8c0468473c5069d9f6fbf0d209",
-                "reference": "9066b2a81f9e0e8c0468473c5069d9f6fbf0d209",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7599b24b1d7dc25ede10644b276998f8ef63f2cf",
+                "reference": "7599b24b1d7dc25ede10644b276998f8ef63f2cf",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-07-15 10:58:09"
+            "time": "2017-07-15 13:46:56"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -464,12 +464,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "d7611f70b8e8f2a476e3a91208754d57b595414d"
+                "reference": "b1a223e09c7625c1a3d8104350dfd2f9b170ae0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d7611f70b8e8f2a476e3a91208754d57b595414d",
-                "reference": "d7611f70b8e8f2a476e3a91208754d57b595414d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b1a223e09c7625c1a3d8104350dfd2f9b170ae0e",
+                "reference": "b1a223e09c7625c1a3d8104350dfd2f9b170ae0e",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +509,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-09 12:56:20"
+            "time": "2017-07-15 16:29:54"
         },
         {
             "name": "phpbench/container",
@@ -654,12 +654,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "10537916d60d2affc5d4a6d04906f431af454f63"
+                "reference": "fd3a67818569fc29a5f8fb977912a242f7318cd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/10537916d60d2affc5d4a6d04906f431af454f63",
-                "reference": "10537916d60d2affc5d4a6d04906f431af454f63",
+                "url": "https://api.github.com/repos/symfony/console/zipball/fd3a67818569fc29a5f8fb977912a242f7318cd4",
+                "reference": "fd3a67818569fc29a5f8fb977912a242f7318cd4",
                 "shasum": ""
             },
             "require": {
@@ -716,7 +716,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-03 13:31:36"
+            "time": "2017-07-12 09:59:19"
         },
         {
             "name": "symfony/debug",
@@ -780,12 +780,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "b8f565808330129d4475d108d0129e897cde9f54"
+                "reference": "353cb00e1fb1342b6e30a6c84e4b301568e58b9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/b8f565808330129d4475d108d0129e897cde9f54",
-                "reference": "b8f565808330129d4475d108d0129e897cde9f54",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/353cb00e1fb1342b6e30a6c84e4b301568e58b9f",
+                "reference": "353cb00e1fb1342b6e30a6c84e4b301568e58b9f",
                 "shasum": ""
             },
             "require": {
@@ -821,7 +821,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-24 09:47:31"
+            "time": "2017-07-11 07:19:17"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1300,22 +1300,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
+                "reference": "46f7e8bb075036c92695b15a1ddb6971c751e585"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
-                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/46f7e8bb075036c92695b15a1ddb6971c751e585",
+                "reference": "46f7e8bb075036c92695b15a1ddb6971c751e585",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.2.0",
+                "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -1341,24 +1341,24 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30T07:12:33+00:00"
+            "time": "2017-07-15T11:38:20+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.2.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb"
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
-                "reference": "e224fb2ea2fba6d3ad6fdaef91cd09a172155ccb",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^5.5 || ^7.0",
                 "phpdocumentor/reflection-common": "^1.0"
             },
             "require-dev": {
@@ -1388,7 +1388,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25T06:54:22+00:00"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -2416,12 +2416,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "23d5ac279cc7b71f733daecca49782a644ef6b9f"
+                "reference": "aeea12fe8abbf2f6ccb917c0037a7664d0e20b51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/23d5ac279cc7b71f733daecca49782a644ef6b9f",
-                "reference": "23d5ac279cc7b71f733daecca49782a644ef6b9f",
+                "url": "https://api.github.com/repos/symfony/process/zipball/aeea12fe8abbf2f6ccb917c0037a7664d0e20b51",
+                "reference": "aeea12fe8abbf2f6ccb917c0037a7664d0e20b51",
                 "shasum": ""
             },
             "require": {
@@ -2457,7 +2457,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-03 08:12:16"
+            "time": "2017-07-15 08:52:56"
         }
     ],
     "aliases": [],

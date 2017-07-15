@@ -51,7 +51,8 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('application.class_new', function (Container $container) {
             return new ClassNew(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('code_transform.new_class_generators')
+                $container->get('code_transform.new_class_generators'),
+                $container->get('source_code_filesystem.simple')
             );
         });
     }
