@@ -51,8 +51,8 @@ use Phpactor\UserInterface\Console\Command\ClassTransformCommand;
 use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\ImplementContracts;
-use Phpactor\CodeTransform\Adapter\TolerantParser\CompleteConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Domain\Editor;
 
 class CoreExtension implements ExtensionInterface

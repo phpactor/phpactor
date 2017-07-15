@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "61a39b84914a1a4d1163e49587b764c9",
+    "content-hash": "ffde3962ed7e2138d94f2dd301ba358e",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -247,21 +247,75 @@
             "time": "2017-07-06 11:56:48"
         },
         {
+            "name": "phpactor/code-builder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/code-builder.git",
+                "reference": "c087bd3509b01a065b0e3ece6ecda8fb288bcf23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/c087bd3509b01a065b0e3ece6ecda8fb288bcf23",
+                "reference": "c087bd3509b01a065b0e3ece6ecda8fb288bcf23",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/tolerant-php-parser": "dev-master",
+                "twig/twig": "^2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\CodeBuilder\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\CodeBuilder\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Generating and modifying source code",
+            "support": {
+                "source": "https://github.com/phpactor/code-builder/tree/master",
+                "issues": "https://github.com/phpactor/code-builder/issues"
+            },
+            "time": "2017-07-15 10:39:01"
+        },
+        {
             "name": "phpactor/code-transform",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "4bbc911bdf4056fa47c249b33e644c0362abbeb4"
+                "reference": "9066b2a81f9e0e8c0468473c5069d9f6fbf0d209"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/4bbc911bdf4056fa47c249b33e644c0362abbeb4",
-                "reference": "4bbc911bdf4056fa47c249b33e644c0362abbeb4",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/9066b2a81f9e0e8c0468473c5069d9f6fbf0d209",
+                "reference": "9066b2a81f9e0e8c0468473c5069d9f6fbf0d209",
                 "shasum": ""
             },
             "require": {
                 "microsoft/tolerant-php-parser": "dev-master",
+                "phpactor/code-builder": "dev-master",
                 "phpactor/worse-reflection": "dev-master"
             },
             "require-dev": {
@@ -297,7 +351,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-07-08 14:13:07"
+            "time": "2017-07-15 10:58:09"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -882,6 +936,72 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2017-07-03 10:20:17"
+        },
+        {
+            "name": "twig/twig",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "9823bed943c91316183df6e387a24d2acfdbf453"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9823bed943c91316183df6e387a24d2acfdbf453",
+                "reference": "9823bed943c91316183df6e387a24d2acfdbf453",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~3.3@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2017-07-04 13:21:11"
         },
         {
             "name": "webmozart/assert",
@@ -2352,6 +2472,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.0"
+    },
     "platform-dev": []
 }
