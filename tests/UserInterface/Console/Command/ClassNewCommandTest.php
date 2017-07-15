@@ -33,7 +33,6 @@ class ClassNewCommandTest extends SystemTestCase
                 'class:new lib/Badger/Teeth.php --no-interaction --force',
                 <<<'EOT'
 src:lib/Badger/Teeth.php
-path:/home/daniel/www/phpactor/phpactor/tests/Assets/Workspace/lib/Badger/Teeth.php
 EOT
             ],
         ];
