@@ -102,10 +102,10 @@ class ClassReflector
 
 
             if (Type::unknown() != $methodType) {
-                $methodInfo[] = ': ' . ($methodType->className() ?: (string) $methodType);
+                $methodInfo[] = ': ' . ($methodType->isPrimitive() ? (string) $methodType : $methodType->className()->short());
             }
 
-            $return['methods'][$method->name()]['type'] = $methodType->className() ? $methodType->className()->short(): (string) $methodType;
+            $return['methods'][$method->name()]['type'] = $methodType->isPrimitive() ? (string) $methodType : $methodType->className()->short();
 
             $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
@@ -132,7 +132,7 @@ class ClassReflector
                 'info' => sprintf(
                     '%s %s $%s',
                     (string) $property->visibility(),
-                    (string) $property->type()->className() ?: (string) $property->type(),
+                    $property->type()->isPrimitive() ? (string) $property->type() : (string) $property->type()->className(),
                     $property->name()
                 ),
             ];

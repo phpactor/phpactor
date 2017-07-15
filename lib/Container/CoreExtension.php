@@ -5,55 +5,49 @@ namespace Phpactor\Container;
 use Composer\Autoload\ClassLoader;
 use PhpBench\DependencyInjection\Container;
 use PhpBench\DependencyInjection\ExtensionInterface;
-use Symfony\Component\Console\Application;
-use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
-use Phpactor\Application\ClassMover as ClassMoverApp;
-use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
-use Phpactor\Filesystem\Domain\Cwd;
-use Phpactor\ClassMover\ClassMover;
-use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
-use Phpactor\Application\FileInfo;
-use Phpactor\TypeInference\TypeInference;
-use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
-use Phpactor\Application\ClassSearch;
-use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
-use Phpactor\Filesystem\Adapter\Composer\ComposerFilesystem;
-use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\UserInterface\Console\Command\FileInfoCommand;
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
-use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
-use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
-use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
-use Phpactor\Filesystem\Domain\ChainFileListProvider;
-use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
-use Phpactor\UserInterface\Console\Prompt\BashPrompt;
-use Phpactor\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
-use Phpactor\TypeInference\Adapter\TolerantParser\TolerantTypeInferer;
-use Phpactor\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
-use Phpactor\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\Application\ClassCopy;
+use Phpactor\Application\ClassMover as ClassMoverApp;
+use Phpactor\Application\ClassReflector;
+use Phpactor\Application\ClassSearch;
+use Phpactor\Application\FileInfo;
 use Phpactor\Application\FileInfoAtOffset;
 use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
+use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
+use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
+use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\ClassMover\ClassMover;
+use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
+use Phpactor\Filesystem\Adapter\Composer\ComposerFilesystem;
+use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
+use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Filesystem\Domain\ChainFileListProvider;
+use Phpactor\Filesystem\Domain\Cwd;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
+use Phpactor\TypeInference\Adapter\TolerantParser\TolerantTypeInferer;
+use Phpactor\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
+use Phpactor\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
+use Phpactor\TypeInference\TypeInference;
+use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
+use Phpactor\UserInterface\Console\Command\ClassNewCommand;
+use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
-use Phpactor\Application\ClassReflector;
+use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
+use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
+use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
 use Phpactor\UserInterface\Console\Dumper\JsonDumper;
 use Phpactor\UserInterface\Console\Dumper\TableDumper;
-use Phpactor\Application\Transformer;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Transformers;
-use Phpactor\UserInterface\Console\Command\ClassTransformCommand;
+use Phpactor\UserInterface\Console\Prompt\BashPrompt;
+use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\ImplementContracts;
-use Phpactor\CodeTransform\Adapter\TolerantParser\CompleteConstructor;
-use Phpactor\CodeTransform\Domain\Editor;
+use Symfony\Component\Console\Application;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -84,7 +78,6 @@ class CoreExtension implements ExtensionInterface
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
         $this->registerReflection($container);
-        $this->registerTransform($container);
     }
 
     private function registerConsole(Container $container)
@@ -130,12 +123,6 @@ class CoreExtension implements ExtensionInterface
             return new ClassReflectorCommand(
                 $container->get('application.class_reflector'),
                 $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.transform', function (Container $container) {
-            return new ClassTransformCommand(
-                $container->get('application.transform')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -323,10 +310,6 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
         });
-
-        $container->register('application.transform', function (Container $container) {
-            return new Transformer($container->get('code_transform.transform'));
-        });
     }
 
     private function registerReflection(Container $container)
@@ -356,35 +339,5 @@ class CoreExtension implements ExtensionInterface
             );
         }, [ 'reflection.source_locator' => []]);
 
-    }
-
-    private function registerTransform(Container $container)
-    {
-        $container->register('code_transform.transform', function (Container $container) {
-            $transformers = [];
-            foreach ($container->getServiceIdsForTag('code_transform.transformer') as $serviceId => $attrs) {
-                $transformers[$attrs['name']] = $container->get($serviceId);
-            }
-
-            return CodeTransform::fromTransformers(Transformers::fromArray($transformers));
-        });
-
-        $container->register('code_transform.editor', function (Container $container) {
-            return new Editor($container->getParameter('indentation'));
-        });
-
-        $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
-            return new CompleteConstructor(
-                null,
-                $container->get('code_transform.editor')
-            );
-        }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
-
-        $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
-            return new ImplementContracts(
-                $container->get('reflection.reflector'),
-                $container->get('code_transform.editor')
-            );
-        }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
     }
 }

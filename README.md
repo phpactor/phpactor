@@ -13,12 +13,14 @@ Features
 --------
 
 - **No indexing**: [Composer](https://getcomposer.org) is used to determine where things should be.
-- **Move and copy**: Move and copy classes, updating PHP references to them.
-- **Reflection API**: Get reflection data for a given class or file.
+- [Move](#move-classes) and [copy](#copy-classes): Move and copy classes, updating PHP references to them.
+- [Class generation](#class-generation): Generate classes.
+- **Class inflection**: Generate classes from other classes.
+- [Reflection API](#reflect-class): Get reflection data for a given class or file.
 - **Type inference**: Determine the type of something at a given offset.
-- **Transformation**: Apply "transformations" to code (e.g. implement
+- [Transformation](#transformation): Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
-- **Class search**: Search for a class by its name.
+- [Class search](#class-search): Search for a class by its name.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
 Prerequisites
@@ -256,6 +258,59 @@ class Post implements \Countable
 }
 ```
 
+### Class generation
+
+Generates a new class for a given file path or class name:
+
+```bash
+$ phpactor class:new lib/Registry/Generator.php
+<?php
+
+namespace Vendor\Registry;
+
+class Generator
+{
+}
+```
+
+Different variants can be specified (contrived example):
+
+$ phpactor class:new tests/Registry/GeneratorTest.php --variant=test
+<?php
+
+namespace Vendor\Tests\Registry;
+
+use PHPUnit\Framework\TestCase
+
+class GeneratorTest extends TestCase
+{
+}
+```
+
+Variants are registered in `.phpactor.yml`:
+
+```yaml
+new_class_variants:
+    phpunit_test: phpunit_test
+```
+
+In order to create the above variant we need to create a template locally in
+`.phpactor/templates` (note you can also create them globally in the XDG
+directories, in a `templates` folder):
+
+```twig
+{# /path/to/project/.phpactor/templates/SourceCode.php.twig #}
+namespace {{ prototype.namespace }};
+
+use PHPUnit\Framework\TestCase;
+
+{% for class in prototype.classes %}
+class {{ class.name }} extends TestCase
+{
+}
+{% endfor %}
+```
+
 Packages
 --------
 
@@ -276,7 +331,7 @@ One of the interesting things about Phpactor is that it does not require any
 indexing before it is used. It leverages the Composer to determine class
 locations and to determine class FQNs from file locations. Introspection is
 done in realtime (using the excellent [Tolereant PHP
-Parser](https://github.com/Microsoft/tolerant-php-parser)).
+Parser](https://github.com/Microsoft/tolerant-php-parser).
 
 Using Composer we can locate a file using a fully qualified class name, when
 we have located the file we can parse it. This is enough for common
