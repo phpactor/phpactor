@@ -49,7 +49,7 @@ map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
 map <Leader>tt :call phpactor#Transform()<CR>
-map <Leader>cc :call phpactor#CreateNew()<CR>
+map <Leader>cc :call phpactor#ClassNew()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
@@ -141,6 +141,10 @@ Create Class
 ------------
 
 ![recording](https://user-images.githubusercontent.com/530801/28240939-2d17c42c-6982-11e7-9ddb-9ecddf55ac87.gif)
+
+```vimscript
+:call phpactor#ClassNew()
+```
 
 Prompt for the create of a new class. If the cursor is on
 a class name, it will suggest to create that class.

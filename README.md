@@ -260,31 +260,17 @@ class Post implements \Countable
 
 ### Class generation
 
-Generates a new class for a given file path or class name:
+Generates a new class at a given file path or class name:
 
 ```bash
 $ phpactor class:new lib/Registry/Generator.php
-<?php
-
-namespace Vendor\Registry;
-
-class Generator
-{
-}
+path: lib/Registry/Generator.php
 ```
 
 Different variants can be specified (contrived example):
 
+```
 $ phpactor class:new tests/Registry/GeneratorTest.php --variant=test
-<?php
-
-namespace Vendor\Tests\Registry;
-
-use PHPUnit\Framework\TestCase
-
-class GeneratorTest extends TestCase
-{
-}
 ```
 
 Variants are registered in `.phpactor.yml`:
