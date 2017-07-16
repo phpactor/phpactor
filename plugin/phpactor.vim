@@ -6,7 +6,8 @@
 " | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
 "                                                                                         
 
-let s:genpath = expand('<sfile>:p:h') . '/../bin/phpactor'
+let s:phpactorpath = expand('<sfile>:p:h') . '/..'
+let s:phpactorbinpath = s:phpactorpath. '/bin/phpactor'
 
 function! phpactor#NamespaceGet()
     let currentPath = expand('%')
@@ -15,6 +16,17 @@ function! phpactor#NamespaceGet()
     let results = json_decode(out)
 
     return results['class_namespace']
+endfunction
+
+"""""""""""""""""
+" Update Phpactor
+"""""""""""""""""
+function! phpactor#Update()
+    let current = getcwd()
+    execute 'cd ' . s:phpactorpath
+    echo system('git pull origin master')
+    echo system('composer install')
+    execute 'cd ' .  current
 endfunction
 
 """"""""""""""""""""""""
@@ -468,7 +480,7 @@ function! phpactor#ClassInflect()
 endfunction
 
 function! phpactor#Exec(cmd)
-    let cmd = 'php ' . s:genpath . ' --verbose ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' --verbose ' . a:cmd
     let result = system(cmd)
 
     if (v:shell_error == 0)
@@ -480,7 +492,7 @@ function! phpactor#Exec(cmd)
 endfunction
 
 function! phpactor#ExecStdIn(cmd, stdin)
-    let cmd = 'php ' . s:genpath . ' --verbose ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' --verbose ' . a:cmd
     let result = system(cmd, a:stdin)
 
     if (v:shell_error == 0)

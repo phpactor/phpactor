@@ -23,18 +23,19 @@ Features
 Installation
 ------------
 
-Using Vundle:
+Using Vundle, add the plugin to your `.vimrc`:
 
 ```
 Plugin 'phpactor/phpactor'
 ```
 
-and then you will need to composer install:
+Afterwards you can run
 
-```bash
-$ cd ~/.vim/bundles/phpactor
-$ composer install
+```vim
+:call phpactor#Update()
 ```
+
+To composer update and install the dependencies.
 
 Example configuration
 ---------------------
