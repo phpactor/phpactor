@@ -63,7 +63,7 @@ class Phpactor
         $config = [];
         foreach ($configPaths as $configPath) {
             if (file_exists($configPath)) {
-                $config = array_merge(
+                $config = array_merge_recursive(
                     $config,
                     Yaml::parse(file_get_contents($configPath))
                 );
