@@ -9,47 +9,18 @@ use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\FilePath;
 
-class ClassNew
+class ClassNew extends AbstractClassGenerator
 {
-    /**
-     * @var ClassFileNormalizer
-     */
-    private $normalizer;
-
-    /**
-     * @var GenerateNew
-     */
-    private $generators;
-
-    public function __construct(ClassFileNormalizer $normalizer, Generators $generators)
-    {
-        $this->normalizer = $normalizer;
-        $this->generators = $generators;
-    }
-
-    public function availableGenerators()
-    {
-        return $this->generators->names();
-    }
-
-    public function generate(string $src, string $variant = 'default', bool $overwrite = false)
+    public function generate(string $src, string $variant = 'default', bool $overwrite = false): string
     {
         $className = $this->normalizer->normalizeToClass($src);
 
         $code = $this->generators->get($variant)->generateNew(ClassName::fromString((string) $className));
         $filePath = $this->normalizer->normalizeToFile($className);
 
-        if (false === $overwrite && file_exists($filePath) && 0 !== filesize($filePath)) {
-            throw new Exception\FileAlreadyExists(sprintf('File "%s" already exists and is non-empty', $filePath));
-        }
+        $this->writeFile($filePath, (string) $code, $overwrite);
 
-        if (!file_exists(dirname($filePath))) {
-            mkdir(dirname($filePath), 0777, true);
-        }
-
-        file_put_contents(FilePath::fromString($filePath), (string) $code);
-
-        return (string) $filePath;
+        return $filePath;
     }
 }
 

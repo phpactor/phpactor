@@ -21,14 +21,16 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Twig\Loader\ChainLoader;
+use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
+use Phpactor\UserInterface\Console\Command\ClassInflectCommand;
+use Phpactor\Application\ClassInflect;
 
 class CodeTransformExtension implements ExtensionInterface
 {
     public function getDefaultConfig()
     {
         return [
-            'new_class_variants' => [
-            ],
+            'new_class_variants' => [],
             'template_paths' => [],
         ];
     }
@@ -51,8 +53,14 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('application.class_new', function (Container $container) {
             return new ClassNew(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('code_transform.new_class_generators'),
-                $container->get('source_code_filesystem.simple')
+                $container->get('code_transform.new_class_generators')
+            );
+        });
+
+        $container->register('application.class_inflect', function (Container $container) {
+            return new ClassInflect(
+                $container->get('application.helper.class_file_normalizer'),
+                $container->get('code_transform.from_existing_generators')
             );
         });
     }
@@ -68,6 +76,13 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('command.class_new', function (Container $container) {
             return new ClassNewCommand(
                 $container->get('application.class_new'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.class_inflect', function (Container $container) {
+            return new ClassInflectCommand(
+                $container->get('application.class_inflect'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -112,6 +127,17 @@ class CodeTransformExtension implements ExtensionInterface
             foreach ($container->getParameter('new_class_variants') as $variantName => $variant) {
                 $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);
             }
+
+            return Generators::fromArray($generators);
+        });
+
+        $container->register('code_transform.from_existing_generators', function (Container $container) {
+            $generators = [
+                'interface' => new InterfaceFromExistingGenerator(
+                    $container->get('reflection.reflector'),
+                    $container->get('code_transform.renderer')
+                ),
+            ];
 
             return Generators::fromArray($generators);
         });
