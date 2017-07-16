@@ -17,6 +17,8 @@ Features
 - [Go-to type](#goto-type): Open the class for the type under the cursor.
 - [Create class](#create-class): New class in an empty file, or generate in a
   new tab for a class name under the cursor.
+- [Inflect class](#inflect-class): Generate a new class based on an existing
+  class (e.g. generate interface)
 
 Installation
 ------------
@@ -153,5 +155,21 @@ a class name, it will suggest to create that class.
 Create class: lib/Container/Bar
 1: default
 2: exception
+Type number and <Enter> or click with mouse (empty cancels): 1
+```
+
+Inflect Class
+-------------
+
+```vimscript
+:call phpactor#ClassInflect()
+```
+
+Prompt for the creation of a new class based on the current class or if the
+cursor is on a class name, based on that.
+
+```bash
+Inflect class: lib/Container/BarInterface.php
+1: interface
 Type number and <Enter> or click with mouse (empty cancels): 1
 ```
