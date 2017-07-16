@@ -15,7 +15,7 @@ Features
 - **No indexing**: [Composer](https://getcomposer.org) is used to determine where things should be.
 - [Move](#move-classes) and [copy](#copy-classes): Move and copy classes, updating PHP references to them.
 - [Class generation](#class-generation): Generate classes.
-- **Class inflection**: Generate classes from other classes.
+- [Class inflection](#class-inflect): Generate classes from other classes.
 - [Reflection API](#reflect-class): Get reflection data for a given class or file.
 - **Type inference**: Determine the type of something at a given offset.
 - [Transformation](#transformation): Apply "transformations" to code (e.g. implement
@@ -295,6 +295,17 @@ class {{ class.name }} extends TestCase
 {
 }
 {% endfor %}
+```
+
+Class Inflect
+-------------
+
+Inflect a new class from an existing class.
+
+The following will generate an interface from an existing class:
+
+```
+$ phpactor class:inflect lib/TestGenerator.php lib/Api/TestGenerator.php interface
 ```
 
 Packages
