@@ -58,14 +58,18 @@ class Phpactor
         $configPaths = array_map(function ($configPath) {
             return Path::join($configPath, '/phpactor/phpactor.yml');
         }, $configDirs);
-        $configPaths[] = Path::join(getcwd(), '.phpactor.yml');
+
+        $localConfigPath = Path::join(getcwd(), '.phpactor.yml');
+        if (file_exists($localConfigPath)) {
+            $configPaths[] = $localConfigPath;
+        }
 
         $config = [];
         foreach ($configPaths as $configPath) {
             if (file_exists($configPath)) {
                 $config = array_merge_recursive(
                     $config,
-                    Yaml::parse(file_get_contents($configPath))
+                    (array) Yaml::parse(file_get_contents($configPath))
                 );
             }
         }
