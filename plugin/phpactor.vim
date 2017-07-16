@@ -404,9 +404,12 @@ function! phpactor#ClassNew()
     endif
 endfunction
 
-""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Inflect new class
-""""""""""""""""""""""""
+"
+" TODO: This is copy and paste from ClassNew - need to break this out into a
+"       separate "class"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#ClassInflect()
 
     let currentPath = expand('%')
