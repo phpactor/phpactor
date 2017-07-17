@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "4564e78289247523e094d8641dd1c042d1ad4733"
+                "reference": "d770fbb1f89dffc04bf2c0cdc50d14e7a5e60a3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/4564e78289247523e094d8641dd1c042d1ad4733",
-                "reference": "4564e78289247523e094d8641dd1c042d1ad4733",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/d770fbb1f89dffc04bf2c0cdc50d14e7a5e60a3a",
+                "reference": "d770fbb1f89dffc04bf2c0cdc50d14e7a5e60a3a",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-07-14 13:12:28"
+            "time": "2017-07-17 11:45:22"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "d4d49e4866075c393171b0e8e78d56f0e66850a8"
+                "reference": "f0b5dd16027c5b15411a5265d19af79089960176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/d4d49e4866075c393171b0e8e78d56f0e66850a8",
-                "reference": "d4d49e4866075c393171b0e8e78d56f0e66850a8",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/f0b5dd16027c5b15411a5265d19af79089960176",
+                "reference": "f0b5dd16027c5b15411a5265d19af79089960176",
                 "shasum": ""
             },
             "require": {
@@ -297,7 +297,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-07-15 13:46:34"
+            "time": "2017-07-17 12:37:59"
         },
         {
             "name": "phpactor/code-transform",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "2d739a08affb1fe2b10f3b0c13d5154c3f3dac66"
+                "reference": "c8fbcf5a6262778eea66dba0685b8d002526756f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/2d739a08affb1fe2b10f3b0c13d5154c3f3dac66",
-                "reference": "2d739a08affb1fe2b10f3b0c13d5154c3f3dac66",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c8fbcf5a6262778eea66dba0685b8d002526756f",
+                "reference": "c8fbcf5a6262778eea66dba0685b8d002526756f",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-07-16 08:06:12"
+            "time": "2017-07-17 13:09:28"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -464,12 +464,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "95bd9c9977dc71ed3fffa3513b04d247d38312e8"
+                "reference": "47a044c5a5d43301a7fbc88a1c9420f5f3d9dacd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/95bd9c9977dc71ed3fffa3513b04d247d38312e8",
-                "reference": "95bd9c9977dc71ed3fffa3513b04d247d38312e8",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/47a044c5a5d43301a7fbc88a1c9420f5f3d9dacd",
+                "reference": "47a044c5a5d43301a7fbc88a1c9420f5f3d9dacd",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +509,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-16 08:05:08"
+            "time": "2017-07-17 13:09:50"
         },
         {
             "name": "phpbench/container",
@@ -654,12 +654,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "fd3a67818569fc29a5f8fb977912a242f7318cd4"
+                "reference": "4820f8e1b3c03aab46a655518d078a7ffc8df4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/fd3a67818569fc29a5f8fb977912a242f7318cd4",
-                "reference": "fd3a67818569fc29a5f8fb977912a242f7318cd4",
+                "url": "https://api.github.com/repos/symfony/console/zipball/4820f8e1b3c03aab46a655518d078a7ffc8df4ef",
+                "reference": "4820f8e1b3c03aab46a655518d078a7ffc8df4ef",
                 "shasum": ""
             },
             "require": {
@@ -716,7 +716,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-12 09:59:19"
+            "time": "2017-07-17 12:21:21"
         },
         {
             "name": "symfony/debug",

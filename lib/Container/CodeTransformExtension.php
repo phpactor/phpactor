@@ -24,6 +24,9 @@ use Twig\Loader\ChainLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\UserInterface\Console\Command\ClassInflectCommand;
 use Phpactor\Application\ClassInflect;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
+use Phpactor\CodeBuilder\Util\TextFormat;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -42,6 +45,7 @@ class CodeTransformExtension implements ExtensionInterface
         $this->registerGenerators($container);
         $this->registerApplication($container);
         $this->registerRenderer($container);
+        $this->registerUpdater($container);
     }
 
     private function registerApplication(Container $container)
@@ -113,7 +117,7 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(
                 $container->get('reflection.reflector'),
-                $container->get('code_transform.editor')
+                $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
     }
@@ -161,9 +165,20 @@ class CodeTransformExtension implements ExtensionInterface
                 'strict_variables' => true,
             ]);
             $renderer = new TwigRenderer($twig);
-            $twig->addExtension(new TwigExtension($renderer, $container->getParameter('indentation')));
+            $twig->addExtension(new TwigExtension($renderer, $container->get('code_transform.text_format')));
 
             return $renderer;
+        });
+
+        $container->register('code_transform.text_format', function (Container $container) {
+            return new TextFormat($container->getParameter('indentation'));
+        });
+    }
+
+    private function registerUpdater(Container $container)
+    {
+        $container->register('code_transform.updater', function (Container $container) {
+            return new TolerantUpdater($container->get('code_transform.renderer'));
         });
     }
 }
