@@ -4,6 +4,8 @@ namespace Phpactor\Tests\UserInterface;
 
 use Phpactor\Tests\UserInterface\SystemTestCase;
 use Phpactor\UserInterface\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class ApplicationTest extends SystemTestCase
 {
@@ -29,5 +31,22 @@ EOT
         chdir($this->workspaceDir());
         $application = new Application();
         $application->initialize();
+    }
+
+    public function testSerializesExceptions()
+    {
+        $output = new BufferedOutput();
+
+        $application = new Application();
+        $application->initialize();
+        $application->setAutoExit(false);
+        $application->run(new ArrayInput([
+            'command' => 'class:reflect',
+            'name' => 'asd',
+            '--format' => 'json',
+        ]), $output);
+
+        $out = json_decode($output->fetch(), true);
+        $this->assertArrayHasKey('error', $out);
     }
 }

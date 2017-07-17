@@ -485,6 +485,9 @@ function! phpactor#Exec(cmd)
 
     if (v:shell_error == 0)
         return result
+    elseif (v:shell_error == 64)
+        let result = json_decode(result)
+        throw result['error']['message']
     else
         echo result
         throw "Could not execute command"
@@ -497,6 +500,9 @@ function! phpactor#ExecStdIn(cmd, stdin)
 
     if (v:shell_error == 0)
         return result
+    elseif (v:shell_error == 64)
+        let result = json_decode(result)
+        throw result['error']['message']
     else
         echo result
         throw "Could not execute command"
