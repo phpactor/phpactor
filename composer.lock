@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "f6c679402d458a035d3f6580b5f19592cfd4fe6f"
+                "reference": "76494afa58b9193bb15074feb00ae4c90a5772ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/f6c679402d458a035d3f6580b5f19592cfd4fe6f",
-                "reference": "f6c679402d458a035d3f6580b5f19592cfd4fe6f",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/76494afa58b9193bb15074feb00ae4c90a5772ea",
+                "reference": "76494afa58b9193bb15074feb00ae4c90a5772ea",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-07-06 11:55:11"
+            "time": "2017-07-18 07:38:03"
         },
         {
             "name": "phpactor/class-to-file",
@@ -252,12 +252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "f0b5dd16027c5b15411a5265d19af79089960176"
+                "reference": "30cab4d8e3dce3fa63b8e48d40247ec97c86783f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/f0b5dd16027c5b15411a5265d19af79089960176",
-                "reference": "f0b5dd16027c5b15411a5265d19af79089960176",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/30cab4d8e3dce3fa63b8e48d40247ec97c86783f",
+                "reference": "30cab4d8e3dce3fa63b8e48d40247ec97c86783f",
                 "shasum": ""
             },
             "require": {
@@ -297,7 +297,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-07-17 12:37:59"
+            "time": "2017-07-18 07:23:32"
         },
         {
             "name": "phpactor/code-transform",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "c6a572e8d3835d7f9d470c62b6c398242e9f0d1d"
+                "reference": "9fef499e712e189d324ceb05c610864729eaf494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c6a572e8d3835d7f9d470c62b6c398242e9f0d1d",
-                "reference": "c6a572e8d3835d7f9d470c62b6c398242e9f0d1d",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/9fef499e712e189d324ceb05c610864729eaf494",
+                "reference": "9fef499e712e189d324ceb05c610864729eaf494",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-07-18 06:44:42"
+            "time": "2017-07-18 07:29:49"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -464,12 +464,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "283256033347cc322815e667342d583cfd994860"
+                "reference": "46e177318f351e79f8d20999ec9323ed1e17f6be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/283256033347cc322815e667342d583cfd994860",
-                "reference": "283256033347cc322815e667342d583cfd994860",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/46e177318f351e79f8d20999ec9323ed1e17f6be",
+                "reference": "46e177318f351e79f8d20999ec9323ed1e17f6be",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +509,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-18 06:42:00"
+            "time": "2017-07-18 06:55:41"
         },
         {
             "name": "phpbench/container",
