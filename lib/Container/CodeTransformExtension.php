@@ -35,7 +35,7 @@ class CodeTransformExtension implements ExtensionInterface
     {
         $configLoader = new ConfigLoader();
         $templatePaths = array_map(function ($dir) {
-            return $dir . '/templates';
+            return $dir . '/phpactor/templates';
         }, $configLoader->configDirs());
         $templatePaths = array_filter($templatePaths, function ($templatePath) {
             return file_exists($templatePath);

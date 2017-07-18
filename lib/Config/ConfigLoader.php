@@ -35,8 +35,8 @@ class ConfigLoader
 
     public function configDirs(): array
     {
-        $configDirs = [ Path::join(getcwd(), '/.phpactor') ];
-        $configDirs += $this->xdg->getConfigDirs();
+        $configDirs = $this->xdg->getConfigDirs();
+        array_unshift($configDirs, Path::join(getcwd(), '/.phpactor'));
 
         return $configDirs;
     }
