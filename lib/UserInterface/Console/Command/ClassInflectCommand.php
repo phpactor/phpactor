@@ -47,7 +47,7 @@ class ClassInflectCommand extends Command
         $this->setDescription('Inflect new class from existing path or FQN');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
-        $this->addArgument('variant', null, InputOption::VALUE_REQUIRED, 'Variant', 'default');
+        $this->addArgument('variant', InputOption::VALUE_REQUIRED, 'Type of inflection', 'default');
         $this->addOption('list', null, InputOption::VALUE_NONE, 'List variants');
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Force overwriting');
         Handler\FormatHandler::configure($this);
