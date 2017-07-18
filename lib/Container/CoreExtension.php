@@ -3,7 +3,6 @@
 namespace Phpactor\Container;
 
 use Composer\Autoload\ClassLoader;
-use PhpBench\DependencyInjection\Container;
 use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Application\ClassMover as ClassMoverApp;
@@ -48,6 +47,8 @@ use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
 use Symfony\Component\Console\Application;
+use Phpactor\UserInterface\Console\Command\ConfigDumpCommand;
+use PhpBench\DependencyInjection\Container;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -64,7 +65,6 @@ class CoreExtension implements ExtensionInterface
             'console_dumper_default' => 'indented',
             'reflector_stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
             'cache_dir' => __DIR__ . '/../../cache',
-            'indentation' => '    ',
         ];
     }
 
@@ -123,6 +123,14 @@ class CoreExtension implements ExtensionInterface
             return new ClassReflectorCommand(
                 $container->get('application.class_reflector'),
                 $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.config_dump', function (Container $container) {
+            return new ConfigDumpCommand(
+                $container->getParameters(),
+                $container->get('console.dumper_registry'),
+                $container->configLoader()
             );
         }, [ 'ui.console.command' => []]);
 

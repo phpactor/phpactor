@@ -27,14 +27,24 @@ use Phpactor\Application\ClassInflect;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use Phpactor\Config\ConfigLoader;
 
 class CodeTransformExtension implements ExtensionInterface
 {
     public function getDefaultConfig()
     {
+        $configLoader = new ConfigLoader();
+        $templatePaths = array_map(function ($dir) {
+            return $dir . '/templates';
+        }, $configLoader->configDirs());
+        $templatePaths = array_filter($templatePaths, function ($templatePath) {
+            return file_exists($templatePath);
+        });
+
         return [
-            'new_class_variants' => [],
-            'template_paths' => [],
+            'code_transform.class_new.variants' => [],
+            'code_transform.template_paths' => $templatePaths,
+            'code_transform.indentation' => '    ',
         ];
     }
 
@@ -104,7 +114,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
 
         $container->register('code_transform.editor', function (Container $container) {
-            return new Editor($container->getParameter('indentation'));
+            return new Editor($container->getParameter('code_transform.indentation'));
         });
 
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
@@ -128,7 +138,7 @@ class CodeTransformExtension implements ExtensionInterface
             $generators = [
                 'default' => new ClassGenerator($container->get('code_transform.renderer')),
             ];
-            foreach ($container->getParameter('new_class_variants') as $variantName => $variant) {
+            foreach ($container->getParameter('code_transform.class_new.variants') as $variantName => $variant) {
                 $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);
             }
 
@@ -153,7 +163,7 @@ class CodeTransformExtension implements ExtensionInterface
             $loaders = [];
             $loaders[] = new FilesystemLoader(__DIR__ . '/../../vendor/phpactor/code-builder/templates');
 
-            foreach ($container->getParameter('template_paths') as $templatePath) {
+            foreach ($container->getParameter('code_transform.template_paths') as $templatePath) {
                 $loaders[] = new FilesystemLoader($templatePath);
             }
 
@@ -171,7 +181,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
 
         $container->register('code_transform.text_format', function (Container $container) {
-            return new TextFormat($container->getParameter('indentation'));
+            return new TextFormat($container->getParameter('code_transform.indentation'));
         });
     }
 

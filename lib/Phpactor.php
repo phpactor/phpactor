@@ -83,7 +83,7 @@ class Phpactor
         $templatePaths = array_filter($templatePaths, function ($templatePath) {
             return file_exists($templatePath);
         });
-        $config['template_paths'] = $templatePaths;
+        $config['code_transform.template_paths'] = $templatePaths;
 
         return $config;
     }

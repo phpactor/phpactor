@@ -32,28 +32,31 @@ Prerequisites
 Configuration
 -------------
 
-Configuration files are loaded and merged from the following locations:
+Configuration files are loaded and merged from the current working directory
+and then by the XDG base dir standard.
 
-1. `/etc/xdg/phpactor/phpactor.yml`
-2. `/home/daniel/.config/phpactor/phpactor.yml`
-3. `<current directory>/.phpactor.yml`
+To debug (and inspect) the configuration:
 
-For example, to change the default indentation for your current project:
+```bash
+$ phpactor config:dump
+Config files:
+ [-] /home/daniel/www/phpactor/phpactor/.phpactor.yml
+ [-] /home/daniel/.config/phpactor/phpactor.yml
+ [x] /etc/xdg/phpactor/phpactor.yml
 
-```yaml
-# <path to your project>/.phpactor.yml
-indentation: "  " # use 2 spaces instead of 4
+autoload:vendor/autoload.php
+cwd:/home/daniel/www/phpactor/phpactor
+console_dumper_default:indented
+reflector_stub_directory:/home/daniel/www/phpactor/phpactor/lib/Container/../../vendor/jetbrains/phpstorm-stubs
+cache_dir:/home/daniel/www/phpactor/phpactor/lib/Container/../../cache
+code_transform.indentation: "    "
+code_transform.class_new.variants:
+  - exception
+  - symfony_command
+  - phpunit_test
+code_transform.template_paths:
+  - /home/daniel/www/phpactor/phpactor/.phpactor/templates
 ```
-
-Change for all projects:
-
-```yaml
-# $HOME/.config/phpactor/.phpactor.yml
-indentation: "  "
-```
-
-The full list of configuration options can be found in this
-[file](https://github.com/phpactor/phpactor/blob/master/lib/Container/CoreExtension.php).
 
 Commands
 --------

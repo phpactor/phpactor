@@ -3,7 +3,6 @@
 namespace Phpactor\UserInterface\Console;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\CoreExtension;
 use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
@@ -13,6 +12,8 @@ use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Phpactor\Container\Container;
+use Phpactor\Container\ApplicationContainer;
 
 class Application extends SymfonyApplication
 {
@@ -28,10 +29,7 @@ class Application extends SymfonyApplication
 
     public function initialize()
     {
-        $this->container = new Container([
-            CoreExtension::class,
-            CodeTransformExtension::class,
-        ], Phpactor::loadConfig());
+        $this->container = new ApplicationContainer();
         $this->container->init();
 
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
