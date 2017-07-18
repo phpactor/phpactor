@@ -79,33 +79,33 @@ class ClassReflector
                 $parameterType = $parameter->type();
                 // build parameter synopsis
                 $paramInfo = [];
-                if ($parameter->hasType()) {
+                if ($parameter->type()->isDefined()) {
                     $paramInfo[] = $parameterType->className() ?: (string) $parameterType;
                 }
                 $paramInfo[] = '$' . $parameter->name();
-                if ($parameter->hasDefault()) {
+                if ($parameter->default()->isDefined()) {
                     $paramInfo[] = ' = ' . var_export($parameter->default(), true);
                 }
                 $paramInfos[] = implode(' ', $paramInfo);
 
                 $return['methods'][$method->name()]['parameters'][$parameter->name()] = [
                     'name' => $parameter->name(),
-                    'has_type' => $parameter->hasType(),
-                    'type' => $parameter->hasType() ? ($parameterType->className() ? $parameterType->className()->short(): (string) $parameterType) : null,
-                    'has_default' => $parameter->hasDefault(),
-                    'default' => $parameter->hasDefault() ? $parameter->default() : null,
+                    'has_type' => $parameter->type()->isDefined(),
+                    'type' => $parameter->type()->isDefined() ? ($parameterType->className() ? $parameterType->className()->short(): (string) $parameterType) : null,
+                    'has_default' => $parameter->default()->isDefined(),
+                    'default' => $parameter->default()->value(),
                 ];
             }
 
             $methodInfo[] = '(' . implode(', ', $paramInfos) . ')';
-            $methodType = $method->type();
+            $methodType = $method->returnType();
 
 
             if (Type::unknown() != $methodType) {
                 $methodInfo[] = ': ' . ($methodType->isPrimitive() ? (string) $methodType : $methodType->className()->short());
             }
 
-            $return['methods'][$method->name()]['type'] = $methodType->isPrimitive() ? (string) $methodType : $methodType->className()->short();
+            $return['methods'][$method->name()]['type'] = $methodType->isDefined() ? $methodType->short() : null;
 
             $return['methods'][$method->name()]['synopsis'] = implode('', $methodInfo);
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
