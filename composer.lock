@@ -517,12 +517,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/container.git",
-                "reference": "edbd67ae839abdd51ab6a179e0cf2266322e7c49"
+                "reference": "8cd29cf58104e68b4d5cc2af5703e6235e41e7b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/container/zipball/edbd67ae839abdd51ab6a179e0cf2266322e7c49",
-                "reference": "edbd67ae839abdd51ab6a179e0cf2266322e7c49",
+                "url": "https://api.github.com/repos/phpbench/container/zipball/8cd29cf58104e68b4d5cc2af5703e6235e41e7b9",
+                "reference": "8cd29cf58104e68b4d5cc2af5703e6235e41e7b9",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
                 }
             ],
             "description": "Simple, configurable, service container.",
-            "time": "2016-09-17 08:43:50"
+            "time": "2017-07-18 12:10:10"
         },
         {
             "name": "psr/container",
