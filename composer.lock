@@ -414,12 +414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/type-inference.git",
-                "reference": "e4b804bed24b6f20c3b096b22f908243356c8f58"
+                "reference": "a19d745fce9d5161e22992aa542d9375e0c66db4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/e4b804bed24b6f20c3b096b22f908243356c8f58",
-                "reference": "e4b804bed24b6f20c3b096b22f908243356c8f58",
+                "url": "https://api.github.com/repos/phpactor/type-inference/zipball/a19d745fce9d5161e22992aa542d9375e0c66db4",
+                "reference": "a19d745fce9d5161e22992aa542d9375e0c66db4",
                 "shasum": ""
             },
             "require": {
@@ -459,7 +459,7 @@
             "support": {
                 "source": "https://github.com/phpactor/type-inference/tree/master"
             },
-            "time": "2017-07-19 17:11:37"
+            "time": "2017-07-19 17:23:04"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -657,12 +657,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "4820f8e1b3c03aab46a655518d078a7ffc8df4ef"
+                "reference": "23ae25d68ac02125ec17ace52c01a245095ee650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/4820f8e1b3c03aab46a655518d078a7ffc8df4ef",
-                "reference": "4820f8e1b3c03aab46a655518d078a7ffc8df4ef",
+                "url": "https://api.github.com/repos/symfony/console/zipball/23ae25d68ac02125ec17ace52c01a245095ee650",
+                "reference": "23ae25d68ac02125ec17ace52c01a245095ee650",
                 "shasum": ""
             },
             "require": {
@@ -719,7 +719,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-17 12:21:21"
+            "time": "2017-07-19 10:10:53"
         },
         {
             "name": "symfony/debug",
@@ -1399,12 +1399,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "79db5dd907ee977039f77ac8471a739497463429"
+                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/79db5dd907ee977039f77ac8471a739497463429",
-                "reference": "79db5dd907ee977039f77ac8471a739497463429",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/420d44c5534bbf269e85e6213446e8284d53c6c7",
+                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7",
                 "shasum": ""
             },
             "require": {
@@ -1454,7 +1454,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-05-31 16:22:32"
+            "time": "2017-07-19T07:44:25+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
