@@ -203,13 +203,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "790823977652c2a6ff07eae917ac6034dfbdc26c"
+                "reference": "20645c705ea5313206e349fafbcfa70b85564026"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/790823977652c2a6ff07eae917ac6034dfbdc26c",
-                "reference": "790823977652c2a6ff07eae917ac6034dfbdc26c",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/20645c705ea5313206e349fafbcfa70b85564026",
+                "reference": "20645c705ea5313206e349fafbcfa70b85564026",
                 "shasum": ""
+            },
+            "require": {
+                "psr/log": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.1",
@@ -244,7 +247,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-to-file/tree/master"
             },
-            "time": "2017-07-06 11:56:48"
+            "time": "2017-07-19 16:55:06"
         },
         {
             "name": "phpactor/code-builder",
