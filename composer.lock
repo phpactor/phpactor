@@ -203,12 +203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "20645c705ea5313206e349fafbcfa70b85564026"
+                "reference": "b9c03b4218fd3203df6e9bc07edc1f20e2a20145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/20645c705ea5313206e349fafbcfa70b85564026",
-                "reference": "20645c705ea5313206e349fafbcfa70b85564026",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/b9c03b4218fd3203df6e9bc07edc1f20e2a20145",
+                "reference": "b9c03b4218fd3203df6e9bc07edc1f20e2a20145",
                 "shasum": ""
             },
             "require": {
@@ -247,7 +247,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-to-file/tree/master"
             },
-            "time": "2017-07-19 16:55:06"
+            "time": "2017-07-25 12:03:14"
         },
         {
             "name": "phpactor/code-builder",
@@ -1454,7 +1454,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-07-19T07:44:25+00:00"
+            "time": "2017-07-19 07:44:25"
         },
         {
             "name": "phpunit/php-code-coverage",
