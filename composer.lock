@@ -362,12 +362,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "3f01207f93532307330be885e08bc251a5d1ea1f"
+                "reference": "3d62625a6717e3956db9fcdc1efd192ed77ebd2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/3f01207f93532307330be885e08bc251a5d1ea1f",
-                "reference": "3f01207f93532307330be885e08bc251a5d1ea1f",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/3d62625a6717e3956db9fcdc1efd192ed77ebd2b",
+                "reference": "3d62625a6717e3956db9fcdc1efd192ed77ebd2b",
                 "shasum": ""
             },
             "require": {
@@ -406,7 +406,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-07-18 11:18:45"
+            "time": "2017-07-28 07:07:57"
         },
         {
             "name": "phpactor/type-inference",
