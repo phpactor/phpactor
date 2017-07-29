@@ -52,7 +52,7 @@ final class FileInfoAtOffset
 
         $return = [
             'type' => (string) $result->value()->type(),
-            'value' => (string) $result->value()->value(),
+            'value' => var_export($result->value()->value(), true),
             'offset' => $offset,
             'path' => null,
         ];
