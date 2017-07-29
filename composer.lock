@@ -467,12 +467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "46e177318f351e79f8d20999ec9323ed1e17f6be"
+                "reference": "eb077faec71a99e96a6c81ed2d5887793b2a3490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/46e177318f351e79f8d20999ec9323ed1e17f6be",
-                "reference": "46e177318f351e79f8d20999ec9323ed1e17f6be",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/eb077faec71a99e96a6c81ed2d5887793b2a3490",
+                "reference": "eb077faec71a99e96a6c81ed2d5887793b2a3490",
                 "shasum": ""
             },
             "require": {
@@ -480,7 +480,7 @@
                 "microsoft/tolerant-php-parser": "dev-master"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^6.0",
                 "symfony/filesystem": "^3.3"
             },
             "type": "library",
@@ -512,7 +512,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-18 06:55:41"
+            "time": "2017-07-29 10:21:38"
         },
         {
             "name": "phpbench/container",

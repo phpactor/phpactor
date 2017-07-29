@@ -2,9 +2,6 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\TypeInference\TypeInference;
-use Phpactor\TypeInference\Domain\Offset;
-use Phpactor\TypeInference\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\ClassName;
@@ -13,13 +10,16 @@ use Phpactor\TypeInference\Domain\InferredType;
 use Phpactor\TypeInference\Domain\TypeInferer;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\SourceCode;
+use Phpactor\WorseReflection\Offset;
 
 final class FileInfoAtOffset
 {
     /**
-     * @var TypeInferer
+     * @var Reflector
      */
-    private $inference;
+    private $reflector;
 
     /**
      * @var ClassToFileFileToClass
@@ -32,18 +32,18 @@ final class FileInfoAtOffset
     private $filesystemHelper;
 
     public function __construct(
-        TypeInferer $inference,
+        Reflector $reflector,
         ClassToFileFileToClass $classToFileConverter
     )
     {
-        $this->inference = $inference;
+        $this->reflector = $reflector;
         $this->classToFileConverter = $classToFileConverter;
         $this->filesystemHelper = new Helper\FilesystemHelper();
     }
 
     public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array
     {
-        $result = $this->inference->inferTypeAtOffset(
+        $result = $this->reflector->reflectOffset(
             SourceCode::fromString(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
             ),
@@ -51,21 +51,35 @@ final class FileInfoAtOffset
         );
 
         $return = [
-            'type' => (string) $result->type(),
+            'type' => (string) $result->value()->type(),
+            'value' => (string) $result->value()->value(),
             'offset' => $offset,
             'path' => null,
-            'messages' => $result->log()->messages()
         ];
 
         if ($showFrame) {
-            $return['frame'] = $result->frame()->asDebugMap();
+            $frame = [];
+
+            foreach (['locals', 'properties'] as $assignmentType) {
+                foreach ($result->frame()->$assignmentType() as $local) {
+                    $info = sprintf(
+                        '%s = (%s) %s', 
+                        $local->name(),
+                        $local->value()->type(),
+                        str_replace(PHP_EOL, '', var_export($local->value()->value(), true))
+                    );
+
+                    $frame[$assignmentType][$local->offset()->toInt()] = $info;
+                }
+            }
+            $return['frame'] = $frame;
         }
 
-        if (InferredType::unknown() == $result->type()) {
+        if (InferredType::unknown() == $result->value()->type()) {
             return $return;
         }
 
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->type()));
+        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->value()->type()));
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;

@@ -2,24 +2,20 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\TypeInference\TypeInference;
-use Phpactor\TypeInference\Domain\Offset;
-use Phpactor\TypeInference\Domain\SourceCode;
+use Phpactor\TypeReflector\TypeReflector;
+use Phpactor\TypeReflector\Domain\Offset;
+use Phpactor\TypeReflector\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
-use Phpactor\TypeInference\Domain\InferredType;
-use Phpactor\TypeInference\Domain\TypeInferer;
+use Phpactor\TypeReflector\Domain\InferredType;
+use Phpactor\TypeReflector\Domain\TypeInferer;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\WorseReflection\Reflector;
 
 final class FileInfo
 {
-    /**
-     * @var TypeInference
-     */
-    private $inference;
-
     /**
      * @var FileToClass
      */
@@ -31,12 +27,10 @@ final class FileInfo
     private $filesystem;
 
     public function __construct(
-        TypeInferer $inference,
         FileToClass $classToFileConverter,
         Filesystem $filesystem
     )
     {
-        $this->inference = $inference;
         $this->classToFileConverter = $classToFileConverter;
         $this->filesystem = $filesystem;
     }

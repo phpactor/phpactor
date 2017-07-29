@@ -4,8 +4,9 @@ namespace Phpactor\Tests\UserInterface;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\TestCase;
 
-abstract class SystemTestCase extends \PHPUnit_Framework_TestCase
+abstract class SystemTestCase extends TestCase
 {
     protected function workspaceDir()
     {

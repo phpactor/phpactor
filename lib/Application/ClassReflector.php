@@ -84,7 +84,7 @@ class ClassReflector
                 }
                 $paramInfo[] = '$' . $parameter->name();
                 if ($parameter->default()->isDefined()) {
-                    $paramInfo[] = ' = ' . var_export($parameter->default(), true);
+                    $paramInfo[] = ' = ' . str_replace(PHP_EOL, '', var_export($parameter->default()->value(), true));
                 }
                 $paramInfos[] = implode(' ', $paramInfo);
 

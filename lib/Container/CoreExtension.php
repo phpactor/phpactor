@@ -261,11 +261,6 @@ class CoreExtension implements ExtensionInterface
         $container->register('type_inference.source_code_loader', function (Container $container) {
             return new ClassToFileSourceCodeLoader($container->get('class_to_file.converter'));
         });
-        $container->register('type_inference.type_inference', function (Container $container) {
-            return new TolerantTypeInferer(null, new WorseMemberTypeResolver(
-                $container->get('reflection.reflector')
-            ));
-        });
     }
 
     private function registerApplicationServices(Container $container)
@@ -288,7 +283,6 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.file_info', function (Container $container) {
             return new FileInfo(
-                $container->get('type_inference.type_inference'),
                 $container->get('class_to_file.converter'),
                 $container->get('source_code_filesystem.simple')
             );
@@ -296,7 +290,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.file_info_at_offset', function (Container $container) {
             return new FileInfoAtOffset(
-                $container->get('type_inference.type_inference'),
+                $container->get('reflection.reflector'),
                 $container->get('class_to_file.converter')
             );
         });
