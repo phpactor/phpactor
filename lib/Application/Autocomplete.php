@@ -9,6 +9,7 @@ use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\ClassName;
 use Phpactor\WorseReflection\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Reflection\ReflectionMethod;
 
 class Autocomplete
 {
@@ -30,7 +31,6 @@ class Autocomplete
 
     public function autocomplete(string $code, int $offset)
     {
-        $debug = fopen('debug.txt', 'a+');
         $code = $this->filesystemHelper->contentsFromFileOrStdin($code);
         $reflectionOffset = $this->reflector->reflectOffset(
             SourceCode::fromString($code),
@@ -38,10 +38,12 @@ class Autocomplete
         );
 
         $type = $reflectionOffset->value()->type();
-        fwrite($debug, $offset . (string) $type . PHP_EOL);
+        $response = [
+            'suggestions' => []
+        ];
 
         if ($type->isPrimitive()) {
-            return [];
+            return $response;
         }
 
         $classReflection = $this->reflector->reflectClass(ClassName::fromString((string) $type));
@@ -70,6 +72,6 @@ class Autocomplete
             ];
         }
 
-        return $suggestions;
+        return ['suggestions' => $suggestions ];
     }
 }
