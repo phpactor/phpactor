@@ -8,6 +8,9 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class Transformer
 {
+    /**
+     * @var CodeTransform
+     */
     private $transform;
 
     /**
@@ -26,8 +29,8 @@ class Transformer
     public function transform(string $src, array $transformations)
     {
         $code = $this->filesystemHelper->contentsFromFileOrStdin($src);
-
         $code = SourceCode::fromString($code);
+
         $transformedCode = $this->transform->transform($code, $transformations);
 
         if ($code == $transformedCode) {

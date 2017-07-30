@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Phpactor\Container\Container;
 use Phpactor\Container\ApplicationContainer;
+use Monolog\Handler\StreamHandler;
 
 class Application extends SymfonyApplication
 {
@@ -40,6 +41,10 @@ class Application extends SymfonyApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setCatchExceptions(false);
+
+        if ($output->isVerbose()) {
+            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDOUT));
+        }
 
         try {
             return parent::doRun($input, $output);

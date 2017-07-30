@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffde3962ed7e2138d94f2dd301ba358e",
+    "content-hash": "56dd43f969a3dfaa875191254013ae11",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "1c6e50a575323a1f608a0cc62d4eefe87faf8827"
+                "reference": "f3d186328b5c4bd985b3866cbd2c188522d8e809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/1c6e50a575323a1f608a0cc62d4eefe87faf8827",
-                "reference": "1c6e50a575323a1f608a0cc62d4eefe87faf8827",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/f3d186328b5c4bd985b3866cbd2c188522d8e809",
+                "reference": "f3d186328b5c4bd985b3866cbd2c188522d8e809",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-07-17 18:50:35"
+            "time": "2017-07-26 10:46:30"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -143,6 +143,85 @@
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
             "time": "2017-06-19 03:11:27"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "7b992836275e09ed63c63fe33ca9993e515e6c5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/7b992836275e09ed63c63fe33ca9993e515e6c5d",
+                "reference": "7b992836275e09ed63c63fe33ca9993e515e6c5d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/log": "^1.0.1"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "^1.4.2",
+                "jakub-onderka/php-parallel-lint": "^0.9",
+                "php-amqplib/php-amqplib": "~2.4",
+                "php-console/php-console": "^3.1.3",
+                "phpspec/prophecy": "^1.6.1",
+                "phpunit/phpunit": "^5.7",
+                "predis/predis": "^1.1",
+                "ruflin/elastica": ">=0.90 <3.0",
+                "sentry/sentry": "^0.13",
+                "swiftmailer/swiftmailer": "^5.3|^6.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-mongodb": "Allow sending log messages to a MongoDB server (via driver)",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+                "sentry/sentry": "Allow sending log messages to a Sentry server"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "http://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "time": "2017-06-19 10:29:40"
         },
         {
             "name": "phpactor/class-mover",
@@ -467,17 +546,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "902e0c6a0a49f20afa4827e8ddb7fdc231fc5761"
+                "reference": "b936ad287212ff89a4eeb41b56639d6a6e55af9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/902e0c6a0a49f20afa4827e8ddb7fdc231fc5761",
-                "reference": "902e0c6a0a49f20afa4827e8ddb7fdc231fc5761",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b936ad287212ff89a4eeb41b56639d6a6e55af9c",
+                "reference": "b936ad287212ff89a4eeb41b56639d6a6e55af9c",
                 "shasum": ""
             },
             "require": {
                 "jetbrains/phpstorm-stubs": "dev-master",
-                "microsoft/tolerant-php-parser": "dev-master"
+                "microsoft/tolerant-php-parser": "dev-master",
+                "psr/log": "^1.0@dev"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0",
@@ -512,7 +592,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-07-29 10:50:04"
+            "time": "2017-07-30 10:34:07"
         },
         {
             "name": "phpbench/container",
@@ -657,12 +737,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "23ae25d68ac02125ec17ace52c01a245095ee650"
+                "reference": "4e1a385b63faac61c56d871af1232fa68e6db2cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/23ae25d68ac02125ec17ace52c01a245095ee650",
-                "reference": "23ae25d68ac02125ec17ace52c01a245095ee650",
+                "url": "https://api.github.com/repos/symfony/console/zipball/4e1a385b63faac61c56d871af1232fa68e6db2cd",
+                "reference": "4e1a385b63faac61c56d871af1232fa68e6db2cd",
                 "shasum": ""
             },
             "require": {
@@ -719,7 +799,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-19 10:10:53"
+            "time": "2017-07-29 21:28:14"
         },
         {
             "name": "symfony/debug",
@@ -727,12 +807,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "296d63b9b2fbe8da9308713295543c08e93cc9cf"
+                "reference": "97592888b907532a9225f6e84a620e642d7093df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/296d63b9b2fbe8da9308713295543c08e93cc9cf",
-                "reference": "296d63b9b2fbe8da9308713295543c08e93cc9cf",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/97592888b907532a9225f6e84a620e642d7093df",
+                "reference": "97592888b907532a9225f6e84a620e642d7093df",
                 "shasum": ""
             },
             "require": {
@@ -775,7 +855,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-06 13:36:30"
+            "time": "2017-07-28 15:30:20"
         },
         {
             "name": "symfony/filesystem",
@@ -891,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "519fb0872bb41e0f0c221ead8945eb12197bb034"
+                "reference": "8ccc03269a0e2a248c0daff5ad20050388cc07c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/519fb0872bb41e0f0c221ead8945eb12197bb034",
-                "reference": "519fb0872bb41e0f0c221ead8945eb12197bb034",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/8ccc03269a0e2a248c0daff5ad20050388cc07c4",
+                "reference": "8ccc03269a0e2a248c0daff5ad20050388cc07c4",
                 "shasum": ""
             },
             "require": {
@@ -938,7 +1018,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-03 10:20:17"
+            "time": "2017-07-26 06:46:38"
         },
         {
             "name": "twig/twig",
@@ -946,12 +1026,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9823bed943c91316183df6e387a24d2acfdbf453"
+                "reference": "5ee1d1884f5bffe98feb28008adc8d69978d0882"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9823bed943c91316183df6e387a24d2acfdbf453",
-                "reference": "9823bed943c91316183df6e387a24d2acfdbf453",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5ee1d1884f5bffe98feb28008adc8d69978d0882",
+                "reference": "5ee1d1884f5bffe98feb28008adc8d69978d0882",
                 "shasum": ""
             },
             "require": {
@@ -1004,7 +1084,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-07-04 13:21:11"
+            "time": "2017-07-22 07:33:53"
         },
         {
             "name": "webmozart/assert",
@@ -1151,60 +1231,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "doctrine/instantiator",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5",
-                "reference": "5acd2bd8c2b600ad5cc4c9180ebf0a930604d6a5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3,<8.0-DEV"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1.8",
-                "ext-pdo": "*",
-                "ext-phar": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
-                }
-            ],
-            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
-            "homepage": "https://github.com/doctrine/instantiator",
-            "keywords": [
-                "constructor",
-                "instantiate"
-            ],
-            "time": "2017-02-16 16:15:51"
-        },
         {
             "name": "myclabs/deep-copy",
             "version": "1.x-dev",
@@ -1662,12 +1688,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "9ddb181faa4a3841fe131c357fd01de75cbb4da9"
+                "reference": "a6ce111630a5eea291d13c273295853ac1a7bf1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/9ddb181faa4a3841fe131c357fd01de75cbb4da9",
-                "reference": "9ddb181faa4a3841fe131c357fd01de75cbb4da9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/a6ce111630a5eea291d13c273295853ac1a7bf1f",
+                "reference": "a6ce111630a5eea291d13c273295853ac1a7bf1f",
                 "shasum": ""
             },
             "require": {
@@ -1703,7 +1729,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-03-07 07:36:57"
+            "time": "2017-07-25T09:28:19+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1711,12 +1737,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c0c61c97be37e1c77ab61ad73448e9208c05aade"
+                "reference": "a12edbc808e6e9fa69ce35a1b156e7701d9c5af5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c0c61c97be37e1c77ab61ad73448e9208c05aade",
-                "reference": "c0c61c97be37e1c77ab61ad73448e9208c05aade",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a12edbc808e6e9fa69ce35a1b156e7701d9c5af5",
+                "reference": "a12edbc808e6e9fa69ce35a1b156e7701d9c5af5",
                 "shasum": ""
             },
             "require": {
@@ -1785,7 +1811,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-23 12:45:27"
+            "time": "2017-07-30T08:14:43+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2471,7 +2497,8 @@
         "phpactor/type-inference": 20,
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
-        "microsoft/tolerant-php-parser": 20
+        "microsoft/tolerant-php-parser": 20,
+        "monolog/monolog": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
