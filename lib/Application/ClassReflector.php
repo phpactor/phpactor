@@ -103,7 +103,6 @@ class ClassReflector
             $methodInfo[] = '(' . implode(', ', $paramInfos) . ')';
             $methodType = $method->returnType();
 
-
             if (Type::unknown() != $methodType) {
                 $methodInfo[] = ': ' . ($methodType->isPrimitive() ? (string) $methodType : $methodType->className()->short());
             }

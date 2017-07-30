@@ -51,6 +51,8 @@ use Phpactor\UserInterface\Console\Command\ConfigDumpCommand;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Logger\PsrLogger;
 use Monolog\Logger;
+use Phpactor\Application\Autocomplete;
+use Phpactor\UserInterface\Console\Command\AutocompleteCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -144,6 +146,12 @@ class CoreExtension implements ExtensionInterface
 			);
 		}, [ 'ui.console.command' => []]);
 
+		$container->register('command.complete', function (Container $container) {
+			return new AutocompleteCommand(
+				$container->get('application.complete'),
+				$container->get('console.dumper_registry')
+			);
+		}, [ 'ui.console.command' => []]);
 		// ---------------
 		// Dumpers
 		// ---------------
@@ -316,6 +324,13 @@ class CoreExtension implements ExtensionInterface
 			return new ClassReflector(
 				$container->get('application.helper.class_file_normalizer'),
 				$container->get('reflection.reflector')
+			);
+        });
+
+		$container->register('application.complete', function (Container $container) {
+			return new Autocomplete(
+				$container->get('reflection.reflector'),
+				$container->get('application.helper.class_file_normalizer')
 			);
 		});
 
