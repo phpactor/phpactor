@@ -480,7 +480,7 @@ function! phpactor#ClassInflect()
 endfunction
 
 function! phpactor#Exec(cmd)
-    let cmd = 'php ' . s:phpactorbinpath . ' --verbose ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd)
 
     if (v:shell_error == 0)
@@ -495,7 +495,7 @@ function! phpactor#Exec(cmd)
 endfunction
 
 function! phpactor#ExecStdIn(cmd, stdin)
-    let cmd = 'php ' . s:phpactorbinpath . ' --verbose ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd, a:stdin)
 
     if (v:shell_error == 0)

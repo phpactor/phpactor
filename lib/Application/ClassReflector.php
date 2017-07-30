@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflection\ReflectionConstant;
+use Phpactor\WorseReflection\Reflection\ReflectionParameter;
 
 class ClassReflector
 {
@@ -46,7 +47,7 @@ class ClassReflector
     /**
      * Move - guess if moving by class name or file.
      */
-    public function reflect(string $classOrFile)
+    public function reflect(string $classOrFile): array
     {
         $className = $this->classFileNormalizer->normalizeToClass($classOrFile);
         $reflection = $this->reflector->reflectClass(ClassName::fromString($className));
@@ -59,6 +60,7 @@ class ClassReflector
             'properties' => [],
             'constants' => [],
         ];
+
 
         /** @var $method ReflectionMethod */
         foreach ($reflection->methods() as $method) {
@@ -75,6 +77,7 @@ class ClassReflector
             ];
 
             $paramInfos = [];
+            /** @var $parameter ReflectionParameter */
             foreach ($method->parameters() as $parameter) {
                 $parameterType = $parameter->type();
                 // build parameter synopsis
