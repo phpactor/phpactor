@@ -29,7 +29,7 @@ class Autocomplete
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function autocomplete(string $code, int $offset)
+    public function autocomplete(string $code, int $offset): array
     {
         $code = $this->filesystemHelper->contentsFromFileOrStdin($code);
         $reflectionOffset = $this->reflector->reflectOffset(
