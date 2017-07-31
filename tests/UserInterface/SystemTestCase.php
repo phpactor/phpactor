@@ -41,6 +41,7 @@ abstract class SystemTestCase extends TestCase
     protected function assertSuccess(Process $process)
     {
         if (true === $process->isSuccessful()) {
+            $this->addToAssertionCount(1);
             return;
         }
 
@@ -58,6 +59,8 @@ abstract class SystemTestCase extends TestCase
         if (null !== $message) {
             $this->assertContains($message, $process->getErrorOutput());
         }
+
+        $this->addToAssertionCount(1);
     }
 
     protected function loadProject($name)

@@ -18,5 +18,6 @@ class ConfigLoaderTest extends TestCase
 
         $configLoader = new ConfigLoader($xdg->reveal());
         $config = $configLoader->loadConfig();
+        $this->assertArrayHasKey('autoload', $config);
     }
 }

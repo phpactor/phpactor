@@ -72,5 +72,6 @@ EOT
         $target = FullyQualifiedName::fromString('Hello\World');
         $this->logger->replacing(FilePath::fromString('/path/to/file/Something.php'), $references, $target);
         $output = $this->output->fetch();
+        $this->assertContains('Hello => World', $output);
     }
 }
