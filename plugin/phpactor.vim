@@ -333,7 +333,7 @@ endfunction
 function! phpactor#Transform()
 
     " TODO: Get the list of transforms from the PHP application
-    let transformations = [ 'complete_constructor', 'implement_contracts' ]
+    let transformations = [ 'complete_constructor', 'implement_contracts', 'add_missing_assignments' ]
 
     let list = []
     let c = 1

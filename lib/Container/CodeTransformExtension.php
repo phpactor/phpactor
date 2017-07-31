@@ -28,6 +28,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\Config\ConfigLoader;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignments;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -130,6 +131,13 @@ class CodeTransformExtension implements ExtensionInterface
                 $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
+
+        $container->register('code_transform.transformer.add_missing_assignments', function (Container $container) {
+            return new AddMissingAssignments(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.updater')
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_assignments' ]]);
     }
 
     private function registerGenerators(Container $container)

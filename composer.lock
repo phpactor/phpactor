@@ -387,12 +387,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "4dce5291d87e9d41c5eb70386ee6b8f1b9009c4f"
+                "reference": "3dc581888aa5c083f8d66063e0632b91744fca29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/4dce5291d87e9d41c5eb70386ee6b8f1b9009c4f",
-                "reference": "4dce5291d87e9d41c5eb70386ee6b8f1b9009c4f",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/3dc581888aa5c083f8d66063e0632b91744fca29",
+                "reference": "3dc581888aa5c083f8d66063e0632b91744fca29",
                 "shasum": ""
             },
             "require": {
@@ -433,7 +433,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-07-18 08:40:15"
+            "time": "2017-07-31 19:48:29"
         },
         {
             "name": "phpactor/source-code-filesystem",
