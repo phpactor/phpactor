@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\ClassName;
 use Phpactor\WorseReflection\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflection\ReflectionMethod;
 
-class Autocomplete
+class Complete
 {
     /**
      * @var Reflector

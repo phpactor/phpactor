@@ -12,9 +12,9 @@ use Phpactor\UserInterface\Console\Logger\SymfonyConsoleInformationForOffsetLogg
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\FileInfoAtOffset;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
-use Phpactor\Application\Autocomplete;
+use Phpactor\Application\Complete;
 
-class AutocompleteCommand extends Command
+class CompleteCommand extends Command
 {
     /**
      * @var Autocomplete
@@ -22,7 +22,7 @@ class AutocompleteCommand extends Command
     private $autocomplete;
 
     public function __construct(
-        Autocomplete $autocomplete,
+        Complete $autocomplete,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
