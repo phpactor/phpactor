@@ -10,6 +10,8 @@ class ConfigLoaderTest extends TestCase
 {
     public function testLoaderConfig()
     {
+        $dir = getcwd();
+        chdir(__DIR__ . '/config');
         $xdg = $this->prophesize(Xdg::class);
         $xdg->getConfigDirs()->willReturn([
             __DIR__ .'/config/xdg',
@@ -18,6 +20,14 @@ class ConfigLoaderTest extends TestCase
 
         $configLoader = new ConfigLoader($xdg->reveal());
         $config = $configLoader->loadConfig();
-        $this->assertArrayHasKey('autoload', $config);
+        $this->assertEquals([
+            'project' => 'config',
+            'hello' => [
+                'world' => [
+                    'bonjour' => 'le-monde',
+                    'foobar' => 'barfoo',
+                ],
+            ],
+        ], $config);
     }
 }
