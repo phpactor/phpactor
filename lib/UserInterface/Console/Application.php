@@ -26,6 +26,7 @@ class Application extends SymfonyApplication
     public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
     {
         parent::__construct('Phpactor', '0.1');
+        $this->foobar = 'string';
     }
 
     public function initialize()
