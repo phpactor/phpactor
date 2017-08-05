@@ -287,12 +287,12 @@ Out:
 ```php
 <?php
 
-class Post implements \Countable
+class Post
 {
     /**
      * @var Turtle
      */
-    private $turtle;
+    private $mutate;
 
     public function hello()
     {
