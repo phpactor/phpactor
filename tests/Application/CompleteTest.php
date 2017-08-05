@@ -29,7 +29,7 @@ class CompleteTest extends TestCase
     public function provideComplete()
     {
         return [
-            'Public method' => [
+            'Public property' => [
                 <<<'EOT'
 <?php
 
@@ -56,7 +56,7 @@ EOT
 
 class Foobar
 {
-    public function foo(string $zzzbar = 'bar', $def)
+    public function foo(string $zzzbar = 'bar', $def): Barbar
     {
     }
 }
@@ -65,11 +65,11 @@ $foobar = new Foobar();
 $foobar->
 
 EOT
-                , 124, [
+                , 132, [
                     [
                         'type' => 'f',
                         'name' => 'foo',
-                        'info' => 'pub foo(string $zzzbar = \'bar\', $def)',
+                        'info' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
                     ]
                 ]
             ],

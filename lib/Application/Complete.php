@@ -150,6 +150,10 @@ class Complete
         }
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 
+        if ($method->returnType()->isDefined()) {
+            $info[] = ': ' . $method->returnType()->short();
+        }
+
         return implode('', $info);
     }
 
