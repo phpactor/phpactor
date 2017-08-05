@@ -10,6 +10,7 @@ use Phpactor\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\ClassName;
 use Phpactor\WorseReflection\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflection\ReflectionMethod;
+use Microsoft\PhpParser\Parser;
 
 class Complete
 {
@@ -29,9 +30,11 @@ class Complete
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function autocomplete(string $code, int $offset): array
+    public function complete(string $code, int $offset): array
     {
         $code = $this->filesystemHelper->contentsFromFileOrStdin($code);
+        list($offset, $partialMatch) = $this->getOffetToReflect($code, $offset);
+
         $reflectionOffset = $this->reflector->reflectOffset(
             SourceCode::fromString($code),
             Offset::fromint($offset)
@@ -72,6 +75,28 @@ class Complete
             ];
         }
 
-        return ['suggestions' => $suggestions ];
+        // filter partial match
+        if ($partialMatch) {
+            $suggestions = array_filter($suggestions, function ($suggestion) use ($partialMatch) {
+                return 0 === strpos($suggestion['name'], $partialMatch);
+            });
+        }
+
+        return ['suggestions' => array_values($suggestions) ];
+    }
+
+    private function getOffetToReflect($code, $offset)
+    {
+        $code = str_replace(PHP_EOL, ' ', $code);
+        $untilCursor = substr($code, 0, $offset);
+
+        foreach ([ '->', '::' ] as $accessor) {
+            $pos = strrpos($untilCursor, $accessor);
+            if ($pos) {
+                return [ $pos,  substr($untilCursor, $pos + 2, $offset) ];
+            }
+        }
+
+        return [ $offset, null ];
     }
 }

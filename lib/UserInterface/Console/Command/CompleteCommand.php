@@ -19,14 +19,14 @@ class CompleteCommand extends Command
     /**
      * @var Autocomplete
      */
-    private $autocomplete;
+    private $complete;
 
     public function __construct(
-        Complete $autocomplete,
+        Complete $complete,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->autocomplete = $autocomplete;
+        $this->complete = $complete;
         $this->dumperRegistry = $dumperRegistry;
     }
 
@@ -41,7 +41,7 @@ class CompleteCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $completions = $this->autocomplete->autocomplete(
+        $completions = $this->complete->complete(
             $input->getArgument('path'),
             $input->getArgument('offset')
         );
