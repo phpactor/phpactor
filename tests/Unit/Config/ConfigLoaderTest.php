@@ -10,15 +10,13 @@ class ConfigLoaderTest extends TestCase
 {
     public function testLoaderConfig()
     {
-        $dir = getcwd();
-        chdir(__DIR__ . '/config');
         $xdg = $this->prophesize(Xdg::class);
         $xdg->getConfigDirs()->willReturn([
             __DIR__ .'/config/xdg',
             __DIR__ .'/config/user',
         ]);
 
-        $configLoader = new ConfigLoader($xdg->reveal());
+        $configLoader = new ConfigLoader($xdg->reveal(), __DIR__ . '/config');
         $config = $configLoader->loadConfig();
         $this->assertEquals([
             'project' => 'config',

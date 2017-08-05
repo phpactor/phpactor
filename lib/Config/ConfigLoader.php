@@ -14,9 +14,15 @@ class ConfigLoader
      */
     private $xdg;
 
-    public function __construct(Xdg $xdg = null)
+    /**
+     * @var string
+     */
+    private $cwd;
+
+    public function __construct(Xdg $xdg = null, string $cwd = null)
     {
         $this->xdg = $xdg ?: new Xdg();
+        $this->cwd = $cwd ?: getcwd();
     }
 
     public function configFiles(): array
@@ -27,7 +33,7 @@ class ConfigLoader
             return Path::join($configPath, '/phpactor/phpactor.yml');
         }, $configDirs);
 
-        $localConfigPath = Path::join(getcwd(), '.phpactor.yml');
+        $localConfigPath = Path::join($this->cwd, '.phpactor.yml');
         array_unshift($configPaths, $localConfigPath);
 
         return $configPaths;
@@ -58,3 +64,4 @@ class ConfigLoader
         return $config;
     }
 }
+
