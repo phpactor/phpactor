@@ -334,12 +334,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "7e5a99a7704b502cfdfd174fa53693cf858849d8"
+                "reference": "b6c3b89c4226453de19de4a7bde652ab96d381fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/7e5a99a7704b502cfdfd174fa53693cf858849d8",
-                "reference": "7e5a99a7704b502cfdfd174fa53693cf858849d8",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/b6c3b89c4226453de19de4a7bde652ab96d381fc",
+                "reference": "b6c3b89c4226453de19de4a7bde652ab96d381fc",
                 "shasum": ""
             },
             "require": {
@@ -376,10 +376,10 @@
             ],
             "description": "Generating and modifying source code",
             "support": {
-                "source": "https://github.com/phpactor/code-builder/tree/0.1.0",
+                "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-07-18 08:01:40"
+            "time": "2017-08-05 07:54:59"
         },
         {
             "name": "phpactor/code-transform",
