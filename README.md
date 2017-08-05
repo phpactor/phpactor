@@ -261,6 +261,46 @@ class Post implements \Countable
 }
 ```
 
+#### Add missing assignments
+
+Name: `add_missing_assignments`
+
+This transformer will add any missing assignments from the current class as
+private properties.
+
+In:
+
+```php
+<?php
+
+class Post
+{
+    public function hello()
+    {
+        $this->mutate = new Turtle();
+    }
+}
+```
+
+Out:
+
+```php
+<?php
+
+class Post implements \Countable
+{
+    /**
+     * @var Turtle
+     */
+    private $turtle;
+
+    public function hello()
+    {
+        $this->mutate = new Turtle();
+    }
+}
+```
+
 ### Class generation
 
 Generates a new class at a given file path or class name:
