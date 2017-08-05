@@ -11,6 +11,8 @@ use Phpactor\WorseReflection\ClassName;
 use Phpactor\WorseReflection\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflection\ReflectionMethod;
 use Microsoft\PhpParser\Parser;
+use Phpactor\WorseReflection\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Reflection\ReflectionProperty;
 
 class Complete
 {
@@ -53,9 +55,14 @@ class Complete
 
         $suggestions = [];
         foreach ($classReflection->methods() as $method) {
+            if ($method->name() === '__construct') {
+                continue;
+            }
+            $info = $this->getMethodInfo($method);
             $suggestions[] = [
                 'type' => 'f',
                 'name' => $method->name(),
+                'info' => $info
             ];
         }
 
@@ -64,6 +71,7 @@ class Complete
                 $suggestions[] = [
                     'type' => 'm',
                     'name' => $property->name(),
+                    'info' => $this->getPropertyInfo($property),
                 ];
             }
         }
@@ -72,6 +80,7 @@ class Complete
             $suggestions[] = [
                 'type' => 'm',
                 'name' => $constant->name(),
+                'info' => 'const ' . $constant->name(),
             ];
         }
 
@@ -98,5 +107,55 @@ class Complete
         }
 
         return [ $offset, null ];
+    }
+
+    private function getMethodInfo(ReflectionMethod $method)
+    {
+        $info = [
+            substr((string) $method->visibility(), 0, 3),
+            ' ',
+            $method->name()
+        ];
+
+        if ($method->isAbstract()) {
+            array_unshift($info, 'abstract ');
+        }
+
+        $paramInfos = [];
+
+        /** @var $parameter ReflectionParameter */
+        foreach ($method->parameters() as $parameter) {
+            $paramInfo = [];
+            if ($parameter->type()->isDefined()) {
+                $paramInfo[] = $parameter->type()->short();
+            }
+            $paramInfo[] = '$' . $parameter->name();
+
+            if ($parameter->default()->isDefined()) {
+                $paramInfo[] = '= '. str_replace(PHP_EOL, '', var_export($parameter->default()->value(), true));
+            }
+            $paramInfos[] = implode(' ', $paramInfo);
+
+        }
+        $info[] = '(' . implode(', ', $paramInfos) . ')';
+
+        return implode('', $info);
+    }
+
+    private function getPropertyInfo(ReflectionProperty $property)
+    {
+        $info = [
+            substr((string) $property->visibility(), 0, 3),
+        ];
+
+        if ($property->isStatic()) {
+            $info[] = ' static';
+        }
+
+        $info[] = ' ';
+        $info[] = '$' . $property->name();
+
+
+        return implode('', $info);
     }
 }

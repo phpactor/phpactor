@@ -46,6 +46,30 @@ EOT
                     [
                         'type' => 'm',
                         'name' => 'foo',
+                        'info' => 'pub $foo',
+                    ]
+                ]
+            ],
+            'Public method with parameters' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    public function foo(string $zzzbar = 'bar', $def)
+    {
+    }
+}
+
+$foobar = new Foobar();
+$foobar->
+
+EOT
+                , 124, [
+                    [
+                        'type' => 'f',
+                        'name' => 'foo',
+                        'info' => 'pub foo(string $zzzbar = \'bar\', $def)',
                     ]
                 ]
             ],
@@ -66,6 +90,7 @@ EOT
                     [
                         'type' => 'm',
                         'name' => 'foo',
+                        'info' => 'pub static $foo',
                     ]
                 ]
             ],
@@ -87,7 +112,35 @@ EOT
                     [
                         'type' => 'm',
                         'name' => 'foobar',
+                        'info' => 'pub static $foobar',
                     ]
+                ]
+            ],
+            'Partially completed' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    const FOOBAR = 'foobar';
+    const BARFOO = 'barfoo';
+}
+
+$foobar = new Foobar();
+$foobar::
+
+EOT
+                , 116, [
+                    [
+                        'type' => 'm',
+                        'name' => 'FOOBAR',
+                        'info' => 'const FOOBAR',
+                    ],
+                    [
+                        'type' => 'm',
+                        'name' => 'BARFOO',
+                        'info' => 'const BARFOO',
+                    ],
                 ]
             ]
         ];
