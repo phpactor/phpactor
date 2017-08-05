@@ -21,6 +21,7 @@ Features
 - [Transformation](#transformation): Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
 - [Class search](#class-search): Search for a class by its name.
+- [Autocompletion](#auto-completion): Auto-completion command.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
 Prerequisites
@@ -347,9 +348,40 @@ Inflect a new class from an existing class.
 
 The following will generate an interface from an existing class:
 
-```
+```bash
 $ phpactor class:inflect lib/TestGenerator.php lib/Api/TestGenerator.php interface
 ```
+
+Autocompletion
+--------------
+
+This command will provide suggestions for the offset in a given file (or stdin). Currently
+only `->` and `::` completions are supported.
+
+```bash
+$ phpactor complete lib/Application/Complete.php 983
+suggestions:
+  0:
+    name:complete
+    info:pub complete(string $code, int $offset)
+  1:
+    name:getOffetToReflect
+    info:pri getOffetToReflect($code, $offset)
+  2:
+    name:getMethodInfo
+    info:pri getMethodInfo(ReflectionMethod $method)
+  3:
+    name:getPropertyInfo
+    info:pri getPropertyInfo(ReflectionProperty $property)
+  4:
+    name:reflector
+    info:pri $reflector
+  5:
+    name:filesystemHelper
+    info:pri $filesystemHelper
+```
+
+Also returns JSON with `--format=json`
 
 Packages
 --------
