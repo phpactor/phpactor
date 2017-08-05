@@ -81,7 +81,7 @@ abstract class SystemTestCase extends TestCase
         $this->cacheWorkspace($name);
     }
 
-    protected function phpactor(string $args)
+    protected function phpactor(string $args): Process
     {
         chdir($this->workspaceDir());
         $bin = __DIR__ . '/../../bin/phpactor';

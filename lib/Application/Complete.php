@@ -47,6 +47,7 @@ class Complete
             'suggestions' => []
         ];
 
+
         if ($type->isPrimitive()) {
             return $response;
         }
@@ -100,10 +101,20 @@ class Complete
         $untilCursor = substr($code, 0, $offset);
 
         foreach ([ '->', '::' ] as $accessor) {
-            $pos = strrpos($untilCursor, $accessor);
-            if ($pos) {
-                return [ $pos,  substr($untilCursor, $pos + 2, $offset) ];
+            $pos = $original = strrpos($untilCursor, $accessor);
+            $pos--;
+
+            if (false === $pos) {
+                continue;
             }
+
+            while (isset($untilCursor[$pos]) && $untilCursor[$pos] == ' ') {
+                $pos--;
+            }
+            $pos++;
+            $accessorOffset = ($original - $pos) + 2;
+
+            return [ $pos,  substr($untilCursor, $pos + $accessorOffset, $offset) ];
         }
 
         return [ $offset, null ];

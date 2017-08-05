@@ -141,7 +141,29 @@ EOT
                         'name' => 'BARFOO',
                         'info' => 'const BARFOO',
                     ],
-                ]
+                ],
+            ],
+            'Accessor on new line' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    public $foobar;
+}
+
+$foobar = new Foobar();
+$foobar
+    ->
+
+EOT
+                , 83, [
+                    [
+                        'type' => 'm',
+                        'name' => 'foobar',
+                        'info' => 'pub $foobar',
+                    ],
+                ],
             ]
         ];
     }

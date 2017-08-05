@@ -19,7 +19,6 @@ class CompleteCommandTest extends SystemTestCase
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
-
         $this->assertContains($expected, trim($process->getOutput()));
     }
 
