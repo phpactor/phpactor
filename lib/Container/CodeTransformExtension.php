@@ -5,10 +5,8 @@ namespace Phpactor\Container;
 use PhpBench\DependencyInjection\Container;
 use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Application\Transformer;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Editor;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\UserInterface\Console\Command\ClassNewCommand;
@@ -29,6 +27,7 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignments;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -114,14 +113,10 @@ class CodeTransformExtension implements ExtensionInterface
             return CodeTransform::fromTransformers(Transformers::fromArray($transformers));
         });
 
-        $container->register('code_transform.editor', function (Container $container) {
-            return new Editor($container->getParameter('code_transform.indentation'));
-        });
-
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
             return new CompleteConstructor(
-                null,
-                $container->get('code_transform.editor')
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
 
