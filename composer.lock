@@ -387,16 +387,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "1835cac4b1d72c0712af2196407791c690f866fd"
+                "reference": "d398114161acfe541d4180d8be05a7c8cf013a86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1835cac4b1d72c0712af2196407791c690f866fd",
-                "reference": "1835cac4b1d72c0712af2196407791c690f866fd",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d398114161acfe541d4180d8be05a7c8cf013a86",
+                "reference": "d398114161acfe541d4180d8be05a7c8cf013a86",
                 "shasum": ""
             },
             "require": {
-                "microsoft/tolerant-php-parser": "dev-master",
                 "phpactor/code-builder": "dev-master",
                 "phpactor/worse-reflection": "dev-master"
             },
@@ -433,7 +432,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-08-05 13:13:49"
+            "time": "2017-08-05 21:06:59"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -546,12 +545,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "10bd28bd04b0496b7ccdff33017d0ada153ac06d"
+                "reference": "6e566e639ebdb58ee0b21a8fad67aa391c0bccf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/10bd28bd04b0496b7ccdff33017d0ada153ac06d",
-                "reference": "10bd28bd04b0496b7ccdff33017d0ada153ac06d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/6e566e639ebdb58ee0b21a8fad67aa391c0bccf5",
+                "reference": "6e566e639ebdb58ee0b21a8fad67aa391c0bccf5",
                 "shasum": ""
             },
             "require": {
@@ -592,7 +591,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-08-05 13:04:08"
+            "time": "2017-08-05 21:01:11"
         },
         {
             "name": "phpbench/container",
@@ -1783,7 +1782,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-03T14:21:49+00:00"
+            "time": "2017-08-03 14:21:49"
         },
         {
             "name": "phpunit/phpunit",
@@ -2491,7 +2490,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2017-08-03T09:34:20+00:00"
+            "time": "2017-08-03 09:34:20"
         },
         {
             "name": "symfony/process",
@@ -2540,7 +2539,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03T09:34:20+00:00"
+            "time": "2017-08-03 09:34:20"
         }
     ],
     "aliases": [],
