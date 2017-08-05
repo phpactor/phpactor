@@ -21,7 +21,7 @@ class ClassFileNormalizer
         $this->fileClassConverter = $fileClassConverter;
     }
 
-    public function normalizeToFile(string $classOrFile)
+    public function normalizeToFile(string $classOrFile): string
     {
         if (false === Phpactor::isFile($classOrFile)) {
             return (string) $this->classToFile($classOrFile);
@@ -30,7 +30,7 @@ class ClassFileNormalizer
         return Phpactor::normalizePath($classOrFile);
     }
 
-    public function normalizeToClass(string $classOrFile)
+    public function normalizeToClass(string $classOrFile): string
     {
         if (true === $resp = Phpactor::isFile($classOrFile)) {
             return (string) $this->fileToClass(Phpactor::normalizePath($classOrFile));
@@ -39,7 +39,7 @@ class ClassFileNormalizer
         return $classOrFile;
     }
 
-    public function classToFile(string $class)
+    public function classToFile(string $class): string
     {
         $filePathCandidates = $this->fileClassConverter->classToFileCandidates(
             ClassName::fromString($class)
@@ -48,7 +48,7 @@ class ClassFileNormalizer
         return (string) $filePathCandidates->best();
     }
 
-    public function fileToClass(string $file)
+    public function fileToClass(string $file): string
     {
         $classCandidates = $this->fileClassConverter->fileToClassCandidates(
             FilePath::fromString($file)
