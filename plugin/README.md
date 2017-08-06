@@ -67,10 +67,7 @@ Omni-completion
 To enable omni-completion type `set omnifunc=phpactor#Complete` or use the
 confuration above to automatically enable it for all PHP files.
 
-The omni-completion uses phpactor's reflection offset type inference and
-reflection API.
-
-![recording](https://user-images.githubusercontent.com/530801/27839804-2b309e8e-60ec-11e7-8df4-f5467cf56c8d.gif)
+![recording](https://user-images.githubusercontent.com/530801/29006615-94356fe2-7af3-11e7-9d73-775d6f9f487a.gif)
 
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
