@@ -50,6 +50,35 @@ EOT
                     ]
                 ]
             ],
+            'Public property access' => [
+                <<<'EOT'
+<?php
+
+class Barar
+{
+    public $bar;
+}
+
+class Foobar
+{
+    /**
+     * @var Barar
+     */
+    public $foo;
+}
+
+$foobar = new Foobar();
+$foobar->foo->
+
+EOT
+                , 148, [
+                    [
+                        'type' => 'm',
+                        'name' => 'bar',
+                        'info' => 'pub $bar',
+                    ]
+                ]
+            ],
             'Public method with parameters' => [
                 <<<'EOT'
 <?php
