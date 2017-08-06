@@ -35,70 +35,22 @@ endfunction
 function! phpactor#Complete(findstart, base)
 
     if a:findstart
-        let line = getline('.')
-        let start = col('.') - 1
-
-        while start > 0 && (line[start - 1] =~ '\a' || line[start - 1] == '$')
-            let start -= 1
-        endwhile
-
+        let start = col('.')
         return start
     endif
 
-    let base = getline('.')
-    let matched = matchstr(base, "->")
-
-    if (!match(base, "->" && !match(base, "::")))
-        return -2
-    endif
-
-    let static = 0
-    if "::" == matchstr(base, "::")
-        let static = 1
-    endif
-
-    " *base* is the line up until the completion point. We back-up 3 chars so
-    " that the offset is the variable that precedes it
-    let offset = line2byte(line(".")) + strlen(base) - 3
+    let offset = line2byte(line(".")) + col('.') - 2
     let stdin = join(getline(1,'.'), "\n")
     let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let results = phpactor#ExecStdIn('file:offset --format=json stdin ' . offset, stdin)
+    let results = phpactor#ExecStdIn('complete --format=json stdin ' . offset, stdin)
     let results = json_decode(results)
-
-    if (results['type'] == '<unknown>')
-        echo "Type could not be determined"
-        return -2
-    endif
-
-    let command = 'class:reflect --format=json ' . shellescape(results['type'])
-    let reflection = phpactor#Exec(command)
-    let reflection = json_decode(reflection)
 
     let completions = []
 
-    if !empty(reflection['methods'])
-        for method in values(reflection['methods'])
-            let info = method['docblock'] . "\n" . method['synopsis']
-
-            if (1 == static && method['static']) || (empty(static) && empty(method['static']))
-                call add(completions, { 'word': method['name'], 'info': info, 'kind': 'f'})
-            endif
-
-        endfor
-    endif
-
-    if !empty(reflection['properties'])
-        for property in values(reflection['properties'])
-            if (1 == static && property['static']) || (empty(static) && empty(property['static']))
-                call add(completions, { 'word': property['name'], 'info': property['info'], 'kind': 'm'})
-            endif
-        endfor
-    endif
-
-    if static == 1 && !empty(reflection['constants'])
-        for constant in values(reflection['constants'])
-            call add(completions, { 'word': constant['name'], 'info': '', 'kind': 'm'})
+    if !empty(results['suggestions'])
+        for suggestion in results['suggestions']
+            call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
         endfor
     endif
 

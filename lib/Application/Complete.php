@@ -47,7 +47,6 @@ class Complete
             'suggestions' => []
         ];
 
-
         if ($type->isPrimitive()) {
             return $response;
         }
@@ -55,6 +54,7 @@ class Complete
         $classReflection = $this->reflector->reflectClass(ClassName::fromString((string) $type));
 
         $suggestions = [];
+        /** @var $method ReflectionMethod */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
                 continue;
@@ -63,7 +63,7 @@ class Complete
             $suggestions[] = [
                 'type' => 'f',
                 'name' => $method->name(),
-                'info' => $info
+                'info' => $info,
             ];
         }
 
@@ -95,6 +95,9 @@ class Complete
         return ['suggestions' => array_values($suggestions) ];
     }
 
+    /**
+     * Hello
+     */
     private function getOffetToReflect($code, $offset)
     {
         $code = str_replace(PHP_EOL, ' ', $code);
@@ -151,7 +154,7 @@ class Complete
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 
         if ($method->returnType()->isDefined()) {
-            $info[] = ': ' . $method->returnType()->short();
+            $info[] = ': ' . (string) $method->returnType()->short();
         }
 
         return implode('', $info);
@@ -170,6 +173,9 @@ class Complete
         $info[] = ' ';
         $info[] = '$' . $property->name();
 
+        if ($property->type()->isDefined()) {
+            $info[] = ': ' . (string) $property->type()->short();
+        }
 
         return implode('', $info);
     }
