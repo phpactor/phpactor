@@ -54,9 +54,9 @@ class ConfigDumpCommand extends Command
             $output->writeln('<info>Config files:</>');
             foreach ($this->configLoader->configFiles() as $i => $file) {
                 if (!file_exists($file)) {
-                    $output->write(' [<error>x</>]');
+                    $output->write(' [<error>𐄂</>]');
                 } else {
-                    $output->write(' [<info>-</>]');
+                    $output->write(' [<info>✔</>]');
                 }
                 $output->writeln(' ' .$file);
             }
