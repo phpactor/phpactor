@@ -402,7 +402,7 @@ IDEs such as PHPStorm.
 One of the interesting things about Phpactor is that it does not require any
 indexing before it is used. It leverages the Composer to determine class
 locations and to determine class FQNs from file locations. Introspection is
-done in realtime (using the excellent [Tolereant PHP
+done in realtime (using the excellent [Tolerant PHP
 Parser](https://github.com/Microsoft/tolerant-php-parser).
 
 Using Composer we can locate a file using a fully qualified class name, when
