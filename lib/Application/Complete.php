@@ -103,24 +103,26 @@ class Complete
         $code = str_replace(PHP_EOL, ' ', $code);
         $untilCursor = substr($code, 0, $offset);
 
-        foreach ([ '->', '::' ] as $accessor) {
-            $pos = $original = strrpos($untilCursor, $accessor);
+        $pos = strlen($untilCursor) - 1;
+        $original = null;
+        while ($pos) {
+            if (in_array(substr($untilCursor, $pos, 2), [ '->', '::' ])) {
+                $original = $pos;
+                break;
+            }
             $pos--;
-
-            if (false === $pos) {
-                continue;
-            }
-
-            while (isset($untilCursor[$pos]) && $untilCursor[$pos] == ' ') {
-                $pos--;
-            }
-            $pos++;
-            $accessorOffset = ($original - $pos) + 2;
-
-            return [ $pos,  substr($untilCursor, $pos + $accessorOffset, $offset) ];
         }
 
-        return [ $offset, null ];
+        $pos--;
+        while (isset($untilCursor[$pos]) && $untilCursor[$pos] == ' ') {
+            $pos--;
+        }
+        $pos++;
+
+        $accessorOffset = ($original - $pos) + 2;
+        $extra = substr($untilCursor, $pos + $accessorOffset, $offset);
+
+        return [ $pos,  $extra ];
     }
 
     private function getMethodInfo(ReflectionMethod $method)

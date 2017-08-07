@@ -123,6 +123,37 @@ EOT
                     ]
                 ]
             ],
+            'Static method with previous arrow accessor' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    public static $foo;
+
+    /**
+     * @var Foobar
+     */
+    public $me;
+}
+
+$foobar = new Foobar();
+$foobar->me::
+
+EOT
+                , 138, [
+                    [
+                        'type' => 'm',
+                        'name' => 'foo',
+                        'info' => 'pub static $foo',
+                    ],
+                    [
+                        'type' => 'm',
+                        'name' => 'me',
+                        'info' => 'pub $me: Foobar',
+                    ]
+                ]
+            ],
             'Partially completed' => [
                 <<<'EOT'
 <?php
