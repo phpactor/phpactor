@@ -18,7 +18,7 @@ Features
 - [Class inflection](#class-inflect): Generate classes from other classes.
 - [Reflection API](#reflect-class): Get reflection data for a given class or file.
 - **Type inference**: Determine the type of something at a given offset.
-- [Transformation](#transformation): Apply "transformations" to code (e.g. implement
+- [Transformation](#transform): Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
 - [Class search](#class-search): Search for a class by its name.
 - [Autocompletion](#auto-completion): Auto-completion command.
