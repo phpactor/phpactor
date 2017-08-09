@@ -64,4 +64,3 @@ class ConfigLoader
         return $config;
     }
 }
-

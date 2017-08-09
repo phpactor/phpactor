@@ -26,8 +26,6 @@ use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
 use Phpactor\TypeInference\Adapter\TolerantParser\TolerantTypeInferer;
-use Phpactor\TypeInference\Adapter\WorseReflection\WorseMemberTypeResolver;
-use Phpactor\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
 use Phpactor\TypeInference\TypeInference;
 use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\UserInterface\Console\Command\ClassNewCommand;
@@ -42,14 +40,9 @@ use Phpactor\UserInterface\Console\Dumper\JsonDumper;
 use Phpactor\UserInterface\Console\Dumper\TableDumper;
 use Phpactor\UserInterface\Console\Prompt\BashPrompt;
 use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
-use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
 use Symfony\Component\Console\Application;
 use Phpactor\UserInterface\Console\Command\ConfigDumpCommand;
 use PhpBench\DependencyInjection\Container;
-use Phpactor\WorseReflection\Logger\PsrLogger;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
 use Phpactor\UserInterface\Console\Command\CompleteCommand;
@@ -67,8 +60,8 @@ class CoreExtension implements ExtensionInterface
             'autoload' => 'vendor/autoload.php',
             'cwd' => getcwd(),
             'console_dumper_default' => 'indented',
-            'reflector_stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
             'cache_dir' => __DIR__ . '/../../cache',
+            'reflection.stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
         ];
     }
 
@@ -82,7 +75,6 @@ class CoreExtension implements ExtensionInterface
         $this->registerTypeInference($container);
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
-        $this->registerReflection($container);
     }
 
     private function registerMonolog(Container $container)
@@ -337,37 +329,5 @@ class CoreExtension implements ExtensionInterface
 		$container->register('application.helper.class_file_normalizer', function (Container $container) {
 			return new ClassFileNormalizer($container->get('class_to_file.converter'));
 		});
-	}
-
-	private function registerReflection(Container $container)
-	{
-		$container->register('reflection.reflector', function (Container $container) {
-			$locators = [];
-
-			foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
-				$locators[] = $container->get($locatorId);
-			}
-			return Reflector::create(
-				new ChainSourceLocator($locators),
-				new PsrLogger($container->get('monolog.logger'))
-			);
-		});
-
-		$container->register('reflection.locator.stub', function (Container $container) {
-			return new StubSourceLocator(
-				// TODO: we do not need the location facility of the reflector in this case
-				//       need to separate responsiblities
-				Reflector::create(new StringSourceLocator(\Phpactor\WorseReflection\SourceCode::fromString(''))),
-				$container->getParameter('reflector_stub_directory'),
-				$container->getParameter('cache_dir')
-			);
-		}, [ 'reflection.source_locator' => []]);
-
-		$container->register('reflection.locator.worse', function (Container $container) {
-			return new WorseSourceCodeLocator(
-				$container->get('type_inference.source_code_loader')
-			);
-		}, [ 'reflection.source_locator' => []]);
-
 	}
 }
