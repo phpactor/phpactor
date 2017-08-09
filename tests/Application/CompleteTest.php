@@ -3,11 +3,11 @@
 namespace Phpactor\Tests\Application;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Logger\ArrayLogger;
+use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\Application\Complete;
-use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCode;
 
 class CompleteTest extends TestCase
 {

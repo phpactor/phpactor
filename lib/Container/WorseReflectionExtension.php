@@ -4,13 +4,13 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\SourceCodeLocator\ChainSourceLocator;
-use Phpactor\WorseReflection\Logger\PsrLogger;
-use Phpactor\WorseReflection\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\SourceCode;
-use Phpactor\TypeInference\Adapter\WorseReflection\WorseSourceCodeLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
+use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
+use Phpactor\WorseReflection\Core\SourceCode;
 use PhpBench\DependencyInjection\ExtensionInterface;
+use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 
 class WorseReflectionExtension implements ExtensionInterface
 {
@@ -46,9 +46,7 @@ class WorseReflectionExtension implements ExtensionInterface
         }, [ 'reflection.source_locator' => []]);
 
         $container->register('reflection.locator.worse', function (Container $container) {
-            return new WorseSourceCodeLocator(
-                $container->get('type_inference.source_code_loader')
-            );
+            return new ClassToFileSourceLocator($container->get('class_to_file.class_to_file'));
         }, [ 'reflection.source_locator' => []]);
     }
 }

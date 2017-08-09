@@ -3,11 +3,11 @@
 namespace Phpactor\Application;
 
 use Phpactor\ClassFileConverter\Domain\ClassName;
-use Phpactor\TypeInference\Domain\InferredType;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\SourceCode;
-use Phpactor\WorseReflection\Offset;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Type;
 
 final class FileInfoAtOffset
 {
@@ -69,7 +69,7 @@ final class FileInfoAtOffset
             $return['frame'] = $frame;
         }
 
-        if (InferredType::unknown() == $result->value()->type()) {
+        if (Type::unknown() === $result->value()->type()) {
             return $return;
         }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "56dd43f969a3dfaa875191254013ae11",
+    "content-hash": "31cb9bc0fb5577fc679ced964dc4c4be",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "38d32d32cb260467cfb1d827be37a91ffa3fb44b"
+                "reference": "61d81ee5563aaa65a188f38a498d7c977c5c955d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/38d32d32cb260467cfb1d827be37a91ffa3fb44b",
-                "reference": "38d32d32cb260467cfb1d827be37a91ffa3fb44b",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/61d81ee5563aaa65a188f38a498d7c977c5c955d",
+                "reference": "61d81ee5563aaa65a188f38a498d7c977c5c955d",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-08-01 15:30:18"
+            "time": "2017-08-08 16:07:47"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -282,12 +282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "b9c03b4218fd3203df6e9bc07edc1f20e2a20145"
+                "reference": "438e3a805c5794900a5b6f9ba25f72891b5a4603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/b9c03b4218fd3203df6e9bc07edc1f20e2a20145",
-                "reference": "b9c03b4218fd3203df6e9bc07edc1f20e2a20145",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/438e3a805c5794900a5b6f9ba25f72891b5a4603",
+                "reference": "438e3a805c5794900a5b6f9ba25f72891b5a4603",
                 "shasum": ""
             },
             "require": {
@@ -308,11 +308,7 @@
                     "Phpactor\\ClassFileConverter\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\ClassFileConverter\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -323,10 +319,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/master"
-            },
-            "time": "2017-07-25 12:03:14"
+            "time": "2017-08-09 11:29:19"
         },
         {
             "name": "phpactor/code-builder",
@@ -545,12 +538,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "6cca9c73c8af0cbc3a48ad00b6f684e87bf95a9a"
+                "reference": "da05373f9ef16c864c3477bd2e7b85a4cc7c6524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/6cca9c73c8af0cbc3a48ad00b6f684e87bf95a9a",
-                "reference": "6cca9c73c8af0cbc3a48ad00b6f684e87bf95a9a",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/da05373f9ef16c864c3477bd2e7b85a4cc7c6524",
+                "reference": "da05373f9ef16c864c3477bd2e7b85a4cc7c6524",
                 "shasum": ""
             },
             "require": {
@@ -559,6 +552,7 @@
                 "psr/log": "^1.0@dev"
             },
             "require-dev": {
+                "phpactor/class-to-file": "^1.0",
                 "phpbench/phpbench": "^0.13.0",
                 "phpunit/phpunit": "^6.0",
                 "symfony/filesystem": "^3.3"
@@ -592,11 +586,11 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-08-09 08:13:55"
+            "time": "2017-08-09 11:49:50"
         },
         {
             "name": "phpbench/container",
-            "version": "dev-master",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/container.git",
@@ -633,7 +627,7 @@
                 }
             ],
             "description": "Simple, configurable, service container.",
-            "time": "2017-07-18 12:10:10"
+            "time": "2017-07-18T12:10:10+00:00"
         },
         {
             "name": "psr/container",
@@ -807,12 +801,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "c9fcef80c38a7fb257d7f0e8c198697c924fc727"
+                "reference": "3be4178b917facf66a0a4e93e665b15bdc8688c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/c9fcef80c38a7fb257d7f0e8c198697c924fc727",
-                "reference": "c9fcef80c38a7fb257d7f0e8c198697c924fc727",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/3be4178b917facf66a0a4e93e665b15bdc8688c6",
+                "reference": "3be4178b917facf66a0a4e93e665b15bdc8688c6",
                 "shasum": ""
             },
             "require": {
@@ -855,7 +849,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 09:34:20"
+            "time": "2017-08-07 12:30:49"
         },
         {
             "name": "symfony/filesystem",
@@ -1383,16 +1377,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "183824db76118b9dddffc7e522b91fa175f75119"
+                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/183824db76118b9dddffc7e522b91fa175f75119",
-                "reference": "183824db76118b9dddffc7e522b91fa175f75119",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4aada1f93c72c35e22fb1383b47fee43b8f1d157",
+                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157",
                 "shasum": ""
             },
             "require": {
@@ -1424,7 +1418,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-04T20:55:59+00:00"
+            "time": "2017-08-08T06:39:58+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1791,12 +1785,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a12edbc808e6e9fa69ce35a1b156e7701d9c5af5"
+                "reference": "40db23cf0249bd543d9ba6f254423279d070cf7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a12edbc808e6e9fa69ce35a1b156e7701d9c5af5",
-                "reference": "a12edbc808e6e9fa69ce35a1b156e7701d9c5af5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/40db23cf0249bd543d9ba6f254423279d070cf7f",
+                "reference": "40db23cf0249bd543d9ba6f254423279d070cf7f",
                 "shasum": ""
             },
             "require": {
@@ -1865,7 +1859,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-07-30 08:14:43"
+            "time": "2017-08-08 16:23:36"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
