@@ -3,14 +3,14 @@
 namespace Phpactor\Application;
 
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\SourceCode;
-use Phpactor\WorseReflection\Offset;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Application\Helper\FilesystemHelper;
-use Phpactor\WorseReflection\ClassName;
-use Phpactor\WorseReflection\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 
 class Complete
 {

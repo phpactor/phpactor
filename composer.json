@@ -16,19 +16,11 @@
         },
         {
             "type": "vcs",
-            "url": "git@github.com:phpactor/class-to-file"
-        },
-        {
-            "type": "vcs",
             "url": "git@github.com:phpactor/source-code-filesystem"
         },
         {
             "type": "vcs",
             "url": "git@github.com:phpactor/worse-reflection"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/type-inference"
         }
     ],
     "require": {
