@@ -29,14 +29,13 @@
         "phpbench/container": "^1.0",
         "phpactor/class-mover": "dev-master",
         "phpactor/source-code-filesystem": "dev-master",
-        "phpactor/type-inference": "dev-master",
         "phpactor/class-to-file": "dev-master",
         "phpactor/code-transform": "dev-master",
         "symfony/filesystem": "^3.3",
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/yaml": "^3.3",
-        "microsoft/tolerant-php-parser": "dev-master#c812b14",
+        "microsoft/tolerant-php-parser": "v0.0.4",
         "monolog/monolog": "^2.0@dev"
     },
     "require-dev": {
