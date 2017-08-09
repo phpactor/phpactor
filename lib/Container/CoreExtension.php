@@ -23,7 +23,6 @@ use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\TypeInference\Adapter\ClassToFile\ClassToFileSourceCodeLoader;
 use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
@@ -67,7 +66,6 @@ class CoreExtension implements ExtensionInterface
         $this->registerComposer($container);
         $this->registerClassToFile($container);
         $this->registerClassMover($container);
-        $this->registerTypeInference($container);
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
     }
@@ -259,13 +257,6 @@ class CoreExtension implements ExtensionInterface
                 $providers[] = new ComposerFileListProvider($cwd, $classLoader);
             }
             return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
-        });
-    }
-
-    private function registerTypeInference(Container $container)
-    {
-        $container->register('type_inference.source_code_loader', function (Container $container) {
-            return new ClassToFileSourceCodeLoader($container->get('class_to_file.converter'));
         });
     }
 
