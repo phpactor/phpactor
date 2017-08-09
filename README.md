@@ -386,11 +386,11 @@ Also returns JSON with `--format=json`
 Packages
 --------
 
-- [phpactor/class-to-file](https://github.com/phpactor/class-to-file): Convert files to class names and vice-versa.
 - [phpactor/class-mover](https://github.com/phpactor/class-mover): Find and update class references.
-- [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code files.
-- [phpactor/type-inference](https://github.com/phpactor/type-inference): Determine type of thing at a given offset.
+- [phpactor/class-to-file](https://github.com/phpactor/class-to-file): Convert files to class names and vice-versa.
+- [phpactor/code-builder](https://github.com/phpactor/code-builder): Library for creating and idempotently updating source code.
 - [phpactor/code-transform](https://github.com/phpactor/code-transform): Transform code.
+- [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code files.
 - [phpactor/worse-reflection](https://github.com/phpactor/worse-reflection): Lightweight class reflection API
 
 About this project
@@ -402,7 +402,7 @@ IDEs such as PHPStorm.
 One of the interesting things about Phpactor is that it does not require any
 indexing before it is used. It leverages the Composer to determine class
 locations and to determine class FQNs from file locations. Introspection is
-done in realtime (using the excellent [Tolerant PHP
+done in realtime using [Worse Reflection](https://github.com/phpactor/worse-reflection) (which is based on the excellent [Tolerant PHP
 Parser](https://github.com/Microsoft/tolerant-php-parser).
 
 Using Composer we can locate a file using a fully qualified class name, when
