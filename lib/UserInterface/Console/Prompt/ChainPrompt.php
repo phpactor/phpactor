@@ -27,7 +27,8 @@ final class ChainPrompt implements Prompt
             'Could not prompt for "%s". '.
             'Appropriate prompt implementation for your platform / environment could not be found (tried "%s"). '.
             'Try specifying the command in full',
-            $prompt, implode('", "', array_keys($this->prompts))
+            $prompt,
+            implode('", "', array_keys($this->prompts))
         ));
     }
 

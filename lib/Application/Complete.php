@@ -5,12 +5,10 @@ namespace Phpactor\Application;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\SourceCode;
 use Phpactor\WorseReflection\Offset;
-use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\ClassName;
 use Phpactor\WorseReflection\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflection\ReflectionMethod;
-use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflection\ReflectionProperty;
 
@@ -151,7 +149,6 @@ class Complete
                 $paramInfo[] = '= '. str_replace(PHP_EOL, '', var_export($parameter->default()->value(), true));
             }
             $paramInfos[] = implode(' ', $paramInfo);
-
         }
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 

@@ -7,7 +7,6 @@ use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\Domain\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\FoundReferences;
-use Phpactor\ClassMover\Domain\Position;
 
 class SymfonyConsoleMoveLogger implements ClassMoverLogger
 {
@@ -22,7 +21,8 @@ class SymfonyConsoleMoveLogger implements ClassMoverLogger
     {
         $this->output->writeln(sprintf(
             '<info>[MOVE]</info> %s <comment>=></> %s',
-            $srcPath->path(), $destPath->path()
+            $srcPath->path(),
+            $destPath->path()
         ));
     }
 

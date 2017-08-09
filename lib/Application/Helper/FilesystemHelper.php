@@ -2,8 +2,6 @@
 
 namespace Phpactor\Application\Helper;
 
-use Phpactor\Filesystem\Domain\Filesystem;
-
 final class FilesystemHelper
 {
     public function contentsFromFileOrStdin(string $filePath): string

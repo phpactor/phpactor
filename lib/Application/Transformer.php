@@ -20,8 +20,7 @@ class Transformer
 
     public function __construct(
         CodeTransform $transform
-    )
-    {
+    ) {
         $this->transform = $transform;
         $this->filesystemHelper = new FilesystemHelper();
     }

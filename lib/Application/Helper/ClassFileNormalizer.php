@@ -16,8 +16,7 @@ class ClassFileNormalizer
 
     public function __construct(
         ClassToFileFileToClass $fileClassConverter
-    )
-    {
+    ) {
         $this->fileClassConverter = $fileClassConverter;
     }
 
@@ -57,5 +56,3 @@ class ClassFileNormalizer
         return (string) $classCandidates->best();
     }
 }
-
-

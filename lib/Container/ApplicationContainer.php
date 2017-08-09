@@ -4,7 +4,6 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container as BaseContainer;
 use Phpactor\Config\ConfigLoader;
-use Phpactor\Container\WorseReflectionExtension;
 
 class ApplicationContainer extends BaseContainer
 {

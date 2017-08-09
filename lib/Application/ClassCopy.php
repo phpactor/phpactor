@@ -4,9 +4,7 @@ namespace Phpactor\Application;
 
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\FullyQualifiedName;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Application\ClassCopy\MoveOperation;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
@@ -66,7 +64,6 @@ class ClassCopy
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (Glob::glob($srcPath) as $globPath) {
-
             $globDest = $destPath;
             // if the src is not the same as the globbed src, then it is a wildcard
             // and we want to append the filename to the destination

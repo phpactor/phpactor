@@ -3,11 +3,6 @@
 namespace Phpactor\UserInterface\Console;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
-use Phpactor\Container\CoreExtension;
-use XdgBaseDir\Xdg;
-use Webmozart\PathUtil\Path;
-use Symfony\Component\Yaml\Yaml;
-use Phpactor\Container\CodeTransformExtension;
 use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

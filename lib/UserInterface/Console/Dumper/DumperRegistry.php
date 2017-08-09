@@ -2,8 +2,6 @@
 
 namespace Phpactor\UserInterface\Console\Dumper;
 
-use Phpactor\UserInterface\Console\Dumper\Dumper;
-
 final class DumperRegistry
 {
     private $default;
@@ -23,7 +21,8 @@ final class DumperRegistry
         if (!isset($this->dumpers[$name])) {
             throw new \InvalidArgumentException(sprintf(
                 'Unknown dumper "%s", known dumpers: "%s"',
-                $name, implode('", "', array_keys($this->dumpers))
+                $name,
+                implode('", "', array_keys($this->dumpers))
             ));
         }
 

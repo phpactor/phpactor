@@ -2,13 +2,8 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\ClassName;
-use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\TypeInference\Domain\InferredType;
-use Phpactor\TypeInference\Domain\TypeInferer;
-use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\SourceCode;
@@ -34,8 +29,7 @@ final class FileInfoAtOffset
     public function __construct(
         Reflector $reflector,
         ClassToFileFileToClass $classToFileConverter
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->classToFileConverter = $classToFileConverter;
         $this->filesystemHelper = new Helper\FilesystemHelper();
@@ -63,7 +57,7 @@ final class FileInfoAtOffset
             foreach (['locals', 'properties'] as $assignmentType) {
                 foreach ($result->frame()->$assignmentType() as $local) {
                     $info = sprintf(
-                        '%s = (%s) %s', 
+                        '%s = (%s) %s',
                         $local->name(),
                         $local->value()->type(),
                         str_replace(PHP_EOL, '', var_export($local->value()->value(), true))

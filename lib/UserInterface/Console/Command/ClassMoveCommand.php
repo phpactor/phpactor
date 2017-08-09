@@ -7,11 +7,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Question\Question;
 use Phpactor\UserInterface\Console\Prompt\Prompt;
 
 class ClassMoveCommand extends Command
@@ -71,8 +68,10 @@ class ClassMoveCommand extends Command
                 return $this->mover->moveClass($logger, $src, $dest);
         }
 
-        throw new \InvalidArgumentException(sprintf('Invalid type "%s", must be one of: "%s"',
-            $type, implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])
+        throw new \InvalidArgumentException(sprintf(
+            'Invalid type "%s", must be one of: "%s"',
+            $type,
+            implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])
         ));
     }
 }

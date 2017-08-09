@@ -5,14 +5,8 @@ namespace Phpactor\UserInterface\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassCopy;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Phpactor;
-use Phpactor\UserInterface\Console\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Question\Question;
-use Phpactor\UserInterface\Console\Prompt\Prompt;
 use Phpactor\Application\Transformer;
 
 class ClassTransformCommand extends Command

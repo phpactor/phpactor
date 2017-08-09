@@ -3,11 +3,9 @@
 namespace Phpactor\UserInterface\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\Domain\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\FoundReferences;
-use Phpactor\ClassMover\Domain\Position;
 use Phpactor\Application\Logger\ClassCopyLogger;
 
 class SymfonyConsoleCopyLogger implements ClassCopyLogger
@@ -23,7 +21,8 @@ class SymfonyConsoleCopyLogger implements ClassCopyLogger
     {
         $this->output->writeln(sprintf(
             '<info>[COPY]</info> %s <comment>=></> %s',
-            $srcPath->path(), $destPath->path()
+            $srcPath->path(),
+            $destPath->path()
         ));
     }
 

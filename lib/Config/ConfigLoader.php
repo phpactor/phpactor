@@ -2,7 +2,6 @@
 
 namespace Phpactor\Config;
 
-use Symfony\Component\Yaml\Parser;
 use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
 use Symfony\Component\Yaml\Yaml;

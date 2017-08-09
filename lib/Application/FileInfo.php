@@ -2,17 +2,9 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\TypeReflector\TypeReflector;
-use Phpactor\TypeReflector\Domain\Offset;
-use Phpactor\TypeReflector\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;
-use Phpactor\ClassFileConverter\Domain\ClassName;
-use Phpactor\ClassFileConverter\Domain\ClassToFile;
-use Phpactor\TypeReflector\Domain\InferredType;
-use Phpactor\TypeReflector\Domain\TypeInferer;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
-use Phpactor\WorseReflection\Reflector;
 
 final class FileInfo
 {
@@ -29,8 +21,7 @@ final class FileInfo
     public function __construct(
         FileToClass $classToFileConverter,
         Filesystem $filesystem
-    )
-    {
+    ) {
         $this->classToFileConverter = $classToFileConverter;
         $this->filesystem = $filesystem;
     }

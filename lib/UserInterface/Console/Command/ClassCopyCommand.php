@@ -7,11 +7,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\ClassCopy;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Question\Question;
 use Phpactor\UserInterface\Console\Prompt\Prompt;
 
 class ClassCopyCommand extends Command
@@ -53,7 +50,6 @@ class ClassCopyCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        
         $type = $input->getOption('type');
         $logger = new SymfonyConsoleCopyLogger($output);
         $src = $input->getArgument('src');
@@ -72,8 +68,10 @@ class ClassCopyCommand extends Command
                 return $this->copier->copyClass($logger, $src, $dest);
         }
 
-        throw new \InvalidArgumentException(sprintf('Invalid type "%s", must be one of: "%s"',
-            $type, implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])
+        throw new \InvalidArgumentException(sprintf(
+            'Invalid type "%s", must be one of: "%s"',
+            $type,
+            implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])
         ));
     }
 }

@@ -31,7 +31,11 @@ final class IndentedDumper implements Dumper
             }
 
             $output->writeln(sprintf(
-                '%s<%s>%s</>:%s', str_repeat(self::PADDING, $padding), $style, $key, $value
+                '%s<%s>%s</>:%s',
+                str_repeat(self::PADDING, $padding),
+                $style,
+                $key,
+                $value
             ));
         }
     }

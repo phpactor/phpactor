@@ -14,4 +14,3 @@ class Test
         $this->turtle = new Turtle();
     }
 }
-

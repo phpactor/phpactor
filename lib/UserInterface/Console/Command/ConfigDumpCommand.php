@@ -5,7 +5,6 @@ namespace Phpactor\UserInterface\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\Config\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
@@ -66,5 +65,3 @@ class ConfigDumpCommand extends Command
         $this->registry->get($format)->dump($output, $this->config);
     }
 }
-
-

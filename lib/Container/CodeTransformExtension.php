@@ -11,7 +11,6 @@ use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\UserInterface\Console\Command\ClassNewCommand;
 use Phpactor\UserInterface\Console\Command\ClassTransformCommand;
-use Phpactor\Application\ClassSearch;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\Application\ClassNew;
