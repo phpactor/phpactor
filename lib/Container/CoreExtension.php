@@ -57,7 +57,6 @@ class CoreExtension implements ExtensionInterface
             'cwd' => getcwd(),
             'console_dumper_default' => 'indented',
             'cache_dir' => __DIR__ . '/../../cache',
-            'reflection.stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
         ];
     }
 
