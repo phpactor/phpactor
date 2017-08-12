@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Phpactor\Container\Container;
 use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class Application extends SymfonyApplication
 {
@@ -42,6 +43,9 @@ class Application extends SymfonyApplication
             $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDOUT));
         }
 
+        $formatter = $output->getFormatter();
+        $formatter->setStyle('bright', new OutputFormatterStyle('white', null, [ 'bold' ]));
+
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $e) {
@@ -56,6 +60,7 @@ class Application extends SymfonyApplication
             return 255;
         }
     }
+
 
     private function handleException(OutputInterface $output, string $dumper, \Exception $e)
     {

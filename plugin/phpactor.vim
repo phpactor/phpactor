@@ -471,6 +471,39 @@ function! phpactor#ClassInflect()
     endif
 endfunction
 
+"""""""""""""""""""""""
+" Find class references
+"""""""""""""""""""""""
+function! phpactor#ClassReferences()
+    let offsetInfo = phpactor#_OffsetTypeInfo()
+
+    if empty(offsetInfo['type'])
+        echo "Cannot determine type"
+        return
+    endif
+
+    if (offsetInfo['type'] == '<unknown>')
+        echo "Cannot determine type"
+        return
+    endif
+
+    let class = offsetInfo['type']
+    let out = phpactor#Exec('class:references --format=json ' . shellescape(class))
+    let results = json_decode(out)
+
+    let list = []
+
+    for fileReferences in results['references']
+        for reference in fileReferences['references']
+            call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'] })
+        endfor
+    endfor
+
+    call setqflist(list)
+    exec ":cc 1"
+
+endfunction
+
 function! phpactor#Exec(cmd)
     let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd)

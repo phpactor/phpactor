@@ -9,6 +9,8 @@ use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Helper\Table;
+use Phpactor\Phpactor;
 
 class ClassReferencesCommand extends Command
 {
@@ -45,7 +47,44 @@ class ClassReferencesCommand extends Command
         $results = $this->referenceFinder->findReferences($class);
 
         $format = $input->getOption('format');
-        $this->dumperRegistry->get($format)->dump($output, $results);
+
+        if ($format) {
+            $this->dumperRegistry->get($format)->dump($output, $results);
+            return;
+        }
+
+        $this->renderTable($output, $results);
+    }
+
+    private function renderTable(OutputInterface $output, array $results)
+    {
+        $table = new Table($output);
+        $table->setHeaders([
+            'Path',
+            'LN',
+            'Line',
+            'OS',
+            'OE',
+        ]);
+
+        foreach ($results['references'] as $result) {
+            foreach ($result['references'] as $reference) {
+                $table->addRow([
+                    Phpactor::relativizePath($result['file']),
+                    $reference['line_no'],
+                    $this->formatLine($reference['line'], $reference['reference'], $reference['start'], $reference['end']),
+                    $reference['start'],
+                    $reference['end'],
+                ]);
+            }
+        }
+
+        $table->render();
+    }
+
+    private function formatLine(string $line, string $reference)
+    {
+        return str_replace($reference, '<bright>' . $reference . '</>', $line);
     }
 }
 

@@ -127,7 +127,7 @@ Search for a class by its (short) name and return a list of fully qualified
 names => absolute paths.
 
 ```bash
-./bin/phpactor class:search Filesystem
+$ phpactor class:search Filesystem
 Phpactor\Filesystem\Domain\Filesystem:/.../vendor/phpactor/source-code-filesystem/lib/Domain/Filesystem.php
 Symfony\Component\Filesystem\Filesystem:/.../vendor/symfony/filesystem/Filesystem.php
 ```
@@ -139,7 +139,15 @@ Also returns JSON with `--format=json`
 Find all references to a class:
 
 ```bash
-./bin/phpactor class:references "Phpactor\\Filesystem\\Domain\\Filesystem"
+$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
++------------------------------------+-----+-------------------------------------------------------+------+------+
+| Path                               | LN  | Line                                                  | OS   | OE   |
++------------------------------------+-----+-------------------------------------------------------+------+------+
+| lib/Application/ClassReflector.php | 7   | use Phpactor\WorseReflection\Reflector;               | 142  | 176  |
+| lib/Application/ClassReflector.php | 32  |         Reflector $reflector                          | 886  | 895  |
+| lib/Application/Complete.php       | 5   | use Phpactor\WorseReflection\Reflector;               | 44   | 78   |
+| lib/Application/Complete.php       | 27  |     public function __construct(Reflector $reflector) | 709  | 718  |
++------------------------------------+-----+-------------------------------------------------------+------+------+
 ```
 
 Accepts either the class FQN or filename.

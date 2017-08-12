@@ -58,10 +58,13 @@ class ClassReferences
             /** @var $reference ClassRef */
             foreach ($this->refFinder->findIn(SourceCode::fromString($code), $className) as $reference) {
                 if ((string) $reference->fullName() == (string) $className) {
+                    list($lineNumber, $line) = $this->line($code, $reference->position()->start());
                     $references[] = [
                         'start' => $reference->position()->start(),
                         'end' => $reference->position()->end(),
-                        'line' => $this->line($code, $reference->position()->start())
+                        'line' => $line,
+                        'line_no' => $lineNumber,
+                        'reference' => (string) $reference->name()
                     ];
                 }
             }
@@ -69,7 +72,7 @@ class ClassReferences
 
             if (count($references)) {
                 $results[] = [
-                    'file' => $filePath,
+                    'file' => (string) $filePath,
                     'references' => $references,
                 ];
             }
@@ -83,20 +86,21 @@ class ClassReferences
     private function line(string $code, int $offset)
     {
         $lines = explode(PHP_EOL, $code);
+        $number = 0;
         $startPosition = 0;
 
-        foreach ($lines as $line) {
+        foreach ($lines as $number => $line) {
+            $number = $number + 1;
             $endPosition = $startPosition + strlen($line) + 1;
 
             if ($offset >= $startPosition && $offset <= $endPosition) {
-                return trim($line);
+                return [ $number, $line ];
             }
 
             $startPosition = $endPosition;
         }
 
-        return '';
-
+        return [$number, ''];
     }
 }
 
