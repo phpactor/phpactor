@@ -78,8 +78,6 @@ confuration above to automatically enable it for all PHP files.
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
-
-
 Include use statement
 ---------------------
 

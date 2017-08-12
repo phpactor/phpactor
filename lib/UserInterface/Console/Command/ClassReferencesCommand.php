@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
+use Symfony\Component\Console\Input\InputOption;
 
 class ClassReferencesCommand extends Command
 {
@@ -38,13 +39,22 @@ class ClassReferencesCommand extends Command
         $this->setName('class:references');
         $this->setDescription('Move class (by name or file path) and update all references to it');
         $this->addArgument('class', InputArgument::REQUIRED, 'Class path or FQN');
+        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
+        $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $class = $input->getArgument('class');
-        $results = $this->referenceFinder->findReferences($class);
+        $replace = $input->getOption('replace');
+
+        if ($replace) {
+            $results = $this->referenceFinder->replaceReferences($class, $replace, $input->getOption('dry-run'));
+        } else {
+            $results = $this->referenceFinder->findReferences($class);
+        }
+
 
         $format = $input->getOption('format');
 

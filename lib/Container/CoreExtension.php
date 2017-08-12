@@ -247,11 +247,18 @@ class CoreExtension implements ExtensionInterface
     private function registerClassMover(Container $container)
     {
         $container->register('class_mover.class_mover', function (Container $container) {
-            return new ClassMover($container->get('class_mover.ref_finder'));
+            return new ClassMover(
+                $container->get('class_mover.ref_finder'),
+                $container->get('class_mover.ref_replacer')
+            );
         });
 
         $container->register('class_mover.ref_finder', function (Container $container) {
             return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantRefFinder();
+        });
+
+        $container->register('class_mover.ref_replacer', function (Container $container) {
+            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantRefReplacer();
         });
     }
 
@@ -330,6 +337,7 @@ class CoreExtension implements ExtensionInterface
             return new ClassReferences(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.ref_finder'),
+                $container->get('class_mover.ref_replacer'),
                 $container->get('source_code_filesystem.git')
             );
         });
