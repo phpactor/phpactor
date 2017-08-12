@@ -12,6 +12,8 @@ Features
 - [Omni-completion](#omni-completion): Intelligent auto-completion with *no indexing!*.
 - [Insert use statement](#include-use-statement): Automatically search for and include the use
   statement for class under cursor.
+- [Expand class to FQN](#class-expand): Search for class under cursor and
+  expand it to its FQN.
 - [Tranformations](#transformations): Apply transformations (implement contracts, etc).
 - [Move and copy classes](#move-class): Move/copy classes and update references to them.
 - [Go-to type](#goto-type): Open the class for the type under the cursor.
@@ -46,6 +48,7 @@ autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
+map <Leader>e :call phpactor#ClassExpand()<CR>
 map <Leader>o :call phpactor#GotoType()<CR>
 map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>i :call phpactor#ReflectAtOffset()<CR>
@@ -72,6 +75,8 @@ confuration above to automatically enable it for all PHP files.
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
+
+
 Include use statement
 ---------------------
 
@@ -80,6 +85,15 @@ cursor:
 
 ```bash
 :call phpactor#UseAdd()
+```
+
+Expand Class
+------------
+
+Expand class under the cursor
+
+```bash
+:call phpactor#ClassExpand()
 ```
 
 Goto Type

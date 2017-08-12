@@ -18,7 +18,7 @@ function! phpactor#NamespaceGet()
     return results['class_namespace']
 endfunction
 
-function! phpactor#_searchAndSelectClass()
+function! phpactor#_searchAndSelectClassInfo()
     " START: Resolve FQN for class
     let word = expand("<cword>")
 
@@ -110,12 +110,23 @@ endfunc
 """"""""""""""""""""""""
 " Expand a use statement
 """"""""""""""""""""""""
-function! phpactor#UseExpand()
-    let classInfo = phpactor#_searchAndSelectClass()
+function! phpactor#ClassExpand()
+    let classInfo = phpactor#_searchAndSelectClassInfo()
     if (empty(classInfo))
         return
     endif
-    execute "normal! lbi" . classInfo['class_namespace'] . "\\"
+    let line = getline('.')
+    let char = line[col('.') - 2]
+    let namespace_prefix = classInfo['class_namespace'] . "\\"
+
+    " If this is the start of the word
+    if (col('.') == 1 || ' ' == char)
+        execute "normal! i" . namespace_prefix
+        return
+    endif
+
+    " otherwise goto start of word
+    execute "normal! bi" . namespace_prefix
 endfunction
 
 """"""""""""""""""""""""
@@ -128,7 +139,7 @@ function! phpactor#UseAdd()
     ""
     function! UseAdd(savePos)
 
-        let classInfo = phpactor#_searchAndSelectClass()
+        let classInfo = phpactor#_searchAndSelectClassInfo()
 
         if (empty(classInfo))
             return
