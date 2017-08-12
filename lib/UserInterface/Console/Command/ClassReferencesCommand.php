@@ -48,9 +48,15 @@ class ClassReferencesCommand extends Command
     {
         $class = $input->getArgument('class');
         $replace = $input->getOption('replace');
+        $dryRun = $input->getOption('dry-run');
+
+
+        if ($replace && $dryRun) {
+            $output->writeln('<info># DRY RUN</> No files will be modified');
+        }
 
         if ($replace) {
-            $results = $this->referenceFinder->replaceReferences($class, $replace, $input->getOption('dry-run'));
+            $results = $this->referenceFinder->replaceReferences($class, $replace, $dryRun);
         } else {
             $results = $this->referenceFinder->findReferences($class);
         }
@@ -63,10 +69,20 @@ class ClassReferencesCommand extends Command
             return;
         }
 
-        $this->renderTable($output, $results);
+        $output->writeln('<comment># References:</>');
+        $count = $this->renderTable($output, $results, 'references');
+
+        if ($replace) {
+            $output->write(PHP_EOL);
+            $output->writeln('<comment># Replacements:</>');
+            $this->renderTable($output, $results, 'replacements');
+        }
+
+        $output->write(PHP_EOL);
+        $output->write(sprintf('%s reference(s)', $count));
     }
 
-    private function renderTable(OutputInterface $output, array $results)
+    private function renderTable(OutputInterface $output, array $results, $type)
     {
         $table = new Table($output);
         $table->setHeaders([
@@ -77,24 +93,37 @@ class ClassReferencesCommand extends Command
             'OE',
         ]);
 
-        foreach ($results['references'] as $result) {
-            foreach ($result['references'] as $reference) {
-                $table->addRow([
-                    Phpactor::relativizePath($result['file']),
-                    $reference['line_no'],
-                    $this->formatLine($reference['line'], $reference['reference'], $reference['start'], $reference['end']),
-                    $reference['start'],
-                    $reference['end'],
-                ]);
+        $count = 0;
+        foreach ($results['references'] as $references) {
+
+            $filePath = $references['file'];
+            foreach ($references[$type] as $reference) {
+                $this->addReferenceRow($table, $filePath, $reference);
+                $count++;
             }
         }
 
         $table->render();
+
+        return $count;
+    }
+
+    private function addReferenceRow(Table $table, string $filePath, array $reference)
+    {
+            $table->addRow([
+                Phpactor::relativizePath($filePath),
+                $reference['line_no'],
+                $this->formatLine($reference['line'], $reference['reference'], $reference['start'], $reference['end']),
+                $reference['start'],
+                $reference['end'],
+            ]);
     }
 
     private function formatLine(string $line, string $reference)
     {
-        return str_replace($reference, '<bright>' . $reference . '</>', $line);
+        $formatted = str_replace($reference, '<bright>' . $reference . '</>', $line);
+
+        return $formatted;
     }
 }
 

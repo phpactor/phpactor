@@ -70,53 +70,81 @@ class ClassReferences
         $results = [];
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
 
-            $references = [];
-            $code = $this->filesystem->getContents($filePath);
+            $references = $this->fileReferences($filePath, $className, $replace, $dryRun);
 
-            $referenceList = $this->refFinder->findIn(SourceCode::fromString($code), $className);
-
-            if ($replace) {
-                $updatedSource = $this->replaceReferencesInCode($code, $referenceList, $class, $replace);
-
-                if (false === $dryRun) {
-                    file_put_contents($filePath, (string) $updatedSource);
-                }
+            if (empty($references['references'])) {
+                continue;
             }
 
-            /** @var $reference ClassRef */
-            foreach ($referenceList as $reference) {
-                if ((string) $reference->fullName() != (string) $className) {
-                    continue;
-                }
-
-                list($lineNumber, $line) = $this->line($code, $reference->position()->start());
-                $ref = [
-                    'start' => $reference->position()->start(),
-                    'end' => $reference->position()->end(),
-                    'new' => null,
-                    'line' => $line,
-                    'line_no' => $lineNumber,
-                    'reference' => (string) $reference->name()
-                ];
-
-                if ($replace) {
-                    $ref['new'] = $this->line((string) $updatedSource, $reference->position()->start());
-                }
-
-                $references[] = $ref;
-            }
-
-
-            if (count($references)) {
-                $results[] = [
-                    'file' => (string) $filePath,
-                    'references' => $references,
-                ];
-            }
+            $references['file'] = (string) $filePath;
+            $results[] = $references;
         }
 
         return [
             'references' => $results
+        ];
+    }
+
+    private function fileReferences($filePath, $className, $replace = null, $dryRun = false)
+    {
+        $code = $this->filesystem->getContents($filePath);
+
+        $referenceList = $this->refFinder
+            ->findIn(SourceCode::fromString($code))
+            ->filterForName(FullyQualifiedName::fromString($className));
+
+        $result = [
+            'references' => [],
+            'replacements' => [],
+        ];
+
+        if ($referenceList->isEmpty()) {
+            return $result;
+        }
+
+        if ($replace) {
+            $updatedSource = $this->replaceReferencesInCode($code, $referenceList, $className, $replace);
+
+            if (false === $dryRun) {
+                file_put_contents($filePath, (string) $updatedSource);
+            }
+        }
+
+        $result['references'] = $this->serializeReferenceList($code, $referenceList);
+
+        if ($replace) {
+            $newReferenceList = $this->refFinder
+                ->findIn(SourceCode::fromString((string) $updatedSource))
+                ->filterForName(FullyQualifiedName::fromString($replace));
+
+            $result['replacements'] = $this->serializeReferenceList((string) $updatedSource, $newReferenceList);
+        }
+
+        return $result;
+    }
+
+    private function serializeReferenceList(string $code, NamespacedClassRefList $referenceList)
+    {
+        $references = [];
+        /** @var $reference ClassRef */
+        foreach ($referenceList as $reference) {
+            $ref = $this->serializeReference($code, $reference);
+
+            $references[] = $ref;
+        }
+
+        return $references;
+    }
+
+    private function serializeReference(string $code, ClassRef $reference)
+    {
+        list($lineNumber, $line) = $this->line($code, $reference->position()->start());
+        return [
+            'start' => $reference->position()->start(),
+            'end' => $reference->position()->end(),
+            'line' => $line,
+            'line_no' => $lineNumber,
+            'reference' => (string) $reference->name()
         ];
     }
 

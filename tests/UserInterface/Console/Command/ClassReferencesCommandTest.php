@@ -40,6 +40,22 @@ class ClassReferencesCommandTest extends SystemTestCase
         $process = $this->phpactor('class:references "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
         $this->assertContains('class Kangaroo', $process->getOutput());
+        $this->assertContains('class Kangaroo', file_get_contents(
+            $this->workspaceDir() . '/lib/Badger.php'
+        ));
+    }
+
+    /**
+     * @testdox It should replace class references
+     */
+    public function testReferencesReplaceDryRun()
+    {
+        $process = $this->phpactor('class:references "Animals\Badger" --dry-run --replace="Kangaroo"');
+        $this->assertSuccess($process);
+        $this->assertContains('class Kangaroo', $process->getOutput());
+        $this->assertNotContains('class Kangaroo', file_get_contents(
+            $this->workspaceDir() . '/lib/Badger.php'
+        ));
     }
 }
 
