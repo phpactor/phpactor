@@ -380,12 +380,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "19e6fccecde7dff8da62b763f19979f1e653eb8f"
+                "reference": "07ea1b9d1463f7f262a352b2b9c3557a62916ecb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/19e6fccecde7dff8da62b763f19979f1e653eb8f",
-                "reference": "19e6fccecde7dff8da62b763f19979f1e653eb8f",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/07ea1b9d1463f7f262a352b2b9c3557a62916ecb",
+                "reference": "07ea1b9d1463f7f262a352b2b9c3557a62916ecb",
                 "shasum": ""
             },
             "require": {
@@ -425,7 +425,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-08-11 19:59:16"
+            "time": "2017-08-12 07:53:13"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -485,12 +485,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "2592c932c204824f553cb84c0de383c296325d6a"
+                "reference": "2f9e9bbbd3f6a368f987c5bff91499ce3f1d733d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/2592c932c204824f553cb84c0de383c296325d6a",
-                "reference": "2592c932c204824f553cb84c0de383c296325d6a",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/2f9e9bbbd3f6a368f987c5bff91499ce3f1d733d",
+                "reference": "2f9e9bbbd3f6a368f987c5bff91499ce3f1d733d",
                 "shasum": ""
             },
             "require": {
@@ -533,7 +533,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-08-11 19:30:52"
+            "time": "2017-08-12 08:34:28"
         },
         {
             "name": "phpbench/container",
@@ -1806,7 +1806,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-10T16:53:18+00:00"
+            "time": "2017-08-10 16:53:18"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
