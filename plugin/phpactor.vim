@@ -18,6 +18,49 @@ function! phpactor#NamespaceGet()
     return results['class_namespace']
 endfunction
 
+function! phpactor#_searchAndSelectClass()
+    " START: Resolve FQN for class
+    let word = expand("<cword>")
+
+    let out = phpactor#Exec('class:search --format=json ' . word)
+    let results = json_decode(out)
+
+    if (len(results) == 0)
+        echo "Could not find class"
+        echo results
+        return {}
+    endif
+
+    if (len(results) > 1)
+        let c = 1
+        let height = len(results) + 1
+        let list = []
+        for info in results
+            let list = add(list, c . '. ' . info['class'])
+            let c = c + 1
+        endfor
+
+        let choice = inputlist(list)
+        if (choice == 0)
+            return {}
+        endif
+        let choice = choice - 1
+
+        let classInfo = get(results, choice, {})
+
+        if ({} == classInfo)
+            echo "Invalid choice"
+            return {}
+        endif
+    endif
+
+    if (len(results) == 1)
+        let classInfo = results[0]
+    endif
+
+    return classInfo
+endfunction
+
 """""""""""""""""
 " Update Phpactor
 """""""""""""""""
@@ -65,6 +108,17 @@ function! phpactor#Complete(findstart, base)
 endfunc
 
 """"""""""""""""""""""""
+" Expand a use statement
+""""""""""""""""""""""""
+function! phpactor#UseExpand()
+    let classInfo = phpactor#_searchAndSelectClass()
+    if (empty(classInfo))
+        return
+    endif
+    execute "normal! lbi" . classInfo['class_namespace'] . "\\"
+endfunction
+
+""""""""""""""""""""""""
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
@@ -73,43 +127,11 @@ function! phpactor#UseAdd()
     " @return int Number of extra lines added
     ""
     function! UseAdd(savePos)
-        " START: Resolve FQN for class
-        let word = expand("<cword>")
 
-        let out = phpactor#Exec('class:search --format=json ' . word)
-        let results = json_decode(out)
+        let classInfo = phpactor#_searchAndSelectClass()
 
-        if (len(results) == 0)
-            echo "Could not find class"
-            echo results
-            return 0
-        endif
-
-        if (len(results) > 1)
-            let c = 1
-            let height = len(results) + 1
-            let list = []
-            for info in results
-                let list = add(list, c . '. ' . info['class'])
-                let c = c + 1
-            endfor
-
-            let choice = inputlist(list)
-            if (choice == 0)
-                return 0
-            endif
-            let choice = choice - 1
-
-            let classInfo = get(results, choice, {})
-
-            if ({} == classInfo)
-                echo "Invalid choice"
-                return 0
-            endif
-        endif
-
-        if (len(results) == 1)
-            let classInfo = results[0]
+        if (empty(classInfo))
+            return
         endif
 
         call cursor(1, 1)
