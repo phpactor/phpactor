@@ -21,6 +21,7 @@ Features
 - [Transformation](#transform): Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
 - [Class search](#class-search): Search for a class by its name.
+- [Class references](#class-references): Find references to class.
 - [Autocompletion](#auto-completion): Auto-completion command.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
@@ -130,6 +131,18 @@ names => absolute paths.
 Phpactor\Filesystem\Domain\Filesystem:/.../vendor/phpactor/source-code-filesystem/lib/Domain/Filesystem.php
 Symfony\Component\Filesystem\Filesystem:/.../vendor/symfony/filesystem/Filesystem.php
 ```
+
+Also returns JSON with `--format=json`
+
+### Class References
+
+Find all references to a class:
+
+```bash
+./bin/phpactor class:references "Phpactor\\Filesystem\\Domain\\Filesystem"
+```
+
+Accepts either the class FQN or filename.
 
 Also returns JSON with `--format=json`
 

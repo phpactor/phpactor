@@ -41,6 +41,8 @@ use PhpBench\DependencyInjection\Container;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
 use Phpactor\UserInterface\Console\Command\CompleteCommand;
+use Phpactor\Application\ClassReferences;
+use Phpactor\UserInterface\Console\Command\ClassReferencesCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -134,6 +136,13 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.complete', function (Container $container) {
             return new CompleteCommand(
                 $container->get('application.complete'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.class_references', function (Container $container) {
+            return new ClassReferencesCommand(
+                $container->get('application.class_references'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -238,7 +247,11 @@ class CoreExtension implements ExtensionInterface
     private function registerClassMover(Container $container)
     {
         $container->register('class_mover.class_mover', function (Container $container) {
-            return new ClassMover();
+            return new ClassMover($container->get('class_mover.ref_finder'));
+        });
+
+        $container->register('class_mover.ref_finder', function (Container $container) {
+            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantRefFinder();
         });
     }
 
@@ -310,6 +323,14 @@ class CoreExtension implements ExtensionInterface
             return new Complete(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
+            );
+        });
+
+        $container->register('application.class_references', function (Container $container) {
+            return new ClassReferences(
+                $container->get('application.helper.class_file_normalizer'),
+                $container->get('class_mover.ref_finder'),
+                $container->get('source_code_filesystem.git')
             );
         });
 
