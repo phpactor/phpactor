@@ -35,7 +35,14 @@ endfunction
 function! phpactor#Complete(findstart, base)
 
     if a:findstart
+        let line = getline('.')
         let start = col('.')
+        let triggers = [ "->", "::" ]
+
+        while start -2 > 0 && -1 == index(triggers, line[start-2:start-1])
+            let start -= 1
+        endwhile
+
         return start
     endif
 
