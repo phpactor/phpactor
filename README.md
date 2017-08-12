@@ -21,7 +21,7 @@ Features
 - [Transformation](#transform): Apply "transformations" to code (e.g. implement
   interfaces, add missing properties).
 - [Class search](#class-search): Search for a class by its name.
-- [Class references](#class-references): Find references to class.
+- [Class references](#class-references): Find and replace references to class.
 - [Autocompletion](#auto-completion): Auto-completion command.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
@@ -149,6 +149,38 @@ $ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
 | lib/Application/Complete.php       | 27  |     public function __construct(Reflector $reflector) | 709  | 718  |
 +------------------------------------+-----+-------------------------------------------------------+------+------+
 ```
+
+Find and replace references to a class by specifying the `--replace` option:
+
+```bash
+$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php \
+    --replace="Phpactor\\AmazingReflection\\Refactor" \
+    --dry-run
+# DRY RUN No files will be modified
+# References:
++--------------------------------------------+-----+------------------------------------------------------------------------------------------------------------+------+------+
+| Path                                       | LN  | Line                                                                                                       | OS   | OE   |
++--------------------------------------------+-----+------------------------------------------------------------------------------------------------------------+------+------+
+| lib/Application/ClassReflector.php         | 7   | use Phpactor\WorseReflection\Reflector;                                                                    | 142  | 176  |
+| lib/Application/ClassReflector.php         | 32  |         Reflector $reflector                                                                               | 886  | 895  |
+| lib/Application/Complete.php               | 5   | use Phpactor\WorseReflection\Reflector;                                                                    | 44   | 78   |
+| lib/Application/Complete.php               | 27  |     public function __construct(Reflector $reflector)                                                      | 709  | 718  |
++--------------------------------------------+-----+------------------------------------------------------------------------------------------------------------+------+------+
+
+# Replacements:
++--------------------------------------------+-----+-----------------------------------------------------------------------------------------------------------+------+------+
+| Path                                       | LN  | Line                                                                                                      | OS   | OE   |
++--------------------------------------------+-----+-----------------------------------------------------------------------------------------------------------+------+------+
+| lib/Application/ClassReflector.php         | 7   | use Phpactor\AmazingReflection\Refactor;                                                                  | 142  | 177  |
+| lib/Application/ClassReflector.php         | 32  |         Refactor $reflector                                                                               | 887  | 895  |
+| lib/Application/Complete.php               | 5   | use Phpactor\AmazingReflection\Refactor;                                                                  | 44   | 79   |
+| lib/Application/Complete.php               | 27  |     public function __construct(Refactor $reflector)                                                      | 710  | 718  |
++--------------------------------------------+-----+-----------------------------------------------------------------------------------------------------------+------+------+
+
+4 reference(s)
+```
+
+The `dry-run` option determines if files are modified or not.
 
 Accepts either the class FQN or filename.
 
