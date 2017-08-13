@@ -11,11 +11,13 @@ use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassReferencesLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\RefFinder;
+use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassRef;
-use Phpactor\ClassMover\Domain\RefReplacer;
+use Phpactor\ClassMover\Domain\ClassReplacer;
 use Phpactor\ClassMover\Domain\NamespacedClassRefList;
-use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
+use Phpactor\ClassMover\Domain\Reference\ClassReference;
 
 class ClassReferences
 {
@@ -25,7 +27,7 @@ class ClassReferences
     private $filesystem;
 
     /**
-     * @var RefFinder
+     * @var ClassFinder
      */
     private $refFinder;
 
@@ -35,14 +37,14 @@ class ClassReferences
     private $classFileNormalizer;
 
     /**
-     * @var RefReplacer
+     * @var ClassReplacer
      */
     private $refReplacer;
 
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
-        RefFinder $refFinder,
-        RefReplacer $refReplacer,
+        ClassFinder $refFinder,
+        ClassReplacer $refReplacer,
         Filesystem $filesystem
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
@@ -123,7 +125,7 @@ class ClassReferences
         return $result;
     }
 
-    private function serializeReferenceList(string $code, NamespacedClassRefList $referenceList)
+    private function serializeReferenceList(string $code, NamespacedClassReferences $referenceList)
     {
         $references = [];
         /** @var $reference ClassRef */
@@ -136,7 +138,7 @@ class ClassReferences
         return $references;
     }
 
-    private function serializeReference(string $code, ClassRef $reference)
+    private function serializeReference(string $code, ClassReference $reference)
     {
         list($lineNumber, $line) = $this->line($code, $reference->position()->start());
         return [
@@ -168,7 +170,7 @@ class ClassReferences
         return [$number, ''];
     }
 
-    private function replaceReferencesInCode(string $code, NamespacedClassRefList $list, string $class, string $replace): SourceCode
+    private function replaceReferencesInCode(string $code, NamespacedClassReferences $list, string $class, string $replace): SourceCode
     {
         $class = FullyQualifiedName::fromString($class);
         $replace = FullyQualifiedName::fromString($replace);

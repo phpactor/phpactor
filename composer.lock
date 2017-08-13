@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "dcb4ee967835b4d22d69a9ffdd17b2d8835cd438"
+                "reference": "c578a35339efa67d931a1f18b4415f863a8e11c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/dcb4ee967835b4d22d69a9ffdd17b2d8835cd438",
-                "reference": "dcb4ee967835b4d22d69a9ffdd17b2d8835cd438",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/c578a35339efa67d931a1f18b4415f863a8e11c6",
+                "reference": "c578a35339efa67d931a1f18b4415f863a8e11c6",
                 "shasum": ""
             },
             "require": {
@@ -242,6 +242,7 @@
                 "symfony/filesystem": "^2.7|^3.0"
             },
             "require-dev": {
+                "phpstan/phpstan": "^0.8.1",
                 "phpunit/phpunit": "^6.2",
                 "symfony/console": "^3.0"
             },
@@ -274,7 +275,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-08-12 17:01:00"
+            "time": "2017-08-13 16:43:12"
         },
         {
             "name": "phpactor/class-to-file",
@@ -327,12 +328,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "7850b56ccbd573eb25e566d29f2d3cd24570c670"
+                "reference": "569a4947d805e54d256756572c412c36f8ac879f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/7850b56ccbd573eb25e566d29f2d3cd24570c670",
-                "reference": "7850b56ccbd573eb25e566d29f2d3cd24570c670",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/569a4947d805e54d256756572c412c36f8ac879f",
+                "reference": "569a4947d805e54d256756572c412c36f8ac879f",
                 "shasum": ""
             },
             "require": {
@@ -372,7 +373,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-08-11 19:54:24"
+            "time": "2017-08-13 19:50:14"
         },
         {
             "name": "phpactor/code-transform",

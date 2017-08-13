@@ -3,7 +3,7 @@
 namespace Phpactor\Application;
 
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
-use Phpactor\ClassMover\Domain\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;

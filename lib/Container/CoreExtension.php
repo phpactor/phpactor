@@ -254,11 +254,11 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('class_mover.ref_finder', function (Container $container) {
-            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantRefFinder();
+            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder();
         });
 
         $container->register('class_mover.ref_replacer', function (Container $container) {
-            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantRefReplacer();
+            return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer();
         });
     }
 

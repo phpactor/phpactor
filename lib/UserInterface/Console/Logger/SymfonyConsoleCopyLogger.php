@@ -4,9 +4,9 @@ namespace Phpactor\UserInterface\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\ClassMover\Domain\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\FoundReferences;
 use Phpactor\Application\Logger\ClassCopyLogger;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 
 class SymfonyConsoleCopyLogger implements ClassCopyLogger
 {
