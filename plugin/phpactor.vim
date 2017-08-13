@@ -496,7 +496,7 @@ function! phpactor#ClassReferences()
     endfunction
 
     function! this.showReferences(class)
-        let out = phpactor#Exec('class:references --ansi ' . shellescape(a:class))
+        let out = phpactor#Exec('class:references --no-ansi ' . shellescape(a:class))
         echo out
     endfunction
 
