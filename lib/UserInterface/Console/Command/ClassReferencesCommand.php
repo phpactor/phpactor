@@ -72,7 +72,7 @@ class ClassReferencesCommand extends Command
         }
 
         $output->write(PHP_EOL);
-        $output->write(sprintf('%s reference(s)', $count));
+        $output->writeln(sprintf('%s reference(s)', $count));
     }
 
     private function findOrReplaceReferences($class, $replace, $dryRun)
