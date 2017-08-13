@@ -19,7 +19,7 @@ class ClassReferencesCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:references "Animals\Badger"');
         $this->assertSuccess($process);
-        $this->assertContains('class Badger', $process->getOutput());
+        $this->assertContains('class ⟶Badger⟵', $process->getOutput());
     }
 
     /**
@@ -39,7 +39,7 @@ class ClassReferencesCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:references "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
-        $this->assertContains('class Kangaroo', $process->getOutput());
+        $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertContains('class Kangaroo', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));
@@ -52,7 +52,7 @@ class ClassReferencesCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:references "Animals\Badger" --dry-run --replace="Kangaroo"');
         $this->assertSuccess($process);
-        $this->assertContains('class Kangaroo', $process->getOutput());
+        $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertNotContains('class Kangaroo', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));

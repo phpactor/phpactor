@@ -10,8 +10,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Phpactor;
 
 class ClassReferencesCommand extends Command
 {
@@ -49,20 +49,13 @@ class ClassReferencesCommand extends Command
         $class = $input->getArgument('class');
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
-
+        $format = $input->getOption('format');
 
         if ($replace && $dryRun) {
             $output->writeln('<info># DRY RUN</> No files will be modified');
         }
 
-        if ($replace) {
-            $results = $this->referenceFinder->replaceReferences($class, $replace, $dryRun);
-        } else {
-            $results = $this->referenceFinder->findReferences($class);
-        }
-
-
-        $format = $input->getOption('format');
+        $results = $this->findOrReplaceReferences($class, $replace, $dryRun);
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
@@ -70,19 +63,28 @@ class ClassReferencesCommand extends Command
         }
 
         $output->writeln('<comment># References:</>');
-        $count = $this->renderTable($output, $results, 'references');
+        $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
         if ($replace) {
             $output->write(PHP_EOL);
             $output->writeln('<comment># Replacements:</>');
-            $this->renderTable($output, $results, 'replacements');
+            $this->renderTable($output, $results, 'replacements', $output->isDecorated());
         }
 
         $output->write(PHP_EOL);
         $output->write(sprintf('%s reference(s)', $count));
     }
 
-    private function renderTable(OutputInterface $output, array $results, $type)
+    private function findOrReplaceReferences($class, $replace, $dryRun)
+    {
+        if ($replace) {
+           return $this->referenceFinder->replaceReferences($class, $replace, $dryRun);
+        }
+
+        return $this->referenceFinder->findReferences($class);
+    }
+
+    private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)
     {
         $table = new Table($output);
         $table->setHeaders([
@@ -98,7 +100,7 @@ class ClassReferencesCommand extends Command
 
             $filePath = $references['file'];
             foreach ($references[$type] as $reference) {
-                $this->addReferenceRow($table, $filePath, $reference);
+                $this->addReferenceRow($table, $filePath, $reference, $ansi);
                 $count++;
             }
         }
@@ -108,22 +110,24 @@ class ClassReferencesCommand extends Command
         return $count;
     }
 
-    private function addReferenceRow(Table $table, string $filePath, array $reference)
+    private function addReferenceRow(Table $table, string $filePath, array $reference, bool $ansi)
     {
-            $table->addRow([
-                Phpactor::relativizePath($filePath),
-                $reference['line_no'],
-                $this->formatLine($reference['line'], $reference['reference'], $reference['start'], $reference['end']),
-                $reference['start'],
-                $reference['end'],
-            ]);
+        $table->addRow([
+            Phpactor::relativizePath($filePath),
+            $reference['line_no'],
+            $this->formatLine($reference['line'], $reference['reference'], $ansi),
+            $reference['start'],
+            $reference['end'],
+        ]);
     }
 
-    private function formatLine(string $line, string $reference)
+    private function formatLine(string $line, string $reference, bool $ansi)
     {
-        $formatted = str_replace($reference, '<bright>' . $reference . '</>', $line);
+        if ($ansi) {
+            return str_replace($reference, '<bright>' . $reference . '</>', $line);
+        }
 
-        return $formatted;
+        return str_replace($reference, '⟶' . $reference . '⟵', $line);
     }
 }
 

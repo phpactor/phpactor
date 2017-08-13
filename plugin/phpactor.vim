@@ -475,7 +475,30 @@ endfunction
 " Find class references
 """""""""""""""""""""""
 function! phpactor#ClassReferences()
+
     let offsetInfo = phpactor#_OffsetTypeInfo()
+    let this = {}
+
+    function! this.populateQuickFix(class)
+        let out = phpactor#Exec('class:references --format=json ' . shellescape(a:class))
+        let results = json_decode(out)
+
+        let list = []
+
+        for fileReferences in results['references']
+            for reference in fileReferences['references']
+                call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'] })
+            endfor
+        endfor
+
+        call setqflist(list)
+        exec ":cc 1"
+    endfunction
+
+    function! this.showReferences(class)
+        let out = phpactor#Exec('class:references --ansi ' . shellescape(a:class))
+        echo out
+    endfunction
 
     if empty(offsetInfo['type'])
         echo "Cannot determine type"
@@ -488,19 +511,16 @@ function! phpactor#ClassReferences()
     endif
 
     let class = offsetInfo['type']
-    let out = phpactor#Exec('class:references --format=json ' . shellescape(class))
-    let results = json_decode(out)
+    let options = [ "1. List", "2. Quickfix" ]
+    let choice = inputlist(options)
 
-    let list = []
+    if (1 == choice)
+        call this.showReferences(class)
+    endif
 
-    for fileReferences in results['references']
-        for reference in fileReferences['references']
-            call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'] })
-        endfor
-    endfor
-
-    call setqflist(list)
-    exec ":cc 1"
+    if (2 == choice)
+        call this.populateQuickFix(class)
+    endif
 
 endfunction
 
