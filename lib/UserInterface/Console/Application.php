@@ -44,7 +44,7 @@ class Application extends SymfonyApplication
         }
 
         $formatter = $output->getFormatter();
-        $formatter->setStyle('bright', new OutputFormatterStyle('white', null, [ 'bold' ]));
+        $formatter->setStyle('highlight', new OutputFormatterStyle('red', null, [ 'bold' ]));
         $formatter->setStyle('diff-add', new OutputFormatterStyle('green', null, [  ]));
         $formatter->setStyle('diff-remove', new OutputFormatterStyle('red', null, [  ]));
 

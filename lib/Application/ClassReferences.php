@@ -140,12 +140,13 @@ class ClassReferences
 
     private function serializeReference(string $code, ClassReference $reference)
     {
-        list($lineNumber, $line) = $this->line($code, $reference->position()->start());
+        list($lineNumber, $colNumber, $line) = $this->line($code, $reference->position()->start());
         return [
             'start' => $reference->position()->start(),
             'end' => $reference->position()->end(),
             'line' => $line,
             'line_no' => $lineNumber,
+            'col_no' => $colNumber,
             'reference' => (string) $reference->name()
         ];
     }
@@ -161,13 +162,14 @@ class ClassReferences
             $endPosition = $startPosition + strlen($line) + 1;
 
             if ($offset >= $startPosition && $offset <= $endPosition) {
-                return [ $number, $line ];
+                $col = $offset - $startPosition;
+                return [ $number, $col, $line ];
             }
 
             $startPosition = $endPosition;
         }
 
-        return [$number, ''];
+        return [$number, 0, ''];
     }
 
     private function replaceReferencesInCode(string $code, NamespacedClassReferences $list, string $class, string $replace): SourceCode

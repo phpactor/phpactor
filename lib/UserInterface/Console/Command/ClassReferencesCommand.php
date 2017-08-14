@@ -115,19 +115,30 @@ class ClassReferencesCommand extends Command
         $table->addRow([
             Phpactor::relativizePath($filePath),
             $reference['line_no'],
-            $this->formatLine($reference['line'], $reference['reference'], $ansi),
+            $this->formatLine($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
             $reference['start'],
             $reference['end'],
         ]);
     }
 
-    private function formatLine(string $line, string $reference, bool $ansi)
+    private function formatLine(string $line, string $reference, int $col, bool $ansi)
     {
+        $leftBracket = '⟶';
+        $rightBracket = '⟵';
+
         if ($ansi) {
-            return str_replace($reference, '<bright>' . $reference . '</>', $line);
+            $leftBracket = '<highlight>';
+            $rightBracket = '</>';
         }
 
-        return str_replace($reference, '⟶' . $reference . '⟵', $line);
+        return sprintf(
+            '%s%s%s%s%s',
+            substr($line, 0, $col),
+            $leftBracket,
+            $reference,
+            $rightBracket,
+            substr($line, $col + strlen($reference))
+        );
     }
 }
 
