@@ -37,7 +37,7 @@ class ClassReferencesCommand extends Command
     public function configure()
     {
         $this->setName('class:references');
-        $this->setDescription('Move class (by name or file path) and update all references to it');
+        $this->setDescription('Find and/or replace references for a given path or FQN');
         $this->addArgument('class', InputArgument::REQUIRED, 'Class path or FQN');
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');

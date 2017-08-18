@@ -39,7 +39,7 @@ class ClassMoveCommand extends Command
     public function configure()
     {
         $this->setName('class:move');
-        $this->setDescription('Move class (by name or file path) and update all references to it');
+        $this->setDescription('Move class (path or FQN) and update all references to it');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('dest', InputArgument::OPTIONAL, 'Destination path or FQN');
         $this->addOption('type', null, InputOption::VALUE_REQUIRED, sprintf(

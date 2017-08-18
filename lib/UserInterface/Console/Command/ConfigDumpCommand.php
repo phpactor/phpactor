@@ -41,6 +41,7 @@ class ConfigDumpCommand extends Command
     public function configure()
     {
         $this->setName('config:dump');
+        $this->setDescription('Show loaded config files and dump current configuration.');
         $this->addOption('config-only', null, InputOption::VALUE_NONE, 'Do not output configuration file locations');
         Handler\FormatHandler::configure($this);
     }

@@ -39,7 +39,7 @@ class ClassInflectCommand extends Command
     public function configure()
     {
         $this->setName('class:inflect');
-        $this->setDescription('Inflect new class from existing path or FQN');
+        $this->setDescription('Inflect new class from existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
         $this->addArgument('variant', InputOption::VALUE_REQUIRED, 'Type of inflection', 'default');
