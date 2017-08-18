@@ -480,7 +480,7 @@ function! phpactor#ClassReferences()
     let this = {}
 
     function! this.populateQuickFix(class)
-        let out = phpactor#Exec('class:references --format=json ' . shellescape(a:class))
+        let out = phpactor#Exec('references:class --format=json ' . shellescape(a:class))
         let results = json_decode(out)
 
         let list = []
@@ -496,7 +496,7 @@ function! phpactor#ClassReferences()
     endfunction
 
     function! this.showReferences(class)
-        let out = phpactor#Exec('class:references --no-ansi ' . shellescape(a:class))
+        let out = phpactor#Exec('references:class --no-ansi ' . shellescape(a:class))
         echo out
     endfunction
 

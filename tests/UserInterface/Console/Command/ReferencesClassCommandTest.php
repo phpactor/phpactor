@@ -4,7 +4,7 @@ namespace Phpactor\Tests\UserInterface\Console\Command;
 
 use Phpactor\Tests\UserInterface\SystemTestCase;
 
-class ClassReferencesCommandTest extends SystemTestCase
+class ReferencesClassCommandTest extends SystemTestCase
 {
     public function setUp()
     {
@@ -17,7 +17,7 @@ class ClassReferencesCommandTest extends SystemTestCase
      */
     public function testReferences()
     {
-        $process = $this->phpactor('class:references "Animals\Badger"');
+        $process = $this->phpactor('references:class "Animals\Badger"');
         $this->assertSuccess($process);
         $this->assertContains('class ⟶Badger⟵', $process->getOutput());
     }
@@ -27,7 +27,7 @@ class ClassReferencesCommandTest extends SystemTestCase
      */
     public function testReferencesFormatted()
     {
-        $process = $this->phpactor('class:references "Animals\Badger" --format=json');
+        $process = $this->phpactor('references:class "Animals\Badger" --format=json');
         $this->assertSuccess($process);
         $this->assertContains('"line":"class Badger', $process->getOutput());
     }
@@ -37,7 +37,7 @@ class ClassReferencesCommandTest extends SystemTestCase
      */
     public function testReferencesReplace()
     {
-        $process = $this->phpactor('class:references "Animals\Badger" --replace="Kangaroo"');
+        $process = $this->phpactor('references:class "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
         $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertContains('class Kangaroo', file_get_contents(
@@ -50,7 +50,7 @@ class ClassReferencesCommandTest extends SystemTestCase
      */
     public function testReferencesReplaceDryRun()
     {
-        $process = $this->phpactor('class:references "Animals\Badger" --dry-run --replace="Kangaroo"');
+        $process = $this->phpactor('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
         $this->assertSuccess($process);
         $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertNotContains('class Kangaroo', file_get_contents(

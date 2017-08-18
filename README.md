@@ -139,7 +139,7 @@ Also returns JSON with `--format=json`
 Find all references to a class:
 
 ```bash
-$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
+$ phpactor references:class vendor/phpactor/worse-reflection/lib/Reflector.php
 +------------------------------------+-----+-------------------------------------------------------+------+------+
 | Path                               | LN  | Line                                                  | OS   | OE   |
 +------------------------------------+-----+-------------------------------------------------------+------+------+
@@ -153,7 +153,7 @@ $ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
 Find and replace references to a class by specifying the `--replace` option:
 
 ```bash
-$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php \
+$ phpactor references:class vendor/phpactor/worse-reflection/lib/Reflector.php \
     --replace="Phpactor\\AmazingReflection\\Refactor" \
     --dry-run
 # DRY RUN No files will be modified
