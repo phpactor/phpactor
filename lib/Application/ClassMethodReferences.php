@@ -1,0 +1,176 @@
+<?php
+
+namespace Phpactor\Application;
+
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Phpactor;
+use Webmozart\Glob\Glob;
+use Webmozart\PathUtil\Path;
+use Phpactor\Application\Logger\ClassReferencesLogger;
+use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\ClassMover\Domain\MethodFinder;
+use Phpactor\ClassMover\Domain\ClassRef;
+use Phpactor\ClassMover\Domain\ClassReplacer;
+use Phpactor\ClassMover\Domain\NamespacedClassRefList;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
+use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\ClassMover\Domain\Model\Class_;
+use Phpactor\ClassMover\Domain\Model\ClassMethod;
+use Phpactor\ClassMover\Domain\Name\MethodName;
+use Phpactor\ClassMover\Domain\Reference\MethodReferences;
+use Phpactor\ClassMover\Domain\Reference\MethodReference;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Core\ClassName;
+
+class ClassMethodReferences
+{
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * @var MethodFinder
+     */
+    private $methodFinder;
+
+    /**
+     * @var ClassFileNormalizer
+     */
+    private $classFileNormalizer;
+
+    /**
+     * @var Reflector
+     */
+    private $reflector;
+
+    public function __construct(
+        ClassFileNormalizer $classFileNormalizer,
+        MethodFinder $methodFinder,
+        Filesystem $filesystem,
+        Reflector $reflector
+    ) {
+        $this->classFileNormalizer = $classFileNormalizer;
+        $this->filesystem = $filesystem;
+        $this->methodFinder = $methodFinder;
+        $this->reflector = $reflector;
+    }
+
+    public function findReferences(string $class, string $methodName)
+    {
+        $classPath = $this->classFileNormalizer->normalizeToFile($class);
+        $classPath = Phpactor::normalizePath($classPath);
+        $className = $this->classFileNormalizer->normalizeToClass($class);
+
+        $results = [];
+        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
+
+            $references = $this->referencesInFile($filePath, $className, $methodName);
+
+            if (empty($references['references'])) {
+                continue;
+            }
+
+            $references['file'] = (string) $filePath;
+            $results[] = $references;
+        }
+
+        if (empty($results)) {
+            $reflection = $this->reflector->reflectClass(ClassName::fromString($class));
+
+            if (false === $reflection->methods()->has($methodName)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Method not known "%s", known methods: "%s"',
+                    $methodName, implode('", "', $reflection->methods()->keys())
+                ));
+            }
+        }
+
+        return [
+            'references' => $results
+        ];
+    }
+
+    private function referencesInFile($filePath, string $className, string $methodName)
+    {
+        $code = $this->filesystem->getContents($filePath);
+
+        $referenceList = $this->methodFinder->findMethods(
+            SourceCode::fromString($code),
+            ClassMethod::fromClassAndMethodName(
+                Class_::fromFullyQualifiedName(FullyQualifiedName::fromString($className)),
+                MethodName::fromString($methodName)
+            )
+        );
+
+        $result = [
+            'references' => [],
+            'replacements' => [],
+        ];
+
+        $result['references'] = $this->serializeReferenceList($code, $referenceList);
+
+        return $result;
+    }
+
+    private function serializeReferenceList(string $code, MethodReferences $referenceList)
+    {
+        $references = [];
+        /** @var $reference ClassRef */
+        foreach ($referenceList as $reference) {
+            $ref = $this->serializeReference($code, $reference);
+
+            $references[] = $ref;
+        }
+
+        return $references;
+    }
+
+    private function serializeReference(string $code, MethodReference $reference)
+    {
+        list($lineNumber, $colNumber, $line) = $this->line($code, $reference->position()->start());
+        return [
+            'start' => $reference->position()->start(),
+            'end' => $reference->position()->end(),
+            'line' => $line,
+            'line_no' => $lineNumber,
+            'col_no' => $colNumber,
+            'reference' => (string) $reference->method()->methodName()
+        ];
+    }
+
+    private function line(string $code, int $offset)
+    {
+        $lines = explode(PHP_EOL, $code);
+        $number = 0;
+        $startPosition = 0;
+
+        foreach ($lines as $number => $line) {
+            $number = $number + 1;
+            $endPosition = $startPosition + strlen($line) + 1;
+
+            if ($offset >= $startPosition && $offset <= $endPosition) {
+                $col = $offset - $startPosition;
+                return [ $number, $col, $line ];
+            }
+
+            $startPosition = $endPosition;
+        }
+
+        return [$number, 0, ''];
+    }
+
+    private function replaceReferencesInCode(string $code, NamespacedClassReferences $list, string $class, string $replace): SourceCode
+    {
+        $class = FullyQualifiedName::fromString($class);
+        $replace = FullyQualifiedName::fromString($replace);
+        $code = SourceCode::fromString($code);
+
+        return $this->refReplacer->replaceReferences($code, $list, $class, $replace);
+    }
+}
+

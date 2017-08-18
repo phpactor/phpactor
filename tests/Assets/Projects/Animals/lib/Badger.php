@@ -12,4 +12,9 @@ class Badger
     {
         $this->carnivorous = $carnivorous;
     }
+    
+    public function badge()
+    {
+        $this->badge();
+    }
 }

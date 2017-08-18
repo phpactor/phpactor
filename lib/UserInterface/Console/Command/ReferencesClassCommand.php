@@ -2,7 +2,7 @@
 
 namespace Phpactor\UserInterface\Console\Command;
 
-use Phpactor\UserInterface\Console\Command\ClassReferencesCommand;
+use Phpactor\UserInterface\Console\Command\ReferencesClassCommand;
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Application\ClassReferences;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
@@ -12,8 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
+use Phpactor\UserInterface\Console\Formatter\Highlight;
 
-class ClassReferencesCommand extends Command
+class ReferencesClassCommand extends Command
 {
     /**
      * @var ClassReferences
@@ -115,30 +116,10 @@ class ClassReferencesCommand extends Command
         $table->addRow([
             Phpactor::relativizePath($filePath),
             $reference['line_no'],
-            $this->formatLine($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
+            Highlight::highlightAtCol($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
             $reference['start'],
             $reference['end'],
         ]);
-    }
-
-    private function formatLine(string $line, string $reference, int $col, bool $ansi)
-    {
-        $leftBracket = '⟶';
-        $rightBracket = '⟵';
-
-        if ($ansi) {
-            $leftBracket = '<highlight>';
-            $rightBracket = '</>';
-        }
-
-        return sprintf(
-            '%s%s%s%s%s',
-            substr($line, 0, $col),
-            $leftBracket,
-            $reference,
-            $rightBracket,
-            substr($line, $col + strlen($reference))
-        );
     }
 }
 
