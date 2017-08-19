@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "8aeeedd477b1a32eccc123303d0c1e3d8a76ecdb"
+                "reference": "4a7721e8a7264c720ad931a56170d3cd3fcf67be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/8aeeedd477b1a32eccc123303d0c1e3d8a76ecdb",
-                "reference": "8aeeedd477b1a32eccc123303d0c1e3d8a76ecdb",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/4a7721e8a7264c720ad931a56170d3cd3fcf67be",
+                "reference": "4a7721e8a7264c720ad931a56170d3cd3fcf67be",
                 "shasum": ""
             },
             "require": {
@@ -242,6 +242,7 @@
                 "symfony/filesystem": "^2.7|^3.0"
             },
             "require-dev": {
+                "phpactor/worse-reflection": "^1.0@dev",
                 "phpstan/phpstan": "^0.8.1",
                 "phpunit/phpunit": "^6.2",
                 "symfony/console": "^3.0"
@@ -275,7 +276,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-08-13 20:14:30"
+            "time": "2017-08-19 12:30:28"
         },
         {
             "name": "phpactor/class-to-file",
@@ -486,12 +487,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "d0a03033898c79c757f076f8216a2e5913f16deb"
+                "reference": "396099c0bbe6528091f046c74a9c3d9576600f4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d0a03033898c79c757f076f8216a2e5913f16deb",
-                "reference": "d0a03033898c79c757f076f8216a2e5913f16deb",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/396099c0bbe6528091f046c74a9c3d9576600f4e",
+                "reference": "396099c0bbe6528091f046c74a9c3d9576600f4e",
                 "shasum": ""
             },
             "require": {
@@ -534,7 +535,7 @@
             "support": {
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2017-08-12 08:42:27"
+            "time": "2017-08-19 12:01:55"
         },
         {
             "name": "phpbench/container",
@@ -679,12 +680,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f5ba4c6753a7260f2fbff5e01d96697eb3a024d8"
+                "reference": "094d1ac303515f276cd3f7c0fc96926064312ae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f5ba4c6753a7260f2fbff5e01d96697eb3a024d8",
-                "reference": "f5ba4c6753a7260f2fbff5e01d96697eb3a024d8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/094d1ac303515f276cd3f7c0fc96926064312ae0",
+                "reference": "094d1ac303515f276cd3f7c0fc96926064312ae0",
                 "shasum": ""
             },
             "require": {
@@ -701,7 +702,6 @@
                 "symfony/config": "~3.3|~4.0",
                 "symfony/dependency-injection": "~3.3|~4.0",
                 "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
-                "symfony/http-kernel": "~2.8|~3.0|~4.0",
                 "symfony/lock": "~3.4|~4.0",
                 "symfony/process": "~3.3|~4.0"
             },
@@ -741,7 +741,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-12 08:14:42"
+            "time": "2017-08-15 13:32:22"
         },
         {
             "name": "symfony/debug",
@@ -1733,12 +1733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "552d65f3dd5ff50cda3a2480b9037d0a803d731e"
+                "reference": "3bfbdd9a0c8510afeabee01eab3f7b98789ed072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/552d65f3dd5ff50cda3a2480b9037d0a803d731e",
-                "reference": "552d65f3dd5ff50cda3a2480b9037d0a803d731e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3bfbdd9a0c8510afeabee01eab3f7b98789ed072",
+                "reference": "3bfbdd9a0c8510afeabee01eab3f7b98789ed072",
                 "shasum": ""
             },
             "require": {
@@ -1807,7 +1807,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-10 16:53:18"
+            "time": "2017-08-18 07:34:02"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

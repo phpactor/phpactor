@@ -77,8 +77,8 @@ class ClassMethodReferences
             $results[] = $references;
         }
 
-        if ($className && empty($results)) {
-            $reflection = $this->reflector->reflectClass(ClassName::fromString($class));
+        if ($methodName && $className && empty($results)) {
+            $reflection = $this->reflector->reflectClass(ClassName::fromString($className));
 
             if (false === $reflection->methods()->has($methodName)) {
                 throw new \InvalidArgumentException(sprintf(
