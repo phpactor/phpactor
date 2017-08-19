@@ -2,7 +2,16 @@
 
 use Symfony\Component\Console\Input\ArgvInput;
 
-require_once(__DIR__ . '/../vendor/autoload.php');
+$autoloadFile = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadFile)) {
+    echo sprintf(
+        'Phpactor dependencies not installed. Run `composer install` (https://getcomposer.org) in "%s"' . PHP_EOL,
+        realpath(__DIR__ . '/..')
+    );
+    exit(255);
+}
+
+require_once($autoloadFile);
 
 $minVersion = '7.0.0';
 
