@@ -25,6 +25,7 @@ use Phpactor\ClassMover\Domain\Reference\MethodReferences;
 use Phpactor\ClassMover\Domain\Reference\MethodReference;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\ClassName;
+use \SplFileInfo;
 
 class ClassMethodReferences
 {
@@ -65,7 +66,16 @@ class ClassMethodReferences
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
         $results = [];
-        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
+        $filePaths = $this->filesystem->fileList()->phpFiles();
+
+        // we can discount any files that do not contain the method name.
+        if ($methodName) {
+            $filePaths = $filePaths->filter(function (SplFileInfo $file) use ($methodName) {
+                return preg_match('{' . $methodName . '}', file_get_contents($file->getPathname()));
+            });
+        }
+
+        foreach ($filePaths as $filePath) {
 
             $references = $this->referencesInFile($filePath, $className, $methodName);
 
