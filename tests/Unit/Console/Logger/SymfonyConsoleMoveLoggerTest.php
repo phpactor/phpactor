@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\ClassMover\Domain\FoundReferences;
+use Phpactor\ClassMover\FoundReferences;
 use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
 use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;

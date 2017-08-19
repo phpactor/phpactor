@@ -19,7 +19,7 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
 use Phpactor\ClassMover\Domain\Model\Class_;
-use Phpactor\ClassMover\Domain\Model\ClassMethod;
+use Phpactor\ClassMover\Domain\Model\ClassMethodQuery;
 use Phpactor\ClassMover\Domain\Name\MethodName;
 use Phpactor\ClassMover\Domain\Reference\MethodReferences;
 use Phpactor\ClassMover\Domain\Reference\MethodReference;
@@ -60,11 +60,9 @@ class ClassMethodReferences
         $this->reflector = $reflector;
     }
 
-    public function findReferences(string $class, string $methodName)
+    public function findReferences(string $class = null, string $methodName = null)
     {
-        $classPath = $this->classFileNormalizer->normalizeToFile($class);
-        $classPath = Phpactor::normalizePath($classPath);
-        $className = $this->classFileNormalizer->normalizeToClass($class);
+        $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
         $results = [];
         foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
@@ -79,7 +77,7 @@ class ClassMethodReferences
             $results[] = $references;
         }
 
-        if (empty($results)) {
+        if ($className && empty($results)) {
             $reflection = $this->reflector->reflectClass(ClassName::fromString($class));
 
             if (false === $reflection->methods()->has($methodName)) {
@@ -95,16 +93,15 @@ class ClassMethodReferences
         ];
     }
 
-    private function referencesInFile($filePath, string $className, string $methodName)
+    private function referencesInFile($filePath, string $className = null, string $methodName = null)
     {
         $code = $this->filesystem->getContents($filePath);
 
+        $query = $this->createQuery($className, $methodName);
+
         $referenceList = $this->methodFinder->findMethods(
             SourceCode::fromString($code),
-            ClassMethod::fromClassAndMethodName(
-                Class_::fromFullyQualifiedName(FullyQualifiedName::fromString($className)),
-                MethodName::fromString($methodName)
-            )
+            $query
         );
 
         $result = [
@@ -139,7 +136,7 @@ class ClassMethodReferences
             'line' => $line,
             'line_no' => $lineNumber,
             'col_no' => $colNumber,
-            'reference' => (string) $reference->method()->methodName()
+            'reference' => (string) $reference->methodName()
         ];
     }
 
@@ -172,5 +169,17 @@ class ClassMethodReferences
 
         return $this->refReplacer->replaceReferences($code, $list, $class, $replace);
     }
-}
 
+    private function createQuery(string $className = null, string $methodName = null)
+    {
+        if ($className && $methodName) {
+            return ClassMethodQuery::fromScalarClassAndMethodName($className, $methodName);
+        }
+
+        if ($className) {
+            return ClassMethodQuery::fromScalarClass($className);
+        }
+
+        return ClassMethodQuery::all();
+    }
+}
