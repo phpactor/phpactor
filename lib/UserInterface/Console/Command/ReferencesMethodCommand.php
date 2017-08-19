@@ -18,7 +18,7 @@ use Phpactor\Application\ClassMethodReferences;
 class ReferencesMethodCommand extends Command
 {
     /**
-     * @var ClassReferences
+     * @var ClassMethodReferences
      */
     private $methodReferences;
 
