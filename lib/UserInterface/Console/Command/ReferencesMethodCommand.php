@@ -2,7 +2,7 @@
 
 namespace Phpactor\UserInterface\Console\Command;
 
-use Phpactor\UserInterface\Console\Command\ClassReferencesCommand;
+use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Application\ClassReferences;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
@@ -12,13 +12,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
+use Phpactor\UserInterface\Console\Formatter\Highlight;
+use Phpactor\Application\ClassMethodReferences;
 
-class ClassReferencesCommand extends Command
+class ReferencesMethodCommand extends Command
 {
     /**
      * @var ClassReferences
      */
-    private $referenceFinder;
+    private $methodReferences;
 
     /**
      * @var DumperRegistry
@@ -26,36 +28,30 @@ class ClassReferencesCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        ClassReferences $referenceFinder,
+        ClassMethodReferences $methodReferences,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->referenceFinder = $referenceFinder;
+        $this->methodReferences = $methodReferences;
         $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
     {
-        $this->setName('class:references');
-        $this->setDescription('Find and/or replace references for a given path or FQN');
-        $this->addArgument('class', InputArgument::REQUIRED, 'Class path or FQN');
-        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
-        $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
+        $this->setName('references:method');
+        $this->setDescription('Find reference to a method');
+        $this->addOption('class', null, InputOption::VALUE_REQUIRED, 'Class path or FQN');
+        $this->addOption('method', null, InputOption::VALUE_REQUIRED, 'Class path or FQN');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $class = $input->getArgument('class');
-        $replace = $input->getOption('replace');
-        $dryRun = $input->getOption('dry-run');
+        $class = $input->getOption('class');
+        $method = $input->getOption('method');
         $format = $input->getOption('format');
 
-        if ($replace && $dryRun) {
-            $output->writeln('<info># DRY RUN</> No files will be modified');
-        }
-
-        $results = $this->findOrReplaceReferences($class, $replace, $dryRun);
+        $results = $this->methodReferences->findReferences($class, $method);
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
@@ -65,23 +61,8 @@ class ClassReferencesCommand extends Command
         $output->writeln('<comment># References:</>');
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
-        if ($replace) {
-            $output->write(PHP_EOL);
-            $output->writeln('<comment># Replacements:</>');
-            $this->renderTable($output, $results, 'replacements', $output->isDecorated());
-        }
-
         $output->write(PHP_EOL);
         $output->writeln(sprintf('%s reference(s)', $count));
-    }
-
-    private function findOrReplaceReferences($class, $replace, $dryRun)
-    {
-        if ($replace) {
-           return $this->referenceFinder->replaceReferences($class, $replace, $dryRun);
-        }
-
-        return $this->referenceFinder->findReferences($class);
     }
 
     private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)
@@ -115,30 +96,10 @@ class ClassReferencesCommand extends Command
         $table->addRow([
             Phpactor::relativizePath($filePath),
             $reference['line_no'],
-            $this->formatLine($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
+            Highlight::highlightAtCol($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
             $reference['start'],
             $reference['end'],
         ]);
-    }
-
-    private function formatLine(string $line, string $reference, int $col, bool $ansi)
-    {
-        $leftBracket = '⟶';
-        $rightBracket = '⟵';
-
-        if ($ansi) {
-            $leftBracket = '<highlight>';
-            $rightBracket = '</>';
-        }
-
-        return sprintf(
-            '%s%s%s%s%s',
-            substr($line, 0, $col),
-            $leftBracket,
-            $reference,
-            $rightBracket,
-            substr($line, $col + strlen($reference))
-        );
     }
 }
 

@@ -6,7 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\FoundReferences;
+use Phpactor\ClassMover\FoundReferences;
 
 class SymfonyConsoleMoveLogger implements ClassMoverLogger
 {

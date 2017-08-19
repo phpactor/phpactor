@@ -4,7 +4,7 @@ namespace Phpactor\Application\Logger;
 
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\FoundReferences;
+use Phpactor\ClassMover\FoundReferences;
 
 interface ClassCopyLogger
 {

@@ -22,6 +22,8 @@ Features
   interfaces, add missing properties).
 - [Class search](#class-search): Search for a class by its name.
 - [Class references](#class-references): Find and replace references to class.
+- [Class method references](#method-references): Find references to class
+  methods.
 - [Autocompletion](#auto-completion): Auto-completion command.
 - **VIM Plugin**: see [plugin README](https://github.com/phpactor/phpactor/tree/master/plugin/README.md).
 
@@ -139,7 +141,7 @@ Also returns JSON with `--format=json`
 Find all references to a class:
 
 ```bash
-$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
+$ phpactor references:class vendor/phpactor/worse-reflection/lib/Reflector.php
 +------------------------------------+-----+-------------------------------------------------------+------+------+
 | Path                               | LN  | Line                                                  | OS   | OE   |
 +------------------------------------+-----+-------------------------------------------------------+------+------+
@@ -153,7 +155,7 @@ $ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php
 Find and replace references to a class by specifying the `--replace` option:
 
 ```bash
-$ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php \
+$ phpactor references:class vendor/phpactor/worse-reflection/lib/Reflector.php \
     --replace="Phpactor\\AmazingReflection\\Refactor" \
     --dry-run
 # DRY RUN No files will be modified
@@ -181,6 +183,36 @@ $ phpactor class:references vendor/phpactor/worse-reflection/lib/Reflector.php \
 ```
 
 The `dry-run` option determines if files are modified or not.
+
+Accepts either the class FQN or filename.
+
+Also returns JSON with `--format=json`
+
+### Method References
+
+Find methods. When no options are provided all methods in the scope will be
+listed. If class is given, then all method calls on that class or any of its
+subclasses. If a method is given then only show calls to that method.
+
+```bash
+$ phpactor references:method --class="Symfony\\Component\\Console\\Input\\InputInterface"
+# References:
++---------------------------------------------------------------+----+--------------------------------------------------------------------------------------------+------+------+
+| Path                                                          | LN | Line                                                                                       | OS   | OE   |
++---------------------------------------------------------------+----+--------------------------------------------------------------------------------------------+------+------+
+| lib/UserInterface/Console/Application.php                     | 54 |             if ($input->⟶hasOption⟵('format') && $input->getOption('format')) {            | 1775 | 1784 |
+| lib/UserInterface/Console/Application.php                     | 54 |             if ($input->hasOption('format') && $input->⟶getOption⟵('format')) {            | 1806 | 1815 |
+| lib/UserInterface/Console/Application.php                     | 55 |                 return $this->handleException($output, $input->⟶getOption⟵('format'), $e); | 1892 | 1901 |
+| lib/UserInterface/Console/Command/ClassCopyCommand.php        | 53 |         $type = $input->⟶getOption⟵('type');                                               | 1562 | 1571 |
+| lib/UserInterface/Console/Command/ClassCopyCommand.php        | 55 |         $src = $input->⟶getArgument⟵('src');                                               | 1661 | 1672 |
+| lib/UserInterface/Console/Command/ClassCopyCommand.php        | 56 |         $dest = $input->⟶getArgument⟵('dest');                                             | 1705 | 1716 |
+| lib/UserInterface/Console/Command/ClassInflectCommand.php     | 53 |         if ($input->⟶getOption⟵('list')) {                                                 | 1846 | 1855 |
+| lib/UserInterface/Console/Command/ClassInflectCommand.php     | 58 |         $this->dumperRegistry->get($input->⟶getOption⟵('format'))->dump($output, $out);    | 2028 | 2037 |
+| ...                                                           | .. |                                                                                            | 2028 | 2037 |
++---------------------------------------------------------------+----+--------------------------------------------------------------------------------------------+------+------+
+
+46 reference(s)
+```
 
 Accepts either the class FQN or filename.
 
