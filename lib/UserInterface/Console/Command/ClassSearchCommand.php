@@ -7,14 +7,27 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Application\ClassSearch;
+use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 
 class ClassSearchCommand extends Command
 {
+    /**
+     * @var ClassSearch
+     */
+    private $search;
+
+    /**
+     * @var DumperRegistry
+     */
+    private $dumperRegistry;
+
     public function __construct(
-        ClassSearch $search
+        ClassSearch $search,
+        DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->search = $search;
+        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
@@ -28,19 +41,8 @@ class ClassSearchCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $results = $this->search->classSearch($input->getArgument('name'));
-        $format = $input->getOption('format');
 
-        $output->write(json_encode($results));
-    }
-
-    private function outputConsole(OutputInterface $output, array $results)
-    {
-        foreach ($results as $result) {
-            if (!$result['class']) {
-                continue;
-            }
-
-            $output->writeln(sprintf('<comment>%s</><info>:</>%s', $result['class'], $result['file_path']));
-        }
+        $dumper = $this->dumperRegistry->get($input->getOption('format'));
+        $dumper->dump($output, $results);
     }
 }

@@ -102,7 +102,8 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('command.class_search', function (Container $container) {
             return new ClassSearchCommand(
-                $container->get('application.class_search')
+                $container->get('application.class_search'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
 
