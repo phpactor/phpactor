@@ -18,7 +18,8 @@ Features
 - [Move and copy classes](#move-class): Move/copy classes and update references to them.
 - [Find class references](#class-references): Populate the quick fix list with
   references to the class under the cursor.
-- [Go-to type](#goto-type): Open the class for the type under the cursor.
+- [Go-to definition](#goto-definition): Goto the definition of a class or a
+  class member.
 - [Create class](#create-class): New class in an empty file, or generate in a
   new tab for a class name under the cursor.
 - [Inflect class](#inflect-class): Generate a new class based on an existing
@@ -51,7 +52,7 @@ autocmd FileType php setlocal omnifunc=phpactor#Complete
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
 map <Leader>e :call phpactor#ClassExpand()<CR>
-map <Leader>o :call phpactor#GotoType()<CR>
+map <Leader>o :call phpactor#GotoDefinition()<CR>
 map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>i :call phpactor#ReflectAtOffset()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
@@ -97,15 +98,14 @@ Expand class under the cursor
 :call phpactor#ClassExpand()
 ```
 
-Goto Type
----------
+Goto Definition
+---------------
 
-Will attempt to go to the type of the word under the
-cursor - the word could be anything for which a type (or return type) can be
-inferred (e.g. class names, variables, methods, etc):
+Will try and goto the definition of a class, or a class member (method,
+property, constant).
 
 ```bash
-:call phpactor#GotoType()
+:call phpactor#GotoDefinition()
 ```
 
 Move class

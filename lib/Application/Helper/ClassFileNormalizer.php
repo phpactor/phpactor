@@ -38,11 +38,24 @@ class ClassFileNormalizer
         return $classOrFile;
     }
 
-    public function classToFile(string $class): string
+    /**
+     * @return string
+     */
+    public function classToFile(string $class, bool $hasToExist = false)
     {
         $filePathCandidates = $this->fileClassConverter->classToFileCandidates(
             ClassName::fromString($class)
         );
+
+        if ($hasToExist) {
+            foreach ($filePathCandidates as $candidate) {
+                if (file_exists((string) $candidate)) {
+                    return (string) $candidate;
+                }
+
+                return null;
+            }
+        }
 
         return (string) $filePathCandidates->best();
     }

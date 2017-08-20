@@ -30,6 +30,6 @@ class FileInfoAtOffsetCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('file:offset lib/Badger.php 137 --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"type":"Animals', $process->getOutput());
+        $this->assertContains('{"symbol":"Carnivorous', $process->getOutput());
     }
 }

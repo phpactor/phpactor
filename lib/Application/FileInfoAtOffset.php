@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
 
 final class FileInfoAtOffset
 {
@@ -17,21 +18,21 @@ final class FileInfoAtOffset
     private $reflector;
 
     /**
-     * @var ClassToFileFileToClass
-     */
-    private $classToFileConverter;
-
-    /**
      * @var Helper\FilesystemHelper
      */
     private $filesystemHelper;
 
+    /**
+     * @var Helper\ClassFileNormalizer
+     */
+    private $classFileNormalizer;
+
     public function __construct(
         Reflector $reflector,
-        ClassToFileFileToClass $classToFileConverter
+        Helper\ClassFileNormalizer $classFileNormalizer
     ) {
         $this->reflector = $reflector;
-        $this->classToFileConverter = $classToFileConverter;
+        $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystemHelper = new Helper\FilesystemHelper();
     }
 
@@ -46,22 +47,28 @@ final class FileInfoAtOffset
 
         $symbolInformation = $result->symbolInformation();
         $return = [
+            'symbol' => $symbolInformation->symbol()->name(),
+            'symbol_type' => $symbolInformation->symbol()->symbolType(),
+            'start' => $symbolInformation->symbol()->position()->start(),
+            'end' => $symbolInformation->symbol()->position()->end(),
             'type' => (string) $symbolInformation->type(),
+            'class_type' => (string) $symbolInformation->classType(),
             'value' => var_export($symbolInformation->value(), true),
             'offset' => $offset,
-            'path' => null,
+            'type_path' => null,
         ];
 
         if ($showFrame) {
             $frame = [];
 
             foreach (['locals', 'properties'] as $assignmentType) {
+                /** @var $local Variable */
                 foreach ($result->frame()->$assignmentType() as $local) {
                     $info = sprintf(
                         '%s = (%s) %s',
                         $local->name(),
-                        $local->value()->type(),
-                        str_replace(PHP_EOL, '', var_export($local->value()->value(), true))
+                        $local->symbolInformation()->type(),
+                        str_replace(PHP_EOL, '', var_export($local->symbolInformation()->value(), true))
                     );
 
                     $frame[$assignmentType][$local->offset()->toInt()] = $info;
@@ -74,12 +81,8 @@ final class FileInfoAtOffset
             return $return;
         }
 
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $symbolInformation->type()));
-        foreach ($fileCandidates as $candidate) {
-            if (file_exists((string) $candidate)) {
-                $return['path'] = (string) $candidate;
-            }
-        }
+        $return['type_path'] = $symbolInformation->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolInformation->type()) : null;
+        $return['class_type_path'] = $symbolInformation->classType() && false === $symbolInformation->classType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type']) : null;
 
         return $return;
     }

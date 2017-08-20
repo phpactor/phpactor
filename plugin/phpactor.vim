@@ -216,6 +216,75 @@ endfunction
 """"""""""""""""
 " Goto defintion
 """"""""""""""""
+function! phpactor#GotoDefinition()
+    " START: Resolve FQN for class
+    let offset = line2byte(line('.')) + col('.') - 1
+    let currentPath = expand('%')
+
+    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let out = phpactor#Exec(command)
+    let results = json_decode(out)
+
+    if results['symbol_type'] == 'method'
+        if (empty(results['class_type_path']))
+            echo "Could not determine type of containing class"
+            return
+        endif
+
+        call phpactor#switchToBufferOrEdit(results['class_type_path'])
+        exec ":silent! /function\\s\\+" . results['symbol'] . "("
+        return
+    endif
+
+    if results['symbol_type'] == 'class'
+        if (empty(results['type_path']))
+            echo "Could not determine type class"
+            return
+        endif
+
+        call phpactor#switchToBufferOrEdit(results['type_path'])
+        exec ":silent! /\\(class\\|interface\\|trait\\)\\s\\+" . results['symbol']
+        return
+    endif
+
+    if results['symbol_type'] == 'constant'
+        if (empty(results['class_type_path']))
+            echo "Could not determine type of containing class"
+            return
+        endif
+
+        call phpactor#switchToBufferOrEdit(results['class_type_path'])
+        exec ":silent! /const\\s\\+" . results['symbol']
+        return
+    endif
+
+    if results['symbol_type'] == 'property'
+        if (empty(results['class_type_path']))
+            echo "Could not determine type of containing class"
+            return
+        endif
+
+        call phpactor#switchToBufferOrEdit(results['class_type_path'])
+        exec ":silent! /\\(private\\|protected\\|public\\)\\s\\+\\$" . results['symbol']
+        return
+    endif
+
+endfunction
+
+function! phpactor#switchToBufferOrEdit(filePath)
+    let bufferNumber = bufnr(a:filePath . '$')
+
+    if (bufferNumber == -1)
+        exec ":edit " . a:filePath
+        return
+    endif
+
+    exec ":buffer " . bufferNumber
+endfunction
+
+""""""""""""""""
+" Goto type
+""""""""""""""""
 function! phpactor#GotoType()
 
     " START: Resolve FQN for class
@@ -226,12 +295,12 @@ function! phpactor#GotoType()
     let out = phpactor#Exec(command)
     let results = json_decode(out)
 
-    if (empty(results['path']))
+    if (empty(results['type_path']))
         echo "Could not locate class at offset: " . offset
         return
     endif
 
-    exec "edit " . results['path']
+    exec "edit " . results['type_path']
 
 endfunction
 

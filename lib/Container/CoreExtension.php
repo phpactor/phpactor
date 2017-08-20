@@ -323,7 +323,7 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.file_info_at_offset', function (Container $container) {
             return new FileInfoAtOffset(
                 $container->get('reflection.reflector'),
-                $container->get('class_to_file.converter')
+                $container->get('application.helper.class_file_normalizer')
             );
         });
 
