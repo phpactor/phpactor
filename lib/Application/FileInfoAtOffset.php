@@ -81,8 +81,8 @@ final class FileInfoAtOffset
             return $return;
         }
 
-        $return['type_path'] = $symbolInformation->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolInformation->type()) : null;
-        $return['class_type_path'] = $symbolInformation->classType() && false === $symbolInformation->classType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type']) : null;
+        $return['type_path'] = $symbolInformation->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolInformation->type(), true) : null;
+        $return['class_type_path'] = $symbolInformation->classType() && false === $symbolInformation->classType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }
