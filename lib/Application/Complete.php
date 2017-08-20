@@ -40,7 +40,7 @@ class Complete
             Offset::fromint($offset)
         );
 
-        $type = $reflectionOffset->value()->type();
+        $type = $reflectionOffset->symbolInformation()->type();
         $response = [
             'suggestions' => []
         ];

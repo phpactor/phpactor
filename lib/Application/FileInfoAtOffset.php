@@ -44,9 +44,10 @@ final class FileInfoAtOffset
             Offset::fromInt($offset)
         );
 
+        $symbolInformation = $result->symbolInformation();
         $return = [
-            'type' => (string) $result->value()->type(),
-            'value' => var_export($result->value()->value(), true),
+            'type' => (string) $symbolInformation->type(),
+            'value' => var_export($symbolInformation->value(), true),
             'offset' => $offset,
             'path' => null,
         ];
@@ -69,11 +70,11 @@ final class FileInfoAtOffset
             $return['frame'] = $frame;
         }
 
-        if (Type::unknown() === $result->value()->type()) {
+        if (Type::unknown() === $symbolInformation->type()) {
             return $return;
         }
 
-        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $result->value()->type()));
+        $fileCandidates = $this->classToFileConverter->classToFileCandidates(ClassName::fromString((string) $symbolInformation->type()));
         foreach ($fileCandidates as $candidate) {
             if (file_exists((string) $candidate)) {
                 $return['path'] = (string) $candidate;
