@@ -53,8 +53,9 @@ class ClassFileNormalizer
                     return (string) $candidate;
                 }
 
-                return null;
             }
+
+            return null;
         }
 
         return (string) $filePathCandidates->best();
