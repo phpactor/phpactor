@@ -415,9 +415,9 @@ function! phpactor#Transform()
         return
     endif
 
-    let @+ = out
+    let @p = out
     exec "%d"
-    exec ":0 put +"
+    exec ":0 put p"
 
     call setpos('.', savePos)
 endfunction
