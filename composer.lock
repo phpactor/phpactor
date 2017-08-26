@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "da17293a0b0a5521681fdbd592d39532ea9e9f01"
+                "reference": "14c06bac55bb167d84ef20e8838ebe0f75c2a7ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/da17293a0b0a5521681fdbd592d39532ea9e9f01",
-                "reference": "da17293a0b0a5521681fdbd592d39532ea9e9f01",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/14c06bac55bb167d84ef20e8838ebe0f75c2a7ec",
+                "reference": "14c06bac55bb167d84ef20e8838ebe0f75c2a7ec",
                 "shasum": ""
             },
             "require": {
@@ -276,7 +276,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-08-26 19:06:47"
+            "time": "2017-08-26 19:11:43"
         },
         {
             "name": "phpactor/class-to-file",
