@@ -49,5 +49,29 @@ class ReferencesMethodCommandTest extends SystemTestCase
         $process = $this->phpactor('references:method');
         $this->assertSuccess($process);
     }
+
+    /**
+     * @testdox Replace method
+     */
+    public function testReplace()
+    {
+        $process = $this->phpactor('references:method "Animals\Badger" badge --replace=dodge');
+        $this->assertSuccess($process);
+        $this->assertContains('this->dodge()', file_get_contents(
+            $this->workspaceDir() . '/lib/Badger.php'
+        ));
+    }
+
+    /**
+     * @testdox Replace dry run
+     */
+    public function testReplaceDryRun()
+    {
+        $process = $this->phpactor('references:method "Animals\Badger" badge --replace=dodge --dry-run');
+        $this->assertSuccess($process);
+        $this->assertContains('this->badge()', file_get_contents(
+            $this->workspaceDir() . '/lib/Badger.php'
+        ));
+    }
 }
 

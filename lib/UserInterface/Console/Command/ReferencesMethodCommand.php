@@ -42,6 +42,8 @@ class ReferencesMethodCommand extends Command
         $this->setDescription('Find reference to a method');
         $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
         $this->addArgument('method', InputArgument::OPTIONAL, 'Method');
+        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
+        $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
     }
 
@@ -50,8 +52,14 @@ class ReferencesMethodCommand extends Command
         $class = $input->getArgument('class');
         $method = $input->getArgument('method');
         $format = $input->getOption('format');
+        $replace = $input->getOption('replace');
+        $dryRun = $input->getOption('dry-run');
 
-        $results = $this->methodReferences->findReferences($class, $method);
+        $results = $this->methodReferences->findOrReplaceReferences($class, $method, $replace, $dryRun);
+
+        if ($replace && $dryRun) {
+            $output->writeln('<info># DRY RUN</> No files will be modified');
+        }
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
@@ -60,6 +68,12 @@ class ReferencesMethodCommand extends Command
 
         $output->writeln('<comment># References:</>');
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
+
+        if ($replace) {
+            $output->write(PHP_EOL);
+            $output->writeln('<comment># Replacements:</>');
+            $this->renderTable($output, $results, 'replacements', $output->isDecorated());
+        }
 
         $output->write(PHP_EOL);
         $output->writeln(sprintf('%s reference(s)', $count));

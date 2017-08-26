@@ -26,6 +26,7 @@ use Phpactor\ClassMover\Domain\Reference\MethodReference;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\ClassName;
 use \SplFileInfo;
+use Phpactor\ClassMover\Domain\MethodReplacer;
 
 class ClassMethodReferences
 {
@@ -49,9 +50,15 @@ class ClassMethodReferences
      */
     private $reflector;
 
+    /**
+     * @var MethodReplacer
+     */
+    private $methodReplacer;
+
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
         MethodFinder $methodFinder,
+        MethodReplacer $methodReplacer,
         Filesystem $filesystem,
         Reflector $reflector
     ) {
@@ -59,9 +66,10 @@ class ClassMethodReferences
         $this->filesystem = $filesystem;
         $this->methodFinder = $methodFinder;
         $this->reflector = $reflector;
+        $this->methodReplacer = $methodReplacer;
     }
 
-    public function findReferences(string $class = null, string $methodName = null)
+    public function findOrReplaceReferences(string $class = null, string $methodName = null, string $replace = null, bool $dryRun = false)
     {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
@@ -77,7 +85,7 @@ class ClassMethodReferences
 
         foreach ($filePaths as $filePath) {
 
-            $references = $this->referencesInFile($filePath, $className, $methodName);
+            $references = $this->referencesInFile($filePath, $className, $methodName, $replace, $dryRun);
 
             if (empty($references['references'])) {
                 continue;
@@ -103,7 +111,7 @@ class ClassMethodReferences
         ];
     }
 
-    private function referencesInFile($filePath, string $className = null, string $methodName = null)
+    private function referencesInFile($filePath, string $className = null, string $methodName = null, string $replace = null, bool $dryRun = false)
     {
         $code = $this->filesystem->getContents($filePath);
 
@@ -120,6 +128,23 @@ class ClassMethodReferences
         ];
 
         $result['references'] = $this->serializeReferenceList($code, $referenceList);
+
+        if ($replace) {
+            $updatedSource = $this->replaceReferencesInCode($code, $referenceList, $replace);
+
+            if (false === $dryRun) {
+                file_put_contents($filePath, (string) $updatedSource);
+            }
+
+            $query = $this->createQuery($className, $replace);
+
+            $newReferenceList = $this->methodFinder->findMethods(
+                SourceCode::fromString($updatedSource),
+                $query
+            );
+
+            $result['replacements'] = $this->serializeReferenceList((string) $updatedSource, $newReferenceList);
+        }
 
         return $result;
     }
@@ -171,13 +196,10 @@ class ClassMethodReferences
         return [$number, 0, ''];
     }
 
-    private function replaceReferencesInCode(string $code, NamespacedClassReferences $list, string $class, string $replace): SourceCode
+    private function replaceReferencesInCode(string $code, MethodReferences $list, string $replace): SourceCode
     {
-        $class = FullyQualifiedName::fromString($class);
-        $replace = FullyQualifiedName::fromString($replace);
         $code = SourceCode::fromString($code);
-
-        return $this->refReplacer->replaceReferences($code, $list, $class, $replace);
+        return $this->methodReplacer->replaceMethods($code, $list, $replace);
     }
 
     private function createQuery(string $className = null, string $methodName = null)
@@ -193,3 +215,4 @@ class ClassMethodReferences
         return ClassMethodQuery::all();
     }
 }
+

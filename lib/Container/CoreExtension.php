@@ -272,6 +272,10 @@ class CoreExtension implements ExtensionInterface
             return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMethodFinder($container->get('reflection.reflector'));
         });
 
+        $container->register('class_mover.method_replacer', function (Container $container) {
+            return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMethodReplacer();
+        });
+
         $container->register('class_mover.ref_replacer', function (Container $container) {
             return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer();
         });
@@ -361,6 +365,7 @@ class CoreExtension implements ExtensionInterface
             return new ClassMethodReferences(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.method_finder'),
+                $container->get('class_mover.method_replacer'),
                 $container->get('source_code_filesystem.git'),
                 $container->get('reflection.reflector')
             );
