@@ -40,15 +40,15 @@ class ReferencesMethodCommand extends Command
     {
         $this->setName('references:method');
         $this->setDescription('Find reference to a method');
-        $this->addOption('class', null, InputOption::VALUE_REQUIRED, 'Class path or FQN');
-        $this->addOption('method', null, InputOption::VALUE_REQUIRED, 'Class path or FQN');
+        $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
+        $this->addArgument('method', InputArgument::OPTIONAL, 'Method');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $class = $input->getOption('class');
-        $method = $input->getOption('method');
+        $class = $input->getArgument('class');
+        $method = $input->getArgument('method');
         $format = $input->getOption('format');
 
         $results = $this->methodReferences->findReferences($class, $method);

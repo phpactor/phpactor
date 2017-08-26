@@ -17,7 +17,7 @@ class ReferencesMethodCommandTest extends SystemTestCase
      */
     public function testReferences()
     {
-        $process = $this->phpactor('references:method --class="Animals\Badger" --method=badge');
+        $process = $this->phpactor('references:method "Animals\Badger" badge');
         $this->assertSuccess($process);
         $this->assertContains('$this->⟶badge⟵', $process->getOutput());
     }
@@ -27,7 +27,7 @@ class ReferencesMethodCommandTest extends SystemTestCase
      */
     public function testNonExistingMethod()
     {
-        $process = $this->phpactor('references:method --class="Animals\Badger" --method=bad');
+        $process = $this->phpactor('references:method "Animals\Badger" bad');
         $this->assertEquals(255, $process->getExitCode());
         $this->assertContains('known methods: "__construct"', $process->getErrorOutput());
     }
@@ -37,7 +37,7 @@ class ReferencesMethodCommandTest extends SystemTestCase
      */
     public function testFindAllForClass()
     {
-        $process = $this->phpactor('references:method --class="Animals\Badger"');
+        $process = $this->phpactor('references:method "Animals\Badger"');
         $this->assertSuccess($process);
     }
 
