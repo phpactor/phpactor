@@ -32,7 +32,7 @@
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/yaml": "^3.3",
-        "microsoft/tolerant-php-parser": "v0.0.4",
+        "microsoft/tolerant-php-parser": "v0.0.5",
         "monolog/monolog": "^2.0@dev"
     },
     "config": {
