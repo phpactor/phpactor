@@ -211,8 +211,12 @@ $ phpactor references:method --class="Symfony\\Component\\Console\\Input\\InputI
 | ...                                                           | .. |                                                                                            | 2028 | 2037 |
 +---------------------------------------------------------------+----+--------------------------------------------------------------------------------------------+------+------+
 
-46 reference(s)
+46 reference(s), 2 risky methods
 ```
+
+Risky methods are method calls which match the given method name but the class
+they are called on cannot be determined. They can be displayed using the
+`--risky` option.
 
 Accepts either the class FQN or filename.
 
