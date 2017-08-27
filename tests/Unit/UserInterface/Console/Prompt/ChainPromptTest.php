@@ -8,7 +8,14 @@ use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
 
 class ChainPromptTest extends TestCase
 {
+    /**
+     * @var Prompt
+     */
     private $prompt1;
+
+    /**
+     * @var Prompt
+     */
     private $prompt2;
 
     public function setUp()

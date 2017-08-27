@@ -42,18 +42,23 @@ class ReferencesMethodCommand extends Command
         $this->setDescription('Find reference to a method');
         $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
         $this->addArgument('method', InputArgument::OPTIONAL, 'Method');
-        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
+        $this->addOption('risky', null, InputOption::VALUE_NONE, 'Show risky references (matching method with unknown class');
+        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output, $bar = null)
     {
+        if (false) {
+            $bar->name();
+        }
         $class = $input->getArgument('class');
         $method = $input->getArgument('method');
         $format = $input->getOption('format');
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
+        $risky = $input->getOption('risky');
 
         $results = $this->methodReferences->findOrReplaceReferences($class, $method, $replace, $dryRun);
 
@@ -69,6 +74,18 @@ class ReferencesMethodCommand extends Command
         $output->writeln('<comment># References:</>');
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
+        if ($risky) {
+            $output->write(PHP_EOL);
+            $output->writeln('<comment># Risky (unknown classes):</>');
+            $riskyCount = $this->renderTable($output, $results, 'risky_references', $output->isDecorated());
+        } else {
+            $riskyCount = array_reduce($results, function ($acc, $result) {
+                return $acc += array_reduce($result, function ($acc, $result) {
+                    return $acc += count($result['risky_references']);
+                }, 0);
+            }, 0);
+        }
+
         if ($replace) {
             $output->write(PHP_EOL);
             $output->writeln('<comment># Replacements:</>');
@@ -76,7 +93,7 @@ class ReferencesMethodCommand extends Command
         }
 
         $output->write(PHP_EOL);
-        $output->writeln(sprintf('%s reference(s)', $count));
+        $output->writeln(sprintf('%s reference(s), %s risky references', $count, $riskyCount));
     }
 
     private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)

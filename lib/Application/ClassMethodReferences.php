@@ -87,7 +87,7 @@ class ClassMethodReferences
 
             $references = $this->referencesInFile($filePath, $className, $methodName, $replace, $dryRun);
 
-            if (empty($references['references'])) {
+            if (empty($references['references']) && empty($references['risky_references'])) {
                 continue;
             }
 
@@ -121,16 +121,20 @@ class ClassMethodReferences
             SourceCode::fromString($code),
             $query
         );
+        $confidentList = $referenceList->withClasses();
+        $riskyList = $referenceList->withoutClasses();
 
         $result = [
             'references' => [],
+            'risky_references' => [],
             'replacements' => [],
         ];
 
-        $result['references'] = $this->serializeReferenceList($code, $referenceList);
+        $result['references'] = $this->serializeReferenceList($code, $confidentList);
+        $result['risky_references'] = $this->serializeReferenceList($code, $riskyList);
 
         if ($replace) {
-            $updatedSource = $this->replaceReferencesInCode($code, $referenceList, $replace);
+            $updatedSource = $this->replaceReferencesInCode($code, $confidentList, $replace);
 
             if (false === $dryRun) {
                 file_put_contents($filePath, (string) $updatedSource);
@@ -138,12 +142,12 @@ class ClassMethodReferences
 
             $query = $this->createQuery($className, $replace);
 
-            $newReferenceList = $this->methodFinder->findMethods(
+            $replacedReferences = $this->methodFinder->findMethods(
                 SourceCode::fromString($updatedSource),
                 $query
             );
 
-            $result['replacements'] = $this->serializeReferenceList((string) $updatedSource, $newReferenceList);
+            $result['replacements'] = $this->serializeReferenceList((string) $updatedSource, $replacedReferences);
         }
 
         return $result;
@@ -171,7 +175,8 @@ class ClassMethodReferences
             'line' => $line,
             'line_no' => $lineNumber,
             'col_no' => $colNumber,
-            'reference' => (string) $reference->methodName()
+            'reference' => (string) $reference->methodName(),
+            'class' => $reference->hasClass() ? (string) $reference->class() : null,
         ];
     }
 
