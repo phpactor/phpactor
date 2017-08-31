@@ -79,6 +79,11 @@ confuration above to automatically enable it for all PHP files.
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
+For auto-completion, you could try
+
+- [ncm-phpactor](https://github.com/roxma/ncm-phpactor)
+
+
 Include use statement
 ---------------------
 
