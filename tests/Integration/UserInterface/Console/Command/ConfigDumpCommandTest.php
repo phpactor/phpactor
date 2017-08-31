@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Tests\UserInterface\Console\Command;
+namespace Phpactor\Tests\Integration\Console\Command;
 
-use Phpactor\Tests\UserInterface\SystemTestCase;
+use Phpactor\Tests\Integration\SystemTestCase;
 
 class ConfigDumpCommandTest extends SystemTestCase
 {

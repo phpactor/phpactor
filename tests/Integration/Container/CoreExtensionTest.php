@@ -1,10 +1,11 @@
 <?php
-namespace Phpactor\Tests\Container;
+namespace Phpactor\Tests\Integration;
 
-use Phpactor\Tests\UserInterface\SystemTestCase;
+use Phpactor\Tests\Integration\SystemTestCase;
 use Phpactor\Container\CoreExtension;
 
-class CoreExtensionTest extends SystemTestCase {
+class CoreExtensionTest extends SystemTestCase
+{
     public function setUp()
     {
         $this->initWorkspace();
