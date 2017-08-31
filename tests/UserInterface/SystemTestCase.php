@@ -10,12 +10,12 @@ abstract class SystemTestCase extends TestCase
 {
     protected function workspaceDir()
     {
-        return __DIR__ . '/../Assets/Workspace';
+        return dirname(__DIR__) . '/Assets/Workspace';
     }
 
     private function cacheDir(string $name)
     {
-        return __DIR__ . '/../Assets/Cache/'.$name;
+        return dirname(__DIR__) . '/Assets/Cache/'.$name;
     }
 
     private function cacheWorkspace($name)
