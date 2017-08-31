@@ -56,8 +56,8 @@ class CoreExtension implements ExtensionInterface
     public function getDefaultConfig()
     {
         return [
-            'autoload' => 'vendor/autoload.php',
-            'cwd' => getcwd(),
+            'autoload' => $this->getBaseCwd() . '/' . 'vendor/autoload.php',
+            'cwd' => $this->getBaseCwd(),
             'console_dumper_default' => 'indented',
             'cache_dir' => __DIR__ . '/../../cache',
         ];
@@ -72,6 +72,19 @@ class CoreExtension implements ExtensionInterface
         $this->registerClassMover($container);
         $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
+    }
+
+    private function getBaseCwd($path = null) {
+        if (is_null($path)) {
+            $path = getcwd();
+        }
+
+        // Return base CWD where .git directory is present
+        if (!is_dir($path . '/' . '.git') and $path !== '/') {
+            return $this->getBaseCwd($path . '/' . '..');
+        }
+
+        return $path;
     }
 
     private function registerMonolog(Container $container)
