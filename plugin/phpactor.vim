@@ -120,7 +120,7 @@ function! phpactor#ClassExpand()
     let namespace_prefix = classInfo['class_namespace'] . "\\"
 
     " If this is the start of the word
-    if (col('.') == 1 || ' ' == char)
+    if (col('.') == 1 || ' ' == char || '(' == char)
         execute "normal! i" . namespace_prefix
         return
     endif
