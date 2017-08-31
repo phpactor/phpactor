@@ -8,7 +8,7 @@ class CoreExtensionTest extends SystemTestCase {
     public function setUp()
     {
         $this->initWorkspace();
-		$this->loadProject('Animals');
+        $this->loadProject('Animals');
     }
 
     public function testDefaultConfig()
@@ -17,8 +17,8 @@ class CoreExtensionTest extends SystemTestCase {
         $dir  = sprintf('%s/lib/Badger', $this->workspaceDir());
         chdir($dir);
 
-		$conf = $core->getDefaultConfig();
-		$this->assertSame($this->workspaceDir(), $conf['cwd']);
-		$this->assertSame(sprintf('%s/vendor/autoload.php', $this->workspaceDir()), $conf['autoload']);
+        $conf = $core->getDefaultConfig();
+        $this->assertSame($this->workspaceDir(), $conf['cwd']);
+        $this->assertSame(sprintf('%s/vendor/autoload.php', $this->workspaceDir()), $conf['autoload']);
     }
 }
