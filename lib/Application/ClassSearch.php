@@ -30,6 +30,10 @@ final class ClassSearch
 
         $results = [];
         foreach ($files as $file) {
+            if (isset($results[(string) $file->path()])) {
+                continue;
+            }
+
             $result = [
                 'file_path' => (string) $file->path(),
                 'class' => null,
@@ -45,7 +49,7 @@ final class ClassSearch
                 $result['class_namespace'] = (string) $candidates->best()->namespace();
             }
 
-            $results[] = $result;
+            $results[(string) $file->path()] = $result;
         }
 
         return $results;
