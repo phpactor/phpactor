@@ -81,7 +81,7 @@ class CoreExtension implements ExtensionInterface
 
         // Return base CWD where .git directory is present
         if (!is_dir($path . '/' . '.git') and $path !== '/') {
-            return $this->getBaseCwd($path . '/' . '..');
+            return $this->getBaseCwd(dirname($path));
         }
 
         return $path;
