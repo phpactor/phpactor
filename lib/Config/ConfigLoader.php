@@ -41,6 +41,8 @@ class ConfigLoader
     public function configDirs(): array
     {
         $configDirs = $this->xdg->getConfigDirs();
+        array_unshift($configDirs, Path::join(getenv('HOME'), '/.vim'));
+        array_unshift($configDirs, Path::join(getenv('HOME'), '/.config/nvim'));
         array_unshift($configDirs, Path::join(getcwd(), '/.phpactor'));
 
         return $configDirs;
