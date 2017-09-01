@@ -80,7 +80,7 @@ class CoreExtension implements ExtensionInterface
         }
 
         // Return base CWD where .git directory is present
-        if (!file_exists(sprintf('%s/.git', $path)) && $path !== '/') {
+        if (!file_exists(sprintf('%s/.git', $path)) && $path !== '/' || strpos($path, 'vendor')) {
             return $this->getBaseCwd(dirname($path));
         }
 
