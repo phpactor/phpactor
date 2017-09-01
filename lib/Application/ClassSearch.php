@@ -52,6 +52,6 @@ final class ClassSearch
             $results[(string) $file->path()] = $result;
         }
 
-        return $results;
+        return array_values($results);
     }
 }
