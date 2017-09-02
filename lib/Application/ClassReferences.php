@@ -18,13 +18,14 @@ use Phpactor\ClassMover\Domain\NamespacedClassRefList;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class ClassReferences
 {
     /**
-     * @var Filesystem
+     * @var FilesystemRegistry
      */
-    private $filesystem;
+    private $filesystemRegistry;
 
     /**
      * @var ClassFinder
@@ -45,34 +46,35 @@ class ClassReferences
         ClassFileNormalizer $classFileNormalizer,
         ClassFinder $refFinder,
         ClassReplacer $refReplacer,
-        Filesystem $filesystem
+        FilesystemRegistry $filesystemRegistry
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystem = $filesystem;
+        $this->filesystemRegistry = $filesystemRegistry;
         $this->refFinder = $refFinder;
         $this->refReplacer = $refReplacer;
     }
 
-    public function replaceReferences(string $class, string $replace, bool $dryRun)
+    public function replaceReferences(string $filesystemName, string $class, string $replace, bool $dryRun)
     {
-        return $this->findReplaceReferences($class, $replace, $dryRun);
+        return $this->findReplaceReferences($filesystemName, $class, $replace, $dryRun);
     }
 
-    public function findReferences(string $class)
+    public function findReferences(string $filesystemName, string $class)
     {
-        return $this->findReplaceReferences($class);
+        return $this->findReplaceReferences($filesystemName, $class);
     }
 
-    private function findReplaceReferences(string $class, string $replace = null, bool $dryRun = false)
+    private function findReplaceReferences(string $filesystemName, string $class, string $replace = null, bool $dryRun = false)
     {
         $classPath = $this->classFileNormalizer->normalizeToFile($class);
         $classPath = Phpactor::normalizePath($classPath);
         $className = $this->classFileNormalizer->normalizeToClass($class);
+        $filesystem = $this->filesystemRegistry->get($filesystemName);
 
         $results = [];
-        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
+        foreach ($filesystem->fileList()->phpFiles() as $filePath) {
 
-            $references = $this->fileReferences($filePath, $className, $replace, $dryRun);
+            $references = $this->fileReferences($filesystem, $filePath, $className, $replace, $dryRun);
 
             if (empty($references['references'])) {
                 continue;
@@ -87,9 +89,9 @@ class ClassReferences
         ];
     }
 
-    private function fileReferences($filePath, $className, $replace = null, $dryRun = false)
+    private function fileReferences(Filesystem $filesystem, $filePath, $className, $replace = null, $dryRun = false)
     {
-        $code = $this->filesystem->getContents($filePath);
+        $code = $filesystem->getContents($filePath);
 
         $referenceList = $this->refFinder
             ->findIn(SourceCode::fromString($code))

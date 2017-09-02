@@ -30,7 +30,6 @@ class ClassMover
      */
     private $filesystem;
 
-    // rename compositetransformer => classToFileConverter
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
         ClassMoverFacade $classMover,

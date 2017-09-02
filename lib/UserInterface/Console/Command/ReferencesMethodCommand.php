@@ -46,6 +46,7 @@ class ReferencesMethodCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
+        Handler\FilesystemHandler::configure($this, 'git');
     }
 
     public function execute(InputInterface $input, OutputInterface $output, $bar = null)
@@ -59,8 +60,9 @@ class ReferencesMethodCommand extends Command
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
         $risky = $input->getOption('risky');
+        $filesystem = $input->getOption('filesystem');
 
-        $results = $this->methodReferences->findOrReplaceReferences($class, $method, $replace, $dryRun);
+        $results = $this->methodReferences->findOrReplaceReferences($filesystem, $class, $method, $replace, $dryRun);
 
         if ($replace && $dryRun) {
             $output->writeln('<info># DRY RUN</> No files will be modified');

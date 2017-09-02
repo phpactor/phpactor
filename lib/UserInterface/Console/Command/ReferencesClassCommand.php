@@ -43,6 +43,7 @@ class ReferencesClassCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
+        Handler\FilesystemHandler::configure($this, 'git');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -51,12 +52,13 @@ class ReferencesClassCommand extends Command
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
         $format = $input->getOption('format');
+        $filesystem = $input->getOption('filesystem');
 
         if ($replace && $dryRun) {
             $output->writeln('<info># DRY RUN</> No files will be modified');
         }
 
-        $results = $this->findOrReplaceReferences($class, $replace, $dryRun);
+        $results = $this->findOrReplaceReferences($filesystem, $class, $replace, $dryRun);
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
@@ -76,13 +78,13 @@ class ReferencesClassCommand extends Command
         $output->writeln(sprintf('%s reference(s)', $count));
     }
 
-    private function findOrReplaceReferences($class, $replace, $dryRun)
+    private function findOrReplaceReferences($filesystem, $class, $replace, $dryRun)
     {
         if ($replace) {
-           return $this->referenceFinder->replaceReferences($class, $replace, $dryRun);
+           return $this->referenceFinder->replaceReferences($filesystem, $class, $replace, $dryRun);
         }
 
-        return $this->referenceFinder->findReferences($class);
+        return $this->referenceFinder->findReferences($filesystem, $class);
     }
 
     private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)

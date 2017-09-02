@@ -45,6 +45,7 @@ use Phpactor\Application\ClassReferences;
 use Phpactor\UserInterface\Console\Command\ReferencesClassCommand;
 use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -55,9 +56,10 @@ class CoreExtension implements ExtensionInterface
 
     public function getDefaultConfig()
     {
+        $cwd = $this->getBaseCwd();
         return [
-            'autoload' => $this->getBaseCwd() . '/' . 'vendor/autoload.php',
-            'cwd' => $this->getBaseCwd(),
+            'autoload' => sprintf('%s/vendor/autoload.php', $cwd),
+            'cwd' => $cwd,
             'console_dumper_default' => 'indented',
             'cache_dir' => __DIR__ . '/../../cache',
         ];
@@ -70,21 +72,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerComposer($container);
         $this->registerClassToFile($container);
         $this->registerClassMover($container);
-        $this->registerSourceCodeFilesystem($container);
         $this->registerApplicationServices($container);
-    }
-
-    private function getBaseCwd($path = null) {
-        if (is_null($path)) {
-            $path = getcwd();
-        }
-
-        // Return base CWD where .git directory is present
-        if (!file_exists(sprintf('%s/.git', $path)) && $path !== '/') {
-            return $this->getBaseCwd(dirname($path));
-        }
-
-        return $path;
     }
 
     private function registerMonolog(Container $container)
@@ -294,24 +282,6 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
-    private function registerSourceCodeFilesystem(Container $container)
-    {
-        $container->register('source_code_filesystem.git', function (Container $container) {
-            return new GitFilesystem(FilePath::fromString($container->getParameter('cwd')));
-        });
-        $container->register('source_code_filesystem.simple', function (Container $container) {
-            return new SimpleFilesystem(FilePath::fromString($container->getParameter('cwd')));
-        });
-        $container->register('source_code_filesystem.composer', function (Container $container) {
-            $providers = [];
-            $cwd = FilePath::fromString($container->getParameter('cwd'));
-            foreach ($container->get('composer.class_loaders') as $classLoader) {
-                $providers[] = new ComposerFileListProvider($cwd, $classLoader);
-            }
-            return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
-        });
-    }
-
     private function registerApplicationServices(Container $container)
     {
         $container->register('application.class_mover', function (Container $container) {
@@ -370,7 +340,7 @@ class CoreExtension implements ExtensionInterface
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_finder'),
                 $container->get('class_mover.ref_replacer'),
-                $container->get('source_code_filesystem.git')
+                $container->get('source_code_filesystem.registry')
             );
         });
 
@@ -379,7 +349,7 @@ class CoreExtension implements ExtensionInterface
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.method_finder'),
                 $container->get('class_mover.method_replacer'),
-                $container->get('source_code_filesystem.git'),
+                $container->get('source_code_filesystem.registry'),
                 $container->get('reflection.reflector')
             );
         });
@@ -387,5 +357,22 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
         });
+    }
+
+    /**
+     * TODO: Move this to Phpactor\Phpactor.
+     */
+    private function getBaseCwd($path = null)
+    {
+        if (is_null($path)) {
+            $path = getcwd();
+        }
+
+        // Return base CWD where .git directory is present
+        if (!file_exists(sprintf('%s/.git', $path)) && $path !== '/') {
+            return $this->getBaseCwd(dirname($path));
+        }
+
+        return $path;
     }
 }
