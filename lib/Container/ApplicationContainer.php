@@ -16,6 +16,7 @@ class ApplicationContainer extends BaseContainer
         parent::__construct([
             CoreExtension::class,
             CodeTransformExtension::class,
+            SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
         ], $this->configLoader->loadConfig());
     }

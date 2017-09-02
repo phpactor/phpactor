@@ -27,13 +27,14 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\ClassName;
 use \SplFileInfo;
 use Phpactor\ClassMover\Domain\MethodReplacer;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class ClassMethodReferences
 {
     /**
-     * @var Filesystem
+     * @var FilesystemRegistry
      */
-    private $filesystem;
+    private $filesystemRegistry;
 
     /**
      * @var MethodFinder
@@ -59,22 +60,23 @@ class ClassMethodReferences
         ClassFileNormalizer $classFileNormalizer,
         MethodFinder $methodFinder,
         MethodReplacer $methodReplacer,
-        Filesystem $filesystem,
+        FilesystemRegistry $filesystemRegistry,
         Reflector $reflector
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystem = $filesystem;
+        $this->filesystemRegistry = $filesystemRegistry;
         $this->methodFinder = $methodFinder;
         $this->reflector = $reflector;
         $this->methodReplacer = $methodReplacer;
     }
 
-    public function findOrReplaceReferences(string $class = null, string $methodName = null, string $replace = null, bool $dryRun = false)
+    public function findOrReplaceReferences(string $scope, string $class = null, string $methodName = null, string $replace = null, bool $dryRun = false)
     {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
+        $filesystem = $this->filesystemRegistry->get($scope);
         $results = [];
-        $filePaths = $this->filesystem->fileList()->phpFiles();
+        $filePaths = $filesystem->fileList()->phpFiles();
 
         // we can discount any files that do not contain the method name.
         if ($methodName) {
@@ -85,7 +87,7 @@ class ClassMethodReferences
 
         foreach ($filePaths as $filePath) {
 
-            $references = $this->referencesInFile($filePath, $className, $methodName, $replace, $dryRun);
+            $references = $this->referencesInFile($filesystem, $filePath, $className, $methodName, $replace, $dryRun);
 
             if (empty($references['references']) && empty($references['risky_references'])) {
                 continue;
@@ -111,9 +113,9 @@ class ClassMethodReferences
         ];
     }
 
-    private function referencesInFile($filePath, string $className = null, string $methodName = null, string $replace = null, bool $dryRun = false)
+    private function referencesInFile(Filesystem $filesystem, $filePath, string $className = null, string $methodName = null, string $replace = null, bool $dryRun = false)
     {
-        $code = $this->filesystem->getContents($filePath);
+        $code = $filesystem->getContents($filePath);
 
         $query = $this->createQuery($className, $methodName);
 

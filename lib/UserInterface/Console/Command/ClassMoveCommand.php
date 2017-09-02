@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\UserInterface\Console\Prompt\Prompt;
+use Phpactor\Container\SourceCodeFilesystemExtension;
 
 class ClassMoveCommand extends Command
 {
@@ -46,6 +47,7 @@ class ClassMoveCommand extends Command
             'Type of move: "%s"',
              implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
+        Handler\FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -54,6 +56,7 @@ class ClassMoveCommand extends Command
         $logger = new SymfonyConsoleMoveLogger($output);
         $src = $input->getArgument('src');
         $dest = $input->getArgument('dest');
+        $filesystem = $input->getOption('filesystem');
 
         if (null === $dest) {
             $dest = $this->prompt->prompt('Move to: ', $src);
@@ -61,11 +64,11 @@ class ClassMoveCommand extends Command
 
         switch ($type) {
             case 'auto':
-                return $this->mover->move($logger, $src, $dest);
+                return $this->mover->move($logger, $filesystem, $src, $dest);
             case 'file':
-                return $this->mover->moveFile($logger, $src, $dest);
+                return $this->mover->moveFile($logger, $filesystem, $src, $dest);
             case 'class':
-                return $this->mover->moveClass($logger, $src, $dest);
+                return $this->mover->moveClass($logger, $filesystem, $src, $dest);
         }
 
         throw new \InvalidArgumentException(sprintf(

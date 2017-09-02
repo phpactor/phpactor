@@ -113,6 +113,8 @@ $ phpactor class:move "Acme\\BlogPost" "Acme\\Article"
 - Updates references for all moved classes in currently **GIT tree**.
 - Use statements are updated or added when required.
 
+Filesystem scope can be specified with `--filesystem`.
+
 ### Copy classes
 
 As with move, except only update the class names of the copied class(es).
@@ -134,7 +136,8 @@ Phpactor\Filesystem\Domain\Filesystem:/.../vendor/phpactor/source-code-filesyste
 Symfony\Component\Filesystem\Filesystem:/.../vendor/symfony/filesystem/Filesystem.php
 ```
 
-Also returns JSON with `--format=json`
+Also returns JSON with `--format=json` and filesystem scope can be specified
+with `--filesystem`.
 
 ### Class References
 
@@ -186,7 +189,8 @@ The `dry-run` option determines if files are modified or not.
 
 Accepts either the class FQN or filename.
 
-Also returns JSON with `--format=json`
+Also returns JSON with `--format=json` and filesystem scope can be specified
+with `--filesystem`.
 
 ### Method References
 
@@ -220,7 +224,8 @@ they are called on cannot be determined. They can be displayed using the
 
 Accepts either the class FQN or filename.
 
-Also returns JSON with `--format=json`
+Also returns JSON with `--format=json` and filesystem scope can be specified
+with `--filesystem`.
 
 ### Information at offset
 

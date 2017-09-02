@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "f5a4e01330f2b8eb19996bcb9022d2c36ef4ae15"
+                "reference": "acebf2a2e36a2b23cc61da59f053cbc8add65fa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/f5a4e01330f2b8eb19996bcb9022d2c36ef4ae15",
-                "reference": "f5a4e01330f2b8eb19996bcb9022d2c36ef4ae15",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/acebf2a2e36a2b23cc61da59f053cbc8add65fa9",
+                "reference": "acebf2a2e36a2b23cc61da59f053cbc8add65fa9",
                 "shasum": ""
             },
             "require": {
@@ -480,7 +480,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-08-25 16:43:28"
+            "time": "2017-09-01 22:40:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "c0a435c7958018c549649f44759b94980c8c4041"
+                "reference": "53588f24d64a5d712502486ff680eab70dbda6e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/c0a435c7958018c549649f44759b94980c8c4041",
-                "reference": "c0a435c7958018c549649f44759b94980c8c4041",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/53588f24d64a5d712502486ff680eab70dbda6e0",
+                "reference": "53588f24d64a5d712502486ff680eab70dbda6e0",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-09-01 18:46:10"
+            "time": "2017-09-01 19:30:09"
         },
         {
             "name": "phpbench/container",
@@ -1801,7 +1801,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-01T08:38:37+00:00"
+            "time": "2017-09-01 08:38:37"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

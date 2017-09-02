@@ -57,5 +57,15 @@ class ReferencesClassCommandTest extends SystemTestCase
             $this->workspaceDir() . '/lib/Badger.php'
         ));
     }
+
+    /**
+     * @testdox It can use a different scope
+     */
+    public function testReferencesScope()
+    {
+        $process = $this->phpactor('references:class "Animals\Badger" --filesystem=simple');
+        $this->assertSuccess($process);
+        $this->assertContains('class ⟶Badger⟵', $process->getOutput());
+    }
 }
 

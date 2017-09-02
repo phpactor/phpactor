@@ -12,6 +12,7 @@ use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class ClassMover
 {
@@ -26,42 +27,42 @@ class ClassMover
     private $classMover;
 
     /**
-     * @var Filesystem
+     * @var FilesystemRegistry
      */
-    private $filesystem;
+    private $filesystemRegistry;
 
-    // rename compositetransformer => classToFileConverter
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
         ClassMoverFacade $classMover,
-        Filesystem $filesystem
+        FilesystemRegistry $filesystemRegistry
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystem = $filesystem;
+        $this->filesystemRegistry = $filesystemRegistry;
         $this->classMover = $classMover;
     }
 
     /**
      * Move - guess if moving by class name or file.
      */
-    public function move(ClassMoverLogger $logger, string $src, string $dest)
+    public function move(ClassMoverLogger $logger, string $filesystemName, string $src, string $dest)
     {
         $srcPath = $this->classFileNormalizer->normalizeToFile($src);
         $destPath = $this->classFileNormalizer->normalizeToFile($dest);
 
-        return $this->moveFile($logger, $srcPath, $destPath);
+        return $this->moveFile($logger, $filesystemName, $srcPath, $destPath);
     }
 
-    public function moveClass(ClassMoverLogger $logger, string $srcName, string $destName)
+    public function moveClass(ClassMoverLogger $logger, string $filesystemName, string $srcName, string $destName)
     {
         return $this->moveFile(
             $logger,
+            $filesystemName,
             $this->classFileNormalizer->classToFile($srcName),
             $this->classFileNormalizer->classToFile($destName)
         );
     }
 
-    public function moveFile(ClassMoverLogger $logger, string $srcPath, string $destPath)
+    public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath)
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (Glob::glob($srcPath) as $globPath) {
@@ -73,19 +74,20 @@ class ClassMover
             }
 
             try {
-                $this->doMoveFile($logger, $globPath, $globDest);
+                $this->doMoveFile($logger, $filesystemName, $globPath, $globDest);
             } catch (\Exception $e) {
                 throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
             }
         }
     }
 
-    private function doMoveFile(ClassMoverLogger $logger, string $srcPath, string $destPath)
+    private function doMoveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath)
     {
+        $filesystem = $this->filesystemRegistry->get($filesystemName);
         $destPath = Phpactor::normalizePath($destPath);
 
-        $srcPath = $this->filesystem->createPath($srcPath);
-        $destPath = $this->filesystem->createPath($destPath);
+        $srcPath = $filesystem->createPath($srcPath);
+        $destPath = $filesystem->createPath($destPath);
 
         if (!file_exists(dirname($destPath->path()))) {
             mkdir(dirname($destPath->path()), 0777, true);
@@ -94,44 +96,44 @@ class ClassMover
         $files = [[$srcPath, $destPath]];
 
         if (is_dir($srcPath)) {
-            $files = $this->directoryMap($srcPath, $destPath);
+            $files = $this->directoryMap($filesystem, $srcPath, $destPath);
         }
 
-        $this->replaceThoseReferences($logger, $files);
+        $this->replaceThoseReferences($logger, $filesystem, $files);
         $logger->moving($srcPath, $destPath);
-        $this->filesystem->move($srcPath, $destPath);
+        $filesystem->move($srcPath, $destPath);
     }
 
-    private function directoryMap(FilePath $srcPath, FilePath $destPath)
+    private function directoryMap(Filesystem $filesystem, FilePath $srcPath, FilePath $destPath)
     {
         $files = [];
-        foreach ($this->filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
+        foreach ($filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
             $suffix = substr($file->path(), strlen($srcPath->path()));
-            $files[] = [$file->path(), $this->filesystem->createPath($destPath.$suffix)];
+            $files[] = [$file->path(), $filesystem->createPath($destPath.$suffix)];
         }
 
         return $files;
     }
 
-    private function replaceThoseReferences(ClassMoverLogger $logger, array $files)
+    private function replaceThoseReferences(ClassMoverLogger $logger, Filesystem $filesystem, array $files)
     {
         foreach ($files as $paths) {
             list($srcPath, $destPath) = $paths;
 
-            $srcPath = $this->filesystem->createPath($srcPath);
-            $destPath = $this->filesystem->createPath($destPath);
+            $srcPath = $filesystem->createPath($srcPath);
+            $destPath = $filesystem->createPath($destPath);
 
             $srcClassName = $this->classFileNormalizer->fileToClass($srcPath->path());
             $destClassName = $this->classFileNormalizer->fileToClass($destPath->path());
 
-            $this->replaceReferences($logger, $srcClassName, $destClassName);
+            $this->replaceReferences($logger, $filesystem, $srcClassName, $destClassName);
         }
     }
 
-    private function replaceReferences(ClassMoverLogger $logger, string $srcName, string $destName)
+    private function replaceReferences(ClassMoverLogger $logger, Filesystem $filesystem, string $srcName, string $destName)
     {
-        foreach ($this->filesystem->fileList()->phpFiles() as $filePath) {
-            $references = $this->classMover->findReferences($this->filesystem->getContents($filePath), $srcName);
+        foreach ($filesystem->fileList()->phpFiles() as $filePath) {
+            $references = $this->classMover->findReferences($filesystem->getContents($filePath), $srcName);
 
             $logger->replacing($filePath, $references, FullyQualifiedName::fromString($destName));
 
@@ -140,7 +142,7 @@ class ClassMover
                 $destName
             );
 
-            $this->filesystem->writeContents($filePath, (string) $source);
+            $filesystem->writeContents($filePath, (string) $source);
         }
     }
 }
