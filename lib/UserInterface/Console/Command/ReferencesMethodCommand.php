@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Formatter\Highlight;
 use Phpactor\Application\ClassMethodReferences;
+use Phpactor\Container\SourceCodeFilesystemExtension;
 
 class ReferencesMethodCommand extends Command
 {
@@ -46,7 +47,7 @@ class ReferencesMethodCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
-        Handler\FilesystemHandler::configure($this, 'git');
+        Handler\FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output, $bar = null)

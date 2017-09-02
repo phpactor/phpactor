@@ -9,10 +9,11 @@ use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\UserInterface\Console\Formatter\Highlight;
+use Phpactor\Container\SourceCodeFilesystemExtension;
 
 class ReferencesClassCommand extends Command
 {
@@ -43,7 +44,7 @@ class ReferencesClassCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         Handler\FormatHandler::configure($this);
-        Handler\FilesystemHandler::configure($this, 'git');
+        Handler\FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
