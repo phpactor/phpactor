@@ -41,7 +41,7 @@ class ClassReflector
     public function reflect(string $classOrFile): array
     {
         $className = $this->classFileNormalizer->normalizeToClass($classOrFile);
-        $reflection = $this->reflector->reflectClass(ClassName::fromString($className));
+        $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
 
         $return  = [
             'class' => (string) $reflection->name(),

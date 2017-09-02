@@ -49,7 +49,7 @@ class Complete
             return $response;
         }
 
-        $classReflection = $this->reflector->reflectClass(ClassName::fromString((string) $type));
+        $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
 
         $suggestions = [];
         /** @var $method ReflectionMethod */

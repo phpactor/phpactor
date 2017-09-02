@@ -98,7 +98,7 @@ class ClassMethodReferences
         }
 
         if ($methodName && $className && empty($results)) {
-            $reflection = $this->reflector->reflectClass(ClassName::fromString($className));
+            $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
 
             if (false === $reflection->methods()->has($methodName)) {
                 throw new \InvalidArgumentException(sprintf(
