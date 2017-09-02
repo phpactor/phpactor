@@ -5,6 +5,7 @@ namespace Phpactor\Application;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 final class ClassSearch
 {
@@ -14,19 +15,21 @@ final class ClassSearch
     private $fileToClass;
 
     /**
-     * @var Filesystem
+     * @var FilesystemRegistry
      */
-    private $filesystem;
+    private $filesystemRegistry;
 
-    public function __construct(Filesystem $filesystem, FileToClass $fileToClass)
+    public function __construct(FilesystemRegistry $filesystemRegistry, FileToClass $fileToClass)
     {
-        $this->filesystem = $filesystem;
+        $this->filesystemRegistry = $filesystemRegistry;
         $this->fileToClass = $fileToClass;
     }
 
-    public function classSearch(string $name)
+    public function classSearch(string $filesystemName, string $name)
     {
-        $files = $this->filesystem->fileList('{' . $name . '}')->named($name . '.php');
+        $filesystem = $this->filesystemRegistry->get($filesystemName);
+
+        $files = $filesystem->fileList('{' . $name . '}')->named($name . '.php');
 
         $results = [];
         foreach ($files as $file) {
