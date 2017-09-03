@@ -4,6 +4,7 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container as BaseContainer;
 use Phpactor\Config\ConfigLoader;
+use Phpactor\Container\OffsetActionExtension;
 
 class ApplicationContainer extends BaseContainer
 {
@@ -17,6 +18,7 @@ class ApplicationContainer extends BaseContainer
             CoreExtension::class,
             CodeTransformExtension::class,
             SourceCodeFilesystemExtension::class,
+            OffsetActionExtension::class,
             WorseReflectionExtension::class,
         ], $this->configLoader->loadConfig());
     }

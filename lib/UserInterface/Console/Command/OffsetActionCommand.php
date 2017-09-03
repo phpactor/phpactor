@@ -10,6 +10,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\OffsetInfo;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\Application\OffsetAction;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Helper\QuestionHelper;
 
 class OffsetActionCommand extends Command
 {
@@ -38,30 +40,38 @@ class OffsetActionCommand extends Command
         $this->setDescription('List and/or perform actions on an offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
-        $this->addArgumnet('action', InputArgument::OPTIONAL, 'Action to perform');
+        $this->addArgument('action', InputArgument::OPTIONAL, 'Action to perform');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $result = $this->processResult($input);
+        $path = $input->getArgument('path');
+        $offset = $input->getArgument('offset');
+        $action = $input->getArgument('action');
+
+        $result = $this->processResult($input, $output, $path, $offset, $action);
 
         $format = $input->getOption('format');
-        $this->dumperRegistry->get($format)->dump($output, $info);
+        $this->dumperRegistry->get($format)->dump($output, $result);
     }
 
-    private function processResult(InputInterface $input, string $path, int $offset, string $action = null)
+    private function processResult(InputInterface $input, OutputInterface $output, string $path, int $offset, string $action = null)
     {
         if (null === $action) {
             $choices = $this->offsetAction->choicesFromOffset($path, $offset);
 
             if (false === $input->isInteractive()) {
-                return $choices;
+                return [
+                    'choices' => $choices
+                ];
             }
 
-            throw new \Exception('TODO');
+            $question = new ChoiceQuestion('Choose action', $choices);
+            $questionHelper = new QuestionHelper();
+            $action = $questionHelper->ask($input, $output, $question);
         }
 
-        $this->offsetAction->performAction($path, $offset, $action);
+        return $this->offsetAction->performAction($path, $offset, $action);
     }
 }

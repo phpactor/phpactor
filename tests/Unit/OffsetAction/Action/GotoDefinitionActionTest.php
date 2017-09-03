@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Tests\Unit\ContextAction\Action;
+namespace Phpactor\Tests\Unit\OffsetAction\Action;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\ContextAction\Action\GotoDefinitionAction;
+use Phpactor\OffsetAction\Action\GotoDefinitionAction;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Core\Position;
@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\ContextAction\Result\GotoDefinitionResult;
+use Phpactor\OffsetAction\Result\GotoDefinitionResult;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;

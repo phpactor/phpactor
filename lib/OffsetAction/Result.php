@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\ContextAction;
+namespace Phpactor\OffsetAction;
 
 interface Result
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\ContextAction\Result;
+namespace Phpactor\OffsetAction\Result;
 
-use Phpactor\ContextAction\Result;
+use Phpactor\OffsetAction\Result;
+use Phpactor\OffsetAction\Result\FailureResult;
 
 final class FailureResult implements Result
 {

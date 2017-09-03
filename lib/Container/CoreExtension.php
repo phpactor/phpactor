@@ -47,6 +47,7 @@ use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Application\OffsetAction;
+use Phpactor\UserInterface\Console\Command\OffsetActionCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -109,9 +110,16 @@ class CoreExtension implements ExtensionInterface
             );
         }, [ 'ui.console.command' => []]);
 
-        $container->register('command.file_offset', function (Container $container) {
+        $container->register('command.offset_info', function (Container $container) {
             return new OffsetInfoCommand(
                 $container->get('application.file_info_at_offset'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.offset_action', function (Container $container) {
+            return new OffsetActionCommand(
+                $container->get('application.offset_action'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -308,17 +316,17 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
-        $container->register('application.file_info_at_offset', function (Container $container) {
-            return new OffsetInfo(
+        $container->register('application.offset_action', function (Container $container) {
+            return new OffsetAction(
                 $container->get('reflection.reflector'),
-                $container->get('application.helper.class_file_normalizer')
+                $container->get('offset_action.action_registry')
             );
         });
 
         $container->register('application.file_info_at_offset', function (Container $container) {
-            return new OffsetAction(
+            return new OffsetInfo(
                 $container->get('reflection.reflector'),
-                $container->get('context_action.action_registry')
+                $container->get('application.helper.class_file_normalizer')
             );
         });
 

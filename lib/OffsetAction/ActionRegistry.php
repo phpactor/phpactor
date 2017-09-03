@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\ContextAction;
+namespace Phpactor\OffsetAction;
 
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
+use Phpactor\OffsetAction\Action;
 
 class ActionRegistry
 {
@@ -28,7 +29,7 @@ class ActionRegistry
         return array_keys($this->actionsByType[$symbolType]);
     }
 
-    public function action(string $symbolType, string $actionName): array
+    public function action(string $symbolType, string $actionName): Action
     {
         Symbol::assertValidSymbolType($symbolType);
 

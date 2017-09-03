@@ -7,7 +7,9 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\ContextAction\ActionRegistry;
+use Phpactor\OffsetAction\ActionRegistry;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Offset;
 
 class OffsetAction
 {
@@ -37,37 +39,18 @@ class OffsetAction
     {
         $reflectionOffset = $this->offsetFromSource($source, $offset);
 
-        if ($reflectionOffset->symbolInformation()->none()) {
-            return [];
-        }
+        $symbolType = $reflectionOffset->symbolInformation()->symbol()->symbolType();
 
-        switch ($reflectionOffset->symbolInformation()->symbol()->symbolType()) {
-            case Symbol::METHOD:
-                return $this->methodChoices;
-            case Symbol::CLASS_:
-                return $this->classChoices;
-        }
-
-        return [];
+        return $this->actionRegistry->actionNames($symbolType);
     }
 
     public function performAction(string $source, int $offset, string $action)
     {
         $reflectionOffset = $this->offsetFromSource($source, $offset);
+        $symbolInformation = $reflectionOffset->symbolInformation();
 
-        if ($reflectionOffset->symbolInformation()->none()) {
-            return [];
-        }
-
-        if (false === $this->actionRegistry->has(
-            $reflectionOffset->symbol()->type(),
-            $action
-        )) {
-            return [];
-        }
-
-        $action = $this->actionRegistry->get(
-            $reflectionOffset->symbol()->type(),
+        $action = $this->actionRegistry->action(
+            $symbolInformation->symbol()->symbolType(),
             $action
         );
 

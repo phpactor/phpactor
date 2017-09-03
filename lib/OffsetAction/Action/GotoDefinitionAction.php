@@ -1,17 +1,17 @@
 <?php
 
-namespace Phpactor\ContextAction\Action;
+namespace Phpactor\OffsetAction\Action;
 
-use Phpactor\ContextAction\Action;
-use Phpactor\ContextAction\Result;
+use Phpactor\OffsetAction\Action;
+use Phpactor\OffsetAction\Result;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\ContextAction\Result\FailureResult;
+use Phpactor\OffsetAction\Result\FailureResult;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\ContextAction\Result\GotoDefinitionResult;
+use Phpactor\OffsetAction\Result\GotoDefinitionResult;
 
 class GotoDefinitionAction implements Action
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Tests\Unit\ContextAction;
+namespace Phpactor\Tests\Unit\OffsetAction;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\ContextAction\ActionRegistry;
+use Phpactor\OffsetAction\ActionRegistry;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
-use Phpactor\ContextAction\Action;
+use Phpactor\OffsetAction\Action;
 
 class ActionRegistryTest extends TestCase
 {
