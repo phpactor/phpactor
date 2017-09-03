@@ -9,13 +9,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\OffsetInfo;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
+use Phpactor\Application\OffsetAction;
 
 class OffsetActionCommand extends Command
 {
     /**
-     * @var FileInfoAtOffset
+     * @var OffsetAction
      */
-    private $infoForOffset;
+    private $offsetAction;
 
     /**
      * @var DumperRegistry
@@ -23,33 +24,44 @@ class OffsetActionCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        OffsetInfo $infoForOffset,
+        OffsetAction $offsetAction,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->infoForOffset = $infoForOffset;
+        $this->offsetAction = $offsetAction;
         $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
     {
-        $this->setName('offset:info');
-        $this->setDescription('Return information about given file at the given offset');
+        $this->setName('offset:action');
+        $this->setDescription('List and/or perform actions on an offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
-        $this->addOption('frame', null, InputOption::VALUE_NONE, 'Show inferred frame state at offset');
+        $this->addArgumnet('action', InputArgument::OPTIONAL, 'Action to perform');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $info = $this->infoForOffset->infoForOffset(
-            $input->getArgument('path'),
-            $input->getArgument('offset'),
-            $input->getOption('frame')
-        );
+        $result = $this->processResult($input);
 
         $format = $input->getOption('format');
         $this->dumperRegistry->get($format)->dump($output, $info);
+    }
+
+    private function processResult(InputInterface $input, string $path, int $offset, string $action = null)
+    {
+        if (null === $action) {
+            $choices = $this->offsetAction->choicesFromOffset($path, $offset);
+
+            if (false === $input->isInteractive()) {
+                return $choices;
+            }
+
+            throw new \Exception('TODO');
+        }
+
+        $this->offsetAction->performAction($path, $offset, $action);
     }
 }

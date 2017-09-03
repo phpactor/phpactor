@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
+use Phpactor\ContextAction\ActionRegistry;
 
 class OffsetAction
 {
@@ -20,11 +21,16 @@ class OffsetAction
      */
     private $filesystemHelper;
 
-    public function __construct(Reflector $reflector)
+    /**
+     * @var ActionRegistry
+     */
+    private $actionRegistry;
+
+    public function __construct(Reflector $reflector, ActionRegistry $actionRegistry)
     {
         $this->reflector = $reflector;
         $this->filesystemHelper = new FilesystemHelper();
-        $this->registerActions();
+        $this->actionRegistry = $actionRegistry;
     }
 
     public function choicesFromOffset(string $source, int $offset)
@@ -83,3 +89,4 @@ class OffsetAction
         );
     }
 }
+

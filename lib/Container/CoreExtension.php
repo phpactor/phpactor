@@ -46,6 +46,7 @@ use Phpactor\UserInterface\Console\Command\ReferencesClassCommand;
 use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Application\OffsetAction;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -311,6 +312,13 @@ class CoreExtension implements ExtensionInterface
             return new OffsetInfo(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
+            );
+        });
+
+        $container->register('application.file_info_at_offset', function (Container $container) {
+            return new OffsetAction(
+                $container->get('reflection.reflector'),
+                $container->get('context_action.action_registry')
             );
         });
 
