@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 
-class ContextAction
+class OffsetAction
 {
     /**
      * @var Reflector
