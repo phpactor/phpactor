@@ -32,9 +32,36 @@ class GotoDefinitionAction implements Action
             case Symbol::PROPERTY:
             case Symbol::CONSTANT:
                 return $this->gotoMember($symbolInformation);
+            case Symbol::CLASS_:
+                return $this->gotoClass($symbolInformation);
         }
 
-        return FailureResult::withReason('Do not know how to goto definition of symbol type "%s"', $symbolInformation->symbol()->symbolType());
+        return FailureResult::withReason(sprintf('Do not know how to goto definition of symbol type "%s"', $symbolInformation->symbol()->symbolType()));
+    }
+
+    public function gotoClass(SymbolInformation $symbolInformation)
+    {
+        $className = $symbolInformation->type();
+
+        try {
+            $class = $this->reflector->reflectClassLike(ClassName::fromString((string) $className));
+        } catch (NotFound $e) {
+            return FailureResult::withReason($e->getMessage());
+        }
+
+        $path = $class->sourceCode()->path();
+
+        if (null === $path) {
+            return FailureResult::withReason(sprintf(
+                'The source code for class "%s" has no path associated with it.',
+                (string) $containingClass->name()
+            ));
+        }
+
+        return GotoDefinitionResult::fromClassPathAndOffset(
+            $path,
+            $class->position()->start()
+        );
     }
 
     private function gotoMember(SymbolInformation $symbolInformation)
@@ -43,7 +70,7 @@ class GotoDefinitionAction implements Action
         $symbolType = $symbolInformation->symbol()->symbolType();
 
         if (null === $symbolInformation->classType()) {
-            return FailureResult::withReason('Containing class for member "%s" could not be determined', $symbolName);
+            return FailureResult::withReason(sprintf('Containing class for member "%s" could not be determined', $symbolName));
         }
 
         try {

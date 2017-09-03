@@ -43,7 +43,7 @@ class OffsetActionExtension implements ExtensionInterface
         }, [
             'offset_action.action' => [
                 'name' => 'goto_definition',
-                'types' => [ Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT ]
+                'types' => [ Symbol::CLASS_, Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT ]
             ]
         ]);
     }

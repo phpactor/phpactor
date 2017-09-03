@@ -221,53 +221,23 @@ function! phpactor#GotoDefinition()
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let command = 'offset:action --format=json ' . currentPath . ' ' . offset . ' goto_definition'
     let out = phpactor#Exec(command)
-    let results = json_decode(out)
+    let result = json_decode(out)
 
-    if results['symbol_type'] == 'method'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
+    if (empty(result['action']))
+        return
+    endif 
 
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /function\\s\\+" . results['symbol'] . "("
+    if (result['action'] == 'fail')
+        echo result['arguments']['reason']
         return
     endif
 
-    if results['symbol_type'] == 'class'
-        if (empty(results['type_path']))
-            echo "Could not determine type class"
-            return
-        endif
 
-        call phpactor#switchToBufferOrEdit(results['type_path'])
-        exec ":silent! /\\(class\\|interface\\|trait\\)\\s\\+" . results['symbol']
-        return
-    endif
-
-    if results['symbol_type'] == 'constant'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /const\\s\\+" . results['symbol']
-        return
-    endif
-
-    if results['symbol_type'] == 'property'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /\\(private\\|protected\\|public\\)\\s\\+\\$" . results['symbol']
-        return
-    endif
+    call phpactor#switchToBufferOrEdit(result['arguments']['path'])
+    exec ':goto ' . result['arguments']['offset']
+    normal! zz
 
 endfunction
 
@@ -291,7 +261,7 @@ function! phpactor#GotoType()
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
     let out = phpactor#Exec(command)
     let results = json_decode(out)
 
@@ -313,7 +283,7 @@ function! phpactor#ReflectAtOffset()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --format=json stdin ' . offset
+    let command = 'offset:info --format=json stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(out)
 
@@ -371,7 +341,7 @@ function! phpactor#OffsetTypeInfo()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --frame stdin ' . offset
+    let command = 'offset:info --frame stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
 
     echo out
@@ -382,7 +352,7 @@ function! phpactor#_OffsetTypeInfo()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --format=json stdin ' . offset
+    let command = 'offset:info --format=json stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
 
     return json_decode(out)
