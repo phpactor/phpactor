@@ -27,7 +27,7 @@ use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
-use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
+use Phpactor\UserInterface\Console\Command\OffsetInfoCommand;
 use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\UserInterface\Console\Dumper\IndentedDumper;

@@ -27,7 +27,7 @@ use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
-use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
+use Phpactor\UserInterface\Console\Command\OffsetInfoCommand;
 use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
@@ -109,7 +109,7 @@ class CoreExtension implements ExtensionInterface
         }, [ 'ui.console.command' => []]);
 
         $container->register('command.file_offset', function (Container $container) {
-            return new FileInfoAtOffsetCommand(
+            return new OffsetInfoCommand(
                 $container->get('application.file_info_at_offset'),
                 $container->get('console.dumper_registry')
             );
