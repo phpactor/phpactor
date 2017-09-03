@@ -9,7 +9,7 @@ use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -308,7 +308,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('application.file_info_at_offset', function (Container $container) {
-            return new FileInfoAtOffset(
+            return new OffsetInfo(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );

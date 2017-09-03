@@ -7,10 +7,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 
-class OffsetInfoCommand extends Command
+class OffsetActionCommand extends Command
 {
     /**
      * @var FileInfoAtOffset
@@ -23,7 +23,7 @@ class OffsetInfoCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        FileInfoAtOffset $infoForOffset,
+        OffsetInfo $infoForOffset,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();

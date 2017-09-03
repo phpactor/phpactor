@@ -9,7 +9,7 @@ use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
