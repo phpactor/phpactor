@@ -9,7 +9,7 @@ use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -27,7 +27,7 @@ use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
 use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
 use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
 use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
-use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
+use Phpactor\UserInterface\Console\Command\OffsetInfoCommand;
 use Phpactor\UserInterface\Console\Command\FileInfoCommand;
 use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
 use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
@@ -46,6 +46,8 @@ use Phpactor\UserInterface\Console\Command\ReferencesClassCommand;
 use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Application\OffsetAction;
+use Phpactor\UserInterface\Console\Command\OffsetActionCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -108,9 +110,16 @@ class CoreExtension implements ExtensionInterface
             );
         }, [ 'ui.console.command' => []]);
 
-        $container->register('command.file_offset', function (Container $container) {
-            return new FileInfoAtOffsetCommand(
+        $container->register('command.offset_info', function (Container $container) {
+            return new OffsetInfoCommand(
                 $container->get('application.file_info_at_offset'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.offset_action', function (Container $container) {
+            return new OffsetActionCommand(
+                $container->get('application.offset_action'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -307,8 +316,15 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
+        $container->register('application.offset_action', function (Container $container) {
+            return new OffsetAction(
+                $container->get('reflection.reflector'),
+                $container->get('offset_action.action_registry')
+            );
+        });
+
         $container->register('application.file_info_at_offset', function (Container $container) {
-            return new FileInfoAtOffset(
+            return new OffsetInfo(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );
