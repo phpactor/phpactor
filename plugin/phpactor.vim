@@ -348,7 +348,7 @@ function! phpactor#MoveFile()
     let destPath = input("Move to: ", currentPath, "file")
     let command = 'class:move ' . currentPath . ' ' . destPath
     echo "\nWARNING: This command will move the class and update ALL references in the git tree."
-    echo "         It is not guranteed to succeed. COMMIT YOUR WORK FIRST!"
+    echo "         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!"
     echo "NOTE: Currently buffers will not be reloaded"
     let confirm =  confirm('Do you want to proceed?', "&Yes\n&No")
 
