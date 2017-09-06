@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "8628e140fd92c3e0c39f3521baacd8c02545ce52"
+                "reference": "c8d8f8278046e7f6ce479fd2e0e7a72717d454a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/8628e140fd92c3e0c39f3521baacd8c02545ce52",
-                "reference": "8628e140fd92c3e0c39f3521baacd8c02545ce52",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c8d8f8278046e7f6ce479fd2e0e7a72717d454a0",
+                "reference": "c8d8f8278046e7f6ce479fd2e0e7a72717d454a0",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-08-29 14:48:18"
+            "time": "2017-09-04 13:22:10"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "5e0c3feccaba33fb42aabdbf5a72678c57bdb4f4"
+                "reference": "8752210e92325b30a099e2b93f0ea67ebb550531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/5e0c3feccaba33fb42aabdbf5a72678c57bdb4f4",
-                "reference": "5e0c3feccaba33fb42aabdbf5a72678c57bdb4f4",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8752210e92325b30a099e2b93f0ea67ebb550531",
+                "reference": "8752210e92325b30a099e2b93f0ea67ebb550531",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-09-02 20:15:00"
+            "time": "2017-09-06 19:34:08"
         },
         {
             "name": "phpbench/container",
@@ -1219,7 +1219,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14T21:17:01+00:00"
+            "time": "2015-06-14 21:17:01"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1261,7 +1261,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12T18:52:22+00:00"
+            "time": "2017-04-12 18:52:22"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1315,20 +1315,20 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-04-30T11:58:12+00:00"
+            "time": "2017-04-30 11:58:12"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.2.3",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f"
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/86e24012a3139b42a7b71155cfaa325389f00f1f",
-                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
                 "shasum": ""
             },
             "require": {
@@ -1360,7 +1360,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-29T19:37:41+00:00"
+            "time": "2017-08-30T18:51:59+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1415,18 +1415,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7"
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/420d44c5534bbf269e85e6213446e8284d53c6c7",
-                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
                 "sebastian/comparator": "^1.1|^2.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -1470,7 +1470,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-07-19T07:44:25+00:00"
+            "time": "2017-09-04 11:05:03"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1533,7 +1533,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-02T07:44:40+00:00"
+            "time": "2017-04-02 07:44:40"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1580,7 +1580,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03T07:40:28+00:00"
+            "time": "2016-10-03 07:40:28"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1670,7 +1670,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07T15:42:04+00:00"
+            "time": "2017-03-07 15:42:04"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1719,7 +1719,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-20T05:47:52+00:00"
+            "time": "2017-08-20 05:47:52"
         },
         {
             "name": "phpunit/phpunit",
@@ -1801,7 +1801,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-01T08:38:37+00:00"
+            "time": "2017-09-01 08:38:37"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1860,7 +1860,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-06-30T09:13:00+00:00"
+            "time": "2017-06-30 09:13:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1905,7 +1905,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04T10:23:55+00:00"
+            "time": "2017-03-04 10:23:55"
         },
         {
             "name": "sebastian/comparator",
@@ -1969,7 +1969,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-03-07T10:34:43+00:00"
+            "time": "2017-03-07 10:34:43"
         },
         {
             "name": "sebastian/diff",
@@ -2021,7 +2021,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22T07:24:03+00:00"
+            "time": "2017-05-22 07:24:03"
         },
         {
             "name": "sebastian/environment",
@@ -2071,7 +2071,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26T07:53:53+00:00"
+            "time": "2016-11-26 07:53:53"
         },
         {
             "name": "sebastian/exporter",
@@ -2138,7 +2138,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-03-07T10:36:49+00:00"
+            "time": "2017-03-07 10:36:49"
         },
         {
             "name": "sebastian/global-state",
@@ -2189,7 +2189,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-02-23T14:11:06+00:00"
+            "time": "2017-02-23 14:11:06"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -2235,7 +2235,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-07T10:37:45+00:00"
+            "time": "2017-03-07 10:37:45"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2288,7 +2288,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-08T08:21:15+00:00"
+            "time": "2017-03-08 08:21:15"
         },
         {
             "name": "sebastian/resource-operations",
@@ -2330,7 +2330,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2016-10-03T07:43:09+00:00"
+            "time": "2016-10-03 07:43:09"
         },
         {
             "name": "sebastian/version",
@@ -2373,7 +2373,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03T07:35:21+00:00"
+            "time": "2016-10-03 07:35:21"
         },
         {
             "name": "symfony/options-resolver",
