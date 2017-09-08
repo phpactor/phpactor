@@ -221,7 +221,7 @@ function! phpactor#GotoDefinition()
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
     let out = phpactor#Exec(command)
     let results = json_decode(out)
 
@@ -291,7 +291,7 @@ function! phpactor#GotoType()
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'file:offset --format=json ' . currentPath . ' ' . offset
+    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
     let out = phpactor#Exec(command)
     let results = json_decode(out)
 
@@ -313,7 +313,7 @@ function! phpactor#ReflectAtOffset()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --format=json stdin ' . offset
+    let command = 'offset:info --format=json stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
     let results = json_decode(out)
 
@@ -371,7 +371,7 @@ function! phpactor#OffsetTypeInfo()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --frame stdin ' . offset
+    let command = 'offset:info --frame stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
 
     echo out
@@ -382,7 +382,7 @@ function! phpactor#_OffsetTypeInfo()
     let offset = line2byte(line('.')) + col('.') - 1
     let stdin = join(getline(1,'$'), "\n")
 
-    let command = 'file:offset --format=json stdin ' . offset
+    let command = 'offset:info --format=json stdin ' . offset
     let out = phpactor#ExecStdIn(command, stdin)
 
     return json_decode(out)
