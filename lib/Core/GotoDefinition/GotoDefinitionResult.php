@@ -26,17 +26,13 @@ final class GotoDefinitionResult
          return new self($path, $offset);
     }
 
-    public function action(): string
+    public function path(): string
     {
-        return 'goto_definition';
+        return $this->path;
     }
 
-    public function arguments(): array
+    public function offset(): int
     {
-        return [
-            'path' => $this->path,
-            'offset' => $this->offset,
-        ];
+        return $this->offset;
     }
 }
-

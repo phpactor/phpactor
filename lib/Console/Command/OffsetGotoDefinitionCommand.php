@@ -9,13 +9,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Application\OffsetInfo;
 use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Application\OffsetDefinition;
 
-class OffsetInfoCommand extends Command
+class OffsetGotoDefinitionCommand extends Command
 {
     /**
      * @var FileInfoAtOffset
      */
-    private $infoForOffset;
+    private $gotoDefinition;
 
     /**
      * @var DumperRegistry
@@ -23,30 +24,28 @@ class OffsetInfoCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        OffsetInfo $infoForOffset,
+        OffsetDefinition $gotoDefinition,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->infoForOffset = $infoForOffset;
+        $this->gotoDefinition = $gotoDefinition;
         $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
     {
-        $this->setName('offset:info');
-        $this->setDescription('Return information about given file at the given offset');
+        $this->setName('offset:definition');
+        $this->setDescription('Return path and offset of the definition of the symbol at given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
-        $this->addOption('frame', null, InputOption::VALUE_NONE, 'Show inferred frame state at offset');
         Handler\FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $info = $this->infoForOffset->infoForOffset(
+        $info = $this->gotoDefinition->gotoDefinition(
             $input->getArgument('path'),
-            $input->getArgument('offset'),
-            $input->getOption('frame')
+            $input->getArgument('offset')
         );
 
         $format = $input->getOption('format');
