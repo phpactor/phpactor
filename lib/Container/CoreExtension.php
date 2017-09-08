@@ -9,7 +9,7 @@ use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -27,7 +27,7 @@ use Phpactor\Console\Command\ClassCopyCommand;
 use Phpactor\Console\Command\ClassMoveCommand;
 use Phpactor\Console\Command\ClassReflectorCommand;
 use Phpactor\Console\Command\ClassSearchCommand;
-use Phpactor\Console\Command\FileInfoAtOffsetCommand;
+use Phpactor\Console\Command\OffsetInfoCommand;
 use Phpactor\Console\Command\FileInfoCommand;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Console\Dumper\IndentedDumper;
@@ -109,7 +109,7 @@ class CoreExtension implements ExtensionInterface
         }, [ 'ui.console.command' => []]);
 
         $container->register('command.file_offset', function (Container $container) {
-            return new FileInfoAtOffsetCommand(
+            return new OffsetInfoCommand(
                 $container->get('application.file_info_at_offset'),
                 $container->get('console.dumper_registry')
             );
@@ -308,7 +308,7 @@ class CoreExtension implements ExtensionInterface
         });
 
         $container->register('application.file_info_at_offset', function (Container $container) {
-            return new FileInfoAtOffset(
+            return new OffsetInfo(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );

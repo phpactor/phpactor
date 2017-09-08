@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
 
-final class FileInfoAtOffset
+final class OffsetInfo
 {
     /**
      * @var Reflector

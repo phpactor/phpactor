@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Integration\Console\Command;
 
 use Phpactor\Tests\Integration\SystemTestCase;
 
-class FileInfoAtOffsetCommandTest extends SystemTestCase
+class OffsetInfoCommandTest extends SystemTestCase
 {
     public function setUp()
     {
