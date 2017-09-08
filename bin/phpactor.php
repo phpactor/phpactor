@@ -20,7 +20,7 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
     exit(255);
 }
 
-use Phpactor\UserInterface\Console\Application;
+use Phpactor\Console\Application;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Debug\Debug;
 
