@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Console\Logger;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Phpactor\UserInterface\Console\Logger\SymfonyConsoleMoveLogger;
+use Phpactor\Console\Logger\SymfonyConsoleMoveLogger;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\FoundReferences;

@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Integration;
 
 use Phpactor\Tests\Integration\SystemTestCase;
-use Phpactor\UserInterface\Console\Application;
+use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
