@@ -9,7 +9,7 @@ use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
-use Phpactor\Application\FileInfoAtOffset;
+use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -23,29 +23,32 @@ use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\UserInterface\Console\Command\ClassCopyCommand;
-use Phpactor\UserInterface\Console\Command\ClassMoveCommand;
-use Phpactor\UserInterface\Console\Command\ClassReflectorCommand;
-use Phpactor\UserInterface\Console\Command\ClassSearchCommand;
-use Phpactor\UserInterface\Console\Command\FileInfoAtOffsetCommand;
-use Phpactor\UserInterface\Console\Command\FileInfoCommand;
-use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
-use Phpactor\UserInterface\Console\Dumper\IndentedDumper;
-use Phpactor\UserInterface\Console\Dumper\JsonDumper;
-use Phpactor\UserInterface\Console\Dumper\TableDumper;
-use Phpactor\UserInterface\Console\Prompt\BashPrompt;
-use Phpactor\UserInterface\Console\Prompt\ChainPrompt;
+use Phpactor\Console\Command\ClassCopyCommand;
+use Phpactor\Console\Command\ClassMoveCommand;
+use Phpactor\Console\Command\ClassReflectorCommand;
+use Phpactor\Console\Command\ClassSearchCommand;
+use Phpactor\Console\Command\OffsetInfoCommand;
+use Phpactor\Console\Command\FileInfoCommand;
+use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Console\Dumper\IndentedDumper;
+use Phpactor\Console\Dumper\JsonDumper;
+use Phpactor\Console\Dumper\TableDumper;
+use Phpactor\Console\Prompt\BashPrompt;
+use Phpactor\Console\Prompt\ChainPrompt;
 use Symfony\Component\Console\Application;
-use Phpactor\UserInterface\Console\Command\ConfigDumpCommand;
+use Phpactor\Console\Command\ConfigDumpCommand;
 use PhpBench\DependencyInjection\Container;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
-use Phpactor\UserInterface\Console\Command\CompleteCommand;
+use Phpactor\Console\Command\CompleteCommand;
 use Phpactor\Application\ClassReferences;
-use Phpactor\UserInterface\Console\Command\ReferencesClassCommand;
-use Phpactor\UserInterface\Console\Command\ReferencesMethodCommand;
+use Phpactor\Console\Command\ReferencesClassCommand;
+use Phpactor\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Console\Command\OffsetGotoDefinitionCommand;
+use Phpactor\Core\GotoDefinition\GotoDefinition;
+use Phpactor\Application\OffsetDefinition;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -108,9 +111,16 @@ class CoreExtension implements ExtensionInterface
             );
         }, [ 'ui.console.command' => []]);
 
-        $container->register('command.file_offset', function (Container $container) {
-            return new FileInfoAtOffsetCommand(
-                $container->get('application.file_info_at_offset'),
+        $container->register('command.offset_info', function (Container $container) {
+            return new OffsetInfoCommand(
+                $container->get('application.offset_info'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.offset_definition', function (Container $container) {
+            return new OffsetGotoDefinitionCommand(
+                $container->get('application.offset_definition'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -307,8 +317,15 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
-        $container->register('application.file_info_at_offset', function (Container $container) {
-            return new FileInfoAtOffset(
+        $container->register('application.offset_info', function (Container $container) {
+            return new OffsetInfo(
+                $container->get('reflection.reflector'),
+                $container->get('application.helper.class_file_normalizer')
+            );
+        });
+
+        $container->register('application.offset_definition', function (Container $container) {
+            return new OffsetDefinition(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );
@@ -353,6 +370,7 @@ class CoreExtension implements ExtensionInterface
                 $container->get('reflection.reflector')
             );
         });
+
 
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));

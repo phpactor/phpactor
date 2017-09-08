@@ -3,8 +3,8 @@
 namespace Phpactor\Tests\Unit\UserInterface\Console\Dumper;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\UserInterface\Console\Dumper\DumperRegistry;
-use Phpactor\UserInterface\Console\Dumper\Dumper;
+use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Console\Dumper\Dumper;
 
 class DumperRegistryTest extends TestCase
 {
