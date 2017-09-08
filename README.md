@@ -506,3 +506,8 @@ auto-completion.
 For other use cases, such as searching for a class, we simply perform a file
 search, but only in those directories mapped by Composer. Even in large
 projects searching for a class by its (short) name is pretty fast.
+
+Community
+---------
+
+Follow [@phpactor](https://twitter.com/phpactor) for the latest news.
