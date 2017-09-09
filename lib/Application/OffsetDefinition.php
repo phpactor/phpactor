@@ -6,6 +6,8 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Core\GotoDefinition\GotoDefinition;
+use Phpactor\Application\Response\OffsetDefinitionResponse;
+use Phpactor\Core\GotoDefinition\GotoDefinitionResult;
 
 class OffsetDefinition
 {
@@ -39,7 +41,7 @@ class OffsetDefinition
         $this->gotoDefinition = new GotoDefinition($reflector);
     }
 
-    public function gotoDefinition(string $sourcePath, int $offset, $showFrame = false): array
+    public function gotoDefinition(string $sourcePath, int $offset, $showFrame = false): GotoDefinitionResult
     {
         $result = $this->reflector->reflectOffset(
             SourceCode::fromString(
@@ -49,11 +51,7 @@ class OffsetDefinition
         );
 
         $symbolInformation = $result->symbolInformation();
-        $result = $this->gotoDefinition->gotoDefinition($symbolInformation);
 
-        return [
-            'offset' => $result->offset(),
-            'path' => $result->path()
-        ];
+        return $this->gotoDefinition->gotoDefinition($symbolInformation);
     }
 }

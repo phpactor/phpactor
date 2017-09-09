@@ -213,40 +213,16 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
+
 """"""""""""""""
 " Goto defintion
 """"""""""""""""
 function! phpactor#GotoDefinition()
-    " START: Resolve FQN for class
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'offset:definition --format=json ' . currentPath . ' ' . offset
-
-    try
-        let out = phpactor#Exec(command)
-        let result = json_decode(out)
-    catch
-        echo v:exception
-        return
-    endtry
-
-    call phpactor#switchToBufferOrEdit(result['path'])
-    exec ':goto ' . (result['offset'] + 1)
-    normal! zz
+    call phpactor#rpc("goto_definition", { "offset": offset, "path": currentPath })
 endfunction
-
-function! phpactor#switchToBufferOrEdit(filePath)
-    let bufferNumber = bufnr(a:filePath . '$')
-
-    if (bufferNumber == -1)
-        exec ":edit " . a:filePath
-        return
-    endif
-
-    exec ":buffer " . bufferNumber
-endfunction
-
 """"""""""""""""
 " Goto type
 """"""""""""""""
@@ -266,7 +242,6 @@ function! phpactor#GotoType()
     endif
 
     exec "edit " . results['type_path']
-
 endfunction
 
 """""""""""""""""""""""""""""""""""
@@ -592,6 +567,16 @@ function! phpactor#NamespaceInsert()
     exec ":normal! i" . phpactor#NamespaceGet()
 endfunction
 
+function! phpactor#switchToBufferOrEdit(filePath)
+    let bufferNumber = bufnr(a:filePath . '$')
+
+    if (bufferNumber == -1)
+        exec ":edit " . a:filePath
+        return
+    endif
+
+    exec ":buffer " . bufferNumber
+endfunction
 
 """""""""""""""""""""""
 " RPC -->-->-->-->-->--
@@ -615,6 +600,23 @@ function! phpactor#rpc(action, arguments)
                 echo action["parameters"]["message"]
                 continue
             endif
+
+            if actionName == "error"
+                echo "Error from Phpactor: " . parameters["message"]
+                continue
+            endif
+
+            if actionName == "open_file"
+                call phpactor#switchToBufferOrEdit(parameters['path'])
+
+                if (parameters['offset'])
+                    exec ":goto " .  (parameters['offset'] + 1)
+                    normal! zz
+                endif
+                continue
+            endif
+
+            throw "Do not know how to handle action '" . actionName . "'"
         endfor
     else
         echo "Phpactor returned an error: " . result

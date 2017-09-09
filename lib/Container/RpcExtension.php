@@ -8,6 +8,7 @@ use Phpactor\Console\Command\RpcCommand;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Handler\EchoHandler;
+use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 
 
 class RpcExtension implements ExtensionInterface
@@ -37,6 +38,13 @@ class RpcExtension implements ExtensionInterface
 
         $container->register('rpc.handler.echo', function (Container $container) {
             return new EchoHandler();
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.goto_definition', function (Container $container) {
+            return new GotoDefinitionHandler(
+                $container->get('reflection.reflector'),
+                $container->get('application.helper.class_file_normalizer')
+            );
         }, [ 'rpc.handler' => [] ]);
     }
 

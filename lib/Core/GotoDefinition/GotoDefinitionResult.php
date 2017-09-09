@@ -4,7 +4,7 @@ namespace Phpactor\Core\GotoDefinition;
 
 use Phpactor\Core\GotoDefinition\GotoDefinitionResult;
 
-final class GotoDefinitionResult
+final class GotoDefinitionResult implements \JsonSerializable
 {
     /**
      * @var string
@@ -35,4 +35,16 @@ final class GotoDefinitionResult
     {
         return $this->offset;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'path' => $this->path,
+            'offset' => $this->offset,
+        ];
+    }
 }
+

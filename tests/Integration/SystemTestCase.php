@@ -84,7 +84,7 @@ abstract class SystemTestCase extends TestCase
     protected function phpactor(string $args, string $stdin = null): Process
     {
         chdir($this->workspaceDir());
-        $bin = __DIR__ . '/../../bin/phpactor --verbose ';
+        $bin = __DIR__ . '/../../bin/phpactor';
         $process = new Process(sprintf(
             '%s %s'
         , $bin, $args), $this->workspaceDir(), [

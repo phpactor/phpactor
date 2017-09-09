@@ -46,9 +46,7 @@ use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Console\Command\OffsetGotoDefinitionCommand;
 use Phpactor\Core\GotoDefinition\GotoDefinition;
-use Phpactor\Application\OffsetDefinition;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -114,13 +112,6 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.offset_info', function (Container $container) {
             return new OffsetInfoCommand(
                 $container->get('application.offset_info'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.offset_definition', function (Container $container) {
-            return new OffsetGotoDefinitionCommand(
-                $container->get('application.offset_definition'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -319,13 +310,6 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.offset_info', function (Container $container) {
             return new OffsetInfo(
-                $container->get('reflection.reflector'),
-                $container->get('application.helper.class_file_normalizer')
-            );
-        });
-
-        $container->register('application.offset_definition', function (Container $container) {
-            return new OffsetDefinition(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );
