@@ -12,43 +12,39 @@ class RpcCommandTest extends SystemTestCase
     public function testFromStdIn()
     {
         $stdin = json_encode([
-            [
-                'command' => 'greet',
-                'arguments' => [
-                    'hello' => 'smith',
+            'actions' => [
+                [
+                    'action' => 'echo',
+                    'parameters' => [
+                        'message' => 'Hello World',
+                    ],
                 ],
-                'options' => [
-                    'title' => 'mr',
-                ],
-            ],
-            [
-                'command' => 'greet',
-                'arguments' => [
-                    'hello' => 'smith',
-                ],
-                'options' => [
-                    'title' => 'mrs',
+                [
+                    'action' => 'echo',
+                    'parameters' => [
+                        'message' => 'Goodbye World!',
+                    ],
                 ],
             ],
         ]);
 
         $process = $this->phpactor('rpc', $stdin);
         $this->assertSuccess($process);
-        $response = json_decode($process->getOutput());
+        $response = json_decode($process->getOutput(), true);
 
         $this->assertEquals([
             [
-                'action' => 'greet',
-                'arguments' => [
-                    'greeting' => 'hello mr smith',
+                'action' => 'echo',
+                'parameters' => [
+                    'message' => 'Hello World',
                 ],
             ],
             [
-                'action' => 'greet',
-                'arguments' => [
-                    'greeting' => 'hello mrs smith',
+                'action' => 'echo',
+                'parameters' => [
+                    'message' => 'Goodbye World!',
                 ],
-            ],
-        ], $response['actions']);
+            ]
+        ] , $response['actions']);
     }
 }

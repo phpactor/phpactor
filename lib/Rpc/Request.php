@@ -2,6 +2,8 @@
 
 namespace Phpactor\Rpc;
 
+use Phpactor\Rpc\ActionRequest;
+
 final class Request
 {
     private $actions = [];
@@ -18,6 +20,24 @@ final class Request
         return new self($actions);
     }
 
+    public static function fromArray(array $requestConfig)
+    {
+        $validKeys = [ 'actions'];
+        if ($diff = array_diff(array_keys($requestConfig), $validKeys)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid keys "%s", valid keys: "%s"',
+                implode('", "', $diff), implode('", "', $validKeys)
+            ));
+        }
+
+        $actions = [];
+        foreach ($requestConfig['actions'] as $action) {
+            $actions[] = ActionRequest::fromArray($action);
+        }
+
+        return new self($actions);
+    }
+
     /**
      * @return Action[]
      */
@@ -26,7 +46,7 @@ final class Request
         return $this->actions;
     }
 
-    private function addAction(Action $action)
+    private function addAction(ActionRequest $action)
     {
         $this->actions[] = $action;
     }

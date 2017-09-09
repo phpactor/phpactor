@@ -4,6 +4,7 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container as BaseContainer;
 use Phpactor\Config\ConfigLoader;
+use Phpactor\Container\RpcExtension;
 
 class ApplicationContainer extends BaseContainer
 {
@@ -14,8 +15,9 @@ class ApplicationContainer extends BaseContainer
         $this->configLoader = new ConfigLoader();
 
         parent::__construct([
-            CoreExtension::class,
             CodeTransformExtension::class,
+            CoreExtension::class,
+            RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
         ], $this->configLoader->loadConfig());

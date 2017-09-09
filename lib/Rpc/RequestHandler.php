@@ -33,7 +33,8 @@ class RequestHandler
             }
 
             $counterActions[] = $handler->handle(array_merge($defaults, $parameters));
-
         }
+
+        return Response::fromActions($counterActions);
     }
 }
