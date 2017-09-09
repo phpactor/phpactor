@@ -40,7 +40,7 @@ class Application extends SymfonyApplication
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
-            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDOUT));
+            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDERR));
         }
 
         $formatter = $output->getFormatter();
