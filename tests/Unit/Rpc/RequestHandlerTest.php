@@ -9,6 +9,7 @@ use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;
+use Phpactor\Rpc\ActionRequest;
 
 class RequestHandlerTest extends TestCase
 {
@@ -44,7 +45,7 @@ class RequestHandlerTest extends TestCase
         ]);
 
         $request = Request::fromActions([
-            Action::fromNameAndParameters('aaa', [
+            ActionRequest::fromNameAndParameters('aaa', [
                 'foo' => 'bar',
             ])
         ]);
@@ -54,7 +55,8 @@ class RequestHandlerTest extends TestCase
 
     public function testHandle()
     {
-        $expectedResponse = Response::fromActions([]);
+        $action = $this->prophesize(Action::class);
+        $expectedResponse = Response::fromActions([$action->reveal()]);
 
         $this->handlerRegistry->get('aaa')->willReturn($this->handler->reveal());
         $this->handler->name()->willReturn('handler1');
@@ -63,15 +65,15 @@ class RequestHandlerTest extends TestCase
         ]);
 
         $request = Request::fromActions([
-            Action::fromNameAndParameters('aaa', [
+            ActionRequest::fromNameAndParameters('aaa', [
                 'one' => 'bar',
             ])
         ]);
 
-        $this->handler->handle(['one' => 'bar'])->willReturn($expectedResponse);
+        $this->handler->handle(['one' => 'bar'])->willReturn($action->reveal());
 
         $response = $this->requestHandler->handle($request);
 
-        $this->assertSame($expectedResponse, $response);
+        $this->assertEquals($expectedResponse, $response);
     }
 }
