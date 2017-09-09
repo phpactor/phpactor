@@ -11,6 +11,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Phpactor\Console\Command\GreetCommand;
 
 class Application extends SymfonyApplication
 {
@@ -32,6 +33,10 @@ class Application extends SymfonyApplication
 
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
             $this->add($this->container->get($commandId));
+        }
+
+        if (getenv('PHPACTORTEST')) {
+            $this->add(new GreetCommand());
         }
     }
 
