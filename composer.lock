@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae55fda42ee1f2edb97ddedd69375c9c",
+    "content-hash": "5b38081fdc1f9a6cb312d42c14823dc4",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "c8d8f8278046e7f6ce479fd2e0e7a72717d454a0"
+                "reference": "a6ccf8a19354c0d818994596dacd2d444e4e5440"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c8d8f8278046e7f6ce479fd2e0e7a72717d454a0",
-                "reference": "c8d8f8278046e7f6ce479fd2e0e7a72717d454a0",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/a6ccf8a19354c0d818994596dacd2d444e4e5440",
+                "reference": "a6ccf8a19354c0d818994596dacd2d444e4e5440",
                 "shasum": ""
             },
             "type": "library",
@@ -101,20 +101,20 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-09-04 13:22:10"
+            "time": "2017-09-07 12:25:37"
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "v0.0.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "1fd9de16e07984a17df350e22cba541565655986"
+                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/1fd9de16e07984a17df350e22cba541565655986",
-                "reference": "1fd9de16e07984a17df350e22cba541565655986",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c26f73270cb73c81387c2250d940ca72b9fdacc4",
+                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-08-11T00:01:27+00:00"
+            "time": "2017-09-08 20:57:18"
         },
         {
             "name": "monolog/monolog",
@@ -2488,6 +2488,7 @@
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
         "phpactor/worse-reflection": 20,
+        "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20
     },
     "prefer-stable": false,
