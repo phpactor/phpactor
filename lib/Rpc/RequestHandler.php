@@ -16,7 +16,7 @@ class RequestHandler
         $this->registry = $registry;
     }
     
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         $counterActions = [];
         foreach ($request->actions() as $action) {

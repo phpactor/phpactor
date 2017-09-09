@@ -20,22 +20,15 @@ class GotoDefinitionHandler implements Handler
     private $reflector;
 
     /**
-     * @var ClassFileNormalizer
-     */
-    private $classFileNormalizer;
-
-    /**
      * @var GotoDefinition
      */
     private $gotoDefinition;
 
     public function __construct(
-        Reflector $reflector,
-        ClassFileNormalizer $classFileNormalizer
+        Reflector $reflector
     )
     {
         $this->reflector = $reflector;
-        $this->classFileNormalizer = $classFileNormalizer;
         $this->gotoDefinition = new GotoDefinition($reflector);
     }
 

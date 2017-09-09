@@ -1,0 +1,34 @@
+<?php
+
+namespace Phpactor\Tests\Integration\Rpc\Handler;
+
+use PHPUnit\Framework\TestCase;
+use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
+use Phpactor\Rpc\HandlerRegistry;
+use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\Handler;
+use Phpactor\Rpc\Action;
+
+abstract class HandlerTestCase extends TestCase
+{
+    abstract protected function createHandler(): Handler;
+
+    protected function handle(string $actionName, array $parameters): Action
+    {
+        $registry = new HandlerRegistry([
+            $this->createHandler()
+        ]);
+        $requestHandler = new RequestHandler($registry);
+        $request = Request::fromActions([
+            ActionRequest::fromNameAndParameters($actionName, $parameters)
+        ]);
+
+        $response = $requestHandler->handle($request);
+        $actions = $response->actions();
+
+        $this->assertCount(1, $actions);
+
+        return reset($actions);
+    }
+}

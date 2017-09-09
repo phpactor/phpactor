@@ -33,6 +33,11 @@ class Response
         ];
     }
 
+    public function actions(): array
+    {
+        return $this->actions;
+    }
+
     private function addAction(Action $action)
     {
         $this->actions[] = $action;
