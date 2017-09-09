@@ -48,7 +48,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
     {
         $action = $this->handle('goto_definition', [
             'offset' => 1264,
-            'path' => __FILE__,
+            'source' => file_get_contents(__FILE__),
         ]);
 
         $this->assertEquals('open_file', $action->name());

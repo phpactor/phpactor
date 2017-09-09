@@ -41,7 +41,7 @@ class GotoDefinitionHandler implements Handler
     {
         return [
             'offset' => null,
-            'path' => null,
+            'source' => null,
         ];
     }
 
@@ -49,7 +49,7 @@ class GotoDefinitionHandler implements Handler
     {
         // TODO: Pass source or write to temporary file
         $result = $this->reflector->reflectOffset(
-            SourceCode::fromPath($arguments['path']),
+            SourceCode::fromString($arguments['source']),
             Offset::fromInt($arguments['offset'])
         );
 
