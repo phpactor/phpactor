@@ -2,11 +2,36 @@
 
 namespace Phpactor\Rpc;
 
-interface Action
+final class Action
 {
-    public function name(): string;
+    /**
+     * @var string
+     */
+    private $name;
+    /**
+     * @var array
+     */
+    private $parameters;
 
-    public function defaultParameters(): array;
+    private function __construct(string $name, array $parameters)
+    {
+        $this->name = $name;
+        $this->parameters = $parameters;
+    }
 
-    public function perform(array $arguments): Response;
+    public static function fromNameAndParameters(string $name, array $parameters)
+    {
+        return new self($name, $parameters);
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function parameters(): array
+    {
+        return $this->parameters;
+    }
 }
+
