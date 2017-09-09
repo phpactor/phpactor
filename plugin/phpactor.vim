@@ -221,53 +221,19 @@ function! phpactor#GotoDefinition()
     let offset = line2byte(line('.')) + col('.') - 1
     let currentPath = expand('%')
 
-    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
-    let out = phpactor#Exec(command)
-    let results = json_decode(out)
+    let command = 'offset:definition --format=json ' . currentPath . ' ' . offset
 
-    if results['symbol_type'] == 'method'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /function\\s\\+" . results['symbol'] . "("
+    try
+        let out = phpactor#Exec(command)
+        let result = json_decode(out)
+    catch
+        echo v:exception
         return
-    endif
+    endtry
 
-    if results['symbol_type'] == 'class'
-        if (empty(results['type_path']))
-            echo "Could not determine type class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['type_path'])
-        exec ":silent! /\\(class\\|interface\\|trait\\)\\s\\+" . results['symbol']
-        return
-    endif
-
-    if results['symbol_type'] == 'constant'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /const\\s\\+" . results['symbol']
-        return
-    endif
-
-    if results['symbol_type'] == 'property'
-        if (empty(results['class_type_path']))
-            echo "Could not determine type of containing class"
-            return
-        endif
-
-        call phpactor#switchToBufferOrEdit(results['class_type_path'])
-        exec ":silent! /\\(private\\|protected\\|public\\)\\s\\+\\$" . results['symbol']
-        return
-    endif
+    call phpactor#switchToBufferOrEdit(result['path'])
+    exec ':goto ' . (result['offset'] + 1)
+    normal! zz
 
 endfunction
 
