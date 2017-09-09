@@ -234,7 +234,6 @@ function! phpactor#GotoDefinition()
     call phpactor#switchToBufferOrEdit(result['path'])
     exec ':goto ' . (result['offset'] + 1)
     normal! zz
-
 endfunction
 
 function! phpactor#switchToBufferOrEdit(filePath)
@@ -593,3 +592,32 @@ function! phpactor#NamespaceInsert()
     exec ":normal! i" . phpactor#NamespaceGet()
 endfunction
 
+
+"""""""""""""""""""""""
+" RPC -->-->-->-->-->--
+"""""""""""""""""""""""
+
+function! phpactor#rpc(action, arguments)
+
+    let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
+
+    let cmd = 'php ' . s:phpactorbinpath . ' rpc'
+    let result = system(cmd, json_encode(request))
+
+    if (v:shell_error == 0)
+        let result = json_decode(result)
+
+        for action in result['actions']
+            let actionName = action['action']
+            let parameters = action['parameters']
+
+            if actionName == "echo"
+                echo action["parameters"]["message"]
+                continue
+            endif
+        endfor
+    else
+        echo "Phpactor returned an error: " . result
+        return
+    endif
+endfunction
