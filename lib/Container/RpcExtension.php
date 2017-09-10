@@ -9,6 +9,7 @@ use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
+use Phpactor\Rpc\Handler\CompleteHandler;
 
 
 class RpcExtension implements ExtensionInterface
@@ -43,6 +44,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.goto_definition', function (Container $container) {
             return new GotoDefinitionHandler(
                 $container->get('reflection.reflector')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.complete', function (Container $container) {
+            return new CompleteHandler(
+                $container->get('application.complete')
             );
         }, [ 'rpc.handler' => [] ]);
     }

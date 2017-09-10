@@ -90,16 +90,14 @@ function! phpactor#Complete(findstart, base)
     endif
 
     let offset = line2byte(line(".")) + col('.') - 2
-    let stdin = join(getline(1,'.'), "\n")
-    let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
+    let source = join(getline(1,'.'), "\n")
+    let source = source . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let results = phpactor#ExecStdIn('complete --format=json stdin ' . offset, stdin)
-    let results = json_decode(results)
+    let suggestions = phpactor#rpc("complete", { "offset": offset, "source": source})
 
     let completions = []
-
-    if !empty(results['suggestions'])
-        for suggestion in results['suggestions']
+    if !empty(suggestions)
+        for suggestion in suggestions
             call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
         endfor
     endif
@@ -556,7 +554,7 @@ function! phpactor#_offset()
 endfunction
 
 function! phpactor#_source()
-    let source = join(getline(1,'$'), "\n")
+    return join(getline(1,'$'), "\n")
 endfunction
 
 """"""""""""""""
@@ -585,30 +583,54 @@ function! phpactor#rpc(action, arguments)
             let actionName = action['action']
             let parameters = action['parameters']
 
-            if actionName == "echo"
-                echo action["parameters"]["message"]
-                continue
+            let result = phpactor#_rpc_dispatch(actionName, parameters)
+
+            if !empty(result)
+                return result
             endif
-
-            if actionName == "error"
-                echo "Error from Phpactor: " . parameters["message"]
-                continue
-            endif
-
-            if actionName == "open_file"
-                call phpactor#_switchToBufferOrEdit(parameters['path'])
-
-                if (parameters['offset'])
-                    exec ":goto " .  (parameters['offset'] + 1)
-                    normal! zz
-                endif
-                continue
-            endif
-
-            throw "Do not know how to handle action '" . actionName . "'"
         endfor
     else
         echo "Phpactor returned an error: " . result
         return
     endif
+endfunction
+
+function! phpactor#_rpc_dispatch(actionName, parameters)
+    if a:actionName == "return"
+        return a:parameters["value"]
+    endif
+
+    if a:actionName == "echo"
+        echo a:parameters["message"]
+        return
+    endif
+
+    if a:actionName == "error"
+        echo "Error from Phpactor: " . a:parameters["message"]
+        return
+    endif
+
+    if a:actionName == "collection"
+        for action in a:parameters["actions"]
+            let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
+            
+            if !empty(result)
+                return result
+            endif
+        endfor
+
+        return
+    endif
+
+    if a:actionName == "open_file"
+        call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+
+        if (a:parameters['offset'])
+            exec ":goto " .  (a:parameters['offset'] + 1)
+            normal! zz
+        endif
+        return
+    endif
+
+    throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction

@@ -16,14 +16,10 @@ class CompleteTest extends TestCase
      */
     public function testComplete(string $source, int $offset, array $expected)
     {
-        $this->assertEquals([
-            'suggestions' => $expected,
-        ], $this->complete($source, $offset));
+        $result = $this->complete($source, $offset);
 
-        $this->assertEquals(json_encode([
-            'suggestions' => $expected,
-        ], true), json_encode($this->complete($source, $offset), true));
-        
+        $this->assertEquals($expected, $result);
+        $this->assertEquals(json_encode($expected, true), json_encode($result, true));
     }
 
     public function provideComplete()
@@ -231,14 +227,11 @@ EOT
     private function complete(string $source, $offset)
     {
         $logger = new ArrayLogger();
-        $tmpFileName = tempnam(sys_get_temp_dir(), 'phpactor_test');
-        file_put_contents($tmpFileName, (string) $source);
 
         $reflector = Reflector::create(new StringSourceLocator(SourceCode::fromString($source)), $logger);
         $complete = new Complete($reflector);
 
-        $result = $complete->complete($tmpFileName, $offset);
-        unlink($tmpFileName);
+        $result = $complete->complete($source, $offset);
 
         return $result;
     }
