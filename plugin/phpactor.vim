@@ -213,37 +213,6 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
-
-""""""""""""""""
-" Goto defintion
-""""""""""""""""
-function! phpactor#GotoDefinition()
-    let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
-
-    call phpactor#rpc("goto_definition", { "offset": offset, "path": currentPath })
-endfunction
-""""""""""""""""
-" Goto type
-""""""""""""""""
-function! phpactor#GotoType()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
-
-    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
-    let out = phpactor#Exec(command)
-    let results = json_decode(out)
-
-    if (empty(results['type_path']))
-        echo "Could not locate class at offset: " . offset
-        return
-    endif
-
-    exec "edit " . results['type_path']
-endfunction
-
 """""""""""""""""""""""""""""""""""
 " Return type information at offset
 """""""""""""""""""""""""""""""""""
@@ -567,7 +536,11 @@ function! phpactor#NamespaceInsert()
     exec ":normal! i" . phpactor#NamespaceGet()
 endfunction
 
-function! phpactor#switchToBufferOrEdit(filePath)
+"""""""""""""""""""""""
+" Utility functions
+"""""""""""""""""""""""
+
+function! phpactor#_switchToBufferOrEdit(filePath)
     let bufferNumber = bufnr(a:filePath . '$')
 
     if (bufferNumber == -1)
@@ -577,6 +550,22 @@ function! phpactor#switchToBufferOrEdit(filePath)
 
     exec ":buffer " . bufferNumber
 endfunction
+
+function! phpactor#_offset()
+    return line2byte(line('.')) + col('.') - 1
+endfunction
+
+function! phpactor#_source()
+    let source = join(getline(1,'$'), "\n")
+endfunction
+
+""""""""""""""""
+" RPC Calls
+""""""""""""""""
+function! phpactor#GotoDefinition()
+    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+endfunction
+
 
 """""""""""""""""""""""
 " RPC -->-->-->-->-->--
@@ -607,7 +596,7 @@ function! phpactor#rpc(action, arguments)
             endif
 
             if actionName == "open_file"
-                call phpactor#switchToBufferOrEdit(parameters['path'])
+                call phpactor#_switchToBufferOrEdit(parameters['path'])
 
                 if (parameters['offset'])
                     exec ":goto " .  (parameters['offset'] + 1)
