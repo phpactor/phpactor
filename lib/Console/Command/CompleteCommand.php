@@ -27,7 +27,6 @@ class CompleteCommand extends Command
      */
     private $helper;
 
-
     public function __construct(
         Complete $complete,
         DumperRegistry $dumperRegistry

@@ -18,49 +18,6 @@ function! phpactor#NamespaceGet()
     return results['class_namespace']
 endfunction
 
-function! phpactor#_searchAndSelectClassInfo()
-    " START: Resolve FQN for class
-    let word = expand("<cword>")
-
-    let out = phpactor#Exec('class:search --format=json ' . word)
-    let results = json_decode(out)
-
-    if (len(results) == 0)
-        echo "Could not find class"
-        echo results
-        return {}
-    endif
-
-    if (len(results) > 1)
-        let c = 1
-        let height = len(results) + 1
-        let list = []
-        for info in results
-            let list = add(list, c . '. ' . info['class'])
-            let c = c + 1
-        endfor
-
-        let choice = inputlist(list)
-        if (choice == 0)
-            return {}
-        endif
-        let choice = choice - 1
-
-        let classInfo = get(results, choice, {})
-
-        if ({} == classInfo)
-            echo "Invalid choice"
-            return {}
-        endif
-    endif
-
-    if (len(results) == 1)
-        let classInfo = results[0]
-    endif
-
-    return classInfo
-endfunction
-
 """""""""""""""""
 " Update Phpactor
 """""""""""""""""
@@ -109,10 +66,13 @@ endfunc
 " Expand a use statement
 """"""""""""""""""""""""
 function! phpactor#ClassExpand()
-    let classInfo = phpactor#_searchAndSelectClassInfo()
+    let word = expand("<cword>")
+    let classInfo = phpactor#rpc("class_search", { "short_name": word })
+
     if (empty(classInfo))
         return
     endif
+
     let line = getline('.')
     let char = line[col('.') - 2]
     let namespace_prefix = classInfo['class_namespace'] . "\\"
@@ -136,8 +96,8 @@ function! phpactor#UseAdd()
     " @return int Number of extra lines added
     ""
     function! UseAdd(savePos)
-
-        let classInfo = phpactor#_searchAndSelectClassInfo()
+        let word = expand("<cword>")
+        let classInfo = phpactor#rpc("class_search", { "short_name": word })
 
         if (empty(classInfo))
             return
@@ -147,12 +107,10 @@ function! phpactor#UseAdd()
         let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
 
         if (existing > 0)
-            echo "\n"
             echo "Use statement already included on line:" . existing
             call setpos('.', a:savePos)
             return 0
         endif
-        "END: Resolve FQN for class
 
         " START: Insert use statement
         call cursor(1, 1)
@@ -198,7 +156,6 @@ function! phpactor#UseAdd()
         endif
 
         return extraLines
-
     endfunc
 
     let savePos = getpos(".")
@@ -596,20 +553,44 @@ function! phpactor#rpc(action, arguments)
 endfunction
 
 function! phpactor#_rpc_dispatch(actionName, parameters)
+
+    " >> return_choice
     if a:actionName == "return"
         return a:parameters["value"]
     endif
 
+    " >> return_choice
+    if a:actionName == "return_choice"
+        let list = []
+        for choice in a:parameters["choices"]
+            call add(list, "1) " . choice["name"])
+        endfor
+
+        let choice = inputlist(list)
+
+        call confirm(choice)
+        if (choice == 0)
+            return
+        endif
+
+        let choice = choice - 1
+
+        return a:parameters["choices"][choice]["value"]
+    endif
+
+    " >> echo
     if a:actionName == "echo"
         echo a:parameters["message"]
         return
     endif
 
+    " >> error
     if a:actionName == "error"
         echo "Error from Phpactor: " . a:parameters["message"]
         return
     endif
-
+    
+    " >> collection
     if a:actionName == "collection"
         for action in a:parameters["actions"]
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
@@ -622,6 +603,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         return
     endif
 
+    " >> open_file
     if a:actionName == "open_file"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
