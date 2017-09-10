@@ -81,20 +81,13 @@ abstract class SystemTestCase extends TestCase
         $this->cacheWorkspace($name);
     }
 
-    protected function phpactor(string $args, string $stdin = null): Process
+    protected function phpactor(string $args): Process
     {
         chdir($this->workspaceDir());
-        $bin = __DIR__ . '/../../bin/phpactor';
+        $bin = __DIR__ . '/../../bin/phpactor --verbose ';
         $process = new Process(sprintf(
             '%s %s'
-        , $bin, $args), $this->workspaceDir(), [
-            'PHPACTORTEST' => 1,
-        ]);
-
-        if ($stdin) {
-            $process->setInput($stdin);
-        }
-
+        , $bin, $args));
         $process->run();
 
         return $process;
