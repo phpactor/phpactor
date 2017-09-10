@@ -3,8 +3,7 @@
 namespace Phpactor\Tests\Unit\Rpc;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Tests\Unit\Rpc\HandlerRegistryTest;
-use Phpactor\Rpc\ActionRequest;
+
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\Handler;
 
@@ -29,7 +28,6 @@ class HandlerRegistryTest extends TestCase
         $registry = $this->create([ $action->reveal() ]);
 
         $this->assertSame($action->reveal(), $registry->get('one'));
-
     }
 
     public function create(array $actions = [])

@@ -59,4 +59,3 @@ class CompleteCommand extends Command
         ], $completions);
     }
 }
-

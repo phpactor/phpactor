@@ -58,4 +58,3 @@ class ReturnChoiceAction implements Action
         $this->options[] = $option;
     }
 }
-

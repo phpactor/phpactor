@@ -2,9 +2,7 @@
 
 namespace Phpactor\Console\Command;
 
-use Phpactor\Console\Command\ReferencesMethodCommand;
 use Symfony\Component\Console\Command\Command;
-use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,8 +13,6 @@ use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
 use Phpactor\Application\ClassMethodReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Console\Command\Handler\FilesystemHandler;
-use Phpactor\Console\Command\Handler\FormatHandler;
 
 class ReferencesMethodCommand extends Command
 {
@@ -114,7 +110,6 @@ class ReferencesMethodCommand extends Command
 
         $count = 0;
         foreach ($results['references'] as $references) {
-
             $filePath = $references['file'];
             foreach ($references[$type] as $reference) {
                 $this->addReferenceRow($table, $filePath, $reference, $ansi);
@@ -138,4 +133,3 @@ class ReferencesMethodCommand extends Command
         ]);
     }
 }
-

@@ -2,8 +2,6 @@
 
 namespace Phpactor\Rpc;
 
-use Phpactor\Rpc\HandlerRegistry;
-
 class RequestHandler
 {
     /**
@@ -28,7 +26,9 @@ class RequestHandler
             if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
                 throw new \InvalidArgumentException(sprintf(
                     'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
-                    implode('", "', $diff), $handler->name(), implode('", "', array_keys($defaults))
+                    implode('", "', $diff),
+                    $handler->name(),
+                    implode('", "', array_keys($defaults))
                 ));
             }
 

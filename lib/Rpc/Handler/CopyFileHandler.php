@@ -35,7 +35,8 @@ class CopyFileHandler implements Handler
     public function handle(array $arguments)
     {
         if (null === $arguments['dest_path']) {
-            return InputCallbackAction::fromInputsAndAction([
+            return InputCallbackAction::fromInputsAndAction(
+                [
                     TextInput::fromNameLabelAndDefault('dest_path', 'Copy to:', $arguments['source_path']),
                 ],
                 ActionRequest::fromNameAndParameters(
@@ -52,6 +53,4 @@ class CopyFileHandler implements Handler
 
         return OpenFileAction::fromPath($arguments['dest_path']);
     }
-
 }
-

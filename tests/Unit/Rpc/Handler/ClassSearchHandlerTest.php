@@ -23,7 +23,6 @@ class ClassSearchHandlerTest extends HandlerTestCase
 
     public function createHandler(): Handler
     {
-
         return new ClassSearchHandler(
             $this->classSearch->reveal()
         );
@@ -90,4 +89,3 @@ class ClassSearchHandlerTest extends HandlerTestCase
         $this->assertCount(2, $action->options());
     }
 }
-

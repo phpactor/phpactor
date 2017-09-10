@@ -31,7 +31,5 @@ class CompleteHandlerTest extends TestCase
         $this->assertEquals([
             'aaa', 'bbb',
         ], $action->value());
-
     }
 }
-

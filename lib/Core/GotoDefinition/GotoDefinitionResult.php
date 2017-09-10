@@ -2,8 +2,6 @@
 
 namespace Phpactor\Core\GotoDefinition;
 
-use Phpactor\Core\GotoDefinition\GotoDefinitionResult;
-
 final class GotoDefinitionResult implements \JsonSerializable
 {
     /**
@@ -23,7 +21,7 @@ final class GotoDefinitionResult implements \JsonSerializable
 
     public static function fromClassPathAndOffset(string $path, int $offset): GotoDefinitionResult
     {
-         return new self($path, $offset);
+        return new self($path, $offset);
     }
 
     public function path(): string
@@ -47,4 +45,3 @@ final class GotoDefinitionResult implements \JsonSerializable
         ];
     }
 }
-

@@ -31,7 +31,8 @@ class ActionRequest
         if ($diff = array_diff(array_keys($actionConfig), $validKeys)) {
             throw new \InvalidArgumentException(sprintf(
                 'Invalid request keys "%s", valid keys: "%s"',
-                implode('", "', $diff), implode('", "', $validKeys)
+                implode('", "', $diff),
+                implode('", "', $validKeys)
             ));
         }
 
@@ -48,4 +49,3 @@ class ActionRequest
         return $this->parameters;
     }
 }
-

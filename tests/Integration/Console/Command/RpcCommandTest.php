@@ -45,6 +45,6 @@ class RpcCommandTest extends SystemTestCase
                     'message' => 'Goodbye World!',
                 ],
             ]
-        ] , $response['actions']);
+        ], $response['actions']);
     }
 }

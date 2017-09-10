@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Action;
 
 class OpenFileAction implements Action
@@ -21,7 +20,6 @@ class OpenFileAction implements Action
     {
         $this->path = $path;
         $this->offset = $offset;
-
     }
 
     public static function fromPath(string $path)
@@ -47,4 +45,3 @@ class OpenFileAction implements Action
         ];
     }
 }
-

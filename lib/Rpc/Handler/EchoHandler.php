@@ -24,4 +24,3 @@ class EchoHandler implements Handler
         return EchoAction::fromMessage($arguments['message']);
     }
 }
-

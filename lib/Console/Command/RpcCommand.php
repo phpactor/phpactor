@@ -49,7 +49,8 @@ class RpcCommand extends Command
     {
         if (null === $request) {
             throw new \InvalidArgumentException(sprintf(
-                'Could not decode JSON: %s', $this->stdin()
+                'Could not decode JSON: %s',
+                $this->stdin()
             ));
         }
 
@@ -68,4 +69,3 @@ class RpcCommand extends Command
         return $in;
     }
 }
-

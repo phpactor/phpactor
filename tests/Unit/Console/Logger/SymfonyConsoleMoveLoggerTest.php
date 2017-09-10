@@ -31,7 +31,8 @@ class SymfonyConsoleMoveLoggerTest extends TestCase
     public function testReplacing()
     {
         $references = new FoundReferences(
-            SourceCode::fromString(<<<'EOT'
+            SourceCode::fromString(
+                <<<'EOT'
 <?php
 
 namespace Acme;
@@ -54,7 +55,8 @@ class Foobar
     }
 }
 EOT
-            ), FullyQualifiedName::fromString('Acme'),
+            ),
+            FullyQualifiedName::fromString('Acme'),
             NamespacedClassReferences::fromNamespaceAndClassRefs(
                 NamespaceReference::fromNameAndPosition(Namespace_::fromString('Foobar'), Position::fromStartAndEnd(10, 20)),
                 [

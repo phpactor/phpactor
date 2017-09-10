@@ -19,7 +19,6 @@ class ReturnAction implements Action
     private function __construct($value)
     {
         $this->value = $value;
-
     }
 
     public function name(): string
@@ -44,4 +43,3 @@ class ReturnAction implements Action
         return $this->value;
     }
 }
-

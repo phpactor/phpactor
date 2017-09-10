@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\UserInterface\Console\Dumper;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Console\Dumper\IndentedDumper;
 
 class IndentedDumperTest extends DumperTestCase

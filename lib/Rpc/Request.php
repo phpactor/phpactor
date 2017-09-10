@@ -2,8 +2,6 @@
 
 namespace Phpactor\Rpc;
 
-use Phpactor\Rpc\ActionRequest;
-
 /**
  * This class represents a request FROM the editor TO phpactor.
  */
@@ -29,7 +27,8 @@ final class Request
         if ($diff = array_diff(array_keys($requestConfig), $validKeys)) {
             throw new \InvalidArgumentException(sprintf(
                 'Invalid keys "%s", valid keys: "%s"',
-                implode('", "', $diff), implode('", "', $validKeys)
+                implode('", "', $diff),
+                implode('", "', $validKeys)
             ));
         }
 

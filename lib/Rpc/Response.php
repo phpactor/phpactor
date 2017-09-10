@@ -2,9 +2,6 @@
 
 namespace Phpactor\Rpc;
 
-use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\Action;
-
 class Response
 {
     private $actions = [];

@@ -2,8 +2,6 @@
 
 namespace Phpactor\Rpc;
 
-use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
-
 class HandlerRegistry
 {
     private $handlers = [];
@@ -20,7 +18,8 @@ class HandlerRegistry
         if (false === isset($this->handlers[$handlerName])) {
             throw new \InvalidArgumentException(sprintf(
                 'No handler "%s", available handlers: "%s"',
-                $handlerName, implode('", "', array_keys($this->handlers))
+                $handlerName,
+                implode('", "', array_keys($this->handlers))
             ));
         }
 

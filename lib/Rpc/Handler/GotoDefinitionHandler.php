@@ -3,12 +3,9 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Application\OffsetDefinition;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Core\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 
@@ -26,8 +23,7 @@ class GotoDefinitionHandler implements Handler
 
     public function __construct(
         Reflector $reflector
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->gotoDefinition = new GotoDefinition($reflector);
     }
@@ -57,4 +53,3 @@ class GotoDefinitionHandler implements Handler
         return OpenFileAction::fromPathAndOffset($result->path(), $result->offset());
     }
 }
-

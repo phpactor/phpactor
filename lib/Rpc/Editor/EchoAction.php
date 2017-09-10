@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Action;
 
 class EchoAction implements Action
@@ -39,4 +38,3 @@ class EchoAction implements Action
         return $this->message;
     }
 }
-

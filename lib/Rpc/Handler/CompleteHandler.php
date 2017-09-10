@@ -38,4 +38,3 @@ class CompleteHandler implements Handler
         return ReturnAction::fromValue($suggestions);
     }
 }
-

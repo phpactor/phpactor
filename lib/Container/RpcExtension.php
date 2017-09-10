@@ -11,8 +11,6 @@ use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
-use Phpactor\Container\SourceCodeFilesystemExtension;
-
 
 class RpcExtension implements ExtensionInterface
 {
@@ -36,7 +34,6 @@ class RpcExtension implements ExtensionInterface
             }
 
             return new HandlerRegistry($handlers);
-
         });
 
         $this->registerHandlers($container);
@@ -77,4 +74,3 @@ class RpcExtension implements ExtensionInterface
         ];
     }
 }
-

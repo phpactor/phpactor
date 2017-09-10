@@ -11,7 +11,6 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Phpactor\Console\Command\GreetCommand;
 
 class Application extends SymfonyApplication
 {

@@ -35,4 +35,3 @@ class ReturnOption
         return $this->value;
     }
 }
-

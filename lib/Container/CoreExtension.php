@@ -17,12 +17,7 @@ use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
 use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
-use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
-use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
-use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Console\Command\ClassCopyCommand;
 use Phpactor\Console\Command\ClassMoveCommand;
 use Phpactor\Console\Command\ClassReflectorCommand;
@@ -45,8 +40,6 @@ use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Core\GotoDefinition\GotoDefinition;
 
 class CoreExtension implements ExtensionInterface
 {

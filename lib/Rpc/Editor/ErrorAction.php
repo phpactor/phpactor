@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Action;
 
 class ErrorAction implements Action
@@ -41,4 +40,3 @@ class ErrorAction implements Action
         ];
     }
 }
-

@@ -2,7 +2,6 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;

@@ -1,7 +1,6 @@
 <?php
 namespace Phpactor\Tests\Integration;
 
-use Phpactor\Tests\Integration\SystemTestCase;
 use Phpactor\Container\CoreExtension;
 
 class CoreExtensionTest extends SystemTestCase

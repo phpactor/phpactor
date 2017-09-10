@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
 class GotoDefinition
@@ -107,7 +106,10 @@ class GotoDefinition
         if (false === $members->has($symbolName)) {
             throw new GotoDefinitionException(sprintf(
                 'Class "%s" has no %s named "%s", has: "%s"',
-                $containingClass->name(), $symbolType, $symbolName, implode('", "', $members->keys())
+                $containingClass->name(),
+                $symbolType,
+                $symbolName,
+                implode('", "', $members->keys())
             ));
         }
 
@@ -119,4 +121,3 @@ class GotoDefinition
         );
     }
 }
-

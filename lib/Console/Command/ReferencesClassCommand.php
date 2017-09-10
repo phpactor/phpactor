@@ -2,7 +2,6 @@
 
 namespace Phpactor\Console\Command;
 
-use Phpactor\Console\Command\ReferencesClassCommand;
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Dumper\DumperRegistry;
@@ -14,8 +13,6 @@ use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Console\Command\Handler\FilesystemHandler;
-use Phpactor\Console\Command\Handler\FormatHandler;
 
 class ReferencesClassCommand extends Command
 {
@@ -84,7 +81,7 @@ class ReferencesClassCommand extends Command
     private function findOrReplaceReferences($filesystem, $class, $replace, $dryRun)
     {
         if ($replace) {
-           return $this->referenceFinder->replaceReferences($filesystem, $class, $replace, $dryRun);
+            return $this->referenceFinder->replaceReferences($filesystem, $class, $replace, $dryRun);
         }
 
         return $this->referenceFinder->findReferences($filesystem, $class);
@@ -103,7 +100,6 @@ class ReferencesClassCommand extends Command
 
         $count = 0;
         foreach ($results['references'] as $references) {
-
             $filePath = $references['file'];
             foreach ($references[$type] as $reference) {
                 $this->addReferenceRow($table, $filePath, $reference, $ansi);
@@ -127,4 +123,3 @@ class ReferencesClassCommand extends Command
         ]);
     }
 }
-
