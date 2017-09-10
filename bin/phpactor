@@ -23,6 +23,13 @@ if (!isset($autoloadFile)) {
     exit(255);
 }
 
+$minVersion = '7.0.0';
+
+if (version_compare(PHP_VERSION, $minVersion) < 0) {
+    echo "Phpactor requires at least PHP {$minVersion}";
+    exit(255);
+}
+
 require_once $autoloadFile;
 
 Debug::enable();
