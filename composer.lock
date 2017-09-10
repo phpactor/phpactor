@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b38081fdc1f9a6cb312d42c14823dc4",
+    "content-hash": "ae55fda42ee1f2edb97ddedd69375c9c",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -105,16 +105,16 @@
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "dev-master",
+            "version": "v0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4"
+                "reference": "1fd9de16e07984a17df350e22cba541565655986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c26f73270cb73c81387c2250d940ca72b9fdacc4",
-                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/1fd9de16e07984a17df350e22cba541565655986",
+                "reference": "1fd9de16e07984a17df350e22cba541565655986",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-09-08 20:57:18"
+            "time": "2017-08-11T00:01:27+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "acebf2a2e36a2b23cc61da59f053cbc8add65fa9"
+                "reference": "1654baa5582b66421dbfcaf304b175806b8b71d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/acebf2a2e36a2b23cc61da59f053cbc8add65fa9",
-                "reference": "acebf2a2e36a2b23cc61da59f053cbc8add65fa9",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/1654baa5582b66421dbfcaf304b175806b8b71d4",
+                "reference": "1654baa5582b66421dbfcaf304b175806b8b71d4",
                 "shasum": ""
             },
             "require": {
@@ -480,7 +480,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-09-01 22:40:00"
+            "time": "2017-09-10 10:42:42"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -2488,7 +2488,6 @@
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
         "phpactor/worse-reflection": 20,
-        "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20
     },
     "prefer-stable": false,
