@@ -168,6 +168,15 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
+
+
+"""""""""""""""""""""""""""
+" Goto definition
+"""""""""""""""""""""""""""
+function! phpactor#GotoDefinition()
+    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+endfunction
+
 """""""""""""""""""""""""""
 " Interactively copy a file
 """""""""""""""""""""""""""
@@ -488,13 +497,6 @@ endfunction
 
 function! phpactor#_source()
     return join(getline(1,'$'), "\n")
-endfunction
-
-""""""""""""""""
-" RPC Calls
-""""""""""""""""
-function! phpactor#GotoDefinition()
-    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
 

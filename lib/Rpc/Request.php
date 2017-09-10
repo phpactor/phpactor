@@ -4,6 +4,9 @@ namespace Phpactor\Rpc;
 
 use Phpactor\Rpc\ActionRequest;
 
+/**
+ * This class represents a request FROM the editor TO phpactor.
+ */
 final class Request
 {
     private $actions = [];

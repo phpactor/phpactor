@@ -7,7 +7,7 @@ use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
-final class ClassSearch
+class ClassSearch
 {
     /**
      * @var FileToClass

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Integration\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Core\GotoDefinition\GotoDefinition;

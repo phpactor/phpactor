@@ -33,5 +33,10 @@ class EchoAction implements Action
             'message' => $this->message
         ];
     }
+
+    public function message(): string
+    {
+        return $this->message;
+    }
 }
 

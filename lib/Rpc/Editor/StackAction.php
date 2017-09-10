@@ -4,6 +4,10 @@ namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Action;
 
+/**
+ * Stack of actions.
+ * Each action will be executed one-after-the-other in the editor.
+ */
 class StackAction implements Action
 {
     /**

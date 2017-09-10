@@ -34,10 +34,6 @@ class Application extends SymfonyApplication
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
             $this->add($this->container->get($commandId));
         }
-
-        if (getenv('PHPACTORTEST')) {
-            $this->add(new GreetCommand());
-        }
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)

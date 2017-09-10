@@ -47,7 +47,6 @@ class GotoDefinitionHandler implements Handler
 
     public function handle(array $arguments)
     {
-        // TODO: Pass source or write to temporary file
         $result = $this->reflector->reflectOffset(
             SourceCode::fromString($arguments['source']),
             Offset::fromInt($arguments['offset'])
