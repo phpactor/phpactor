@@ -442,6 +442,9 @@ function! phpactor#ClassReferences()
 
 endfunction
 
+""
+" !DEPRECATED! Will be removed when everything is ported to RPC
+""
 function! phpactor#Exec(cmd)
     let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd)
@@ -457,6 +460,9 @@ function! phpactor#Exec(cmd)
     endif
 endfunction
 
+""
+" !DEPRECATED! Will be removed when everything is ported to RPC
+""
 function! phpactor#ExecStdIn(cmd, stdin)
     let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd, a:stdin)
