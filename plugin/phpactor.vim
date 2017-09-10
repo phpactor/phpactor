@@ -18,49 +18,6 @@ function! phpactor#NamespaceGet()
     return results['class_namespace']
 endfunction
 
-function! phpactor#_searchAndSelectClassInfo()
-    " START: Resolve FQN for class
-    let word = expand("<cword>")
-
-    let out = phpactor#Exec('class:search --format=json ' . word)
-    let results = json_decode(out)
-
-    if (len(results) == 0)
-        echo "Could not find class"
-        echo results
-        return {}
-    endif
-
-    if (len(results) > 1)
-        let c = 1
-        let height = len(results) + 1
-        let list = []
-        for info in results
-            let list = add(list, c . '. ' . info['class'])
-            let c = c + 1
-        endfor
-
-        let choice = inputlist(list)
-        if (choice == 0)
-            return {}
-        endif
-        let choice = choice - 1
-
-        let classInfo = get(results, choice, {})
-
-        if ({} == classInfo)
-            echo "Invalid choice"
-            return {}
-        endif
-    endif
-
-    if (len(results) == 1)
-        let classInfo = results[0]
-    endif
-
-    return classInfo
-endfunction
-
 """""""""""""""""
 " Update Phpactor
 """""""""""""""""
@@ -90,16 +47,14 @@ function! phpactor#Complete(findstart, base)
     endif
 
     let offset = line2byte(line(".")) + col('.') - 2
-    let stdin = join(getline(1,'.'), "\n")
-    let stdin = stdin . "\n" . join(getline(line('.') + 1, '$'), "\n")
+    let source = join(getline(1,'.'), "\n")
+    let source = source . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let results = phpactor#ExecStdIn('complete --format=json stdin ' . offset, stdin)
-    let results = json_decode(results)
+    let suggestions = phpactor#rpc("complete", { "offset": offset, "source": source})
 
     let completions = []
-
-    if !empty(results['suggestions'])
-        for suggestion in results['suggestions']
+    if !empty(suggestions)
+        for suggestion in suggestions
             call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
         endfor
     endif
@@ -111,10 +66,13 @@ endfunc
 " Expand a use statement
 """"""""""""""""""""""""
 function! phpactor#ClassExpand()
-    let classInfo = phpactor#_searchAndSelectClassInfo()
+    let word = expand("<cword>")
+    let classInfo = phpactor#rpc("class_search", { "short_name": word })
+
     if (empty(classInfo))
         return
     endif
+
     let line = getline('.')
     let char = line[col('.') - 2]
     let namespace_prefix = classInfo['class_namespace'] . "\\"
@@ -138,8 +96,8 @@ function! phpactor#UseAdd()
     " @return int Number of extra lines added
     ""
     function! UseAdd(savePos)
-
-        let classInfo = phpactor#_searchAndSelectClassInfo()
+        let word = expand("<cword>")
+        let classInfo = phpactor#rpc("class_search", { "short_name": word })
 
         if (empty(classInfo))
             return
@@ -149,12 +107,10 @@ function! phpactor#UseAdd()
         let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
 
         if (existing > 0)
-            echo "\n"
             echo "Use statement already included on line:" . existing
             call setpos('.', a:savePos)
             return 0
         endif
-        "END: Resolve FQN for class
 
         " START: Insert use statement
         call cursor(1, 1)
@@ -200,7 +156,6 @@ function! phpactor#UseAdd()
         endif
 
         return extraLines
-
     endfunc
 
     let savePos = getpos(".")
@@ -213,85 +168,13 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
-""""""""""""""""
-" Goto defintion
-""""""""""""""""
+
+
+"""""""""""""""""""""""""""
+" Goto definition
+"""""""""""""""""""""""""""
 function! phpactor#GotoDefinition()
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
-
-    let command = 'offset:definition --format=json ' . currentPath . ' ' . offset
-
-    try
-        let out = phpactor#Exec(command)
-        let result = json_decode(out)
-    catch
-        echo v:exception
-        return
-    endtry
-
-    call phpactor#switchToBufferOrEdit(result['path'])
-    exec ':goto ' . (result['offset'] + 1)
-    normal! zz
-
-endfunction
-
-function! phpactor#switchToBufferOrEdit(filePath)
-    let bufferNumber = bufnr(a:filePath . '$')
-
-    if (bufferNumber == -1)
-        exec ":edit " . a:filePath
-        return
-    endif
-
-    exec ":buffer " . bufferNumber
-endfunction
-
-""""""""""""""""
-" Goto type
-""""""""""""""""
-function! phpactor#GotoType()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let currentPath = expand('%')
-
-    let command = 'offset:info --format=json ' . currentPath . ' ' . offset
-    let out = phpactor#Exec(command)
-    let results = json_decode(out)
-
-    if (empty(results['type_path']))
-        echo "Could not locate class at offset: " . offset
-        return
-    endif
-
-    exec "edit " . results['type_path']
-
-endfunction
-
-"""""""""""""""""""""""""""""""""""
-" Return type information at offset
-"""""""""""""""""""""""""""""""""""
-function! phpactor#ReflectAtOffset()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-
-    let command = 'offset:info --format=json stdin ' . offset
-    let out = phpactor#ExecStdIn(command, stdin)
-    let results = json_decode(out)
-
-    if (results['type'] == "<unknown>")
-        echo "Could not locate class at offset: " . offset
-        return
-    endif
-
-    let command = 'class:reflect ' . shellescape(results['type'])
-    let out = phpactor#Exec(command)
-    echo out
-
+    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
 """""""""""""""""""""""""""
@@ -559,6 +442,9 @@ function! phpactor#ClassReferences()
 
 endfunction
 
+""
+" !DEPRECATED! Will be removed when everything is ported to RPC
+""
 function! phpactor#Exec(cmd)
     let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd)
@@ -574,6 +460,9 @@ function! phpactor#Exec(cmd)
     endif
 endfunction
 
+""
+" !DEPRECATED! Will be removed when everything is ported to RPC
+""
 function! phpactor#ExecStdIn(cmd, stdin)
     let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
     let result = system(cmd, a:stdin)
@@ -593,3 +482,121 @@ function! phpactor#NamespaceInsert()
     exec ":normal! i" . phpactor#NamespaceGet()
 endfunction
 
+"""""""""""""""""""""""
+" Utility functions
+"""""""""""""""""""""""
+
+function! phpactor#_switchToBufferOrEdit(filePath)
+    let bufferNumber = bufnr(a:filePath . '$')
+
+    if (bufferNumber == -1)
+        exec ":edit " . a:filePath
+        return
+    endif
+
+    exec ":buffer " . bufferNumber
+endfunction
+
+function! phpactor#_offset()
+    return line2byte(line('.')) + col('.') - 1
+endfunction
+
+function! phpactor#_source()
+    return join(getline(1,'$'), "\n")
+endfunction
+
+
+"""""""""""""""""""""""
+" RPC -->-->-->-->-->--
+"""""""""""""""""""""""
+
+function! phpactor#rpc(action, arguments)
+
+    let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
+
+    let cmd = 'php ' . s:phpactorbinpath . ' rpc'
+    let result = system(cmd, json_encode(request))
+
+    if (v:shell_error == 0)
+        let result = json_decode(result)
+
+        for action in result['actions']
+            let actionName = action['action']
+            let parameters = action['parameters']
+
+            let result = phpactor#_rpc_dispatch(actionName, parameters)
+
+            if !empty(result)
+                return result
+            endif
+        endfor
+    else
+        echo "Phpactor returned an error: " . result
+        return
+    endif
+endfunction
+
+function! phpactor#_rpc_dispatch(actionName, parameters)
+
+    " >> return_choice
+    if a:actionName == "return"
+        return a:parameters["value"]
+    endif
+
+    " >> return_choice
+    if a:actionName == "return_choice"
+        let list = []
+        for choice in a:parameters["choices"]
+            call add(list, "1) " . choice["name"])
+        endfor
+
+        let choice = inputlist(list)
+
+        call confirm(choice)
+        if (choice == 0)
+            return
+        endif
+
+        let choice = choice - 1
+
+        return a:parameters["choices"][choice]["value"]
+    endif
+
+    " >> echo
+    if a:actionName == "echo"
+        echo a:parameters["message"]
+        return
+    endif
+
+    " >> error
+    if a:actionName == "error"
+        echo "Error from Phpactor: " . a:parameters["message"]
+        return
+    endif
+    
+    " >> collection
+    if a:actionName == "collection"
+        for action in a:parameters["actions"]
+            let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
+            
+            if !empty(result)
+                return result
+            endif
+        endfor
+
+        return
+    endif
+
+    " >> open_file
+    if a:actionName == "open_file"
+        call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+
+        if (a:parameters['offset'])
+            exec ":goto " .  (a:parameters['offset'] + 1)
+            normal! zz
+        endif
+        return
+    endif
+
+    throw "Do not know how to handle action '" . a:actionName . "'"
+endfunction

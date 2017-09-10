@@ -84,4 +84,3 @@ class ReferencesMethodCommandTest extends SystemTestCase
         $this->assertContains('⟶badge⟵', $process->getOutput());
     }
 }
-

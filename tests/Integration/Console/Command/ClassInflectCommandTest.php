@@ -55,4 +55,3 @@ EOT
         $this->assertContains('interface', file_get_contents($filePath));
     }
 }
-

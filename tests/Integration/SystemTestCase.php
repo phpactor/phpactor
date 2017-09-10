@@ -46,7 +46,10 @@ abstract class SystemTestCase extends TestCase
         }
 
         $this->fail(sprintf(
-            'Process exited with code %d: %s %s', $process->getExitCode(), $process->getErrorOutput(), $process->getOutput()
+            'Process exited with code %d: %s %s',
+            $process->getExitCode(),
+            $process->getErrorOutput(),
+            $process->getOutput()
         ));
     }
 
@@ -81,13 +84,21 @@ abstract class SystemTestCase extends TestCase
         $this->cacheWorkspace($name);
     }
 
-    protected function phpactor(string $args): Process
+    protected function phpactor(string $args, string $stdin = null): Process
     {
         chdir($this->workspaceDir());
         $bin = __DIR__ . '/../../bin/phpactor --verbose ';
         $process = new Process(sprintf(
-            '%s %s'
-        , $bin, $args));
+            '%s %s',
+            $bin,
+            $args
+        ));
+
+        if ($stdin) {
+            $process->setInput($stdin);
+        }
+
+
         $process->run();
 
         return $process;

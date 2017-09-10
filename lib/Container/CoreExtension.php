@@ -17,12 +17,7 @@ use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
 use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
-use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
-use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
-use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Console\Command\ClassCopyCommand;
 use Phpactor\Console\Command\ClassMoveCommand;
 use Phpactor\Console\Command\ClassReflectorCommand;
@@ -45,10 +40,6 @@ use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMethodCommand;
 use Phpactor\Application\ClassMethodReferences;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Console\Command\OffsetGotoDefinitionCommand;
-use Phpactor\Core\GotoDefinition\GotoDefinition;
-use Phpactor\Application\OffsetDefinition;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -114,13 +105,6 @@ class CoreExtension implements ExtensionInterface
         $container->register('command.offset_info', function (Container $container) {
             return new OffsetInfoCommand(
                 $container->get('application.offset_info'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.offset_definition', function (Container $container) {
-            return new OffsetGotoDefinitionCommand(
-                $container->get('application.offset_definition'),
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
@@ -319,13 +303,6 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.offset_info', function (Container $container) {
             return new OffsetInfo(
-                $container->get('reflection.reflector'),
-                $container->get('application.helper.class_file_normalizer')
-            );
-        });
-
-        $container->register('application.offset_definition', function (Container $container) {
-            return new OffsetDefinition(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
             );

@@ -2,19 +2,13 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
-use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
-use Phpactor\Application\Logger\ClassReferencesLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassRef;
 use Phpactor\ClassMover\Domain\ClassReplacer;
-use Phpactor\ClassMover\Domain\NamespacedClassRefList;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
@@ -73,7 +67,6 @@ class ClassReferences
 
         $results = [];
         foreach ($filesystem->fileList()->phpFiles() as $filePath) {
-
             $references = $this->fileReferences($filesystem, $filePath, $className, $replace, $dryRun);
 
             if (empty($references['references'])) {
@@ -183,4 +176,3 @@ class ClassReferences
         return $this->refReplacer->replaceReferences($code, $list, $class, $replace);
     }
 }
-

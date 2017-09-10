@@ -32,4 +32,3 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertContains('Badger.php"', $process->getOutput());
     }
 }
-

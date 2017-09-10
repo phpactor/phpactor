@@ -30,23 +30,19 @@ class Complete
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function complete(string $code, int $offset): array
+    public function complete(string $source, int $offset): array
     {
-        $code = $this->filesystemHelper->contentsFromFileOrStdin($code);
-        list($offset, $partialMatch) = $this->getOffetToReflect($code, $offset);
+        list($offset, $partialMatch) = $this->getOffetToReflect($source, $offset);
 
         $reflectionOffset = $this->reflector->reflectOffset(
-            SourceCode::fromString($code),
+            SourceCode::fromString($source),
             Offset::fromint($offset)
         );
 
         $type = $reflectionOffset->symbolInformation()->type();
-        $response = [
-            'suggestions' => []
-        ];
 
         if ($type->isPrimitive()) {
-            return $response;
+            return [];
         }
 
         $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
@@ -90,16 +86,16 @@ class Complete
             });
         }
 
-        return ['suggestions' => array_values($suggestions) ];
+        return array_values($suggestions);
     }
 
     /**
      * Hello
      */
-    private function getOffetToReflect($code, $offset)
+    private function getOffetToReflect($source, $offset)
     {
-        $code = str_replace(PHP_EOL, ' ', $code);
-        $untilCursor = substr($code, 0, $offset);
+        $source = str_replace(PHP_EOL, ' ', $source);
+        $untilCursor = substr($source, 0, $offset);
 
         $pos = strlen($untilCursor) - 1;
         $original = null;

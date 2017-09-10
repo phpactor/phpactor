@@ -24,4 +24,3 @@ class ConfigDumpCommandTest extends SystemTestCase
         $this->assertInternalType('array', $config);
     }
 }
-

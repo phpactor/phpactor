@@ -2,8 +2,6 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\ClassFileConverter\Domain\ClassName;
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;

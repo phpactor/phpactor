@@ -68,4 +68,3 @@ class ReferencesClassCommandTest extends SystemTestCase
         $this->assertContains('class ⟶Badger⟵', $process->getOutput());
     }
 }
-

@@ -52,7 +52,6 @@ class ClassFileNormalizer
                 if (file_exists((string) $candidate)) {
                     return (string) $candidate;
                 }
-
             }
 
             return null;

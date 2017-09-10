@@ -2,25 +2,12 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Phpactor;
-use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
-use Phpactor\Application\Logger\ClassReferencesLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\MethodFinder;
 use Phpactor\ClassMover\Domain\ClassRef;
-use Phpactor\ClassMover\Domain\ClassReplacer;
-use Phpactor\ClassMover\Domain\NamespacedClassRefList;
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
-use Phpactor\ClassMover\Domain\Reference\ClassReference;
-use Phpactor\ClassMover\Domain\Model\Class_;
 use Phpactor\ClassMover\Domain\Model\ClassMethodQuery;
-use Phpactor\ClassMover\Domain\Name\MethodName;
 use Phpactor\ClassMover\Domain\Reference\MethodReferences;
 use Phpactor\ClassMover\Domain\Reference\MethodReference;
 use Phpactor\WorseReflection\Reflector;
@@ -86,7 +73,6 @@ class ClassMethodReferences
         }
 
         foreach ($filePaths as $filePath) {
-
             $references = $this->referencesInFile($filesystem, $filePath, $className, $methodName, $replace, $dryRun);
 
             if (empty($references['references']) && empty($references['risky_references'])) {
@@ -103,7 +89,8 @@ class ClassMethodReferences
             if (false === $reflection->methods()->has($methodName)) {
                 throw new \InvalidArgumentException(sprintf(
                     'Method not known "%s", known methods: "%s"',
-                    $methodName, implode('", "', $reflection->methods()->keys())
+                    $methodName,
+                    implode('", "', $reflection->methods()->keys())
                 ));
             }
         }
@@ -222,4 +209,3 @@ class ClassMethodReferences
         return ClassMethodQuery::all();
     }
 }
-
