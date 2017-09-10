@@ -552,7 +552,6 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
         let choice = inputlist(list)
 
-        call confirm(choice)
         if (choice == 0)
             return
         endif
