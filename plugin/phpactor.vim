@@ -546,8 +546,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> return_choice
     if a:actionName == "return_choice"
         let list = []
+        let c = 1
         for choice in a:parameters["choices"]
-            call add(list, "1) " . choice["name"])
+            call add(list, c . ") " . choice["name"])
+            let c = c + 1
         endfor
 
         let choice = inputlist(list)
