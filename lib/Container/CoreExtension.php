@@ -40,6 +40,7 @@ use Phpactor\Console\Command\ConfigDumpCommand;
 use PhpBench\DependencyInjection\Container;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
+use Phpactor\Console\Command\CompleteCommand;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMethodCommand;
@@ -134,6 +135,13 @@ class CoreExtension implements ExtensionInterface
                 $container->getParameters(),
                 $container->get('console.dumper_registry'),
                 $container->configLoader()
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.complete', function (Container $container) {
+            return new CompleteCommand(
+                $container->get('application.complete'),
+                $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
 
