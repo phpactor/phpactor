@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 use Phpactor\Console\Application;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -26,7 +27,7 @@ if (!isset($autoloadFile)) {
 $minVersion = '7.0.0';
 
 if (version_compare(PHP_VERSION, $minVersion) < 0) {
-    echo "Phpactor requires at least PHP {$minVersion}";
+    echo sprintf('Phpactor requires at least PHP %s', $minVersion) . PHP_EOL;
     exit(255);
 }
 
