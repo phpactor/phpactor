@@ -168,30 +168,6 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
-"""""""""""""""""""""""""""""""""""
-" Return type information at offset
-"""""""""""""""""""""""""""""""""""
-function! phpactor#ReflectAtOffset()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-
-    let command = 'offset:info --format=json stdin ' . offset
-    let out = phpactor#ExecStdIn(command, stdin)
-    let results = json_decode(out)
-
-    if (results['type'] == "<unknown>")
-        echo "Could not locate class at offset: " . offset
-        return
-    endif
-
-    let command = 'class:reflect ' . shellescape(results['type'])
-    let out = phpactor#Exec(command)
-    echo out
-
-endfunction
-
 """""""""""""""""""""""""""
 " Interactively copy a file
 """""""""""""""""""""""""""
