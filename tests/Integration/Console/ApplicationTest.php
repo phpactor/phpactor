@@ -67,7 +67,7 @@ EOT
         $application->setCatchExceptions(false);
         $exitCode = $application->run(new ArrayInput([
             'command' => 'config:dump',
-            '--cwd' => $this->workspaceDir(),
+            '--working-dir' => $this->workspaceDir(),
         ]), $output);
 
         $this->assertEquals(0, $exitCode);

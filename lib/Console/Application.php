@@ -59,7 +59,7 @@ class Application extends SymfonyApplication
     protected function getDefaultInputDefinition()
     {
         $definition = parent::getDefaultInputDefinition();
-        $definition->addOption(new InputOption('cwd', null, InputOption::VALUE_REQUIRED, 'Working directory'));
+        $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
 
         return $definition;
     }
@@ -94,8 +94,8 @@ class Application extends SymfonyApplication
     {
         $config = [];
 
-        if ($input->hasParameterOption([ '--cwd' ])) {
-            $config['cwd'] = $input->getParameterOption([ '--cwd' ]);
+        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
+            $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         $this->container = new ApplicationContainer($config);
