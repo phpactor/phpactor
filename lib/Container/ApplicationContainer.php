@@ -9,7 +9,7 @@ class ApplicationContainer extends BaseContainer
 {
     private $configLoader;
 
-    final public function __construct()
+    final public function __construct(array $config = [])
     {
         $this->configLoader = new ConfigLoader();
 
@@ -19,7 +19,7 @@ class ApplicationContainer extends BaseContainer
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
-        ], $this->configLoader->loadConfig());
+        ], array_merge($this->configLoader->loadConfig(), $config));
     }
 
     public function configLoader(): ConfigLoader
