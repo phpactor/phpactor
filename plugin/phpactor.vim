@@ -394,29 +394,8 @@ endfunction
 """""""""""""""""""""""
 function! phpactor#ClassReferences()
 
+    " TODO: Delegate this look up to Phpactor
     let offsetInfo = phpactor#_OffsetTypeInfo()
-    let this = {}
-
-    function! this.populateQuickFix(class)
-        let out = phpactor#Exec('references:class --format=json ' . shellescape(a:class))
-        let results = json_decode(out)
-
-        let list = []
-
-        for fileReferences in results['references']
-            for reference in fileReferences['references']
-                call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'] })
-            endfor
-        endfor
-
-        call setqflist(list)
-        exec ":cc 1"
-    endfunction
-
-    function! this.showReferences(class)
-        let out = phpactor#Exec('references:class --no-ansi ' . shellescape(a:class))
-        echo out
-    endfunction
 
     if empty(offsetInfo['type'])
         echo "Cannot determine type"
@@ -429,17 +408,10 @@ function! phpactor#ClassReferences()
     endif
 
     let class = offsetInfo['type']
-    let options = [ "1. List", "2. Quickfix" ]
-    let choice = inputlist(options)
 
-    if (1 == choice)
-        call this.showReferences(class)
-    endif
+    call phpactor#rpc("class_references", { "class": class })
 
-    if (2 == choice)
-        call this.populateQuickFix(class)
-    endif
-
+    return
 endfunction
 
 ""
@@ -596,6 +568,20 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             exec ":goto " .  (a:parameters['offset'] + 1)
             normal! zz
         endif
+        return
+    endif
+
+    " >> file references
+    if a:actionName == "file_references"
+        let list = []
+
+        for fileReferences in a:parameters['file_references']
+            for reference in fileReferences['references']
+                call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'] })
+            endfor
+        endfor
+
+        call setqflist(list)
         return
     endif
 

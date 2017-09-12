@@ -48,6 +48,11 @@ class StackAction implements Action
         ];
     }
 
+    public function actions(): array
+    {
+        return $this->actions;
+    }
+
     private function add(Action $action)
     {
         $this->actions[] = $action;

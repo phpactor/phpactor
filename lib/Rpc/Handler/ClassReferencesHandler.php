@@ -10,6 +10,7 @@ use Phpactor\Rpc\Editor\ReturnOption;
 use Phpactor\Rpc\Editor\ReturnChoiceAction;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\FileReferencesAction;
+use Phpactor\Rpc\Editor\StackAction;
 
 class ClassReferencesHandler implements Handler
 {
@@ -53,10 +54,18 @@ class ClassReferencesHandler implements Handler
         $results = $results['references'];
 
         if (count($results) === 0) {
-            return EchoAction::fromMessage(sprintf('No references found'));
+            return EchoAction::fromMessage('No references found');
         }
 
-        return FileReferencesAction::fromArray($results);
+        $count = array_reduce($results, function ($count, $result) {
+            $count += count($result['references']);
+            return $count;
+        }, 0);
+
+        return StackAction::fromActions([
+            EchoAction::fromMessage(sprintf('Found %s literal references to class "%s"', $count, $arguments['class'])),
+            FileReferencesAction::fromArray($results)
+        ]);
     }
 }
 

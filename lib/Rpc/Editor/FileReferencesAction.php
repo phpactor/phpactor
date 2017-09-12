@@ -25,7 +25,7 @@ class FileReferencesAction implements Action
             $references[] = FileReferences::fromPathAndReferences(
                 $fileAndReferences['file'],
                 array_map(function (array $reference) {
-                    return Reference::fromStartAndEnd($reference['start'], $reference['end']);
+                    return Reference::fromStartEndAndLineNumber($reference['start'], $reference['end'], $reference['line_no']);
                 }, $fileAndReferences['references'])
             );
         }
@@ -35,7 +35,7 @@ class FileReferencesAction implements Action
 
     public function name(): string
     {
-        return 'echo';
+        return 'file_references';
     }
 
     public function parameters(): array
