@@ -11,6 +11,7 @@ use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
+use Phpactor\Rpc\Handler\ClassReferencesHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -60,6 +61,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.class_search', function (Container $container) {
             return new ClassSearchHandler(
                 $container->get('application.class_search')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.class_references', function (Container $container) {
+            return new ClassReferencesHandler(
+                $container->get('application.class_references')
             );
         }, [ 'rpc.handler' => [] ]);
     }
