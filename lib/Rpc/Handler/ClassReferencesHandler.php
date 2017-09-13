@@ -26,7 +26,7 @@ class ClassReferencesHandler implements Handler
 
     public function __construct(
         ClassReferences $classReferences,
-        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
     ) {
         $this->classReferences = $classReferences;
         $this->defaultFilesystem = $defaultFilesystem;
@@ -46,8 +46,9 @@ class ClassReferencesHandler implements Handler
 
     public function handle(array $arguments)
     {
+        $filesystem = $this->defaultFilesystem;
         $results = $this->classReferences->findReferences(
-            $this->defaultFilesystem,
+            $filesystem,
             $arguments['class']
         );
 
@@ -63,7 +64,7 @@ class ClassReferencesHandler implements Handler
         }, 0);
 
         return StackAction::fromActions([
-            EchoAction::fromMessage(sprintf('Found %s literal references to class "%s"', $count, $arguments['class'])),
+            EchoAction::fromMessage(sprintf('Found %s literal references to class "%s" using FS "%s"', $count, $arguments['class'], $filesystem)),
             FileReferencesAction::fromArray($results)
         ]);
     }

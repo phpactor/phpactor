@@ -33,7 +33,7 @@ class ClassReferencesHandlerTest extends HandlerTestCase
     public function testReturnNoneFound()
     {
         $this->classReferences->findReferences(
-            SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'AAA'
         )->willReturn([
             'references' => [],
@@ -49,7 +49,7 @@ class ClassReferencesHandlerTest extends HandlerTestCase
     public function testReferences()
     {
         $this->classReferences->findReferences(
-            SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'AAA'
         )->willReturn([
             'references' => [
