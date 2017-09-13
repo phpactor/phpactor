@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "a6ccf8a19354c0d818994596dacd2d444e4e5440"
+                "reference": "ae6536aa2165808d963915d38ec624a23e9747ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/a6ccf8a19354c0d818994596dacd2d444e4e5440",
-                "reference": "a6ccf8a19354c0d818994596dacd2d444e4e5440",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/ae6536aa2165808d963915d38ec624a23e9747ca",
+                "reference": "ae6536aa2165808d963915d38ec624a23e9747ca",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-09-07 12:25:37"
+            "time": "2017-09-11 17:10:04"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4"
+                "reference": "5bfa8bbffa416aaf9d7b7a4bb127289299726afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c26f73270cb73c81387c2250d940ca72b9fdacc4",
-                "reference": "c26f73270cb73c81387c2250d940ca72b9fdacc4",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/5bfa8bbffa416aaf9d7b7a4bb127289299726afc",
+                "reference": "5bfa8bbffa416aaf9d7b7a4bb127289299726afc",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-09-08 20:57:18"
+            "time": "2017-09-13 17:28:32"
         },
         {
             "name": "monolog/monolog",
@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "1654baa5582b66421dbfcaf304b175806b8b71d4"
+                "reference": "a787c52aefd355033629270ddad08add32ed3605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/1654baa5582b66421dbfcaf304b175806b8b71d4",
-                "reference": "1654baa5582b66421dbfcaf304b175806b8b71d4",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/a787c52aefd355033629270ddad08add32ed3605",
+                "reference": "a787c52aefd355033629270ddad08add32ed3605",
                 "shasum": ""
             },
             "require": {
@@ -480,7 +480,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-09-10 10:42:42"
+            "time": "2017-09-10 10:45:16"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8752210e92325b30a099e2b93f0ea67ebb550531"
+                "reference": "77bc684748ec206e3f3ed69a5fd8180c94b0b716"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8752210e92325b30a099e2b93f0ea67ebb550531",
-                "reference": "8752210e92325b30a099e2b93f0ea67ebb550531",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/77bc684748ec206e3f3ed69a5fd8180c94b0b716",
+                "reference": "77bc684748ec206e3f3ed69a5fd8180c94b0b716",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-09-06 19:34:08"
+            "time": "2017-09-13 18:10:24"
         },
         {
             "name": "phpbench/container",
