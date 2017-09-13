@@ -39,7 +39,6 @@ $application = new Application();
 $output = new ConsoleOutput();
 
 try {
-    $application->initialize();
     $application->run(null, $output);
 } catch (Exception $e) {
     $application->renderException($e, $output);

@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\Tests\Integration;
+namespace Phpactor\Tests\Integration\Console;
 
 use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Phpactor\Tests\Integration\SystemTestCase;
 
 class ApplicationTest extends SystemTestCase
 {
@@ -28,8 +29,16 @@ EOT
         );
 
         chdir($this->workspaceDir());
+        $output = new BufferedOutput();
         $application = new Application();
-        $application->initialize();
+        $application->setAutoExit(false);
+        $application->setCatchExceptions(false);
+        $application->run(new ArrayInput([
+            'command' => 'class:reflect',
+            'name' => 'asd',
+            '--format' => 'json',
+        ]), $output);
+
     }
 
     public function testSerializesExceptions()
@@ -37,7 +46,6 @@ EOT
         $output = new BufferedOutput();
 
         $application = new Application();
-        $application->initialize();
         $application->setAutoExit(false);
         $application->run(new ArrayInput([
             'command' => 'class:reflect',
@@ -47,5 +55,22 @@ EOT
 
         $out = json_decode($output->fetch(), true);
         $this->assertArrayHasKey('error', $out);
+    }
+
+    public function testCwd()
+    {
+        $this->loadProject('Animals');
+        $output = new BufferedOutput();
+
+        $application = new Application();
+        $application->setAutoExit(false);
+        $application->setCatchExceptions(false);
+        $exitCode = $application->run(new ArrayInput([
+            'command' => 'config:dump',
+            '--working-dir' => $this->workspaceDir(),
+        ]), $output);
+
+        $this->assertEquals(0, $exitCode);
+        $this->assertContains($this->workspaceDir(), $output->fetch());
     }
 }

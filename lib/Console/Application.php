@@ -11,6 +11,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Input\InputOption;
 
 class Application extends SymfonyApplication
 {
@@ -25,18 +26,10 @@ class Application extends SymfonyApplication
         $this->foobar = 'string';
     }
 
-    public function initialize()
-    {
-        $this->container = new ApplicationContainer();
-        $this->container->init();
-
-        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
-            $this->add($this->container->get($commandId));
-        }
-    }
-
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->initialize($input);
+
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
@@ -63,6 +56,13 @@ class Application extends SymfonyApplication
         }
     }
 
+    protected function getDefaultInputDefinition()
+    {
+        $definition = parent::getDefaultInputDefinition();
+        $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
+
+        return $definition;
+    }
 
     private function handleException(OutputInterface $output, string $dumper, \Exception $e)
     {
@@ -89,4 +89,21 @@ class Application extends SymfonyApplication
             'message' => $e->getMessage(),
         ];
     }
+
+    private function initialize(InputInterface $input)
+    {
+        $config = [];
+
+        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
+            $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
+
+        $this->container = new ApplicationContainer($config);
+        $this->container->init();
+
+        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
+            $this->add($this->container->get($commandId));
+        }
+    }
+
 }

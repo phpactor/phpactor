@@ -8,6 +8,7 @@
 
 let s:phpactorpath = expand('<sfile>:p:h') . '/..'
 let s:phpactorbinpath = s:phpactorpath. '/bin/phpactor'
+let s:phpactorInitialCwd = getcwd()
 
 function! phpactor#NamespaceGet()
     let currentPath = expand('%')
@@ -418,7 +419,8 @@ endfunction
 " !DEPRECATED! Will be removed when everything is ported to RPC
 ""
 function! phpactor#Exec(cmd)
-    let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
+    call confirm(s:phpactorInitialCwd)
+    let cmd = 'php ' . s:phpactorbinpath . '--working-dir=' s:phpactorInitialCwd . ' ' . a:cmd
     let result = system(cmd)
 
     if (v:shell_error == 0)
@@ -436,7 +438,8 @@ endfunction
 " !DEPRECATED! Will be removed when everything is ported to RPC
 ""
 function! phpactor#ExecStdIn(cmd, stdin)
-    let cmd = 'php ' . s:phpactorbinpath . ' ' . a:cmd
+    call confirm(s:phpactorInitialCwd)
+    let cmd = 'php ' . s:phpactorbinpath . '--working-dir=' s:phpactorInitialCwd . ' ' . a:cmd
     let result = system(cmd, a:stdin)
 
     if (v:shell_error == 0)
@@ -484,9 +487,10 @@ endfunction
 
 function! phpactor#rpc(action, arguments)
 
+    call confirm(s:phpactorInitialCwd)
     let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
 
-    let cmd = 'php ' . s:phpactorbinpath . ' rpc'
+    let cmd = 'php ' . s:phpactorbinpath . ' rpc --working-dir=' . s:phpactorInitialCwd
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)

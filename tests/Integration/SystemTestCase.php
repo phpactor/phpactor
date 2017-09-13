@@ -76,11 +76,13 @@ abstract class SystemTestCase extends TestCase
         }
 
         $filesystem->mirror(__DIR__ . '/../Assets/Projects/' . $name, $this->workspaceDir());
+        $currentDir = getcwd();
         chdir($this->workspaceDir());
         exec('git init');
         exec('git add *');
         exec('git commit -m "Test"');
         exec('composer install --quiet');
+        chdir($currentDir);
         $this->cacheWorkspace($name);
     }
 

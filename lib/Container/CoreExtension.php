@@ -50,10 +50,9 @@ class CoreExtension implements ExtensionInterface
 
     public function getDefaultConfig()
     {
-        $cwd = $this->getBaseCwd();
         return [
-            'autoload' => sprintf('%s/vendor/autoload.php', $cwd),
-            'cwd' => $cwd,
+            'autoload' => 'vendor/autoload.php',
+            'cwd' => getcwd(),
             'console_dumper_default' => 'indented',
             'cache_dir' => __DIR__ . '/../../cache',
         ];
@@ -191,7 +190,16 @@ class CoreExtension implements ExtensionInterface
     {
         $container->register('composer.class_loaders', function (Container $container) {
             $currentAutoloaders = spl_autoload_functions();
-            $autoloaderPaths = (array) $container->getParameter('autoload');
+
+            // prefix relative paths with the configured CWD
+            $autoloaderPaths = array_map(function ($path) use ($container) {
+                if (substr($path, 0, 1) == '/') {
+                    return $path;
+                }
+
+                return $container->getParameter('cwd') . '/' . $path;
+            }, (array) $container->getParameter('autoload'));
+
             $autoloaders = [];
 
             foreach ($autoloaderPaths as $autoloaderPath) {
@@ -352,22 +360,5 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
         });
-    }
-
-    /**
-     * TODO: Move this to Phpactor\Phpactor.
-     */
-    private function getBaseCwd($path = null)
-    {
-        if (is_null($path)) {
-            $path = getcwd();
-        }
-
-        // Return base CWD where .git directory is present
-        if (!file_exists(sprintf('%s/.git', $path)) && $path !== '/') {
-            return $this->getBaseCwd(dirname($path));
-        }
-
-        return $path;
     }
 }
