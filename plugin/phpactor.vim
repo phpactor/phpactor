@@ -419,8 +419,7 @@ endfunction
 " !DEPRECATED! Will be removed when everything is ported to RPC
 ""
 function! phpactor#Exec(cmd)
-    call confirm(s:phpactorInitialCwd)
-    let cmd = 'php ' . s:phpactorbinpath . '--working-dir=' s:phpactorInitialCwd . ' ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' --working-dir=' . s:phpactorInitialCwd . ' ' . a:cmd
     let result = system(cmd)
 
     if (v:shell_error == 0)
@@ -438,8 +437,7 @@ endfunction
 " !DEPRECATED! Will be removed when everything is ported to RPC
 ""
 function! phpactor#ExecStdIn(cmd, stdin)
-    call confirm(s:phpactorInitialCwd)
-    let cmd = 'php ' . s:phpactorbinpath . '--working-dir=' s:phpactorInitialCwd . ' ' . a:cmd
+    let cmd = 'php ' . s:phpactorbinpath . ' --working-dir=' . s:phpactorInitialCwd . ' ' . a:cmd
     let result = system(cmd, a:stdin)
 
     if (v:shell_error == 0)
