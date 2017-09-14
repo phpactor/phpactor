@@ -58,7 +58,7 @@ map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
 map <Leader>tt :call phpactor#Transform()<CR>
 map <Leader>cc :call phpactor#ClassNew()<CR>
-map <Leader>fr :call phpactor#References()<CR>
+map <Leader>fr :call phpactor#FindReferences()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
