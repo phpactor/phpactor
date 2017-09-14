@@ -393,26 +393,14 @@ endfunction
 """""""""""""""""""""""
 " Find class references
 """""""""""""""""""""""
+
+" Deprecated!!
 function! phpactor#ClassReferences()
+    call phpactor#FindReferences()
+endfunction
 
-    " TODO: Delegate this look up to Phpactor
-    let offsetInfo = phpactor#_OffsetTypeInfo()
-
-    if empty(offsetInfo['type'])
-        echo "Cannot determine type"
-        return
-    endif
-
-    if (offsetInfo['type'] == '<unknown>')
-        echo "Cannot determine type"
-        return
-    endif
-
-    let class = offsetInfo['type']
-
-    call phpactor#rpc("class_references", { "class": class })
-
-    return
+function! phpactor#FindReferences()
+    call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
 ""
@@ -484,8 +472,6 @@ endfunction
 """""""""""""""""""""""
 
 function! phpactor#rpc(action, arguments)
-
-    call confirm(s:phpactorInitialCwd)
     let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
 
     let cmd = 'php ' . s:phpactorbinpath . ' rpc --working-dir=' . s:phpactorInitialCwd

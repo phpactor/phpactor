@@ -16,8 +16,8 @@ Features
   expand it to its FQN.
 - [Tranformations](#transformations): Apply transformations (implement contracts, etc).
 - [Move and copy classes](#move-class): Move/copy classes and update references to them.
-- [Find class references](#class-references): Populate the quick fix list with
-  references to the class under the cursor.
+- [Find references](#class-references): Populate the quick fix list with
+  references to the symbol under the cursor (currently classes and methods).
 - [Go-to definition](#goto-definition): Goto the definition of a class or a
   class member.
 - [Create class](#create-class): New class in an empty file, or generate in a
@@ -58,7 +58,7 @@ map <Leader>pfm :call phpactor#MoveFile()<CR>
 map <Leader>pfc :call phpactor#CopyFile()<CR>
 map <Leader>tt :call phpactor#Transform()<CR>
 map <Leader>cc :call phpactor#ClassNew()<CR>
-map <Leader>cr :call phpactor#ClassReferences()<CR>
+map <Leader>fr :call phpactor#References()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
@@ -125,11 +125,11 @@ update the class name and all references to it in the current git-tree.
 Find References
 ---------------
 
-Find references to the class under the cursor and populate the quickfix list
+Find references to the symbol under the cursor and populate the quickfix list
 with them:
 
 ```bash
-:call phpactor#ClassReferences()
+:call phpactor#FindReferences()
 ```
 
 Copy class

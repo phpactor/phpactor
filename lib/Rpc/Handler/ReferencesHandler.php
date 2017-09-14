@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 
 class ReferencesHandler implements Handler
 {
@@ -70,45 +71,57 @@ class ReferencesHandler implements Handler
         $offset = $this->reflector->reflectOffset(SourceCode::fromString($arguments['source']), Offset::fromInt($arguments['offset']));
         $symbolInformation = $offset->symbolInformation();
 
-        $classType = (string) $symbolInformation->type();
+        $references = $this->getReferences($symbolInformation);
 
-        $references = $this->classReferences->findReferences($this->defaultFilesystem, $classType);
-        $results = $references['references'];
-
-        if (count($results) === 0) {
+        if (count($references) === 0) {
             return EchoAction::fromMessage('No references found');
         }
 
-        $count = array_reduce($results, function ($count, $result) {
+        $count = array_reduce($references, function ($count, $result) {
             $count += count($result['references']);
             return $count;
         }, 0);
 
         return StackAction::fromActions([
-            EchoAction::fromMessage(sprintf('Found %s literal references to class "%s" using FS "%s"', $count, $classType, $filesystem)),
-            FileReferencesAction::fromArray($results)
+            EchoAction::fromMessage(sprintf(
+                'Found %s literal references to %s "%s" using FS "%s"',
+                $count,
+                $symbolInformation->symbol()->symbolType(),
+                $symbolInformation->symbol()->name(),
+                $filesystem
+            )),
+            FileReferencesAction::fromArray($references)
         ]);
     }
 
-    private function getReferences(Symbol $symbol)
+    private function classReferences(SymbolInformation $symbolInformation)
     {
-        switch ($symbol->symbolType()) {
-            case Symbol::METHOD:
-                return $this->classMethodReferences->findOrReplaceReferences(
-                    $this->defaultFilesystem,
-                    $symbolInformation->hasClassType() ? (string) $symbolInformation->classType() : null,
-                    $symbol->name()
-                );
+        $classType = (string) $symbolInformation->type();
+
+        $references = $this->classReferences->findReferences($this->defaultFilesystem, $classType);
+        return $references['references'];
+    }
+
+    private function methodReferences(SymbolInformation $symbolInformation)
+    {
+        $classType = (string) $symbolInformation->classType();
+        $references = $this->classMethodReferences->findOrReplaceReferences($this->defaultFilesystem, $classType, $symbolInformation->symbol()->name());
+
+        return $references['references'];
+    }
+
+    private function getReferences(SymbolInformation $symbolInformation)
+    {
+        switch ($symbolInformation->symbol()->symbolType()) {
             case Symbol::CLASS_:
-                return $this->classReferences->findReferences(
-                    $filesystem,
-                    (string) $symbolInformation->type()
-                );
+                return $this->classReferences($symbolInformation);
+            case Symbol::METHOD:
+                return $this->methodReferences($symbolInformation);
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Do not know how to handle references for symbol type "%s"',
-            $symbol->symbolType()
+        throw new \RuntimeException(sprintf(
+            'Cannot find references for symbol type "%s"',
+            $symbolInformation->symbol()->symbolType()
         ));
     }
 }
