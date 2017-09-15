@@ -11,6 +11,7 @@ use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
+use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 
 class RpcExtension implements ExtensionInterface
@@ -69,6 +70,12 @@ class RpcExtension implements ExtensionInterface
                 $container->get('reflection.reflector'),
                 $container->get('application.class_references'),
                 $container->get('application.method_references')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.copy_class', function (Container $container) {
+            return new ClassCopyHandler(
+                $container->get('application.class_copy')
             );
         }, [ 'rpc.handler' => [] ]);
     }

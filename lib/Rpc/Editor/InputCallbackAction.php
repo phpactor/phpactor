@@ -4,6 +4,7 @@ namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Editor\Input\Input;
 
 class InputCallbackAction implements Action
 {
@@ -36,15 +37,31 @@ class InputCallbackAction implements Action
         return 'input_callback';
     }
 
+    public function inputs(): array
+    {
+        return $this->inputs;
+    }
+
     public function parameters(): array
     {
         return [
-            'inputs' => $this->inputs,
+            'inputs' => array_map(function (Input $input) {
+                return [
+                    'name' => $input->name(),
+                    'type' => $input->type(),
+                    'parameters' => $input->parameters()
+                ];
+            }, $this->inputs),
             'callback' => [
                 'action' => $this->callbackAction->name(),
                 'parameters' => $this->callbackAction->parameters()
             ],
         ];
+    }
+
+    public function callbackAction(): ActionRequest
+    {
+        return $this->callbackAction;
     }
 
     private function add(Input $input)

@@ -183,11 +183,7 @@ endfunction
 """""""""""""""""""""""""""
 function! phpactor#CopyFile()
     let currentPath = expand('%')
-    let destPath = input("Copy to: ", currentPath, "file")
-    let command = 'class:copy ' . currentPath . ' ' . destPath
-    let out = phpactor#Exec(command)
-    echo out
-    exec "edit " . destPath
+    call phpactor#rpc("copy_class", { "source_path": currentPath })
 endfunction
 
 """""""""""""""""""""""""""
@@ -573,5 +569,24 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         return
     endif
 
+    " >> input_callback
+    if a:actionName == "input_callback"
+        let parameters = a:parameters['callback']['parameters']
+        for input in a:parameters['inputs']
+            let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
+            let parameters[input['name']] = value
+        endfor
+        call phpactor#rpc(a:parameters['callback']['action'], parameters)
+        return
+    endif
+
     throw "Do not know how to handle action '" . a:actionName . "'"
+endfunction
+
+function! phpactor#_rpc_dispatch_input(type, parameters)
+    if a:type == 'text'
+        return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
+    endif
+
+    throw "Do not know how to handle input '" . type . "'"
 endfunction
