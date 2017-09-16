@@ -35,8 +35,8 @@ class ReplaceFileSourceAction implements Action
     public function parameters(): array
     {
         return [
-            'path' => null,
-            'source' => null,
+            'path' => $this->path,
+            'source' => $this->replacementSource,
         ];
     }
 

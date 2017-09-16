@@ -216,34 +216,8 @@ endfunction
 " Apply a transformation
 """"""""""""""""""""""""
 function! phpactor#Transform()
-
-    " TODO: Get the list of transforms from the PHP application
-    let transformations = [ 'complete_constructor', 'implement_contracts', 'add_missing_assignments' ]
-
-    let list = []
-    let c = 1
-    for transformation in transformations
-        let list = add(list, c . ': ' . transformation)
-        let c = c + 1
-    endfor
-    let choice = inputlist(list)
-    let transform = transformations[choice - 1]
-
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-    let out = phpactor#ExecStdIn('class:transform stdin --transform=' . transform, stdin)
-    let savePos = getpos(".")
-
-    if (empty(out))
-        echo "No transformation made"
-        return
-    endif
-
-    let @p = out
-    exec "%d"
-    exec ":0 put p"
-
-    call setpos('.', savePos)
+    let currentPath = expand('%')
+    call phpactor#rpc("transform", { "path": currentPath, "source": phpactor#_source() })
 endfunction
 
 """"""""""""""""""""""""
@@ -581,6 +555,17 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         execute ":1"
         silent write!
         wincmd p
+        return
+    endif
+
+    " >> replace_file_source
+    if a:actionName == "replace_file_source"
+
+        " TODO: This is not clever
+        let savePos = getpos(".")
+        exec "%d"
+        call append(0, split(a:parameters['source'], "\n"))
+        call setpos('.', savePos)
         return
     endif
 

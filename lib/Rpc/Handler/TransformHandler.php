@@ -40,7 +40,7 @@ class TransformHandler implements Handler
     public function handle(array $arguments)
     {
         if (null === $arguments['transform']) {
-            return $this->transformerChoiceAction();
+            return $this->transformerChoiceAction($arguments['path'], $arguments['source']);
         }
 
         $code = SourceCode::fromString($arguments['source']);
@@ -52,7 +52,7 @@ class TransformHandler implements Handler
         return ReplaceFileSourceAction::fromPathAndSource($arguments['path'], (string) $transformedCode);
     }
 
-    private function transformerChoiceAction()
+    private function transformerChoiceAction(string $path, string $source)
     {
         $transformers= $this->codeTransform->transformers()->names();
 
@@ -62,6 +62,8 @@ class TransformHandler implements Handler
                 $this->name(),
                 [
                     'transform' => null,
+                    'path' => $path,
+                    'source' => $source,
                 ]
             ),
             [

@@ -61,8 +61,7 @@ class CodeTransformExtension implements ExtensionInterface
     {
         $container->register('application.transform', function (Container $container) {
             return new Transformer(
-                $container->get('code_transform.transform'),
-                $container->get('code_transform.transformers')
+                $container->get('code_transform.transform')
             );
         });
 
