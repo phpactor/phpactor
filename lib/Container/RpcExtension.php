@@ -14,6 +14,7 @@ use Phpactor\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Rpc\Handler\ReferencesHandler;
+use Phpactor\Rpc\Handler\OffsetInfoHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -84,6 +85,12 @@ class RpcExtension implements ExtensionInterface
             return new ClassMoveHandler(
                 $container->get('application.class_mover'),
                 $container->getParameter('rpc.class_move.filesystem')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.offset_info', function (Container $container) {
+            return new OffsetInfoHandler(
+                $container->get('reflection.reflector')
             );
         }, [ 'rpc.handler' => [] ]);
     }
