@@ -24,7 +24,7 @@ class ChoiceInput implements Input
      */
     private $choices;
 
-    private function __construct(string $name, string $label, array $choices, string $default)
+    private function __construct(string $name, string $label, array $choices, string $default = null)
     {
         $this->name = $name;
         $this->label = $label;
@@ -50,6 +50,11 @@ class ChoiceInput implements Input
     public function label(): string
     {
         return $this->label;
+    }
+
+    public function choices(): array
+    {
+        return $this->choices;
     }
 
     public function parameters(): array
