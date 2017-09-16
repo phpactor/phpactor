@@ -198,15 +198,7 @@ endfunction
 " Return debug information about the current offset
 """""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#OffsetTypeInfo()
-
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-
-    let command = 'offset:info --frame stdin ' . offset
-    let out = phpactor#ExecStdIn(command, stdin)
-
-    echo out
+    call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
 function! phpactor#_OffsetTypeInfo()
@@ -575,6 +567,20 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             let parameters[input['name']] = value
         endfor
         call phpactor#rpc(a:parameters['callback']['action'], parameters)
+        return
+    endif
+
+    " >> information
+    if a:actionName == "information"
+        " We write to a temporary file and then "edit" it in the preview
+        " window. Not sure if there is a better way to do this.
+        let temp = resolve(tempname())
+        execute 'pedit ' . temp
+        wincmd P
+        call append(0, split(a:parameters['information'], "\n"))
+        execute ":1"
+        silent write!
+        wincmd p
         return
     endif
 
