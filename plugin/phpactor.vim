@@ -191,21 +191,7 @@ endfunction
 """""""""""""""""""""""""""
 function! phpactor#MoveFile()
     let currentPath = expand('%')
-    let destPath = input("Move to: ", currentPath, "file")
-    let command = 'class:move ' . currentPath . ' ' . destPath
-    echo "\nWARNING: This command will move the class and update ALL references in the git tree."
-    echo "         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!"
-    echo "NOTE: Currently buffers will not be reloaded"
-    let confirm =  confirm('Do you want to proceed?', "&Yes\n&No")
-
-    if confirm == 2
-        echo "Cancelled"
-        return
-    endif
-
-    let out = phpactor#Exec(command)
-    echo out
-    exec "edit " . destPath
+    call phpactor#rpc("move_class", { "source_path": currentPath })
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -555,6 +541,18 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         return
     endif
 
+    " >> close_file
+    if a:actionName == "close_file"
+        let bufferNumber = bufnr(a:parameters['path']. '$')
+
+        if (bufferNumber == -1)
+            return
+        endif
+
+        exec ":bdelete " . bufferNumber
+        return
+    endif
+
     " >> file references
     if a:actionName == "file_references"
         let list = []
@@ -584,9 +582,24 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 endfunction
 
 function! phpactor#_rpc_dispatch_input(type, parameters)
+    " >> text
     if a:type == 'text'
         return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
     endif
 
-    throw "Do not know how to handle input '" . type . "'"
+    " >> choice
+    if a:type == 'choice'
+        let confirmStr = ''
+        let choices = []
+        for choiceLabel in keys(a:parameters['choices'])
+            let confirmStr = confirmStr . '&' . choiceLabel . "\n"
+            call add(choices, choiceLabel)
+        endfor
+
+        let choice = confirm(a:parameters['label'], confirmStr)
+
+        return a:parameters['choices'][choices[choice - 1]]
+    endif
+
+    throw "Do not know how to handle input '" . a:type . "'"
 endfunction

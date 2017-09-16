@@ -13,6 +13,7 @@ use Phpactor\Application\ClassMover;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Editor\CloseFileAction;
 
 class ClassMoveHandler implements Handler
 {
@@ -42,7 +43,7 @@ class ClassMoveHandler implements Handler
         return [
             'source_path' => null,
             'dest_path' => null,
-            'confirmed' => false,
+            'confirmed' => null,
         ];
     }
 
@@ -72,7 +73,7 @@ class ClassMoveHandler implements Handler
         if (null === $arguments['confirmed']) {
             return StackAction::fromActions([
                 EchoAction::fromMessage(
-                    'WARNING: This command will move the class and update ALL references in the git tree.' .
+                    PHP_EOL . 'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
                     '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!'
                 ),
                 InputCallbackAction::fromCallbackAndInputs(
@@ -84,7 +85,7 @@ class ClassMoveHandler implements Handler
                         ]
                     ),
                     [
-                        ChoiceInput::fromNameLabelAndDefault(
+                        ChoiceInput::fromNameLabelChoicesAndDefault(
                             'confirmed',
                             'Are you sure? :',
                             [
