@@ -60,7 +60,9 @@ class CodeTransformExtension implements ExtensionInterface
     private function registerApplication(Container $container)
     {
         $container->register('application.transform', function (Container $container) {
-            return new Transformer($container->get('code_transform.transform'));
+            return new Transformer(
+                $container->get('code_transform.transform')
+            );
         });
 
         $container->register('application.class_new', function (Container $container) {
@@ -103,13 +105,17 @@ class CodeTransformExtension implements ExtensionInterface
 
     private function registerTransformers(Container $container)
     {
-        $container->register('code_transform.transform', function (Container $container) {
+        $container->register('code_transform.transformers', function (Container $container) {
             $transformers = [];
             foreach ($container->getServiceIdsForTag('code_transform.transformer') as $serviceId => $attrs) {
                 $transformers[$attrs['name']] = $container->get($serviceId);
             }
 
-            return CodeTransform::fromTransformers(Transformers::fromArray($transformers));
+            return Transformers::fromArray($transformers);
+        });
+
+        $container->register('code_transform.transform', function (Container $container) {
+            return CodeTransform::fromTransformers($container->get('code_transform.transformers'));
         });
 
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
