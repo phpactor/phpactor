@@ -11,6 +11,7 @@ use Phpactor\Application\Logger\ClassCopyLogger;
 use Prophecy\Argument;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Application\Logger\NullLogger;
 
 class CopyFileHandlerTest extends HandlerTestCase
 {
@@ -61,7 +62,7 @@ class CopyFileHandlerTest extends HandlerTestCase
     public function testCopyClass()
     {
         $this->classCopy->copy(
-            Argument::type(ClassCopyLogger::class),
+            Argument::type(NullLogger::class),
             self::SOURCE_PATH,
             self::DEST_PATH
         )->shouldBeCalled();

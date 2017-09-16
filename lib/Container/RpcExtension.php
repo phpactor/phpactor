@@ -12,6 +12,7 @@ use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
+use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 
 class RpcExtension implements ExtensionInterface
@@ -78,6 +79,13 @@ class RpcExtension implements ExtensionInterface
                 $container->get('application.class_copy')
             );
         }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.move_class', function (Container $container) {
+            return new ClassMoveHandler(
+                $container->get('application.class_mover'),
+                $container->getParameter('rpc.class_move.filesystem')
+            );
+        }, [ 'rpc.handler' => [] ]);
     }
 
     /**
@@ -86,7 +94,8 @@ class RpcExtension implements ExtensionInterface
     public function getDefaultConfig()
     {
         return [
-            'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+            'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
+            'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
         ];
     }
 }
