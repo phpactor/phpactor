@@ -494,7 +494,15 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "input_callback"
         let parameters = a:parameters['callback']['parameters']
         for input in a:parameters['inputs']
-            let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
+
+            try 
+                let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
+            catch "cancelled"
+                execute ':redraw'
+                echo "Cancelled"
+                return
+            endtry
+
             let parameters[input['name']] = value
         endfor
         call phpactor#rpc(a:parameters['callback']['action'], parameters)
@@ -555,7 +563,7 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
         let choice = inputlist(list)
 
         if (choice == 0)
-            return
+            throw "cancelled"
         endif
 
         let choice = choice - 1
