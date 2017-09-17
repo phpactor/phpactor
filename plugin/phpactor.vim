@@ -10,15 +10,6 @@ let s:phpactorpath = expand('<sfile>:p:h') . '/..'
 let s:phpactorbinpath = s:phpactorpath. '/bin/phpactor'
 let s:phpactorInitialCwd = getcwd()
 
-function! phpactor#NamespaceGet()
-    let currentPath = expand('%')
-    let command = 'file:info --format=json ' . currentPath
-    let out = phpactor#Exec(command)
-    let results = json_decode(out)
-
-    return results['class_namespace']
-endfunction
-
 """""""""""""""""
 " Update Phpactor
 """""""""""""""""
@@ -169,79 +160,43 @@ function! phpactor#UseAdd()
     call setpos('.', savePos)
 endfunction
 
-
-
 """""""""""""""""""""""""""
-" Goto definition
+" RPC Proxy methods
 """""""""""""""""""""""""""
 function! phpactor#GotoDefinition()
     call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-"""""""""""""""""""""""""""
-" Interactively copy a file
-"""""""""""""""""""""""""""
 function! phpactor#CopyFile()
     let currentPath = expand('%')
     call phpactor#rpc("copy_class", { "source_path": currentPath })
 endfunction
 
-"""""""""""""""""""""""""""
-" Interactively move a file
-"""""""""""""""""""""""""""
 function! phpactor#MoveFile()
     let currentPath = expand('%')
     call phpactor#rpc("move_class", { "source_path": currentPath })
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-" Return debug information about the current offset
-"""""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-function! phpactor#_OffsetTypeInfo()
-    " START: Resolve FQN for class
-    let offset = line2byte(line('.')) + col('.') - 1
-    let stdin = join(getline(1,'$'), "\n")
-
-    let command = 'offset:info --format=json stdin ' . offset
-    let out = phpactor#ExecStdIn(command, stdin)
-
-    return json_decode(out)
-endfunction
-
-""""""""""""""""""""""""
-" Apply a transformation
-""""""""""""""""""""""""
 function! phpactor#Transform()
     let currentPath = expand('%')
     call phpactor#rpc("transform", { "path": currentPath, "source": phpactor#_source() })
 endfunction
 
-""""""""""""""""""""""""
-" Create new class
-""""""""""""""""""""""""
 function! phpactor#ClassNew()
     let currentPath = expand('%')
     call phpactor#rpc("class_new", { "current_path": currentPath })
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Inflect new class
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#ClassInflect()
-
     let currentPath = expand('%')
     call phpactor#rpc("class_inflect", { "current_path": currentPath })
 endfunction
 
-"""""""""""""""""""""""
-" Find class references
-"""""""""""""""""""""""
-
-" Deprecated!!
+" Deprecated!! Use FindReferences
 function! phpactor#ClassReferences()
     call phpactor#FindReferences()
 endfunction
@@ -250,50 +205,9 @@ function! phpactor#FindReferences()
     call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-""
-" !DEPRECATED! Will be removed when everything is ported to RPC
-""
-function! phpactor#Exec(cmd)
-    let cmd = 'php ' . s:phpactorbinpath . ' --working-dir=' . s:phpactorInitialCwd . ' ' . a:cmd
-    let result = system(cmd)
-
-    if (v:shell_error == 0)
-        return result
-    elseif (v:shell_error == 64)
-        let result = json_decode(result)
-        throw result['error']['message']
-    else
-        echo result
-        throw "Could not execute command"
-    endif
-endfunction
-
-""
-" !DEPRECATED! Will be removed when everything is ported to RPC
-""
-function! phpactor#ExecStdIn(cmd, stdin)
-    let cmd = 'php ' . s:phpactorbinpath . ' --working-dir=' . s:phpactorInitialCwd . ' ' . a:cmd
-    let result = system(cmd, a:stdin)
-
-    if (v:shell_error == 0)
-        return result
-    elseif (v:shell_error == 64)
-        let result = json_decode(result)
-        throw result['error']['message']
-    else
-        echo result
-        throw "Could not execute command"
-    endif
-endfunction
-
-function! phpactor#NamespaceInsert()
-    exec ":normal! i" . phpactor#NamespaceGet()
-endfunction
-
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
-
 function! phpactor#_switchToBufferOrEdit(filePath)
     let bufferNumber = bufnr(a:filePath . '$')
 

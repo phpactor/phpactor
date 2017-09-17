@@ -1,13 +1,13 @@
 RPC Protocol
 ============
 
-Phpactor communicates with the editor over it's own RPC protocol which
+Phpactor communicates with the editor over its own RPC protocol which
 effectively allows the editor to intruct Phpactor to do things, and in turn
 Phpactor can also instruct the editor to do things.
 
 ![rpc](https://user-images.githubusercontent.com/530801/30521464-39743352-9bc0-11e7-92ac-06b3228adf67.png)
 
-Requests can be sent via. `stdin` the Phpactor `rpc` command 
+Requests can be sent via. `stdin` to the Phpactor `rpc` command 
 
 ```bash
 $ echo '{"actions": [ {"action": "echo", "parameters": { "message": "Hello" } }]}' | ./bin/phpactor rpc
@@ -22,11 +22,25 @@ response asking the editor to echo a message. The result is sent over
 ```
 
 Responses contain a list of actions which will be executed sequentially in
-the editor. (An exception is the `return` action which will return a value toj
+the editor. (An exception is the `return` action which will return a value to
 the caller of the RPC command, and prevent any further processing).
 
 Some responses will include callbacks to Phpactor. This allows Phpactor to ask
 for more information as required.
+
+Work-in-progress
+----------------
+
+This Protocol is a work-in-progress.
+
+TODO:
+
+- It is not necessary to return a list of actions, as the `collection` action
+  already fills this role.
+- Parameters should not refer to file paths in class contexts: Although
+  classes map 1-1 to files now, this may not always be the case and Phpactor
+  can figure out a file-path from a class-name and vice-versa (so `class`
+  instead of `class_path`).
 
 Editor Actions
 --------------
@@ -148,16 +162,16 @@ Example:
     "callback": {
         "action": "hello",
         "parameters": {
-            "param1": "value1"
-            "param2": null
+            "greeting": "Hello",
+            "first_name": "value1"
         }
     }
     "inputs": [
         {
+            "name": "first_name",
             "type": "text",
             "parameters": {
-                "default": "Daniel",
-                "type": "file"
+                "default": "<enter your first name>",
             }
         }
     ]
@@ -189,8 +203,9 @@ Phpactor Commands
 In the following references all parameters are assumed to be required unless
 otherwise stated. *optional* parameters are optional, *eventually required* means the parameter is optional, but if not given Phpactor will ask for it (via. a callback).
 
-Note that after implementing the standard editor actions it is not necessary
-to know the result of these commands, they will be handled by your editor.
+Note that after implementing a dispatcher for standard editor actions above it
+is not necessary to know the result of these commands, they will be handled by
+your editor.
 
 ### `complete`
 
