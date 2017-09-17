@@ -6,16 +6,15 @@ use Phpactor\CodeTransform\Domain\ClassName;
 
 class ClassNew extends AbstractClassGenerator
 {
-    public function generate(string $src, string $variant = 'default'): array
+    public function generate(string $src, string $variant = 'default', bool $overwrite = false): string
     {
         $className = $this->normalizer->normalizeToClass($src);
 
         $code = $this->generators->get($variant)->generateNew(ClassName::fromString((string) $className));
         $filePath = $this->normalizer->normalizeToFile($className);
 
-        return [
-            'path' => $filePath,
-            'source' => (string) $code,
-        ];
+        $this->writeFile($filePath, (string) $code, $overwrite);
+
+        return $filePath;
     }
 }

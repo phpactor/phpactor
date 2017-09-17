@@ -37,6 +37,11 @@ class ChoiceInput implements Input
         return new self($name, $label, $choices, $default);
     }
 
+    public static function fromNameLabelChoices(string $name, string $label, array $choices)
+    {
+        return new self($name, $label, $choices);
+    }
+
     public function type(): string
     {
         return 'choice';
