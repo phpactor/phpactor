@@ -101,7 +101,7 @@ Open a file in the editor.
 
 - **Name**: `open_file`
 - **Parameters**:
-   - `path`: Array of actions to dispatch.
+   - `path`: Path to file which should be opened.
    - `offset`: Goto this offset after opening the file.
 
 ### `close_file`
@@ -110,7 +110,7 @@ Close a file.
 
 - **Name**: `close_file`
 - **Parameters**:
-   - `path`: Array of actions to dispatch.
+   - `path`: Path to file which should be closed.
 
 ### `file_references`
 
