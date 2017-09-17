@@ -13,6 +13,7 @@ use Phpactor\Application\ClassNew;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Application\Exception\FileAlreadyExists;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Phpactor\Phpactor;
 
 class ClassNewCommand extends Command
 {
@@ -52,36 +53,31 @@ class ClassNewCommand extends Command
             return $this->listGenerators($input, $output);
         }
 
-        $out = $this->process($input, $output);
-        $this->dumperRegistry->get($input->getOption('format'))->dump($output, $out);
+        $path = $this->process($input, $output);
+        $this->dumperRegistry->get($input->getOption('format'))->dump($output, [
+            'src' => Phpactor::relativizePath($path)
+        ]);
     }
 
     private function process(InputInterface $input, OutputInterface $output)
     {
         $src = $input->getArgument('src');
         $variant = $input->getOption('variant');
-        $response = [
-            'src' => $src,
-            'path' => null,
-            'exists' => false,
-        ];
 
-        try {
-            $response['path'] = $this->classNew->generate($src, $variant, $input->getOption('force'));
-        } catch (FileAlreadyExists $exception) {
+        $response = $this->classNew->generate($src, $variant);
+
+        if (false === $input->getOption('force') && file_exists($response['path'])) {
             $questionHelper = new QuestionHelper();
             $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
 
             if (false === $questionHelper->ask($input, $output, $question)) {
-                $response['exists'] = true;
-                return $response;
+                return $response['path'];
             }
-
-            $filePath = $this->classNew->generate($src, $variant, true);
-            $response['path'] = $filePath;
         }
 
-        return $response;
+        file_put_contents($response['path'], $response['source']);
+
+        return $response['path'];
     }
 
     private function listGenerators(InputInterface $input, OutputInterface $output)
