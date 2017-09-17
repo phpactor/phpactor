@@ -54,9 +54,9 @@ class ClassNewHandler implements Handler
         }
 
         if (null === $arguments['variant']) {
-            $missingInputs[] = ChoiceInput::fromNameLabelChoices(
+            $missingInputs[] = ChoiceInput::fromNameLabelChoicesAndDefault(
                 'variant', 
-                'Create at: ', 
+                'Variant: ', 
                 array_combine(
                     $this->classNew->availableGenerators(),
                     $this->classNew->availableGenerators()

@@ -72,10 +72,6 @@ class ClassMoveHandler implements Handler
 
         if (null === $arguments['confirmed']) {
             return StackAction::fromActions([
-                EchoAction::fromMessage(
-                    PHP_EOL . 'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
-                    '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!'
-                ),
                 InputCallbackAction::fromCallbackAndInputs(
                     ActionRequest::fromNameAndParameters(
                         $this->name(),
@@ -87,6 +83,8 @@ class ClassMoveHandler implements Handler
                     [
                         ChoiceInput::fromNameLabelChoicesAndDefault(
                             'confirmed',
+                            'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
+                            '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
                             'Are you sure? :',
                             [
                                 'Yes' => true, 'No' => false,

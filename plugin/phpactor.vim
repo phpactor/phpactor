@@ -374,6 +374,9 @@ endfunction
 """""""""""""""""""""""
 
 function! phpactor#rpc(action, arguments)
+    " Remove any existing output in the message window
+    execute ':redraw'
+
     let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
 
     let cmd = 'php ' . s:phpactorbinpath . ' rpc --working-dir=' . s:phpactorInitialCwd
@@ -527,6 +530,9 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 endfunction
 
 function! phpactor#_rpc_dispatch_input(type, parameters)
+    " Remove any existing output in the message window
+    execute ':redraw'
+
     " >> text
     if a:type == 'text'
         return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
@@ -534,16 +540,26 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
 
     " >> choice
     if a:type == 'choice'
-        let confirmStr = ''
+
+        let list = []
         let choices = []
-        for choiceLabel in keys(a:parameters['choices'])
-            let confirmStr = confirmStr . '&' . choiceLabel . "\n"
+
+        let c = 1
+        for choiceLabel in keys(a:parameters["choices"])
+            call add(list, c . ") " . choiceLabel)
             call add(choices, choiceLabel)
+            let c = c + 1
         endfor
 
-        let choice = confirm(a:parameters['label'], confirmStr)
+        echo a:parameters['label']
+        let choice = inputlist(list)
 
-        return a:parameters['choices'][choices[choice - 1]]
+        if (choice == 0)
+            return
+        endif
+
+        let choice = choice - 1
+        return a:parameters['choices'][choices[choice]]
     endif
 
     throw "Do not know how to handle input '" . a:type . "'"
