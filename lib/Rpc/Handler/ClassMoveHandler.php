@@ -14,6 +14,7 @@ use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\CloseFileAction;
+use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassMoveHandler implements Handler
 {
@@ -71,29 +72,23 @@ class ClassMoveHandler implements Handler
         }
 
         if (null === $arguments['confirmed']) {
-            return StackAction::fromActions([
-                InputCallbackAction::fromCallbackAndInputs(
-                    ActionRequest::fromNameAndParameters(
-                        $this->name(),
-                        [
-                            'source_path' => $arguments['source_path'],
-                            'dest_path' => $arguments['dest_path'],
-                        ]
-                    ),
+            return InputCallbackAction::fromCallbackAndInputs(
+                ActionRequest::fromNameAndParameters(
+                    $this->name(),
                     [
-                        ChoiceInput::fromNameLabelChoicesAndDefault(
-                            'confirmed',
-                            'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
-                            '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
-                            'Are you sure? :',
-                            [
-                                'Yes' => true, 'No' => false,
-                            ],
-                            'Yes'
-                        ),
+                        'source_path' => $arguments['source_path'],
+                        'dest_path' => $arguments['dest_path'],
                     ]
-                )
-            ]);
+                ),
+                [
+                    ConfirmInput::fromNameAndLabel(
+                        'confirmed',
+                        'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
+                        '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
+                        'Are you sure? :'
+                    ),
+                ]
+            );
         }
 
         $this->classMove->move(

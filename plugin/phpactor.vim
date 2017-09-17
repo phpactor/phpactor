@@ -497,7 +497,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
             try 
                 let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
-            catch "cancelled"
+            catch /cancelled/
                 execute ':redraw'
                 echo "Cancelled"
                 return
@@ -525,8 +525,6 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> replace_file_source
     if a:actionName == "replace_file_source"
-
-        " TODO: This is not clever
         let savePos = getpos(".")
         exec "%d"
         call append(0, split(a:parameters['source'], "\n"))
@@ -569,6 +567,18 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
         let choice = choice - 1
         return a:parameters['choices'][choices[choice]]
     endif
+
+    " >> confirm
+    if a:type == 'confirm'
+        let choice = confirm(a:parameters["label"], "&Yes\n&No\n")
+
+        if choice == 1
+            return v:true
+        endif
+
+        return v:false
+    endif
+
 
     throw "Do not know how to handle input '" . a:type . "'"
 endfunction

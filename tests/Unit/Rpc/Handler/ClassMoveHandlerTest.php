@@ -16,6 +16,7 @@ use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\CloseFileAction;
+use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
@@ -51,6 +52,22 @@ class ClassMoveHandlerTest extends HandlerTestCase
 
         $this->assertInstanceOf(EchoAction::class, $action);
         $this->assertContains('Cancelled', $action->message());
+    }
+
+    public function testConfirmChallenge()
+    {
+        /** @var $action InputCallbackAction */
+        $action = $this->handle('move_class', [
+            'source_path' => self::SOURCE_PATH,
+            'dest_path' => self::DEST_PATH,
+        ]);
+
+        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $inputs = $action->inputs();
+        $this->assertCount(1, $inputs);
+        $this->assertInstanceOf(ConfirmInput::class, reset($inputs));
+        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertEquals('move_class', $action->callbackAction()->name());
     }
 
 

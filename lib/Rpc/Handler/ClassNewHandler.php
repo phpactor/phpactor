@@ -12,6 +12,7 @@ use Phpactor\Rpc\ActionRequest;
 use Phpactor\Application\Exception\FileAlreadyExists;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassNewHandler implements Handler
 {
@@ -90,14 +91,9 @@ class ClassNewHandler implements Handler
                     ]
                 ),
                 [
-                    ChoiceInput::fromNameLabelChoicesAndDefault(
+                    ConfirmInput::fromNameAndLabel(
                         'overwrite',
-                        'File already exists, overwrite? :',
-                        [
-                            'Yes' => true,
-                            'No' => false,
-                        ],
-                        'No'
+                        'File already exists, overwrite? :'
                     )
                 ]
             );
