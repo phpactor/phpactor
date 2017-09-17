@@ -16,6 +16,7 @@ use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 use Phpactor\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Rpc\Handler\TransformHandler;
+use Phpactor\Rpc\Handler\ClassNewHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -98,6 +99,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.transform', function (Container $container) {
             return new TransformHandler(
                 $container->get('code_transform.transform')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.class_new', function (Container $container) {
+            return new ClassNewHandler(
+                $container->get('application.class_new')
             );
         }, [ 'rpc.handler' => [] ]);
     }

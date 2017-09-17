@@ -46,6 +46,11 @@ class TextInput implements Input
         return $this->label;
     }
 
+    public function default(): string
+    {
+        return $this->default;
+    }
+
     public function parameters(): array
     {
         return [

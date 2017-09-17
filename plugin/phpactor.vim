@@ -224,55 +224,8 @@ endfunction
 " Create new class
 """"""""""""""""""""""""
 function! phpactor#ClassNew()
-
     let currentPath = expand('%')
-    let directory = fnamemodify(currentPath, ':h')
-    let classOrPath = currentPath
-
-    let word = expand("<cword>")
-
-    if !empty(word)
-        let offsetInfo = phpactor#_OffsetTypeInfo()
-        if !empty(offsetInfo['type'])
-            if offsetInfo['type'] != '<unknown>'
-                let classOrPath = offsetInfo['type']
-            endif
-        endif
-    endif
-
-    let classOrPath = input("Create class: ", classOrPath, "file")
-    echo "\n"
-    let variants = phpactor#Exec('class:new --list --format=json ' . classOrPath)
-    let variants = json_decode(variants)
-
-    let list = []
-    let c = 1
-    for variant in variants
-        let list = add(list, c . ': ' . variant)
-        let c = c + 1
-    endfor
-
-    let choice = inputlist(list)
-    let variant = variants[choice - 1]
-
-    let out = phpactor#Exec('class:new --format=json --variant=' . variant . ' ' . shellescape(classOrPath))
-    let out = json_decode(out)
-
-    if out['exists'] == 1
-        let confirm = confirm('File exists, overwrite?', "&Yes\n&No")
-
-        if confirm == 2
-            echo "Cancelled"
-            return
-        endif
-
-        let out = phpactor#Exec('class:new --force --format=json --variant=' . variant . ' ' . shellescape(classOrPath))
-        let out = json_decode(out)
-    endif
-
-    if !empty(out)
-        exec ":edit " . out['path']
-    endif
+    call phpactor#rpc("class_new", { "current_path": currentPath })
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -404,6 +357,7 @@ function! phpactor#_switchToBufferOrEdit(filePath)
     endif
 
     exec ":buffer " . bufferNumber
+    exec ":edit"
 endfunction
 
 function! phpactor#_offset()
