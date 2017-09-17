@@ -14,21 +14,26 @@ use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
-class ClassNewHandler extends AbstractClassGenerateHandler
+class ClassInflectHandler extends AbstractClassGenerateHandler
 {
     protected function generate(array $arguments)
     {
-        return $this->classGenerator->generate($arguments['new_path'], $arguments['variant'], (bool) $arguments['overwrite']);
+        return $this->classGenerator->generateFromExisting(
+            $arguments['current_path'],
+            $arguments['new_path'],
+            $arguments['variant'],
+            (bool) $arguments['overwrite']
+        );
     }
 
     public function name(): string
     {
-        return 'class_new';
+        return 'class_inflect';
     }
 
     public function newMessage(): string
     {
-        return 'Create at: ';
+        return 'Create inflection at: ';
     }
 }
 

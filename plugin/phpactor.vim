@@ -230,65 +230,11 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Inflect new class
-"
-" TODO: This is copy and paste from ClassNew - need to break this out into a
-"       separate "class"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! phpactor#ClassInflect()
 
     let currentPath = expand('%')
-    let directory = fnamemodify(currentPath, ':h')
-    let classOrPath = currentPath
-
-    let word = expand("<cword>")
-
-    if !empty(word)
-        let offsetInfo = phpactor#_OffsetTypeInfo()
-        if !empty(offsetInfo['type'])
-            if offsetInfo['type'] != '<unknown>'
-                let classOrPath = offsetInfo['type']
-            endif
-        endif
-    endif
-
-    let destClassOrPath = input("Inflect class to: ", classOrPath, "file")
-    echo "\n"
-    " call with dummy file arguments when listing
-    let variants = phpactor#Exec('class:inflect --list --format=json one two') 
-    let variants = json_decode(variants)
-
-    let list = []
-    let c = 1
-    for variant in variants
-        let list = add(list, c . ': ' . variant)
-        let c = c + 1
-    endfor
-
-    let choice = inputlist(list)
-    if (choice == 0)
-        return 0
-    endif
-    let variant = variants[choice - 1]
-
-    let command = 'class:inflect --format=json ' . shellescape(classOrPath) . ' ' . shellescape(destClassOrPath) . ' ' . variant
-    let out = phpactor#Exec(command)
-    let out = json_decode(out)
-
-    if out['exists'] == 1
-        let confirm = confirm('File exists, overwrite?', "&Yes\n&No")
-
-        if confirm == 2
-            echo "Cancelled"
-            return
-        endif
-
-        let out = phpactor#Exec(command . ' --force')
-        let out = json_decode(out)
-    endif
-
-    if !empty(out)
-        exec ":edit " . out['path']
-    endif
+    call phpactor#rpc("class_inflect", { "current_path": currentPath })
 endfunction
 
 """""""""""""""""""""""
