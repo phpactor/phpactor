@@ -2,6 +2,9 @@
 
 namespace Phpactor\Application\Helper;
 
+use Webmozart\Glob\Glob;
+use Webmozart\PathUtil\Path;
+
 final class FilesystemHelper
 {
     public function contentsFromFileOrStdin(string $filePath): string
@@ -23,5 +26,20 @@ final class FilesystemHelper
         }
 
         return $contents;
+    }
+
+    public static function globSourceDestination(string $src, string $dest): \Generator
+    {
+        foreach (Glob::glob($src) as $globSrc) {
+            $globDest = $dest;
+
+            // if the src is not the same as the globbed src, then it is a wildcard
+            // and we want to append the filename to the destination
+            if ($src !== $globSrc) {
+                $globDest = Path::join($dest, Path::getFilename($globSrc));
+            }
+
+            yield $globSrc => $globDest;
+        }
     }
 }

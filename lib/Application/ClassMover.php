@@ -13,6 +13,7 @@ use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Application\Helper\FilesystemHelper;
 
 class ClassMover
 {
@@ -65,16 +66,9 @@ class ClassMover
     public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath)
     {
         $srcPath = Phpactor::normalizePath($srcPath);
-        foreach (Glob::glob($srcPath) as $globPath) {
-            $globDest = $destPath;
-            // if the src is not the same as the globbed src, then it is a wildcard
-            // and we want to append the filename to the destination
-            if ($srcPath !== $globPath) {
-                $globDest = Path::join($destPath, Path::getFilename($globPath));
-            }
-
+        foreach (FilesystemHelper::globSourceDestination($srcPath, $destPath) as $globSrc => $globDest) {
             try {
-                $this->doMoveFile($logger, $filesystemName, $globPath, $globDest);
+                $this->doMoveFile($logger, $filesystemName, $globSrc, $globDest);
             } catch (\Exception $e) {
                 throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
             }

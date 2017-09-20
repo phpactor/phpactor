@@ -23,6 +23,7 @@ class ClassInflectCommandTest extends SystemTestCase
         $this->assertSuccess($process);
 
         $expectedFilePath = $this->workspaceDir() . '/' . $expectedFilePath;
+        $this->assertSuccess($process);
         $this->assertFileExists($expectedFilePath);
         $this->assertContains($expectedContents, file_get_contents($expectedFilePath));
     }
@@ -30,6 +31,13 @@ class ClassInflectCommandTest extends SystemTestCase
     public function provideInflectClass()
     {
         return [
+            'Glob' => [
+                'class:inflect "lib/Badger/*.php" lib/Badger/Api interface',
+                'lib/Badger/Api/Carnivorous.php',
+                <<<'EOT'
+interface Carnivorous
+EOT
+            ],
             'Inflect class' => [
                 'class:inflect lib/Badger/Carnivorous.php lib/Badger/Api/CarnivorousInterface.php interface',
                 'lib/Badger/Api/CarnivorousInterface.php',
