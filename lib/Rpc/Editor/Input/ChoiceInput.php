@@ -71,4 +71,3 @@ class ChoiceInput implements Input
         ];
     }
 }
-

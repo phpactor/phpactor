@@ -15,7 +15,7 @@ final class InformationAction implements Action
 
     public static function fromString(string $information): InformationAction
     {
-         return new self($information);
+        return new self($information);
     }
 
     public function information(): string
@@ -35,4 +35,3 @@ final class InformationAction implements Action
         ];
     }
 }
-

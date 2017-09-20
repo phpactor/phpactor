@@ -17,6 +17,7 @@ use Phpactor\Rpc\Editor\Input\ConfirmInput;
 class ClassInflectHandlerTest extends HandlerTestCase
 {
     const CURRENT_PATH = '/path/to.php';
+    const GLOBBED_CURRENT_PATH = '/path/*.php';
     const NEW_PATH = '/path/to/new.php';
     const VARIANT = 'default';
 
@@ -92,11 +93,40 @@ class ClassInflectHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(EchoAction::class, $action);
     }
 
+    public function testExceptionOnGlob()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('glob');
+
+        $this->handle('class_inflect', [
+            'current_path' => self::GLOBBED_CURRENT_PATH,
+            'new_path' => self::NEW_PATH,
+            'variant' => self::VARIANT,
+            'overwrite' => null,
+        ]);
+    }
+
+    public function testExceptionOnInvalidNumberOfPathsReturned()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Expected 1 path from class generator, got 2');
+
+        $this->classInflect->generateFromExisting(
+            self::CURRENT_PATH, self::NEW_PATH, self::VARIANT, false
+        )->willReturn([ 'foo', self::NEW_PATH ]);
+
+        $this->handle('class_inflect', [
+            'current_path' => self::CURRENT_PATH,
+            'new_path' => self::NEW_PATH,
+            'variant' => self::VARIANT,
+        ]);
+    }
+
     public function testGenerate()
     {
         $this->classInflect->generateFromExisting(
             self::CURRENT_PATH, self::NEW_PATH, self::VARIANT, false
-        )->willReturn(self::NEW_PATH);
+        )->willReturn([ self::NEW_PATH ]);
 
         $action = $this->handle('class_inflect', [
             'current_path' => self::CURRENT_PATH,

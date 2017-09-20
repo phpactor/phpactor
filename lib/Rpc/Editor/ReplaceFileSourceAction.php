@@ -50,4 +50,3 @@ class ReplaceFileSourceAction implements Action
         return $this->path;
     }
 }
-

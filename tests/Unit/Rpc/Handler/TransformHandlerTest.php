@@ -12,7 +12,6 @@ use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
 
-
 class TransformHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php echo "foo";';

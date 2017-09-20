@@ -4,7 +4,6 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\ActionRequest;
-use Phpactor\Application\ClassMove;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Editor\Input\TextInput;
@@ -12,7 +11,6 @@ use Phpactor\Application\Logger\NullLogger;
 use Phpactor\Application\ClassMover;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\CloseFileAction;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
