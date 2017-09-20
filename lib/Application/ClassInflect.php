@@ -7,6 +7,7 @@ use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class ClassInflect extends AbstractClassGenerator
 {
@@ -15,6 +16,10 @@ class ClassInflect extends AbstractClassGenerator
         $src = Phpactor::normalizePath($src);
         $newPaths = [];
         foreach (FilesystemHelper::globSourceDestination($src, $dest) as $globSrc => $globDest) {
+            if (false === is_file($globSrc)) {
+                continue;
+            }
+
             $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
         }
 

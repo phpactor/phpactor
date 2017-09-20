@@ -38,6 +38,13 @@ class ClassInflectCommandTest extends SystemTestCase
 interface Carnivorous
 EOT
             ],
+            'Glob with directories' => [
+                'class:inflect "lib/*" lib/Api interface',
+                'lib/Api/Badger.php',
+                <<<'EOT'
+interface Badger
+EOT
+            ],
             'Inflect class' => [
                 'class:inflect lib/Badger/Carnivorous.php lib/Badger/Api/CarnivorousInterface.php interface',
                 'lib/Badger/Api/CarnivorousInterface.php',
