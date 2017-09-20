@@ -43,4 +43,3 @@ class FileReferences
         $this->references[] = $reference;
     }
 }
-

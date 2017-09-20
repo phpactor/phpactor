@@ -6,7 +6,6 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassGenerator;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Application\Exception\FileAlreadyExists;
@@ -51,8 +50,8 @@ abstract class AbstractClassGenerateHandler implements Handler
 
         if (null === $arguments['variant']) {
             $missingInputs[] = ChoiceInput::fromNameLabelChoicesAndDefault(
-                'variant', 
-                'Variant: ', 
+                'variant',
+                'Variant: ',
                 array_combine(
                     $this->classGenerator->availableGenerators(),
                     $this->classGenerator->availableGenerators()
@@ -62,14 +61,17 @@ abstract class AbstractClassGenerateHandler implements Handler
 
         if (null === $arguments['new_path']) {
             $missingInputs[] = TextInput::fromNameLabelAndDefault(
-                'new_path', $this->newMessage(), $arguments['current_path']
+                'new_path',
+                $this->newMessage(),
+                $arguments['current_path']
             );
         }
 
         if ($missingInputs) {
             return InputCallbackAction::fromCallbackAndInputs(
                 ActionRequest::fromNameAndParameters(
-                    $this->name(), [
+                    $this->name(),
+                    [
                         'current_path' => $arguments['current_path'],
                         'new_path' => null,
                         'variant' => null,
@@ -84,7 +86,8 @@ abstract class AbstractClassGenerateHandler implements Handler
         } catch (FileAlreadyExists $e) {
             return InputCallbackAction::fromCallbackAndInputs(
                 ActionRequest::fromNameAndParameters(
-                    $this->name(), [
+                    $this->name(),
+                    [
                         'current_path' => $arguments['current_path'],
                         'new_path' => $arguments['new_path'],
                         'variant' => $arguments['variant'],

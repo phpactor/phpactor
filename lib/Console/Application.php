@@ -105,5 +105,4 @@ class Application extends SymfonyApplication
             $this->add($this->container->get($commandId));
         }
     }
-
 }

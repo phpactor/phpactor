@@ -60,4 +60,3 @@ class TextInput implements Input
         ];
     }
 }
-

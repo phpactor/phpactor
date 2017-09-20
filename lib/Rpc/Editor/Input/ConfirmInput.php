@@ -41,4 +41,3 @@ class ConfirmInput implements Input
         ];
     }
 }
-

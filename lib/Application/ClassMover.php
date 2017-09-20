@@ -8,8 +8,6 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
-use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;

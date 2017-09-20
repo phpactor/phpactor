@@ -3,16 +3,6 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\ClassNew;
-use Phpactor\Rpc\Editor\Input\TextInput;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
-use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
 use Webmozart\Glob\Glob;
 
 class ClassInflectHandler extends AbstractClassGenerateHandler
@@ -53,4 +43,3 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
         return 'Create inflection at: ';
     }
 }
-

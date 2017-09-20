@@ -4,10 +4,7 @@ namespace Phpactor\Application;
 
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\Phpactor;
-use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
 use Phpactor\Application\Helper\FilesystemHelper;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class ClassInflect extends AbstractClassGenerator
 {
