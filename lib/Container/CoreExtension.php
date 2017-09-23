@@ -50,12 +50,23 @@ class CoreExtension implements ExtensionInterface
 
     public function getDefaultConfig()
     {
-        return [
+        $config = [
             'autoload' => 'vendor/autoload.php',
             'cwd' => getcwd(),
             'console_dumper_default' => 'indented',
             'cache_dir' => __DIR__ . '/../../cache',
         ];
+
+        $composerConfig = json_decode(
+            file_get_contents(getcwd() . '/composer.json'),
+            true
+        );
+
+        if (isset($composerConfig['config']['vendor-dir'])) {
+            $config['autoload'] = $composerConfig['config']['vendor-dir'] . '/autoload.php';
+        }
+
+        return $config;
     }
 
     public function load(Container $container)
