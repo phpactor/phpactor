@@ -347,6 +347,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         endfor
 
         call setqflist(list)
+        execute ':cwindow'
         return
     endif
 
