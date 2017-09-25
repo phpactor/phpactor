@@ -6,16 +6,16 @@
 " | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
 "                                                                                         
 
-let s:phpactorpath = expand('<sfile>:p:h') . '/..'
-let s:phpactorbinpath = s:phpactorpath. '/bin/phpactor'
-let s:phpactorInitialCwd = getcwd()
+let g:phpactorpath = expand('<sfile>:p:h') . '/..'
+let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
+let g:phpactorInitialCwd = getcwd()
 
 """""""""""""""""
 " Update Phpactor
 """""""""""""""""
 function! phpactor#Update()
     let current = getcwd()
-    execute 'cd ' . s:phpactorpath
+    execute 'cd ' . g:phpactorpath
     echo system('git pull origin master')
     echo system('composer install')
     execute 'cd ' .  current
@@ -239,7 +239,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
 
-    let cmd = 'php ' . s:phpactorbinpath . ' rpc --working-dir=' . s:phpactorInitialCwd
+    let cmd = 'php ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)
