@@ -8,6 +8,7 @@
 
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
+let g:phpactorPhpBin = 'php'
 let g:phpactorInitialCwd = getcwd()
 
 """""""""""""""""
@@ -239,7 +240,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
 
-    let cmd = 'php ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
+    let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)

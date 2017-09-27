@@ -62,6 +62,9 @@ map <Leader>fr :call phpactor#FindReferences()<CR>
 
 " Show information about "type" under cursor including current frame
 nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
+
+" Specify a different PHP binary to use when calling Phpactor
+" let g:phpactorPhpBin = "/usr/bin/local/php6"
 ```
 
 **NOTE**: The above mappings are probably sub-optimal, feel free to find a
