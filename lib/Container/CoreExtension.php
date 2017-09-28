@@ -271,12 +271,12 @@ class CoreExtension implements ExtensionInterface
             return new \Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder();
         });
 
-        $container->register('class_mover.method_finder', function (Container $container) {
-            return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMethodFinder($container->get('reflection.reflector'));
+        $container->register('class_mover.member_finder', function (Container $container) {
+            return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberFinder($container->get('reflection.reflector'));
         });
 
-        $container->register('class_mover.method_replacer', function (Container $container) {
-            return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMethodReplacer();
+        $container->register('class_mover.member_replacer', function (Container $container) {
+            return new \Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberReplacer();
         });
 
         $container->register('class_mover.ref_replacer', function (Container $container) {
@@ -349,8 +349,8 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.method_references', function (Container $container) {
             return new ClassMethodReferences(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('class_mover.method_finder'),
-                $container->get('class_mover.method_replacer'),
+                $container->get('class_mover.member_finder'),
+                $container->get('class_mover.member_replacer'),
                 $container->get('source_code_filesystem.registry'),
                 $container->get('reflection.reflector')
             );
