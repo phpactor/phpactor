@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Symfony\Component\Yaml\Exception\RuntimeException;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
@@ -139,7 +140,8 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classMethodReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
-            'testMethodReturnNoneFound'
+            'testMethodReturnNoneFound',
+            ClassMemberQuery::TYPE_METHOD
         )->willReturn([
             'references' => [],
         ]);
@@ -157,7 +159,8 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classMethodReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
-            'testMethodReferences'
+            'testMethodReferences',
+            ClassMemberQuery::TYPE_METHOD
         )->willReturn([
             'references' => [
                 [
