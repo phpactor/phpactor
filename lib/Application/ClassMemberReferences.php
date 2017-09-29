@@ -15,6 +15,7 @@ use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
+use Phpactor\WorseReflection\Core\Reflection\AbstractReflectionClass;
 
 class ClassMemberReferences
 {
@@ -93,13 +94,7 @@ class ClassMemberReferences
         if ($memberName && $className && empty($results)) {
             $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
 
-            if (false === $reflection->methods()->has($memberName)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Method not known "%s", known methods: "%s"',
-                    $memberName,
-                    implode('", "', $reflection->methods()->keys())
-                ));
-            }
+            $this->throwMemberNotFoundException($reflection, $memberName, $memberType);
         }
 
         return [
@@ -229,5 +224,42 @@ class ClassMemberReferences
         }
 
         return $query;
+    }
+
+    private function throwMemberNotFoundException(AbstractReflectionClass $class, string $memberName, string $memberType = null)
+    {
+        if ($memberType == ClassMemberQuery::TYPE_METHOD && false === $class->methods()->has($memberName)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Method not known "%s", known methods: "%s"',
+                $memberName,
+                implode('", "', $class->methods()->keys())
+            ));
+        }
+
+        if ($memberType == ClassMemberQuery::TYPE_PROPERTY && false === $class->methods()->has($memberName)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Properties not known "%s", known properties: "%s"',
+                $memberName,
+                implode('", "', $class->properties()->keys())
+            ));
+        }
+
+        if ($memberType == ClassMemberQuery::TYPE_CONSTANT && false === $class->methods()->has($memberName)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Constants not known "%s", known constants: "%s"',
+                $memberName,
+                implode('", "', $class->constants()->keys())
+            ));
+        }
+
+        throw new \InvalidArgumentException(sprintf(
+            'Member not known "%s", known members: "%s"',
+            $memberName,
+            implode('", "', array_merge(
+                $class->constants()->keys(),
+                $class->methods()->keys(),
+                $class->properties()->keys()
+            ))
+        ));
     }
 }
