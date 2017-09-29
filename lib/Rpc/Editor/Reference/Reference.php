@@ -19,16 +19,22 @@ class Reference
      */
     private $lineNumber;
 
-    private function __construct(int $start, int $end, int $lineNumber)
+    /**
+     * @var int
+     */
+    private $colNo;
+
+    private function __construct(int $start, int $end, int $lineNumber, int $colNo = null)
     {
         $this->start = $start;
         $this->end = $end;
         $this->lineNumber = $lineNumber;
+        $this->colNo = $colNo;
     }
 
-    public static function fromStartEndAndLineNumber(int $start, int $end, int $lineNumber)
+    public static function fromStartEndLineNumberAndCol(int $start, int $end, int $lineNumber, int $col = null)
     {
-        return new self($start, $end, $lineNumber);
+        return new self($start, $end, $lineNumber, $col);
     }
 
     public function toArray()
@@ -36,7 +42,9 @@ class Reference
         return [
             'start' => $this->start,
             'end' => $this->end,
-            'line_no' => $this->lineNumber
+            'line_no' => $this->lineNumber,
+            'col_no' => $this->colNo
         ];
     }
 }
+
