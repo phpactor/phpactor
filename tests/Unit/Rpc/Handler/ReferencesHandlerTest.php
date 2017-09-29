@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Symfony\Component\Yaml\Exception\RuntimeException;
-use Phpactor\Application\ClassMethodReferences;
+use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 
 class ReferencesHandlerTest extends HandlerTestCase
@@ -39,7 +39,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function setUp()
     {
         $this->classReferences = $this->prophesize(ClassReferences::class);
-        $this->classMethodReferences = $this->prophesize(ClassMethodReferences::class);
+        $this->classMethodReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
         $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)), $this->logger);
     }

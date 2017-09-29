@@ -11,15 +11,15 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
-use Phpactor\Application\ClassMethodReferences;
+use Phpactor\Application\ClassMemberReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
 
-class ReferencesMethodCommand extends Command
+class ReferencesMemberCommand extends Command
 {
     /**
-     * @var ClassMethodReferences
+     * @var ClassMemberReferences
      */
-    private $methodReferences;
+    private $memberReferences;
 
     /**
      * @var DumperRegistry
@@ -27,11 +27,11 @@ class ReferencesMethodCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        ClassMethodReferences $methodReferences,
+        ClassMemberReferences $memberReferences,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->methodReferences = $methodReferences;
+        $this->memberReferences = $memberReferences;
         $this->dumperRegistry = $dumperRegistry;
     }
 
@@ -41,6 +41,7 @@ class ReferencesMethodCommand extends Command
         $this->setDescription('Find reference to a method');
         $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
         $this->addArgument('method', InputArgument::OPTIONAL, 'Method');
+        $this->addOption('type', null, InputOption::VALUE_REQUIRED, 'Member type (constant, property or method)');
         $this->addOption('risky', null, InputOption::VALUE_NONE, 'Show risky references (matching method with unknown class');
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
@@ -50,18 +51,16 @@ class ReferencesMethodCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output, $bar = null)
     {
-        if (false) {
-            $bar->name();
-        }
         $class = $input->getArgument('class');
         $method = $input->getArgument('method');
         $format = $input->getOption('format');
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
         $risky = $input->getOption('risky');
+        $memberType = $input->getOption('type');
         $filesystem = $input->getOption('filesystem');
 
-        $results = $this->methodReferences->findOrReplaceReferences($filesystem, $class, $method, $replace, $dryRun);
+        $results = $this->memberReferences->findOrReplaceReferences($filesystem, $class, $method, $memberType, $replace, $dryRun);
 
         if ($replace && $dryRun) {
             $output->writeln('<info># DRY RUN</> No files will be modified');

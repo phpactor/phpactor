@@ -16,7 +16,7 @@ use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
 
-class ClassMethodReferences
+class ClassMemberReferences
 {
     /**
      * @var FilesystemRegistry
@@ -26,7 +26,7 @@ class ClassMethodReferences
     /**
      * @var MemberFinder
      */
-    private $methodFinder;
+    private $memberFinder;
 
     /**
      * @var ClassFileNormalizer
@@ -41,23 +41,30 @@ class ClassMethodReferences
     /**
      * @var MemberReplacer
      */
-    private $methodReplacer;
+    private $memberReplacer;
 
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
-        MemberFinder $methodFinder,
-        MemberReplacer $methodReplacer,
+        MemberFinder $memberFinder,
+        MemberReplacer $memberReplacer,
         FilesystemRegistry $filesystemRegistry,
         Reflector $reflector
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystemRegistry = $filesystemRegistry;
-        $this->methodFinder = $methodFinder;
+        $this->memberFinder = $memberFinder;
         $this->reflector = $reflector;
-        $this->methodReplacer = $methodReplacer;
+        $this->memberReplacer = $memberReplacer;
     }
 
-    public function findOrReplaceReferences(string $scope, string $class = null, string $memberName = null, string $replace = null, bool $dryRun = false)
+    public function findOrReplaceReferences(
+        string $scope,
+        string $class = null,
+        string $memberName = null,
+        string $memberType = null,
+        string $replace = null,
+        bool $dryRun = false
+    )
     {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
@@ -73,7 +80,7 @@ class ClassMethodReferences
         }
 
         foreach ($filePaths as $filePath) {
-            $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $replace, $dryRun);
+            $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $memberType, $replace, $dryRun);
 
             if (empty($references['references']) && empty($references['risky_references'])) {
                 continue;
@@ -100,13 +107,21 @@ class ClassMethodReferences
         ];
     }
 
-    private function referencesInFile(Filesystem $filesystem, $filePath, string $className = null, string $memberName = null, string $replace = null, bool $dryRun = false)
+    private function referencesInFile(
+        Filesystem $filesystem,
+        $filePath,
+        string $className = null,
+        string $memberName = null,
+        string $memberType = null,
+        string $replace = null,
+        bool $dryRun = false
+    )
     {
         $code = $filesystem->getContents($filePath);
 
-        $query = $this->createQuery($className, $memberName);
+        $query = $this->createQuery($className, $memberName, $memberType);
 
-        $referenceList = $this->methodFinder->findMembers(
+        $referenceList = $this->memberFinder->findMembers(
             SourceCode::fromString($code),
             $query
         );
@@ -129,9 +144,9 @@ class ClassMethodReferences
                 file_put_contents($filePath, (string) $updatedSource);
             }
 
-            $query = $this->createQuery($className, $replace);
+            $query = $this->createQuery($className, $replace, $memberType);
 
-            $replacedReferences = $this->methodFinder->findMembers(
+            $replacedReferences = $this->memberFinder->findMembers(
                 SourceCode::fromString($updatedSource),
                 $query
             );
@@ -194,10 +209,10 @@ class ClassMethodReferences
     {
         $code = SourceCode::fromString($code);
 
-        return $this->methodReplacer->replaceMembers($code, $list, $replace);
+        return $this->memberReplacer->replaceMembers($code, $list, $replace);
     }
 
-    private function createQuery(string $className = null, string $memberName = null)
+    private function createQuery(string $className = null, string $memberName = null, $memberType = null)
     {
         $query = ClassMemberQuery::create();
 
@@ -206,8 +221,11 @@ class ClassMethodReferences
         }
 
         if ($memberName) {
-            $query = $query
-                ->withMember($memberName);
+            $query = $query->withMember($memberName);
+        }
+
+        if ($memberType) {
+            $query = $query->withType($memberType);
         }
 
         return $query;

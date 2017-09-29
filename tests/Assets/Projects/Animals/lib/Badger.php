@@ -17,4 +17,8 @@ class Badger
     {
         $this->badge();
     }
+
+    public function carnivorous()
+    {
+    }
 }

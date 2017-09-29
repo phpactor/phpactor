@@ -192,11 +192,14 @@ Accepts either the class FQN or filename.
 Also returns JSON with `--format=json` and filesystem scope can be specified
 with `--filesystem`.
 
-### Method References
+### Member References
 
-Find methods. When no options are provided all methods in the scope will be
-listed. If class is given, then all method calls on that class or any of its
-subclasses. If a method is given then only show calls to that method.
+Find class members. When no options are provided all members in the scope will be
+listed. If class is given, then all references to class members on that class
+or any of its subclasses. If a member name is given then only show references
+to that member.
+
+Member type can be specified via `--type=method` etc.
 
 ```bash
 $ phpactor references:method --class="Symfony\\Component\\Console\\Input\\InputInterface"

@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "099d0b17f29e8736c7c6a0adb4e872724f763c5d"
+                "reference": "8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/099d0b17f29e8736c7c6a0adb4e872724f763c5d",
-                "reference": "099d0b17f29e8736c7c6a0adb4e872724f763c5d",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367",
+                "reference": "8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-09-20 19:55:18"
+            "time": "2017-09-28 19:57:26"
         },
         {
             "name": "monolog/monolog",
@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "dac258736a051c6277b3b27739a71f4dcad8a744"
+                "reference": "093aa05cc7c7113cff4c6f8bf6c9e071c764f1ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/dac258736a051c6277b3b27739a71f4dcad8a744",
-                "reference": "dac258736a051c6277b3b27739a71f4dcad8a744",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/093aa05cc7c7113cff4c6f8bf6c9e071c764f1ea",
+                "reference": "093aa05cc7c7113cff4c6f8bf6c9e071c764f1ea",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-09-24 13:22:46"
+            "time": "2017-09-29 16:45:07"
         },
         {
             "name": "phpactor/class-to-file",
@@ -962,12 +962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "103cae817d68b56ddcb50c051a6ed7980d746409"
+                "reference": "d8d888e2ae694c8057d6b0201b7b8f6f07d430cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/103cae817d68b56ddcb50c051a6ed7980d746409",
-                "reference": "103cae817d68b56ddcb50c051a6ed7980d746409",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d8d888e2ae694c8057d6b0201b7b8f6f07d430cc",
+                "reference": "d8d888e2ae694c8057d6b0201b7b8f6f07d430cc",
                 "shasum": ""
             },
             "require": {
@@ -1020,7 +1020,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-08-19 17:43:10"
+            "time": "2017-09-27 18:11:00"
         },
         {
             "name": "webmozart/assert",
@@ -1727,12 +1727,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada"
+                "reference": "905862cee2711021c30a50af9c3543f0d9d58a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/905862cee2711021c30a50af9c3543f0d9d58a0a",
+                "reference": "905862cee2711021c30a50af9c3543f0d9d58a0a",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1801,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-24 07:23:38"
+            "time": "2017-09-28T11:11:31+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

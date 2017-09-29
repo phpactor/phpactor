@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Integration\Console\Command;
 
 use Phpactor\Tests\Integration\SystemTestCase;
 
-class ReferencesMethodCommandTest extends SystemTestCase
+class ReferencesMemberCommandTest extends SystemTestCase
 {
     public function setUp()
     {
@@ -33,7 +33,7 @@ class ReferencesMethodCommandTest extends SystemTestCase
     }
 
     /**
-     * @testdox Find all methods for class
+     * @testdox Find all members for class
      */
     public function testFindAllForClass()
     {
@@ -82,5 +82,26 @@ class ReferencesMethodCommandTest extends SystemTestCase
         $process = $this->phpactor('references:method "Animals\Badger" badge --filesystem=composer');
         $this->assertSuccess($process);
         $this->assertContains('⟶badge⟵', $process->getOutput());
+    }
+
+    /**
+     * @testdox By property
+     */
+    public function testByTypeProperty()
+    {
+        $process = $this->phpactor('references:method "Animals\Badger" carnivorous --type=property');
+        $this->assertSuccess($process);
+        $this->assertContains('⟶carnivorous⟵', $process->getOutput());
+    }
+
+    /**
+     * @testdox Find member name shared by differnt types
+     */
+    public function testDifferentTypees()
+    {
+        $process = $this->phpactor('references:method "Animals\Badger" carnivorous');
+        $this->assertSuccess($process);
+        $this->assertContains('$this->⟶carnivorous⟵ = $carnivorous', $process->getOutput());
+        $this->assertContains('public function ⟶carnivorous⟵(', $process->getOutput());
     }
 }
