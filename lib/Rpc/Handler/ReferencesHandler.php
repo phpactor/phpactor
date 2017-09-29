@@ -8,12 +8,13 @@ use Phpactor\Container\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\FileReferencesAction;
 use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Application\ClassMethodReferences;
+use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 
 class ReferencesHandler implements Handler
 {
@@ -30,7 +31,7 @@ class ReferencesHandler implements Handler
     /**
      * @var ClassMethodReferences
      */
-    private $classMethodReferences;
+    private $classMemberReferences;
 
     /**
      * @var Reflector
@@ -40,12 +41,12 @@ class ReferencesHandler implements Handler
     public function __construct(
         Reflector $reflector,
         ClassReferences $classReferences,
-        ClassMethodReferences $classMethodReferences,
+        ClassMemberReferences $classMemberReferences,
         string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
     ) {
         $this->classReferences = $classReferences;
         $this->defaultFilesystem = $defaultFilesystem;
-        $this->classMethodReferences = $classMethodReferences;
+        $this->classMemberReferences = $classMemberReferences;
         $this->reflector = $reflector;
     }
 
@@ -99,10 +100,10 @@ class ReferencesHandler implements Handler
         return $references['references'];
     }
 
-    private function methodReferences(SymbolInformation $symbolInformation)
+    private function memberReferences(SymbolInformation $symbolInformation, string $memberType)
     {
         $classType = (string) $symbolInformation->classType();
-        $references = $this->classMethodReferences->findOrReplaceReferences($this->defaultFilesystem, $classType, $symbolInformation->symbol()->name());
+        $references = $this->classMemberReferences->findOrReplaceReferences($this->defaultFilesystem, $classType, $symbolInformation->symbol()->name(), $memberType);
 
         return $references['references'];
     }
@@ -113,7 +114,11 @@ class ReferencesHandler implements Handler
             case Symbol::CLASS_:
                 return $this->classReferences($symbolInformation);
             case Symbol::METHOD:
-                return $this->methodReferences($symbolInformation);
+                return $this->memberReferences($symbolInformation, ClassMemberQuery::TYPE_METHOD);
+            case Symbol::PROPERTY:
+                return $this->memberReferences($symbolInformation, ClassMemberQuery::TYPE_PROPERTY);
+            case Symbol::CONSTANT:
+                return $this->memberReferences($symbolInformation, ClassMemberQuery::TYPE_CONSTANT);
         }
 
         throw new \RuntimeException(sprintf(

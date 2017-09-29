@@ -10,6 +10,7 @@ use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\ActionRequest;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class RequestHandlerTest extends TestCase
 {
@@ -22,6 +23,11 @@ class RequestHandlerTest extends TestCase
      * @var ObjectProphecy
      */
     private $handler;
+
+    /**
+     * @var RequestHandler
+     */
+    private $requestHandler;
 
     public function setUp()
     {
@@ -77,3 +83,4 @@ class RequestHandlerTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 }
+

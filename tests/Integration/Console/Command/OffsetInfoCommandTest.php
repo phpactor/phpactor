@@ -17,7 +17,7 @@ class OffsetInfoCommandTest extends SystemTestCase
      */
     public function testProvideInformationForOffset()
     {
-        $process = $this->phpactor('offset:info lib/Badger.php 137');
+        $process = $this->phpactor('offset:info lib/Badger.php 163');
         $this->assertSuccess($process);
         $this->assertContains('type:Animals\Badger\Carnivorous', $process->getOutput());
         $this->assertContains('Badger/Carnivorous.php', $process->getOutput());
@@ -30,6 +30,6 @@ class OffsetInfoCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('offset:info lib/Badger.php 137 --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"symbol":"Carnivorous', $process->getOutput());
+        $this->assertContains('{"symbol":"__construct', $process->getOutput());
     }
 }
