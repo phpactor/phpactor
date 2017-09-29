@@ -17,17 +17,17 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testReferences()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" badge');
+        $process = $this->phpactor('references:member "Animals\Badger" badge');
         $this->assertSuccess($process);
         $this->assertContains('$this->⟶badge⟵', $process->getOutput());
     }
 
     /**
-     * @testdox When non-existing method given, suggest existing methods with exception.
+     * @testdox When non-existing member given, suggest existing members with exception.
      */
     public function testNonExistingMethod()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" bad');
+        $process = $this->phpactor('references:member "Animals\Badger" bad --type="method"');
         $this->assertEquals(255, $process->getExitCode());
         $this->assertContains('known methods: "__construct"', $process->getErrorOutput());
     }
@@ -37,25 +37,25 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testFindAllForClass()
     {
-        $process = $this->phpactor('references:method "Animals\Badger"');
+        $process = $this->phpactor('references:member "Animals\Badger"');
         $this->assertSuccess($process);
     }
 
     /**
-     * @testdox Find all methods
+     * @testdox Find all members
      */
     public function testFindAll()
     {
-        $process = $this->phpactor('references:method');
+        $process = $this->phpactor('references:member');
         $this->assertSuccess($process);
     }
 
     /**
-     * @testdox Replace method
+     * @testdox Replace member
      */
     public function testReplace()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" badge --replace=dodge');
+        $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge');
         $this->assertSuccess($process);
         $this->assertContains('this->dodge()', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
@@ -67,7 +67,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testReplaceDryRun()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" badge --replace=dodge --dry-run');
+        $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge --dry-run');
         $this->assertSuccess($process);
         $this->assertContains('this->badge()', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
@@ -79,7 +79,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testReferencesScope()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" badge --filesystem=composer');
+        $process = $this->phpactor('references:member "Animals\Badger" badge --filesystem=composer');
         $this->assertSuccess($process);
         $this->assertContains('⟶badge⟵', $process->getOutput());
     }
@@ -89,7 +89,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testByTypeProperty()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" carnivorous --type=property');
+        $process = $this->phpactor('references:member "Animals\Badger" carnivorous --type=property');
         $this->assertSuccess($process);
         $this->assertContains('⟶carnivorous⟵', $process->getOutput());
     }
@@ -99,7 +99,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
      */
     public function testDifferentTypees()
     {
-        $process = $this->phpactor('references:method "Animals\Badger" carnivorous');
+        $process = $this->phpactor('references:member "Animals\Badger" carnivorous');
         $this->assertSuccess($process);
         $this->assertContains('$this->⟶carnivorous⟵ = $carnivorous', $process->getOutput());
         $this->assertContains('public function ⟶carnivorous⟵(', $process->getOutput());
