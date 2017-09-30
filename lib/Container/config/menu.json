@@ -1,7 +1,7 @@
 {
     "method": {
         "find_references": {
-            "action": "find_references",
+            "action": "references",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
@@ -19,18 +19,17 @@
         "class_new": {
             "action": "class_new",
             "parameters": {
-                "offset": "%offset%",
-                "source": "%source%"
+                "current_path": "%path%"
             }
         },
         "move": {
-            "action": "class_move",
+            "action": "move_class",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "copy": {
-            "action": "class_copy",
+            "action": "copy_class",
             "parameters": {
                 "source_path": "%path%"
             }
@@ -38,7 +37,7 @@
         "inflect": {
             "action": "class_inflect",
             "parameters": {
-                "source_path": "%path%"
+                "current_path": "%path%"
             }
         },
         "goto_definition": {

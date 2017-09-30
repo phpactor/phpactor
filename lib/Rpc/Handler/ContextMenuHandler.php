@@ -93,6 +93,7 @@ class ContextMenuHandler implements Handler
                 [
                     'source' => $arguments['source'],
                     'offset' => (int) $arguments['offset'],
+                    'path' => $arguments['path']
                 ]
             ),
             [

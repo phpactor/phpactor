@@ -169,7 +169,9 @@ function! phpactor#GotoDefinition()
 endfunction
 
 function! phpactor#ContextMenu()
-    call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+    let currentPath = expand('%')
+    echo currentPath
+    call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": currentPath })
 endfunction
 
 function! phpactor#CopyFile()
