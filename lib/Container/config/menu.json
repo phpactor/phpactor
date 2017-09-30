@@ -1,0 +1,52 @@
+{
+    "method": {
+        "find_references": {
+            "action": "find_references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "class": {
+        "class_new": {
+            "action": "class_new",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "move": {
+            "action": "class_move",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "copy": {
+            "action": "class_copy",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "inflect": {
+            "action": "class_inflect",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    }
+}
