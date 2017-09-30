@@ -16,6 +16,8 @@ use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
+use Phpactor\Rpc\Editor\StackAction;
 
 class ContextMenuHandler implements Handler
 {
@@ -53,6 +55,7 @@ class ContextMenuHandler implements Handler
         return [
             'source' => null,
             'offset' => null,
+            'path' => null,
             'action' => null,
         ];
     }
@@ -72,14 +75,16 @@ class ContextMenuHandler implements Handler
             $action = $symbolMenu[$arguments['action']];
 
             // to avoid a cyclic dependency we get the request handler from the container ...
-            return $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
+            $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
                 Request::fromActions([
                     ActionRequest::fromNameAndParameters(
                         $action['action'],
-                        $action['parameters']
+                        $this->replaceTokens($arguments, $action['parameters'], $offset)
                     )
                 ])
             );
+
+            return StackAction::fromActions($response->actions());
         }
 
         return InputCallbackAction::fromCallbackAndInputs(
@@ -98,6 +103,21 @@ class ContextMenuHandler implements Handler
                 )
             ]
         );
+    }
+
+    private function replaceTokens(array $arguments, array $parameters, ReflectionOffset $offset)
+    {
+        foreach ($arguments as $argumentName => $argumentValue) {
+            foreach ($parameters as $parameterName => $parameterValue) {
+                $token = '%' . $argumentName . '%';
+                if ($parameterValue == $token) {
+                    $parameters[$parameterName] = $argumentValue;
+                }
+                continue 1;
+            }
+        }
+
+        return $parameters;
     }
 }
 
