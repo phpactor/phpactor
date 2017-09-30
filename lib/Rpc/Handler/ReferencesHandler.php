@@ -102,7 +102,7 @@ class ReferencesHandler implements Handler
 
     private function memberReferences(SymbolInformation $symbolInformation, string $memberType)
     {
-        $classType = (string) $symbolInformation->classType();
+        $classType = (string) $symbolInformation->containerType();
 
         $references = $this->classMemberReferences->findOrReplaceReferences($this->defaultFilesystem, $classType, ltrim($symbolInformation->symbol()->name(), '$'), $memberType);
 

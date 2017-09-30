@@ -61,7 +61,7 @@ class OffsetInfoHandler implements Handler
             'start' => $symbolInformation->symbol()->position()->start(),
             'end' => $symbolInformation->symbol()->position()->end(),
             'type' => (string) $symbolInformation->type(),
-            'class_type' => (string) $symbolInformation->classType(),
+            'class_type' => (string) $symbolInformation->containerType(),
             'value' => var_export($symbolInformation->value(), true),
             'offset' => $offset,
             'type_path' => null,

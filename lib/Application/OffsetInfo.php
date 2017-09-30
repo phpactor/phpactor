@@ -50,7 +50,7 @@ final class OffsetInfo
             'start' => $symbolInformation->symbol()->position()->start(),
             'end' => $symbolInformation->symbol()->position()->end(),
             'type' => (string) $symbolInformation->type(),
-            'class_type' => (string) $symbolInformation->classType(),
+            'class_type' => (string) $symbolInformation->containerType(),
             'value' => var_export($symbolInformation->value(), true),
             'offset' => $offset,
             'type_path' => null,
@@ -80,7 +80,7 @@ final class OffsetInfo
         }
 
         $return['type_path'] = $symbolInformation->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolInformation->type(), true) : null;
-        $return['class_type_path'] = $symbolInformation->classType() && false === $symbolInformation->classType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['class_type_path'] = $symbolInformation->containerType() && false === $symbolInformation->containerType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }
