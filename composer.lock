@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "a13fa7ad0ef934033ece5dd484554916f9e58bfb"
+                "reference": "9f95791d5c4733a5efb5b842593c6683b62a259f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/a13fa7ad0ef934033ece5dd484554916f9e58bfb",
-                "reference": "a13fa7ad0ef934033ece5dd484554916f9e58bfb",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/9f95791d5c4733a5efb5b842593c6683b62a259f",
+                "reference": "9f95791d5c4733a5efb5b842593c6683b62a259f",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-09-30 07:16:27"
+            "time": "2017-09-30 20:18:15"
         },
         {
             "name": "phpactor/class-to-file",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "bdcd57740767262c406abdb0905704ea62fd099e"
+                "reference": "11422000e97f91e7d0af836565e541bc7fb05e4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/bdcd57740767262c406abdb0905704ea62fd099e",
-                "reference": "bdcd57740767262c406abdb0905704ea62fd099e",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/11422000e97f91e7d0af836565e541bc7fb05e4f",
+                "reference": "11422000e97f91e7d0af836565e541bc7fb05e4f",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-09-29 20:19:11"
+            "time": "2017-09-30 20:27:49"
         },
         {
             "name": "phpbench/container",

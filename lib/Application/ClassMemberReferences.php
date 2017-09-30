@@ -252,6 +252,14 @@ class ClassMemberReferences
             ));
         }
 
+        if (
+            true === $class->methods()->has($memberName) ||
+            true === $class->constants()->has($memberName) ||
+            true === $class->properties()->has($memberName)
+        ) {
+            return;
+        }
+
         throw new \InvalidArgumentException(sprintf(
             'Member not known "%s", known members: "%s"',
             $memberName,

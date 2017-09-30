@@ -68,12 +68,12 @@ class GotoDefinition
         $symbolName = $symbolInformation->symbol()->name();
         $symbolType = $symbolInformation->symbol()->symbolType();
 
-        if (null === $symbolInformation->classType()) {
+        if (null === $symbolInformation->containerType()) {
             throw new GotoDefinitionException(sprintf('Containing class for member "%s" could not be determined', $symbolName));
         }
 
         try {
-            $containingClass = $this->reflector->reflectClassLike(ClassName::fromString((string) $symbolInformation->classType()));
+            $containingClass = $this->reflector->reflectClassLike(ClassName::fromString((string) $symbolInformation->containerType()));
         } catch (NotFound $e) {
             throw new GotoDefinitionException($e->getMessage());
         }
