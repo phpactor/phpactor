@@ -17,6 +17,8 @@ use Symfony\Component\Yaml\Exception\RuntimeException;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Rpc\Editor\InputCallbackAction;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
@@ -37,16 +39,18 @@ class ReferencesHandlerTest extends HandlerTestCase
 
     private $logger;
 
+    /**
+     * @var FilesystemRegistry
+     */
+    private $filesystemRegistry;
+
     public function setUp()
     {
         $this->classReferences = $this->prophesize(ClassReferences::class);
         $this->classMethodReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
         $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)), $this->logger);
-    }
-
-    public function tearDown()
-    {
+        $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
     }
 
     public function createHandler(): Handler
@@ -54,9 +58,29 @@ class ReferencesHandlerTest extends HandlerTestCase
         return new ReferencesHandler(
             $this->reflector,
             $this->classReferences->reveal(),
-            $this->classMethodReferences->reveal()
+            $this->classMethodReferences->reveal(),
+            $this->filesystemRegistry->reveal()
         );
     }
+
+    public function testFilesystemSelection()
+    {
+        $this->filesystemRegistry->names()->willReturn(['one', 'two']);
+
+        $action = $this->handle('references', [
+            'source' => '<?php',
+            'offset' => 1,
+        ]);
+
+        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $inputs = $action->inputs();
+        $this->assertCount(1, $inputs);
+        $input = reset($inputs);
+        $this->assertEquals(ReferencesHandler::PARAMETER_FILESYSTEM, $input->name());
+        $this->assertEquals([ 'one' => 'one', 'two' => 'two' ] , $input->choices());
+        $this->assertEquals('git' , $input->default());
+    }
+
 
     public function testInvalidSymbolType()
     {
@@ -66,6 +90,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => '<?php',
             'offset' => 1,
+            'filesystem' => 'git',
         ]);
     }
 
@@ -76,11 +101,13 @@ class ReferencesHandlerTest extends HandlerTestCase
             'stdClass'
         )->willReturn([
             'references' => [],
+            'risky_references' => [],
         ]);
 
         $action = $this->handle('references', [
             'source' => '<?php new \stdClass();',
             'offset' => 15,
+            'filesystem' => 'git',
         ]);
 
         $this->assertInstanceOf(EchoAction::class, $action);
@@ -110,6 +137,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => '<?php new \stdClass();',
             'offset' => 15,
+            'filesystem' => 'git',
         ]);
 
         $this->assertInstanceOf(StackAction::class, $action);
@@ -151,6 +179,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReturnNoneFound();',
             'offset' => 86,
+            'filesystem' => 'git',
         ]);
 
         $this->assertInstanceOf(EchoAction::class, $action);
@@ -182,6 +211,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReferences();',
             'offset' => 86,
+            'filesystem' => 'git',
         ]);
 
         $this->assertInstanceOf(StackAction::class, $action);
@@ -207,6 +237,52 @@ class ReferencesHandlerTest extends HandlerTestCase
                 ]
             ],
         ], $second->parameters());
+    }
+
+    public function testMethodReferencesWithRisky()
+    {
+        $this->classMethodReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            __CLASS__,
+            'testMethodReferences',
+            ClassMemberQuery::TYPE_METHOD
+        )->willReturn([
+            'references' => [
+                [
+                    'file' => 'barfoo',
+                    'references' => [
+                        [
+                            'start' => 10,
+                            'line_no' => 10,
+                            'end' => 20,
+                            'col_no' => 12,
+                        ],
+                    ],
+                    'risky_references' => [
+                        [
+                            'start' => 10,
+                            'line_no' => 10,
+                            'end' => 20,
+                            'col_no' => 12,
+                        ],
+                    ],
+                ]
+            ],
+        ]);
+
+        $action = $this->handle('references', [
+            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReferences();',
+            'offset' => 86,
+            'filesystem' => 'git',
+        ]);
+
+        $this->assertInstanceOf(StackAction::class, $action);
+
+        $actions = $action->actions();
+
+        $first = array_shift($actions);
+        $this->assertInstanceOf(EchoAction::class, $first);
+        $this->assertContains('risky', $first->message());
     }
 }
 
