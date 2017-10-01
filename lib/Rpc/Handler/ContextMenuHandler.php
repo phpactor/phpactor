@@ -18,10 +18,15 @@ use Phpactor\Container\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Phpactor;
 
 class ContextMenuHandler implements Handler
 {
     const NAME = 'context_menu';
+    const PARAMETER_SOURCE = 'source';
+    const PARAMETER_OFFSET = 'offset';
+    const PARAMETER_ACTION = 'action';
 
     /**
      * @var Reflector
@@ -38,11 +43,22 @@ class ContextMenuHandler implements Handler
      */
     private $container;
 
-    public function __construct(Reflector $reflector, array $menu, Container $container)
+    /**
+     * @var ClassFileNormalizer
+     */
+    private $classFileNormalizer;
+
+    public function __construct(
+        Reflector $reflector,
+        ClassFileNormalizer $classFileNormalizer,
+        array $menu,
+        Container $container
+    )
     {
         $this->reflector = $reflector;
         $this->menu = $menu;
         $this->container = $container;
+        $this->classFileNormalizer = $classFileNormalizer;
     }
 
     public function name(): string
@@ -53,16 +69,19 @@ class ContextMenuHandler implements Handler
     public function defaultParameters(): array
     {
         return [
-            'source' => null,
-            'offset' => null,
-            'path' => null,
-            'action' => null,
+            self::PARAMETER_SOURCE => null,
+            self::PARAMETER_OFFSET => null,
+            self::PARAMETER_ACTION => null,
         ];
     }
 
     public function handle(array $arguments)
     {
-        $offset = $this->reflector->reflectOffset(SourceCode::fromString($arguments['source']), Offset::fromInt($arguments['offset']));
+        $offset = $this->reflector->reflectOffset(
+            SourceCode::fromString($arguments[self::PARAMETER_SOURCE]),
+            Offset::fromInt($arguments[self::PARAMETER_OFFSET])
+        );
+
         $symbol = $offset->symbolInformation()->symbol();
 
         if (false === isset($this->menu[$symbol->symbolType()])) {
@@ -71,15 +90,15 @@ class ContextMenuHandler implements Handler
 
         $symbolMenu = $this->menu[$symbol->symbolType()];
 
-        if (null !== $arguments['action']) {
-            $action = $symbolMenu[$arguments['action']];
+        if (null !== $arguments[self::PARAMETER_ACTION]) {
+            $action = $symbolMenu[$arguments[self::PARAMETER_ACTION]];
 
             // to avoid a cyclic dependency we get the request handler from the container ...
             $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
                 Request::fromActions([
                     ActionRequest::fromNameAndParameters(
-                        $action['action'],
-                        $this->replaceTokens($arguments, $action['parameters'], $offset)
+                        $action[self::PARAMETER_ACTION],
+                        $this->replaceTokens($action['parameters'], $offset, $arguments)
                     )
                 ])
             );
@@ -91,31 +110,37 @@ class ContextMenuHandler implements Handler
             ActionRequest::fromNameAndParameters(
                 self::NAME,
                 [
-                    'source' => $arguments['source'],
-                    'offset' => (int) $arguments['offset'],
-                    'path' => $arguments['path']
+                    self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],
+                    self::PARAMETER_OFFSET => (int) $arguments[self::PARAMETER_OFFSET],
                 ]
             ),
             [
                 ChoiceInput::fromNameLabelChoices(
-                    'action',
-                    sprintf('Context action on "%s"', $symbol->name()),
+                    self::PARAMETER_ACTION,
+                    sprintf('%s "%s":', ucfirst($symbol->symbolType()), $symbol->name()),
                     array_combine(array_keys($symbolMenu), array_keys($symbolMenu))
                 )
             ]
         );
     }
 
-    private function replaceTokens(array $arguments, array $parameters, ReflectionOffset $offset)
+    private function replaceTokens(array $parameters, ReflectionOffset $offset, array $arguments)
     {
-        foreach ($arguments as $argumentName => $argumentValue) {
-            foreach ($parameters as $parameterName => $parameterValue) {
-                $token = '%' . $argumentName . '%';
-                if ($parameterValue == $token) {
-                    $parameters[$parameterName] = $argumentValue;
-                }
-                continue 1;
+        foreach ($parameters as $parameterName => $parameterValue) {
+            switch ($parameterValue) {
+            case '%path%':
+                $path = $this->classFileNormalizer->classToFile((string) $offset->symbolInformation()->type());
+                $parameterValue = Phpactor::relativizePath($path);
+                break;
+            case '%offset%':
+                $parameterValue = $arguments[self::PARAMETER_OFFSET];
+                break;
+            case '%source%':
+                $parameterValue = $arguments[self::PARAMETER_SOURCE];
+                break;
             }
+
+            $parameters[$parameterName] = $parameterValue;
         }
 
         return $parameters;

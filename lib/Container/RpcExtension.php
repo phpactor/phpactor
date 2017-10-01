@@ -122,6 +122,7 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.context_menu', function (Container $container) {
             return new ContextMenuHandler(
                 $container->get('reflection.reflector'),
+                $container->get('application.helper.class_file_normalizer'),
                 json_decode(file_get_contents(__DIR__ . '/config/menu.json'), true),
                 $container
             );

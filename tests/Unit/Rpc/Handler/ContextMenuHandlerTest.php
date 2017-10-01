@@ -17,6 +17,8 @@ use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
+use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Phpactor;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {
@@ -43,9 +45,15 @@ class ContextMenuHandlerTest extends HandlerTestCase
      */
     private $requestHandler;
 
+    /**
+     * @var ClassFileNormalizer
+     */
+    private $classFileNormalizer;
+
     public function setUp()
     {
         $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)));
+        $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);
         $this->requestHandler = $this->prophesize(RequestHandler::class);
     }
@@ -54,6 +62,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
     {
         return new ContextMenuHandler(
             $this->reflector,
+            $this->classFileNormalizer->reveal(),
             $this->menu,
             $this->container->reveal()
         );
@@ -96,13 +105,15 @@ class ContextMenuHandlerTest extends HandlerTestCase
             $this->requestHandler->reveal()
         );
 
+        $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
+
         $this->requestHandler->handle(Request::fromActions([
             ActionRequest::fromNameAndParameters(
                 self::VARIABLE_ACTION, 
                 [
                     'some_source' => self::SOURCE,
                     'some_offset' => 8,
-                    'some_path' => __FILE__
+                    'some_path' => 'tests/Unit/Rpc/Handler/ContextMenuHandlerTest.php'
                 ]
             )
         ]))->willReturn(
@@ -127,7 +138,6 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $action = $this->handle(ContextMenuHandler::NAME, [
             'action' => self::VARIABLE_ACTION,
             'source' => self::SOURCE,
-            'path' => __FILE__,
             'offset' => 8,
         ]);
 
