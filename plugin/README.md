@@ -93,6 +93,8 @@ Phpactor as a backend for an as-you-type completion manager:
 Context Menu
 ------------
 
+![recording](https://user-images.githubusercontent.com/530801/31052985-96b96e10-a692-11e7-8d43-681f85c636d0.gif)
+
 Allow the selection of an action to take on the symbol at the current cursor
 position.
 
