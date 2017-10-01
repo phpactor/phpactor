@@ -78,7 +78,8 @@ class RpcExtension implements ExtensionInterface
             return new ReferencesHandler(
                 $container->get('reflection.reflector'),
                 $container->get('application.class_references'),
-                $container->get('application.method_references')
+                $container->get('application.method_references'),
+                $container->get('source_code_filesystem.registry')
             );
         }, [ 'rpc.handler' => [] ]);
 

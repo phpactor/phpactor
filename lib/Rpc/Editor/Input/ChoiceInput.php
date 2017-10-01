@@ -2,6 +2,8 @@
 
 namespace Phpactor\Rpc\Editor\Input;
 
+// show context menu with "pp"
+
 class ChoiceInput implements Input
 {
     /**
@@ -55,6 +57,11 @@ class ChoiceInput implements Input
     public function label(): string
     {
         return $this->label;
+    }
+
+    public function default(): string
+    {
+        return $this->default;
     }
 
     public function choices(): array
