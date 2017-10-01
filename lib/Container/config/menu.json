@@ -1,5 +1,5 @@
 {
-    "method": {
+    "constant": {
         "find_references": {
             "action": "references",
             "parameters": {
@@ -52,6 +52,38 @@
             "action": "move_class",
             "parameters": {
                 "source_path": "%path%"
+            }
+        }
+    },
+    "property": {
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "method": {
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
             }
         }
     }

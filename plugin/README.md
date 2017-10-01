@@ -10,6 +10,8 @@ Features
 --------
 
 - [Omni-completion](#omni-completion): Intelligent auto-completion with *no indexing!*.
+- [Context Menu](#context-menu): Show list of actions to take on the current
+  cursor position.
 - [Insert use statement](#include-use-statement): Automatically search for and include the use
   statement for class under cursor.
 - [Expand class to FQN](#class-expand): Search for class under cursor and
@@ -52,6 +54,7 @@ autocmd FileType php setlocal omnifunc=phpactor#Complete
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
 map <Leader>e :call phpactor#ClassExpand()<CR>
+map <Leader>pp :call phpactor#ContextMenu()<CR>
 map <Leader>o :call phpactor#GotoDefinition()<CR>
 map <Leader>pd :call phpactor#OffsetTypeInfo()<CR>
 map <Leader>pfm :call phpactor#MoveFile()<CR>
@@ -81,10 +84,21 @@ confuration above to automatically enable it for all PHP files.
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
-For auto-completion, you could try
+**NOTE**: Omni-completion works, but it's not great. It is better to use
+Phpactor as a backend for an as-you-type completion manager:
 
-- [ncm-phpactor](https://github.com/roxma/ncm-phpactor)
+- [ncm-phpactor](https://github.com/roxma/ncm-phpactor): Integration for
+  Neovim Completion Manager.
 
+Context Menu
+------------
+
+Allow the selection of an action to take on the symbol at the current cursor
+position.
+
+```bash
+:call phpactor#ContextMenu()
+```
 
 Include use statement
 ---------------------
