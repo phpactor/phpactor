@@ -1,0 +1,90 @@
+{
+    "constant": {
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "class": {
+        "class_new": {
+            "action": "class_new",
+            "parameters": {
+                "current_path": "%path%"
+            }
+        },
+        "copy": {
+            "action": "copy_class",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "inflect": {
+            "action": "class_inflect",
+            "parameters": {
+                "current_path": "%path%"
+            }
+        },
+        "move": {
+            "action": "move_class",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        }
+    },
+    "property": {
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "method": {
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    }
+}

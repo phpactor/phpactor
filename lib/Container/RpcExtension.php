@@ -18,9 +18,13 @@ use Phpactor\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
+use Phpactor\Rpc\Handler\ContextMenuHandler;
+use Symfony\Component\Yaml\Yaml;
 
 class RpcExtension implements ExtensionInterface
 {
+    const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
+
     /**
      * {@inheritDoc}
      */
@@ -30,7 +34,7 @@ class RpcExtension implements ExtensionInterface
             return new RpcCommand($container->get('rpc.request_handler'));
         }, [ 'ui.console.command' => [] ]);
 
-        $container->register('rpc.request_handler', function (Container $container) {
+        $container->register(self::SERVICE_REQUEST_HANDLER, function (Container $container) {
             return new RequestHandler($container->get('rpc.handler_registry'));
         });
 
@@ -114,6 +118,16 @@ class RpcExtension implements ExtensionInterface
                 $container->get('application.class_inflect')
             );
         }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.context_menu', function (Container $container) {
+            return new ContextMenuHandler(
+                $container->get('reflection.reflector'),
+                $container->get('application.helper.class_file_normalizer'),
+                json_decode(file_get_contents(__DIR__ . '/config/menu.json'), true),
+                $container
+            );
+        }, [ 'rpc.handler' => [] ]);
+
     }
 
     /**

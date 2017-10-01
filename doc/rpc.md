@@ -364,3 +364,12 @@ Find references to the symbol under the cursor.
 
 Will return a file-list action, containing a list of all the files in which
 references can be found (and the position of all the references).
+
+### `context_menu`
+
+Return a menu for selecting an action to perform on the current symbol
+
+- **Name**: `context_menu`
+- **Parameters**:
+    - `source`: Source code as a string
+    - `offset`: Offset of symbol (int)

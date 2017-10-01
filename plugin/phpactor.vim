@@ -168,6 +168,10 @@ function! phpactor#GotoDefinition()
     call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
+function! phpactor#ContextMenu()
+    call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source() })
+endfunction
+
 function! phpactor#CopyFile()
     let currentPath = expand('%')
     call phpactor#rpc("copy_class", { "source_path": currentPath })
