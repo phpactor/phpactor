@@ -53,6 +53,13 @@
             "parameters": {
                 "source_path": "%path%"
             }
+        },
+        "transform_file": {
+            "action": "transform",
+            "parameters": {
+                "path": "%path%",
+                "source": "%source%"
+            }
         }
     },
     "property": {
