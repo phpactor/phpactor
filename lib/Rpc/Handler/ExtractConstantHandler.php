@@ -2,21 +2,23 @@
 
 namespace Phpactor\Rpc\Handler;
 
+use Phpactor\Rpc\Handler;
+use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
+use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 class ExtractConstantHandler extends AbstractHandler
 {
     const NAME = 'extract_constant';
-
-    const LABEL_CONSTANT_NAME = 'Constant name: ';
-
     const PARAM_CONSTANT_NAME = 'constant_name';
-    const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
     const PARAM_OFFSET = 'offset';
-    const PARAM_PATH = 'path';
     const PARAM_SOURCE = 'source';
+    const PARAM_PATH = 'path';
+    const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
 
     /**
      * @var ExtractConstant
@@ -46,10 +48,10 @@ class ExtractConstantHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $this->requireArgument('constant_name', TextInput::fromNameLabelAndDefault(
+        $this->requireArgument(self::PARAM_CONSTANT_NAME, TextInput::fromNameLabelAndDefault(
             self::PARAM_CONSTANT_NAME,
-            self::LABEL_CONSTANT_NAME,
-            $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION] ?: ''
+            'Constant name',
+            $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION]
         ));
 
         if ($this->hasMissingArguments($arguments)) {
@@ -62,6 +64,7 @@ class ExtractConstantHandler extends AbstractHandler
             $arguments[self::PARAM_CONSTANT_NAME]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource(self::PARAM_PATH, (string) $sourceCode);
+        return ReplaceFileSourceAction::fromPathAndSource($arguments[self::PARAM_PATH], (string) $sourceCode);
     }
 }
+
