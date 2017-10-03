@@ -15,6 +15,14 @@ class ExtractConstantHandler extends AbstractHandler
 {
     const NAME = 'extract_constant';
 
+    const LABEL_CONSTANT_NAME = 'Constant name: ';
+
+    const PARAM_CONSTANT_NAME = 'constant_name';
+    const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
+    const PARAM_OFFSET = 'offset';
+    const PARAM_PATH = 'path';
+    const PARAM_SOURCE = 'source';
+
     /**
      * @var ExtractConstant
      */
@@ -33,20 +41,20 @@ class ExtractConstantHandler extends AbstractHandler
     public function defaultParameters(): array
     {
         return [
-            'path' => null,
-            'source' => null,
-            'offset' => null,
-            'constant_name' => null,
-            'constant_name_suggestion' => null,
+            self::PARAM_PATH => null,
+            self::PARAM_SOURCE => null,
+            self::PARAM_OFFSET => null,
+            self::PARAM_CONSTANT_NAME => null,
+            self::PARAM_CONSTANT_NAME_SUGGESTION => null,
         ];
     }
 
     public function handle(array $arguments)
     {
         $this->requireArgument('constant_name', TextInput::fromNameLabelAndDefault(
-            'constant_name',
-            'Constant name',
-            $arguments['constant_name_suggestion']
+            self::PARAM_CONSTANT_NAME,
+            self::LABEL_CONSTANT_NAME,
+            $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION] ?: ''
         ));
 
         if ($this->hasMissingArguments($arguments)) {
@@ -54,12 +62,12 @@ class ExtractConstantHandler extends AbstractHandler
         }
 
         $sourceCode = $this->extractConstant->extractConstant(
-            $arguments['source'],
-            $arguments['offset'],
-            $arguments['constant_name']
+            $arguments[self::PARAM_SOURCE],
+            $arguments[self::PARAM_OFFSET],
+            $arguments[self::PARAM_CONSTANT_NAME]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource($arguments['path'], (string) $sourceCode);
+        return ReplaceFileSourceAction::fromPathAndSource(self::PARAM_PATH, (string) $sourceCode);
     }
 }
 

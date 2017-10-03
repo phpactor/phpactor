@@ -43,7 +43,7 @@ abstract class AbstractHandler implements Handler
                 return false;
             }
 
-            return $argument === null;
+            return empty($argument);
         }, ARRAY_FILTER_USE_BOTH));
     }
 
