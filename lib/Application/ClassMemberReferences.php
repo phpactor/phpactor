@@ -65,8 +65,7 @@ class ClassMemberReferences
         string $memberType = null,
         string $replace = null,
         bool $dryRun = false
-    )
-    {
+    ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
 
         $filesystem = $this->filesystemRegistry->get($scope);
@@ -110,8 +109,7 @@ class ClassMemberReferences
         string $memberType = null,
         string $replace = null,
         bool $dryRun = false
-    )
-    {
+    ) {
         $code = $filesystem->getContents($filePath);
 
         $query = $this->createQuery($className, $memberName, $memberType);

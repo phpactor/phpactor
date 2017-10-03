@@ -19,7 +19,6 @@ use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
-use Symfony\Component\Yaml\Yaml;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
 
 class RpcExtension implements ExtensionInterface
@@ -135,7 +134,6 @@ class RpcExtension implements ExtensionInterface
                 $container->get('code_transform.refactor.extract_constant')
             );
         }, [ 'rpc.handler' => [] ]);
-
     }
 
     /**

@@ -91,6 +91,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertEquals([
             'source_path' => self::SOURCE_PATH,
             'dest_path' => null,
+            'confirmed' => null,
         ], $action->callbackAction()->parameters());
     }
 

@@ -2,10 +2,7 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 use Phpactor\Application\ClassMover;
@@ -14,7 +11,7 @@ use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\CloseFileAction;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
-class ClassMoveHandler implements Handler
+class ClassMoveHandler extends AbstractHandler
 {
     /**
      * @var ClassMover
@@ -52,41 +49,23 @@ class ClassMoveHandler implements Handler
             return EchoAction::fromMessage('Cancelled');
         }
 
-        if (null === $arguments['dest_path']) {
+        $this->requireArgument('dest_path', TextInput::fromNameLabelAndDefault(
+            'dest_path',
+            'Move to: ',
+            $arguments['source_path']
+        ));
 
-            // get destination path
-            return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
-                    $this->name(),
-                    [
-                        'source_path' => $arguments['source_path'],
-                        'dest_path' => null,
-                    ]
-                ),
-                [
-                    TextInput::fromNameLabelAndDefault('dest_path', 'Move to: ', $arguments['source_path']),
-                ]
-            );
+        if (null !== $arguments['dest_path'] && null === $arguments['confirmed']) {
+            $this->requireArgument('confirmed', ConfirmInput::fromNameAndLabel(
+                'confirmed',
+                'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
+                '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
+                'Are you sure? :'
+            ));
         }
 
-        if (null === $arguments['confirmed']) {
-            return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
-                    $this->name(),
-                    [
-                        'source_path' => $arguments['source_path'],
-                        'dest_path' => $arguments['dest_path'],
-                    ]
-                ),
-                [
-                    ConfirmInput::fromNameAndLabel(
-                        'confirmed',
-                        'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
-                        '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
-                        'Are you sure? :'
-                    ),
-                ]
-            );
+        if ($this->hasMissingArguments($arguments)) {
+            return $this->createInputCallback($arguments);
         }
 
         $this->classMove->move(
