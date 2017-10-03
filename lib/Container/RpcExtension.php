@@ -20,6 +20,7 @@ use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Symfony\Component\Yaml\Yaml;
+use Phpactor\Rpc\Handler\ExtractConstantHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -126,6 +127,12 @@ class RpcExtension implements ExtensionInterface
                 $container->get('application.helper.class_file_normalizer'),
                 json_decode(file_get_contents(__DIR__ . '/config/menu.json'), true),
                 $container
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.extract_constant', function (Container $container) {
+            return new ExtractConstantHandler(
+                $container->get('code_transform.refactor.extract_constant')
             );
         }, [ 'rpc.handler' => [] ]);
 

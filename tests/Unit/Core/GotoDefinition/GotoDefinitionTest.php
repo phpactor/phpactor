@@ -103,7 +103,7 @@ class GotoDefinitionTest extends TestCase
         $info = SymbolInformation::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
-        $info = $info->withClassType(Type::fromString('Foobar'));
+        $info = $info->withContainerType(Type::fromString('Foobar'));
         $this->reflector->reflectClassLike(ClassName::fromString('Foobar'))->willThrow(new NotFound('Notfound'));
 
         $result = $this->action->gotoDefinition($info);
@@ -120,7 +120,7 @@ class GotoDefinitionTest extends TestCase
         $info = SymbolInformation::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
-        $info = $info->withClassType(Type::fromString('Foobar'));
+        $info = $info->withContainerType(Type::fromString('Foobar'));
         $this->reflector->reflectClassLike(ClassName::fromString('Foobar'))->willReturn($this->reflectionClass->reveal());
         $this->reflectionClass->sourceCode()->willReturn(SourceCode::fromString('asd'));
         $this->reflectionClass->name()->willReturn(ClassName::fromString('asd'));
@@ -139,7 +139,7 @@ class GotoDefinitionTest extends TestCase
         $info = SymbolInformation::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
-        $info = $info->withClassType(Type::fromString('Foobar'));
+        $info = $info->withContainerType(Type::fromString('Foobar'));
         $this->reflector->reflectClassLike(ClassName::fromString('Foobar'))->willReturn($this->reflectionClass->reveal());
         $this->reflectionClass->name()->willReturn(ClassName::fromString('class1'));
         $this->reflectionClass->methods()->willReturn($this->reflectionMethodCollection->reveal());
@@ -201,7 +201,7 @@ class GotoDefinitionTest extends TestCase
         $info = SymbolInformation::for(
             Symbol::fromTypeNameAndPosition(Symbol::PROPERTY, 'aaa', Position::fromStartAndEnd(1, 2))
         );
-        $info = $info->withClassType(Type::fromString('Foobar'));
+        $info = $info->withContainerType(Type::fromString('Foobar'));
         $this->reflector->reflectClassLike(ClassName::fromString('Foobar'))->willReturn($this->reflectionClass->reveal());
         $this->reflectionClass->isInterface()->willReturn(true);
         $this->reflectionClass->name()->willReturn(ClassName::fromString('class1'));
@@ -214,7 +214,7 @@ class GotoDefinitionTest extends TestCase
         $info = SymbolInformation::for(
             Symbol::fromTypeNameAndPosition($symbolType, 'aaa', Position::fromStartAndEnd(1, 2))
         );
-        $info = $info->withClassType(Type::fromString('Foobar'));
+        $info = $info->withContainerType(Type::fromString('Foobar'));
         $this->reflector->reflectClassLike(ClassName::fromString('Foobar'))->willReturn($this->reflectionClass->reveal());
         $this->reflectionClass->name()->willReturn(ClassName::fromString('class1'));
         $this->reflectionClass->sourceCode()->willReturn(SourceCode::fromPath(__FILE__));

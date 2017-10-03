@@ -27,6 +27,7 @@ use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignments;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -55,6 +56,7 @@ class CodeTransformExtension implements ExtensionInterface
         $this->registerApplication($container);
         $this->registerRenderer($container);
         $this->registerUpdater($container);
+        $this->registerRefactorings($container);
     }
 
     private function registerApplication(Container $container)
@@ -190,6 +192,16 @@ class CodeTransformExtension implements ExtensionInterface
 
         $container->register('code_transform.text_format', function (Container $container) {
             return new TextFormat($container->getParameter('code_transform.indentation'));
+        });
+    }
+
+    private function registerRefactorings(Container $container)
+    {
+        $container->register('code_transform.refactor.extract_constant', function (Container $container) {
+            return new WorseExtractConstant(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.updater')
+            );
         });
     }
 

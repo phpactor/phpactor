@@ -126,18 +126,20 @@ class ContextMenuHandler implements Handler
 
     private function replaceTokens(array $parameters, ReflectionOffset $offset, array $arguments)
     {
+        $symbolInformation = $offset->symbolInformation();
         foreach ($parameters as $parameterName => $parameterValue) {
             switch ($parameterValue) {
-            case '%path%':
-                $path = $this->classFileNormalizer->classToFile((string) $offset->symbolInformation()->type());
-                $parameterValue = Phpactor::relativizePath($path);
-                break;
-            case '%offset%':
-                $parameterValue = $arguments[self::PARAMETER_OFFSET];
-                break;
-            case '%source%':
-                $parameterValue = $arguments[self::PARAMETER_SOURCE];
-                break;
+                case '%path%':
+                    $type = $symbolInformation->hasContainerType() ? $symbolInformation->containerType() : $symbolInformation->type();
+                    $path = $this->classFileNormalizer->classToFile($type);
+                    $parameterValue = Phpactor::relativizePath($path);
+                    break;
+                case '%offset%':
+                    $parameterValue = $arguments[self::PARAMETER_OFFSET];
+                    break;
+                case '%source%':
+                    $parameterValue = $arguments[self::PARAMETER_SOURCE];
+                    break;
             }
 
             $parameters[$parameterName] = $parameterValue;
