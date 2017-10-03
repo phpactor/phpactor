@@ -365,6 +365,21 @@ Find references to the symbol under the cursor.
 Will return a file-list action, containing a list of all the files in which
 references can be found (and the position of all the references).
 
+### `extract_constant`
+
+Extract a constant from the value at the given offset and replace all
+identical values with a reference to the constant.
+
+- **Name**: `extract_constant`
+- **Parameters**:
+    - `source`: Source code as a string
+    - `offset`: Offset of symbol (int)
+    - `constant_name`: Name for constant.
+    - `constant_suggestion_name`: (optional) Use this as a suggestion when
+      interactive.
+
+Will return an action to replace the file with the updated code.
+
 ### `context_menu`
 
 Return a menu for selecting an action to perform on the current symbol

@@ -12,6 +12,10 @@ use Phpactor\Rpc\Editor\EchoAction;
 
 class ClassSearchHandler implements Handler
 {
+    const NAME = 'class_search';
+    const SHORT_NAME = 'short_name';
+
+
     /**
      * @var ClassSearch
      */
@@ -32,13 +36,13 @@ class ClassSearchHandler implements Handler
 
     public function name(): string
     {
-        return 'class_search';
+        return self::NAME;
     }
 
     public function defaultParameters(): array
     {
         return [
-            'short_name' => null,
+            self::SHORT_NAME => null,
         ];
     }
 
@@ -46,11 +50,11 @@ class ClassSearchHandler implements Handler
     {
         $results = $this->classSearch->classSearch(
             $this->defaultFilesystem,
-            $arguments['short_name']
+            $arguments[self::SHORT_NAME]
         );
 
         if (count($results) === 0) {
-            return EchoAction::fromMessage(sprintf('No classes found with short name "%s"', $arguments['short_name']));
+            return EchoAction::fromMessage(sprintf('No classes found with short name "%s"', $arguments[self::SHORT_NAME]));
         }
 
         if (count($results) === 1) {
@@ -69,3 +73,4 @@ class ClassSearchHandler implements Handler
         return ReturnChoiceAction::fromOptions($options);
     }
 }
+

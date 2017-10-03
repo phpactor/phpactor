@@ -9,6 +9,11 @@ use Phpactor\Application\Logger\NullLogger;
 
 class ClassCopyHandler extends AbstractHandler
 {
+    const NAME = 'copy_class';
+    const PARAM_SOURCE_PATH = 'source_path';
+    const PARAM_DEST_PATH = 'dest_path';
+
+
     /**
      * @var ClassCopy
      */
@@ -21,27 +26,32 @@ class ClassCopyHandler extends AbstractHandler
 
     public function name(): string
     {
-        return 'copy_class';
+        return self::NAME;
     }
 
     public function defaultParameters(): array
     {
         return [
-            'source_path' => null,
-            'dest_path' => null,
+            self::PARAM_SOURCE_PATH => null,
+            self::PARAM_DEST_PATH => null,
         ];
     }
 
     public function handle(array $arguments)
     {
-        $this->requireArgument('dest_path', TextInput::fromNameLabelAndDefault('dest_path', 'Copy to: ', $arguments['source_path']));
+        $this->requireArgument(self::PARAM_DEST_PATH, TextInput::fromNameLabelAndDefault(
+            self::PARAM_DEST_PATH,
+            'Copy to: ',
+            $arguments[self::PARAM_SOURCE_PATH]
+        ));
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
         }
 
-        $this->classCopy->copy(new NullLogger(), $arguments['source_path'], $arguments['dest_path']);
+        $this->classCopy->copy(new NullLogger(), $arguments[self::PARAM_SOURCE_PATH], $arguments[self::PARAM_DEST_PATH]);
 
-        return OpenFileAction::fromPath($arguments['dest_path']);
+        return OpenFileAction::fromPath($arguments[self::PARAM_DEST_PATH]);
     }
 }
+

@@ -8,6 +8,10 @@ use Phpactor\Rpc\Editor\ReturnAction;
 
 class CompleteHandler implements Handler
 {
+    const NAME = 'complete';
+    const PARAM_SOURCE = 'source';
+    const PARAM_OFFSET = 'offset';
+
     /**
      * @var Complete
      */
@@ -20,21 +24,22 @@ class CompleteHandler implements Handler
 
     public function name(): string
     {
-        return 'complete';
+        return self::NAME;
     }
 
     public function defaultParameters(): array
     {
         return [
-            'source' => null,
-            'offset' => null,
+            self::PARAM_SOURCE => null,
+            self::PARAM_OFFSET => null,
         ];
     }
 
     public function handle(array $arguments)
     {
-        $suggestions = $this->complete->complete($arguments['source'], $arguments['offset']);
+        $suggestions = $this->complete->complete($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
         return ReturnAction::fromValue($suggestions);
     }
 }
+

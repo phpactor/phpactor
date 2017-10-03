@@ -15,6 +15,11 @@ use Phpactor\Application\AbstractClassGenerator;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
+    const PARAM_CURRENT_PATH = 'current_path';
+    const PARAM_NEW_PATH = 'new_path';
+    const PARAM_VARIANT = 'variant';
+    const PARAM_OVERWRITE = 'overwrite';
+
     /**
      * @var ClassGenerator
      */
@@ -28,10 +33,10 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     public function defaultParameters(): array
     {
         return [
-            'current_path' => null,
-            'new_path' => null,
-            'variant' => null,
-            'overwrite' => null,
+            self::PARAM_CURRENT_PATH => null,
+            self::PARAM_NEW_PATH => null,
+            self::PARAM_VARIANT => null,
+            self::PARAM_OVERWRITE => null,
         ];
     }
 
@@ -41,15 +46,15 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        if (false === $arguments['overwrite']) {
+        if (false === $arguments[self::PARAM_OVERWRITE]) {
             return EchoAction::fromMessage('Cancelled');
         }
 
         $missingInputs = [];
 
-        if (null === $arguments['variant']) {
-            $this->requireArgument('variant', ChoiceInput::fromNameLabelChoicesAndDefault(
-                'variant',
+        if (null === $arguments[self::PARAM_VARIANT]) {
+            $this->requireArgument(self::PARAM_VARIANT, ChoiceInput::fromNameLabelChoicesAndDefault(
+                self::PARAM_VARIANT,
                 'Variant: ',
                 array_combine(
                     $this->classGenerator->availableGenerators(),
@@ -58,10 +63,10 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             ));
         }
 
-        $this->requireArgument('new_path', TextInput::fromNameLabelAndDefault(
-            'new_path',
+        $this->requireArgument(self::PARAM_NEW_PATH, TextInput::fromNameLabelAndDefault(
+            self::PARAM_NEW_PATH,
             $this->newMessage(),
-            $arguments['current_path']
+            $arguments[self::PARAM_CURRENT_PATH]
         ));
 
         if ($this->hasMissingArguments($arguments)) {
@@ -75,15 +80,15 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
                 ActionRequest::fromNameAndParameters(
                     $this->name(),
                     [
-                        'current_path' => $arguments['current_path'],
-                        'new_path' => $arguments['new_path'],
-                        'variant' => $arguments['variant'],
-                        'overwrite' => null,
+                        self::PARAM_CURRENT_PATH => $arguments[self::PARAM_CURRENT_PATH],
+                        self::PARAM_NEW_PATH => $arguments[self::PARAM_NEW_PATH],
+                        self::PARAM_VARIANT => $arguments[self::PARAM_VARIANT],
+                        self::PARAM_OVERWRITE => null,
                     ]
                 ),
                 [
                     ConfirmInput::fromNameAndLabel(
-                        'overwrite',
+                        self::PARAM_OVERWRITE,
                         'File already exists, overwrite? :'
                     )
                 ]

@@ -19,6 +19,7 @@ class ExtractConstantHandler extends AbstractHandler
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
     const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
+    const INPUT_LABEL_NAME = 'Constant name: ';
 
     /**
      * @var ExtractConstant
@@ -50,8 +51,8 @@ class ExtractConstantHandler extends AbstractHandler
     {
         $this->requireArgument(self::PARAM_CONSTANT_NAME, TextInput::fromNameLabelAndDefault(
             self::PARAM_CONSTANT_NAME,
-            'Constant name',
-            $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION]
+            self::INPUT_LABEL_NAME,
+            $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION] ?: ''
         ));
 
         if ($this->hasMissingArguments($arguments)) {

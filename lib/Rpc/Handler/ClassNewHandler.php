@@ -4,6 +4,8 @@ namespace Phpactor\Rpc\Handler;
 
 class ClassNewHandler extends AbstractClassGenerateHandler
 {
+    const NAME = 'class_new';
+
     protected function generate(array $arguments)
     {
         return $this->classGenerator->generate($arguments['new_path'], $arguments['variant'], (bool) $arguments['overwrite']);
@@ -11,7 +13,7 @@ class ClassNewHandler extends AbstractClassGenerateHandler
 
     public function name(): string
     {
-        return 'class_new';
+        return self::NAME;
     }
 
     public function newMessage(): string
@@ -19,3 +21,4 @@ class ClassNewHandler extends AbstractClassGenerateHandler
         return 'Create at: ';
     }
 }
+

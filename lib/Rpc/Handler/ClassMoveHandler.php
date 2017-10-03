@@ -13,6 +13,11 @@ use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassMoveHandler extends AbstractHandler
 {
+    const PARAM_SOURCE_PATH = 'source_path';
+    const PARAM_DEST_PATH = 'dest_path';
+    const PARAM_CONFIRMED = 'confirmed';
+
+
     /**
      * @var ClassMover
      */
@@ -37,27 +42,27 @@ class ClassMoveHandler extends AbstractHandler
     public function defaultParameters(): array
     {
         return [
-            'source_path' => null,
-            'dest_path' => null,
-            'confirmed' => null,
+            self::PARAM_SOURCE_PATH => null,
+            self::PARAM_DEST_PATH => null,
+            self::PARAM_CONFIRMED => null,
         ];
     }
 
     public function handle(array $arguments)
     {
-        if (false === $arguments['confirmed']) {
+        if (false === $arguments[self::PARAM_CONFIRMED]) {
             return EchoAction::fromMessage('Cancelled');
         }
 
-        $this->requireArgument('dest_path', TextInput::fromNameLabelAndDefault(
-            'dest_path',
+        $this->requireArgument(self::PARAM_DEST_PATH, TextInput::fromNameLabelAndDefault(
+            self::PARAM_DEST_PATH,
             'Move to: ',
-            $arguments['source_path']
+            $arguments[self::PARAM_SOURCE_PATH]
         ));
 
-        if (null !== $arguments['dest_path'] && null === $arguments['confirmed']) {
-            $this->requireArgument('confirmed', ConfirmInput::fromNameAndLabel(
-                'confirmed',
+        if (null !== $arguments[self::PARAM_DEST_PATH] && null === $arguments[self::PARAM_CONFIRMED]) {
+            $this->requireArgument(self::PARAM_CONFIRMED, ConfirmInput::fromNameAndLabel(
+                self::PARAM_CONFIRMED,
                 'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
                 '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
                 'Are you sure? :'
@@ -71,13 +76,14 @@ class ClassMoveHandler extends AbstractHandler
         $this->classMove->move(
             new NullLogger(),
             $this->defaultFilesystem,
-            $arguments['source_path'],
-            $arguments['dest_path']
+            $arguments[self::PARAM_SOURCE_PATH],
+            $arguments[self::PARAM_DEST_PATH]
         );
 
         return StackAction::fromActions([
-            CloseFileAction::fromPath($arguments['source_path']),
-            OpenFileAction::fromPath($arguments['dest_path'])
+            CloseFileAction::fromPath($arguments[self::PARAM_SOURCE_PATH]),
+            OpenFileAction::fromPath($arguments[self::PARAM_DEST_PATH])
         ]);
     }
 }
+

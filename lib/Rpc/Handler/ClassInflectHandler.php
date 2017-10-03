@@ -7,6 +7,8 @@ use Webmozart\Glob\Glob;
 
 class ClassInflectHandler extends AbstractClassGenerateHandler
 {
+    const NAME = 'class_inflect';
+
     protected function generate(array $arguments)
     {
         if (Glob::isDynamic($arguments['current_path'])) {
@@ -17,10 +19,10 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
         }
 
         $newPaths = $this->classGenerator->generateFromExisting(
-            $arguments['current_path'],
-            $arguments['new_path'],
-            $arguments['variant'],
-            (bool) $arguments['overwrite']
+            $arguments[self::PARAM_CURRENT_PATH],
+            $arguments[self::PARAM_NEW_PATH],
+            $arguments[self::PARAM_VARIANT],
+            (bool) $arguments[self::PARAM_OVERWRITE]
         );
 
         if (count($newPaths) !== 1) {
@@ -35,7 +37,7 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
 
     public function name(): string
     {
-        return 'class_inflect';
+        return self::NAME;
     }
 
     public function newMessage(): string
@@ -43,3 +45,4 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
         return 'Create inflection at: ';
     }
 }
+
