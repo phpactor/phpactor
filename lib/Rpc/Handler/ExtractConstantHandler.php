@@ -9,8 +9,9 @@ use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
-class ExtractConstantHandler implements Handler
+class ExtractConstantHandler extends AbstractHandler
 {
     const NAME = 'extract_constant';
 
@@ -43,15 +44,13 @@ class ExtractConstantHandler implements Handler
     public function handle(array $arguments)
     {
         $this->requireArgument('constant_name', TextInput::fromNameLabelAndDefault(
-            TextInput::fromNameLabelAndDefault(
-                'constant_name',
-                'Constant name',
-                $arguments['constant_name_suggestion']
-            )
+            'constant_name',
+            'Constant name',
+            $arguments['constant_name_suggestion']
         ));
 
-        if ($this->requiresArguments()) {
-            return $this->createInputCallback();
+        if ($this->hasMissingArguments($arguments)) {
+            return $this->createInputCallback($arguments);
         }
 
         $sourceCode = $this->extractConstant->extractConstant(

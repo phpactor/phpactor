@@ -4,6 +4,8 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Editor\Input\Input;
+use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\ActionRequest;
 
 abstract class AbstractHandler implements Handler
 {
@@ -36,9 +38,13 @@ abstract class AbstractHandler implements Handler
 
     private function missingArguments(array $arguments): array
     {
-        return array_keys(array_filter($arguments, function ($argument) {
+        return array_keys(array_filter($arguments, function ($argument, $key) {
+            if (false === isset($this->requiredArguments[$key])) {
+                return false;
+            }
+
             return $argument === null;
-        }));
+        }, ARRAY_FILTER_USE_BOTH));
     }
 
     private function inputsFromMissingArguments(array $arguments)
