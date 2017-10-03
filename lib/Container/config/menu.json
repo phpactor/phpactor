@@ -1,4 +1,24 @@
 {
+    "string": {
+        "extract_constant": {
+            "action": "extract_constant",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "number": {
+        "extract_constant": {
+            "action": "extract_constant",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
     "constant": {
         "find_references": {
             "action": "references",
