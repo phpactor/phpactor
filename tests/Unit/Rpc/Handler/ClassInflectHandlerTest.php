@@ -48,6 +48,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
 
         $this->assertInstanceOf(InputCallbackAction::class, $action);
         $inputs = $action->inputs();
+        $this->assertCount(2, $inputs);
         $firstInput = array_shift($inputs);
         $this->assertInstanceOf(ChoiceInput::class, $firstInput);
         $this->assertEquals('variant', $firstInput->name());

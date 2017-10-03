@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Editor\EchoAction;
@@ -17,10 +16,8 @@ use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
 
-class ReferencesHandler implements Handler
+class ReferencesHandler extends AbstractHandler
 {
     const NAME = 'references';
 
@@ -95,20 +92,16 @@ class ReferencesHandler implements Handler
         $symbolInformation = $offset->symbolInformation();
 
         if (null === $arguments[self::PARAMETER_FILESYSTEM]) {
-            return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
-                    self::NAME,
-                    $arguments
-                ),
-                [
-                    ChoiceInput::fromNameLabelChoicesAndDefault(
-                        self::PARAMETER_FILESYSTEM,
-                        sprintf('%s "%s" in:', ucfirst($symbolInformation->symbol()->symbolType()), $symbolInformation->symbol()->name()),
-                        array_combine($this->registry->names(), $this->registry->names()),
-                        $this->defaultFilesystem
-                    )
-                ]
-            );
+            $this->requireArgument(self::PARAMETER_FILESYSTEM, ChoiceInput::fromNameLabelChoicesAndDefault(
+                self::PARAMETER_FILESYSTEM,
+                sprintf('%s "%s" in:', ucfirst($symbolInformation->symbol()->symbolType()), $symbolInformation->symbol()->name()),
+                array_combine($this->registry->names(), $this->registry->names()),
+                $this->defaultFilesystem
+            ));
+        }
+
+        if ($this->hasMissingArguments($arguments)) {
+            return $this->createInputCallback($arguments);
         }
 
         switch ($arguments['mode']) {
@@ -117,7 +110,8 @@ class ReferencesHandler implements Handler
         }
 
         throw new \InvalidArgumentException(sprintf(
-            'Unknown references mode "%s"', $arguments['mode']
+            'Unknown references mode "%s"',
+            $arguments['mode']
         ));
     }
 
@@ -185,14 +179,14 @@ class ReferencesHandler implements Handler
     private function getReferences(SymbolInformation $symbolInformation, string $filesystem)
     {
         switch ($symbolInformation->symbol()->symbolType()) {
-            case Symbol::CLASS_:
-                return $this->classReferences($filesystem, $symbolInformation);
-            case Symbol::METHOD:
-                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD);
-            case Symbol::PROPERTY:
-                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY);
-            case Symbol::CONSTANT:
-                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT);
+        case Symbol::CLASS_:
+            return $this->classReferences($filesystem, $symbolInformation);
+        case Symbol::METHOD:
+            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD);
+        case Symbol::PROPERTY:
+            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY);
+        case Symbol::CONSTANT:
+            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT);
         }
 
         throw new \RuntimeException(sprintf(
@@ -201,4 +195,3 @@ class ReferencesHandler implements Handler
         ));
     }
 }
-

@@ -2,15 +2,12 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 
-class ClassCopyHandler implements Handler
+class ClassCopyHandler extends AbstractHandler
 {
     /**
      * @var ClassCopy
@@ -37,21 +34,10 @@ class ClassCopyHandler implements Handler
 
     public function handle(array $arguments)
     {
-        if (null === $arguments['dest_path']) {
+        $this->requireArgument('dest_path', TextInput::fromNameLabelAndDefault('dest_path', 'Copy to: ', $arguments['source_path']));
 
-            // get destination path
-            return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
-                    $this->name(),
-                    [
-                        'source_path' => $arguments['source_path'],
-                        'dest_path' => null,
-                    ]
-                ),
-                [
-                    TextInput::fromNameLabelAndDefault('dest_path', 'Copy to: ', $arguments['source_path']),
-                ]
-            );
+        if ($this->hasMissingArguments($arguments)) {
+            return $this->createInputCallback($arguments);
         }
 
         $this->classCopy->copy(new NullLogger(), $arguments['source_path'], $arguments['dest_path']);

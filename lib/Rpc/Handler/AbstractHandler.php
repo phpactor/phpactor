@@ -61,6 +61,6 @@ abstract class AbstractHandler implements Handler
             $inputs[] = $this->requiredArguments[$argumentName];
         }
 
-        return $inputs;
+        return array_reverse($inputs);
     }
 }

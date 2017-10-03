@@ -2,7 +2,6 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassGenerator;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
@@ -14,7 +13,7 @@ use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 use Phpactor\Application\AbstractClassGenerator;
 
-abstract class AbstractClassGenerateHandler implements Handler
+abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
     /**
      * @var ClassGenerator
@@ -49,36 +48,24 @@ abstract class AbstractClassGenerateHandler implements Handler
         $missingInputs = [];
 
         if (null === $arguments['variant']) {
-            $missingInputs[] = ChoiceInput::fromNameLabelChoicesAndDefault(
+            $this->requireArgument('variant', ChoiceInput::fromNameLabelChoicesAndDefault(
                 'variant',
                 'Variant: ',
                 array_combine(
                     $this->classGenerator->availableGenerators(),
                     $this->classGenerator->availableGenerators()
                 )
-            );
+            ));
         }
 
-        if (null === $arguments['new_path']) {
-            $missingInputs[] = TextInput::fromNameLabelAndDefault(
-                'new_path',
-                $this->newMessage(),
-                $arguments['current_path']
-            );
-        }
+        $this->requireArgument('new_path', TextInput::fromNameLabelAndDefault(
+            'new_path',
+            $this->newMessage(),
+            $arguments['current_path']
+        ));
 
-        if ($missingInputs) {
-            return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
-                    $this->name(),
-                    [
-                        'current_path' => $arguments['current_path'],
-                        'new_path' => null,
-                        'variant' => null,
-                    ]
-                ),
-                $missingInputs
-            );
+        if ($this->hasMissingArguments($arguments)) {
+            return $this->createInputCallback($arguments);
         }
 
         try {
