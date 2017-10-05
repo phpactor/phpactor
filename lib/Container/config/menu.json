@@ -106,6 +106,14 @@
                 "source": "%source%"
             }
         },
+        "generate_method": {
+            "action": "generate_method",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
         "goto_definition": {
             "action": "goto_definition",
             "parameters": {

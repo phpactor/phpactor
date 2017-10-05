@@ -32,6 +32,7 @@ class RpcCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $stdin = $this->stdin();
+        file_put_contents('debug', $stdin);
         $request = json_decode($stdin, true);
 
         try {

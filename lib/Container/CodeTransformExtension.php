@@ -28,6 +28,7 @@ use Phpactor\Config\ConfigLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignments;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -200,6 +201,13 @@ class CodeTransformExtension implements ExtensionInterface
     {
         $container->register('code_transform.refactor.extract_constant', function (Container $container) {
             return new WorseExtractConstant(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.updater')
+            );
+        });
+
+        $container->register('code_transform.refactor.generate_method', function (Container $container) {
+            return new WorseGenerateMethod(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')
             );
