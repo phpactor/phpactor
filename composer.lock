@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367"
+                "reference": "41fd99ffb1f5fe471c40dc3468e66afa5b5bedae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367",
-                "reference": "8aa8c0ab56a8f288f3cce74ec4ba0fb91f4ca367",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/41fd99ffb1f5fe471c40dc3468e66afa5b5bedae",
+                "reference": "41fd99ffb1f5fe471c40dc3468e66afa5b5bedae",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-09-28 19:57:26"
+            "time": "2017-10-03 21:51:16"
         },
         {
             "name": "monolog/monolog",
@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "9f95791d5c4733a5efb5b842593c6683b62a259f"
+                "reference": "f6b1e306b59ce259cbd364730be33cd986056104"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/9f95791d5c4733a5efb5b842593c6683b62a259f",
-                "reference": "9f95791d5c4733a5efb5b842593c6683b62a259f",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/f6b1e306b59ce259cbd364730be33cd986056104",
+                "reference": "f6b1e306b59ce259cbd364730be33cd986056104",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-09-30 20:18:15"
+            "time": "2017-10-07 07:54:34"
         },
         {
             "name": "phpactor/class-to-file",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "98113fa6cd766263f38b4ba56903b066173d6d46"
+                "reference": "60c45a5ba614e4db6f3f43721705aef07974df65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/98113fa6cd766263f38b4ba56903b066173d6d46",
-                "reference": "98113fa6cd766263f38b4ba56903b066173d6d46",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/60c45a5ba614e4db6f3f43721705aef07974df65",
+                "reference": "60c45a5ba614e4db6f3f43721705aef07974df65",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-10-03 16:39:03"
+            "time": "2017-10-05 19:13:26"
         },
         {
             "name": "phpbench/container",
