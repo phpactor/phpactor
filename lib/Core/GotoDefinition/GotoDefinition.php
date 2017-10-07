@@ -5,8 +5,8 @@ namespace Phpactor\Core\GotoDefinition;
 use Phpactor\Core\GotoDefinition\Exception\GotoDefinitionException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Reflection\Inference\SymbolInformation;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
 use Phpactor\WorseReflection\Reflector;
 
 class GotoDefinition

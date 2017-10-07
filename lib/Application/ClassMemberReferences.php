@@ -15,7 +15,7 @@ use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
-use Phpactor\WorseReflection\Core\Reflection\AbstractReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 
 class ClassMemberReferences
 {
@@ -224,7 +224,7 @@ class ClassMemberReferences
         return $query;
     }
 
-    private function throwMemberNotFoundException(AbstractReflectionClass $class, string $memberName, string $memberType = null)
+    private function throwMemberNotFoundException(ReflectionClassLike $class, string $memberName, string $memberType = null)
     {
         if ($memberType == ClassMemberQuery::TYPE_METHOD && false === $class->methods()->has($memberName)) {
             throw new \InvalidArgumentException(sprintf(
