@@ -77,7 +77,8 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('application.class_inflect', function (Container $container) {
             return new ClassInflect(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('code_transform.from_existing_generators')
+                $container->get('code_transform.from_existing_generators'),
+                $container->get('monolog.logger')
             );
         });
     }

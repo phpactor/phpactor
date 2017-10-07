@@ -6,6 +6,8 @@ use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Filesystem\Domain\FilePath;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class AbstractClassGenerator
 {
@@ -19,15 +21,26 @@ class AbstractClassGenerator
      */
     protected $generators;
 
-    public function __construct(ClassFileNormalizer $normalizer, Generators $generators)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ClassFileNormalizer $normalizer, Generators $generators , LoggerInterface $logger = null)
     {
         $this->normalizer = $normalizer;
         $this->generators = $generators;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     public function availableGenerators()
     {
         return $this->generators->names();
+    }
+
+    protected function logger(): LoggerInterface
+    {
+        return $this->logger;
     }
 
     protected function writeFile(string $filePath, string $code, bool $overwrite)
@@ -43,3 +56,4 @@ class AbstractClassGenerator
         file_put_contents(FilePath::fromString($filePath), (string) $code);
     }
 }
+

@@ -5,6 +5,7 @@ namespace Phpactor\Application;
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\Phpactor;
 use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class ClassInflect extends AbstractClassGenerator
 {
@@ -19,7 +20,8 @@ class ClassInflect extends AbstractClassGenerator
 
             try {
                 $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
-            } catch (\Exception $e) {
+            } catch (NotFound $e) {
+                $this->logger()->error($e->getMessage());
             }
         }
 
