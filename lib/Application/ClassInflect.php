@@ -17,7 +17,10 @@ class ClassInflect extends AbstractClassGenerator
                 continue;
             }
 
-            $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
+            try {
+                $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
+            } catch (\Exception $e) {
+            }
         }
 
         return $newPaths;
