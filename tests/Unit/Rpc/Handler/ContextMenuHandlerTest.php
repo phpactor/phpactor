@@ -10,7 +10,7 @@ use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\WorseReflection\Core\Reflection\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Container\RpcExtension;
