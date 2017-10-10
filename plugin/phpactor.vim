@@ -10,6 +10,7 @@ let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorPhpBin = 'php'
 let g:phpactorInitialCwd = getcwd()
+let g:phpactorDebug = 0
 
 """""""""""""""""
 " Update Phpactor
@@ -261,7 +262,11 @@ function! phpactor#rpc(action, arguments)
             endif
         endfor
     else
-        echo "Phpactor returned an error: " . result
+        " Only show error if debug is true
+        if (g:phpactorDebug == 1)
+            echo "Phpactor returned an error: " . result
+        endif
+
         return
     endif
 endfunction

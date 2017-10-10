@@ -73,6 +73,16 @@ nnoremap <silent><Leader>d :call phpactor#OffsetTypeInfo()<CR>
 **NOTE**: The above mappings are probably sub-optimal, feel free to find a
 something that works for you.
 
+Debug mode
+----------
+
+By default, no error will be thrown in your interface. If you want enable debug
+mode, feel free to dynamically call the following command
+
+```vim
+:let g:phpactorDebug = 1
+```
+
 Omni-completion
 ---------------
 
