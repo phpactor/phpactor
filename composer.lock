@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "577ae4e14e3c18acc50a422b39187364003f9073"
+                "reference": "30c93745206020e2ac73fc582b8bf408967f469f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/577ae4e14e3c18acc50a422b39187364003f9073",
-                "reference": "577ae4e14e3c18acc50a422b39187364003f9073",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/30c93745206020e2ac73fc582b8bf408967f469f",
+                "reference": "30c93745206020e2ac73fc582b8bf408967f469f",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-09-20 17:50:10"
+            "time": "2017-10-13 16:25:21"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "2f599a5e13e34cf4fce9e4c02af698e136bdcb5d"
+                "reference": "24aea928f54eaa42cadfc882349289a9ae4b4f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/2f599a5e13e34cf4fce9e4c02af698e136bdcb5d",
-                "reference": "2f599a5e13e34cf4fce9e4c02af698e136bdcb5d",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/24aea928f54eaa42cadfc882349289a9ae4b4f4b",
+                "reference": "24aea928f54eaa42cadfc882349289a9ae4b4f4b",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-10-07 09:54:39"
+            "time": "2017-10-14 19:53:44"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "baf0306bd92d969e4a01e1bd4f2fea13d24ea649"
+                "reference": "a736c6811daca05ead9a898df93d0e07c02a1999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/baf0306bd92d969e4a01e1bd4f2fea13d24ea649",
-                "reference": "baf0306bd92d969e4a01e1bd4f2fea13d24ea649",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a736c6811daca05ead9a898df93d0e07c02a1999",
+                "reference": "a736c6811daca05ead9a898df93d0e07c02a1999",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-10-07 09:54:23"
+            "time": "2017-10-14 19:41:31"
         },
         {
             "name": "phpbench/container",
@@ -848,12 +848,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
                 "shasum": ""
             },
             "require": {
@@ -865,7 +865,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -899,7 +899,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-14 15:44:48"
+            "time": "2017-10-11 12:05:26"
         },
         {
             "name": "symfony/yaml",
@@ -1727,12 +1727,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "905862cee2711021c30a50af9c3543f0d9d58a0a"
+                "reference": "ae3fcc05361320cdfba1ae56adcea0ee234aaefa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/905862cee2711021c30a50af9c3543f0d9d58a0a",
-                "reference": "905862cee2711021c30a50af9c3543f0d9d58a0a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ae3fcc05361320cdfba1ae56adcea0ee234aaefa",
+                "reference": "ae3fcc05361320cdfba1ae56adcea0ee234aaefa",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1801,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-28 11:11:31"
+            "time": "2017-10-14 05:59:30"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
