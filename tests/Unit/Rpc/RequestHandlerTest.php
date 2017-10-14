@@ -83,4 +83,3 @@ class RequestHandlerTest extends TestCase
         $this->assertEquals($expectedResponse, $response);
     }
 }
-

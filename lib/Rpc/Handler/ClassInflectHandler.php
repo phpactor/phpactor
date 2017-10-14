@@ -45,4 +45,3 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
         return 'Create inflection at: ';
     }
 }
-

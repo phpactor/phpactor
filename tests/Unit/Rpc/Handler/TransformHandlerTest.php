@@ -80,4 +80,3 @@ class TransformHandlerTest extends HandlerTestCase
         $this->assertEquals(self::PATH, $action->path());
     }
 }
-

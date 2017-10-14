@@ -3,10 +3,7 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
@@ -18,6 +15,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
     const SOURCE = '<?php echo "foo";';
     const PATH = '/path/to';
     const OFFSET = 1234;
+    const CONSTANT_NAME = 'FOOBAR';
 
     /**
      * @var ExtractConstant
@@ -54,11 +52,17 @@ class ExtractConstantHandlerTest extends HandlerTestCase
 
     public function testExtractConstant()
     {
+        $this->extractConstant->extractConstant(
+            self::SOURCE,
+            self::OFFSET,
+            self::CONSTANT_NAME
+        )->willReturn(SourceCode::fromString('asd'));
+
         $action = $this->handle('extract_constant', [
             'source' => self::SOURCE,
             'path' => self::PATH,
             'offset' => self::OFFSET,
-            'constant_name' => 'FOOBAR',
+            'constant_name' => self::CONSTANT_NAME,
         ]);
 
         $this->assertInstanceof(ReplaceFileSourceAction::class, $action);

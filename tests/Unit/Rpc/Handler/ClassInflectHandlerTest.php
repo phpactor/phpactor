@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Application\ClassInflect;
@@ -65,7 +64,10 @@ class ClassInflectHandlerTest extends HandlerTestCase
     public function testFileExists()
     {
         $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH, self::NEW_PATH, self::VARIANT, false
+            self::CURRENT_PATH,
+            self::NEW_PATH,
+            self::VARIANT,
+            false
         )->willThrow(new FileAlreadyExists(self::NEW_PATH));
 
         $action = $this->handle('class_inflect', [
@@ -113,7 +115,10 @@ class ClassInflectHandlerTest extends HandlerTestCase
         $this->expectExceptionMessage('Expected 1 path from class generator, got 2');
 
         $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH, self::NEW_PATH, self::VARIANT, false
+            self::CURRENT_PATH,
+            self::NEW_PATH,
+            self::VARIANT,
+            false
         )->willReturn([ 'foo', self::NEW_PATH ]);
 
         $this->handle('class_inflect', [
@@ -126,7 +131,10 @@ class ClassInflectHandlerTest extends HandlerTestCase
     public function testGenerate()
     {
         $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH, self::NEW_PATH, self::VARIANT, false
+            self::CURRENT_PATH,
+            self::NEW_PATH,
+            self::VARIANT,
+            false
         )->willReturn([ self::NEW_PATH ]);
 
         $action = $this->handle('class_inflect', [
@@ -139,4 +147,3 @@ class ClassInflectHandlerTest extends HandlerTestCase
         $this->assertEquals(self::NEW_PATH, $action->path());
     }
 }
-

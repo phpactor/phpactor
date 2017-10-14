@@ -86,4 +86,3 @@ class ClassMoveHandler extends AbstractHandler
         ]);
     }
 }
-

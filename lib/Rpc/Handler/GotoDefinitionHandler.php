@@ -11,6 +11,10 @@ use Phpactor\WorseReflection\Core\Offset;
 
 class GotoDefinitionHandler implements Handler
 {
+    const NAME = 'goto_definition';
+    const PARAM_OFFSET = 'offset';
+    const PARAM_SOURCE = 'source';
+
     /**
      * @var Reflector
      */
@@ -30,22 +34,22 @@ class GotoDefinitionHandler implements Handler
 
     public function name(): string
     {
-        return 'goto_definition';
+        return self::NAME;
     }
 
     public function defaultParameters(): array
     {
         return [
-            'offset' => null,
-            'source' => null,
+            self::PARAM_OFFSET => null,
+            self::PARAM_SOURCE => null,
         ];
     }
 
     public function handle(array $arguments)
     {
         $result = $this->reflector->reflectOffset(
-            SourceCode::fromString($arguments['source']),
-            Offset::fromInt($arguments['offset'])
+            SourceCode::fromString($arguments[self::PARAM_SOURCE]),
+            Offset::fromInt($arguments[self::PARAM_OFFSET])
         );
 
         $result = $this->gotoDefinition->gotoDefinition($result->symbolInformation());

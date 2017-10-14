@@ -21,4 +21,3 @@ class ClassNewHandler extends AbstractClassGenerateHandler
         return 'Create at: ';
     }
 }
-

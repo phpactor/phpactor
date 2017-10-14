@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Application\ClassNew;
@@ -63,7 +62,9 @@ class ClassNewHandlerTest extends HandlerTestCase
     public function testFileExists()
     {
         $this->classNew->generate(
-            self::NEW_PATH, self::VARIANT, false
+            self::NEW_PATH,
+            self::VARIANT,
+            false
         )->willThrow(new FileAlreadyExists(self::NEW_PATH));
 
         $action = $this->handle('class_new', [
@@ -95,7 +96,9 @@ class ClassNewHandlerTest extends HandlerTestCase
     public function testGenerate()
     {
         $this->classNew->generate(
-            self::NEW_PATH, self::VARIANT, false
+            self::NEW_PATH,
+            self::VARIANT,
+            false
         )->willReturn(self::NEW_PATH);
 
         $action = $this->handle('class_new', [
@@ -108,4 +111,3 @@ class ClassNewHandlerTest extends HandlerTestCase
         $this->assertEquals(self::NEW_PATH, $action->path());
     }
 }
-

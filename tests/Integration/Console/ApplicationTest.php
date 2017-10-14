@@ -38,7 +38,6 @@ EOT
             'name' => 'asd',
             '--format' => 'json',
         ]), $output);
-
     }
 
     public function testSerializesExceptions()

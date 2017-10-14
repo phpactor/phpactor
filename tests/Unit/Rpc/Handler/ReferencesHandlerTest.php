@@ -2,18 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\FileReferencesAction;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Symfony\Component\Yaml\Exception\RuntimeException;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -77,8 +74,8 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertCount(1, $inputs);
         $input = reset($inputs);
         $this->assertEquals(ReferencesHandler::PARAMETER_FILESYSTEM, $input->name());
-        $this->assertEquals([ 'one' => 'one', 'two' => 'two' ] , $input->choices());
-        $this->assertEquals('git' , $input->default());
+        $this->assertEquals([ 'one' => 'one', 'two' => 'two' ], $input->choices());
+        $this->assertEquals('git', $input->default());
     }
 
 
@@ -285,4 +282,3 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertContains('risky', $first->message());
     }
 }
-
