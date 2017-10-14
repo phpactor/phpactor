@@ -34,3 +34,4 @@ final class DumperRegistry
         $this->dumpers[$name] = $dumper;
     }
 }
+
