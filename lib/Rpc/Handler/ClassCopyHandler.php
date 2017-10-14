@@ -54,4 +54,3 @@ class ClassCopyHandler extends AbstractHandler
         return OpenFileAction::fromPath($arguments[self::PARAM_DEST_PATH]);
     }
 }
-

@@ -53,4 +53,3 @@ class ActionRequest
         return $this->parameters;
     }
 }
-

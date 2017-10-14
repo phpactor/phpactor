@@ -73,4 +73,3 @@ class ClassSearchHandler implements Handler
         return ReturnChoiceAction::fromOptions($options);
     }
 }
-

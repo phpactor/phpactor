@@ -57,4 +57,3 @@ class GotoDefinitionHandler implements Handler
         return OpenFileAction::fromPathAndOffset($result->path(), $result->offset());
     }
 }
-

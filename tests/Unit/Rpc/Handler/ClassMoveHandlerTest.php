@@ -14,7 +14,6 @@ use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\CloseFileAction;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 

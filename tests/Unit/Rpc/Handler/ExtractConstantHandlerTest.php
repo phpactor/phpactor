@@ -3,10 +3,7 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
@@ -71,4 +68,3 @@ class ExtractConstantHandlerTest extends HandlerTestCase
         $this->assertInstanceof(ReplaceFileSourceAction::class, $action);
     }
 }
-

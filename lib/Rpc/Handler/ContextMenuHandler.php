@@ -8,9 +8,6 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\RequestHandler;
-use Phpactor\Rpc\Editor\ReturnChoiceAction;
-use Phpactor\Rpc\Editor\ReturnOption;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use PhpBench\DependencyInjection\Container;
@@ -53,8 +50,7 @@ class ContextMenuHandler implements Handler
         ClassFileNormalizer $classFileNormalizer,
         array $menu,
         Container $container
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->menu = $menu;
         $this->container = $container;
@@ -148,4 +144,3 @@ class ContextMenuHandler implements Handler
         return $parameters;
     }
 }
-

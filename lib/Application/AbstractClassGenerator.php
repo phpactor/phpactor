@@ -26,7 +26,7 @@ class AbstractClassGenerator
      */
     private $logger;
 
-    public function __construct(ClassFileNormalizer $normalizer, Generators $generators , LoggerInterface $logger = null)
+    public function __construct(ClassFileNormalizer $normalizer, Generators $generators, LoggerInterface $logger = null)
     {
         $this->normalizer = $normalizer;
         $this->generators = $generators;
@@ -56,4 +56,3 @@ class AbstractClassGenerator
         file_put_contents(FilePath::fromString($filePath), (string) $code);
     }
 }
-

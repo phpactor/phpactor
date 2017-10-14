@@ -2,14 +2,8 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
-use Phpactor\Rpc\Handler\AbstractHandler;
 
 class GenerateMethodHandler extends AbstractHandler
 {

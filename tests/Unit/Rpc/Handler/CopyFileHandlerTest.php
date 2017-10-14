@@ -7,7 +7,6 @@ use Phpactor\Application\ClassCopy;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\ActionRequest;
-use Phpactor\Application\Logger\ClassCopyLogger;
 use Prophecy\Argument;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\Input\TextInput;

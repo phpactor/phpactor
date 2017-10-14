@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
@@ -18,7 +17,6 @@ use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Application\Helper\ClassFileNormalizer;
-use Phpactor\Phpactor;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {
@@ -109,7 +107,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->requestHandler->handle(Request::fromActions([
             ActionRequest::fromNameAndParameters(
-                self::VARIABLE_ACTION, 
+                self::VARIABLE_ACTION,
                 [
                     'some_source' => self::SOURCE,
                     'some_offset' => 8,
@@ -149,4 +147,3 @@ class ContextMenuHandlerTest extends HandlerTestCase
         ], $parameters);
     }
 }
-
