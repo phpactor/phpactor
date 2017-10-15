@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "24aea928f54eaa42cadfc882349289a9ae4b4f4b"
+                "reference": "fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/24aea928f54eaa42cadfc882349289a9ae4b4f4b",
-                "reference": "24aea928f54eaa42cadfc882349289a9ae4b4f4b",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d",
+                "reference": "fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-10-14 19:53:44"
+            "time": "2017-10-15 20:04:55"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1263,7 +1263,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-10-15T18:29:05+00:00"
+            "time": "2017-10-15 18:29:05"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1803,7 +1803,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-15T06:13:55+00:00"
+            "time": "2017-10-15 06:13:55"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
