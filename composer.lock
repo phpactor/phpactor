@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "41fd99ffb1f5fe471c40dc3468e66afa5b5bedae"
+                "reference": "69ea4ed415cd07d74b688ac570b8936ed91ffc14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/41fd99ffb1f5fe471c40dc3468e66afa5b5bedae",
-                "reference": "41fd99ffb1f5fe471c40dc3468e66afa5b5bedae",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/69ea4ed415cd07d74b688ac570b8936ed91ffc14",
+                "reference": "69ea4ed415cd07d74b688ac570b8936ed91ffc14",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-10-03 21:51:16"
+            "time": "2017-10-15 06:00:08"
         },
         {
             "name": "monolog/monolog",
@@ -330,12 +330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "4795f87455dcb2fa35a355f1cb3ed9749520e7cd"
+                "reference": "8c0b13cb9ea811de1116db9015e6ca9f0b636b3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/4795f87455dcb2fa35a355f1cb3ed9749520e7cd",
-                "reference": "4795f87455dcb2fa35a355f1cb3ed9749520e7cd",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/8c0b13cb9ea811de1116db9015e6ca9f0b636b3b",
+                "reference": "8c0b13cb9ea811de1116db9015e6ca9f0b636b3b",
                 "shasum": ""
             },
             "require": {
@@ -375,7 +375,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-10-03 09:40:09"
+            "time": "2017-10-14 21:37:20"
         },
         {
             "name": "phpactor/code-transform",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "a736c6811daca05ead9a898df93d0e07c02a1999"
+                "reference": "deadacbb1c1c1dfae9fc38228c048e62159f4477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a736c6811daca05ead9a898df93d0e07c02a1999",
-                "reference": "a736c6811daca05ead9a898df93d0e07c02a1999",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/deadacbb1c1c1dfae9fc38228c048e62159f4477",
+                "reference": "deadacbb1c1c1dfae9fc38228c048e62159f4477",
                 "shasum": ""
             },
             "require": {
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-10-14 19:41:31"
+            "time": "2017-10-15 19:40:55"
         },
         {
             "name": "phpbench/container",
@@ -1227,33 +1227,35 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102"
+                "reference": "66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8e6e04167378abf1ddb4d3522d8755c5fd90d102",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea",
+                "reference": "66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "doctrine/collections": "1.*",
+                "doctrine/collections": "^1.0",
                 "phpunit/phpunit": "~4.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "DeepCopy\\": "src/DeepCopy/"
-                }
+                },
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Create deep copies (clones) of your objects",
-            "homepage": "https://github.com/myclabs/DeepCopy",
             "keywords": [
                 "clone",
                 "copy",
@@ -1261,7 +1263,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12 18:52:22"
+            "time": "2017-10-15T18:29:05+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1727,12 +1729,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ae3fcc05361320cdfba1ae56adcea0ee234aaefa"
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ae3fcc05361320cdfba1ae56adcea0ee234aaefa",
-                "reference": "ae3fcc05361320cdfba1ae56adcea0ee234aaefa",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/78532d5269d984660080d8e0f4c99c5c2ea65ffe",
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1803,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-14 05:59:30"
+            "time": "2017-10-15T06:13:55+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

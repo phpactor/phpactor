@@ -21,6 +21,7 @@ use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
 use Phpactor\Rpc\Handler\GenerateMethodHandler;
+use Phpactor\Rpc\Handler\GenerateAccessorHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -139,6 +140,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.generate_method', function (Container $container) {
             return new GenerateMethodHandler(
                 $container->get('code_transform.refactor.generate_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.generate_accessor', function (Container $container) {
+            return new GenerateAccessorHandler(
+                $container->get('code_transform.refactor.generate_accessor')
             );
         }, [ 'rpc.handler' => [] ]);
     }
