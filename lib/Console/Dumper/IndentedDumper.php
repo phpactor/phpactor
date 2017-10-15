@@ -35,8 +35,17 @@ final class IndentedDumper implements Dumper
                 str_repeat(self::PADDING, $padding),
                 $style,
                 $key,
-                $value
+                $this->formatValue($value)
             ));
         }
+    }
+
+    private function formatValue($value)
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        return $value;
     }
 }

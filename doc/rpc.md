@@ -380,6 +380,29 @@ identical values with a reference to the constant.
 
 Will return an action to replace the file with the updated code.
 
+### `generate_method`
+
+Generate (or update) a method from the **method call** at the given offset in the
+given source.
+
+- **Name**: `extract_constant`
+- **Parameters**:
+    - `source`: Source code as a string
+    - `offset`: Offset of symbol (int)
+
+Will return an action to replace the file with the updated code.
+
+### `generate_accessor`
+
+Generate (or update) an accessor for the property under the cursor.
+
+- **Name**: `extract_constant`
+- **Parameters**:
+    - `source`: Source code as a string
+    - `offset`: Offset of symbol (int)
+
+Will return an action to replace the file with the updated code.
+
 ### `context_menu`
 
 Return a menu for selecting an action to perform on the current symbol

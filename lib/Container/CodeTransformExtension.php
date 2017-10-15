@@ -29,9 +29,17 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignm
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
 
 class CodeTransformExtension implements ExtensionInterface
 {
+    const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';
+    const TEMPLATE_PATHS = 'code_transform.template_paths';
+    const INDENTATION = 'code_transform.indentation';
+    const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
+    const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+
+
     public function getDefaultConfig()
     {
         $configLoader = new ConfigLoader();
@@ -43,9 +51,11 @@ class CodeTransformExtension implements ExtensionInterface
         });
 
         return [
-            'code_transform.class_new.variants' => [],
-            'code_transform.template_paths' => $templatePaths,
-            'code_transform.indentation' => '    ',
+            self::CLASS_NEW_VARIANTS => [],
+            self::TEMPLATE_PATHS => $templatePaths,
+            self::INDENTATION => '    ',
+            self::GENERATE_ACCESSOR_PREFIX => '',
+            self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
         ];
     }
 
@@ -150,7 +160,7 @@ class CodeTransformExtension implements ExtensionInterface
             $generators = [
                 'default' => new ClassGenerator($container->get('code_transform.renderer')),
             ];
-            foreach ($container->getParameter('code_transform.class_new.variants') as $variantName => $variant) {
+            foreach ($container->getParameter(self::CLASS_NEW_VARIANTS) as $variantName => $variant) {
                 $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);
             }
 
@@ -175,7 +185,7 @@ class CodeTransformExtension implements ExtensionInterface
             $loaders = [];
             $loaders[] = new FilesystemLoader(__DIR__ . '/../../vendor/phpactor/code-builder/templates');
 
-            foreach ($container->getParameter('code_transform.template_paths') as $templatePath) {
+            foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
                 $loaders[] = new FilesystemLoader($templatePath);
             }
 
@@ -193,7 +203,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
 
         $container->register('code_transform.text_format', function (Container $container) {
-            return new TextFormat($container->getParameter('code_transform.indentation'));
+            return new TextFormat($container->getParameter(self::INDENTATION));
         });
     }
 
@@ -210,6 +220,15 @@ class CodeTransformExtension implements ExtensionInterface
             return new WorseGenerateMethod(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')
+            );
+        });
+
+        $container->register('code_transform.refactor.generate_accessor', function (Container $container) {
+            return new WorseGenerateAccessor(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.updater'),
+                $container->getParameter(self::GENERATE_ACCESSOR_PREFIX),
+                $container->getParameter(self::GENERATE_ACCESSOR_UPPER_CASE_FIRST)
             );
         });
     }

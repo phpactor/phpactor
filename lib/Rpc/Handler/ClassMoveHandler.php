@@ -17,7 +17,6 @@ class ClassMoveHandler extends AbstractHandler
     const PARAM_DEST_PATH = 'dest_path';
     const PARAM_CONFIRMED = 'confirmed';
 
-
     /**
      * @var ClassMover
      */

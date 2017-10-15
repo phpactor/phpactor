@@ -63,7 +63,7 @@ EOT
         $filePath =  'lib/Badger/Carnivorous.php';
         $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface');
         $this->assertSuccess($process);
-        $this->assertContains('exists:1', $process->getOutput());
+        $this->assertContains('exists:true', $process->getOutput());
         $this->assertNotContains('interface', file_get_contents($filePath));
 
         $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --force');
