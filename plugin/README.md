@@ -161,16 +161,6 @@ copied file to be consistent with the filename.
 :call phpactor#CopyFile()
 ```
 
-Reflect at offset
------------------
-
-Provide a synopsis of the class for the word under the cursor (if a class can
-be inferred from it).
-
-```bash
-:call phpactor#ReflectAtOffset()
-```
-
 Transformations
 ---------------
 
