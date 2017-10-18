@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "30c93745206020e2ac73fc582b8bf408967f469f"
+                "reference": "abd573e20d0c34b597c72479e7e157d62dcbcc09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/30c93745206020e2ac73fc582b8bf408967f469f",
-                "reference": "30c93745206020e2ac73fc582b8bf408967f469f",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/abd573e20d0c34b597c72479e7e157d62dcbcc09",
+                "reference": "abd573e20d0c34b597c72479e7e157d62dcbcc09",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-10-13 16:25:21"
+            "time": "2017-10-18 12:47:32"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "2549cdda7694853426667adf140f5769b87086bd"
+                "reference": "fd11478c67be53380ba3ee5ae9ea25f4ae873695"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/2549cdda7694853426667adf140f5769b87086bd",
-                "reference": "2549cdda7694853426667adf140f5769b87086bd",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/fd11478c67be53380ba3ee5ae9ea25f4ae873695",
+                "reference": "fd11478c67be53380ba3ee5ae9ea25f4ae873695",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-10-07 09:55:13"
+            "time": "2017-10-16 18:17:51"
         },
         {
             "name": "phpactor/class-to-file",
@@ -285,16 +285,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "438e3a805c5794900a5b6f9ba25f72891b5a4603"
+                "reference": "cacae722a79be5815a1d390a362cff37e544651c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/438e3a805c5794900a5b6f9ba25f72891b5a4603",
-                "reference": "438e3a805c5794900a5b6f9ba25f72891b5a4603",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/cacae722a79be5815a1d390a362cff37e544651c",
+                "reference": "cacae722a79be5815a1d390a362cff37e544651c",
                 "shasum": ""
             },
             "require": {
-                "psr/log": "^1.0"
+                "psr/log": "^1.0",
+                "webmozart/path-util": "^2.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.1",
@@ -322,7 +323,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2017-08-09 11:29:19"
+            "time": "2017-10-17 20:10:56"
         },
         {
             "name": "phpactor/code-builder",
@@ -1227,20 +1228,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea"
+                "reference": "ae684c84fd1be31813faffa78ebd70cdc013fc8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea",
-                "reference": "66a912abc3ee48ef4fb5a506457fb33b0a6ac9ea",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/ae684c84fd1be31813faffa78ebd70cdc013fc8e",
+                "reference": "ae684c84fd1be31813faffa78ebd70cdc013fc8e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
                 "doctrine/collections": "^1.0",
-                "phpunit/phpunit": "~4.1"
+                "doctrine/common": "^2.6",
+                "phpunit/phpunit": "^4.1"
             },
             "type": "library",
             "autoload": {
@@ -1263,7 +1265,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-10-15 18:29:05"
+            "time": "2017-10-16 22:02:21"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1729,12 +1731,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe"
+                "reference": "4f426b3fa79032a6328fce3572d7894ac2ef429b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/78532d5269d984660080d8e0f4c99c5c2ea65ffe",
-                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4f426b3fa79032a6328fce3572d7894ac2ef429b",
+                "reference": "4f426b3fa79032a6328fce3572d7894ac2ef429b",
                 "shasum": ""
             },
             "require": {
@@ -1803,7 +1805,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-15 06:13:55"
+            "time": "2017-10-18T07:16:25+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2140,7 +2142,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-03-07 10:36:49"
+            "time": "2017-03-07T10:36:49+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -2237,7 +2239,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-07 10:37:45"
+            "time": "2017-03-07T10:37:45+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2290,7 +2292,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-08 08:21:15"
+            "time": "2017-03-08T08:21:15+00:00"
         },
         {
             "name": "sebastian/resource-operations",
