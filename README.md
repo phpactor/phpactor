@@ -426,7 +426,7 @@ In order to create the above variant we need to create a template locally in
 directories, in a `templates` folder):
 
 ```twig
-{# /path/to/project/.phpactor/templates/SourceCode.php.twig #}
+{# /path/to/project/.phpactor/templates/phpunit_test/SourceCode.php.twig #}
 namespace {{ prototype.namespace }};
 
 use PHPUnit\Framework\TestCase;
