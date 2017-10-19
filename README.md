@@ -55,9 +55,9 @@ reflector_stub_directory:/home/daniel/www/phpactor/phpactor/lib/Container/../../
 cache_dir:/home/daniel/www/phpactor/phpactor/lib/Container/../../cache
 code_transform.indentation: "    "
 code_transform.class_new.variants:
-  - exception
-  - symfony_command
-  - phpunit_test
+  exception: exception
+  "Symfony Command": symfony_command
+  "Phpunit test": phpunit_test
 code_transform.template_paths:
   - /home/daniel/www/phpactor/phpactor/.phpactor/templates
 ```
@@ -417,8 +417,8 @@ $ phpactor class:new tests/Registry/GeneratorTest.php --variant=test
 Variants are registered in `.phpactor.yml`:
 
 ```yaml
-new_class_variants:
-    phpunit_test: phpunit_test
+code_transform.class_new.variants:
+    "Phpunit test": phpunit_test
 ```
 
 In order to create the above variant we need to create a template locally in
@@ -426,7 +426,7 @@ In order to create the above variant we need to create a template locally in
 directories, in a `templates` folder):
 
 ```twig
-{# /path/to/project/.phpactor/templates/SourceCode.php.twig #}
+{# /path/to/project/.phpactor/templates/phpunit_test/SourceCode.php.twig #}
 namespace {{ prototype.namespace }};
 
 use PHPUnit\Framework\TestCase;
