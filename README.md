@@ -417,8 +417,8 @@ $ phpactor class:new tests/Registry/GeneratorTest.php --variant=test
 Variants are registered in `.phpactor.yml`:
 
 ```yaml
-new_class_variants:
-    phpunit_test: phpunit_test
+code_transform.class_new.variants:
+    "Phpunit test": phpunit_test
 ```
 
 In order to create the above variant we need to create a template locally in
