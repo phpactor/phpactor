@@ -10,7 +10,10 @@ for dep in class-mover class-to-file code-builder code-transform source-code-fil
     echo "Testing: "$dep
     echo ""
     cd vendor/phpactor/$dep
-    ln -s ../../../vendor
+
+    if [ ! -e vendor ]; then
+        ln -s ../../../vendor
+    fi
     composer dumpautoload
     vendor/bin/phpunit
     cd -

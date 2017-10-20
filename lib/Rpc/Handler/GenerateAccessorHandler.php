@@ -4,9 +4,6 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
-use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\EchoAction;
 
 class GenerateAccessorHandler extends AbstractHandler
 {
