@@ -4,6 +4,9 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Editor\OpenFileAction;
+use Phpactor\Rpc\Editor\EchoAction;
 
 class GenerateAccessorHandler extends AbstractHandler
 {
@@ -44,6 +47,9 @@ class GenerateAccessorHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource($arguments[self::PARAM_PATH], (string) $sourceCode);
+        return ReplaceFileSourceAction::fromPathAndSource(
+            $sourceCode->path(),
+            (string) $sourceCode
+        );
     }
 }

@@ -37,6 +37,7 @@ class RpcCommand extends Command
         try {
             $response = $this->processRequest($request);
         } catch (\Exception $e) {
+            file_put_contents('dump', $e->getTraceAsString());
             $response = Response::fromActions([
                 ErrorAction::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString())
             ]);

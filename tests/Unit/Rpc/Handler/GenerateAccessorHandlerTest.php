@@ -35,7 +35,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
         $this->generateAccessor->generateAccessor(
             self::SOURCE,
             self::OFFSET
-        )->willReturn(SourceCode::fromString('asd'));
+        )->willReturn(SourceCode::fromStringAndPath('asd', '/path'));
 
         $action = $this->handle(GenerateAccessorHandler::NAME, [
             'source' => self::SOURCE,
