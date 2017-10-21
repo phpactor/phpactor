@@ -111,7 +111,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 [
                     'some_source' => self::SOURCE,
                     'some_offset' => 8,
-                    'some_path' => 'tests/Unit/Rpc/Handler/ContextMenuHandlerTest.php'
+                    'some_path' => __FILE__
                 ]
             )
         ]))->willReturn(

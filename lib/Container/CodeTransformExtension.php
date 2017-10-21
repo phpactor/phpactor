@@ -30,6 +30,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstruct
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -230,6 +231,10 @@ class CodeTransformExtension implements ExtensionInterface
                 $container->getParameter(self::GENERATE_ACCESSOR_PREFIX),
                 $container->getParameter(self::GENERATE_ACCESSOR_UPPER_CASE_FIRST)
             );
+        });
+
+        $container->register('code_transform.refactor.rename_variable', function (Container $container) {
+            return new TolerantRenameVariable();
         });
     }
 

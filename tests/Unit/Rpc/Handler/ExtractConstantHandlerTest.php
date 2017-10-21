@@ -56,7 +56,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
             self::SOURCE,
             self::OFFSET,
             self::CONSTANT_NAME
-        )->willReturn(SourceCode::fromString('asd'));
+        )->willReturn(SourceCode::fromStringAndPath('asd', '/path'));
 
         $action = $this->handle('extract_constant', [
             'source' => self::SOURCE,

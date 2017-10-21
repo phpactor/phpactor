@@ -22,6 +22,7 @@ use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
 use Phpactor\Rpc\Handler\GenerateMethodHandler;
 use Phpactor\Rpc\Handler\GenerateAccessorHandler;
+use Phpactor\Rpc\Handler\RenameVariableHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -146,6 +147,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.generate_accessor', function (Container $container) {
             return new GenerateAccessorHandler(
                 $container->get('code_transform.refactor.generate_accessor')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.rename_variable', function (Container $container) {
+            return new RenameVariableHandler(
+                $container->get('code_transform.refactor.rename_variable')
             );
         }, [ 'rpc.handler' => [] ]);
     }

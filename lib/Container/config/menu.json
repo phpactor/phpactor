@@ -1,4 +1,14 @@
 {
+    "variable": {
+        "rename_variable": {
+            "action": "rename_variable",
+            "parameters": {
+                "path": "%current_path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
     "string": {
         "extract_constant": {
             "action": "extract_constant",
@@ -117,7 +127,7 @@
         "generate_method": {
             "action": "generate_method",
             "parameters": {
-                "path": "%path%",
+                "path": "%current_path%",
                 "offset": "%offset%",
                 "source": "%source%"
             }
