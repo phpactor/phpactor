@@ -388,6 +388,7 @@ given source.
 - **Name**: `extract_constant`
 - **Parameters**:
     - `source`: Source code as a string
+    - `path`: Path to source
     - `offset`: Offset of symbol (int)
 
 Will return an action to replace the file with the updated code.
