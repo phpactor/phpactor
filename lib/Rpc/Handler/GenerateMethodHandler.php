@@ -44,7 +44,7 @@ class GenerateMethodHandler extends AbstractHandler
         );
 
         return ReplaceFileSourceAction::fromPathAndSource(
-            $sourceCode->path(),
+            $sourceCode->path() ?: $arguments[self::PARAM_PATH],
             (string) $sourceCode
         );
     }

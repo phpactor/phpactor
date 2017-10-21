@@ -393,7 +393,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "replace_file_source"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
         let savePos = getpos(".")
-        exec "%d"
+        exec "%d _"
         call append(0, split(a:parameters['source'], "\n"))
         call setpos('.', savePos)
         return
