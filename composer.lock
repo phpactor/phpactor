@@ -384,12 +384,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d"
+                "reference": "7e8591288e3b876ac0b9bb4bf2df76dd2bafd656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d",
-                "reference": "fec1edcf8e3d0946160dc84e6a6af8bb5c75ea0d",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7e8591288e3b876ac0b9bb4bf2df76dd2bafd656",
+                "reference": "7e8591288e3b876ac0b9bb4bf2df76dd2bafd656",
                 "shasum": ""
             },
             "require": {
@@ -429,7 +429,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-10-15 20:04:55"
+            "time": "2017-10-21 06:39:58"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1805,7 +1805,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-18T07:16:25+00:00"
+            "time": "2017-10-18 07:16:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2142,7 +2142,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-03-07T10:36:49+00:00"
+            "time": "2017-03-07 10:36:49"
         },
         {
             "name": "sebastian/global-state",
@@ -2239,7 +2239,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-07T10:37:45+00:00"
+            "time": "2017-03-07 10:37:45"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2292,7 +2292,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-08T08:21:15+00:00"
+            "time": "2017-03-08 08:21:15"
         },
         {
             "name": "sebastian/resource-operations",

@@ -44,6 +44,9 @@ class GenerateAccessorHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource($arguments[self::PARAM_PATH], (string) $sourceCode);
+        return ReplaceFileSourceAction::fromPathAndSource(
+            $sourceCode->path(),
+            (string) $sourceCode
+        );
     }
 }
