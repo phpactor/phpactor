@@ -384,16 +384,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "131d49e05e28a7e582ef72659ecafaf70ae8b7dc"
+                "reference": "31a73a0109909ae6e614e0942624168511449f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/131d49e05e28a7e582ef72659ecafaf70ae8b7dc",
-                "reference": "131d49e05e28a7e582ef72659ecafaf70ae8b7dc",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/31a73a0109909ae6e614e0942624168511449f4d",
+                "reference": "31a73a0109909ae6e614e0942624168511449f4d",
                 "shasum": ""
             },
             "require": {
-                "phpactor/code-builder": "dev-master"
+                "phpactor/code-builder": "dev-master",
+                "webmozart/path-util": "^2.3@dev"
             },
             "require-dev": {
                 "phpactor/worse-reflection": "^1.0@dev",
@@ -429,7 +430,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-10-21 08:13:11"
+            "time": "2017-10-21 16:39:05"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -489,12 +490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "deadacbb1c1c1dfae9fc38228c048e62159f4477"
+                "reference": "282b6fe579ecd4c089f71fa04e3410b32d07c812"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/deadacbb1c1c1dfae9fc38228c048e62159f4477",
-                "reference": "deadacbb1c1c1dfae9fc38228c048e62159f4477",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/282b6fe579ecd4c089f71fa04e3410b32d07c812",
+                "reference": "282b6fe579ecd4c089f71fa04e3410b32d07c812",
                 "shasum": ""
             },
             "require": {
@@ -530,7 +531,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-10-15 19:40:55"
+            "time": "2017-10-21 11:12:45"
         },
         {
             "name": "phpbench/container",

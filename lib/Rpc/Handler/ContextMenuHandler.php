@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\Phpactor;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class ContextMenuHandler implements Handler
 {
@@ -24,6 +25,7 @@ class ContextMenuHandler implements Handler
     const PARAMETER_SOURCE = 'source';
     const PARAMETER_OFFSET = 'offset';
     const PARAMETER_ACTION = 'action';
+    const PARAMETER_CURRENT_PATH = 'current_path';
 
     /**
      * @var Reflector
@@ -68,46 +70,62 @@ class ContextMenuHandler implements Handler
             self::PARAMETER_SOURCE => null,
             self::PARAMETER_OFFSET => null,
             self::PARAMETER_ACTION => null,
+            self::PARAMETER_CURRENT_PATH => null,
         ];
     }
 
     public function handle(array $arguments)
     {
-        $offset = $this->reflector->reflectOffset(
-            SourceCode::fromString($arguments[self::PARAMETER_SOURCE]),
-            Offset::fromInt($arguments[self::PARAMETER_OFFSET])
-        );
-
+        $offset = $this->offsetFromSourceAndOffset($arguments[self::PARAMETER_SOURCE], $arguments[self::PARAMETER_OFFSET]);
         $symbol = $offset->symbolInformation()->symbol();
 
+        return $this->resolveAction($offset, $symbol, $arguments);
+    }
+
+    private function resolveAction(ReflectionOffset $offset, Symbol $symbol, array $arguments)
+    {
         if (false === isset($this->menu[$symbol->symbolType()])) {
-            return EchoAction::fromMessage(sprintf('No context actions available for symbol type "%s"', $symbol->symbolType()));
+            return EchoAction::fromMessage(sprintf(
+                'No context actions available for symbol type "%s"',
+                $symbol->symbolType()
+            ));
         }
 
         $symbolMenu = $this->menu[$symbol->symbolType()];
 
         if (null !== $arguments[self::PARAMETER_ACTION]) {
-            $action = $symbolMenu[$arguments[self::PARAMETER_ACTION]];
-
-            // to avoid a cyclic dependency we get the request handler from the container ...
-            $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
-                Request::fromActions([
-                    ActionRequest::fromNameAndParameters(
-                        $action[self::PARAMETER_ACTION],
-                        $this->replaceTokens($action['parameters'], $offset, $arguments)
-                    )
-                ])
-            );
-
-            return StackAction::fromActions($response->actions());
+            return $this->delegateAction($symbolMenu, $arguments, $offset);
         }
 
+        return $this->actionSelectionAction($symbol, $symbolMenu, $arguments);
+    }
+
+    private function delegateAction(array $symbolMenu, array $arguments, ReflectionOffset $offset): StackAction
+    {
+        $action = $symbolMenu[$arguments[self::PARAMETER_ACTION]];
+
+        // to avoid a cyclic dependency we get the request handler from the container ...
+        $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
+            Request::fromActions([
+                ActionRequest::fromNameAndParameters(
+                    $action[self::PARAMETER_ACTION],
+                    $this->replaceTokens($action['parameters'], $offset, $arguments)
+                )
+            ])
+        );
+
+        return StackAction::fromActions($response->actions());
+    }
+
+    private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackAction
+    {
         return InputCallbackAction::fromCallbackAndInputs(
             ActionRequest::fromNameAndParameters(
                 self::NAME,
                 [
                     self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],
                     self::PARAMETER_OFFSET => (int) $arguments[self::PARAMETER_OFFSET],
+                    self::PARAMETER_CURRENT_PATH => $arguments[self::PARAMETER_CURRENT_PATH],
                 ]
             ),
             [
@@ -120,15 +138,29 @@ class ContextMenuHandler implements Handler
         );
     }
 
+    private function offsetFromSourceAndOffset(string $source, int $offset)
+    {
+        return $this->reflector->reflectOffset(
+            SourceCode::fromString($source),
+            Offset::fromInt($offset)
+        );
+    }
+
     private function replaceTokens(array $parameters, ReflectionOffset $offset, array $arguments)
     {
         $symbolInformation = $offset->symbolInformation();
         foreach ($parameters as $parameterName => $parameterValue) {
             switch ($parameterValue) {
+                case '%current_path%':
+                    $parameterValue = $arguments[self::PARAMETER_CURRENT_PATH];
+                    break;
                 case '%path%':
+                    // TODO: the "path" of the reflected type. You might expect
+                    // this to be the current path but it is not. It is used
+                    // when we want to act on the file in the "type" under the
+                    // cursor. this shouldn't be a thing.
                     $type = $symbolInformation->hasContainerType() ? $symbolInformation->containerType() : $symbolInformation->type();
-                    $path = $this->classFileNormalizer->classToFile($type);
-                    $parameterValue = Phpactor::relativizePath($path);
+                    $parameterValue = $this->classFileNormalizer->classToFile($type);
                     break;
                 case '%offset%':
                     $parameterValue = $arguments[self::PARAMETER_OFFSET];
