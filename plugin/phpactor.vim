@@ -392,9 +392,20 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> replace_file_source
     if a:actionName == "replace_file_source"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+
+        " save the cursor position
         let savePos = getpos(".")
+
+        " delete everything into the blackhole buffer
         exec "%d _"
-        call append(0, split(a:parameters['source'], "\n"))
+
+        " insert the transformed source code
+        execute ":put =a:parameters['source']"
+
+        " `put` will leave a blank line at the start of the file, remove it
+        execute ":1delete _"
+
+        " restore the cursor position
         call setpos('.', savePos)
         return
     endif
