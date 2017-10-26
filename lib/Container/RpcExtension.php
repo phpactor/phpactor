@@ -6,7 +6,7 @@ use PhpBench\DependencyInjection\ExtensionInterface;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\Console\Command\RpcCommand;
 use Phpactor\Rpc\HandlerRegistry;
-use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;

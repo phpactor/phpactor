@@ -45,7 +45,7 @@ class Complete
             return [];
         }
 
-        $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
+        $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type), $source);
 
         $suggestions = [];
         /** @var $method ReflectionMethod */

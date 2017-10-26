@@ -5,7 +5,7 @@ namespace Phpactor\Rpc;
 /**
  * This class represents a request FROM the editor TO phpactor.
  */
-final class Request
+class Request
 {
     private $actions = [];
 
