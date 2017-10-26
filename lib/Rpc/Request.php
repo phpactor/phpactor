@@ -2,6 +2,8 @@
 
 namespace Phpactor\Rpc;
 
+use Phpactor\Rpc\Action;
+
 /**
  * This class represents a request FROM the editor TO phpactor.
  */
@@ -46,6 +48,16 @@ class Request
     public function actions(): array
     {
         return $this->actions;
+    }
+
+    public function toArray(): array
+    {
+        return array_map(function (Action $action) {
+            return [
+                'name' => $action->name(),
+                'parameters' => $action->parameters(),
+            ];
+        });
     }
 
     private function addAction(ActionRequest $action)

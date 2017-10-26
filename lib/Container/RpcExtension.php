@@ -23,6 +23,7 @@ use Phpactor\Rpc\Handler\ExtractConstantHandler;
 use Phpactor\Rpc\Handler\GenerateMethodHandler;
 use Phpactor\Rpc\Handler\GenerateAccessorHandler;
 use Phpactor\Rpc\Handler\RenameVariableHandler;
+use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -38,7 +39,9 @@ class RpcExtension implements ExtensionInterface
         }, [ 'ui.console.command' => [] ]);
 
         $container->register(self::SERVICE_REQUEST_HANDLER, function (Container $container) {
-            return new RequestHandler($container->get('rpc.handler_registry'));
+            return new ExceptionCatchingHandler(
+                new RequestHandler($container->get('rpc.handler_registry'))
+            );
         });
 
         $container->register('rpc.handler_registry', function (Container $container) {

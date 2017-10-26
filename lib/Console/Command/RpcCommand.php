@@ -5,10 +5,10 @@ namespace Phpactor\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Editor\ErrorAction;
+use Phpactor\Rpc\RequestHandler;
 
 class RpcCommand extends Command
 {

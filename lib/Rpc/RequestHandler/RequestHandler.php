@@ -2,7 +2,12 @@
 
 namespace Phpactor\Rpc\RequestHandler;
 
-class RequestHandler
+use Phpactor\Rpc\HandlerRegistry;
+use Phpactor\Rpc\RequestHandler as CoreRequestHandler;
+use Phpactor\Rpc\Request;
+use Phpactor\Rpc\Response;
+
+class RequestHandler implements CoreRequestHandler
 {
     /**
      * @var HandlerRegistry
