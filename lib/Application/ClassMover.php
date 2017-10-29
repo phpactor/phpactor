@@ -127,6 +127,10 @@ class ClassMover
         foreach ($filesystem->fileList()->phpFiles() as $filePath) {
             $references = $this->classMover->findReferences($filesystem->getContents($filePath), $srcName);
 
+            if ($references->references()->isEmpty()) {
+                continue;
+            }
+
             $logger->replacing($filePath, $references, FullyQualifiedName::fromString($destName));
 
             $source = $this->classMover->replaceReferences(
