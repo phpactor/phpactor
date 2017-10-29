@@ -2,11 +2,11 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Editor\Reference\FileReferences;
 use Phpactor\Rpc\Editor\Reference\Reference;
 
-class FileReferencesAction implements Action
+class FileReferencesAction implements Response
 {
     /**
      * @var array

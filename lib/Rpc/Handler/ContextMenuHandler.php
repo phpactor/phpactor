@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\Rpc\Response;
 
 class ContextMenuHandler implements Handler
 {
@@ -98,19 +99,17 @@ class ContextMenuHandler implements Handler
         return $this->actionSelectionAction($symbol, $symbolMenu, $arguments);
     }
 
-    private function delegateAction(array $symbolMenu, array $arguments, ReflectionOffset $offset): StackAction
+    private function delegateAction(array $symbolMenu, array $arguments, ReflectionOffset $offset): Response
     {
         $action = $symbolMenu[$arguments[self::PARAMETER_ACTION]];
 
         // to avoid a cyclic dependency we get the request handler from the container ...
-        $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
+        return $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
             Request::fromNameAndParameters(
                 $action[self::PARAMETER_ACTION],
                 $this->replaceTokens($action['parameters'], $offset, $arguments)
             )
         );
-
-        return StackAction::fromActions($response->actions());
     }
 
     private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackAction

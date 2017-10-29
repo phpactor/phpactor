@@ -2,9 +2,9 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-class OpenFileAction implements Action
+class OpenFileAction implements Response
 {
     /**
      * @var string

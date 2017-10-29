@@ -114,9 +114,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ]
             )
         )->willReturn(
-            Response::fromActions([
-                EchoAction::fromMessage('Hello')
-            ])
+            EchoAction::fromMessage('Hello')
         );
 
         $this->menu = [
@@ -138,8 +136,6 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 8,
         ]);
 
-        $actions = $action->actions();
-        $action = reset($actions);
         $parameters = $action->parameters();
         $this->assertEquals([
             'message' => 'Hello',

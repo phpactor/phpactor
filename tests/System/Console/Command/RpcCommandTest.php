@@ -23,12 +23,10 @@ class RpcCommandTest extends SystemTestCase
         $response = json_decode($process->getOutput(), true);
 
         $this->assertEquals([
-            [
-                'action' => 'echo',
-                'parameters' => [
-                    'message' => 'Hello World',
-                ],
+            'action' => 'echo',
+            'parameters' => [
+                'message' => 'Hello World',
             ],
-        ], $response['actions']);
+        ], $response);
     }
 }

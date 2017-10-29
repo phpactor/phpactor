@@ -2,46 +2,9 @@
 
 namespace Phpactor\Rpc;
 
-class Response
+interface Response
 {
-    private $actions = [];
+    public function name(): string;
 
-    private function __construct(array $actions)
-    {
-        foreach ($actions as $action) {
-            $this->addAction($action);
-        }
-    }
-
-    public static function fromActions(array $actions)
-    {
-        return new self($actions);
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'actions' => array_map(function (Action  $action) {
-                return [
-                    'action' => $action->name(),
-                    'parameters' => $action->parameters(),
-                ];
-            }, $this->actions)
-        ];
-    }
-
-    public function actions(): array
-    {
-        return $this->actions;
-    }
-
-    private function addAction(Action $action)
-    {
-        $this->actions[] = $action;
-    }
-
-    public function fromAction(Action $action)
-    {
-        return new self([ $action ]);
-    }
+    public function parameters(): array;
 }

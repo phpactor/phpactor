@@ -36,8 +36,6 @@ class RequestHandler implements CoreRequestHandler
             ));
         }
 
-        $action = $handler->handle(array_merge($defaults, $parameters));
-
-        return Response::fromAction($action);
+        return $handler->handle(array_merge($defaults, $parameters));
     }
 }

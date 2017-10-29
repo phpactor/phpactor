@@ -2,9 +2,9 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-final class InformationAction implements Action
+final class InformationAction implements Response
 {
     private $information;
 

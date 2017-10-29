@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -58,8 +57,7 @@ class RequestHandlerTest extends TestCase
 
     public function testHandle()
     {
-        $action = $this->prophesize(Action::class);
-        $expectedResponse = Response::fromActions([$action->reveal()]);
+        $expectedResponse = $this->prophesize(Response::class);
 
         $this->handlerRegistry->get('aaa')->willReturn($this->handler->reveal());
         $this->handler->name()->willReturn('handler1');
@@ -71,10 +69,10 @@ class RequestHandlerTest extends TestCase
             'one' => 'bar',
         ]);
 
-        $this->handler->handle(['one' => 'bar'])->willReturn($action->reveal());
+        $this->handler->handle(['one' => 'bar'])->willReturn($expectedResponse->reveal());
 
         $response = $this->requestHandler->handle($request);
 
-        $this->assertEquals($expectedResponse, $response);
+        $this->assertEquals($expectedResponse->reveal(), $response);
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
 /**
  * Instruct the editor to return the options to the RPC caller.
  *
  * NOTE: No actions can be performed after this action.
  */
-class ReturnChoiceAction implements Action
+class ReturnChoiceAction implements Response
 {
     /**
      * @var array

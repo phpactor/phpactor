@@ -2,9 +2,9 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-class EchoAction implements Action
+class EchoAction implements Response
 {
     /**
      * @var string

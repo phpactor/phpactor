@@ -49,17 +49,17 @@ class LoggingHandlerTest extends TestCase
 
         $this->response = $this->prophesize(Response::class);
         $this->request = $this->prophesize(Request::class);
+        $this->request->name()->willReturn('req-name');
+        $this->request->parameters()->willReturn(['p1' => 'v1' ]);
+        $this->response->name()->willReturn('res-name');
+        $this->response->parameters()->willReturn(['p1' => 'v1' ]);
+
+        $this->expectedRequestData = [ 'action' => 'req-name', 'parameters' => [ 'p1' => 'v1' ] ];
+        $this->expectedResponseData = [ 'action' => 'res-name', 'parameters' => [ 'p1' => 'v1' ] ];
     }
 
     public function testLogging()
     {
-        $requestData = [ 'one' => 'two' ];
-        $responseData = [ 'three' => 'four' ];
-
-        $this->request->toArray()->willReturn($requestData);
-        $this->response->toArray()->willReturn($responseData);
-        $this->response->actions()->willReturn([]);
-
         $this->innerHandler->handle($this->request->reveal())->willReturn($this->response->reveal());
 
         $response = $this->loggingHandler->handle($this->request->reveal());
@@ -69,23 +69,21 @@ class LoggingHandlerTest extends TestCase
             $response
         );
 
-        $this->logger->debug('REQUEST', $requestData)->shouldHaveBeenCalled();
-        $this->logger->log(LogLevel::DEBUG, 'RESPONSE', $responseData)->shouldHaveBeenCalled();
+        $this->logger->debug('REQUEST', $this->expectedRequestData)->shouldHaveBeenCalled();
+        $this->logger->log(LogLevel::DEBUG, 'RESPONSE', $this->expectedResponseData)->shouldHaveBeenCalled();
     }
 
     public function testLoggingWithError()
     {
-        $requestData = [ 'one' => 'two' ];
-        $responseData = [ 'three' => 'four' ];
+        $response = ErrorAction::fromMessageAndDetails('foobar', 'barfoo');
+        $expected = [
+            'action' => $response->name(),
+            'parameters' => $response->parameters()
+        ];
 
-        $this->request->toArray()->willReturn($requestData);
-        $this->response->toArray()->willReturn($responseData);
-        $this->response->actions()->willReturn([
-            ErrorAction::fromMessageAndDetails('foobar', 'barfoo')
-        ]);
-        $this->innerHandler->handle($this->request->reveal())->willReturn($this->response->reveal());
+        $this->innerHandler->handle($this->request->reveal())->willReturn($response);
 
         $response = $this->loggingHandler->handle($this->request->reveal());
-        $this->logger->log(LogLevel::ERROR, 'RESPONSE', $responseData)->shouldHaveBeenCalled();
+        $this->logger->log(LogLevel::ERROR, 'RESPONSE', $expected)->shouldHaveBeenCalled();
     }
 }

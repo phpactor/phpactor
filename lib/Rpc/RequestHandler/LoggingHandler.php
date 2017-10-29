@@ -31,18 +31,22 @@ class LoggingHandler implements RequestHandler
 
     public function handle(Request $request): Response
     {
-        $this->logger->debug('REQUEST', $request->toArray());
+        $this->logger->debug('REQUEST', [
+            'action' => $request->name(),
+            'parameters' => $request->parameters()
+        ]);
+
         $response = $this->requestHandler->handle($request);
 
         $level = LogLevel::DEBUG;
-        foreach ($response->actions() as $action) {
-            if ($action instanceof ErrorAction) {
-                $level = LogLevel::ERROR;
-                break;
-            }
+        if ($response instanceof ErrorAction) {
+            $level = LogLevel::ERROR;
         }
 
-        $this->logger->log($level, 'RESPONSE', $response->toArray());
+        $this->logger->log($level, 'RESPONSE', [
+            'action' => $response->name(),
+            'parameters' => $response->parameters(),
+        ]);
 
         return $response;
     }

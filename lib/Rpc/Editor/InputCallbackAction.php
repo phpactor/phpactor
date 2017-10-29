@@ -2,11 +2,11 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Editor\Input\Input;
 
-class InputCallbackAction implements Action
+class InputCallbackAction implements Response
 {
     /**
      * @var ActionRequest

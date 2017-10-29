@@ -2,9 +2,9 @@
 
 namespace Phpactor\Rpc\Editor;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-class ReplaceFileSourceAction implements Action
+class ReplaceFileSourceAction implements Response
 {
     /**
      * @var string

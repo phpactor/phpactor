@@ -35,7 +35,10 @@ class RpcCommand extends Command
 
         $response = $this->processRequest($request);
 
-        $output->write(json_encode($response->toArray()));
+        $output->write(json_encode([
+            'action' => $response->name(),
+            'parameters' => $response->parameters(),
+        ]));
     }
 
     private function processRequest(array $request = null)
