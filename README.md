@@ -44,23 +44,44 @@ To debug (and inspect) the configuration:
 ```bash
 $ phpactor config:dump
 Config files:
- [-] /home/daniel/www/phpactor/phpactor/.phpactor.yml
- [-] /home/daniel/.config/phpactor/phpactor.yml
- [x] /etc/xdg/phpactor/phpactor.yml
+ [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
+ [✔] /home/daniel/.config/phpactor/phpactor.yml
+ [𐄂] /etc/xdg/phpactor/phpactor.yml
 
+code_transform.class_new.variants:
+  exception:exception
+  symfony_command:symfony_command
+  phpunit_test:phpunit_test
+  value_object:value_object
+  collection:collection
+code_transform.template_paths:
+  1:/home/daniel/.config/phpactor/templates
+code_transform.indentation:
+code_transform.refactor.generate_accessor.prefix:
+code_transform.refactor.generate_accessor.upper_case_first:false
 autoload:vendor/autoload.php
 cwd:/home/daniel/www/phpactor/phpactor
 console_dumper_default:indented
-reflector_stub_directory:/home/daniel/www/phpactor/phpactor/lib/Container/../../vendor/jetbrains/phpstorm-stubs
 cache_dir:/home/daniel/www/phpactor/phpactor/lib/Container/../../cache
-code_transform.indentation: "    "
-code_transform.class_new.variants:
-  exception: exception
-  "Symfony Command": symfony_command
-  "Phpunit test": phpunit_test
-code_transform.template_paths:
-  - /home/daniel/www/phpactor/phpactor/.phpactor/templates
+logging.enabled:true
+logging.fingers_crossed:false
+logging.path:phpactor.log
+logging.level:DEBUG
+rpc.class_search.filesystem:composer
+rpc.class_move.filesystem:composer
+reflection.stub_directory:/home/daniel/www/phpactor/phpactor/lib/Container/../../vendor/jetbrains/phpstorm-stubs
 ```
+
+Debugging
+---------
+
+In exceptional circumstances Phpactor may not work as expected. There are some
+options to help better understand what is happening:
+
+- **verbose mode**: Use the `--verbose` command line flag to log everything to
+  STDERR.
+- **logging**: Enable logging to write to a file (optionally, *fingers
+  crossed*, only write to the log file when there is a problem).
 
 Commands
 --------
