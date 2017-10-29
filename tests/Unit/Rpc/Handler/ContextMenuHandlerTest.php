@@ -14,7 +14,6 @@ use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Request;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Response;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ContextMenuHandlerTest extends HandlerTestCase

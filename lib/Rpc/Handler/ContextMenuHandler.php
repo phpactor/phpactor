@@ -13,7 +13,6 @@ use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Rpc\Response;
