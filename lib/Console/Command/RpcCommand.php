@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\ErrorAction;
 use Phpactor\Rpc\RequestHandler;
 
 class RpcCommand extends Command
@@ -34,7 +33,7 @@ class RpcCommand extends Command
         $stdin = $this->stdin();
         $request = json_decode($stdin, true);
 
-        $response = $this->response($request);
+        $response = $this->processRequest($request);
 
         $output->write(json_encode($response->toArray()));
     }
@@ -62,16 +61,5 @@ class RpcCommand extends Command
         }
 
         return $in;
-    }
-
-    private function response(array $request): Response
-    {
-        try {
-            return $this->processRequest($request);
-        } catch (\Exception $e) {
-            return Response::fromActions([
-                ErrorAction::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString())
-            ]);
-        }
     }
 }

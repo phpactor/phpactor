@@ -40,7 +40,6 @@ use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMemberCommand;
 use Phpactor\Application\ClassMemberReferences;
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;

@@ -24,8 +24,7 @@ class LoggingHandler implements RequestHandler
     public function __construct(
         RequestHandler $requestHandler,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->requestHandler = $requestHandler;
         $this->logger = $logger;
     }

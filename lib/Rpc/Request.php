@@ -2,9 +2,6 @@
 
 namespace Phpactor\Rpc;
 
-use Phpactor\Rpc\Action;
-use Phpactor\Rpc\ActionRequest;
-
 /**
  * This class represents a request FROM the editor TO phpactor.
  */
