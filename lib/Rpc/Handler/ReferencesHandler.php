@@ -4,9 +4,9 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\FileReferencesAction;
-use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Editor\FileReferencesResponse;
+use Phpactor\Rpc\Editor\CollectionResponse;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -120,7 +120,7 @@ class ReferencesHandler extends AbstractHandler
         $references = $this->getReferences($symbolInformation, $filesystem);
 
         if (count($references) === 0) {
-            return EchoAction::fromMessage('No references found');
+            return EchoResponse::fromMessage('No references found');
         }
 
         $count = array_reduce($references, function ($count, $result) {
@@ -141,8 +141,8 @@ class ReferencesHandler extends AbstractHandler
             $risky = sprintf(' (%s risky references not listed)', $riskyCount);
         }
 
-        return StackAction::fromActions([
-            EchoAction::fromMessage(sprintf(
+        return CollectionResponse::fromActions([
+            EchoResponse::fromMessage(sprintf(
                 'Found %s literal references to %s "%s" using FS "%s"%s',
                 $count,
                 $symbolInformation->symbol()->symbolType(),
@@ -150,7 +150,7 @@ class ReferencesHandler extends AbstractHandler
                 $filesystem,
                 $risky
             )),
-            FileReferencesAction::fromArray($references),
+            FileReferencesResponse::fromArray($references),
         ]);
     }
 

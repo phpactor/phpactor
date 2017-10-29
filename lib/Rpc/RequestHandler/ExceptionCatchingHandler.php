@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\RequestHandler;
 
 use Phpactor\Rpc\RequestHandler;
-use Phpactor\Rpc\Editor\ErrorAction;
+use Phpactor\Rpc\Editor\ErrorResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 
@@ -24,7 +24,7 @@ class ExceptionCatchingHandler implements RequestHandler
         try {
             return $this->innerHandler->handle($request);
         } catch (\Exception $e) {
-            return ErrorAction::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString());
+            return ErrorResponse::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString());
         }
     }
 }

@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Handler\OffsetInfoHandler;
-use Phpactor\Rpc\Editor\InformationAction;
+use Phpactor\Rpc\Editor\InformationResponse;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {
@@ -31,7 +31,7 @@ EOT
             'source' => self::SOURCE
         ]);
 
-        $this->assertInstanceOf(InformationAction::class, $action);
+        $this->assertInstanceOf(InformationResponse::class, $action);
         $this->assertContains('symbol', $action->information());
     }
 }

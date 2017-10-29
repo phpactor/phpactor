@@ -6,7 +6,7 @@ use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Editor\Reference\FileReferences;
 use Phpactor\Rpc\Editor\Reference\Reference;
 
-class FileReferencesAction implements Response
+class FileReferencesResponse implements Response
 {
     /**
      * @var array

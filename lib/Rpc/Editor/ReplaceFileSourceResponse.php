@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Response;
 
-class ReplaceFileSourceAction implements Response
+class ReplaceFileSourceResponse implements Response
 {
     /**
      * @var string

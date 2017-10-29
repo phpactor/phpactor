@@ -3,13 +3,14 @@
 namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Editor\ReturnChoiceResponse;
 
 /**
  * Instruct the editor to return the options to the RPC caller.
  *
  * NOTE: No actions can be performed after this action.
  */
-class ReturnChoiceAction implements Response
+class ReturnChoiceResponse implements Response
 {
     /**
      * @var array
@@ -43,7 +44,7 @@ class ReturnChoiceAction implements Response
         ];
     }
 
-    public static function fromOptions(array $options): ReturnChoiceAction
+    public static function fromOptions(array $options): ReturnChoiceResponse
     {
         return new self($options);
     }

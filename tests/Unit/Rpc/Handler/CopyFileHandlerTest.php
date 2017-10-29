@@ -4,11 +4,11 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassCopy;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\Request;
 use Prophecy\Argument;
-use Phpactor\Rpc\Editor\OpenFileAction;
+use Phpactor\Rpc\Editor\OpenFileResponse;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 
@@ -46,7 +46,7 @@ class CopyFileHandlerTest extends HandlerTestCase
             'dest_path' => null,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(TextInput::class, reset($inputs));
@@ -72,6 +72,6 @@ class CopyFileHandlerTest extends HandlerTestCase
             'dest_path' => self::DEST_PATH,
         ]);
 
-        $this->assertInstanceOf(OpenFileAction::class, $action);
+        $this->assertInstanceOf(OpenFileResponse::class, $action);
     }
 }

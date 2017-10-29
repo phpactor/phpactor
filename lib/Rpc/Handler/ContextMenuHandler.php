@@ -5,9 +5,9 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\EchoResponse;
 use Phpactor\Rpc\Request;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\RpcExtension;
@@ -83,7 +83,7 @@ class ContextMenuHandler implements Handler
     private function resolveAction(ReflectionOffset $offset, Symbol $symbol, array $arguments)
     {
         if (false === isset($this->menu[$symbol->symbolType()])) {
-            return EchoAction::fromMessage(sprintf(
+            return EchoResponse::fromMessage(sprintf(
                 'No context actions available for symbol type "%s"',
                 $symbol->symbolType()
             ));
@@ -111,9 +111,9 @@ class ContextMenuHandler implements Handler
         );
     }
 
-    private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackAction
+    private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackResponse
     {
-        return InputCallbackAction::fromCallbackAndInputs(
+        return InputCallbackResponse::fromCallbackAndInputs(
             Request::fromNameAndParameters(
                 self::NAME,
                 [

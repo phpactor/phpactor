@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\EchoResponse;
 
 class EchoHandler implements Handler
 {
@@ -21,6 +21,6 @@ class EchoHandler implements Handler
 
     public function handle(array $arguments)
     {
-        return EchoAction::fromMessage($arguments['message']);
+        return EchoResponse::fromMessage($arguments['message']);
     }
 }

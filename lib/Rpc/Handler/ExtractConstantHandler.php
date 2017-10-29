@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Rpc\Editor\Input\TextInput;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ExtractConstantHandler extends AbstractHandler
@@ -61,7 +61,7 @@ class ExtractConstantHandler extends AbstractHandler
             $arguments[self::PARAM_CONSTANT_NAME]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource(
+        return ReplaceFileSourceResponse::fromPathAndSource(
             $sourceCode->path(),
             (string) $sourceCode
         );

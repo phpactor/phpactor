@@ -6,7 +6,7 @@ use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Editor\Input\Input;
 
-class InputCallbackAction implements Response
+class InputCallbackResponse implements Response
 {
     /**
      * @var ActionRequest

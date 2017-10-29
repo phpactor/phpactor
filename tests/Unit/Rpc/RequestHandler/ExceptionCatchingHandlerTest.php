@@ -8,7 +8,7 @@ use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Rpc\Editor\ErrorAction;
+use Phpactor\Rpc\Editor\ErrorResponse;
 
 class ExceptionCatchingHandlerTest extends TestCase
 {
@@ -60,7 +60,7 @@ class ExceptionCatchingHandlerTest extends TestCase
 
         $response = $this->exceptionHandler->handle($this->request->reveal());
 
-        $this->assertInstanceOf(ErrorAction::class, $response);
+        $this->assertInstanceOf(ErrorResponse::class, $response);
         $this->assertEquals('Test!', $response->message());
     }
 }

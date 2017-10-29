@@ -8,7 +8,7 @@ use Phpactor\Rpc\Response;
  * Stack of actions.
  * Each action will be executed one-after-the-other in the editor.
  */
-class StackAction implements Response
+class CollectionResponse implements Response
 {
     /**
      * @var array

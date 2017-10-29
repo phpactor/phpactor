@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class GenerateMethodHandler extends AbstractHandler
@@ -47,7 +47,7 @@ class GenerateMethodHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource(
+        return ReplaceFileSourceResponse::fromPathAndSource(
             $sourceCode->path(),
             (string) $sourceCode
         );

@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\Complete;
-use Phpactor\Rpc\Editor\ReturnAction;
+use Phpactor\Rpc\Editor\ReturnResponse;
 
 class CompleteHandler implements Handler
 {
@@ -39,6 +39,6 @@ class CompleteHandler implements Handler
     {
         $suggestions = $this->complete->complete($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
-        return ReturnAction::fromValue($suggestions);
+        return ReturnResponse::fromValue($suggestions);
     }
 }

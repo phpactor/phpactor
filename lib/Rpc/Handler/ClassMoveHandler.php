@@ -2,13 +2,13 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Editor\OpenFileAction;
+use Phpactor\Rpc\Editor\OpenFileResponse;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 use Phpactor\Application\ClassMover;
-use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\CloseFileAction;
+use Phpactor\Rpc\Editor\CollectionResponse;
+use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Editor\CloseFileResponse;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassMoveHandler extends AbstractHandler
@@ -50,7 +50,7 @@ class ClassMoveHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         if (false === $arguments[self::PARAM_CONFIRMED]) {
-            return EchoAction::fromMessage('Cancelled');
+            return EchoResponse::fromMessage('Cancelled');
         }
 
         $this->requireArgument(self::PARAM_DEST_PATH, TextInput::fromNameLabelAndDefault(
@@ -79,9 +79,9 @@ class ClassMoveHandler extends AbstractHandler
             $arguments[self::PARAM_DEST_PATH]
         );
 
-        return StackAction::fromActions([
-            CloseFileAction::fromPath($arguments[self::PARAM_SOURCE_PATH]),
-            OpenFileAction::fromPath($arguments[self::PARAM_DEST_PATH])
+        return CollectionResponse::fromActions([
+            CloseFileResponse::fromPath($arguments[self::PARAM_SOURCE_PATH]),
+            OpenFileResponse::fromPath($arguments[self::PARAM_DEST_PATH])
         ]);
     }
 }

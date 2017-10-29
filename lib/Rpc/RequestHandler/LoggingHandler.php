@@ -7,7 +7,7 @@ use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Phpactor\Rpc\Editor\ErrorAction;
+use Phpactor\Rpc\Editor\ErrorResponse;
 
 class LoggingHandler implements RequestHandler
 {
@@ -39,7 +39,7 @@ class LoggingHandler implements RequestHandler
         $response = $this->requestHandler->handle($request);
 
         $level = LogLevel::DEBUG;
-        if ($response instanceof ErrorAction) {
+        if ($response instanceof ErrorResponse) {
             $level = LogLevel::ERROR;
         }
 

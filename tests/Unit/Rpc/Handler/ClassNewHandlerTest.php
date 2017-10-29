@@ -5,12 +5,12 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Application\ClassNew;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\OpenFileResponse;
+use Phpactor\Rpc\Editor\EchoResponse;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 
 class ClassNewHandlerTest extends HandlerTestCase
@@ -44,7 +44,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             'current_path' => self::CURRENT_PATH
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $firstInput = array_shift($inputs);
         $this->assertInstanceOf(ChoiceInput::class, $firstInput);
@@ -73,7 +73,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             'variant' => self::VARIANT,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $firstInput = reset($inputs);
 
@@ -90,7 +90,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             'overwrite' => false,
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
     public function testGenerate()
@@ -107,7 +107,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             'variant' => self::VARIANT,
         ]);
 
-        $this->assertInstanceOf(OpenFileAction::class, $action);
+        $this->assertInstanceOf(OpenFileResponse::class, $action);
         $this->assertEquals(self::NEW_PATH, $action->path());
     }
 }

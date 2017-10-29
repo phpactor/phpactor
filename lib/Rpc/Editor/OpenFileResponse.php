@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Response;
 
-class OpenFileAction implements Response
+class OpenFileResponse implements Response
 {
     /**
      * @var string

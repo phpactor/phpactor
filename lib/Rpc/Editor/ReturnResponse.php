@@ -3,13 +3,14 @@
 namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Editor\ReturnResponse;
 
 /**
  * Instruct the editor to return the value to the RPC caller.
  *
  * NOTE: No actions can be performed after this action.
  */
-class ReturnAction implements Response
+class ReturnResponse implements Response
 {
     /**
      * @var mixed
@@ -33,7 +34,7 @@ class ReturnAction implements Response
         ];
     }
 
-    public static function fromValue($value): ReturnAction
+    public static function fromValue($value): ReturnResponse
     {
         return new self($value);
     }

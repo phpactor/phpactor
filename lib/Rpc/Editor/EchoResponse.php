@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Editor;
 
 use Phpactor\Rpc\Response;
 
-class EchoAction implements Response
+class EchoResponse implements Response
 {
     /**
      * @var string

@@ -8,9 +8,9 @@ use Phpactor\WorseReflection\Reflector;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
@@ -71,7 +71,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 4,
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
         $this->assertContains('No context actions', $action->message());
     }
 
@@ -90,7 +90,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 8,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
     }
@@ -113,7 +113,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ]
             )
         )->willReturn(
-            EchoAction::fromMessage('Hello')
+            EchoResponse::fromMessage('Hello')
         );
 
         $this->menu = [

@@ -5,9 +5,9 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\ReturnAction;
-use Phpactor\Rpc\Editor\ReturnChoiceAction;
+use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Editor\ReturnResponse;
+use Phpactor\Rpc\Editor\ReturnChoiceResponse;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {
@@ -40,7 +40,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
             'short_name' => 'AAA',
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
         $this->assertContains('No classes found', $action->message());
     }
 
@@ -60,7 +60,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
             'short_name' => 'AAA',
         ]);
 
-        $this->assertInstanceOf(ReturnAction::class, $action);
+        $this->assertInstanceOf(ReturnResponse::class, $action);
         $this->assertEquals([
             'class' => 'Foobar',
         ], $action->value());
@@ -85,7 +85,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
             'short_name' => 'AAA',
         ]);
 
-        $this->assertInstanceOf(ReturnChoiceAction::class, $action);
+        $this->assertInstanceOf(ReturnChoiceResponse::class, $action);
         $this->assertCount(2, $action->options());
     }
 }

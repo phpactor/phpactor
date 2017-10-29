@@ -3,9 +3,9 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
 use Phpactor\Rpc\Editor\Input\TextInput;
@@ -40,7 +40,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
             'offset' => self::OFFSET,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $firstInput = reset($inputs);
@@ -65,6 +65,6 @@ class ExtractConstantHandlerTest extends HandlerTestCase
             'constant_name' => self::CONSTANT_NAME,
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceAction::class, $action);
+        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
     }
 }

@@ -6,8 +6,8 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Editor\CollectionResponse;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -15,7 +15,7 @@ use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
@@ -69,7 +69,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'offset' => 1,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $input = reset($inputs);
@@ -107,7 +107,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'filesystem' => 'git',
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
     public function testClassReferences()
@@ -137,12 +137,12 @@ class ReferencesHandlerTest extends HandlerTestCase
             'filesystem' => 'git',
         ]);
 
-        $this->assertInstanceOf(StackAction::class, $action);
+        $this->assertInstanceOf(CollectionResponse::class, $action);
 
         $actions = $action->actions();
 
         $first = array_shift($actions);
-        $this->assertInstanceOf(EchoAction::class, $first);
+        $this->assertInstanceOf(EchoResponse::class, $first);
 
         $second = array_shift($actions);
         $this->assertEquals([
@@ -179,7 +179,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'filesystem' => 'git',
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
     public function testMethodReferences()
@@ -211,12 +211,12 @@ class ReferencesHandlerTest extends HandlerTestCase
             'filesystem' => 'git',
         ]);
 
-        $this->assertInstanceOf(StackAction::class, $action);
+        $this->assertInstanceOf(CollectionResponse::class, $action);
 
         $actions = $action->actions();
 
         $first = array_shift($actions);
-        $this->assertInstanceOf(EchoAction::class, $first);
+        $this->assertInstanceOf(EchoResponse::class, $first);
 
         $second = array_shift($actions);
         $this->assertEquals([
@@ -273,12 +273,12 @@ class ReferencesHandlerTest extends HandlerTestCase
             'filesystem' => 'git',
         ]);
 
-        $this->assertInstanceOf(StackAction::class, $action);
+        $this->assertInstanceOf(CollectionResponse::class, $action);
 
         $actions = $action->actions();
 
         $first = array_shift($actions);
-        $this->assertInstanceOf(EchoAction::class, $first);
+        $this->assertInstanceOf(EchoResponse::class, $first);
         $this->assertContains('risky', $first->message());
     }
 }

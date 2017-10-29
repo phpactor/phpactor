@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\Editor\ReturnOption;
-use Phpactor\Rpc\Editor\ReturnChoiceAction;
+use Phpactor\Rpc\Editor\ReturnChoiceResponse;
 
 class ReturnChoiceActionTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ReturnChoiceActionTest extends TestCase
             1000
         );
 
-        $returnChoice = ReturnChoiceAction::fromOptions([$option1]);
+        $returnChoice = ReturnChoiceResponse::fromOptions([$option1]);
 
         $this->assertEquals([
             'choices' => [

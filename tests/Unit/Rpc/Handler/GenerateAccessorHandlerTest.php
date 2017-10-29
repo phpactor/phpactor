@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Rpc\Handler\GenerateAccessorHandler;
 
@@ -43,6 +43,6 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
             'offset' => self::OFFSET
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceAction::class, $action);
+        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
     }
 }

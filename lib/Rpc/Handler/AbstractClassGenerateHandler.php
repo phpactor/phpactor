@@ -5,11 +5,11 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassGenerator;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Editor\InputCallbackResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Editor\OpenFileResponse;
+use Phpactor\Rpc\Editor\EchoResponse;
 use Phpactor\Rpc\Editor\Input\ConfirmInput;
 use Phpactor\Application\AbstractClassGenerator;
 
@@ -47,7 +47,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         if (false === $arguments[self::PARAM_OVERWRITE]) {
-            return EchoAction::fromMessage('Cancelled');
+            return EchoResponse::fromMessage('Cancelled');
         }
 
         $missingInputs = [];
@@ -76,7 +76,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         try {
             $newPath = $this->generate($arguments);
         } catch (FileAlreadyExists $e) {
-            return InputCallbackAction::fromCallbackAndInputs(
+            return InputCallbackResponse::fromCallbackAndInputs(
                 Request::fromNameAndParameters(
                     $this->name(),
                     [
@@ -95,6 +95,6 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             );
         }
 
-        return OpenFileAction::fromPath($newPath);
+        return OpenFileResponse::fromPath($newPath);
     }
 }

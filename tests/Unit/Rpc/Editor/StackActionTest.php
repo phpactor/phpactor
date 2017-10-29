@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Editor\CollectionResponse;
 
 class StackActionTest extends TestCase
 {
@@ -19,7 +19,7 @@ class StackActionTest extends TestCase
         $action2->parameters()->willReturn([ 'p2' => 'v2' ]);
 
 
-        $action = StackAction::fromActions([
+        $action = CollectionResponse::fromActions([
             $action1->reveal(), $action2->reveal()
         ]);
 
