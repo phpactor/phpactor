@@ -5,10 +5,9 @@ namespace Phpactor\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\ErrorAction;
+use Phpactor\Rpc\RequestHandler;
 
 class RpcCommand extends Command
 {
@@ -34,13 +33,7 @@ class RpcCommand extends Command
         $stdin = $this->stdin();
         $request = json_decode($stdin, true);
 
-        try {
-            $response = $this->processRequest($request);
-        } catch (\Exception $e) {
-            $response = Response::fromActions([
-                ErrorAction::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString())
-            ]);
-        }
+        $response = $this->processRequest($request);
 
         $output->write(json_encode($response->toArray()));
     }
@@ -55,6 +48,7 @@ class RpcCommand extends Command
         }
 
         $request = Request::fromArray($request);
+
         return $this->handler->handle($request);
     }
 

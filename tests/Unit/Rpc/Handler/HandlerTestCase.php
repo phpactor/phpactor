@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\HandlerRegistry;
-use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Action;
 

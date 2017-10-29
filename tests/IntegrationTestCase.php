@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Tests\Integration;
+namespace Phpactor\Tests;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 
-abstract class SystemTestCase extends TestCase
+abstract class IntegrationTestCase extends TestCase
 {
     protected function workspaceDir()
     {
@@ -75,7 +75,7 @@ abstract class SystemTestCase extends TestCase
             return;
         }
 
-        $filesystem->mirror(__DIR__ . '/../Assets/Projects/' . $name, $this->workspaceDir());
+        $filesystem->mirror(__DIR__ . '/Assets/Projects/' . $name, $this->workspaceDir());
         $currentDir = getcwd();
         chdir($this->workspaceDir());
         exec('git init');
@@ -84,25 +84,5 @@ abstract class SystemTestCase extends TestCase
         exec('composer install --quiet');
         chdir($currentDir);
         $this->cacheWorkspace($name);
-    }
-
-    protected function phpactor(string $args, string $stdin = null): Process
-    {
-        chdir($this->workspaceDir());
-        $bin = __DIR__ . '/../../bin/phpactor --verbose ';
-        $process = new Process(sprintf(
-            '%s %s',
-            $bin,
-            $args
-        ));
-
-        if ($stdin) {
-            $process->setInput($stdin);
-        }
-
-
-        $process->run();
-
-        return $process;
     }
 }

@@ -39,4 +39,9 @@ class ErrorAction implements Action
             'details' => $this->details
         ];
     }
+
+    public function message(): string
+    {
+        return $this->message;
+    }
 }

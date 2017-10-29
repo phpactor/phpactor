@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;

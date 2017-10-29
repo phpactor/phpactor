@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Tests\Integration\Console\Command;
+namespace Phpactor\Tests\System\Console\Command;
 
-use Phpactor\Tests\Integration\SystemTestCase;
+use Phpactor\Tests\System\SystemTestCase;
 
 class ClassCopyCommandTest extends SystemTestCase
 {

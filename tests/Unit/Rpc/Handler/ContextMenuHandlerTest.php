@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Container\RpcExtension;
-use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Application\Helper\ClassFileNormalizer;

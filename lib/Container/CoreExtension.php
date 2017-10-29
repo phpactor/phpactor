@@ -40,21 +40,36 @@ use Phpactor\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMemberCommand;
 use Phpactor\Application\ClassMemberReferences;
+use Psr\Log\LogLevel;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FingersCrossedHandler;
 
 class CoreExtension implements ExtensionInterface
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
+    const LOGGING_PATH = 'logging.path';
+    const LOGGING_LEVEL = 'logging.level';
+    const AUTOLOAD = 'autoload';
+    const WORKING_DIRECTORY = 'cwd';
+    const DUMPER = 'console_dumper_default';
+    const CACHE_DIR = 'cache_dir';
+    const LOGGING_ENABLED = 'logging.enabled';
+    const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
 
     public static $autoloader;
 
     public function getDefaultConfig()
     {
         return [
-            'autoload' => 'vendor/autoload.php',
-            'cwd' => getcwd(),
-            'console_dumper_default' => 'indented',
-            'cache_dir' => __DIR__ . '/../../cache',
+            self::AUTOLOAD => 'vendor/autoload.php',
+            self::WORKING_DIRECTORY => getcwd(),
+            self::DUMPER => 'indented',
+            self::CACHE_DIR => __DIR__ . '/../../cache',
+            self::LOGGING_ENABLED => false,
+            self::LOGGING_FINGERS_CROSSED => true,
+            self::LOGGING_PATH => 'phpactor.log',
+            self::LOGGING_LEVEL => LogLevel::WARNING,
         ];
     }
 
@@ -71,7 +86,24 @@ class CoreExtension implements ExtensionInterface
     private function registerMonolog(Container $container)
     {
         $container->register('monolog.logger', function (Container $container) {
-            return new Logger('phpactor');
+            $logger = new Logger('phpactor');
+
+            if (false === $container->getParameter(self::LOGGING_ENABLED)) {
+                return $logger;
+            }
+
+            $handler = new StreamHandler(
+                $container->getParameter(self::LOGGING_PATH),
+                $container->getParameter(self::LOGGING_LEVEL)
+            );
+
+            if ($container->getParameter(self::LOGGING_FINGERS_CROSSED)) {
+                $handler = new FingersCrossedHandler($handler);
+            }
+
+            $logger->pushHandler($handler);
+
+            return $logger;
         });
     }
 
@@ -160,7 +192,7 @@ class CoreExtension implements ExtensionInterface
                 $dumpers[$attrs['name']] = $container->get($dumperId);
             }
 
-            return new DumperRegistry($dumpers, $container->getParameter('console_dumper_default'));
+            return new DumperRegistry($dumpers, $container->getParameter(self::DUMPER));
         });
 
         $container->register('console.dumper.indented', function (Container $container) {
@@ -197,8 +229,8 @@ class CoreExtension implements ExtensionInterface
                     return $path;
                 }
 
-                return $container->getParameter('cwd') . '/' . $path;
-            }, (array) $container->getParameter('autoload'));
+                return $container->getParameter(self::WORKING_DIRECTORY) . '/' . $path;
+            }, (array) $container->getParameter(self::AUTOLOAD));
 
             $autoloaders = [];
 

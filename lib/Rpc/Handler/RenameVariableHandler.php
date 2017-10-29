@@ -55,7 +55,9 @@ class RenameVariableHandler extends AbstractHandler
         ));
 
         $this->requireArgument(self::PARAM_SCOPE, ChoiceInput::fromNameLabelChoices(
-            self::PARAM_SCOPE, 'Scope: ', [
+            self::PARAM_SCOPE,
+            'Scope: ',
+            [
                 RenameVariable::SCOPE_FILE => 'Current file',
                 RenameVariable::SCOPE_LOCAL => 'Local (e.g. method)',
             ]
