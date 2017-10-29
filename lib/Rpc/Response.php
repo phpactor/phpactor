@@ -39,4 +39,9 @@ class Response
     {
         $this->actions[] = $action;
     }
+
+    public function fromAction(Action $action)
+    {
+        return new self([ $action ]);
+    }
 }

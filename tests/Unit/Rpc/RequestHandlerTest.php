@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\ActionRequest;
@@ -50,10 +49,8 @@ class RequestHandlerTest extends TestCase
             'bbb' => 'ccc',
         ]);
 
-        $request = Request::fromActions([
-            ActionRequest::fromNameAndParameters('aaa', [
-                'foo' => 'bar',
-            ])
+        $request = ActionRequest::fromNameAndParameters('aaa', [
+            'foo' => 'bar',
         ]);
 
         $response = $this->requestHandler->handle($request);
@@ -70,10 +67,8 @@ class RequestHandlerTest extends TestCase
             'one' => 'foo',
         ]);
 
-        $request = Request::fromActions([
-            ActionRequest::fromNameAndParameters('aaa', [
-                'one' => 'bar',
-            ])
+        $request = ActionRequest::fromNameAndParameters('aaa', [
+            'one' => 'bar',
         ]);
 
         $this->handler->handle(['one' => 'bar'])->willReturn($action->reveal());

@@ -12,19 +12,9 @@ class RpcCommandTest extends SystemTestCase
     public function testFromStdIn()
     {
         $stdin = json_encode([
-            'actions' => [
-                [
-                    'action' => 'echo',
-                    'parameters' => [
-                        'message' => 'Hello World',
-                    ],
-                ],
-                [
-                    'action' => 'echo',
-                    'parameters' => [
-                        'message' => 'Goodbye World!',
-                    ],
-                ],
+            'action' => 'echo',
+            'parameters' => [
+                'message' => 'Hello World',
             ],
         ]);
 
@@ -39,12 +29,6 @@ class RpcCommandTest extends SystemTestCase
                     'message' => 'Hello World',
                 ],
             ],
-            [
-                'action' => 'echo',
-                'parameters' => [
-                    'message' => 'Goodbye World!',
-                ],
-            ]
         ], $response['actions']);
     }
 }

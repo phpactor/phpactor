@@ -43,6 +43,14 @@ class ActionRequest
         return new self($actionConfig[self::KEY_ACTION], $actionConfig[self::KEY_PARAMETERS]);
     }
 
+    public function toArray(): array
+    {
+        return [
+            self::KEY_ACTION => $this->name,
+            self::KEY_PARAMETERS => $this->parameters,
+        ];
+    }
+
     public function name(): string
     {
         return $this->name;

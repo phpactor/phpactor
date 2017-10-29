@@ -14,7 +14,6 @@ use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\ActionRequest;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 
@@ -105,7 +104,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
-        $this->requestHandler->handle(Request::fromActions([
+        $this->requestHandler->handle(
             ActionRequest::fromNameAndParameters(
                 self::VARIABLE_ACTION,
                 [
@@ -114,7 +113,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                     'some_path' => __FILE__
                 ]
             )
-        ]))->willReturn(
+        )->willReturn(
             Response::fromActions([
                 EchoAction::fromMessage('Hello')
             ])

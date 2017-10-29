@@ -4,5 +4,5 @@ namespace Phpactor\Rpc;
 
 interface RequestHandler
 {
-    public function handle(Request $request): Response;
+    public function handle(ActionRequest $request): Response;
 }

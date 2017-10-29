@@ -5,7 +5,7 @@ namespace Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Editor\ErrorAction;
-use Phpactor\Rpc\Request;
+use Phpactor\Rpc\ActionRequest;
 
 class ExceptionCatchingHandler implements RequestHandler
 {
@@ -19,7 +19,7 @@ class ExceptionCatchingHandler implements RequestHandler
         $this->innerHandler = $innerHandler;
     }
 
-    public function handle(Request $request): Response
+    public function handle(ActionRequest $request): Response
     {
         try {
             return $this->innerHandler->handle($request);

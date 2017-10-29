@@ -105,12 +105,10 @@ class ContextMenuHandler implements Handler
 
         // to avoid a cyclic dependency we get the request handler from the container ...
         $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
-            Request::fromActions([
-                ActionRequest::fromNameAndParameters(
-                    $action[self::PARAMETER_ACTION],
-                    $this->replaceTokens($action['parameters'], $offset, $arguments)
-                )
-            ])
+            ActionRequest::fromNameAndParameters(
+                $action[self::PARAMETER_ACTION],
+                $this->replaceTokens($action['parameters'], $offset, $arguments)
+            )
         );
 
         return StackAction::fromActions($response->actions());

@@ -5,9 +5,9 @@ namespace Phpactor\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\ActionRequest;
 
 class RpcCommand extends Command
 {
@@ -47,7 +47,7 @@ class RpcCommand extends Command
             ));
         }
 
-        $request = Request::fromArray($request);
+        $request = ActionRequest::fromArray($request);
 
         return $this->handler->handle($request);
     }

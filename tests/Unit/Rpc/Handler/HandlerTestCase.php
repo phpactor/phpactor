@@ -4,7 +4,6 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\Request;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Handler;
@@ -20,9 +19,7 @@ abstract class HandlerTestCase extends TestCase
             $this->createHandler()
         ]);
         $requestHandler = new RequestHandler($registry);
-        $request = Request::fromActions([
-            ActionRequest::fromNameAndParameters($actionName, $parameters)
-        ]);
+        $request = ActionRequest::fromNameAndParameters($actionName, $parameters);
 
         $response = $requestHandler->handle($request);
         $actions = $response->actions();

@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\RequestHandler;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
-use Phpactor\Rpc\Request;
+use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Editor\ErrorAction;
@@ -48,7 +48,7 @@ class LoggingHandlerTest extends TestCase
         $this->loggingHandler = new LoggingHandler($this->innerHandler->reveal(), $this->logger->reveal());
 
         $this->response = $this->prophesize(Response::class);
-        $this->request = $this->prophesize(Request::class);
+        $this->request = $this->prophesize(ActionRequest::class);
     }
 
     public function testLogging()
