@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\RequestHandler;
 
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler as CoreRequestHandler;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 
 class RequestHandler implements CoreRequestHandler
@@ -19,7 +19,7 @@ class RequestHandler implements CoreRequestHandler
         $this->registry = $registry;
     }
     
-    public function handle(ActionRequest $request): Response
+    public function handle(Request $request): Response
     {
         $counterActions = [];
         $handler = $this->registry->get($request->name());

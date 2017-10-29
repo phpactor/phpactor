@@ -7,7 +7,7 @@ use Phpactor\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
 
@@ -58,7 +58,7 @@ class TransformHandler implements Handler
 
         // get destination path
         return InputCallbackAction::fromCallbackAndInputs(
-            ActionRequest::fromNameAndParameters(
+            Request::fromNameAndParameters(
                 $this->name(),
                 [
                     'transform' => null,

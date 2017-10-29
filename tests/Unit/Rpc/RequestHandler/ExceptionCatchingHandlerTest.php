@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\RequestHandler;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Editor\ErrorAction;
@@ -37,7 +37,7 @@ class ExceptionCatchingHandlerTest extends TestCase
         $this->innerHandler = $this->prophesize(RequestHandler::class);
         $this->exceptionHandler = new ExceptionCatchingHandler($this->innerHandler->reveal());
         $this->response = $this->prophesize(Response::class);
-        $this->request = $this->prophesize(ActionRequest::class);
+        $this->request = $this->prophesize(Request::class);
     }
 
     public function testDelegate()

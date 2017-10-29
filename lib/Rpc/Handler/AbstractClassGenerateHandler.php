@@ -6,7 +6,7 @@ use Phpactor\Application\ClassGenerator;
 use Phpactor\Rpc\Editor\Input\TextInput;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\Application\Exception\FileAlreadyExists;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\EchoAction;
@@ -77,7 +77,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             $newPath = $this->generate($arguments);
         } catch (FileAlreadyExists $e) {
             return InputCallbackAction::fromCallbackAndInputs(
-                ActionRequest::fromNameAndParameters(
+                Request::fromNameAndParameters(
                     $this->name(),
                     [
                         self::PARAM_CURRENT_PATH => $arguments[self::PARAM_CURRENT_PATH],

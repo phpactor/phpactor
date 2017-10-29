@@ -5,7 +5,7 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Editor\Input\Input;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 
 abstract class AbstractHandler implements Handler
 {
@@ -28,7 +28,7 @@ abstract class AbstractHandler implements Handler
     protected function createInputCallback(array $arguments)
     {
         return InputCallbackAction::fromCallbackAndInputs(
-            ActionRequest::fromNameAndParameters(
+            Request::fromNameAndParameters(
                 $this->name(),
                 $arguments
             ),

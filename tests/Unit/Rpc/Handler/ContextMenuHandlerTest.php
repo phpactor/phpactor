@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Response;
@@ -92,7 +92,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(InputCallbackAction::class, $action);
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
     }
 
@@ -105,7 +105,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
         $this->requestHandler->handle(
-            ActionRequest::fromNameAndParameters(
+            Request::fromNameAndParameters(
                 self::VARIABLE_ACTION,
                 [
                     'some_source' => self::SOURCE,

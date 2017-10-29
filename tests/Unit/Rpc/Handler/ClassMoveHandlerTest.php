@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassMover;
 use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Prophecy\Argument;
 use Phpactor\Rpc\Editor\OpenFileAction;
@@ -65,7 +65,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(ConfirmInput::class, reset($inputs));
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
     }
 
@@ -85,7 +85,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(TextInput::class, reset($inputs));
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
         $this->assertEquals([
             'source_path' => self::SOURCE_PATH,

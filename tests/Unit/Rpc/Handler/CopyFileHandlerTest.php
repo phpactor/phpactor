@@ -6,7 +6,7 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Prophecy\Argument;
 use Phpactor\Rpc\Editor\OpenFileAction;
 use Phpactor\Rpc\Editor\Input\TextInput;
@@ -50,7 +50,7 @@ class CopyFileHandlerTest extends HandlerTestCase
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(TextInput::class, reset($inputs));
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('copy_class', $action->callbackAction()->name());
         $this->assertEquals([
             'source_path' => self::SOURCE_PATH,

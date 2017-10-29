@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\RequestHandler;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 
 class RpcCommand extends Command
 {
@@ -47,7 +47,7 @@ class RpcCommand extends Command
             ));
         }
 
-        $request = ActionRequest::fromArray($request);
+        $request = Request::fromArray($request);
 
         return $this->handler->handle($request);
     }

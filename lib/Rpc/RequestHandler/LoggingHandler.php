@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\RequestHandler;
 
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Phpactor\Rpc\Editor\ErrorAction;
@@ -29,7 +29,7 @@ class LoggingHandler implements RequestHandler
         $this->logger = $logger;
     }
 
-    public function handle(ActionRequest $request): Response
+    public function handle(Request $request): Response
     {
         $this->logger->debug('REQUEST', $request->toArray());
         $response = $this->requestHandler->handle($request);

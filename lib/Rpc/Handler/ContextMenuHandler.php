@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Editor\EchoAction;
 use Phpactor\Rpc\Request;
-use Phpactor\Rpc\ActionRequest;
 use Phpactor\Rpc\Editor\InputCallbackAction;
 use Phpactor\Rpc\Editor\Input\ChoiceInput;
 use PhpBench\DependencyInjection\Container;
@@ -105,7 +104,7 @@ class ContextMenuHandler implements Handler
 
         // to avoid a cyclic dependency we get the request handler from the container ...
         $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
-            ActionRequest::fromNameAndParameters(
+            Request::fromNameAndParameters(
                 $action[self::PARAMETER_ACTION],
                 $this->replaceTokens($action['parameters'], $offset, $arguments)
             )
@@ -117,7 +116,7 @@ class ContextMenuHandler implements Handler
     private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackAction
     {
         return InputCallbackAction::fromCallbackAndInputs(
-            ActionRequest::fromNameAndParameters(
+            Request::fromNameAndParameters(
                 self::NAME,
                 [
                     self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],

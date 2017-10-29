@@ -8,7 +8,7 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Action;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Request;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class RequestHandlerTest extends TestCase
@@ -49,7 +49,7 @@ class RequestHandlerTest extends TestCase
             'bbb' => 'ccc',
         ]);
 
-        $request = ActionRequest::fromNameAndParameters('aaa', [
+        $request = Request::fromNameAndParameters('aaa', [
             'foo' => 'bar',
         ]);
 
@@ -67,7 +67,7 @@ class RequestHandlerTest extends TestCase
             'one' => 'foo',
         ]);
 
-        $request = ActionRequest::fromNameAndParameters('aaa', [
+        $request = Request::fromNameAndParameters('aaa', [
             'one' => 'bar',
         ]);
 
