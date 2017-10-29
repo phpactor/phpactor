@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
+use Symfony\Component\Console\Output\Output;
 
 class RpcCommand extends Command
 {
@@ -33,23 +34,23 @@ class RpcCommand extends Command
         $stdin = $this->stdin();
         $request = json_decode($stdin, true);
 
+        if (null === $request) {
+            throw new \InvalidArgumentException(sprintf(
+                'Could not decode JSON: %s',
+                $stdin
+            ));
+        }
+
         $response = $this->processRequest($request);
 
         $output->write(json_encode([
             'action' => $response->name(),
             'parameters' => $response->parameters(),
-        ]));
+        ]), false, OutputInterface::OUTPUT_RAW);
     }
 
     private function processRequest(array $request = null)
     {
-        if (null === $request) {
-            throw new \InvalidArgumentException(sprintf(
-                'Could not decode JSON: %s',
-                $this->stdin()
-            ));
-        }
-
         $request = Request::fromArray($request);
 
         return $this->handler->handle($request);
