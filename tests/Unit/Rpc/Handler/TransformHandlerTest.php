@@ -4,13 +4,13 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Transformer;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 
 class TransformHandlerTest extends HandlerTestCase
 {

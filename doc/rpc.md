@@ -22,8 +22,7 @@ response asking the editor to echo a message. The result is sent over
 ```
 
 Responses contain an action which will be executed in
-the editor. (An exception is the `return` action which will return a value to
-the caller of the RPC command, and prevent any further processing).
+the editor.
 
 Some responses will include callbacks to Phpactor. This allows Phpactor to ask
 for more information as required.

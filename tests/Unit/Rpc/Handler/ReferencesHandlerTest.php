@@ -6,8 +6,8 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Rpc\Handler\ReferencesHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\CollectionResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -15,7 +15,7 @@ use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {

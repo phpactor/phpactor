@@ -3,8 +3,8 @@
 namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\Editor\ReturnOption;
-use Phpactor\Rpc\Editor\ReturnChoiceResponse;
+use Phpactor\Rpc\Response\ReturnOption;
+use Phpactor\Rpc\Response\ReturnChoiceResponse;
 
 class ReturnChoiceActionTest extends TestCase
 {

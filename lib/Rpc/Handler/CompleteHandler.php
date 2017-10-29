@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\Complete;
-use Phpactor\Rpc\Editor\ReturnResponse;
+use Phpactor\Rpc\Response\ReturnResponse;
 
 class CompleteHandler implements Handler
 {

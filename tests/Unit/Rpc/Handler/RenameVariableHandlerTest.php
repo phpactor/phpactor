@@ -5,11 +5,11 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 
 class RenameVariableHandlerTest extends HandlerTestCase
 {

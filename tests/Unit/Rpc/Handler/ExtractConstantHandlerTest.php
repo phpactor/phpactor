@@ -3,12 +3,12 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\Input\TextInput;
 
 class ExtractConstantHandlerTest extends HandlerTestCase
 {

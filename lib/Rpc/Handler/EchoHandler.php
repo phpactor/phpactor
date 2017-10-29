@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Response\EchoResponse;
 
 class EchoHandler implements Handler
 {

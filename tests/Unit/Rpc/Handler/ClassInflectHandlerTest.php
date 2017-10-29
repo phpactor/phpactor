@@ -5,13 +5,13 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Application\ClassInflect;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ClassInflectHandlerTest extends HandlerTestCase
 {

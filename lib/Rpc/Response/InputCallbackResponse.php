@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
-use Phpactor\Rpc\Editor\Input\Input;
+use Phpactor\Rpc\Response\Input\Input;
 
 class InputCallbackResponse implements Response
 {

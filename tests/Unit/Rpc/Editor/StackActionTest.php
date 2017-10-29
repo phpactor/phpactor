@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\CollectionResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
 
 class StackActionTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 use Phpactor\Application\ClassMover;
-use Phpactor\Rpc\Editor\CollectionResponse;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\CloseFileResponse;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\CloseFileResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ClassMoveHandler extends AbstractHandler
 {

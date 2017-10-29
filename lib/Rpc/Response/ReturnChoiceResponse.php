@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\ReturnChoiceResponse;
+use Phpactor\Rpc\Response\ReturnChoiceResponse;
 
 /**
  * Instruct the editor to return the options to the RPC caller.

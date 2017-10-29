@@ -4,12 +4,12 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassCopy;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\Request;
 use Prophecy\Argument;
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 
 class CopyFileHandlerTest extends HandlerTestCase

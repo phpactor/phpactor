@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Handler\OffsetInfoHandler;
-use Phpactor\Rpc\Editor\InformationResponse;
+use Phpactor\Rpc\Response\InformationResponse;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {

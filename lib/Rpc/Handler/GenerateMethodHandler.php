@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class GenerateMethodHandler extends AbstractHandler

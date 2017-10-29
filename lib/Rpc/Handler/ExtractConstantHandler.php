@@ -3,8 +3,8 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
-use Phpactor\Rpc\Editor\Input\TextInput;
-use Phpactor\Rpc\Editor\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ExtractConstantHandler extends AbstractHandler

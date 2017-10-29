@@ -8,7 +8,7 @@ use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Rpc\Editor\ErrorResponse;
+use Phpactor\Rpc\Response\ErrorResponse;
 
 class ExceptionCatchingHandlerTest extends TestCase
 {

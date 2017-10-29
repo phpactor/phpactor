@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\InformationResponse;
+use Phpactor\Rpc\Response\InformationResponse;
 
 final class InformationResponse implements Response
 {

@@ -1,19 +1,25 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 use Phpactor\Rpc\Response;
 
-class CloseFileResponse implements Response
+class OpenFileResponse implements Response
 {
     /**
      * @var string
      */
     private $path;
 
-    private function __construct(string $path)
+    /**
+     * @var int
+     */
+    private $offset;
+
+    private function __construct(string $path, int $offset = 0)
     {
         $this->path = $path;
+        $this->offset = $offset;
     }
 
     public static function fromPath(string $path)
@@ -21,15 +27,21 @@ class CloseFileResponse implements Response
         return new self($path);
     }
 
+    public static function fromPathAndOffset(string $path, int $offset)
+    {
+        return new self($path, $offset);
+    }
+
     public function name(): string
     {
-        return 'close_file';
+        return 'open_file';
     }
 
     public function parameters(): array
     {
         return [
             'path' => $this->path,
+            'offset' => $this->offset,
         ];
     }
 

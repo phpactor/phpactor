@@ -4,18 +4,18 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassMover;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Prophecy\Argument;
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\CollectionResponse;
-use Phpactor\Rpc\Editor\CloseFileResponse;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Rpc\Response\CloseFileResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {

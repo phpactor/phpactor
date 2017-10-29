@@ -3,14 +3,14 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassGenerator;
-use Phpactor\Rpc\Editor\Input\TextInput;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Application\AbstractClassGenerator;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler

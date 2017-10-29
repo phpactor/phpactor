@@ -3,8 +3,8 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassCopy;
-use Phpactor\Rpc\Editor\OpenFileResponse;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 
 class ClassCopyHandler extends AbstractHandler

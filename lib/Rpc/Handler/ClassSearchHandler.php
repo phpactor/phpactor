@@ -5,10 +5,10 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\ReturnResponse;
-use Phpactor\Rpc\Editor\ReturnOption;
-use Phpactor\Rpc\Editor\ReturnChoiceResponse;
-use Phpactor\Rpc\Editor\EchoResponse;
+use Phpactor\Rpc\Response\ReturnResponse;
+use Phpactor\Rpc\Response\ReturnOption;
+use Phpactor\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Rpc\Response\EchoResponse;
 
 class ClassSearchHandler implements Handler
 {

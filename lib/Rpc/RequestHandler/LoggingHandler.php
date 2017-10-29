@@ -7,7 +7,7 @@ use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Phpactor\Rpc\Editor\ErrorResponse;
+use Phpactor\Rpc\Response\ErrorResponse;
 
 class LoggingHandler implements RequestHandler
 {

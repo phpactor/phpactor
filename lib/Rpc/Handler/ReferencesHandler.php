@@ -4,9 +4,9 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoResponse;
-use Phpactor\Rpc\Editor\FileReferencesResponse;
-use Phpactor\Rpc\Editor\CollectionResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\FileReferencesResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class ReferencesHandler extends AbstractHandler

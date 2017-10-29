@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Editor\ReturnResponse;
+use Phpactor\Rpc\Response\ReturnResponse;
 
 /**
  * Instruct the editor to return the value to the RPC caller.

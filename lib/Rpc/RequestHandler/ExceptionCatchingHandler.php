@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\RequestHandler;
 
 use Phpactor\Rpc\RequestHandler;
-use Phpactor\Rpc\Editor\ErrorResponse;
+use Phpactor\Rpc\Response\ErrorResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 

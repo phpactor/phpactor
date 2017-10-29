@@ -3,8 +3,8 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\Input\Input;
-use Phpactor\Rpc\Editor\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\Input;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Request;
 
 abstract class AbstractHandler implements Handler

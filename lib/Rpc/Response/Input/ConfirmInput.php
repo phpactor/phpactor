@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Editor\Input;
+namespace Phpactor\Rpc\Response\Input;
 
 class ConfirmInput implements Input
 {
