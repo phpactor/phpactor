@@ -6,6 +6,8 @@ use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\Request;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+use Phpactor\Rpc\Editor\ErrorAction;
 
 class LoggingHandler implements RequestHandler
 {
@@ -30,9 +32,18 @@ class LoggingHandler implements RequestHandler
 
     public function handle(Request $request): Response
     {
-        $this->logger->debug('REQ: ' . json_encode($request->toArray()));
+        $this->logger->debug('REQUEST', $request->toArray());
         $response = $this->requestHandler->handle($request);
-        $this->logger->debug('RES: ' . json_encode($response->toArray()));
+
+        $level = LogLevel::DEBUG;
+        foreach ($response->actions() as $action) {
+            if ($action instanceof ErrorAction) {
+                $level = LogLevel::ERROR;
+                break;
+            }
+        }
+
+        $this->logger->log($level, 'RESPONSE', $response->toArray());
 
         return $response;
     }

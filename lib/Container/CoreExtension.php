@@ -70,7 +70,7 @@ class CoreExtension implements ExtensionInterface
             self::LOGGING_ENABLED => false,
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
-            self::LOGGING_LEVEL => LogLevel::DEBUG,
+            self::LOGGING_LEVEL => LogLevel::WARNING,
         ];
     }
 
