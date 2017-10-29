@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-class ReplaceFileSourceAction implements Action
+class ReplaceFileSourceResponse implements Response
 {
     /**
      * @var string

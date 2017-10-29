@@ -6,7 +6,7 @@ use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\Rpc\Editor\InformationAction;
+use Phpactor\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -42,7 +42,7 @@ class OffsetInfoHandler implements Handler
             Offset::fromInt($arguments['offset'])
         );
 
-        return InformationAction::fromString(json_encode(
+        return InformationResponse::fromString(json_encode(
             $this->serialize(
                 $arguments['offset'],
                 $offset

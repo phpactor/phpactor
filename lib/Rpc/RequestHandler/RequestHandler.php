@@ -22,24 +22,20 @@ class RequestHandler implements CoreRequestHandler
     public function handle(Request $request): Response
     {
         $counterActions = [];
-        foreach ($request->actions() as $action) {
-            $handler = $this->registry->get($action->name());
+        $handler = $this->registry->get($request->name());
 
-            $parameters = $action->parameters();
-            $defaults = $handler->defaultParameters();
+        $parameters = $request->parameters();
+        $defaults = $handler->defaultParameters();
 
-            if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
-                throw new \InvalidArgumentException(sprintf(
-                    'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
-                    implode('", "', $diff),
-                    $handler->name(),
-                    implode('", "', array_keys($defaults))
-                ));
-            }
-
-            $counterActions[] = $handler->handle(array_merge($defaults, $parameters));
+        if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
+            throw new \InvalidArgumentException(sprintf(
+                'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
+                implode('", "', $diff),
+                $handler->name(),
+                implode('", "', array_keys($defaults))
+            ));
         }
 
-        return Response::fromActions($counterActions);
+        return $handler->handle(array_merge($defaults, $parameters));
     }
 }

@@ -5,11 +5,11 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Request;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 
 class TransformHandler implements Handler
 {
@@ -49,7 +49,7 @@ class TransformHandler implements Handler
             $arguments['transform']
         ]);
 
-        return ReplaceFileSourceAction::fromPathAndSource($arguments['path'], (string) $transformedCode);
+        return ReplaceFileSourceResponse::fromPathAndSource($arguments['path'], (string) $transformedCode);
     }
 
     private function transformerChoiceAction(string $path, string $source)
@@ -57,8 +57,8 @@ class TransformHandler implements Handler
         $transformers= $this->codeTransform->transformers()->names();
 
         // get destination path
-        return InputCallbackAction::fromCallbackAndInputs(
-            ActionRequest::fromNameAndParameters(
+        return InputCallbackResponse::fromCallbackAndInputs(
+            Request::fromNameAndParameters(
                 $this->name(),
                 [
                     'transform' => null,

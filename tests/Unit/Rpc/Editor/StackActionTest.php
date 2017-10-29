@@ -3,15 +3,15 @@
 namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\Action;
-use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Response\CollectionResponse;
 
 class StackActionTest extends TestCase
 {
     public function testCreate()
     {
-        $action1 = $this->prophesize(Action::class);
-        $action2 = $this->prophesize(Action::class);
+        $action1 = $this->prophesize(Response::class);
+        $action2 = $this->prophesize(Response::class);
 
         $action1->name()->willReturn('a1');
         $action2->name()->willReturn('a2');
@@ -19,7 +19,7 @@ class StackActionTest extends TestCase
         $action2->parameters()->willReturn([ 'p2' => 'v2' ]);
 
 
-        $action = StackAction::fromActions([
+        $action = CollectionResponse::fromActions([
             $action1->reveal(), $action2->reveal()
         ]);
 

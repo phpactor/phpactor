@@ -1,14 +1,14 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
 /**
  * Stack of actions.
  * Each action will be executed one-after-the-other in the editor.
  */
-class StackAction implements Action
+class CollectionResponse implements Response
 {
     /**
      * @var array
@@ -53,7 +53,7 @@ class StackAction implements Action
         return $this->actions;
     }
 
-    private function add(Action $action)
+    private function add(Response $action)
     {
         $this->actions[] = $action;
     }

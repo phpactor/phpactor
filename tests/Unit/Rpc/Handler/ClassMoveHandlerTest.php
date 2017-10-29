@@ -4,18 +4,18 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassMover;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Request;
 use Phpactor\Application\Logger\ClassMoverLogger;
 use Prophecy\Argument;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Rpc\Handler\ClassMoveHandler;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\StackAction;
-use Phpactor\Rpc\Editor\CloseFileAction;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Rpc\Response\CloseFileResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
@@ -49,7 +49,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
             'confirmed' => false,
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
         $this->assertContains('Cancelled', $action->message());
     }
 
@@ -61,11 +61,11 @@ class ClassMoveHandlerTest extends HandlerTestCase
             'dest_path' => self::DEST_PATH,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(ConfirmInput::class, reset($inputs));
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
     }
 
@@ -81,11 +81,11 @@ class ClassMoveHandlerTest extends HandlerTestCase
             'dest_path' => null,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $this->assertInstanceOf(TextInput::class, reset($inputs));
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
         $this->assertEquals([
             'source_path' => self::SOURCE_PATH,
@@ -113,15 +113,15 @@ class ClassMoveHandlerTest extends HandlerTestCase
             self::DEST_PATH
         )->shouldBeCalled();
 
-        $this->assertInstanceOf(StackAction::class, $action);
+        $this->assertInstanceOf(CollectionResponse::class, $action);
         $actions = $action->actions();
 
         $firstAction = array_shift($actions);
-        $this->assertInstanceOf(CloseFileAction::class, $firstAction);
+        $this->assertInstanceOf(CloseFileResponse::class, $firstAction);
         $this->assertEquals(self::SOURCE_PATH, $firstAction->path());
 
         $secondAction = array_shift($actions);
-        $this->assertInstanceOf(OpenFileAction::class, $secondAction);
+        $this->assertInstanceOf(OpenFileResponse::class, $secondAction);
         $this->assertEquals(self::DEST_PATH, $secondAction->path());
     }
 }

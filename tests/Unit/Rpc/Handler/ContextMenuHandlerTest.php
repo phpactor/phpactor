@@ -8,14 +8,12 @@ use Phpactor\WorseReflection\Reflector;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\ActionRequest;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Request;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Request;
-use Phpactor\Rpc\Response;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 
 class ContextMenuHandlerTest extends HandlerTestCase
@@ -73,7 +71,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 4,
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
         $this->assertContains('No context actions', $action->message());
     }
 
@@ -92,8 +90,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 8,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
-        $this->assertInstanceOf(ActionRequest::class, $action->callbackAction());
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
     }
 
@@ -105,8 +103,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
-        $this->requestHandler->handle(Request::fromActions([
-            ActionRequest::fromNameAndParameters(
+        $this->requestHandler->handle(
+            Request::fromNameAndParameters(
                 self::VARIABLE_ACTION,
                 [
                     'some_source' => self::SOURCE,
@@ -114,10 +112,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
                     'some_path' => __FILE__
                 ]
             )
-        ]))->willReturn(
-            Response::fromActions([
-                EchoAction::fromMessage('Hello')
-            ])
+        )->willReturn(
+            EchoResponse::fromMessage('Hello')
         );
 
         $this->menu = [
@@ -139,8 +135,6 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'offset' => 8,
         ]);
 
-        $actions = $action->actions();
-        $action = reset($actions);
         $parameters = $action->parameters();
         $this->assertEquals([
             'message' => 'Hello',

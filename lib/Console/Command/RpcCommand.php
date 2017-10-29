@@ -5,9 +5,9 @@ namespace Phpactor\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\RequestHandler;
+use Phpactor\Rpc\Request;
 
 class RpcCommand extends Command
 {
@@ -35,7 +35,10 @@ class RpcCommand extends Command
 
         $response = $this->processRequest($request);
 
-        $output->write(json_encode($response->toArray()));
+        $output->write(json_encode([
+            'action' => $response->name(),
+            'parameters' => $response->parameters(),
+        ]));
     }
 
     private function processRequest(array $request = null)

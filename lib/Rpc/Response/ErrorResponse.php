@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
 
-class ErrorAction implements Action
+class ErrorResponse implements Response
 {
     /**
      * @var string

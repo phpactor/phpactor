@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Application\Complete;
-use Phpactor\Rpc\Editor\ReturnAction;
+use Phpactor\Rpc\Response\ReturnResponse;
 use Phpactor\Rpc\Handler\CompleteHandler;
 
 class CompleteHandlerTest extends TestCase
@@ -27,7 +27,7 @@ class CompleteHandlerTest extends TestCase
         ]);
         $action = $handler->handle(['source' => 'aaa', 'offset' => 1234]);
 
-        $this->assertInstanceOf(ReturnAction::class, $action);
+        $this->assertInstanceOf(ReturnResponse::class, $action);
         $this->assertEquals([
             'aaa', 'bbb',
         ], $action->value());

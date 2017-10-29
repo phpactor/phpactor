@@ -5,18 +5,17 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Request;
-use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\Rpc\Editor\StackAction;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\Rpc\Response;
 
 class ContextMenuHandler implements Handler
 {
@@ -84,7 +83,7 @@ class ContextMenuHandler implements Handler
     private function resolveAction(ReflectionOffset $offset, Symbol $symbol, array $arguments)
     {
         if (false === isset($this->menu[$symbol->symbolType()])) {
-            return EchoAction::fromMessage(sprintf(
+            return EchoResponse::fromMessage(sprintf(
                 'No context actions available for symbol type "%s"',
                 $symbol->symbolType()
             ));
@@ -99,27 +98,23 @@ class ContextMenuHandler implements Handler
         return $this->actionSelectionAction($symbol, $symbolMenu, $arguments);
     }
 
-    private function delegateAction(array $symbolMenu, array $arguments, ReflectionOffset $offset): StackAction
+    private function delegateAction(array $symbolMenu, array $arguments, ReflectionOffset $offset): Response
     {
         $action = $symbolMenu[$arguments[self::PARAMETER_ACTION]];
 
         // to avoid a cyclic dependency we get the request handler from the container ...
-        $response = $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
-            Request::fromActions([
-                ActionRequest::fromNameAndParameters(
-                    $action[self::PARAMETER_ACTION],
-                    $this->replaceTokens($action['parameters'], $offset, $arguments)
-                )
-            ])
+        return $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->handle(
+            Request::fromNameAndParameters(
+                $action[self::PARAMETER_ACTION],
+                $this->replaceTokens($action['parameters'], $offset, $arguments)
+            )
         );
-
-        return StackAction::fromActions($response->actions());
     }
 
-    private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackAction
+    private function actionSelectionAction(Symbol $symbol, $symbolMenu, array $arguments): InputCallbackResponse
     {
-        return InputCallbackAction::fromCallbackAndInputs(
-            ActionRequest::fromNameAndParameters(
+        return InputCallbackResponse::fromCallbackAndInputs(
+            Request::fromNameAndParameters(
                 self::NAME,
                 [
                     self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],

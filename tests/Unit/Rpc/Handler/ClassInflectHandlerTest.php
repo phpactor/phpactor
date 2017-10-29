@@ -5,13 +5,13 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Application\ClassInflect;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\Input\ConfirmInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ClassInflectHandlerTest extends HandlerTestCase
 {
@@ -45,7 +45,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
             'current_path' => self::CURRENT_PATH
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(2, $inputs);
         $firstInput = array_shift($inputs);
@@ -76,7 +76,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
             'variant' => self::VARIANT,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $firstInput = reset($inputs);
 
@@ -93,7 +93,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
             'overwrite' => false,
         ]);
 
-        $this->assertInstanceOf(EchoAction::class, $action);
+        $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
     public function testExceptionOnGlob()
@@ -143,7 +143,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
             'variant' => self::VARIANT,
         ]);
 
-        $this->assertInstanceOf(OpenFileAction::class, $action);
+        $this->assertInstanceOf(OpenFileResponse::class, $action);
         $this->assertEquals(self::NEW_PATH, $action->path());
     }
 }

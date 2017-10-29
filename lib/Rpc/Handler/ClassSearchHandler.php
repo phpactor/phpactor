@@ -5,10 +5,10 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\ReturnAction;
-use Phpactor\Rpc\Editor\ReturnOption;
-use Phpactor\Rpc\Editor\ReturnChoiceAction;
-use Phpactor\Rpc\Editor\EchoAction;
+use Phpactor\Rpc\Response\ReturnResponse;
+use Phpactor\Rpc\Response\ReturnOption;
+use Phpactor\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Rpc\Response\EchoResponse;
 
 class ClassSearchHandler implements Handler
 {
@@ -54,12 +54,12 @@ class ClassSearchHandler implements Handler
         );
 
         if (count($results) === 0) {
-            return EchoAction::fromMessage(sprintf('No classes found with short name "%s"', $arguments[self::SHORT_NAME]));
+            return EchoResponse::fromMessage(sprintf('No classes found with short name "%s"', $arguments[self::SHORT_NAME]));
         }
 
         if (count($results) === 1) {
             $result = reset($results);
-            return ReturnAction::fromValue($result);
+            return ReturnResponse::fromValue($result);
         }
 
         $options = [];
@@ -70,6 +70,6 @@ class ClassSearchHandler implements Handler
             );
         }
 
-        return ReturnChoiceAction::fromOptions($options);
+        return ReturnChoiceResponse::fromOptions($options);
     }
 }

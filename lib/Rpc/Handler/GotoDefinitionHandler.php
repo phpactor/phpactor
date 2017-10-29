@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\OpenFileAction;
+use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Core\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -54,6 +54,6 @@ class GotoDefinitionHandler implements Handler
 
         $result = $this->gotoDefinition->gotoDefinition($result->symbolInformation());
 
-        return OpenFileAction::fromPathAndOffset($result->path(), $result->offset());
+        return OpenFileResponse::fromPathAndOffset($result->path(), $result->offset());
     }
 }

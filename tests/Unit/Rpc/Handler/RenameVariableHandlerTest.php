@@ -5,11 +5,11 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Editor\InputCallbackAction;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 
 class RenameVariableHandlerTest extends HandlerTestCase
 {
@@ -41,7 +41,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
             RenameVariableHandler::PARAM_OFFSET => self::OFFSET,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(2, $inputs);
         $this->assertEquals(RenameVariableHandler::NAME, $action->callbackAction()->name());
@@ -61,7 +61,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
             RenameVariableHandler::PARAM_NAME => self::VARIABLE_NAME,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $firstInput = reset($inputs);
@@ -88,6 +88,6 @@ class RenameVariableHandlerTest extends HandlerTestCase
             RenameVariableHandler::PARAM_SCOPE => RenameVariable::SCOPE_FILE
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceAction::class, $action);
+        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
+use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Response\InformationResponse;
 
-final class InformationAction implements Action
+final class InformationResponse implements Response
 {
     private $information;
 
@@ -13,7 +14,7 @@ final class InformationAction implements Action
         $this->information = $information;
     }
 
-    public static function fromString(string $information): InformationAction
+    public static function fromString(string $information): InformationResponse
     {
         return new self($information);
     }

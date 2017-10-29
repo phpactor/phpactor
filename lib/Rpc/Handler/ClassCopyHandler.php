@@ -3,8 +3,8 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassCopy;
-use Phpactor\Rpc\Editor\OpenFileAction;
-use Phpactor\Rpc\Editor\Input\TextInput;
+use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
 
 class ClassCopyHandler extends AbstractHandler
@@ -51,6 +51,6 @@ class ClassCopyHandler extends AbstractHandler
 
         $this->classCopy->copy(new NullLogger(), $arguments[self::PARAM_SOURCE_PATH], $arguments[self::PARAM_DEST_PATH]);
 
-        return OpenFileAction::fromPath($arguments[self::PARAM_DEST_PATH]);
+        return OpenFileResponse::fromPath($arguments[self::PARAM_DEST_PATH]);
     }
 }

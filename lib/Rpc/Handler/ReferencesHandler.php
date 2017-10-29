@@ -4,9 +4,9 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassReferences;
 use Phpactor\Container\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Editor\EchoAction;
-use Phpactor\Rpc\Editor\FileReferencesAction;
-use Phpactor\Rpc\Editor\StackAction;
+use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\FileReferencesResponse;
+use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class ReferencesHandler extends AbstractHandler
@@ -120,7 +120,7 @@ class ReferencesHandler extends AbstractHandler
         $references = $this->getReferences($symbolInformation, $filesystem);
 
         if (count($references) === 0) {
-            return EchoAction::fromMessage('No references found');
+            return EchoResponse::fromMessage('No references found');
         }
 
         $count = array_reduce($references, function ($count, $result) {
@@ -141,8 +141,8 @@ class ReferencesHandler extends AbstractHandler
             $risky = sprintf(' (%s risky references not listed)', $riskyCount);
         }
 
-        return StackAction::fromActions([
-            EchoAction::fromMessage(sprintf(
+        return CollectionResponse::fromActions([
+            EchoResponse::fromMessage(sprintf(
                 'Found %s literal references to %s "%s" using FS "%s"%s',
                 $count,
                 $symbolInformation->symbol()->symbolType(),
@@ -150,7 +150,7 @@ class ReferencesHandler extends AbstractHandler
                 $filesystem,
                 $risky
             )),
-            FileReferencesAction::fromArray($references),
+            FileReferencesResponse::fromArray($references),
         ]);
     }
 

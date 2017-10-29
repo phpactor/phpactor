@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
-use Phpactor\Rpc\ActionRequest;
-use Phpactor\Rpc\Editor\Input\Input;
+use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Request;
+use Phpactor\Rpc\Response\Input\Input;
 
-class InputCallbackAction implements Action
+class InputCallbackResponse implements Response
 {
     /**
      * @var ActionRequest
@@ -18,7 +18,7 @@ class InputCallbackAction implements Action
      */
     private $inputs;
 
-    private function __construct(ActionRequest $callbackAction, array $inputs)
+    private function __construct(Request $callbackAction, array $inputs)
     {
         $this->callbackAction = $callbackAction;
 
@@ -27,7 +27,7 @@ class InputCallbackAction implements Action
         }
     }
 
-    public static function fromCallbackAndInputs(ActionRequest $callbackAction, array $inputs)
+    public static function fromCallbackAndInputs(Request $callbackAction, array $inputs)
     {
         return new self($callbackAction, $inputs);
     }
@@ -59,7 +59,7 @@ class InputCallbackAction implements Action
         ];
     }
 
-    public function callbackAction(): ActionRequest
+    public function callbackAction(): Request
     {
         return $this->callbackAction;
     }

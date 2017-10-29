@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Editor\Reference;
+namespace Phpactor\Rpc\Response\Reference;
 
 class FileReferences
 {

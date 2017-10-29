@@ -10,7 +10,7 @@ Phpactor can also instruct the editor to do things.
 Requests can be sent via. `stdin` to the Phpactor `rpc` command 
 
 ```bash
-$ echo '{"actions": [ {"action": "echo", "parameters": { "message": "Hello" } }]}' | ./bin/phpactor rpc
+$ echo '{"action": "echo", "parameters": { "message": "Hello" }}' | ./bin/phpactor rpc
 ```
 
 Above we use the somewhat pointless `echo` action, which simply returns a
@@ -18,12 +18,11 @@ response asking the editor to echo a message. The result is sent over
 `stdout`:
 
 ```javascript
-{"actions":[{"action":"echo","parameters":{"message":"Hello"}}]}
+{"action":"echo","parameters":{"message":"Hello"}}
 ```
 
-Responses contain a list of actions which will be executed sequentially in
-the editor. (An exception is the `return` action which will return a value to
-the caller of the RPC command, and prevent any further processing).
+Responses contain an action which will be executed in
+the editor.
 
 Some responses will include callbacks to Phpactor. This allows Phpactor to ask
 for more information as required.
@@ -35,8 +34,6 @@ This Protocol is a work-in-progress.
 
 TODO:
 
-- It is not necessary to return a list of actions, as the `collection` action
-  already fills this role.
 - Parameters should not refer to file paths in class contexts: Although
   classes map 1-1 to files now, this may not always be the case and Phpactor
   can figure out a file-path from a class-name and vice-versa (so `class`

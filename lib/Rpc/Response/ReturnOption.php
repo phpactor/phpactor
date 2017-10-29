@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
 class ReturnOption
 {

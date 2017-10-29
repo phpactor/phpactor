@@ -2,64 +2,62 @@
 
 namespace Phpactor\Rpc;
 
-/**
- * This class represents a request FROM the editor TO phpactor.
- */
 class Request
 {
-    private $actions = [];
+    const KEY_ACTION = 'action';
+    const KEY_PARAMETERS = 'parameters';
 
-    private function __construct(array $actions)
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var array
+     */
+    private $parameters;
+
+    private function __construct(string $name, array $parameters)
     {
-        foreach ($actions as $action) {
-            $this->addAction($action);
-        }
+        $this->name = $name;
+        $this->parameters = $parameters;
     }
 
-    public static function fromActions(array $actions)
+    public static function fromNameAndParameters(string $name, array $parameters)
     {
-        return new self($actions);
+        return new self($name, $parameters);
     }
 
-    public static function fromArray(array $requestConfig)
+    public static function fromArray(array $actionConfig)
     {
-        $validKeys = [ 'actions'];
-        if ($diff = array_diff(array_keys($requestConfig), $validKeys)) {
+        $validKeys = [ self::KEY_ACTION, self::KEY_PARAMETERS ];
+        if ($diff = array_diff(array_keys($actionConfig), $validKeys)) {
             throw new \InvalidArgumentException(sprintf(
-                'Invalid keys "%s", valid keys: "%s"',
+                'Invalid request keys "%s", valid keys: "%s"',
                 implode('", "', $diff),
                 implode('", "', $validKeys)
             ));
         }
 
-        $actions = [];
-        foreach ($requestConfig['actions'] as $action) {
-            $actions[] = ActionRequest::fromArray($action);
-        }
-
-        return new self($actions);
-    }
-
-    /**
-     * @return Action[]
-     */
-    public function actions(): array
-    {
-        return $this->actions;
+        return new self($actionConfig[self::KEY_ACTION], $actionConfig[self::KEY_PARAMETERS]);
     }
 
     public function toArray(): array
     {
-        return array_map(function (ActionRequest $action) {
-            return [
-                'action' => $action->name(),
-                'parameters' => $action->parameters(),
-            ];
-        }, $this->actions);
+        return [
+            self::KEY_ACTION => $this->name,
+            self::KEY_PARAMETERS => $this->parameters,
+        ];
     }
 
-    private function addAction(ActionRequest $action)
+    public function name(): string
     {
-        $this->actions[] = $action;
+        return $this->name;
+    }
+
+    public function parameters(): array
+    {
+        return $this->parameters;
     }
 }

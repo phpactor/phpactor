@@ -3,9 +3,9 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
-use Phpactor\Rpc\Editor\Input\TextInput;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class RenameVariableHandler extends AbstractHandler
@@ -77,7 +77,7 @@ class RenameVariableHandler extends AbstractHandler
             $arguments[self::PARAM_SCOPE]
         );
 
-        return ReplaceFileSourceAction::fromPathAndSource(
+        return ReplaceFileSourceResponse::fromPathAndSource(
             $sourceCode->path(),
             (string) $sourceCode
         );

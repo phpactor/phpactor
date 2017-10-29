@@ -241,24 +241,22 @@ function! phpactor#rpc(action, arguments)
     " Remove any existing output in the message window
     execute ':redraw'
 
-    let request = {"actions": [ { "action": a:action, "parameters": a:arguments } ] }
+    let request = { "action": a:action, "parameters": a:arguments }
 
     let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)
-        let result = json_decode(result)
+        let response = json_decode(result)
 
-        for action in result['actions']
-            let actionName = action['action']
-            let parameters = action['parameters']
+        let actionName = response['action']
+        let parameters = response['parameters']
 
-            let result = phpactor#_rpc_dispatch(actionName, parameters)
+        let response = phpactor#_rpc_dispatch(actionName, parameters)
 
-            if !empty(result)
-                return result
-            endif
-        endfor
+        if !empty(response)
+            return response
+        endif
     else
         echo "Phpactor returned an error: " . result
         return

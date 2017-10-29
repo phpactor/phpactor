@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Rpc\Editor;
+namespace Phpactor\Rpc\Response;
 
-use Phpactor\Rpc\Action;
-use Phpactor\Rpc\Editor\Reference\FileReferences;
-use Phpactor\Rpc\Editor\Reference\Reference;
+use Phpactor\Rpc\Response;
+use Phpactor\Rpc\Response\Reference\FileReferences;
+use Phpactor\Rpc\Response\Reference\Reference;
 
-class FileReferencesAction implements Action
+class FileReferencesResponse implements Response
 {
     /**
      * @var array

@@ -4,13 +4,13 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Transformer;
-use Phpactor\Rpc\Editor\Input\ChoiceInput;
-use Phpactor\Rpc\Editor\InputCallbackAction;
+use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Rpc\Handler\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Editor\ReplaceFileSourceAction;
+use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 
 class TransformHandlerTest extends HandlerTestCase
 {
@@ -47,7 +47,7 @@ class TransformHandlerTest extends HandlerTestCase
             'path' => self::PATH,
         ]);
 
-        $this->assertInstanceOf(InputCallbackAction::class, $action);
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $firstInput = reset($inputs);
@@ -75,7 +75,7 @@ class TransformHandlerTest extends HandlerTestCase
             'path' => self::PATH,
         ]);
 
-        $this->assertInstanceOf(ReplaceFileSourceAction::class, $action);
+        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $action);
         $this->assertEquals(self::TRANSFORMED_SOURCE, $action->replacementSource());
         $this->assertEquals(self::PATH, $action->path());
     }
