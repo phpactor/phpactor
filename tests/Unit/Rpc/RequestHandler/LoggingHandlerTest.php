@@ -11,6 +11,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Editor\ErrorAction;
 use Psr\Log\LoggerInterface;
 use Phpactor\Rpc\RequestHandler\LoggingHandler;
+use Psr\Log\LogLevel;
 
 class LoggingHandlerTest extends TestCase
 {
@@ -52,11 +53,12 @@ class LoggingHandlerTest extends TestCase
 
     public function testLogging()
     {
-        $request = [ 'one' => 'two' ];
-        $response = [ 'three' => 'four' ];
+        $requestData = [ 'one' => 'two' ];
+        $responseData = [ 'three' => 'four' ];
 
-        $this->request->toArray()->willReturn($request);
-        $this->response->toArray()->willReturn($response);
+        $this->request->toArray()->willReturn($requestData);
+        $this->response->toArray()->willReturn($responseData);
+        $this->response->actions()->willReturn([]);
 
         $this->innerHandler->handle($this->request->reveal())->willReturn($this->response->reveal());
 
@@ -67,7 +69,23 @@ class LoggingHandlerTest extends TestCase
             $response
         );
 
-        $this->logger->debug('REQ: {"one":"two"}')->shouldHaveBeenCalled();
-        $this->logger->debug('RES: {"three":"four"}')->shouldHaveBeenCalled();
+        $this->logger->debug('REQUEST', $requestData)->shouldHaveBeenCalled();
+        $this->logger->log(LogLevel::DEBUG, 'RESPONSE', $responseData)->shouldHaveBeenCalled();
+    }
+
+    public function testLoggingWithError()
+    {
+        $requestData = [ 'one' => 'two' ];
+        $responseData = [ 'three' => 'four' ];
+
+        $this->request->toArray()->willReturn($requestData);
+        $this->response->toArray()->willReturn($responseData);
+        $this->response->actions()->willReturn([
+            ErrorAction::fromMessageAndDetails('foobar', 'barfoo')
+        ]);
+        $this->innerHandler->handle($this->request->reveal())->willReturn($this->response->reveal());
+
+        $response = $this->loggingHandler->handle($this->request->reveal());
+        $this->logger->log(LogLevel::ERROR, 'RESPONSE', $responseData)->shouldHaveBeenCalled();
     }
 }

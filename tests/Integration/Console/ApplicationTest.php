@@ -5,9 +5,9 @@ namespace Phpactor\Tests\Integration\Console;
 use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Phpactor\Tests\Integration\SystemTestCase;
+use Phpactor\Tests\IntegrationTestCase;
 
-class ApplicationTest extends SystemTestCase
+class ApplicationTest extends IntegrationTestCase
 {
     public function setUp()
     {
