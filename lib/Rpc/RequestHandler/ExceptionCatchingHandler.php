@@ -23,8 +23,8 @@ class ExceptionCatchingHandler implements RequestHandler
     {
         try {
             return $this->innerHandler->handle($request);
-        } catch (\Exception $e) {
-            return ErrorResponse::fromMessageAndDetails($e->getMessage(), $e->getTraceAsString());
+        } catch (\Exception $exception) {
+            return ErrorResponse::fromException($exception);
         }
     }
 }
