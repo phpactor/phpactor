@@ -43,6 +43,7 @@ use Phpactor\Application\ClassMemberReferences;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FingersCrossedHandler;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -55,6 +56,7 @@ class CoreExtension implements ExtensionInterface
     const DUMPER = 'console_dumper_default';
     const CACHE_DIR = 'cache_dir';
     const LOGGING_ENABLED = 'logging.enabled';
+    const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
 
     public static $autoloader;
 
@@ -66,7 +68,8 @@ class CoreExtension implements ExtensionInterface
             self::DUMPER => 'indented',
             self::CACHE_DIR => __DIR__ . '/../../cache',
             self::LOGGING_ENABLED => false,
-            self::LOGGING_PATH => null,
+            self::LOGGING_FINGERS_CROSSED => true,
+            self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::DEBUG,
         ];
     }
@@ -94,6 +97,10 @@ class CoreExtension implements ExtensionInterface
                 $container->getParameter(self::LOGGING_PATH),
                 $container->getParameter(self::LOGGING_LEVEL)
             );
+
+            if ($container->getParameter(self::LOGGING_FINGERS_CROSSED)) {
+                $handler = new FingersCrossedHandler($handler);
+            }
 
             $logger->pushHandler($handler);
 
