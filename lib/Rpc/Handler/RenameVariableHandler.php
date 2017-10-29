@@ -58,8 +58,8 @@ class RenameVariableHandler extends AbstractHandler
             self::PARAM_SCOPE,
             'Scope: ',
             [
-                RenameVariable::SCOPE_FILE => 'Current file',
-                RenameVariable::SCOPE_LOCAL => 'Local (e.g. method)',
+                RenameVariable::SCOPE_FILE => RenameVariable::SCOPE_FILE,
+                RenameVariable::SCOPE_LOCAL => RenameVariable::SCOPE_LOCAL,
             ]
         ));
 
