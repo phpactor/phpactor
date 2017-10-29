@@ -54,6 +54,7 @@ class CoreExtension implements ExtensionInterface
     const WORKING_DIRECTORY = 'cwd';
     const DUMPER = 'console_dumper_default';
     const CACHE_DIR = 'cache_dir';
+    const LOGGING_ENABLED = 'logging.enabled';
 
     public static $autoloader;
 
@@ -64,6 +65,7 @@ class CoreExtension implements ExtensionInterface
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => __DIR__ . '/../../cache',
+            self::LOGGING_ENABLED => false,
             self::LOGGING_PATH => null,
             self::LOGGING_LEVEL => LogLevel::DEBUG,
         ];
@@ -83,14 +85,17 @@ class CoreExtension implements ExtensionInterface
     {
         $container->register('monolog.logger', function (Container $container) {
             $logger = new Logger('phpactor');
-            $logPath = $container->getParameter(self::LOGGING_PATH);
 
-            if (null !== $logPath) {
-                $logger->pushHandler(new StreamHandler(
-                    $logPath,
-                    $container->getParameter(self::LOGGING_LEVEL)
-                ));
+            if (false === $container->getParameter(self::LOGGING_ENABLED)) {
+                return $logger;
             }
+
+            $handler = new StreamHandler(
+                $container->getParameter(self::LOGGING_PATH),
+                $container->getParameter(self::LOGGING_LEVEL)
+            );
+
+            $logger->pushHandler($handler);
 
             return $logger;
         });
