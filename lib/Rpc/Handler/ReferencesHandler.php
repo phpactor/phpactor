@@ -107,7 +107,7 @@ class ReferencesHandler extends AbstractHandler
             $this->requireArgument(self::PARAMETER_REPLACEMENT, TextInput::fromNameLabelAndDefault(
                 self::PARAMETER_REPLACEMENT,
                 'Replacement:',
-                (string) $symbolInformation->type()->className()
+                (string) $symbolInformation->symbol()->name()
             ));
         }
 
@@ -117,9 +117,9 @@ class ReferencesHandler extends AbstractHandler
 
         switch ($arguments[self::PARAMETER_MODE]) {
             case self::MODE_FIND:
-                return $this->findOrReplaceReferences($symbolInformation, $arguments['filesystem']);
+                return $this->findReferences($symbolInformation, $arguments['filesystem']);
             case self::MODE_REPLACE:
-                return $this->findOrReplaceReferences($symbolInformation, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
+                return $this->replaceReferences($symbolInformation, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
         }
 
         throw new \InvalidArgumentException(sprintf(
@@ -128,42 +128,22 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function findOrReplaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
+    private function findReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
+    {
+        $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem);
+
+        return CollectionResponse::fromActions([
+            $this->echoMesssage('Found', $symbolInformation, $filesystem, $references),
+            FileReferencesResponse::fromArray($references),
+        ]);
+    }
+
+    private function replaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement)
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem, $replacement);
 
-        if (count($references) === 0) {
-            return EchoResponse::fromMessage('No references found');
-        }
-
-        $count = array_reduce($references, function ($count, $result) {
-            $count += count($result['references']);
-            return $count;
-        }, 0);
-
-        $riskyCount = array_reduce($references, function ($count, $result) {
-            if (!isset($result['risky_references'])) {
-                return $count;
-            }
-            $count += count($result['risky_references']);
-            return $count;
-        }, 0);
-
-        $risky = '';
-        if ($riskyCount > 0) {
-            $risky = sprintf(' (%s risky references not listed)', $riskyCount);
-        }
-
         return CollectionResponse::fromActions([
-            EchoResponse::fromMessage(sprintf(
-                'Found %s literal references to %s "%s" using FS "%s"%s',
-                $count,
-                $symbolInformation->symbol()->symbolType(),
-                $symbolInformation->symbol()->name(),
-                $filesystem,
-                $risky
-            )),
-            FileReferencesResponse::fromArray($references),
+            $this->echoMessage('Replaced', $symbolInformation, $filesystem, $references),
         ]);
     }
 
@@ -206,6 +186,41 @@ class ReferencesHandler extends AbstractHandler
         throw new \RuntimeException(sprintf(
             'Cannot find references for symbol type "%s"',
             $symbolInformation->symbol()->symbolType()
+        ));
+    }
+
+    private function echoMessage(string $action, SymbolInformation $symbolInformation, string $filesystem, array $references): EchoResponse
+    {
+        if (count($references) === 0) {
+            return EchoResponse::fromMessage('No references found');
+        }
+
+        $count = array_reduce($references, function ($count, $result) {
+            $count += count($result['references']);
+            return $count;
+        }, 0);
+
+        $riskyCount = array_reduce($references, function ($count, $result) {
+            if (!isset($result['risky_references'])) {
+                return $count;
+            }
+            $count += count($result['risky_references']);
+            return $count;
+        }, 0);
+
+        $risky = '';
+        if ($riskyCount > 0) {
+            $risky = sprintf(' (%s risky references not listed)', $riskyCount);
+        }
+
+        return EchoResponse::fromMessage(sprintf(
+            '%s %s literal references to %s "%s" using FS "%s"%s',
+            $action,
+            $count,
+            $symbolInformation->symbol()->symbolType(),
+            $symbolInformation->symbol()->name(),
+            $filesystem,
+            $risky
         ));
     }
 }
