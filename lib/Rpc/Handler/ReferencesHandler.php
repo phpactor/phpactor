@@ -17,6 +17,7 @@ use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ReferencesHandler extends AbstractHandler
 {
@@ -26,10 +27,12 @@ class ReferencesHandler extends AbstractHandler
     const PARAMETER_SOURCE = 'source';
     const PARAMETER_MODE = 'mode';
     const PARAMETER_FILESYSTEM = 'filesystem';
+    const PARAMETER_CONFIRM = 'confirm';
 
     const MODE_FIND = 'find';
     const MODE_REPLACE = 'replace';
     const PARAMETER_REPLACEMENT = 'replacement';
+    const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
     /**
      * @var ClassReferences
@@ -83,6 +86,7 @@ class ReferencesHandler extends AbstractHandler
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => null,
             self::PARAMETER_REPLACEMENT => null,
+            self::PARAMETER_CONFIRM => null,
         ];
     }
 
@@ -106,10 +110,17 @@ class ReferencesHandler extends AbstractHandler
         if ($arguments[self::PARAMETER_MODE] === self::MODE_REPLACE) {
             $this->requireArgument(self::PARAMETER_REPLACEMENT, TextInput::fromNameLabelAndDefault(
                 self::PARAMETER_REPLACEMENT,
-                'Replacement:',
+                'Replacement: ',
                 (string) $symbolInformation->symbol()->name()
             ));
+
+            $this->requireArgument(self::PARAMETER_CONFIRM, ConfirmInput::fromNameAndLabel(
+                self::PARAMETER_CONFIRM,
+                'WARNING: This will replace all non-risky references on the given filesystem and ' . PHP_EOL .
+                '         you will need to reload you files afterwards. COMMIT YOUR WOKK FIRST!' . PHP_EOL
+            ));
         }
+
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
@@ -132,8 +143,12 @@ class ReferencesHandler extends AbstractHandler
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem);
 
+        if (count($references) === 0) {
+            return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
+        }
+
         return CollectionResponse::fromActions([
-            $this->echoMesssage('Found', $symbolInformation, $filesystem, $references),
+            $this->echoMessage('Found', $symbolInformation, $filesystem, $references),
             FileReferencesResponse::fromArray($references),
         ]);
     }
@@ -142,8 +157,13 @@ class ReferencesHandler extends AbstractHandler
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem, $replacement);
 
+        if (count($references) === 0) {
+            return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
+        }
+
         return CollectionResponse::fromActions([
             $this->echoMessage('Replaced', $symbolInformation, $filesystem, $references),
+            FileReferencesResponse::fromArray($references),
         ]);
     }
 
@@ -173,14 +193,14 @@ class ReferencesHandler extends AbstractHandler
     private function performFindOrReplaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
     {
         switch ($symbolInformation->symbol()->symbolType()) {
-        case Symbol::CLASS_:
-            return $this->classReferences($filesystem, $symbolInformation, $replacement);
-        case Symbol::METHOD:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD, $replacement);
-        case Symbol::PROPERTY:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY, $replacement);
-        case Symbol::CONSTANT:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT, $replacement);
+            case Symbol::CLASS_:
+                return $this->classReferences($filesystem, $symbolInformation, $replacement);
+            case Symbol::METHOD:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD, $replacement);
+            case Symbol::PROPERTY:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY, $replacement);
+            case Symbol::CONSTANT:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT, $replacement);
         }
 
         throw new \RuntimeException(sprintf(
@@ -191,10 +211,6 @@ class ReferencesHandler extends AbstractHandler
 
     private function echoMessage(string $action, SymbolInformation $symbolInformation, string $filesystem, array $references): EchoResponse
     {
-        if (count($references) === 0) {
-            return EchoResponse::fromMessage('No references found');
-        }
-
         $count = array_reduce($references, function ($count, $result) {
             $count += count($result['references']);
             return $count;

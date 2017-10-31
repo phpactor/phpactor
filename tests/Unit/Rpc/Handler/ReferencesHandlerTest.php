@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Rpc\Response\Input\TextInput;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
@@ -91,27 +92,6 @@ class ReferencesHandlerTest extends HandlerTestCase
         ]);
     }
 
-    public function testReplaceMember()
-    {
-        $replacement = 'foobar';
-
-        $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
-            __CLASS__,
-            'testMemberReferences',
-            ClassMemberQuery::TYPE_METHOD,
-            $replacement
-        )->willReturn($this->exampleMemberResponse());
-
-        $action = $this->handle('references', [
-            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
-            'offset' => 86,
-            'filesystem' => 'git',
-            'mode' => ReferencesHandler::MODE_REPLACE,
-            'replacement' => $replacement,
-        ]);
-    }
-
     public function testClassReturnNoneFound()
     {
         $this->classReferences->findOrReplaceReferences(
@@ -136,21 +116,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass'
-        )->willReturn([
-            'references' => [
-                [
-                    'file' => 'barfoo',
-                    'references' => [
-                        [
-                            'start' => 10,
-                            'line_no' => 10,
-                            'end' => 20,
-                            'col_no' => 12,
-                        ],
-                    ],
-                ]
-            ],
-        ]);
+        )->willReturn($this->exampleClassResponse());
 
         $action = $this->handle('references', [
             'source' => '<?php new \stdClass();',
@@ -181,6 +147,24 @@ class ReferencesHandlerTest extends HandlerTestCase
                 ]
             ],
         ], $second->parameters());
+    }
+
+    public function testReplaceClassReferences()
+    {
+        $this->classReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            'stdClass',
+            'newClass'
+        )->willReturn($this->exampleClassResponse());
+
+        $action = $this->handle('references', [
+            'source' => '<?php new \stdClass();',
+            'offset' => 15,
+            'filesystem' => 'git',
+            'mode' => ReferencesHandler::MODE_REPLACE,
+            'confirm' => true,
+            'replacement' => 'newClass',
+        ]);
     }
 
     public function testMemberReturnNoneFound()
@@ -259,6 +243,53 @@ class ReferencesHandlerTest extends HandlerTestCase
         ], $second->parameters());
     }
 
+    public function testReplaceMemberDemandReplacement()
+    {
+        $replacement = 'foobar';
+
+        $this->classMemberReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            $replacement
+        )->willReturn($this->exampleMemberRiskyResponse());
+
+        $action = $this->handle('references', [
+            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'offset' => 86,
+            'filesystem' => 'git',
+            'mode' => ReferencesHandler::MODE_REPLACE,
+            'confirm' => true,
+        ]);
+
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        $textInput = $action->inputs()[0];
+        $this->assertInstanceOf(TextInput::class, $textInput);
+        $this->assertEquals('testMemberReferences', $textInput->default());
+    }
+
+    public function testReplaceMember()
+    {
+        $replacement = 'foobar';
+
+        $this->classMemberReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            $replacement
+        )->willReturn($this->exampleMemberRiskyResponse());
+
+        $action = $this->handle('references', [
+            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'offset' => 86,
+            'filesystem' => 'git',
+            'mode' => ReferencesHandler::MODE_REPLACE,
+            'replacement' => $replacement,
+        ]);
+    }
+
     public function testMemberReferencesWithRisky()
     {
         $this->classMemberReferences->findOrReplaceReferences(
@@ -267,7 +298,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'testMemberReferences',
             ClassMemberQuery::TYPE_METHOD,
             null
-        )->willReturn($this->exampleMemberResponse());
+        )->willReturn($this->exampleMemberRiskyResponse());
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
@@ -284,7 +315,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertContains('risky', $first->message());
     }
 
-    private function exampleMemberResponse()
+    private function exampleMemberRiskyResponse()
     {
         return [
             'references' => [
@@ -299,6 +330,25 @@ class ReferencesHandlerTest extends HandlerTestCase
                         ],
                     ],
                     'risky_references' => [
+                        [
+                            'start' => 10,
+                            'line_no' => 10,
+                            'end' => 20,
+                            'col_no' => 12,
+                        ],
+                    ],
+                ]
+            ],
+        ];
+    }
+
+    private function exampleClassResponse()
+    {
+        return [
+            'references' => [
+                [
+                    'file' => 'barfoo',
+                    'references' => [
                         [
                             'start' => 10,
                             'line_no' => 10,
