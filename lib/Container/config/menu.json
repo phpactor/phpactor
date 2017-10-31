@@ -37,6 +37,14 @@
                 "source": "%source%"
             }
         },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "mode": "replace"
+            }
+        },
         "goto_definition": {
             "action": "goto_definition",
             "parameters": {
@@ -93,6 +101,14 @@
         }
     },
     "property": {
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "mode": "replace"
+            }
+        },
         "find_references": {
             "action": "references",
             "parameters": {
@@ -122,6 +138,14 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "mode": "replace"
             }
         },
         "generate_method": {

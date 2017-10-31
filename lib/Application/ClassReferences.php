@@ -50,15 +50,15 @@ class ClassReferences
 
     public function replaceReferences(string $filesystemName, string $class, string $replace, bool $dryRun)
     {
-        return $this->findReplaceReferences($filesystemName, $class, $replace, $dryRun);
+        return $this->findOrReplaceReferences($filesystemName, $class, $replace, $dryRun);
     }
 
     public function findReferences(string $filesystemName, string $class)
     {
-        return $this->findReplaceReferences($filesystemName, $class);
+        return $this->findOrReplaceReferences($filesystemName, $class);
     }
 
-    private function findReplaceReferences(string $filesystemName, string $class, string $replace = null, bool $dryRun = false)
+    public function findOrReplaceReferences(string $filesystemName, string $class, string $replace = null, bool $dryRun = false)
     {
         $classPath = $this->classFileNormalizer->normalizeToFile($class);
         $classPath = Phpactor::normalizePath($classPath);

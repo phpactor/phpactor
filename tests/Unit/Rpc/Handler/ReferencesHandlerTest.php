@@ -30,9 +30,9 @@ class ReferencesHandlerTest extends HandlerTestCase
     private $reflector;
 
     /**
-     * @var ClassMethodReferences
+     * @var ClassMemberReferences
      */
-    private $classMethodReferences;
+    private $classMemberReferences;
 
     private $logger;
 
@@ -44,7 +44,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function setUp()
     {
         $this->classReferences = $this->prophesize(ClassReferences::class);
-        $this->classMethodReferences = $this->prophesize(ClassMemberReferences::class);
+        $this->classMemberReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
         $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)), $this->logger);
         $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
@@ -55,7 +55,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         return new ReferencesHandler(
             $this->reflector,
             $this->classReferences->reveal(),
-            $this->classMethodReferences->reveal(),
+            $this->classMemberReferences->reveal(),
             $this->filesystemRegistry->reveal()
         );
     }
@@ -91,9 +91,30 @@ class ReferencesHandlerTest extends HandlerTestCase
         ]);
     }
 
+    public function testReplaceMember()
+    {
+        $replacement = 'foobar';
+
+        $this->classMemberReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            $replacement
+        )->willReturn($this->exampleMemberResponse());
+
+        $action = $this->handle('references', [
+            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'offset' => 86,
+            'filesystem' => 'git',
+            'mode' => ReferencesHandler::MODE_REPLACE,
+            'replacement' => $replacement,
+        ]);
+    }
+
     public function testClassReturnNoneFound()
     {
-        $this->classReferences->findReferences(
+        $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass'
         )->willReturn([
@@ -112,7 +133,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
     public function testClassReferences()
     {
-        $this->classReferences->findReferences(
+        $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass'
         )->willReturn([
@@ -162,19 +183,20 @@ class ReferencesHandlerTest extends HandlerTestCase
         ], $second->parameters());
     }
 
-    public function testMethodReturnNoneFound()
+    public function testMemberReturnNoneFound()
     {
-        $this->classMethodReferences->findOrReplaceReferences(
+        $this->classMemberReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
-            'testMethodReturnNoneFound',
-            ClassMemberQuery::TYPE_METHOD
+            'testMemberReturnNoneFound',
+            ClassMemberQuery::TYPE_METHOD,
+            null
         )->willReturn([
             'references' => [],
         ]);
 
         $action = $this->handle('references', [
-            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReturnNoneFound();',
+            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReturnNoneFound();',
             'offset' => 86,
             'filesystem' => 'git',
         ]);
@@ -182,13 +204,14 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
-    public function testMethodReferences()
+    public function testMemberReferences()
     {
-        $this->classMethodReferences->findOrReplaceReferences(
+        $this->classMemberReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
-            'testMethodReferences',
-            ClassMemberQuery::TYPE_METHOD
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            null
         )->willReturn([
             'references' => [
                 [
@@ -206,7 +229,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         ]);
 
         $action = $this->handle('references', [
-            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReferences();',
+            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
             'offset' => 86,
             'filesystem' => 'git',
         ]);
@@ -236,14 +259,34 @@ class ReferencesHandlerTest extends HandlerTestCase
         ], $second->parameters());
     }
 
-    public function testMethodReferencesWithRisky()
+    public function testMemberReferencesWithRisky()
     {
-        $this->classMethodReferences->findOrReplaceReferences(
+        $this->classMemberReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
-            'testMethodReferences',
-            ClassMemberQuery::TYPE_METHOD
-        )->willReturn([
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            null
+        )->willReturn($this->exampleMemberResponse());
+
+        $action = $this->handle('references', [
+            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'offset' => 86,
+            'filesystem' => 'git',
+        ]);
+
+        $this->assertInstanceOf(CollectionResponse::class, $action);
+
+        $actions = $action->actions();
+
+        $first = array_shift($actions);
+        $this->assertInstanceOf(EchoResponse::class, $first);
+        $this->assertContains('risky', $first->message());
+    }
+
+    private function exampleMemberResponse()
+    {
+        return [
             'references' => [
                 [
                     'file' => 'barfoo',
@@ -265,20 +308,6 @@ class ReferencesHandlerTest extends HandlerTestCase
                     ],
                 ]
             ],
-        ]);
-
-        $action = $this->handle('references', [
-            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMethodReferences();',
-            'offset' => 86,
-            'filesystem' => 'git',
-        ]);
-
-        $this->assertInstanceOf(CollectionResponse::class, $action);
-
-        $actions = $action->actions();
-
-        $first = array_shift($actions);
-        $this->assertInstanceOf(EchoResponse::class, $first);
-        $this->assertContains('risky', $first->message());
+        ];
     }
 }
