@@ -16,6 +16,8 @@ use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Response\Input\ConfirmInput;
 
 class ReferencesHandler extends AbstractHandler
 {
@@ -28,6 +30,8 @@ class ReferencesHandler extends AbstractHandler
 
     const MODE_FIND = 'find';
     const MODE_REPLACE = 'replace';
+    const PARAMETER_REPLACEMENT = 'replacement';
+    const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
     /**
      * @var ClassReferences
@@ -40,7 +44,7 @@ class ReferencesHandler extends AbstractHandler
     private $defaultFilesystem;
 
     /**
-     * @var ClassMethodReferences
+     * @var ClassMemberReferences
      */
     private $classMemberReferences;
 
@@ -80,6 +84,7 @@ class ReferencesHandler extends AbstractHandler
             self::PARAMETER_SOURCE => null,
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => null,
+            self::PARAMETER_REPLACEMENT => null,
         ];
     }
 
@@ -100,13 +105,23 @@ class ReferencesHandler extends AbstractHandler
             ));
         }
 
+        if ($arguments[self::PARAMETER_MODE] === self::MODE_REPLACE) {
+            $this->requireArgument(self::PARAMETER_REPLACEMENT, TextInput::fromNameLabelAndDefault(
+                self::PARAMETER_REPLACEMENT,
+                'Replacement: ',
+                $this->defaultReplacement($symbolInformation)
+            ));
+        }
+
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
         }
 
-        switch ($arguments['mode']) {
+        switch ($arguments[self::PARAMETER_MODE]) {
             case self::MODE_FIND:
                 return $this->findReferences($symbolInformation, $arguments['filesystem']);
+            case self::MODE_REPLACE:
+                return $this->replaceReferences1($symbolInformation, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
         }
 
         throw new \InvalidArgumentException(sprintf(
@@ -115,14 +130,79 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function findReferences(SymbolInformation $symbolInformation, string $filesystem)
+    private function findReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
     {
-        $references = $this->getReferences($symbolInformation, $filesystem);
+        $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem);
 
         if (count($references) === 0) {
-            return EchoResponse::fromMessage('No references found');
+            return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
         }
 
+        return CollectionResponse::fromActions([
+            $this->echoMessage('Found', $symbolInformation, $filesystem, $references),
+            FileReferencesResponse::fromArray($references),
+        ]);
+    }
+
+    private function replaceReferences1(SymbolInformation $symbolInformation, string $filesystem, string $replacement)
+    {
+        $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem, $replacement);
+
+        if (count($references) === 0) {
+            return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
+        }
+
+        return CollectionResponse::fromActions([
+            $this->echoMessage('Replaced', $symbolInformation, $filesystem, $references),
+            EchoResponse::fromMessage('You will need to refresh any open files (:e<CR>)'),
+            FileReferencesResponse::fromArray($references),
+        ]);
+    }
+
+    private function classReferences(string $filesystem, SymbolInformation $symbolInformation, string $replacement = null)
+    {
+        $classType = (string) $symbolInformation->type();
+        $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
+
+        return $references['references'];
+    }
+
+    private function memberReferences(string $filesystem, SymbolInformation $symbolInformation, string $memberType, string $replacement = null)
+    {
+        $classType = (string) $symbolInformation->containerType();
+
+        $references = $this->classMemberReferences->findOrReplaceReferences(
+            $filesystem,
+            $classType,
+            $symbolInformation->symbol()->name(),
+            $memberType,
+            $replacement
+        );
+
+        return $references['references'];
+    }
+
+    private function performFindOrReplaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
+    {
+        switch ($symbolInformation->symbol()->symbolType()) {
+            case Symbol::CLASS_:
+                return $this->classReferences($filesystem, $symbolInformation, $replacement);
+            case Symbol::METHOD:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD, $replacement);
+            case Symbol::PROPERTY:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY, $replacement);
+            case Symbol::CONSTANT:
+                return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT, $replacement);
+        }
+
+        throw new \RuntimeException(sprintf(
+            'Cannot find references for symbol type "%s"',
+            $symbolInformation->symbol()->symbolType()
+        ));
+    }
+
+    private function echoMessage(string $action, SymbolInformation $symbolInformation, string $filesystem, array $references): EchoResponse
+    {
         $count = array_reduce($references, function ($count, $result) {
             $count += count($result['references']);
             return $count;
@@ -141,57 +221,23 @@ class ReferencesHandler extends AbstractHandler
             $risky = sprintf(' (%s risky references not listed)', $riskyCount);
         }
 
-        return CollectionResponse::fromActions([
-            EchoResponse::fromMessage(sprintf(
-                'Found %s literal references to %s "%s" using FS "%s"%s',
-                $count,
-                $symbolInformation->symbol()->symbolType(),
-                $symbolInformation->symbol()->name(),
-                $filesystem,
-                $risky
-            )),
-            FileReferencesResponse::fromArray($references),
-        ]);
-    }
-
-    private function classReferences(string $filesystem, SymbolInformation $symbolInformation)
-    {
-        $classType = (string) $symbolInformation->type();
-        $references = $this->classReferences->findReferences($filesystem, $classType);
-
-        return $references['references'];
-    }
-
-    private function memberReferences(string $filesystem, SymbolInformation $symbolInformation, string $memberType)
-    {
-        $classType = (string) $symbolInformation->containerType();
-
-        $references = $this->classMemberReferences->findOrReplaceReferences(
-            $filesystem,
-            $classType,
+        return EchoResponse::fromMessage(sprintf(
+            '%s %s literal references to %s "%s" using FS "%s"%s',
+            $action,
+            $count,
+            $symbolInformation->symbol()->symbolType(),
             $symbolInformation->symbol()->name(),
-            $memberType
-        );
-
-        return $references['references'];
+            $filesystem,
+            $risky
+        ));
     }
 
-    private function getReferences(SymbolInformation $symbolInformation, string $filesystem)
+    private function defaultReplacement(SymbolInformation $symbolInformation)
     {
-        switch ($symbolInformation->symbol()->symbolType()) {
-        case Symbol::CLASS_:
-            return $this->classReferences($filesystem, $symbolInformation);
-        case Symbol::METHOD:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_METHOD);
-        case Symbol::PROPERTY:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_PROPERTY);
-        case Symbol::CONSTANT:
-            return $this->memberReferences($filesystem, $symbolInformation, ClassMemberQuery::TYPE_CONSTANT);
+        if ($symbolInformation->symbol()->symbolType() === Symbol::CLASS_) {
+            return (string) $symbolInformation->type()->className();
         }
 
-        throw new \RuntimeException(sprintf(
-            'Cannot find references for symbol type "%s"',
-            $symbolInformation->symbol()->symbolType()
-        ));
+        return $symbolInformation->symbol()->name();
     }
 }

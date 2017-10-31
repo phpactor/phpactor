@@ -234,7 +234,7 @@ class ClassMemberReferences
             ));
         }
 
-        if ($memberType == ClassMemberQuery::TYPE_PROPERTY && false === $class->methods()->has($memberName)) {
+        if ($memberType == ClassMemberQuery::TYPE_PROPERTY && false === $class->properties()->has($memberName)) {
             throw new \InvalidArgumentException(sprintf(
                 'Properties not known "%s", known properties: "%s"',
                 $memberName,
@@ -242,7 +242,7 @@ class ClassMemberReferences
             ));
         }
 
-        if ($memberType == ClassMemberQuery::TYPE_CONSTANT && false === $class->methods()->has($memberName)) {
+        if ($memberType == ClassMemberQuery::TYPE_CONSTANT && false === $class->constants()->has($memberName)) {
             throw new \InvalidArgumentException(sprintf(
                 'Constants not known "%s", known constants: "%s"',
                 $memberName,
