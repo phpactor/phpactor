@@ -27,7 +27,6 @@ class ReferencesHandler extends AbstractHandler
     const PARAMETER_SOURCE = 'source';
     const PARAMETER_MODE = 'mode';
     const PARAMETER_FILESYSTEM = 'filesystem';
-    const PARAMETER_CONFIRM = 'confirm';
 
     const MODE_FIND = 'find';
     const MODE_REPLACE = 'replace';
@@ -86,7 +85,6 @@ class ReferencesHandler extends AbstractHandler
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => null,
             self::PARAMETER_REPLACEMENT => null,
-            self::PARAMETER_CONFIRM => null,
         ];
     }
 
@@ -113,12 +111,6 @@ class ReferencesHandler extends AbstractHandler
                 'Replacement: ',
                 $this->defaultReplacement($symbolInformation)
             ));
-
-            $this->requireArgument(self::PARAMETER_CONFIRM, ConfirmInput::fromNameAndLabel(
-                self::PARAMETER_CONFIRM,
-                'WARNING: This will replace all non-risky references on the given filesystem and ' . PHP_EOL .
-                '         you will need to reload you files afterwards. COMMIT YOUR WOKK FIRST!' . PHP_EOL
-            ));
         }
 
         if ($this->hasMissingArguments($arguments)) {
@@ -129,7 +121,7 @@ class ReferencesHandler extends AbstractHandler
             case self::MODE_FIND:
                 return $this->findReferences($symbolInformation, $arguments['filesystem']);
             case self::MODE_REPLACE:
-                return $this->replaceReferences($symbolInformation, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
+                return $this->replaceReferences1($symbolInformation, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
         }
 
         throw new \InvalidArgumentException(sprintf(
@@ -152,7 +144,7 @@ class ReferencesHandler extends AbstractHandler
         ]);
     }
 
-    private function replaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement)
+    private function replaceReferences1(SymbolInformation $symbolInformation, string $filesystem, string $replacement)
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem, $replacement);
 
@@ -162,6 +154,7 @@ class ReferencesHandler extends AbstractHandler
 
         return CollectionResponse::fromActions([
             $this->echoMessage('Replaced', $symbolInformation, $filesystem, $references),
+            EchoResponse::fromMessage('You will need to refresh any open files (:e<CR>)'),
             FileReferencesResponse::fromArray($references),
         ]);
     }
