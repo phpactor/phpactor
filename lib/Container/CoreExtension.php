@@ -351,7 +351,8 @@ class CoreExtension implements ExtensionInterface
         $container->register('application.class_search', function (Container $container) {
             return new ClassSearch(
                 $container->get('source_code_filesystem.registry'),
-                $container->get('class_to_file.converter')
+                $container->get('class_to_file.converter'),
+                $container->get('reflection.reflector')
             );
         });
 

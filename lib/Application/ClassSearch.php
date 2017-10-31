@@ -5,6 +5,8 @@ namespace Phpactor\Application;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class ClassSearch
 {
@@ -18,10 +20,16 @@ class ClassSearch
      */
     private $filesystemRegistry;
 
-    public function __construct(FilesystemRegistry $filesystemRegistry, FileToClass $fileToClass)
+    /**
+     * @var Reflector
+     */
+    private $reflector;
+
+    public function __construct(FilesystemRegistry $filesystemRegistry, FileToClass $fileToClass, Reflector $reflector)
     {
         $this->filesystemRegistry = $filesystemRegistry;
         $this->fileToClass = $fileToClass;
+        $this->reflector = $reflector;
     }
 
     public function classSearch(string $filesystemName, string $name)
@@ -31,6 +39,11 @@ class ClassSearch
         $files = $filesystem->fileList('{' . $name . '}')->named($name . '.php');
 
         $results = [];
+
+        if ($reflectionResult = $this->tryAndReflect($name)) {
+            $results[] = $reflectionResult;
+        }
+
         foreach ($files as $file) {
             if (isset($results[(string) $file->path()])) {
                 continue;
@@ -55,5 +68,21 @@ class ClassSearch
         }
 
         return array_values($results);
+    }
+
+    private function tryAndReflect(string $name)
+    {
+        try {
+            $reflectionClass = $this->reflector->reflectClassLike($name);
+        } catch (NotFound $exception) {
+            return;
+        }
+
+        return [
+            'file_path' => (string) $reflectionClass->sourceCode()->path(),
+            'class' => (string) $reflectionClass->name(),
+            'class_name' => $reflectionClass->name()->short(),
+            'class_namespace' => (string) $reflectionClass->name()->namespace(),
+        ];
     }
 }

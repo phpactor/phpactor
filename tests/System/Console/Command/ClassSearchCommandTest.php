@@ -31,4 +31,14 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertSuccess($process);
         $this->assertContains('Badger.php"', $process->getOutput());
     }
+
+    /**
+     * @testdox It should return information baesd on a class "short" name.
+     */
+    public function testSearchNameInternalName()
+    {
+        $process = $this->phpactor('class:search "DateTime" --format=json');
+        $this->assertSuccess($process);
+        $this->assertContains('DateTime', $process->getOutput());
+    }
 }
