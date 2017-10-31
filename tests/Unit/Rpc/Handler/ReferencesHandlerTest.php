@@ -96,7 +96,8 @@ class ReferencesHandlerTest extends HandlerTestCase
     {
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
-            'stdClass'
+            'stdClass',
+            null
         )->willReturn([
             'references' => [],
             'risky_references' => [],
@@ -115,7 +116,8 @@ class ReferencesHandlerTest extends HandlerTestCase
     {
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
-            'stdClass'
+            'stdClass',
+            null
         )->willReturn($this->exampleClassResponse());
 
         $action = $this->handle('references', [
@@ -154,7 +156,8 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
-            'newClass'
+            'newClass',
+            null
         )->willReturn($this->exampleClassResponse());
 
         $action = $this->handle('references', [
@@ -165,6 +168,8 @@ class ReferencesHandlerTest extends HandlerTestCase
             'confirm' => true,
             'replacement' => 'newClass',
         ]);
+
+        $this->assertInstanceOf(CollectionResponse::class, $action);
     }
 
     public function testMemberReturnNoneFound()

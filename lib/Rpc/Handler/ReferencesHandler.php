@@ -111,7 +111,7 @@ class ReferencesHandler extends AbstractHandler
             $this->requireArgument(self::PARAMETER_REPLACEMENT, TextInput::fromNameLabelAndDefault(
                 self::PARAMETER_REPLACEMENT,
                 'Replacement: ',
-                (string) $symbolInformation->symbol()->name()
+                $this->defaultReplacement($symbolInformation)
             ));
 
             $this->requireArgument(self::PARAMETER_CONFIRM, ConfirmInput::fromNameAndLabel(
@@ -120,7 +120,6 @@ class ReferencesHandler extends AbstractHandler
                 '         you will need to reload you files afterwards. COMMIT YOUR WOKK FIRST!' . PHP_EOL
             ));
         }
-
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
@@ -170,7 +169,7 @@ class ReferencesHandler extends AbstractHandler
     private function classReferences(string $filesystem, SymbolInformation $symbolInformation, string $replacement = null)
     {
         $classType = (string) $symbolInformation->type();
-        $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType);
+        $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
 
         return $references['references'];
     }
@@ -238,5 +237,14 @@ class ReferencesHandler extends AbstractHandler
             $filesystem,
             $risky
         ));
+    }
+
+    private function defaultReplacement(SymbolInformation $symbolInformation)
+    {
+        if ($symbolInformation->symbol()->symbolType() === Symbol::CLASS_) {
+            return (string) $symbolInformation->type()->className();
+        }
+
+        return $symbolInformation->symbol()->name();
     }
 }

@@ -92,6 +92,14 @@
                 "source_path": "%path%"
             }
         },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "mode": "replace"
+            }
+        },
         "transform_file": {
             "action": "transform",
             "parameters": {
