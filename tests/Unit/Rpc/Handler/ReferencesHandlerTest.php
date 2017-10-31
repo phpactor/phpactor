@@ -165,7 +165,6 @@ class ReferencesHandlerTest extends HandlerTestCase
             'offset' => 15,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
-            'confirm' => true,
             'replacement' => 'newClass',
         ]);
 
@@ -265,7 +264,6 @@ class ReferencesHandlerTest extends HandlerTestCase
             'offset' => 86,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
-            'confirm' => true,
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
