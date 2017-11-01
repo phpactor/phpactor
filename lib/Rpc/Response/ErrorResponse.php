@@ -70,7 +70,8 @@ class ErrorResponse implements Response
         foreach ($exceptions as $index => $exception) {
             $details[] = sprintf(
                 "%s: %s\n%s",
-                $index, $exception->getMessage(),
+                $index,
+                $exception->getMessage(),
                 $exception->getTraceAsString()
             );
         }

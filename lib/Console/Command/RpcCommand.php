@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Rpc\Response;
 use Phpactor\Rpc\RequestHandler;
 use Phpactor\Rpc\Request;
-use Symfony\Component\Console\Output\Output;
 
 class RpcCommand extends Command
 {
