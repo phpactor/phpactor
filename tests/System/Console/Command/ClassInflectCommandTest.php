@@ -69,4 +69,25 @@ EOT
         $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --force');
         $this->assertContains('interface', file_get_contents($filePath));
     }
+
+    /**
+     * Application level failures
+     *
+     * @dataProvider provideSmokeFailure
+     */
+    public function testSmokeFailure($command, $expectedMessage = null)
+    {
+        $process = $this->phpactor($command);
+        $this->assertFailure($process, $expectedMessage);
+    }
+
+    public function provideSmokeFailure()
+    {
+        return [
+            'non-existing' => [
+                'class:inflect lib/Badger/BooNotExist.php lib/Badger/Api/CarnivorousInterface.php interface',
+                'does not exist',
+            ],
+        ];
+    }
 }

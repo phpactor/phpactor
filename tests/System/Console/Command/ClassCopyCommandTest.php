@@ -116,6 +116,10 @@ class ClassCopyCommandTest extends SystemTestCase
                 'class:copy lib/Aardvark/Edentate.php lib/Foobar.php --type=foobar',
                 'Invalid type "foobar", must be one of: "auto", "file", "class"',
             ],
+            'Copy non-existing' => [
+                'class:copy lib/Aardvark/Blah.php lib/Foobar.php',
+                'does not exist',
+            ],
         ];
     }
 }

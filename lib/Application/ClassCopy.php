@@ -63,6 +63,15 @@ class ClassCopy
     public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath)
     {
         $srcPath = Phpactor::normalizePath($srcPath);
+
+
+        if (false === Glob::isDynamic($srcPath) && !file_exists($srcPath)) {
+            throw new \RuntimeException(sprintf(
+                'File "%s" does not exist',
+                $srcPath
+            ));
+        }
+
         foreach (Glob::glob($srcPath) as $globPath) {
             $globDest = $destPath;
             // if the src is not the same as the globbed src, then it is a wildcard
