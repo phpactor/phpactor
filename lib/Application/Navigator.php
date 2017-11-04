@@ -12,9 +12,25 @@ class Navigator
      */
     private $pathFinder;
 
-    public function __construct(PathFinder $pathFinder)
+    /**
+     * @var ClassNew
+     */
+    private $classNew;
+
+    /**
+     * @var array
+     */
+    private $autoCreateConfig;
+
+    public function __construct(
+        PathFinder $pathFinder,
+        ClassNew $classNew,
+        array $autoCreateConfig
+    )
     {
         $this->pathFinder = $pathFinder;
+        $this->classNew = $classNew;
+        $this->autoCreateConfig = $autoCreateConfig;
     }
 
     public function destinationsFor(string $path)
@@ -23,6 +39,24 @@ class Navigator
     }
 
     public function canCreateNew(string $path, string $destinationName)
+    {
+        $destination = $this->destination($path, $destinationName);
+
+        if (file_exists($destination)) {
+            return false;
+        }
+
+        return isset($this->autoCreateConfig[$destinationName]);
+    }
+
+    public function createNew(string $path, string $destinationName)
+    {
+        $destination = $this->destination($path, $destinationName);
+        $variant = $this->variant($destinationName);
+        $this->classNew->generate($destination, $variant);
+    }
+
+    private function destination(string $path, string $destinationName)
     {
         $destinations = $this->destinationsFor($path);
 
@@ -33,12 +67,18 @@ class Navigator
             ));
         }
 
-        $destination = $destinations[$destinationName];
+        return $destinations[$destinationName];
+    }
 
-        if (file_exists($destination)) {
-            return false;
+    private function variant(string $destinationName)
+    {
+        if (!isset($this->autoCreateConfig[$destinationName])) {
+            throw new RuntimeException(sprintf(
+                'Destination "%s" has no new class variant set',
+                $destinationName
+            ));
         }
 
-        return true;
+        return $this->autoCreateConfig[$destinationName];
     }
 }

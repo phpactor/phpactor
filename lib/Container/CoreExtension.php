@@ -10,6 +10,7 @@ use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
 use Phpactor\Application\OffsetInfo;
+use Phpactor\Application\Navigator;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -43,6 +44,7 @@ use Phpactor\Application\ClassMemberReferences;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
+use Phpactor\ClassFileConverter\PathFinder;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -56,6 +58,7 @@ class CoreExtension implements ExtensionInterface
     const CACHE_DIR = 'cache_dir';
     const LOGGING_ENABLED = 'logging.enabled';
     const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
+    const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
 
     public static $autoloader;
 
@@ -70,6 +73,7 @@ class CoreExtension implements ExtensionInterface
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
+            self::NAVIGATOR_AUTOCREATE => [],
         ];
     }
 
@@ -389,6 +393,13 @@ class CoreExtension implements ExtensionInterface
             );
         });
 
+        $container->register('application.navigator', function (Container $container) {
+            return new Navigator(
+                $container->get('path_finder.path_finder'),
+                $container->get('application.class_new'),
+                $container->getParameter(self::NAVIGATOR_AUTOCREATE)
+            );
+        });
 
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));

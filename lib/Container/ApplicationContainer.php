@@ -4,6 +4,7 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container as BaseContainer;
 use Phpactor\Config\ConfigLoader;
+use Phpactor\Container\PathFinderExtension;
 
 class ApplicationContainer extends BaseContainer
 {
@@ -19,6 +20,7 @@ class ApplicationContainer extends BaseContainer
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
+            PathFinderExtension::class,
         ], array_merge($this->configLoader->loadConfig(), $config));
     }
 

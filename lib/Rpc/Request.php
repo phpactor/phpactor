@@ -7,7 +7,6 @@ class Request
     const KEY_ACTION = 'action';
     const KEY_PARAMETERS = 'parameters';
 
-
     /**
      * @var string
      */

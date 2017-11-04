@@ -17,7 +17,6 @@ class NavigateHandlerTest extends HandlerTestCase
     const TEST_PATH = 'path/to/file.php';
     const TEST_DEST1 = 'dest1';
 
-
     /**
      * @var ObjectProphecy
      */

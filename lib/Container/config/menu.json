@@ -92,6 +92,12 @@
                 "source_path": "%path%"
             }
         },
+        "navigate": {
+            "action": "navigate",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
         "replace_references": {
             "action": "references",
             "parameters": {

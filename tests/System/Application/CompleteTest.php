@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Integration;
+namespace Phpactor\Tests\System;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;

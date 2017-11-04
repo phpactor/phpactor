@@ -26,6 +26,7 @@ Features
   new tab for a class name under the cursor.
 - [Inflect class](#inflect-class): Generate a new class based on an existing
   class (e.g. generate interface)
+- [Navigate](#navigate): Navigate to related source files.
 
 Installation
 ------------
@@ -208,4 +209,39 @@ cursor is on a class name, based on that.
 Inflect class: lib/Container/BarInterface.php
 1: interface
 Type number and <Enter> or click with mouse (empty cancels): 1
+```
+
+Navigate
+--------
+
+```vimscript
+:call phpactor#Navigate()
+```
+
+Offer a choice of related file destinations, f.e.
+
+```bash
+Destination:
+1) system_test
+2) unit_test
+3) source
+```
+
+Destinations are configured in `.phpactor.yml`:
+
+```
+navigator.destinations:
+    source: lib/<kernel>.php
+    unit_test: tests/Unit/<kernel>Test.php
+    integration_test: tests/Integration/<kernel>Test.php
+    system_test: tests/System/<kernel>Test.php
+```
+
+Classes can be automatically created by mapping detinations to [new class](#create-class)
+variants:
+
+```
+navigator.autocreate:
+  source:default
+  unit_test:phpunit_test
 ```
