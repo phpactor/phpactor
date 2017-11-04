@@ -409,3 +409,14 @@ Return a menu for selecting an action to perform on the current symbol
 - **Parameters**:
     - `source`: Source code as a string
     - `offset`: Offset of symbol (int)
+
+### `navigate`
+
+Navigate to related source files.
+
+- **Name**: `navigate`
+- **Parameters**:
+    - `source_path`: Source code as a string
+    - `destination`: (eventually required) Destination path
+    - `confirm_create`: (conditionally eventually required) Confirm file
+      creation

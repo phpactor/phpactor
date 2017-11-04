@@ -201,6 +201,11 @@ function! phpactor#ClassInflect()
     call phpactor#rpc("class_inflect", { "current_path": currentPath })
 endfunction
 
+function! phpactor#Navigate()
+    let currentPath = expand('%')
+    call phpactor#rpc("navigate", { "source_path": currentPath })
+endfunction
+
 " Deprecated!! Use FindReferences
 function! phpactor#ClassReferences()
     call phpactor#FindReferences()
