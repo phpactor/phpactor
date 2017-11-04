@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "2b7028a2a2411b140be906a649500f5855808cc3"
+                "reference": "10609283d64f38ae5f0596fd033a267224306fdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/2b7028a2a2411b140be906a649500f5855808cc3",
-                "reference": "2b7028a2a2411b140be906a649500f5855808cc3",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/10609283d64f38ae5f0596fd033a267224306fdc",
+                "reference": "10609283d64f38ae5f0596fd033a267224306fdc",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-10-27 19:11:35"
+            "time": "2017-11-03 16:03:50"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "69ea4ed415cd07d74b688ac570b8936ed91ffc14"
+                "reference": "77579dfa1e4095b5a3e9958495aded246039ecb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/69ea4ed415cd07d74b688ac570b8936ed91ffc14",
-                "reference": "69ea4ed415cd07d74b688ac570b8936ed91ffc14",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/77579dfa1e4095b5a3e9958495aded246039ecb8",
+                "reference": "77579dfa1e4095b5a3e9958495aded246039ecb8",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-10-15 06:00:08"
+            "time": "2017-10-30 23:14:48"
         },
         {
             "name": "monolog/monolog",
@@ -490,12 +490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "4b6dc95014c2ad720f46f833cf367c02ca99958d"
+                "reference": "e13bd9e61f7a4eab0c523ed99268744799ff9cea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4b6dc95014c2ad720f46f833cf367c02ca99958d",
-                "reference": "4b6dc95014c2ad720f46f833cf367c02ca99958d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e13bd9e61f7a4eab0c523ed99268744799ff9cea",
+                "reference": "e13bd9e61f7a4eab0c523ed99268744799ff9cea",
                 "shasum": ""
             },
             "require": {
@@ -531,7 +531,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-10-28 13:33:35"
+            "time": "2017-11-04 07:35:24"
         },
         {
             "name": "phpbench/container",
@@ -1555,7 +1555,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^7.0"
             },
             "type": "library",
             "extra": {
@@ -1806,7 +1806,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-22T06:55:39+00:00"
+            "time": "2017-10-22 06:55:39"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
