@@ -201,11 +201,6 @@ function! phpactor#ClassInflect()
     call phpactor#rpc("class_inflect", { "current_path": currentPath })
 endfunction
 
-function! phpactor#Navigate()
-    let currentPath = expand('%')
-    call phpactor#rpc("navigate", { "source_path": currentPath })
-endfunction
-
 " Deprecated!! Use FindReferences
 function! phpactor#ClassReferences()
     call phpactor#FindReferences()
@@ -213,6 +208,11 @@ endfunction
 
 function! phpactor#FindReferences()
     call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+endfunction
+
+function! phpactor#Navigate()
+    let currentPath = expand('%')
+    call phpactor#rpc("navigate", { "source_path": currentPath })
 endfunction
 
 """""""""""""""""""""""
@@ -268,6 +268,65 @@ function! phpactor#rpc(action, arguments)
     endif
 endfunction
 
+function! phpactor#_input_confirm_choice(label, choices)
+    let list = []
+    let choices = []
+    let usedShortcuts = []
+
+
+    for choiceLabel in keys(a:choices)
+        let buffer = []
+        let foundShortcut = v:false
+
+        for char in split(choiceLabel, '\zs')
+            if v:false == foundShortcut && -1 == index(usedShortcuts, char)
+                call add(buffer, '&')
+                let foundShortcut = v:true
+                call add(usedShortcuts, char)
+            endif
+
+            call add(buffer, char)
+        endfor
+
+        let confirmLabel = join(buffer, "")
+
+        call add(list, confirmLabel)
+        call add(choices, choiceLabel)
+    endfor
+
+    let choice = confirm(a:label, join(list, "\n"))
+
+    if (choice == 0)
+        " this is an exception, not a message!
+        throw "cancelled"
+    endif
+
+    let choice = choice - 1
+    return a:choices[get(choices, choice)]
+endfunction
+
+function! phpactor#_input_numeric_choice(label, choices)
+    let list = []
+    let choices = []
+
+    let c = 1
+    for choiceLabel in keys(a:choices)
+        call add(list, c . ") " . choiceLabel)
+        call add(choices, choiceLabel)
+        let c = c + 1
+    endfor
+
+    echo a:label
+    let choice = inputlist(list)
+
+    if (choice == 0)
+        throw "Cancelled"
+    endif
+
+    let choice = choice - 1
+    return a:choices[choices[choice]]
+endfunction
+
 function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> return_choice
@@ -306,12 +365,12 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         echo "Error from Phpactor: " . a:parameters["message"]
         return
     endif
-    
+
     " >> collection
     if a:actionName == "collection"
         for action in a:parameters["actions"]
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
-            
+
             if !empty(result)
                 return result
             endif
@@ -427,26 +486,7 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
 
     " >> choice
     if a:type == 'choice'
-
-        let list = []
-        let choices = []
-
-        let c = 1
-        for choiceLabel in keys(a:parameters["choices"])
-            call add(list, c . ") " . choiceLabel)
-            call add(choices, choiceLabel)
-            let c = c + 1
-        endfor
-
-        echo a:parameters['label']
-        let choice = inputlist(list)
-
-        if (choice == 0)
-            throw "cancelled"
-        endif
-
-        let choice = choice - 1
-        return a:parameters['choices'][choices[choice]]
+        return phpactor#_input_confirm_choice(a:parameters['label'], a:parameters['choices'])
     endif
 
     " >> confirm
