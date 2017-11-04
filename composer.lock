@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b38081fdc1f9a6cb312d42c14823dc4",
+    "content-hash": "34d117e20a481321af7da25fee533072",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -431,6 +431,59 @@
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
             "time": "2017-10-21 16:39:05"
+        },
+        {
+            "name": "phpactor/path-finder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/path-finder.git",
+                "reference": "9961c7e7f8948dc0d0814cb0789c059aa24d58bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/path-finder/zipball/9961c7e7f8948dc0d0814cb0789c059aa24d58bd",
+                "reference": "9961c7e7f8948dc0d0814cb0789c059aa24d58bd",
+                "shasum": ""
+            },
+            "require": {
+                "webmozart/path-util": "^2.3"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.8.5",
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Utility for navigating to related source files",
+            "support": {
+                "source": "https://github.com/phpactor/path-finder/tree/master",
+                "issues": "https://github.com/phpactor/path-finder/issues"
+            },
+            "time": "2017-11-03 22:33:56"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -2493,6 +2546,7 @@
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
         "phpactor/worse-reflection": 20,
+        "phpactor/path-finder": 20,
         "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20
     },

@@ -17,6 +17,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:phpactor/source-code-filesystem"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:phpactor/path-finder"
         }
     ],
     "require": {
@@ -28,6 +32,7 @@
         "phpactor/class-to-file": "dev-master",
         "phpactor/code-transform": "dev-master",
         "phpactor/worse-reflection": "dev-master",
+        "phpactor/path-finder": "dev-master",
         "symfony/filesystem": "^3.3",
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
