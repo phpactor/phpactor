@@ -273,7 +273,6 @@ function! phpactor#_input_confirm_choice(label, choices)
     let choices = []
     let usedShortcuts = []
 
-
     for choiceLabel in keys(a:choices)
         let buffer = []
         let foundShortcut = v:false
@@ -303,28 +302,6 @@ function! phpactor#_input_confirm_choice(label, choices)
 
     let choice = choice - 1
     return a:choices[get(choices, choice)]
-endfunction
-
-function! phpactor#_input_numeric_choice(label, choices)
-    let list = []
-    let choices = []
-
-    let c = 1
-    for choiceLabel in keys(a:choices)
-        call add(list, c . ") " . choiceLabel)
-        call add(choices, choiceLabel)
-        let c = c + 1
-    endfor
-
-    echo a:label
-    let choice = inputlist(list)
-
-    if (choice == 0)
-        throw "Cancelled"
-    endif
-
-    let choice = choice - 1
-    return a:choices[choices[choice]]
 endfunction
 
 function! phpactor#_rpc_dispatch(actionName, parameters)
