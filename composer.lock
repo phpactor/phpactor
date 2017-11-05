@@ -384,12 +384,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "31a73a0109909ae6e614e0942624168511449f4d"
+                "reference": "c2cb08be73598c849c03c062a26a8bcb2d0556e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/31a73a0109909ae6e614e0942624168511449f4d",
-                "reference": "31a73a0109909ae6e614e0942624168511449f4d",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c2cb08be73598c849c03c062a26a8bcb2d0556e9",
+                "reference": "c2cb08be73598c849c03c062a26a8bcb2d0556e9",
                 "shasum": ""
             },
             "require": {
@@ -430,7 +430,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-10-21 16:39:05"
+            "time": "2017-11-04 15:13:29"
         },
         {
             "name": "phpactor/path-finder",
@@ -438,12 +438,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/path-finder.git",
-                "reference": "9961c7e7f8948dc0d0814cb0789c059aa24d58bd"
+                "reference": "9375374c41bf4e0b290a2e2e46bd0d341944d2c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/path-finder/zipball/9961c7e7f8948dc0d0814cb0789c059aa24d58bd",
-                "reference": "9961c7e7f8948dc0d0814cb0789c059aa24d58bd",
+                "url": "https://api.github.com/repos/phpactor/path-finder/zipball/9375374c41bf4e0b290a2e2e46bd0d341944d2c0",
+                "reference": "9375374c41bf4e0b290a2e2e46bd0d341944d2c0",
                 "shasum": ""
             },
             "require": {
@@ -483,7 +483,7 @@
                 "source": "https://github.com/phpactor/path-finder/tree/master",
                 "issues": "https://github.com/phpactor/path-finder/issues"
             },
-            "time": "2017-11-03 22:33:56"
+            "time": "2017-11-04 12:57:48"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -543,12 +543,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "e13bd9e61f7a4eab0c523ed99268744799ff9cea"
+                "reference": "e2af974b382cfcfe298d1631037571bdf8d6591c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e13bd9e61f7a4eab0c523ed99268744799ff9cea",
-                "reference": "e13bd9e61f7a4eab0c523ed99268744799ff9cea",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e2af974b382cfcfe298d1631037571bdf8d6591c",
+                "reference": "e2af974b382cfcfe298d1631037571bdf8d6591c",
                 "shasum": ""
             },
             "require": {
@@ -559,6 +559,7 @@
             "require-dev": {
                 "phpactor/class-to-file": "^1.0@dev",
                 "phpbench/phpbench": "^0.13.0",
+                "phpstan/phpstan": "^0.8.5",
                 "phpunit/phpunit": "^6.0@stable",
                 "symfony/filesystem": "^3.3"
             },
@@ -584,7 +585,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-11-04 07:35:24"
+            "time": "2017-11-04 08:13:46"
         },
         {
             "name": "phpbench/container",
@@ -1274,20 +1275,20 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.x-dev",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "ae684c84fd1be31813faffa78ebd70cdc013fc8e"
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/ae684c84fd1be31813faffa78ebd70cdc013fc8e",
-                "reference": "ae684c84fd1be31813faffa78ebd70cdc013fc8e",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
                 "shasum": ""
             },
             "require": {
@@ -1319,7 +1320,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-10-16 22:02:21"
+            "time": "2017-10-19T19:58:43+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1373,7 +1374,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-09-11 18:02:19"
+            "time": "2017-09-11T18:02:19+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1528,7 +1529,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-09-04 11:05:03"
+            "time": "2017-09-04T11:05:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1591,24 +1592,24 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-02 07:44:40"
+            "time": "2017-04-02T07:44:40+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "dev-master",
+            "version": "1.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
+                "reference": "63304292f3cf89b2382b90dd7a2abf9e0ba232f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/63304292f3cf89b2382b90dd7a2abf9e0ba232f9",
+                "reference": "63304292f3cf89b2382b90dd7a2abf9e0ba232f9",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": ">=5.3.3"
             },
             "type": "library",
             "extra": {
@@ -1638,7 +1639,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2017-10-30T04:21:02+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1728,7 +1729,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07 15:42:04"
+            "time": "2017-03-07T15:42:04+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1777,7 +1778,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-20 05:47:52"
+            "time": "2017-08-20T05:47:52+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1859,7 +1860,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-22 06:55:39"
+            "time": "2017-10-22T06:55:39+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1918,7 +1919,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-06-30 09:13:00"
+            "time": "2017-06-30T09:13:00+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1963,7 +1964,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 10:23:55"
+            "time": "2017-03-04T10:23:55+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -2027,7 +2028,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-03-07 10:34:43"
+            "time": "2017-03-07T10:34:43+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -2079,7 +2080,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22 07:24:03"
+            "time": "2017-05-22T07:24:03+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -2129,7 +2130,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26 07:53:53"
+            "time": "2016-11-26T07:53:53+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -2196,7 +2197,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-03-07 10:36:49"
+            "time": "2017-03-07T10:36:49+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -2247,7 +2248,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-02-23 14:11:06"
+            "time": "2017-02-23T14:11:06+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -2293,7 +2294,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-07 10:37:45"
+            "time": "2017-03-07T10:37:45+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2346,7 +2347,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-08 08:21:15"
+            "time": "2017-03-08T08:21:15+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -2388,7 +2389,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2016-10-03 07:43:09"
+            "time": "2016-10-03T07:43:09+00:00"
         },
         {
             "name": "sebastian/version",
@@ -2431,7 +2432,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "symfony/options-resolver",

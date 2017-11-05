@@ -380,12 +380,12 @@ class Post implements \Countable
 }
 ```
 
-#### Add missing assignments
+#### Add missing properties
 
-Name: `add_missing_assignments`
+Name: `add_missing_properties`
 
-This transformer will add any missing assignments from the current class as
-private properties.
+This transformer will add any missing properties based on assignments found in
+the class. Private visibility will be used.
 
 In:
 

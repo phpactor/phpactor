@@ -25,7 +25,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\Config\ConfigLoader;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingAssignments;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
@@ -147,12 +147,12 @@ class CodeTransformExtension implements ExtensionInterface
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
 
-        $container->register('code_transform.transformer.add_missing_assignments', function (Container $container) {
-            return new AddMissingAssignments(
+        $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
+            return new AddMissingProperties(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')
             );
-        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_assignments' ]]);
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
     }
 
     private function registerGenerators(Container $container)
