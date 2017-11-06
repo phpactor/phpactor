@@ -237,7 +237,7 @@ navigator.destinations:
     system_test: tests/System/<kernel>Test.php
 ```
 
-Classes can be automatically created by mapping detinations to [new class](#create-class)
+Classes can be automatically created by mapping destinations to [new class](#create-class)
 variants:
 
 ```
