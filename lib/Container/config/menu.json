@@ -98,6 +98,13 @@
                 "source_path": "%path%"
             }
         },
+        "overload_method": {
+            "action": "overload_method",
+            "parameters": {
+                "path": "%current_path%",
+                "source": "%source%"
+            }
+        },
         "replace_references": {
             "action": "references",
             "parameters": {

@@ -31,6 +31,9 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
+use Phpactor\CodeTransform\Domain\Refactor\OverloadMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverloadMethod;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -147,12 +150,13 @@ class CodeTransformExtension implements ExtensionInterface
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
 
-        $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
+        $container->register('code_transform.refactor.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
+
     }
 
     private function registerGenerators(Container $container)
@@ -235,6 +239,14 @@ class CodeTransformExtension implements ExtensionInterface
 
         $container->register('code_transform.refactor.rename_variable', function (Container $container) {
             return new TolerantRenameVariable();
+        });
+
+        $container->register('code_transform.refactor.overload_method', function (Container $container) {
+            return new WorseOverloadMethod(
+                $container->get('reflection.reflector'),
+                new WorseBuilderFactory($container->get('reflection.reflector')),
+                $container->get('code_transform.updater')
+            );
         });
     }
 
