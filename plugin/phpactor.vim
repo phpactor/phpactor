@@ -278,10 +278,10 @@ function! phpactor#_input_confirm_choice(label, choices)
         let foundShortcut = v:false
 
         for char in split(choiceLabel, '\zs')
-            if v:false == foundShortcut && -1 == index(usedShortcuts, char)
+            if v:false == foundShortcut && -1 == index(usedShortcuts, tolower(char))
                 call add(buffer, '&')
                 let foundShortcut = v:true
-                call add(usedShortcuts, char)
+                call add(usedShortcuts, tolower(char))
             endif
 
             call add(buffer, char)
