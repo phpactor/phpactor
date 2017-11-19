@@ -72,45 +72,13 @@ class OverloadMethodHandler extends AbstractHandler
             );
         }
 
-        $classes = $this->reflector->reflectClassesIn($arguments[self::PARAM_SOURCE]);
-
-        if ($classes->count() === 0) {
-            throw new InvalidArgumentException(
-                'No classes in source file'
-            );
-        }
-
-        if (null === $arguments[self::PARAM_CLASS_NAME] && $classes->count() > 1) {
-            throw new InvalidArgumentException(
-                'Currently will only overload methods in files with one class'
-            );
-        }
-
-        $class = $arguments[self::PARAM_CLASS_NAME] ? $classes->get($arguments[self::PARAM_CLASS_NAME]) : $classes->first();
-
-        /** @var ReflectionClass $parentClass */
-        $parentClass = $class->parent();
-
-        if (null === $parentClass) {
-            throw new InvalidArgumentException(sprintf(
-                'Class "%s" has no parent', $class->name()
-            ));
-        }
-
-        $methodNames = array_map(function (ReflectionMethod $method) {
-            return $method->name();
-        }, iterator_to_array(
-            $parentClass->methods()->byVisibilities([ Visibility::public(), Visibility::protected() ])
-        ));
-
-        sort($methodNames);
-
-        $methodNames = array_combine($methodNames, $methodNames);
+        $class = $this->class($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_CLASS_NAME]);
+        $parentClass = $this->parentClass($class);
 
         $this->requireArgument(self::PARAM_METHOD_NAME, ListInput::fromNameLabelChoices(
             self::PARAM_METHOD_NAME,
             sprintf('Methods from "%s"', $parentClass->name()),
-            $methodNames
+            $this->methodChoices($parentClass)
         ));
 
         if ($this->hasMissingArguments($arguments)) {
@@ -124,5 +92,51 @@ class OverloadMethodHandler extends AbstractHandler
         );
 
         return ReplaceFileSourceResponse::fromPathAndSource($arguments[self::PARAM_PATH], (string) $transformedCode);
+    }
+
+    private function class($source, $className = null)
+    {
+        $classes = $this->reflector->reflectClassesIn($source);
+
+        if ($classes->count() === 0) {
+            throw new InvalidArgumentException(
+                'No classes in source file'
+            );
+        }
+
+        if (null === $className && $classes->count() > 1) {
+            throw new InvalidArgumentException(
+                'Currently will only overload methods in files with one class'
+            );
+        }
+
+        return $className ? $classes->get($className) : $classes->first();
+    }
+
+    private function parentClass(ReflectionClass $class)
+    {
+        /** @var ReflectionClass $parentClass */
+        $parentClass = $class->parent();
+
+        if (null === $parentClass) {
+            throw new InvalidArgumentException(sprintf(
+                'Class "%s" has no parent', $class->name()
+            ));
+        }
+
+        return $parentClass;
+    }
+
+    private function methodChoices(ReflectionClass $parentClass)
+    {
+        $methodNames = array_map(function (ReflectionMethod $method) {
+            return $method->name();
+        }, iterator_to_array(
+            $parentClass->methods()->byVisibilities([ Visibility::public(), Visibility::protected() ])
+        ));
+
+        sort($methodNames);
+
+        return array_combine($methodNames, $methodNames);
     }
 }

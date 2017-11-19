@@ -150,7 +150,7 @@ class CodeTransformExtension implements ExtensionInterface
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
 
-        $container->register('code_transform.refactor.add_missing_properties', function (Container $container) {
+        $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')

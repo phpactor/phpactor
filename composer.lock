@@ -385,12 +385,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "5280d56c76c1906c4584024a573452424d4e4f0d"
+                "reference": "0d8585312cd0906d92c0838859689aac7a463ccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5280d56c76c1906c4584024a573452424d4e4f0d",
-                "reference": "5280d56c76c1906c4584024a573452424d4e4f0d",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/0d8585312cd0906d92c0838859689aac7a463ccf",
+                "reference": "0d8585312cd0906d92c0838859689aac7a463ccf",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-11-17 19:25:35"
+            "time": "2017-11-19 08:16:27"
         },
         {
             "name": "phpactor/path-finder",
