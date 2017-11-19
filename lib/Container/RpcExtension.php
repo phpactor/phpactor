@@ -26,6 +26,7 @@ use Phpactor\Rpc\Handler\RenameVariableHandler;
 use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Rpc\RequestHandler\LoggingHandler;
 use Phpactor\Rpc\Handler\NavigateHandler;
+use Phpactor\Rpc\Handler\OverloadMethodHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -167,6 +168,13 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.navigate', function (Container $container) {
             return new NavigateHandler(
                 $container->get('application.navigator')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.overload_method', function (Container $container) {
+            return new OverloadMethodHandler(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.refactor.overload_method')
             );
         }, [ 'rpc.handler' => [] ]);
     }
