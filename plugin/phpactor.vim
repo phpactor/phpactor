@@ -268,7 +268,7 @@ function! phpactor#rpc(action, arguments)
     endif
 endfunction
 
-function! phpactor#_input_confirm_choice(label, choices)
+function! phpactor#_input_choice(label, choices)
     let list = []
     let choices = []
     let usedShortcuts = []
@@ -302,6 +302,28 @@ function! phpactor#_input_confirm_choice(label, choices)
 
     let choice = choice - 1
     return a:choices[get(choices, choice)]
+endfunction
+
+function! phpactor#_input_list(label, choices)
+    let list = []
+    let choices = []
+
+    let c = 1
+    for choiceLabel in keys(a:choices)
+        call add(list, c . ") " . choiceLabel)
+        call add(choices, choiceLabel)
+        let c = c + 1
+    endfor
+
+    echo a:label
+    let choice = inputlist(list)
+
+    if (choice == 0)
+        throw "cancelled"
+    endif
+
+    let choice = choice - 1
+    return a:choices[choices[choice]]
 endfunction
 
 function! phpactor#_rpc_dispatch(actionName, parameters)
@@ -463,7 +485,11 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
 
     " >> choice
     if a:type == 'choice'
-        return phpactor#_input_confirm_choice(a:parameters['label'], a:parameters['choices'])
+        return phpactor#_input_choice(a:parameters['label'], a:parameters['choices'])
+    endif
+
+    if a:type == 'list'
+        return phpactor#_input_list(a:parameters['label'], a:parameters['choices'])
     endif
 
     " >> confirm

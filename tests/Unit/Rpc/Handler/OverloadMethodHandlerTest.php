@@ -11,10 +11,10 @@ use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\CodeTransform\Domain\Refactor\OverloadMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Rpc\Response\Input\ListInput;
 
 class OverloadMethodHandlerTest extends HandlerTestCase
 {
@@ -44,7 +44,7 @@ class OverloadMethodHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testSuggestsPossibleClasses()
+    public function testSuggestsPossibleMethods()
     {
         $action = $this->handle('overload_method', [
             'class_name' => 'ChildClass',
@@ -60,7 +60,7 @@ EOT
 
         $input = $action->inputs();
         $input = reset($input);
-        $this->assertInstanceOf(ChoiceInput::class, $input);
+        $this->assertInstanceOf(ListInput::class, $input);
         $choices = $input->choices();
         $this->assertCount(1, $choices);
     }

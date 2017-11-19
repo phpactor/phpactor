@@ -2,8 +2,6 @@
 
 namespace Phpactor\Rpc\Response\Input;
 
-// show context menu with "pp"
-
 class ChoiceInput implements Input
 {
     /**
@@ -36,12 +34,12 @@ class ChoiceInput implements Input
 
     public static function fromNameLabelChoicesAndDefault(string $name, string $label, array $choices, string $default = null)
     {
-        return new self($name, $label, $choices, $default);
+        return new static($name, $label, $choices, $default);
     }
 
     public static function fromNameLabelChoices(string $name, string $label, array $choices)
     {
-        return new self($name, $label, $choices);
+        return new static($name, $label, $choices);
     }
 
     public function type(): string

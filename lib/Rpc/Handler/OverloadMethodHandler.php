@@ -8,7 +8,7 @@ use Phpactor\Core\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Offset;
 use InvalidArgumentException;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -102,9 +102,12 @@ class OverloadMethodHandler extends AbstractHandler
         }, iterator_to_array(
             $parentClass->methods()->byVisibilities([ Visibility::public(), Visibility::protected() ])
         ));
+
+        sort($methodNames);
+
         $methodNames = array_combine($methodNames, $methodNames);
 
-        $this->requireArgument(self::PARAM_METHOD_NAME, ChoiceInput::fromNameLabelChoices(
+        $this->requireArgument(self::PARAM_METHOD_NAME, ListInput::fromNameLabelChoices(
             self::PARAM_METHOD_NAME,
             sprintf('Methods from "%s"', $parentClass->name()),
             $methodNames
