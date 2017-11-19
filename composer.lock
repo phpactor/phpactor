@@ -492,12 +492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "2b8831a8498340642081e07632d8c036da8227ef"
+                "reference": "a6ba39dc73fe44feddfbfd5f5d93d231bb35d728"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/2b8831a8498340642081e07632d8c036da8227ef",
-                "reference": "2b8831a8498340642081e07632d8c036da8227ef",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/a6ba39dc73fe44feddfbfd5f5d93d231bb35d728",
+                "reference": "a6ba39dc73fe44feddfbfd5f5d93d231bb35d728",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-10-01 09:53:10"
+            "time": "2017-11-19 13:13:53"
         },
         {
             "name": "phpactor/worse-reflection",

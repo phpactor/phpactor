@@ -99,7 +99,7 @@ class ClassMover
     private function directoryMap(Filesystem $filesystem, FilePath $srcPath, FilePath $destPath)
     {
         $files = [];
-        foreach ($filesystem->fileList()->within($srcPath)->phpFiles() as $file) {
+        foreach ($filesystem->fileList()->existing()->within($srcPath)->phpFiles() as $file) {
             $suffix = substr($file->path(), strlen($srcPath->path()));
             $files[] = [$file->path(), $filesystem->createPath($destPath.$suffix)];
         }
@@ -124,7 +124,7 @@ class ClassMover
 
     private function replaceReferences(ClassMoverLogger $logger, Filesystem $filesystem, string $srcName, string $destName)
     {
-        foreach ($filesystem->fileList()->phpFiles() as $filePath) {
+        foreach ($filesystem->fileList()->existing()->phpFiles() as $filePath) {
             $references = $this->classMover->findReferences($filesystem->getContents($filePath), $srcName);
 
             if ($references->references()->isEmpty()) {

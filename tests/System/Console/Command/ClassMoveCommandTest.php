@@ -80,6 +80,13 @@ class ClassMoveCommandTest extends SystemTestCase
         ];
     }
 
+    public function testOutdatedGitIndex()
+    {
+        rename($this->workspaceDir() . '/lib/Badger.php', $this->workspaceDir() . '/lib/Crow.php');
+        $process = $this->phpactor('class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php');
+        $this->assertSuccess($process);
+    }
+
     /**
      * Application level failures
      *
