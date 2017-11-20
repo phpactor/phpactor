@@ -70,7 +70,7 @@ class ClassMemberReferences
 
         $filesystem = $this->filesystemRegistry->get($scope);
         $results = [];
-        $filePaths = $filesystem->fileList()->phpFiles();
+        $filePaths = $filesystem->fileList()->existing()->phpFiles();
 
         // we can discount any files that do not contain the method name.
         if ($memberName) {
