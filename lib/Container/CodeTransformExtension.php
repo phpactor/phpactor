@@ -31,8 +31,8 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
-use Phpactor\CodeTransform\Domain\Refactor\OverloadMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverloadMethod;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 
 class CodeTransformExtension implements ExtensionInterface
@@ -241,8 +241,8 @@ class CodeTransformExtension implements ExtensionInterface
             return new TolerantRenameVariable();
         });
 
-        $container->register('code_transform.refactor.overload_method', function (Container $container) {
-            return new WorseOverloadMethod(
+        $container->register('code_transform.refactor.override_method', function (Container $container) {
+            return new WorseOverrideMethod(
                 $container->get('reflection.reflector'),
                 new WorseBuilderFactory($container->get('reflection.reflector')),
                 $container->get('code_transform.updater')
