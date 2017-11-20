@@ -11,6 +11,7 @@ use Phpactor\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Rpc\Response\Input\Input;
 
 class NavigateHandler extends AbstractHandler
 {

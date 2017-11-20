@@ -6,17 +6,17 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\Rpc\Handler\OverloadMethodHandler;
+use Phpactor\Rpc\Handler\OverrideMethodHandler;
 use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\CodeTransform\Domain\Refactor\OverloadMethod;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Rpc\Response\Input\ListInput;
 
-class OverloadMethodHandlerTest extends HandlerTestCase
+class OverrideMethodHandlerTest extends HandlerTestCase
 {
     /**
      * @var Reflector
@@ -26,27 +26,27 @@ class OverloadMethodHandlerTest extends HandlerTestCase
     /**
      * @var ObjectProphecy
      */
-    private $overloadMethod;
+    private $overrideMethod;
 
     public function setUp()
     {
         $this->reflector = Reflector::create(
             new StringSourceLocator(SourceCode::fromString('<?php class ParentClass { public function foobar() {} }'))
         );
-        $this->overloadMethod = $this->prophesize(OverloadMethod::class);
+        $this->overrideMethod = $this->prophesize(OverrideMethod::class);
     }
 
     public function createHandler(): Handler
     {
-        return new OverloadMethodHandler(
+        return new OverrideMethodHandler(
             $this->reflector,
-            $this->overloadMethod->reveal()
+            $this->overrideMethod->reveal()
         );
     }
 
     public function testSuggestsPossibleMethods()
     {
-        $action = $this->handle('overload_method', [
+        $action = $this->handle('override_method', [
             'class_name' => 'ChildClass',
             'path' => __FILE__,
             'source' => <<<'EOT'
@@ -65,7 +65,7 @@ EOT
         $this->assertCount(1, $choices);
     }
 
-    public function testOverloadMethod()
+    public function testOverrideMethod()
     {
         $source = <<<'EOT'
 <?php 
@@ -76,9 +76,9 @@ class ChildClass extends ParentClass
 EOT
         ;
 
-        $this->overloadMethod->overloadMethod($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
+        $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
 
-        $action = $this->handle('overload_method', [
+        $action = $this->handle('override_method', [
             'class_name' => 'ChildClass',
             'method_name' => 'foobar',
             'path' => __FILE__,

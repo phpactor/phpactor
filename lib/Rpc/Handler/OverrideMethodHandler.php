@@ -12,15 +12,15 @@ use Phpactor\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\CodeTransform\Domain\Refactor\OverloadMethod;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Response\Input\Input;
 
-class OverloadMethodHandler extends AbstractHandler
+class OverrideMethodHandler extends AbstractHandler
 {
-    const NAME = 'overload_method';
+    const NAME = 'override_method';
     const PARAM_SOURCE = 'source';
     const PARAM_CLASS_NAME = self::CLASS_NAME;
     const PARAM_METHOD_NAME = 'method_name';
@@ -33,14 +33,14 @@ class OverloadMethodHandler extends AbstractHandler
     private $reflector;
 
     /**
-     * @var OverloadMethod
+     * @var OverrideMethod
      */
-    private $overloadMethod;
+    private $overrideMethod;
 
-    public function __construct(Reflector $reflector, OverloadMethod $overloadMethod
+    public function __construct(Reflector $reflector, OverrideMethod $overrideMethod
     ) {
         $this->reflector = $reflector;
-        $this->overloadMethod = $overloadMethod;
+        $this->overrideMethod = $overrideMethod;
     }
 
     public function name(): string
@@ -85,7 +85,7 @@ class OverloadMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $transformedCode = $this->overloadMethod->overloadMethod(
+        $transformedCode = $this->overrideMethod->overrideMethod(
             SourceCode::fromString($arguments[self::PARAM_SOURCE]),
             (string) $class->name(),
             $arguments[self::PARAM_METHOD_NAME]
@@ -106,7 +106,7 @@ class OverloadMethodHandler extends AbstractHandler
 
         if (null === $className && $classes->count() > 1) {
             throw new InvalidArgumentException(
-                'Currently will only overload methods in files with one class'
+                'Currently will only override methods in files with one class'
             );
         }
 
