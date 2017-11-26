@@ -186,7 +186,7 @@ class RpcExtension implements ExtensionInterface
     {
         return [
             'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
-            'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+            'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_GIT
         ];
     }
 }
