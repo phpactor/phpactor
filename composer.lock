@@ -285,12 +285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "cacae722a79be5815a1d390a362cff37e544651c"
+                "reference": "00c7cd8aaf2ed59681a91b5e503fb3eadc7e1ba9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/cacae722a79be5815a1d390a362cff37e544651c",
-                "reference": "cacae722a79be5815a1d390a362cff37e544651c",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/00c7cd8aaf2ed59681a91b5e503fb3eadc7e1ba9",
+                "reference": "00c7cd8aaf2ed59681a91b5e503fb3eadc7e1ba9",
                 "shasum": ""
             },
             "require": {
@@ -323,7 +323,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2017-10-17 20:10:56"
+            "time": "2017-12-04 20:39:25"
         },
         {
             "name": "phpactor/code-builder",
