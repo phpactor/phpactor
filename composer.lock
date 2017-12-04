@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "3862619f08bf4fdff97e81819112e71e910f9d63"
+                "reference": "79872c3ebd6f110414df926597b4ade944ab86d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3862619f08bf4fdff97e81819112e71e910f9d63",
-                "reference": "3862619f08bf4fdff97e81819112e71e910f9d63",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/79872c3ebd6f110414df926597b4ade944ab86d9",
+                "reference": "79872c3ebd6f110414df926597b4ade944ab86d9",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-11-09 14:25:14"
+            "time": "2017-11-27 12:12:22"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -229,12 +229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "fd11478c67be53380ba3ee5ae9ea25f4ae873695"
+                "reference": "1ed1bb824622f0ed654843be6d8623269fa8fe76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/fd11478c67be53380ba3ee5ae9ea25f4ae873695",
-                "reference": "fd11478c67be53380ba3ee5ae9ea25f4ae873695",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/1ed1bb824622f0ed654843be6d8623269fa8fe76",
+                "reference": "1ed1bb824622f0ed654843be6d8623269fa8fe76",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +277,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2017-10-16 18:17:51"
+            "time": "2017-12-02 20:51:11"
         },
         {
             "name": "phpactor/class-to-file",
@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "61ee8e34f204381a008363170da068905ebf9a8d"
+                "reference": "04b3fa894d7d2ab0cf59c518e654e5b00b07d36a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/61ee8e34f204381a008363170da068905ebf9a8d",
-                "reference": "61ee8e34f204381a008363170da068905ebf9a8d",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/04b3fa894d7d2ab0cf59c518e654e5b00b07d36a",
+                "reference": "04b3fa894d7d2ab0cf59c518e654e5b00b07d36a",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +377,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-11-18 15:39:57"
+            "time": "2017-12-04 19:35:33"
         },
         {
             "name": "phpactor/code-transform",
@@ -544,12 +544,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "064f02c7130c31c35770c9729083b1f4202dc36f"
+                "reference": "74e179a83a81dd8d66aa78f6c811ffd04d9f4763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/064f02c7130c31c35770c9729083b1f4202dc36f",
-                "reference": "064f02c7130c31c35770c9729083b1f4202dc36f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/74e179a83a81dd8d66aa78f6c811ffd04d9f4763",
+                "reference": "74e179a83a81dd8d66aa78f6c811ffd04d9f4763",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +586,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-12-04 19:34:39"
+            "time": "2017-12-04 19:47:21"
         },
         {
             "name": "phpbench/container",
@@ -1280,16 +1280,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.7.0",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e"
+                "reference": "103e21127bc63462af5f5165064cdd960f95fa14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
-                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/103e21127bc63462af5f5165064cdd960f95fa14",
+                "reference": "103e21127bc63462af5f5165064cdd960f95fa14",
                 "shasum": ""
             },
             "require": {
@@ -1298,9 +1298,14 @@
             "require-dev": {
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.6",
-                "phpunit/phpunit": "^4.1"
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "DeepCopy\\": "src/DeepCopy/"
@@ -1321,7 +1326,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-10-19T19:58:43+00:00"
+            "time": "2017-11-29T14:36:38+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1379,16 +1384,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "dev-master",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "1119a9765990a24f4c5218a85032fb6f3a91eaff"
+                "reference": "66465776cfc249844bde6d117abff1d22e06c2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/1119a9765990a24f4c5218a85032fb6f3a91eaff",
-                "reference": "1119a9765990a24f4c5218a85032fb6f3a91eaff",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/66465776cfc249844bde6d117abff1d22e06c2da",
+                "reference": "66465776cfc249844bde6d117abff1d22e06c2da",
                 "shasum": ""
             },
             "require": {
@@ -1426,7 +1431,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-15 19:01:54"
+            "time": "2017-11-27T17:38:31+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1481,12 +1486,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "ddd9d7ffff1d7c3acd1a79a8e21d5ee5ea7beace"
+                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/ddd9d7ffff1d7c3acd1a79a8e21d5ee5ea7beace",
-                "reference": "ddd9d7ffff1d7c3acd1a79a8e21d5ee5ea7beace",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
+                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
                 "shasum": ""
             },
             "require": {
@@ -1536,7 +1541,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-11-07 12:00:44"
+            "time": "2017-11-24T13:59:53+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1600,53 +1605,6 @@
                 "xunit"
             ],
             "time": "2017-04-02 07:44:40"
-        },
-        {
-            "name": "phpunit/php-file-iterator",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "FilterIterator implementation that filters files based on a list of suffixes.",
-            "homepage": "https://github.com/sebastianbergmann/php-file-iterator/",
-            "keywords": [
-                "filesystem",
-                "iterator"
-            ],
-            "time": "2016-10-03 07:40:28"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1739,66 +1697,17 @@
             "time": "2017-03-07 15:42:04"
         },
         {
-            "name": "phpunit/php-token-stream",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "7aad36cd1f32bbbd09a9a5efc596d00039ecb224"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/7aad36cd1f32bbbd09a9a5efc596d00039ecb224",
-                "reference": "7aad36cd1f32bbbd09a9a5efc596d00039ecb224",
-                "shasum": ""
-            },
-            "require": {
-                "ext-tokenizer": "*",
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de"
-                }
-            ],
-            "description": "Wrapper around PHP's tokenizer extension.",
-            "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
-            "keywords": [
-                "tokenizer"
-            ],
-            "time": "2017-11-16 09:53:19"
-        },
-        {
             "name": "phpunit/phpunit",
             "version": "5.7.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "cb52087e4403c100622f05c8811201cce2607b24"
+                "reference": "a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cb52087e4403c100622f05c8811201cce2607b24",
-                "reference": "cb52087e4403c100622f05c8811201cce2607b24",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba",
+                "reference": "a8a55d1f10ab29a793e8353fc49aaa44ba7b97ba",
                 "shasum": ""
             },
             "require": {
@@ -1867,7 +1776,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-16 09:54:38"
+            "time": "2017-12-01T05:15:50+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
