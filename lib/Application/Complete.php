@@ -6,11 +6,12 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Application\Helper\FilesystemHelper;
-use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\ClassName;
 
 class Complete
 {
@@ -39,51 +40,54 @@ class Complete
             Offset::fromint($offset)
         );
 
-        $type = $reflectionOffset->symbolInformation()->type();
-
-        if ($type->isPrimitive()) {
-            return [];
-        }
-
-        $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
+        $types = $reflectionOffset->symbolInformation()->types();
 
         $suggestions = [];
-        /** @var $method ReflectionMethod */
-        foreach ($classReflection->methods() as $method) {
-            if ($method->name() === '__construct') {
+
+        foreach ($types as $type) {
+            if ($type->isPrimitive()) {
                 continue;
             }
-            $info = $this->getMethodInfo($method);
-            $suggestions[] = [
-                'type' => 'f',
-                'name' => $method->name(),
-                'info' => $info,
-            ];
-        }
 
-        if ($classReflection instanceof ReflectionClass) {
-            foreach ($classReflection->properties() as $property) {
+            $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
+
+            /** @var $method ReflectionMethod */
+            foreach ($classReflection->methods() as $method) {
+                if ($method->name() === '__construct') {
+                    continue;
+                }
+                $info = $this->getMethodInfo($method);
                 $suggestions[] = [
-                    'type' => 'm',
-                    'name' => $property->name(),
-                    'info' => $this->getPropertyInfo($property),
+                    'type' => 'f',
+                    'name' => $method->name(),
+                    'info' => $info,
                 ];
             }
-        }
 
-        foreach ($classReflection->constants() as $constant) {
-            $suggestions[] = [
-                'type' => 'm',
-                'name' => $constant->name(),
-                'info' => 'const ' . $constant->name(),
-            ];
-        }
+            if ($classReflection instanceof ReflectionClass) {
+                foreach ($classReflection->properties() as $property) {
+                    $suggestions[] = [
+                        'type' => 'm',
+                        'name' => $property->name(),
+                        'info' => $this->getPropertyInfo($property),
+                    ];
+                }
+            }
 
-        // filter partial match
-        if ($partialMatch) {
-            $suggestions = array_filter($suggestions, function ($suggestion) use ($partialMatch) {
-                return 0 === strpos($suggestion['name'], $partialMatch);
-            });
+            foreach ($classReflection->constants() as $constant) {
+                $suggestions[] = [
+                    'type' => 'm',
+                    'name' => $constant->name(),
+                    'info' => 'const ' . $constant->name(),
+                ];
+            }
+
+            // filter partial match
+            if ($partialMatch) {
+                $suggestions = array_filter($suggestions, function ($suggestion) use ($partialMatch) {
+                    return 0 === strpos($suggestion['name'], $partialMatch);
+                });
+            }
         }
 
         return array_values($suggestions);
@@ -148,9 +152,11 @@ class Complete
         }
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 
-        $returnType = $method->inferredReturnType();
-        if ($returnType->isDefined()) {
-            $info[] = ': ' . (string) $returnType->short();
+        $returnTypes = $method->inferredReturnTypes();
+        if (count($returnTypes->count())) {
+            $info[] = ': ' . implode('|', array_map(function (Type $type) {
+                return $type->short();
+            }, iterator_to_array($returnTypes)));
         }
 
         return implode('', $info);
@@ -169,8 +175,8 @@ class Complete
         $info[] = ' ';
         $info[] = '$' . $property->name();
 
-        if ($property->type()->isDefined()) {
-            $info[] = ': ' . (string) $property->type()->short();
+        if ($property->inferredTypes()->best()->isDefined()) {
+            $info[] = ': ' . (string) $property->inferredTypes()->best()->short();
         }
 
         return implode('', $info);

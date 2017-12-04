@@ -118,6 +118,7 @@ class ClassReflector
 
         /** @var $property ReflectionProperty */
         foreach ($reflection->properties() as $property) {
+            $propertyType = $property->inferredTypes()->best();
             $return['properties'][$property->name()] = [
                 'name' => $property->name(),
                 'visibility' => (string) $property->visibility(),
@@ -125,7 +126,7 @@ class ClassReflector
                 'info' => sprintf(
                     '%s %s $%s',
                     (string) $property->visibility(),
-                    $property->type()->isPrimitive() ? (string) $property->type() : (string) $property->type()->className(),
+                    $propertyType->isPrimitive() ? (string) $propertyType : (string) $propertyType->className(),
                     $property->name()
                 ),
             ];
