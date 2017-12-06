@@ -11,6 +11,7 @@ use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
 use Phpactor\Application\OffsetInfo;
 use Phpactor\Application\Navigator;
+use Phpactor\Application\Linter;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -45,6 +46,7 @@ use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\ClassFileConverter\PathFinder;
+use Phpactor\Console\Command\LintCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -184,6 +186,12 @@ class CoreExtension implements ExtensionInterface
             return new ReferencesMemberCommand(
                 $container->get('application.method_references'),
                 $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.lint', function (Container $container) {
+            return new LintCommand(
+                $container->get('application.linter')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -371,6 +379,13 @@ class CoreExtension implements ExtensionInterface
             return new Complete(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer')
+            );
+        });
+
+        $container->register('application.linter', function (Container $container) {
+            return new Linter(
+                $container->get('reflection.reflector'),
+                $container->get('source_code_filesystem.registry')
             );
         });
 
