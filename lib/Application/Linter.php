@@ -34,7 +34,7 @@ class Linter
         $files = $filesystem->fileList()->within(FilePath::fromString($path));
 
         foreach ($files as $file) {
-            $problems[$file->path()] = $this->reflector->lint(file_get_contents($file->path()));
+            $problems[$file->path()] = $this->reflector->diagnose(file_get_contents($file->path()));
         }
 
         return $problems;

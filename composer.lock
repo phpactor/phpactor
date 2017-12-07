@@ -492,12 +492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "59c4dc9b402a03159d8d92ee7e4805d1c0b97251"
+                "reference": "d2df4fde3a36aa78fe48be676433bed592a23422"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/59c4dc9b402a03159d8d92ee7e4805d1c0b97251",
-                "reference": "59c4dc9b402a03159d8d92ee7e4805d1c0b97251",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/d2df4fde3a36aa78fe48be676433bed592a23422",
+                "reference": "d2df4fde3a36aa78fe48be676433bed592a23422",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-11-19 13:31:44"
+            "time": "2017-12-06 21:00:12"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -544,12 +544,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "74e179a83a81dd8d66aa78f6c811ffd04d9f4763"
+                "reference": "f4a77100eba2d4bae46f062e39a40f1fd85adad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/74e179a83a81dd8d66aa78f6c811ffd04d9f4763",
-                "reference": "74e179a83a81dd8d66aa78f6c811ffd04d9f4763",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f4a77100eba2d4bae46f062e39a40f1fd85adad6",
+                "reference": "f4a77100eba2d4bae46f062e39a40f1fd85adad6",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +586,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-12-04 19:47:21"
+            "time": "2017-12-07 08:14:57"
         },
         {
             "name": "phpbench/container",
@@ -1647,16 +1647,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "5.2.x-dev",
+            "version": "5.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "7d7739ff9e07475ba0eb1a46dfd6eb98c2fd04bc"
+                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/7d7739ff9e07475ba0eb1a46dfd6eb98c2fd04bc",
-                "reference": "7d7739ff9e07475ba0eb1a46dfd6eb98c2fd04bc",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/661f34d0bd3f1a7225ef491a70a020ad23a057a1",
+                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1",
                 "shasum": ""
             },
             "require": {
@@ -1680,7 +1680,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.2.x-dev"
+                    "dev-master": "5.3.x-dev"
                 }
             },
             "autoload": {
@@ -1706,7 +1706,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-28 06:05:44"
+            "time": "2017-12-06 09:29:45"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1753,7 +1753,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-27 13:52:08"
+            "time": "2017-11-27T13:52:08+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1892,7 +1892,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-11-27 08:47:38"
+            "time": "2017-11-27T08:47:38+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1900,12 +1900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b2bd71c37f873d95609e5427b2e8f215d1e729ce"
+                "reference": "882e886cc928a0abd3c61282b2a64026237d14a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b2bd71c37f873d95609e5427b2e8f215d1e729ce",
-                "reference": "b2bd71c37f873d95609e5427b2e8f215d1e729ce",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/882e886cc928a0abd3c61282b2a64026237d14a4",
+                "reference": "882e886cc928a0abd3c61282b2a64026237d14a4",
                 "shasum": ""
             },
             "require": {
@@ -1919,7 +1919,7 @@
                 "phar-io/version": "^1.0",
                 "php": "^7.0",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^5.2.3",
+                "phpunit/php-code-coverage": "^5.3",
                 "phpunit/php-file-iterator": "^1.4.3",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^1.0.9",
@@ -1976,7 +1976,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-04 16:42:16"
+            "time": "2017-12-06 09:42:03"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1984,12 +1984,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "c93faa8e25f880627a580db54e0c798702f325d1"
+                "reference": "c785d2b2ce990b4f569b2492e10c569afd2123aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/c93faa8e25f880627a580db54e0c798702f325d1",
-                "reference": "c93faa8e25f880627a580db54e0c798702f325d1",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/c785d2b2ce990b4f569b2492e10c569afd2123aa",
+                "reference": "c785d2b2ce990b4f569b2492e10c569afd2123aa",
                 "shasum": ""
             },
             "require": {
@@ -2035,7 +2035,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-12-04 15:08:52"
+            "time": "2017-12-06 09:45:14"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

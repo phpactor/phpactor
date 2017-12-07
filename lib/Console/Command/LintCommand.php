@@ -48,7 +48,7 @@ class LintCommand extends Command
                 $table->addRow([
                     $problem->symbol()->position()->start(),
                     $problem->symbol()->position()->end(),
-                    implode(', ', $problem->errors()),
+                    implode(', ', $problem->issues()),
                 ]);
             }
 
