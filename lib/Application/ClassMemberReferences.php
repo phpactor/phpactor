@@ -16,6 +16,7 @@ use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\Core\OffsetContext;
 
 class ClassMemberReferences
 {
@@ -165,37 +166,16 @@ class ClassMemberReferences
 
     private function serializeReference(string $code, MemberReference $reference)
     {
-        list($lineNumber, $colNumber, $line) = $this->line($code, $reference->position()->start());
+        $offsetContext = OffsetContext::fromSourceAndOffset($code, $reference->position()->start(), $reference->position()->length());
         return [
             'start' => $reference->position()->start(),
             'end' => $reference->position()->end(),
-            'line' => $line,
-            'line_no' => $lineNumber,
-            'col_no' => $colNumber,
+            'line' => $offsetContext->line(),
+            'line_no' => $offsetContext->lineNumber(),
+            'col_no' => $offsetContext->col(),
             'reference' => (string) $reference->methodName(),
             'class' => $reference->hasClass() ? (string) $reference->class() : null,
         ];
-    }
-
-    private function line(string $code, int $offset)
-    {
-        $lines = explode(PHP_EOL, $code);
-        $number = 0;
-        $startPosition = 0;
-
-        foreach ($lines as $number => $line) {
-            $number = $number + 1;
-            $endPosition = $startPosition + strlen($line) + 1;
-
-            if ($offset >= $startPosition && $offset <= $endPosition) {
-                $col = $offset - $startPosition;
-                return [ $number, $col, $line ];
-            }
-
-            $startPosition = $endPosition;
-        }
-
-        return [$number, 0, ''];
     }
 
     private function replaceReferencesInCode(string $code, MemberReferences $list, string $replace): SourceCode

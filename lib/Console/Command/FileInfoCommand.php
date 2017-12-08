@@ -11,7 +11,14 @@ use Phpactor\Console\Dumper\DumperRegistry;
 
 class FileInfoCommand extends Command
 {
+    /**
+     * @var FileInfo
+     */
     private $infoForOffset;
+
+    /**
+     * @var DumperRegistry
+     */
     private $dumperRegistry;
 
     public function __construct(
