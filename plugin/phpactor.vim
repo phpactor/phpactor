@@ -43,13 +43,20 @@ function! phpactor#Complete(findstart, base)
     let source = join(getline(1,'.'), "\n")
     let source = source . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let suggestions = phpactor#rpc("complete", { "offset": offset, "source": source})
+    let result = phpactor#rpc("complete", { "offset": offset, "source": source})
+    let suggestions = result['suggestions']
+    let issues = result['issues']
+
 
     let completions = []
     if !empty(suggestions)
         for suggestion in suggestions
             call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
         endfor
+    endif
+
+    if !empty(issues)
+        echoe join(issues, ', ')
     endif
 
     return completions

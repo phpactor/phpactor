@@ -6,7 +6,7 @@ use Phpactor\Core\GotoDefinition\Exception\GotoDefinitionException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
+use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Reflector;
 
 class GotoDefinition
@@ -21,7 +21,7 @@ class GotoDefinition
         $this->reflector = $reflector;
     }
 
-    public function gotoDefinition(SymbolInformation $symbolInformation): GotoDefinitionResult
+    public function gotoDefinition(SymbolContext $symbolInformation): GotoDefinitionResult
     {
         switch ($symbolInformation->symbol()->symbolType()) {
             case Symbol::METHOD:
@@ -38,7 +38,7 @@ class GotoDefinition
         ));
     }
 
-    public function gotoClass(SymbolInformation $symbolInformation): GotoDefinitionResult
+    public function gotoClass(SymbolContext $symbolInformation): GotoDefinitionResult
     {
         $className = $symbolInformation->type();
 
@@ -63,7 +63,7 @@ class GotoDefinition
         );
     }
 
-    private function gotoMember(SymbolInformation $symbolInformation)
+    private function gotoMember(SymbolContext $symbolInformation)
     {
         $symbolName = $symbolInformation->symbol()->name();
         $symbolType = $symbolInformation->symbol()->symbolType();

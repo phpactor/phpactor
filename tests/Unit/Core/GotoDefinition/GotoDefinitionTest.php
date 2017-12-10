@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Core\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
+use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -74,7 +74,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('Do not know how to goto definition of symbol');
 
-        $info = SymbolInformation::for(Symbol::unknown());
+        $info = SymbolContext::for(Symbol::unknown());
         $result = $this->action->gotoDefinition($info);
     }
 
@@ -86,7 +86,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('Containing class for member "aaa" could not be determined');
 
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $result = $this->action->gotoDefinition($info);
@@ -100,7 +100,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('Notfound');
 
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $info = $info->withContainerType(Type::fromString('Foobar'));
@@ -117,7 +117,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('The source code for class "asd" has no path associated with it');
 
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $info = $info->withContainerType(Type::fromString('Foobar'));
@@ -136,7 +136,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('Class "class1" has no method named "aaa", has: "a", "b", "c"');
 
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition(Symbol::METHOD, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $info = $info->withContainerType(Type::fromString('Foobar'));
@@ -198,7 +198,7 @@ class GotoDefinitionTest extends TestCase
         $this->expectException(GotoDefinitionException::class);
         $this->expectExceptionMessage('Symbol is a property and class "class1" is an interface');
 
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition(Symbol::PROPERTY, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $info = $info->withContainerType(Type::fromString('Foobar'));
@@ -211,7 +211,7 @@ class GotoDefinitionTest extends TestCase
 
     private function assertGotoDefinition($symbolType)
     {
-        $info = SymbolInformation::for(
+        $info = SymbolContext::for(
             Symbol::fromTypeNameAndPosition($symbolType, 'aaa', Position::fromStartAndEnd(1, 2))
         );
         $info = $info->withContainerType(Type::fromString('Foobar'));

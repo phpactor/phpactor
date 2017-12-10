@@ -18,8 +18,8 @@ class CompleteTest extends TestCase
     {
         $result = $this->complete($source, $offset);
 
-        $this->assertEquals($expected, $result);
-        $this->assertEquals(json_encode($expected, true), json_encode($result, true));
+        $this->assertEquals($expected, $result['suggestions']);
+        $this->assertEquals(json_encode($expected, true), json_encode($result['suggestions'], true));
     }
 
     public function provideComplete()
@@ -38,7 +38,7 @@ $foobar = new Foobar();
 $foobar->
 
 EOT
-                , 75, [
+        , 75, [
                     [
                         'type' => 'm',
                         'name' => 'foo',
@@ -95,6 +95,32 @@ EOT
                         'type' => 'f',
                         'name' => 'foo',
                         'info' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
+                    ]
+                ]
+            ],
+            'Public method multiple return types' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    /**
+     * @return Foobar|Barbar
+     */
+    public function foo()
+    {
+    }
+}
+
+$foobar = new Foobar();
+$foobar->
+
+EOT
+                , 141, [
+                    [
+                        'type' => 'f',
+                        'name' => 'foo',
+                        'info' => 'pub foo(): Foobar|Barbar',
                     ]
                 ]
             ],
@@ -234,5 +260,72 @@ EOT
         $result = $complete->complete($source, $offset);
 
         return $result;
+    }
+
+    /**
+     * @dataProvider provideErrors
+     */
+    public function testErrors(string $source, int $offset, array $expected)
+    {
+        $results = $this->complete($source, $offset);
+        $this->assertEquals($expected, $results['issues']);
+    }
+
+    public function provideErrors()
+    {
+        return [
+            [
+                <<<'EOT'
+<?php
+
+$asd = 'asd';
+$asd->
+EOT
+                ,27,
+                [
+                    'Cannot complete members on scalar value (string)',
+                ]
+            ],
+            [
+                <<<'EOT'
+<?php
+
+$asd->
+EOT
+                ,13,
+                [
+                    'Variable "asd" is undefined',
+                ]
+            ],
+            [
+                <<<'EOT'
+<?php
+
+$asd = new BooBar();
+$asd->
+EOT
+                ,34,
+                [
+                    'Could not find class "BooBar"',
+                ]
+            ],
+            [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    public $foobar;
+}
+
+$foobar = new Foobar();
+$foobar->barbar->;
+EOT
+                ,86,
+                [
+                    'Class "Foobar" has no properties named "barbar"',
+                ]
+            ]
+        ];
     }
 }
