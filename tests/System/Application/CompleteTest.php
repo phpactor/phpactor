@@ -98,6 +98,32 @@ EOT
                     ]
                 ]
             ],
+            'Public method multiple return types' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    /**
+     * @return Foobar|Barbar
+     */
+    public function foo()
+    {
+    }
+}
+
+$foobar = new Foobar();
+$foobar->
+
+EOT
+                , 141, [
+                    [
+                        'type' => 'f',
+                        'name' => 'foo',
+                        'info' => 'pub foo(): Foobar|Barbar',
+                    ]
+                ]
+            ],
             'Static method' => [
                 <<<'EOT'
 <?php
