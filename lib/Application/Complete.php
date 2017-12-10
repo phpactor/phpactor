@@ -115,7 +115,7 @@ class Complete
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 
         $returnTypes = $method->inferredReturnTypes();
-        if (count($returnTypes->count())) {
+        if ($returnTypes->count() > 0) {
             $info[] = ': ' . implode('|', array_map(function (Type $type) {
                 return $type->short();
             }, iterator_to_array($returnTypes)));
