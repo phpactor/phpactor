@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 
 class Complete

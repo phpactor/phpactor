@@ -57,7 +57,6 @@ function! phpactor#Complete(findstart, base)
 
     if !empty(issues)
         echoe join(issues, ', ')
-        return -3
     endif
 
     return completions
