@@ -492,12 +492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "d2df4fde3a36aa78fe48be676433bed592a23422"
+                "reference": "59c4dc9b402a03159d8d92ee7e4805d1c0b97251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/d2df4fde3a36aa78fe48be676433bed592a23422",
-                "reference": "d2df4fde3a36aa78fe48be676433bed592a23422",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/59c4dc9b402a03159d8d92ee7e4805d1c0b97251",
+                "reference": "59c4dc9b402a03159d8d92ee7e4805d1c0b97251",
                 "shasum": ""
             },
             "require": {
@@ -536,7 +536,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2017-12-06 21:00:12"
+            "time": "2017-11-19 13:31:44"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -544,12 +544,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "9ecc8f1b3caa515bfe918f7a4be46e2f7cbf4c5c"
+                "reference": "895ceb9348aa57675cd45529cb2f7c12ba5a4c76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/9ecc8f1b3caa515bfe918f7a4be46e2f7cbf4c5c",
-                "reference": "9ecc8f1b3caa515bfe918f7a4be46e2f7cbf4c5c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/895ceb9348aa57675cd45529cb2f7c12ba5a4c76",
+                "reference": "895ceb9348aa57675cd45529cb2f7c12ba5a4c76",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +586,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-12-10 16:05:00"
+            "time": "2017-12-10 21:14:36"
         },
         {
             "name": "phpbench/container",
@@ -1643,7 +1643,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-12-07T16:59:59+00:00"
+            "time": "2017-12-07 16:59:59"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1706,7 +1706,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-07T10:13:30+00:00"
+            "time": "2017-12-07 10:13:30"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1976,7 +1976,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-10T08:06:19+00:00"
+            "time": "2017-12-10 08:06:19"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2035,7 +2035,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-12-10T08:01:53+00:00"
+            "time": "2017-12-10 08:01:53"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
