@@ -54,8 +54,6 @@ class CompleteCommand extends Command
         );
 
         $format = $input->getOption('format');
-        $this->dumperRegistry->get($format)->dump($output, [
-            $completions
-        ]);
+        $this->dumperRegistry->get($format)->dump($output, $completions);
     }
 }
