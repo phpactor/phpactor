@@ -64,7 +64,6 @@ class ClassCopy
     {
         $srcPath = Phpactor::normalizePath($srcPath);
 
-
         if (false === Glob::isDynamic($srcPath) && !file_exists($srcPath)) {
             throw new \RuntimeException(sprintf(
                 'File "%s" does not exist',

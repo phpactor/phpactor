@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Inference\SymbolInformation;
+use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
@@ -129,7 +129,7 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function findReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
+    private function findReferences(SymbolContext $symbolInformation, string $filesystem, string $replacement = null)
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem);
 
@@ -143,7 +143,7 @@ class ReferencesHandler extends AbstractHandler
         ]);
     }
 
-    private function replaceReferences1(SymbolInformation $symbolInformation, string $filesystem, string $replacement)
+    private function replaceReferences1(SymbolContext $symbolInformation, string $filesystem, string $replacement)
     {
         $references = $this->performFindOrReplaceReferences($symbolInformation, $filesystem, $replacement);
 
@@ -158,7 +158,7 @@ class ReferencesHandler extends AbstractHandler
         ]);
     }
 
-    private function classReferences(string $filesystem, SymbolInformation $symbolInformation, string $replacement = null)
+    private function classReferences(string $filesystem, SymbolContext $symbolInformation, string $replacement = null)
     {
         $classType = (string) $symbolInformation->type();
         $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
@@ -166,7 +166,7 @@ class ReferencesHandler extends AbstractHandler
         return $references['references'];
     }
 
-    private function memberReferences(string $filesystem, SymbolInformation $symbolInformation, string $memberType, string $replacement = null)
+    private function memberReferences(string $filesystem, SymbolContext $symbolInformation, string $memberType, string $replacement = null)
     {
         $classType = (string) $symbolInformation->containerType();
 
@@ -181,7 +181,7 @@ class ReferencesHandler extends AbstractHandler
         return $references['references'];
     }
 
-    private function performFindOrReplaceReferences(SymbolInformation $symbolInformation, string $filesystem, string $replacement = null)
+    private function performFindOrReplaceReferences(SymbolContext $symbolInformation, string $filesystem, string $replacement = null)
     {
         switch ($symbolInformation->symbol()->symbolType()) {
             case Symbol::CLASS_:
@@ -200,7 +200,7 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function echoMessage(string $action, SymbolInformation $symbolInformation, string $filesystem, array $references): EchoResponse
+    private function echoMessage(string $action, SymbolContext $symbolInformation, string $filesystem, array $references): EchoResponse
     {
         $count = array_reduce($references, function ($count, $result) {
             $count += count($result['references']);
@@ -231,7 +231,7 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function defaultReplacement(SymbolInformation $symbolInformation)
+    private function defaultReplacement(SymbolContext $symbolInformation)
     {
         if ($symbolInformation->symbol()->symbolType() === Symbol::CLASS_) {
             return (string) $symbolInformation->type()->className();

@@ -2,16 +2,19 @@
 
 namespace Phpactor\Application;
 
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Reflector;
 
 class Complete
 {
@@ -40,62 +43,22 @@ class Complete
             Offset::fromint($offset)
         );
 
-        $types = $reflectionOffset->symbolInformation()->types();
+        $symbolInformation = $reflectionOffset->symbolInformation();
+        $types = $symbolInformation->types();
 
         $suggestions = [];
 
         foreach ($types as $type) {
-            if ($type->isPrimitive()) {
-                continue;
-            }
-
-            $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
-
-            /** @var $method ReflectionMethod */
-            foreach ($classReflection->methods() as $method) {
-                if ($method->name() === '__construct') {
-                    continue;
-                }
-                $info = $this->getMethodInfo($method);
-                $suggestions[] = [
-                    'type' => 'f',
-                    'name' => $method->name(),
-                    'info' => $info,
-                ];
-            }
-
-            if ($classReflection instanceof ReflectionClass) {
-                foreach ($classReflection->properties() as $property) {
-                    $suggestions[] = [
-                        'type' => 'm',
-                        'name' => $property->name(),
-                        'info' => $this->getPropertyInfo($property),
-                    ];
-                }
-            }
-
-            foreach ($classReflection->constants() as $constant) {
-                $suggestions[] = [
-                    'type' => 'm',
-                    'name' => $constant->name(),
-                    'info' => 'const ' . $constant->name(),
-                ];
-            }
-
-            // filter partial match
-            if ($partialMatch) {
-                $suggestions = array_filter($suggestions, function ($suggestion) use ($partialMatch) {
-                    return 0 === strpos($suggestion['name'], $partialMatch);
-                });
-            }
+            $symbolInformation = $this->populateSuggestions($symbolInformation, $type, $suggestions);
         }
 
-        return array_values($suggestions);
+        return [
+            'suggestions' => array_values($suggestions),
+            'issues' => $symbolInformation->issues(),
+        ];
+
     }
 
-    /**
-     * Hello
-     */
     private function getOffetToReflect($source, $offset)
     {
         $source = str_replace(PHP_EOL, ' ', $source);
@@ -180,5 +143,55 @@ class Complete
         }
 
         return implode('', $info);
+    }
+
+    private function populateSuggestions(SymbolContext $symbolInformation, Type $type, array &$suggestions)
+    {
+        if (false === $type->isDefined()) {
+            return $symbolInformation;
+        }
+
+        if ($type->isPrimitive()) {
+            return $symbolInformation->withIssue(sprintf('Cannot complete members on scalar value (%s)', (string) $type));
+        }
+
+        try {
+            $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
+        } catch (NotFound $e) {
+            return $symbolInformation->withIssue(sprintf('Could not find class "%s"', (string) $type));
+        }
+
+        /** @var $method ReflectionMethod */
+        foreach ($classReflection->methods() as $method) {
+            if ($method->name() === '__construct') {
+                continue;
+            }
+            $info = $this->getMethodInfo($method);
+            $suggestions[] = [
+                'type' => 'f',
+                'name' => $method->name(),
+                'info' => $info,
+            ];
+        }
+
+        if ($classReflection instanceof ReflectionClass) {
+            foreach ($classReflection->properties() as $property) {
+                $suggestions[] = [
+                    'type' => 'm',
+                    'name' => $property->name(),
+                    'info' => $this->getPropertyInfo($property),
+                ];
+            }
+        }
+
+        foreach ($classReflection->constants() as $constant) {
+            $suggestions[] = [
+                'type' => 'm',
+                'name' => $constant->name(),
+                'info' => 'const ' . $constant->name(),
+            ];
+        }
+
+        return $symbolInformation;
     }
 }
