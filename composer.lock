@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "79872c3ebd6f110414df926597b4ade944ab86d9"
+                "reference": "eccc6119a65bb4a6437fceb2c73b1d13ab22f805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/79872c3ebd6f110414df926597b4ade944ab86d9",
-                "reference": "79872c3ebd6f110414df926597b4ade944ab86d9",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/eccc6119a65bb4a6437fceb2c73b1d13ab22f805",
+                "reference": "eccc6119a65bb4a6437fceb2c73b1d13ab22f805",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-11-27 12:12:22"
+            "time": "2017-12-11 12:56:16"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -109,12 +109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "10e901a6086826376c6256954dc8903ef0ec6c9e"
+                "reference": "c435c471f6ffcb50def01c943314ee99b5080873"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/10e901a6086826376c6256954dc8903ef0ec6c9e",
-                "reference": "10e901a6086826376c6256954dc8903ef0ec6c9e",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/c435c471f6ffcb50def01c943314ee99b5080873",
+                "reference": "c435c471f6ffcb50def01c943314ee99b5080873",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +142,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2017-11-17 17:06:43"
+            "time": "2017-12-13 09:47:57"
         },
         {
             "name": "monolog/monolog",
@@ -434,6 +434,42 @@
             "time": "2017-12-10 20:22:39"
         },
         {
+            "name": "phpactor/docblock",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/docblock.git",
+                "reference": "3c872e3bc78f7706049a6d32983ad16572e995b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/3c872e3bc78f7706049a6d32983ad16572e995b3",
+                "reference": "3c872e3bc78f7706049a6d32983ad16572e995b3",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Docblock\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Simple Docblock Parser",
+            "time": "2017-12-12 16:08:10"
+        },
+        {
             "name": "phpactor/path-finder",
             "version": "dev-master",
             "source": {
@@ -544,17 +580,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "895ceb9348aa57675cd45529cb2f7c12ba5a4c76"
+                "reference": "f70e2eb64c70769f2460e731353874d4037c0cbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/895ceb9348aa57675cd45529cb2f7c12ba5a4c76",
-                "reference": "895ceb9348aa57675cd45529cb2f7c12ba5a4c76",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f70e2eb64c70769f2460e731353874d4037c0cbf",
+                "reference": "f70e2eb64c70769f2460e731353874d4037c0cbf",
                 "shasum": ""
             },
             "require": {
                 "jetbrains/phpstorm-stubs": "dev-master",
                 "microsoft/tolerant-php-parser": "@dev",
+                "phpactor/docblock": "@dev",
                 "psr/log": "^1.0@dev"
             },
             "require-dev": {
@@ -586,7 +623,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-12-10 21:14:36"
+            "time": "2017-12-13 10:21:57"
         },
         {
             "name": "phpbench/container",
@@ -1900,12 +1937,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c"
+                "reference": "6224cb834a6b0b432741393b0ce313517da3f47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6224cb834a6b0b432741393b0ce313517da3f47e",
+                "reference": "6224cb834a6b0b432741393b0ce313517da3f47e",
                 "shasum": ""
             },
             "require": {
@@ -1976,7 +2013,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-10 08:06:19"
+            "time": "2017-12-12 05:55:06"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
