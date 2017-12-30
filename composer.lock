@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "72e78da24d97c09e6c1d8a3d41140ea3504cfabc"
+                "reference": "880674c7eb417256c49241572578f070a68bc725"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/72e78da24d97c09e6c1d8a3d41140ea3504cfabc",
-                "reference": "72e78da24d97c09e6c1d8a3d41140ea3504cfabc",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/880674c7eb417256c49241572578f070a68bc725",
+                "reference": "880674c7eb417256c49241572578f070a68bc725",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +377,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-12-30 18:52:49"
+            "time": "2017-12-30 19:23:49"
         },
         {
             "name": "phpactor/code-transform",
