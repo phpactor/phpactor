@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "43061d78f1980dedab671a30b419074b9e6d79f8"
+                "reference": "3f4891a7df1ba335cfbda521f4f4eaa0724b7e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/43061d78f1980dedab671a30b419074b9e6d79f8",
-                "reference": "43061d78f1980dedab671a30b419074b9e6d79f8",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3f4891a7df1ba335cfbda521f4f4eaa0724b7e10",
+                "reference": "3f4891a7df1ba335cfbda521f4f4eaa0724b7e10",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-12-19 13:52:02"
+            "time": "2017-12-29 13:54:16"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -580,12 +580,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "438ec1a87c61535a9a4f9f973e6a517a4c140b35"
+                "reference": "967b7b888ea9d214ebffea658c2a53a941144af6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/438ec1a87c61535a9a4f9f973e6a517a4c140b35",
-                "reference": "438ec1a87c61535a9a4f9f973e6a517a4c140b35",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/967b7b888ea9d214ebffea658c2a53a941144af6",
+                "reference": "967b7b888ea9d214ebffea658c2a53a941144af6",
                 "shasum": ""
             },
             "require": {
@@ -623,7 +623,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2017-12-20 18:30:56"
+            "time": "2017-12-20 21:37:16"
         },
         {
             "name": "phpbench/container",
@@ -1620,12 +1620,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e"
+                "reference": "9a84d1c09fbf7918e9d3cf998b83ecbf7555261d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3d0b3928bb1f6b1046a4547e96da9397a165f10e",
-                "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/9a84d1c09fbf7918e9d3cf998b83ecbf7555261d",
+                "reference": "9a84d1c09fbf7918e9d3cf998b83ecbf7555261d",
                 "shasum": ""
             },
             "require": {
@@ -1637,7 +1637,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^2.5|^3.2",
-                "phpunit/phpunit": "^4.8.35 || ^5.7"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5"
             },
             "type": "library",
             "extra": {
@@ -1675,7 +1675,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-12-07 16:59:59"
+            "time": "2017-12-21 16:59:48"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1932,12 +1932,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "218d86c432ccb197b9bd6ca29d57a08acba6908a"
+                "reference": "2068d5216333af1b3dc8dc1552f6b9e2df3dc0ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/218d86c432ccb197b9bd6ca29d57a08acba6908a",
-                "reference": "218d86c432ccb197b9bd6ca29d57a08acba6908a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2068d5216333af1b3dc8dc1552f6b9e2df3dc0ee",
+                "reference": "2068d5216333af1b3dc8dc1552f6b9e2df3dc0ee",
                 "shasum": ""
             },
             "require": {
@@ -2008,7 +2008,66 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-19T06:28:18+00:00"
+            "time": "2017-12-28T09:21:53+00:00"
+        },
+        {
+            "name": "phpunit/phpunit-mock-objects",
+            "version": "5.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
+                "reference": "283b9f4f670e3a6fd6c4ff95c51a952eb5c75933"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/283b9f4f670e3a6fd6c4ff95c51a952eb5c75933",
+                "reference": "283b9f4f670e3a6fd6c4ff95c51a952eb5c75933",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/instantiator": "^1.0.5",
+                "php": "^7.0",
+                "phpunit/php-text-template": "^1.2.1",
+                "sebastian/exporter": "^3.1"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "suggest": {
+                "ext-soap": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Mock Object library for PHPUnit",
+            "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
+            "keywords": [
+                "mock",
+                "xunit"
+            ],
+            "time": "2017-12-10 08:01:53"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2061,12 +2120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "329177051e1c113473530ab0486cb5e892e7e161"
+                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/329177051e1c113473530ab0486cb5e892e7e161",
-                "reference": "329177051e1c113473530ab0486cb5e892e7e161",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
+                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
                 "shasum": ""
             },
             "require": {
@@ -2117,7 +2176,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-12-19T21:05:59+00:00"
+            "time": "2017-12-22 14:50:35"
         },
         {
             "name": "sebastian/diff",
@@ -2169,7 +2228,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-12-14T13:13:00+00:00"
+            "time": "2017-12-14 13:13:00"
         },
         {
             "name": "sebastian/environment",
