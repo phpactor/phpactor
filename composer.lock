@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "fc57c3576b748380e413ad494e0022939d586fcf"
+                "reference": "d8a84b20c073596aca81b352f100f708f00ed441"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/fc57c3576b748380e413ad494e0022939d586fcf",
-                "reference": "fc57c3576b748380e413ad494e0022939d586fcf",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/d8a84b20c073596aca81b352f100f708f00ed441",
+                "reference": "d8a84b20c073596aca81b352f100f708f00ed441",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +377,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-12-04 19:53:25"
+            "time": "2017-12-30 17:12:18"
         },
         {
             "name": "phpactor/code-transform",
@@ -385,12 +385,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "b8192e85fd19f1a63daec818b31288d267ece6ff"
+                "reference": "02d44799bd7fc841eb2cd26b6d7a1a40ab86bb6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/b8192e85fd19f1a63daec818b31288d267ece6ff",
-                "reference": "b8192e85fd19f1a63daec818b31288d267ece6ff",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/02d44799bd7fc841eb2cd26b6d7a1a40ab86bb6c",
+                "reference": "02d44799bd7fc841eb2cd26b6d7a1a40ab86bb6c",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2017-12-10 20:22:39"
+            "time": "2017-12-30 17:16:37"
         },
         {
             "name": "phpactor/docblock",
@@ -2008,7 +2008,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-28T09:21:53+00:00"
+            "time": "2017-12-28 09:21:53"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
