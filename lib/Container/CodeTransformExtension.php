@@ -224,6 +224,7 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.refactor.generate_method', function (Container $container) {
             return new WorseGenerateMethod(
                 $container->get('reflection.reflector'),
+                new WorseBuilderFactory($container->get('reflection.reflector')),
                 $container->get('code_transform.updater')
             );
         });
