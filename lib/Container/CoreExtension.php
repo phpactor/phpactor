@@ -47,6 +47,7 @@ use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Application\CacheClear;
 use Phpactor\Console\Command\CacheClearCommand;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -298,6 +299,9 @@ class CoreExtension implements ExtensionInterface
             foreach ($container->get('composer.class_loaders') as $classLoader) {
                 $fileToClasses[] =  new ComposerFileToClass($classLoader);
             }
+
+            $fileToClasses[] = new SimpleFileToClass();
+
             return new ChainFileToClass($fileToClasses);
         });
     }
