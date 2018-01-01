@@ -48,6 +48,7 @@ use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Application\CacheClear;
 use Phpactor\Console\Command\CacheClearCommand;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -291,6 +292,7 @@ class CoreExtension implements ExtensionInterface
                 $classToFiles[] = new ComposerClassToFile($classLoader);
             }
 
+            $classToFiles[] = new SimpleClassToFile($container->getParameter(self::WORKING_DIRECTORY));
             return new ChainClassToFile($classToFiles);
         });
 
