@@ -247,7 +247,10 @@ class CoreExtension implements ExtensionInterface
             $autoloaders = [];
 
             foreach ($autoloaderPaths as $autoloaderPath) {
-                if (!file_exists($autoloaderPath)) {
+                if (false === file_exists($autoloaderPath)) {
+                    $container->get('monolog.logger')->warning(sprintf(
+                        'Could not find autoloader "%s"', $autoloaderPath
+                    ));
                     continue;
                 }
 
@@ -339,7 +342,7 @@ class CoreExtension implements ExtensionInterface
             return new ClassCopy(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_mover'),
-                $container->get('source_code_filesystem.git')
+                $container->get('source_code_filesystem.registry')->get('git')
             );
         });
 

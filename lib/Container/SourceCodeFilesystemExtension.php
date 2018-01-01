@@ -14,6 +14,7 @@ use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use PhpBench\DependencyInjection\Container;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
+use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
 
 class SourceCodeFilesystemExtension implements ExtensionInterface
 {
@@ -62,7 +63,10 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
                 }
             }
 
-            return new MappedFilesystemRegistry($filesystems);
+            return new FallbackFilesystemRegistry(
+                new MappedFilesystemRegistry($filesystems),
+                'simple'
+            );
         });
     }
 }
