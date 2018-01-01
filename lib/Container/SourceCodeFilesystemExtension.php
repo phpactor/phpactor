@@ -60,6 +60,9 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
                     $filesystems[$attributes['name']] = $container->get($serviceId);
                 } catch (NotSupported $exception)
                 {
+                    $container->get('monolog.logger')->warning(sprintf(
+                        'Filesystem "%s" not supported: "%s"', $attributes['name'], $exception->getMessage()
+                    ));
                 }
             }
 

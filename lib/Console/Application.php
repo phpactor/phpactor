@@ -12,6 +12,8 @@ use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Container\CoreExtension;
+use Psr\Log\LogLevel;
 
 class Application extends SymfonyApplication
 {
@@ -23,7 +25,6 @@ class Application extends SymfonyApplication
     public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
     {
         parent::__construct('Phpactor', '0.1');
-        $this->foobar = 'string';
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)
@@ -31,10 +32,6 @@ class Application extends SymfonyApplication
         $this->initialize($input);
 
         $this->setCatchExceptions(false);
-
-        if ($output->isVerbose()) {
-            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDERR));
-        }
 
         $formatter = $output->getFormatter();
         $formatter->setStyle('highlight', new OutputFormatterStyle('red', null, [ 'bold' ]));
@@ -96,6 +93,10 @@ class Application extends SymfonyApplication
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
+
+        if ($input->hasParameterOption([ '--verbose', '-v' ])) {
+            $config[CoreExtension::LOGGING_STDERR_LEVEL] = LogLevel::DEBUG;
         }
 
         $this->container = new ApplicationContainer($config);

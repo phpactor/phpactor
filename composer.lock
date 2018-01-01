@@ -286,6 +286,7 @@
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "reference": "f752d27e03d096d5c2b42abe2befaf482646c780"
             },
             "dist": {
@@ -300,6 +301,14 @@
                 "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/3d211b23761e91dd0eea90cda5c29f1253e4b583",
                 "reference": "3d211b23761e91dd0eea90cda5c29f1253e4b583",
 >>>>>>> Updated composer
+=======
+                "reference": "f752d27e03d096d5c2b42abe2befaf482646c780"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/f752d27e03d096d5c2b42abe2befaf482646c780",
+                "reference": "f752d27e03d096d5c2b42abe2befaf482646c780",
+>>>>>>> Log WARNINGs by default
                 "shasum": ""
             },
             "require": {
@@ -333,10 +342,14 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2018-01-01T20:30:06+00:00"
 =======
             "time": "2018-01-01 16:53:16"
 >>>>>>> Updated composer
+=======
+            "time": "2018-01-01 20:30:06"
+>>>>>>> Log WARNINGs by default
         },
         {
             "name": "phpactor/code-builder",
@@ -2514,10 +2527,14 @@
                 "xunit"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2018-01-14T15:48:34+00:00"
 =======
             "time": "2018-01-01T07:03:12+00:00"
 >>>>>>> Updated composer
+=======
+            "time": "2018-01-01 07:03:12"
+>>>>>>> Log WARNINGs by default
         },
         {
             "name": "phpunit/phpunit-mock-objects",
