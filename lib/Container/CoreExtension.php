@@ -248,10 +248,7 @@ class CoreExtension implements ExtensionInterface
 
             foreach ($autoloaderPaths as $autoloaderPath) {
                 if (!file_exists($autoloaderPath)) {
-                    throw new \InvalidArgumentException(sprintf(
-                        'Could not locate autoloaderPath file "%s"',
-                        $autoloaderPath
-                    ));
+                    continue;
                 }
 
                 $autoloader = require $autoloaderPath;
