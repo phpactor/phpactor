@@ -25,6 +25,7 @@ class ConfigLoaderTest extends TestCase
                     'bonjour' => 'le-monde',
                     'foobar' => 'barfoo',
                 ],
+                'exists' => 'mememe',
             ],
         ], $config);
     }

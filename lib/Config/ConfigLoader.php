@@ -54,7 +54,7 @@ class ConfigLoader
                 continue;
             }
 
-            $config = array_merge_recursive(
+            $config = array_replace_recursive(
                 $config,
                 (array) Yaml::parse(file_get_contents($configPath))
             );
