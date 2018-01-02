@@ -75,7 +75,8 @@ class GotoDefinitionTest extends TestCase
         $this->expectExceptionMessage('Do not know how to goto definition of symbol');
 
         $info = SymbolContext::for(Symbol::unknown());
-        $result = $this->action->gotoDefinition($info);
+
+        $this->action->gotoDefinition($info);
     }
 
     /**
