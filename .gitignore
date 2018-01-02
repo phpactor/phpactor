@@ -2,6 +2,7 @@ vendor
 tests/Assets/Workspace
 tests/Assets/Cache
 cache
+/phpbench.json
 
 # File frequently used for testing
 lib/Foobar.php

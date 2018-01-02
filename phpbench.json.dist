@@ -1,0 +1,9 @@
+{
+    "path": "tests/Benchmark",
+    "bootstrap": "vendor/autoload.php",
+    "storage": "reports",
+    "storage.reports.url": "https://reports.phpbench.org",
+    "extensions": [
+        "PhpBench\\Extensions\\Reports\\ReportsExtension"
+    ]
+}
