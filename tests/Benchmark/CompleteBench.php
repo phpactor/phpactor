@@ -6,6 +6,7 @@ use Phpactor\Tests\IntegrationTestCase;
 use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use PHPUnit\Framework\Assert;
 
 /**
  * @BeforeMethods({"setUp"})
@@ -21,11 +22,11 @@ class CompleteBench extends BaseBenchCase
 
     public function benchComplete()
     {
-        $this->runCommand([
+        $output = $this->runCommand([
             'command' => 'complete',
             'path' => 'tests/FoobarTest.php',
             'offset'=> 184
         ]);
-
+        Assert::assertContains('info:pub', $output->fetch());
     }
 }
