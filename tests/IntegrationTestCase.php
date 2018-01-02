@@ -10,12 +10,12 @@ abstract class IntegrationTestCase extends TestCase
 {
     protected function workspaceDir()
     {
-        return dirname(__DIR__) . '/Assets/Workspace';
+        return __DIR__ . '/Assets/Workspace';
     }
 
     private function cacheDir(string $name)
     {
-        return dirname(__DIR__) . '/Assets/Cache/'.$name;
+        return __DIR__ . '/Assets/Cache/'.$name;
     }
 
     private function cacheWorkspace($name)
