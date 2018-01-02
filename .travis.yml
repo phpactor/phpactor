@@ -1,5 +1,9 @@
 language: php
 
+env:
+  global:
+    secure: "uimZ7caOJ1+7M2AfrwalR+3R9gBno7l5Su94QL7k2R+/4ttOqKPdo+gDasoqI/IRA31/89dMFkFf1R30H0bnL9s8l4hEuu2n3DTBRz8siyl58Ln42WwYRSXQrRzCOQatnUbEjWfo4zLqH4NaKx13CnMlKtJbBrJfhtskIZNTXljnQKgIXASLNmiDxp+5wAwxMNFFf0FbR+De9iCOxQ26GzLfHIYANFL+FWWb1o/ekevFvUHL05HiI80pCwd3OzqKCjfDJT2wYxlDdxDOvXCfzkxQFan98xvUhK8FAvQ/3BRaNC2zub3woIcZruxDYt/tK8zQUqfopUZ+OV4MNddmBv19reH53iGinHBAGzN2225U54wYyO+vejNk/myeWTTLNyxvRi9EvuuWOVlSEqqV8PH5oLP+VvRGDDZGmYpc3aE7EhyFkONzBLD7daY8fLMHW9o0G21e02R3l3D8IkAxsbU9+pTplgneMA0Bz4YToyete1moRHGm04Pnx8ioJrK+MfKpVAISoCGOdVXOuC/em7L+W8jbnkXNlPKL3LX4JHljBZId9RllMD05QTR0RyvlwQ89IpgB+e5pkT+ZK08uxhmaaBL+XAJU1g1GcrmbHjMinwENgqGOIApJia4v5jCdi4uiuX6OpKR/4bz7TQYEMXlNYe4pmFqKOUTCUGVX/wg="
+
 php:
   - 7.0
   - 7.1
@@ -19,4 +23,5 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - vendor/bin/phpbench run --store
   - .travis/testdeps

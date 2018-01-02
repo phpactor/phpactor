@@ -9,6 +9,7 @@
     <testsuites>
         <testsuite name="PhpActor Test Suite">
             <directory>./tests</directory>
+            <exclude>tests/Assets</exclude>
         </testsuite>
     </testsuites>
 

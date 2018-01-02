@@ -1,0 +1,5 @@
+{
+    "require": {
+        "symfony/framework-standard-edition": "3.0"
+    }
+}
