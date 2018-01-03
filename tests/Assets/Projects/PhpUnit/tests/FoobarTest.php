@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Assets\Projects\PhpUnit\tests;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 

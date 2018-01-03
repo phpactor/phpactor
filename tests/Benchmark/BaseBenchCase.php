@@ -9,12 +9,13 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 class BaseBenchCase extends IntegrationTestCase
 {
-    protected function runCommand(array $input)
+    protected function runCommand(array $input): BufferedOutput
     {
         chdir($this->workspaceDir());
         $application = new Application();
         $output = new BufferedOutput();
         $application->setAutoExit(false);
         $application->run(new ArrayInput($input), $output);
+        return $output;
     }
 }
