@@ -2,6 +2,7 @@
 
 namespace Phpactor\Container;
 
+use PhpBench\DependencyInjection\Container;
 use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
@@ -9,8 +10,7 @@ use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
-use PhpBench\DependencyInjection\Container;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 
 class SourceCodeFilesystemExtension implements ExtensionInterface
 {
@@ -48,7 +48,7 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
                 $filesystems[$attributes['name']] = $container->get($serviceId);
             }
 
-            return new FilesystemRegistry($filesystems);
+            return new MappedFilesystemRegistry($filesystems);
         });
     }
 }
