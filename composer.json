@@ -49,7 +49,8 @@
         "phpunit/phpunit": "^6.0",
         "symfony/process": "^2.7|^3.0",
         "symfony/options-resolver": "^2.7|^3.0",
-        "phpbench/phpbench": "^1.0@dev"
+        "phpbench/phpbench": "^1.0@dev",
+        "phpactor/test-utils": "dev-master"
     },
     "autoload": {
         "psr-4": {

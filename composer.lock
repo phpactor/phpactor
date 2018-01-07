@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "26454baf9f02ece3da8b731081c0bd05",
+    "content-hash": "f9d7c23ef3375453d85938d725abba68",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1778,6 +1778,47 @@
             "time": "2017-03-05T17:38:23+00:00"
         },
         {
+            "name": "phpactor/test-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/test-utils.git",
+                "reference": "dc1d2780ee553d2d7ebed3cce89e41377b7226d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/dc1d2780ee553d2d7ebed3cce89e41377b7226d9",
+                "reference": "dc1d2780ee553d2d7ebed3cce89e41377b7226d9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\TestUtils\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Utilities for managing the test environment",
+            "time": "2018-01-05T08:55:54+00:00"
+        },
+        {
             "name": "phpbench/dom",
             "version": "0.2.0",
             "source": {
@@ -3318,7 +3359,8 @@
         "phpactor/path-finder": 20,
         "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20,
-        "phpbench/phpbench": 20
+        "phpbench/phpbench": 20,
+        "phpactor/test-utils": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
