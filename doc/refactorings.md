@@ -1,30 +1,36 @@
 Refactorings
 ============
 
+... and other useful things.
+
 - [Add Missing Assignments](#add-missing-assignments)
+- [Class Copy](#class-copy)
 - [Class Move](#class-move)
+- [Class New](#class-new)
 - [Complete Constructor](#complete-constructor)
 - [Extract Constant](#extract-constant)
 - [Extract Interface](#extract-interface)
 - [Generate Accessor](#generate-accessor)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
+- [Import Class](#import-class) (generate use statement)
 - [Override Method](#override-method)
 - [Rename Variable](#rename-variable)
+
 
 Add Missing Assignments
 -----------------------
 
 Automatically add any missing properties to a class.
 
-- **Command**: `$ phpactor class:transform /path/to/class.php --transform=add_missing_assignments`
+- **Command**: `$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments`
 - **VIM Context Menu**: _Class context menu > Implement Contracts_.
 - **VIM Command**: `call phpactor#Transform()`
 
 ### Motivation
 
 When authoring a class it is redundant effort to add a property and documentation tag when making an assignment. This
-refactoring will scan for any assignments which have not been assigned, and add a property, inferring the type if possible.
+refactoring will scan for any assignments which have do not have corresponding properties and add the required properties with docblocks based on inferred types where possible.
 
 ### Before and After
 
@@ -58,6 +64,58 @@ class AcmeBlogTest extends TestCase
     }
 }
 ```
+Class Copy
+----------
+
+Copy an existing class to another location updating its name and namespace.
+
+- **Command**: `$ phpactor class:copy path/to/ClassA.php path/to/ClassB.php` (class FQN also accepted).
+- **VIM context menu**: _Class context menu > Copy Class_
+- **VIM function**: `call phpactor#CopyFile()`
+
+### Motivation
+
+Sometimes you find that an existing class is a good starting point for a new class. In this situation you will:
+
+1. Copy the class to a new file location.
+2. Update the class name and namespace.
+3. Adjust the copied class as necessary.
+
+This refactoring performs steps 1 and 2.
+
+### Before and After
+
+```php
+# src/Blog/Post.php
+<?php
+
+namespace Acme\Blog;
+
+class Post
+{
+    public function title()
+    {
+        return 'Hello';
+	}
+}
+```
+
+After moving to `src/Cms/Article.php`:
+
+```php
+# src/Cms/Page.php
+<?php
+
+namespace Acme\Cms;
+
+class Article
+{
+    public function title()
+    {
+        return 'Hello';
+	}
+}
+```
 
 Class Move
 ----------
@@ -80,10 +138,12 @@ This refactoring will move either a class, class-containing-file or folder to a
 new location, updating the classes namespace and all references to that class
 where possible.
 
-<div class="alert alert-warning">
+<div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before
 executing it and be aware that success is not guaranteed (e.g. class references
 in non-PHP files or docblocks are not currently updated).
+
+This refactoring works best when you have a well tested code base.
 </div>
 
 ### Before and After
@@ -102,12 +162,62 @@ class Post
 After moving to `src/Writer.php`:
 
 ```php
-# src/Writer/Page.php
+# src/Writer.php
 <?php
 
-namespace Writer\Page;
+namespace Acme;
 
-class Page
+class Writer
+{
+}
+```
+
+Class New
+---------
+
+Generate a new class with a name and namespace at a given location or from a class name.
+
+- **Command**: `$ phpactor class:new path/To/ClassName.php` (class FQN also accepted).
+- **VIM context menu**: _Class context menu > New Class_
+- **VIM function**: `call phpactor#ClassNew()`
+
+### Motivation
+
+Creating classes is one of the most general actions we perform:
+
+1. Create a new file.
+2. Code the namespace, ensuring that it is compatible with the autoloading scheme.
+3. Code the class name, ensuring that it is the same as the file name.
+
+This refactoring will perform steps 1, 2 and 3 for:
+
+- Any given file name.
+- Any given class name.
+- A class name under the cursor.
+
+It is also possible to choose a class template, see [templates](templates.md)
+for more information.
+
+### Before and After
+
+<div class="alert alert-success">
+This example is from an existing, empty, file. Note that you can also use
+the context menu to generate classes from non-existing class names in the current
+file
+</div>
+
+```php
+# src/Blog/Post.php
+```
+
+After moving to `src/Writer.php`:
+
+```php
+<?php
+
+namespace Acme/Blog;
+
+class Post
 {
 }
 ```
@@ -181,10 +291,11 @@ Extract a constant from a scalar value.
 ### Motivation
 
 Each time a value is duplicated in a class a fairy dies. Duplicated values
-increase the fragility of your code. Replacing them with a constant ensures
-runtime integrity.
+increase the fragility of your code. Replacing them with a constant helps to
+ensure runtime integrity.
 
-This refactoring includes _Replace Magic Number with Symbolic Constant (204)_
+This refactoring includes [Replace Magic Number with Symbolic
+Constant](https://refactoring.com/catalog/replaceMagicNumberWithSymbolicConstant.html)
 (Fowler, Refactoring).
 
 ### Before and After
@@ -309,12 +420,12 @@ class Foobar
 }
 ```
 
-Generated interface (suffix added for illustration):
+After:
 
 ```php
 <?php
 
-interface FoobarInterface
+class Foobar
 {
     /**
      * @var Barfoo
@@ -392,7 +503,7 @@ class Foobar
 
     public function hello(Hello $hello)
     {
-         $this->barfoo->good<>bye($hello);
+         $this->barfoo->goodbye($hello);
     }
 }
 
@@ -415,7 +526,7 @@ Add any not implemented methods from interfaces or abstract classes.
 
 ### Motivation
 
-It can be very tiresome to manually implement contracts for interfaces,
+It can be very tiresome to manually implement contracts for interfaces and abstract classes,
 especially interfaces with many methods (e.g. `ArrayAccess`).
 
 This refactoring will automatically add the required methods to your class. If
@@ -430,8 +541,82 @@ also be added.
 class Foobar implements Countable
 {
 }
+```
 
-class Barfoo
+After:
+
+```php
+<?php
+
+class Foobar implements Countable
+{
+    public function count()
+    {
+    }
+}
+```
+
+Import Class
+------------
+
+Import a class into the current namespace based on the class name under the cursor.
+
+- **Command**: _VIM function only_
+- **VIM plugin**: _VIM function only_
+- **VIM function**: `call phpactor#AddUse()`
+
+### Motivation
+
+It is easy to remember the name of a class, but more difficult to remember its
+namespace, and certainly it is time consuming to manually code class imports:
+
+Manually one would:
+
+1. Perform a fuzzy search for the class by its short name.
+2. Identify the class you want to import.
+3. Copy the namespace.
+4. Paste it into your current file
+5. Add the class name to the new `use` statement.
+
+This refactoring covers steps 1, 3, 4 and 5.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+class Hello
+{
+    public function index(Re<>quest $request)
+    {
+	}
+
+}
+```
+
+After selecting `Symfony\Component\HttpFoundation\Request` from the list of candidates:
+
+```php
+<?php
+
+use Symfony\Component\HttpFoundation\Request;
+
+class Hello
+{
+    public function index(Request $request)
+    {
+	}
+}
+```
+
+### Before and After
+
+```php
+<?php
+
+class Foobar implements Countable
 {
 }
 ```
@@ -452,7 +637,7 @@ class Foobar implements Countable
 Override Method
 ---------------
 
-Ovvride a method from a parent class.
+Overide a method from a parent class.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Class context menu > Override method_.
@@ -492,5 +677,64 @@ class MyCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
 	{
 	}
+}
+```
+
+Rename Variable
+---------------
+
+Rename a variable in the local or class scope.
+
+- **Command**: _RPC only_
+- **VIM plugin**: _Variable context menu > Rename_.
+- **VIM function**: `call phpactor#ContextMenu()`
+
+### Motivation
+
+Having meaningful and descriptive variable names makes the intention of
+code clearer and therefore easier to maintain. Renaming variables is a frequent
+refactoring, but doing this with a simple search and replace can often have unintended
+consquences (e.g. renaming the variable `$class` also changes the `class` keyword).
+
+This refactoring will rename a variable, and only variables, in either the method scope
+or the class scope.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+class Hello
+{
+    public function say(array $hell<>os)
+    {
+        foreach ($hellos as $greeting) {
+            echo $greeting;
+		}
+
+        return $hellos;
+	}
+
+}
+```
+
+Rename the variable `$hellos` to `$foobars` in the local scope:
+
+```php
+<?php
+
+class Hello
+{
+    public function say(array $foobars)
+    {
+        foreach ($foobars as $greeting) {
+            echo $greeting;
+		}
+
+        return $foobars;
+	}
+
 }
 ```

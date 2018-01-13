@@ -19,14 +19,26 @@ menu:
             name: About
             items:
                 about:
+                    text: About
+                    relativeUrl: index.html
+                history:
                     text: History
                     relativeUrl: history.html
         reference:
-            name: References
+            name: Reference
             items:
                 refactorings:
-                    text: Refactorings
+                    text: Refactorings etc.
                     relativeUrl: refactorings.html
+                rpc:
+                    text: RPC Protocol
+                    relativeUrl: rpc.html
+                vim-plugin:
+                    text: VIM plugin
+                    relativeUrl: vim-plugin.html
         other:
             name: Other topics
             items:
+                rpc:
+                    text: Screenshots
+                    relativeUrl: screenshots.html
