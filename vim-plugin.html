@@ -87,26 +87,85 @@
 
                 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="about-phpactor">About Phpactor</h1>
-<p>Phpactor is a intelligent code-completion and refactoring tool for PHP.</p>
+                    <h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
 <ul>
-<li><strong>Code Completion</strong>: Provides accurate context aware code completion for
-classes.</li>
-<li><strong>No indexing</strong>: Phpactor uses composer to guess class locations.</li>
-<li><strong>Introspection</strong>: Jump to class and method definitions, find references.</li>
-<li><strong>Refactoring</strong>: Move classes, complete constructors, implement contracts,
-generate methods, etc.</li>
-<li><strong>VIM plugin</strong>: Lightweight VIM plugin.</li>
-<li><strong>CLI interface</strong>: Most/some functionality is exposed through CLI commands.</li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#updating">Updating</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#completion">Completion</a></li>
+<li><a href="#context-menu">Context Menu</a></li>
 </ul>
-<p>Phpactor can be used in a limited way as a standalone application, but its full
-power can only be utilized through its RPC protocol. It ships with support for VIM, but it
-would not involve a huge amount of effort to support other editors such as
-<a href="https://www.gnu.org/s/emacs/">GNU Emacs</a>.</p>
-<p>Phpactor is a bleeding-edge product, it is not perfect, it probably never will
-be. It has been driven forward by immediate need. Comprimises have been made and
-it's a work in progress. But, I have been using it extensively in my daily work and havn't felt
-especially compelled to add new features for some months.</p>
+<h2 id="installation">Installation</h2>
+<p>Install Phpactor using your favorite VIM package manager, or Vundle. Add the
+plugin to your <code>.vimrc</code>:</p>
+<pre><code>Plugin 'phpactor/phpactor'</code></pre>
+<p>Then in VIM:</p>
+<pre><code>:VundleInstall</code></pre>
+<p>Now you will need to install the Phpactor dependencies with composer:</p>
+<pre><code>$ cd ~/.vim/bundles/phpactor
+$ composer install</code></pre>
+<p>or using nvim, do the above where it counts.</p>
+<p>Make a <a href="https://github.com/phpactor/phpactor">pull request</a> to impove the
+installation procedure!</p>
+<div class="alert alert-info">
+This is not a recommendation (or disincentive) to use Vundle, this is just the package manager that I use
+at time of writing.
+</div>
+<h2 id="updating">Updating</h2>
+<p>Updating Phpactor from VIM is easy:</p>
+<pre><code class="language-vim">:call phpactor#Update()</code></pre>
+<div class="alert alert-warning">
+Note that if the update included changes to the VIM plugin you will currently
+need to either resource the plugin or reload VIM (pull requests are open!).
+</div>
+<h2 id="keyboard-mappings">Keyboard Mappings</h2>
+<p>The Phpactor plugin will <strong>not</strong> automatically assume any shortcuts, copy
+the following configuration into your <code>.vimrc</code>:</p>
+<pre><code>" Include use statement
+map &lt;Leader&gt;u :call phpactor#UseAdd()&lt;CR&gt;
+
+" Invoke the context menu
+map &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
+
+" Goto definition of class or class member under the cursor
+map &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
+
+" Transform the classes in the current file
+map &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
+
+" Generate a new class (replacing the current file)
+map &lt;Leader&gt;cc :call phpactor#ClassNew()&lt;CR&gt;</code></pre>
+<p>See the <a href="refactorings.html">Refactorings</a> chapter for more functions you can map
+shortcuts to.</p>
+<p>Phpactor is requires at least PHP 7.0. If you use a different version of PHP
+locally, you may need to target PHP 7.0, you can change the PHP binary the
+plugin will use as follows:</p>
+<pre><code>let g:phpactorPhpBin = "/usr/bin/local/php6"</code></pre>
+<h2 id="completion">Completion</h2>
+<h3 id="omni-completion">Omni-completion</h3>
+<p>Omni-completion (<a href="http://localhost:8000/screenshots.html#code-completion">Screenshot</a>) is VIM's built-in auto-completion mechanism. Tell
+VIM to use Phpactor for omni-completion in PHP files with the following conifg in <code>.vimrc</code>:</p>
+<pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
+<p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
+See <code>:help compl-omni</code>.</p>
+<div class="alert alert-info">
+The Omni-Complete method provides <i>feedback</i> messages when it cannot complete something. This information
+is <b>useful</b>. Other completion mehanisms may not provide this information.
+
+<b>Always enable omni-completion</b>. If another mechanism is failing to complete, invoke omni-complete to find out why.
+</div>
+<h3 id="neovim-completion-manager">Neovim Completion Manager</h3>
+<p>If you are using <a href="https://neovim.io/">Neovim</a> with the <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
+Manager</a> you should certainly
+install <a href="https://github.com/roxma/ncm-phpactor">ncm-phpactor</a> to benefit from
+great asynchronous complete-as-you-type auto-completion:</p>
+<h2 id="context-menu">Context Menu</h2>
+<p>The context menu is the main point of contact with Phpactor. Invoke it on any
+class, member, variable, method call, or anything really.</p>
+<p>If you move over a method and invoke the context menu with <code>:call phpactor#ContextMenu()</code> (or with <code>&lt;Leader&gt;mm</code> as per the configuration above) you
+should see something like the following:</p>
+<pre><code>Method "execute":
+[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition: </code></pre>
                 </section>
 
             </div>
