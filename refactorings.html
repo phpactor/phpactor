@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                The title
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="refactorings">Refactorings</h1>
+<ul>
+<li><a href="#add-missing-assignments">Add Missing Assignments</a></li>
+<li><a href="#class-move">Class Move</a></li>
+<li><a href="#complete-constructor">Complete Constructor</a></li>
+<li><a href="#extract-constant">Extract Constant</a></li>
+<li><a href="#extract-interface">Extract Interface</a></li>
+<li><a href="#generate-accessor">Generate Accessor</a></li>
+<li><a href="#generate-method">Generate Method</a></li>
+<li><a href="#implement-contracts">Implement Contracts</a></li>
+<li><a href="#override-method">Override Method</a></li>
+<li><a href="#rename-variable">Rename Variable</a></li>
+</ul>
+<h2 id="add-missing-assignments">Add Missing Assignments</h2>
+<p>Automatically add any missing properties to a class.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor class:transform /path/to/class.php --transform=add_missing_assignments</code></li>
+<li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Implement Contracts</em>.</li>
+<li><strong>VIM Command</strong>: <code>call phpactor#Transform()</code></li>
+</ul>
+<h3 id="motivation">Motivation</h3>
+<p>When authoring a class it is redundant effort to add a property and documentation tag when making an assignment. This
+refactoring will scan for any assignments which have not been assigned, and add a property, inferring the type if possible.</p>
+<h3 id="before-and-after">Before and After</h3>
+<pre><code class="language-php">&lt;?php
+
+class AcmeBlogTest extends TestCase
+{
+    public function setUp()
+    {
+        $this-&gt;blog = new Blog();
+    }
+}</code></pre>
+<p>Becomes:</p>
+<pre><code class="language-php">&lt;?php
+
+class AcmeBlogTest extends TestCase
+{
+    /**
+     * @var Blog
+     */
+    private $blog;
+
+    public function setUp()
+    {
+        $this-&gt;blog = new Blog();
+    }
+}</code></pre>
+<h2 id="class-move">Class Move</h2>
+<p>Move a class (or folder containing classes) from one location to another.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor class:move path/to/ClassA.php path/to/ClassB.php</code> (class FQN also accepted).</li>
+<li><strong>VIM context menu</strong>: <em>Class context menu &gt; Move Class</em></li>
+<li><strong>VIM function</strong>: <code>call phpactor#MoveFile()</code></li>
+</ul>
+<h3 id="motivation-1">Motivation</h3>
+<p>When authoring classes, it is often difficult to determine really appropriate
+names and namespaces, this is unfortunate as a class name can quickly propagate
+through your code, making the class name harder to change as time goes on.</p>
+<p>This problem is multiplied if you have chosen an incorrect namespace.</p>
+<p>This refactoring will move either a class, class-containing-file or folder to a
+new location, updating the classes namespace and all references to that class
+where possible.</p>
+<div class="alert alert-warning">
+This is a dangerous refactoring! Ensure that you commit your work before
+executing it and be aware that success is not guaranteed (e.g. class references
+in non-PHP files or docblocks are not currently updated).
+</div>
+<h3 id="before-and-after-1">Before and After</h3>
+<pre><code class="language-php"># src/Blog/Post.php
+&lt;?php
+
+namespace Acme\Blog;
+
+class Post
+{
+}</code></pre>
+<p>After moving to <code>src/Writer.php</code>:</p>
+<pre><code class="language-php"># src/Writer/Page.php
+&lt;?php
+
+namespace Writer\Page;
+
+class Page
+{
+}</code></pre>
+<h2 id="complete-constructor">Complete Constructor</h2>
+<p>Complete the assignments and add properties for an incomplete constructor.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor class:transform path/to/class.php --transform=complete_constructor</code></li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Complete Constructor</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#Transform()</code></li>
+</ul>
+<h3 id="motivation-2">Motivation</h3>
+<p>When authoring a new class, it is often required to:</p>
+<ol>
+<li>Create a constructor method with typed arguments.</li>
+<li>Assign the arguments to class properties.</li>
+<li>Create the class properties with docblocks.</li>
+</ol>
+<p>This refactoring will automatically take care of 2 and 3.</p>
+<h3 id="before-and-after-2">Before and After</h3>
+<pre><code class="language-php">&lt;?php
+
+class Post
+{
+    public function __construct(Hello $hello, Goodbye $goodbye)
+    {
+    }
+}</code></pre>
+<p>After moving to <code>src/Writer.php</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class Post
+{
+    /**
+     * @var Hello
+     */
+    private $hello;
+
+    /**
+     * @var Goodbye
+     */
+    private $goodbye;
+
+    public function __construct(Hello $hello, Goodbye $goodbye)
+    {
+        $this-&gt;hello = $hello;
+        $this-&gt;goodbye = $goodbye;
+    }
+}</code></pre>
+<h2 id="extract-constant">Extract Constant</h2>
+<p>Extract a constant from a scalar value.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC only</em></li>
+<li><strong>VIM plugin</strong>: <em>Symbol context menu &gt; Extract Constant</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-3">Motivation</h3>
+<p>Each time a value is duplicated in a class a fairy dies. Duplicated values
+increase the fragility of your code. Replacing them with a constant ensures
+runtime integrity.</p>
+<p>This refactoring includes <em>Replace Magic Number with Symbolic Constant (204)</em>
+(Fowler, Refactoring).</p>
+<h3 id="before-and-after-3">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class DecisionMaker
+{
+    public function yesOrNo($arg)
+    {
+        if ($arg == 'y&lt;&gt;es') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function yes()
+    {
+        return 'yes';
+    }
+}</code></pre>
+<p>After:</p>
+<pre><code class="language-php">&lt;?php
+
+class DecisionMaker
+{
+    const YES = 'yes';
+
+    public function yesOrNo($arg)
+    {
+        if ($arg == self::YES) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function yes()
+    {
+        return self::YES;
+    }
+}</code></pre>
+<h2 id="extract-interface">Extract Interface</h2>
+<p>Extract an interface from a class. If a wildcard is given (CLI only) generate an interface per class.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor class:inflect path/to/Class.php path/to/Interface.php</code> (wild card accepted).</li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Inflect &gt; Extract interface</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ClassInflect()</code></li>
+</ul>
+<h3 id="motivation-4">Motivation</h3>
+<p>It is sometimes unwise to preemptively create interfaces for all your classes,
+as doing so adds maintainance overhead, and the interfaces may never be needed.</p>
+<p>This refactoring allows you to generate an interface from an existing class. All public methods
+will be added to generated interface.</p>
+<h3 id="before-and-after-4">Before and After</h3>
+<pre><code class="language-php">&lt;?php
+
+class Foobar
+{
+    public function foobar(string $bar): Barfoo
+    {
+    }
+}</code></pre>
+<p>Generated interface (suffix added for illustration):</p>
+<pre><code class="language-php">&lt;?php
+
+interface FoobarInterface
+{
+    public function foobar(string $bar): Barfoo;
+}</code></pre>
+<h2 id="generate-accessor">Generate Accessor</h2>
+<p>Generate an accessor for a class property.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC only</em></li>
+<li><strong>VIM plugin</strong>: <em>Property context menu &gt; Generate accessor</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-5">Motivation</h3>
+<p>When creating entities and value objects it is frequently necessary to add accessors.</p>
+<p>This refactoring automates the generation of accessors.</p>
+<h3 id="before-and-after-5">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class Foobar
+{
+    /**
+     * @var Barfoo
+     */
+    private $bar&lt;&gt;foo;
+}</code></pre>
+<p>Generated interface (suffix added for illustration):</p>
+<pre><code class="language-php">&lt;?php
+
+interface FoobarInterface
+{
+    /**
+     * @var Barfoo
+     */
+    private $barfoo;
+
+    public function barfoo(): Barfoo
+    {
+        return $this-&gt;barfoo;
+    }
+}</code></pre>
+<div class="alert alert-primary">
+Note the accessor template can be customized see [Templates](templates.html).
+</div>
+<h2 id="generate-method">Generate Method</h2>
+<p>Generate or update a method based on the method call under the cursor.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC only</em></li>
+<li><strong>VIM plugin</strong>: <em>Method context menu &gt; Generate method</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-6">Motivation</h3>
+<p>When initially authoring a package you will often write a method call which
+doesn't exist and then add the method to the corresponding class.</p>
+<p>This refactoring will automatically generate the method inferring any type
+information that it can.</p>
+<h3 id="before-and-after-6">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class Foobar
+{
+    /**
+     * @var Barfoo
+     */
+    private $barfoo;
+
+    // ...
+
+    public function hello(Hello $hello)
+    {
+         $this-&gt;barfoo-&gt;good&lt;&gt;bye($hello);
+    }
+}
+
+class Barfoo
+{
+}</code></pre>
+<p>After generating the method:</p>
+<pre><code class="language-php">&lt;?php
+
+class Foobar
+{
+    /**
+     * @var Barfoo
+     */
+    private $barfoo;
+
+    // ...
+
+    public function hello(Hello $hello)
+    {
+         $this-&gt;barfoo-&gt;good&lt;&gt;bye($hello);
+    }
+}
+
+class Barfoo
+{
+    public function goodbye(Hello $hello)
+    {
+    }
+}</code></pre>
+<h2 id="implement-contracts">Implement Contracts</h2>
+<p>Add any not implemented methods from interfaces or abstract classes.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor class:transform /path/to/class.php --transform=implement_contracts</code></li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Transform &gt; Implement contracts</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#Transform()</code></li>
+</ul>
+<h3 id="motivation-7">Motivation</h3>
+<p>It can be very tiresome to manually implement contracts for interfaces,
+especially interfaces with many methods (e.g. <code>ArrayAccess</code>).</p>
+<p>This refactoring will automatically add the required methods to your class. If
+the interface uses any foreign classes, the necessary <code>use</code> statements will
+also be added.</p>
+<h3 id="before-and-after-7">Before and After</h3>
+<pre><code class="language-php">&lt;?php
+
+class Foobar implements Countable
+{
+}
+
+class Barfoo
+{
+}</code></pre>
+<p>After:</p>
+<pre><code class="language-php">&lt;?php
+
+class Foobar implements Countable
+{
+    public function count()
+    {
+    }
+}</code></pre>
+<h2 id="override-method">Override Method</h2>
+<p>Ovvride a method from a parent class.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC only</em></li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Override method</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-8">Motivation</h3>
+<p>Sometimes it is expected or necessary that you override a parent classes method
+(for example when authoring a Symfony Command class).</p>
+<p>This refactoring will allow you to select a method to override and generate that method
+in your class.</p>
+<h3 id="before-and-after-8">Before and After</h3>
+<pre><code class="language-php">&lt;?php
+
+use Symfony\Component\Console\Command\Command;
+
+class MyCommand extends Command
+{
+}</code></pre>
+<p>Override method <code>execute</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class MyCommand extends Command
+{
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+    }
+}</code></pre>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

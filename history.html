@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                The title
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="history">History</h1>
+<p>I developed Phpactor because I am a VIM user, and every year that passed
+(there were many of them) I noticed that the relative stupidity of my editor
+grew more and more as IDEs such as Jetbrains PHPStorm and idea platforms
+offered more and more great features.</p>
+<p>VIM is a great text editor, but it is essentially dumb. Nevertheless, I still
+<em>felt</em> that I could program faster and more efficiently in VIM running in
+<a href="https://github.com/tmux/tmux/wiki">Tmux</a> sessions in a minimal tiling desktop
+environment such as <a href="https://i3wm.org/">I3</a>. I became extremely good at
+typing, and developed muscle memory for class constructors and properties.</p>
+<p>Of course there were some ways to mitigate this and for some time I had been
+using ctags completion (basically regexy dumb completion) and code snippet
+generators, but a real contextually aware code completion tool for PHP was
+simply not available.</p>
+<p>I was excited to find out about projects like
+<a href="https://github.com/padawan-php/padawan.php">Padawan</a> and other similar
+efforts, after a while I thought &quot;how hard can it be&quot;? So in 2014 I wrote the
+first version of Phpactor. It was terrible. 1 year later I wrote another,
+again, it sucked. The ongoing third effort is what we have here today.</p>
+<p>One of the things that made Phpactor possible was the Microsoft (yep) PHP
+parser, which offers a practical and fast AST. At this time I also discovered
+the Microsoft Language Server protocol, and Felix Beckers <a href="https://github.com/felixfbecker/php-language-server">PHP Language
+Server</a>. This was awkward
+as the language server was a solid effort to meet the same requirements as
+Phpactor.</p>
+<h2 id="why-not-php-language-server">Why not PHP Language Server?</h2>
+<p>No reason - PHP language server is great. Well, there are some differentiators:</p>
+<ul>
+<li><strong>Phpactor does not index anything</strong>: This is both good and bad, good
+because it is very fast and doesn't crash. It uses short lived processes,
+which is what PHP is good at. We locate files quickly by depending on
+the <a href="https://getcomposer.org">Composer</a> autoloader. Bad because
+it cannot discover classes within-classes or (at time of writing) provide
+completion for non-class functions.</li>
+<li><strong>Phpactor is also a refactoring tool</strong>: Phpactor provides refactorings and
+procedures to help you code faster and more accurately (such as complete
+constructor, generate method, implement contracts etc).</li>
+<li><strong>Phpactor ships with a VIM plugin</strong>: Phpactor ships with a VIM plugin.</li>
+</ul>
+<p>... and competition for the eco-system right?</p>
+<h2 id="why-not-language-server-protocol">Why not Language Server Protocol?</h2>
+<p>The <a href="https://github.com/Microsoft/language-server-protocol">Language Server
+Protocol</a> defines a
+standard protocol for an editor to talk to a language server. Phpactor is
+essentially a language server.</p>
+<p>Phpactor does not currently support the Language Server protocol, but it does
+implement its own <a href="rpc.html">RPC Protocol</a>.</p>
+<p>In the future it may happen that Phpactor will implement LSP, or maybe it will
+be made redundant by the PHP Language Server.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
