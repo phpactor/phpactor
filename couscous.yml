@@ -1,0 +1,32 @@
+baseUrl: http://phpactor.github.io/phpactor
+
+include:
+    - doc
+
+template:
+    url: https://github.com/CouscousPHP/Template-Dark
+
+github:
+    user: phpactor
+    repo: phpactor
+
+title: Phpactor
+subTitle: Intelligent autocompletion and refactoring tool for PHP
+
+menu:
+    sections:
+        about:
+            name: About
+            items:
+                about:
+                    text: History
+                    relativeUrl: history.html
+        reference:
+            name: References
+            items:
+                refactorings:
+                    text: Refactorings
+                    relativeUrl: refactorings.html
+        other:
+            name: Other topics
+            items:
