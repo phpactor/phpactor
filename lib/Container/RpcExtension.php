@@ -27,6 +27,7 @@ use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Rpc\RequestHandler\LoggingHandler;
 use Phpactor\Rpc\Handler\NavigateHandler;
 use Phpactor\Rpc\Handler\OverrideMethodHandler;
+use Phpactor\Rpc\Handler\CacheClearHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -175,6 +176,12 @@ class RpcExtension implements ExtensionInterface
             return new OverrideMethodHandler(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.refactor.override_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.cache_clear', function (Container $container) {
+            return new CacheClearHandler(
+                $container->get('application.cache_clear')
             );
         }, [ 'rpc.handler' => [] ]);
     }

@@ -45,6 +45,8 @@ use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\ClassFileConverter\PathFinder;
+use Phpactor\Application\CacheClear;
+use Phpactor\Console\Command\CacheClearCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -184,6 +186,12 @@ class CoreExtension implements ExtensionInterface
             return new ReferencesMemberCommand(
                 $container->get('application.method_references'),
                 $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+
+        $container->register('command.cache_clear', function (Container $container) {
+            return new CacheClearCommand(
+                $container->get('application.cache_clear')
             );
         }, [ 'ui.console.command' => []]);
 
@@ -398,6 +406,12 @@ class CoreExtension implements ExtensionInterface
                 $container->get('path_finder.path_finder'),
                 $container->get('application.class_new'),
                 $container->getParameter(self::NAVIGATOR_AUTOCREATE)
+            );
+        });
+
+        $container->register('application.cache_clear', function (Container $container) {
+            return new CacheClear(
+                $container->getParameter(self::CACHE_DIR)
             );
         });
 
