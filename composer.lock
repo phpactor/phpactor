@@ -76,12 +76,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "3f4891a7df1ba335cfbda521f4f4eaa0724b7e10"
+                "reference": "bcc073a39ef194cd80945667886952d000ea614c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3f4891a7df1ba335cfbda521f4f4eaa0724b7e10",
-                "reference": "3f4891a7df1ba335cfbda521f4f4eaa0724b7e10",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/bcc073a39ef194cd80945667886952d000ea614c",
+                "reference": "bcc073a39ef194cd80945667886952d000ea614c",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2017-12-29T13:54:16+00:00"
+            "time": "2018-01-10T15:52:40+00:00"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -1058,12 +1058,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "0b9a64d842bf7f15c9f3964909100a6663e97db2"
+                "reference": "d4482c9ab98d71171f2b27423b0891f67c9ed44e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/0b9a64d842bf7f15c9f3964909100a6663e97db2",
-                "reference": "0b9a64d842bf7f15c9f3964909100a6663e97db2",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d4482c9ab98d71171f2b27423b0891f67c9ed44e",
+                "reference": "d4482c9ab98d71171f2b27423b0891f67c9ed44e",
                 "shasum": ""
             },
             "require": {
@@ -1116,7 +1116,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-11-12T18:48:08+00:00"
+            "time": "2018-01-07T17:54:41+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1496,16 +1496,16 @@
         },
         {
             "name": "lstrojny/functional-php",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lstrojny/functional-php.git",
-                "reference": "c0c15f048355d0a7ab17914022ec1f901fe5144a"
+                "reference": "7c2091ddea572e012aa980e5d19d242d3a06ad5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/c0c15f048355d0a7ab17914022ec1f901fe5144a",
-                "reference": "c0c15f048355d0a7ab17914022ec1f901fe5144a",
+                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/7c2091ddea572e012aa980e5d19d242d3a06ad5b",
+                "reference": "7c2091ddea572e012aa980e5d19d242d3a06ad5b",
                 "shasum": ""
             },
             "require": {
@@ -1592,6 +1592,7 @@
                     "src/Functional/Reject.php",
                     "src/Functional/Retry.php",
                     "src/Functional/Select.php",
+                    "src/Functional/SelectKeys.php",
                     "src/Functional/SequenceConstant.php",
                     "src/Functional/SequenceExponential.php",
                     "src/Functional/SequenceLinear.php",
@@ -1599,6 +1600,7 @@
                     "src/Functional/Sort.php",
                     "src/Functional/Sum.php",
                     "src/Functional/SuppressError.php",
+                    "src/Functional/Tap.php",
                     "src/Functional/Tail.php",
                     "src/Functional/TailRecursion.php",
                     "src/Functional/True.php",
@@ -1628,7 +1630,7 @@
             "keywords": [
                 "functional"
             ],
-            "time": "2017-05-08T10:17:44+00:00"
+            "time": "2018-01-03T10:08:50+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1783,12 +1785,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "dc1d2780ee553d2d7ebed3cce89e41377b7226d9"
+                "reference": "19af66eb2eb94e95646d29062619e12fe8330347"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/dc1d2780ee553d2d7ebed3cce89e41377b7226d9",
-                "reference": "dc1d2780ee553d2d7ebed3cce89e41377b7226d9",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/19af66eb2eb94e95646d29062619e12fe8330347",
+                "reference": "19af66eb2eb94e95646d29062619e12fe8330347",
                 "shasum": ""
             },
             "require-dev": {
@@ -1816,7 +1818,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2018-01-05T08:55:54+00:00"
+            "time": "2018-01-13T10:21:32+00:00"
         },
         {
             "name": "phpbench/dom",
@@ -1941,7 +1943,7 @@
         },
         {
             "name": "phpdocumentor/reflection-common",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
@@ -2493,12 +2495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "33fd41a76e746b8fa96d00b49a23dadfa8334cdf"
+                "reference": "e244c19aec6a1f0a2ff9e498b9b4bed22537730a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/33fd41a76e746b8fa96d00b49a23dadfa8334cdf",
-                "reference": "33fd41a76e746b8fa96d00b49a23dadfa8334cdf",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/e244c19aec6a1f0a2ff9e498b9b4bed22537730a",
+                "reference": "e244c19aec6a1f0a2ff9e498b9b4bed22537730a",
                 "shasum": ""
             },
             "require": {
@@ -2544,7 +2546,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2018-01-06T05:45:45+00:00"
+            "time": "2018-01-07T17:10:51+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2597,12 +2599,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f"
+                "reference": "c2019a4d1d15b86fc3da1139c99f6ed16a1fe517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
-                "reference": "b11c729f95109b56a0fe9650c6a63a0fcd8c439f",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/c2019a4d1d15b86fc3da1139c99f6ed16a1fe517",
+                "reference": "c2019a4d1d15b86fc3da1139c99f6ed16a1fe517",
                 "shasum": ""
             },
             "require": {
@@ -2653,7 +2655,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-12-22T14:50:35+00:00"
+            "time": "2018-01-12T08:56:06+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -2928,12 +2930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-reflector.git",
-                "reference": "e1b86d7bde734bd7d05454ea964eb8283a3259b6"
+                "reference": "ff755086ff55902772e3fae5dd5f29bcbae68285"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/e1b86d7bde734bd7d05454ea964eb8283a3259b6",
-                "reference": "e1b86d7bde734bd7d05454ea964eb8283a3259b6",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/ff755086ff55902772e3fae5dd5f29bcbae68285",
+                "reference": "ff755086ff55902772e3fae5dd5f29bcbae68285",
                 "shasum": ""
             },
             "require": {
@@ -2965,7 +2967,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-11-16T09:51:26+00:00"
+            "time": "2018-01-07T16:00:13+00:00"
         },
         {
             "name": "sebastian/recursion-context",
