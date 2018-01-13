@@ -15,7 +15,7 @@ class ClassSearchBench extends BaseBenchCase
 {
     public function setUp()
     {
-        $this->initWorkspace();
+        $this->workspace()->reset();
         $this->loadProject('Symfony');
     }
 

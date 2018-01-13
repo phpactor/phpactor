@@ -11,7 +11,7 @@ class ApplicationTest extends IntegrationTestCase
 {
     public function setUp()
     {
-        $this->initWorkspace();
+        $this->workspace()->reset();
     }
 
     /**

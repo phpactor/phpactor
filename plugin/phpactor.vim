@@ -222,6 +222,10 @@ function! phpactor#Navigate()
     call phpactor#rpc("navigate", { "source_path": currentPath })
 endfunction
 
+function! phpactor#CacheClear()
+    call phpactor#rpc("cache_clear", {})
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
