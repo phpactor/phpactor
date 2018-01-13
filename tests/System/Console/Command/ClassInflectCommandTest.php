@@ -8,7 +8,7 @@ class ClassInflectCommandTest extends SystemTestCase
 {
     public function setUp()
     {
-        $this->initWorkspace();
+        $this->workspace()->reset();
         $this->loadProject('Animals');
     }
 

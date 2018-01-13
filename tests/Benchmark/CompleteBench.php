@@ -16,7 +16,7 @@ class CompleteBench extends BaseBenchCase
 {
     public function setUp()
     {
-        $this->initWorkspace();
+        $this->workspace()->reset();
         $this->loadProject('PhpUnit');
     }
 

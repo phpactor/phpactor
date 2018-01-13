@@ -5,6 +5,7 @@ namespace Phpactor\Tests;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Phpactor\TestUtils\Workspace;
 
 abstract class IntegrationTestCase extends TestCase
 {
@@ -29,13 +30,9 @@ abstract class IntegrationTestCase extends TestCase
         $filesystem->mirror($this->workspaceDir(), $this->cacheDir($name));
     }
 
-    protected function initWorkspace()
+    protected function workspace(): Workspace
     {
-        $filesystem = new Filesystem();
-        if (file_exists($this->workspaceDir())) {
-            $filesystem->remove($this->workspaceDir());
-        }
-        $filesystem->mkdir($this->workspaceDir());
+        return Workspace::create($this->workspaceDir());
     }
 
     protected function assertSuccess(Process $process)
