@@ -1,3 +1,6 @@
+---
+currentMenu: rpc
+---
 RPC Protocol
 ============
 

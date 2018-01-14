@@ -4,7 +4,7 @@ include:
     - doc
 
 template:
-    url: https://github.com/CouscousPHP/Template-Dark
+    directory: doc/template
 
 github:
     user: phpactor
@@ -16,29 +16,38 @@ subTitle: Intelligent autocompletion and refactoring tool for PHP
 menu:
     sections:
         about:
-            name: About
+            name: Home
             items:
                 about:
                     text: About
                     relativeUrl: index.html
-                history:
-                    text: History
-                    relativeUrl: history.html
-        reference:
-            name: Reference
+        usage:
+            name: Usage
             items:
-                refactorings:
-                    text: Refactorings etc.
-                    relativeUrl: refactorings.html
-                rpc:
-                    text: RPC Protocol
-                    relativeUrl: rpc.html
+                standalone:
+                    text: Standalone
+                    relativeUrl: standalone.html
                 vim-plugin:
                     text: VIM plugin
                     relativeUrl: vim-plugin.html
+        reference:
+            name: Reference
+            items:
+                navigation:
+                    text: Navigation
+                    relativeUrl: navigation.html
+                refactorings:
+                    text: Refactorings
+                    relativeUrl: refactorings.html
         other:
             name: Other topics
             items:
-                rpc:
+                history:
+                    text: History
+                    relativeUrl: history.html
+                screenshots:
                     text: Screenshots
                     relativeUrl: screenshots.html
+                rpc:
+                    text: RPC Protocol
+                    relativeUrl: rpc.html

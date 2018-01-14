@@ -1,3 +1,6 @@
+---
+currentMenu: vim-plugin
+---
 Phpactor VIM Plugin
 ===================
 

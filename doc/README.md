@@ -1,3 +1,6 @@
+---
+currentMenu: about
+---
 About Phpactor
 ==============
 
@@ -12,7 +15,7 @@ Phpactor is a intelligent code-completion and refactoring tool for PHP.
 - **VIM plugin**: Lightweight VIM plugin.
 - **CLI interface**: Most/some functionality is exposed through CLI commands.
 
-Phpactor can be used in a limited way as a standalone application, but its full
+Phpactor can be used in a limited way as a **standalone application**, but its full
 power can only be utilized through its RPC protocol. It ships with support for VIM, but it
 would not involve a huge amount of effort to support other editors such as
 [GNU Emacs](https://www.gnu.org/s/emacs/).

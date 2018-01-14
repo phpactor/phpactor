@@ -1,3 +1,6 @@
+---
+currentMenu: screenshots
+---
 Screenshots
 ===========
 
