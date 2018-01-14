@@ -1,0 +1,13 @@
+
+digraph {
+    Class [label="Acme\\AbstractServiceFactoryFactoryImpl"]
+    File1 [label="lib/Acme/Engine:32"]
+    File2 [label="lib/Acme/Entity/Car:100"]
+    File3 [label="lib/Acme/Circulator:200"]
+    File4 [label="lib/Acme/ContainerContainer:100,120,130"]
+
+    File1 -> Class
+    File2 -> Class
+    File3 -> Class
+    File4 -> Class
+}

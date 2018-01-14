@@ -13,8 +13,8 @@ Phpactor VIM Plugin
 Installation
 ------------
 
-Install Phpactor using your favorite VIM package manager, or Vundle. Add the
-plugin to your `.vimrc`:
+Install Phpactor using your favorite VIM package manager, I am using Vundle.
+Add the plugin to your `.vimrc`:
 
 ```
 Plugin 'phpactor/phpactor'
@@ -26,7 +26,6 @@ Then in VIM:
 :VundleInstall
 ```
 
-
 Now you will need to install the Phpactor dependencies with composer:
 
 ```
@@ -36,12 +35,9 @@ $ composer install
 
 or using nvim, do the above where it counts.
 
-Make a [pull request](https://github.com/phpactor/phpactor) to impove the
-installation procedure!
-
 <div class="alert alert-info">
-This is not a recommendation (or disincentive) to use Vundle, this is just the package manager that I use
-at time of writing.
+Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
+installation procedure!
 </div>
 
 Updating

@@ -1,0 +1,26 @@
+digraph {
+    CodeBuilder [label="Code Builder"]
+    Transform [label="Code Transform"]
+    Reflection [label="Worse Reflection"]
+    Filesystem [label="SC Filesystem"]
+    ClassMover [label="Class Mover"]
+    Phpactor [label="Phpactor"]
+    ClassToFile [label="Class to File"]
+    TestUtils [label="Test Utils"]
+    PathFinder [label="Path Finder"]
+
+    Transform -> Phpactor
+    Reflection -> Phpactor
+    Filesystem -> Phpactor
+    ClassMover -> Phpactor
+    Reflection -> Transform
+    CodeBuilder -> Transform
+    ClassToFile -> Phpactor
+    PathFinder -> Phpactor
+
+    Reflection -> TestUtils
+    Phpactor -> TestUtils
+    Transform -> TestUtils
+    CodeBuilder -> TestUtils
+    ClassMover -> TestUtils
+}
