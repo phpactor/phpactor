@@ -82,7 +82,7 @@ No reason - PHP language server is great. Well, there are some differentiators:
   constructor, generate method, implement contracts etc).
 - **Phpactor ships with a VIM plugin**: Phpactor ships with a [VIM plugin](vim-plugin.md).
 
-... and competition for the eco-system right? "Competing" products allow more
+… and competition for the eco-system right? "Competing" products allow more
 independent vectors of discovery.
 
 Why not Language Server Protocol?

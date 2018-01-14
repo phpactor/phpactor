@@ -4,6 +4,10 @@ currentMenu: rpc
 RPC Protocol
 ============
 
+<div class="alert alert-danger">
+This document should largely be correct but is a work-in-progress
+</div>
+
 Phpactor communicates with the editor over its own RPC protocol which
 effectively allows the editor to intruct Phpactor to do things, and in turn
 Phpactor can also instruct the editor to do things.

@@ -20,12 +20,12 @@ Navigate / list all references to a given class.
 
 ### Description
 
-Keep track of where a class is being used or perform an intial survey before
+Keep track of where a class is being used or perform an initial survey before
 deciding to rename a class.
 
 The VIM plugin will load the class references into a quick fix list which you can navigate through (see `:help quickfix`).
 
-The CLI command will list the references and show a highlighted line where the references was found.
+The CLI command will list the references and show a highlighted line where the references were found.
 
 Class Member References
 -------------------------
@@ -41,8 +41,8 @@ Navigate / list all references to a given class member (method, property or cons
 Scan for all references to a class member in the project.
 
 This functionality is very similar to [Class References](#class-references)
-with the exception that it is possible not all members will be found as PHPHP
-is a loosely typed language and it may not be possible to determine all the
+with the exception that it is possible that not all members will be found as
+PHP is a loosely typed language and it may not be possible to determine all the
 class types of methods matching the query.
 
 Jump to definition

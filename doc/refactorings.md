@@ -529,7 +529,7 @@ class Barfoo
 Implement Contracts
 -------------------
 
-Add any not implemented methods from interfaces or abstract classes.
+Add any non-implemented methods from interfaces or abstract classes.
 
 - **Command**: `$ phpactor class:transform /path/to/class.php --transform=implement_contracts`
 - **VIM plugin**: _Class context menu > Transform > Implement contracts_.
@@ -705,7 +705,7 @@ Rename a variable in the local or class scope.
 Having meaningful and descriptive variable names makes the intention of
 code clearer and therefore easier to maintain. Renaming variables is a frequent
 refactoring, but doing this with a simple search and replace can often have unintended
-consquences (e.g. renaming the variable `$class` also changes the `class` keyword).
+consequences (e.g. renaming the variable `$class` also changes the `class` keyword).
 
 This refactoring will rename a variable, and only variables, in either the method scope
 or the class scope.
@@ -819,7 +819,7 @@ Rename a class member.
 ### Motivation
 
 Having an API which is expressive of the intent of the class is important, and
-and contribute to making your code more consistent and maintaintable.
+contributes to making your code more consistent and maintainable.
 
 When renaming methods global search and replace can be used, but is a shotgun approach and
 you may end up replacing many things you did not mean to replace (e.g. imagine renaming the method `name()`).
@@ -831,12 +831,12 @@ This refactoring will:
 3. Identify the members, and try and identify the containing class.
 4. Replace only the members which certainly belong to the target class.
 
-Due to the losely typed nature of PHP this refactoring may not find all of the member accesses for the given class. Run
+Due to the loosely typed nature of PHP this refactoring may not find all of the member accesses for the given class. Run
 your tests before and after applying this refactoring.
 
 <div class="alert alert-info">
 <b>Hint</b>: Use the CLI command to list all of the <b>risky</b> references. Risky references are those member accesses which match
-the query but whose containg classes could not be resolved.
+the query but whose containing classes could not be resolved.
 </div>
 
 ![Risky references](images/risky.png)

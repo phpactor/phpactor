@@ -84,12 +84,12 @@ map <Leader>cc :call phpactor#ClassNew()<CR>
 See the [Refactorings](refactorings.md) chapter for more functions you can map
 shortcuts to.
 
-Phpactor is requires at least PHP 7.0. If you use a different version of PHP
-locally, you may need to target PHP 7.0, you can change the PHP binary the
-plugin will use as follows:
+Phpactor requires at least PHP 7.0. If you use a different version of PHP
+locally, you may need to target a new version of PHP, you can change the PHP
+PHP binary the plugin will use as follows:
 
 ```
-let g:phpactorPhpBin = "/usr/bin/local/php6"
+let g:phpactorPhpBin = "/usr/bin/local/php6.0"
 ```
 
 Completion

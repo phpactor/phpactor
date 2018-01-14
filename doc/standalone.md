@@ -4,12 +4,12 @@ currentMenu: standalone
 Standalone
 ==========
 
-Phpactor can be used as (and was designed be) a standalone CLI application,
+Phpactor can be used as (and was designed to be) a standalone CLI application,
 and this will act as a compliment if it is being used as a backend for a text
 editor.
 
 The standalone application can be used to perform many of the actions exposed through the text editor
-but can also be used to compliment the text editor by providing debug information and in some cases
+but can also be used to complement the text editor by providing debug information and in some cases
 more detail.
 
 Installation
