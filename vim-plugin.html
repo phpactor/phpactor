@@ -97,8 +97,8 @@
 <li><a href="#context-menu">Context Menu</a></li>
 </ul>
 <h2 id="installation">Installation</h2>
-<p>Install Phpactor using your favorite VIM package manager, or Vundle. Add the
-plugin to your <code>.vimrc</code>:</p>
+<p>Install Phpactor using your favorite VIM package manager, I am using Vundle.
+Add the plugin to your <code>.vimrc</code>:</p>
 <pre><code>Plugin 'phpactor/phpactor'</code></pre>
 <p>Then in VIM:</p>
 <pre><code>:VundleInstall</code></pre>
@@ -106,11 +106,9 @@ plugin to your <code>.vimrc</code>:</p>
 <pre><code>$ cd ~/.vim/bundles/phpactor
 $ composer install</code></pre>
 <p>or using nvim, do the above where it counts.</p>
-<p>Make a <a href="https://github.com/phpactor/phpactor">pull request</a> to impove the
-installation procedure!</p>
 <div class="alert alert-info">
-This is not a recommendation (or disincentive) to use Vundle, this is just the package manager that I use
-at time of writing.
+Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
+installation procedure!
 </div>
 <h2 id="updating">Updating</h2>
 <p>Updating Phpactor from VIM is easy:</p>
@@ -180,6 +178,9 @@ should see something like the following:</p>
         <script>
             $(function() {
                 $("section>h1").wrap('<div class="page-header" />');
+                $("section>h2").each(function (index, value) {
+                    $(value).append('&nbsp;<a href="#' + $(value).attr('id') + '"><i class="fa small fa-link"></i></a>');
+                });
                 // Syntax highlighting
                 hljs.initHighlightingOnLoad();
             });

@@ -116,6 +116,9 @@ experience (hopefully it will be better...).</p>
         <script>
             $(function() {
                 $("section>h1").wrap('<div class="page-header" />');
+                $("section>h2").each(function (index, value) {
+                    $(value).append('&nbsp;<a href="#' + $(value).attr('id') + '"><i class="fa small fa-link"></i></a>');
+                });
                 // Syntax highlighting
                 hljs.initHighlightingOnLoad();
             });

@@ -118,7 +118,7 @@
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments</code></li>
 <li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Implement Contracts</em>.</li>
-<li><strong>VIM Command</strong>: <code>call phpactor#Transform()</code></li>
+<li><strong>VIM Command</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
 <h3 id="motivation">Motivation</h3>
 <p>When authoring a class it is redundant effort to add a property and documentation tag when making an assignment. This
@@ -153,7 +153,7 @@ class AcmeBlogTest extends TestCase
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:copy path/to/ClassA.php path/to/ClassB.php</code> (class FQN also accepted).</li>
 <li><strong>VIM context menu</strong>: <em>Class context menu &gt; Copy Class</em></li>
-<li><strong>VIM function</strong>: <code>call phpactor#CopyFile()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#CopyFile()</code></li>
 </ul>
 <h3 id="motivation-1">Motivation</h3>
 <p>Sometimes you find that an existing class is a good starting point for a new class. In this situation you may:</p>
@@ -194,7 +194,7 @@ class Article
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:move path/to/ClassA.php path/to/ClassB.php</code> (class FQN also accepted).</li>
 <li><strong>VIM context menu</strong>: <em>Class context menu &gt; Move Class</em></li>
-<li><strong>VIM function</strong>: <code>call phpactor#MoveFile()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#MoveFile()</code></li>
 </ul>
 <h3 id="motivation-2">Motivation</h3>
 <p>When authoring classes, it is often difficult to determine really appropriate
@@ -235,7 +235,7 @@ class Writer
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:new path/To/ClassName.php</code> (class FQN also accepted).</li>
 <li><strong>VIM context menu</strong>: <em>Class context menu &gt; New Class</em></li>
-<li><strong>VIM function</strong>: <code>call phpactor#ClassNew()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ClassNew()</code></li>
 </ul>
 <h3 id="motivation-3">Motivation</h3>
 <p>Creating classes is one of the most general actions we perform:</p>
@@ -272,7 +272,7 @@ class Post
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:transform path/to/class.php --transform=complete_constructor</code></li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Complete Constructor</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#Transform()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
 <h3 id="motivation-4">Motivation</h3>
 <p>When authoring a new class, it is often required to:</p>
@@ -317,7 +317,7 @@ class Post
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Symbol context menu &gt; Extract Constant</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-5">Motivation</h3>
 <p>Each time a value is duplicated in a class a fairy dies. Duplicated values
@@ -372,7 +372,7 @@ class DecisionMaker
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:inflect path/to/Class.php path/to/Interface.php</code> (wild card accepted).</li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Inflect &gt; Extract interface</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ClassInflect()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ClassInflect()</code></li>
 </ul>
 <h3 id="motivation-6">Motivation</h3>
 <p>It is sometimes unwise to preemptively create interfaces for all your classes,
@@ -400,7 +400,7 @@ interface FoobarInterface
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Property context menu &gt; Generate accessor</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-7">Motivation</h3>
 <p>When creating entities and value objects it is frequently necessary to add accessors.</p>
@@ -439,7 +439,7 @@ Note the accessor template can be customized see [Templates](templates.html).
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Method context menu &gt; Generate method</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-8">Motivation</h3>
 <p>When initially authoring a package you will often write a method call which
@@ -497,7 +497,7 @@ class Barfoo
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:transform /path/to/class.php --transform=implement_contracts</code></li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Transform &gt; Implement contracts</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#Transform()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
 <h3 id="motivation-9">Motivation</h3>
 <p>It can be very tiresome to manually implement contracts for interfaces and abstract classes,
@@ -525,7 +525,7 @@ class Foobar implements Countable
 <ul>
 <li><strong>Command</strong>: <em>VIM function only</em></li>
 <li><strong>VIM plugin</strong>: <em>VIM function only</em></li>
-<li><strong>VIM function</strong>: <code>call phpactor#AddUse()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#AddUse()</code></li>
 </ul>
 <h3 id="motivation-10">Motivation</h3>
 <p>It is easy to remember the name of a class, but more difficult to remember its
@@ -581,7 +581,7 @@ class Foobar implements Countable
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Override method</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-11">Motivation</h3>
 <p>Sometimes it is expected or necessary that you override a parent classes method
@@ -614,7 +614,7 @@ class MyCommand extends Command
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Variable context menu &gt; Rename</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-12">Motivation</h3>
 <p>Having meaningful and descriptive variable names makes the intention of
@@ -659,7 +659,7 @@ class Hello
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor references:class path/to/Class.php --replace="NewName"</code> (class FQN accepted)</li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Replace references</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-13">Motivation</h3>
 <p>This refactoring is <em>similar</em> to <a href="#class-move">Move Class</a>, but without
@@ -702,7 +702,7 @@ When renaming classes in your project use <a href="#class-move">Class Move</a>.
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor references:member path/to/Class.php memberName --type="method" --replace="newMemberName"</code> (FQN accepted)</li>
 <li><strong>VIM plugin</strong>: <em>Member context menu &gt; Replace references</em>.</li>
-<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
 <h3 id="motivation-14">Motivation</h3>
 <p>Having an API which is expressive of the intent of the class is important, and
@@ -765,6 +765,9 @@ $hello-&gt;speak();</code></pre>
         <script>
             $(function() {
                 $("section>h1").wrap('<div class="page-header" />');
+                $("section>h2").each(function (index, value) {
+                    $(value).append('&nbsp;<a href="#' + $(value).attr('id') + '"><i class="fa small fa-link"></i></a>');
+                });
                 // Syntax highlighting
                 hljs.initHighlightingOnLoad();
             });
