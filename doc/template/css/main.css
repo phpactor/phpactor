@@ -13,6 +13,13 @@ section {
 h1, h2, h3, h4 {
     color: #df691a;
 }
+
+h2 {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #aaa;
+}
+
 h3 {
     font-size: 23px;
 }

@@ -16,7 +16,7 @@ Navigate / list all references to a given class.
 
 - **Command**: `$ phpactor references:class path/to/Class.php`
 - **VIM Context Menu**: _Class context menu > Find references_.
-- **VIM Command**: `call phpactor#FindReferences()`
+- **VIM Command**:`:call phpactor#FindReferences()`
 
 ### Description
 
@@ -27,6 +27,8 @@ The VIM plugin will load the class references into a quick fix list which you ca
 
 The CLI command will list the references and show a highlighted line where the references were found.
 
+![Class references](images/class-referenes.png)
+
 Class Member References
 -------------------------
 
@@ -34,7 +36,7 @@ Navigate / list all references to a given class member (method, property or cons
 
 - **Command**: `$ phpactor references:member path/to/Class.php memberName`
 - **VIM Context Menu**: _Member context menu > Find references_.
-- **VIM Command**: `call phpactor#FindReferences()`
+- **VIM Command**:`:call phpactor#FindReferences()`
 
 ### Description
 
@@ -52,7 +54,7 @@ Jump to the definition of a class or class member.
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Member/class context menu > Goto definition_.
-- **VIM Command**: `call phpactor#GotoDefinition()`
+- **VIM Command**:`:call phpactor#GotoDefinition()`
 
 ### Description
 
@@ -67,7 +69,7 @@ Jump to a related file (e.g. unit test, integration test, benchmark), and option
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Class context menu > Navigate_.
-- **VIM Command**: `call phpactor#Navigate()`
+- **VIM Command**:`:call phpactor#Navigate()`
 
 ### Description
 
