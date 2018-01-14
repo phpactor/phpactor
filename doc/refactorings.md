@@ -1,22 +1,29 @@
 Refactorings
 ============
 
-... and other useful things.
+Fixes:
 
 - [Add Missing Assignments](#add-missing-assignments)
-- [Class Copy](#class-copy)
-- [Class Move](#class-move)
-- [Class New](#class-new)
 - [Complete Constructor](#complete-constructor)
-- [Extract Constant](#extract-constant)
-- [Extract Interface](#extract-interface)
 - [Generate Accessor](#generate-accessor)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
-- [Import Class](#import-class) (generate use statement)
+- [Import Class](#import-class)
 - [Override Method](#override-method)
-- [Rename Variable](#rename-variable)
 
+Generation:
+
+- [Class New](#class-new)
+- [Class Copy](#class-copy)
+- [Extract Interface](#extract-interface)
+
+Refactoring:
+
+- [Class Move](#class-move)
+- [Extract Constant](#extract-constant)
+- [Rename Class](#rename-class)
+- [Rename Class Member](#rename-member)
+- [Rename Variable](#rename-variable)
 
 Add Missing Assignments
 -----------------------
@@ -738,4 +745,133 @@ class Hello
 	}
 
 }
+```
+
+Rename Class
+------------
+
+Rename a class.
+
+- **Command**: `$ phpactor references:class path/to/Class.php --replace="NewName"` (class FQN accepted)
+- **VIM plugin**: _Class context menu > Replace references_.
+- **VIM function**: `call phpactor#ContextMenu()`
+
+### Motivation
+
+This refactoring is _similar_ to [Move Class](#class-move), but without
+renaming the file. This is a useful refactoring when a dependant library has
+changed a class name and you need to update that class name in your project.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+class Hel<>lo
+{
+    public function say()
+    {
+        
+	}
+
+}
+
+$hello = new Hello();
+$hello->say();
+```
+
+Rename `Hello` to `Goodbye`
+
+```php
+<?php
+
+class Goodbye
+{
+    public function say()
+    {
+        
+	}
+
+}
+
+$hello = new Goodbye();
+$hello->say();
+```
+
+<div class="alert alert-danger">
+When renaming classes in your project use <a href="#class-move">Class Move</a>.
+</div>
+
+Rename Class Member
+-------------------
+
+Rename a class member.
+
+- **Command**: `$ phpactor references:member path/to/Class.php memberName --type="method" --replace="newMemberName"` (FQN accepted)
+- **VIM plugin**: _Member context menu > Replace references_.
+- **VIM function**: `call phpactor#ContextMenu()`
+
+### Motivation
+
+Having an API which is expressive of the intent of the class is important, and
+and contribute to making your code more consistent and maintaintable.
+
+When renaming methods global search and replace can be used, but is a shotgun approach and
+you may end up replacing many things you did not mean to replace (e.g. imagine renaming the method `name()`).
+
+This refactoring will:
+
+1. Scan for files in your project which contain the member name text.
+2. Parse all of the candidate files.
+3. Identify the members, and try and identify the containing class.
+4. Replace only the members which certainly belong to the target class.
+
+Due to the losely typed nature of PHP this refactoring may not find all of the member accesses for the given class. Run
+your tests before and after applying this refactoring.
+
+<div class="alert alert-info">
+<b>Hint</b>: Use the CLI command to list all of the <b>risky</b> references. Risky references are those member accesses which match
+the query but whose containg classes could not be resolved.
+</div>
+
+![Risky references](images/risky.png)
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+class Hello
+{
+    public function sa<>y()
+    {
+        
+	}
+
+}
+
+$hello = new Hello();
+$hello->say();
+```
+
+Rename `Hello#say()` to `Hello#speak()`
+
+```php
+<?php
+
+class Hello
+{
+    public function speak()
+    {
+        
+	}
+
+}
+
+$hello = new Hello();
+$hello->speak();
 ```
