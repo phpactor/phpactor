@@ -45,9 +45,6 @@ menu:
                 history:
                     text: History
                     relativeUrl: history.html
-                screenshots:
-                    text: Screenshots
-                    relativeUrl: screenshots.html
                 rpc:
                     text: RPC Protocol
                     relativeUrl: rpc.html
