@@ -22,10 +22,10 @@ have a direct influence on the quality of my code and architecture (if would
 take an hour to move a bunch of classes, the chances are I probably wouldn't do
 that).
 
-Of course there were some ways to mitigate this and for some time I had been
-using ctags completion (basically regexy dumb completion) and code snippet
-generators, but a real contextually aware code completion and refactoring tool
-for PHP was simply not available.
+Of course there were a multitude of ways to mitigate this lack of functionality
+and for some time I had, for example, been using ctags completion (basically
+regexy dumb completion) and code snippet generators, but a real contextually
+aware code completion and refactoring tool for PHP was simply not available.
 
 I was excited to find out about projects like
 [Padawan](https://github.com/padawan-php/padawan.php) and other similar
@@ -73,7 +73,7 @@ No reason - PHP language server is great. Well, there are some differentiators:
   what PHP is good at. We locate files quickly by depending on
   the [Composer](https://getcomposer.org) autoloader. Bad because
   it cannot discover non-autoloadable classes or (at time of writing) provide
-  completion for functions in the wild.
+  completion for functions in the wild. Phpactor does not work well without Composer.
 - **Phpactor is also a refactoring tool**: Phpactor provides [refactorings](refactorings.md) and
   procedures to help you code faster and more accurately (such as complete
   constructor, generate method, implement contracts etc).

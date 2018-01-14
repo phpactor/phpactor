@@ -75,7 +75,7 @@ Copy an existing class to another location updating its name and namespace.
 
 ### Motivation
 
-Sometimes you find that an existing class is a good starting point for a new class. In this situation you will:
+Sometimes you find that an existing class is a good starting point for a new class. In this situation you may:
 
 1. Copy the class to a new file location.
 2. Update the class name and namespace.
@@ -136,7 +136,8 @@ This problem is multiplied if you have chosen an incorrect namespace.
 
 This refactoring will move either a class, class-containing-file or folder to a
 new location, updating the classes namespace and all references to that class
-where possible.
+where possible in a given _scope_ (i.e. files known by GIT: `git`, files known by Composer: `composer`, or all PHP files under
+the current CWD: `simple`).
 
 <div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before

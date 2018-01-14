@@ -18,6 +18,7 @@ would not involve a huge amount of effort to support other editors such as
 [GNU Emacs](https://www.gnu.org/s/emacs/).
 
 Phpactor is a bleeding-edge product, it is not perfect, it probably never will
-be. It has been driven forward by immediate need. Comprimises have been made and
-it's a work in progress. But, I have been using it extensively in my daily work and havn't felt
-especially compelled to add new features for some months.
+be. It has been driven forward by immediate need. Comprimises have been made
+and it's a work in progress. But, I have been using it extensively in my daily
+work and havn't felt especially compelled to add new features for some months.
+Your mileage my vary, pull requests are open!
