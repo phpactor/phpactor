@@ -51,7 +51,7 @@ Updating Phpactor from VIM is easy:
 
 <div class="alert alert-warning">
 Note that if the update included changes to the VIM plugin you will currently
-need to either resource the plugin or reload VIM (pull requests are open!).
+need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
 </div>
 
 Keyboard Mappings
@@ -60,7 +60,7 @@ Keyboard Mappings
 The Phpactor plugin will **not** automatically assume any shortcuts, copy
 the following configuration into your `.vimrc`:
 
-```
+```vimscript
 " Include use statement
 map <Leader>u :call phpactor#UseAdd()<CR>
 
@@ -81,8 +81,8 @@ See the [Refactorings](refactorings.md) chapter for more functions you can map
 shortcuts to.
 
 Phpactor requires at least PHP 7.0. If you use a different version of PHP
-locally, you may need to target a new version of PHP, you can change the PHP
-PHP binary the plugin will use as follows:
+locally, you may need to target a new version of PHP - add the following to
+your `.vimrc` to change the PHP binary:
 
 ```
 let g:phpactorPhpBin = "/usr/bin/local/php6.0"
@@ -93,8 +93,11 @@ Completion
 
 ### Omni-completion
 
-Omni-completion ([Screenshot](http://localhost:8000/screenshots.html#code-completion)) is VIM's built-in auto-completion mechanism. Tell
-VIM to use Phpactor for omni-completion in PHP files with the following conifg in `.vimrc`:
+Omni-completion
+([Screenshot](http://localhost:8000/screenshots.html#code-completion)) is
+VIM's built-in auto-completion mechanism. 
+
+Add the following to your `.vimrc` in order to use Phpactor for omni-completion (for PHP files):
 
 ```vimscript
 autocmd FileType php setlocal omnifunc=phpactor#Complete
@@ -104,10 +107,13 @@ To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
 <div class="alert alert-info">
+<p>
 The Omni-Complete method provides <i>feedback</i> messages when it cannot complete something. This information
 is <b>useful</b>. Other completion mehanisms may not provide this information.
-
+</p>
+<p>
 <b>Always enable omni-completion</b>. If another mechanism is failing to complete, invoke omni-complete to find out why.
+</p>
 </div>
 
 ### Neovim Completion Manager
