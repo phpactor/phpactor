@@ -43,11 +43,7 @@ class Phpactor
             return true;
         }
 
-        if (true === file_exists($string)) {
-            return true;
-        }
-
-        return false;
+        return file_exists($string);
     }
 
     public static function loadConfig(): array
