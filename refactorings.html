@@ -6,36 +6,27 @@
 
         <title>Phpactor</title>
 
-        <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/font-awesome.min.css">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/highlight.tomorrow-night.css">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/main.css">
     </head>
     <body>
 
-        <header class="navbar navbar-default navbar-fixed-top">
-
-            <a class="navbar-brand" href="http://phpactor.github.io/phpactor/">
-                Phpactor
-                <small class="hidden-xs hidden-sm">
-                    Intelligent autocompletion and refactoring tool for PHP
-                </small>
-            </a>
-
-                            <a href="https://github.com/phpactor/phpactor">
-                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-                </a>
-            
-        </header>
-
         <main class="container-fluid">
             <div class="row">
 
-                
                     <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+                        <div class="logo">
+<center>
+							<a href="http://phpactor.github.io/phpactor"><img src="http://phpactor.github.io/phpactor/images/logo-small.png" /></a>
+							<br/>
+							<b>Phpactor</b><br/> <i>Intelligent completion and refactoring tool for PHP</i>
+</center>
+						</div>
 
                                                     <p class="text-muted">
-                                About
+                                Home
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
@@ -44,25 +35,15 @@
                                             About
                                         </a>
                                     </li>
-                                                                    <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/history.html">
-                                            History
-                                        </a>
-                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
-                                Reference
+                                Usage
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/refactorings.html">
-                                            Refactorings etc.
-                                        </a>
-                                    </li>
-                                                                    <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/rpc.html">
-                                            RPC Protocol
+                                        <a href="http://phpactor.github.io/phpactor/standalone.html">
+                                            Standalone
                                         </a>
                                     </li>
                                                                     <li class="">
@@ -72,36 +53,69 @@
                                     </li>
                                                             </ul>
                                                     <p class="text-muted">
+                                Reference
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/navigation.html">
+                                            Navigation
+                                        </a>
+                                    </li>
+                                                                    <li class="active">
+                                        <a href="http://phpactor.github.io/phpactor/refactorings.html">
+                                            Refactorings
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
                                 Other topics
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/history.html">
+                                            History
+                                        </a>
+                                    </li>
+                                                                    <li class="">
                                         <a href="http://phpactor.github.io/phpactor/screenshots.html">
                                             Screenshots
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/rpc.html">
+                                            RPC Protocol
                                         </a>
                                     </li>
                                                             </ul>
                         
                     </nav>
 
-                
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="refactorings">Refactorings</h1>
-<p>... and other useful things.</p>
+<p>Fixes:</p>
 <ul>
 <li><a href="#add-missing-assignments">Add Missing Assignments</a></li>
-<li><a href="#class-copy">Class Copy</a></li>
-<li><a href="#class-move">Class Move</a></li>
-<li><a href="#class-new">Class New</a></li>
 <li><a href="#complete-constructor">Complete Constructor</a></li>
-<li><a href="#extract-constant">Extract Constant</a></li>
-<li><a href="#extract-interface">Extract Interface</a></li>
 <li><a href="#generate-accessor">Generate Accessor</a></li>
 <li><a href="#generate-method">Generate Method</a></li>
 <li><a href="#implement-contracts">Implement Contracts</a></li>
-<li><a href="#import-class">Import Class</a> (generate use statement)</li>
+<li><a href="#import-class">Import Class</a></li>
 <li><a href="#override-method">Override Method</a></li>
+</ul>
+<p>Generation:</p>
+<ul>
+<li><a href="#class-new">Class New</a></li>
+<li><a href="#class-copy">Class Copy</a></li>
+<li><a href="#extract-interface">Extract Interface</a></li>
+</ul>
+<p>Refactoring:</p>
+<ul>
+<li><a href="#class-move">Class Move</a></li>
+<li><a href="#extract-constant">Extract Constant</a></li>
+<li><a href="#rename-class">Rename Class</a></li>
+<li><a href="#rename-member">Rename Class Member</a></li>
 <li><a href="#rename-variable">Rename Variable</a></li>
 </ul>
 <h2 id="add-missing-assignments">Add Missing Assignments</h2>
@@ -147,7 +161,7 @@ class AcmeBlogTest extends TestCase
 <li><strong>VIM function</strong>: <code>call phpactor#CopyFile()</code></li>
 </ul>
 <h3 id="motivation-1">Motivation</h3>
-<p>Sometimes you find that an existing class is a good starting point for a new class. In this situation you will:</p>
+<p>Sometimes you find that an existing class is a good starting point for a new class. In this situation you may:</p>
 <ol>
 <li>Copy the class to a new file location.</li>
 <li>Update the class name and namespace.</li>
@@ -194,7 +208,8 @@ through your code, making the class name harder to change as time goes on.</p>
 <p>This problem is multiplied if you have chosen an incorrect namespace.</p>
 <p>This refactoring will move either a class, class-containing-file or folder to a
 new location, updating the classes namespace and all references to that class
-where possible.</p>
+where possible in a given <em>scope</em> (i.e. files known by GIT: <code>git</code>, files known by Composer: <code>composer</code>, or all PHP files under
+the current CWD: <code>simple</code>).</p>
 <div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before
 executing it and be aware that success is not guaranteed (e.g. class references
@@ -644,9 +659,108 @@ class Hello
     }
 
 }</code></pre>
+<h2 id="rename-class">Rename Class</h2>
+<p>Rename a class.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor references:class path/to/Class.php --replace="NewName"</code> (class FQN accepted)</li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Replace references</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-13">Motivation</h3>
+<p>This refactoring is <em>similar</em> to <a href="#class-move">Move Class</a>, but without
+renaming the file. This is a useful refactoring when a dependant library has
+changed a class name and you need to update that class name in your project.</p>
+<h3 id="before-and-after-14">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class Hel&lt;&gt;lo
+{
+    public function say()
+    {
+
+    }
+
+}
+
+$hello = new Hello();
+$hello-&gt;say();</code></pre>
+<p>Rename <code>Hello</code> to <code>Goodbye</code></p>
+<pre><code class="language-php">&lt;?php
+
+class Goodbye
+{
+    public function say()
+    {
+
+    }
+
+}
+
+$hello = new Goodbye();
+$hello-&gt;say();</code></pre>
+<div class="alert alert-danger">
+When renaming classes in your project use <a href="#class-move">Class Move</a>.
+</div>
+<h2 id="rename-class-member">Rename Class Member</h2>
+<p>Rename a class member.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor references:member path/to/Class.php memberName --type="method" --replace="newMemberName"</code> (FQN accepted)</li>
+<li><strong>VIM plugin</strong>: <em>Member context menu &gt; Replace references</em>.</li>
+<li><strong>VIM function</strong>: <code>call phpactor#ContextMenu()</code></li>
+</ul>
+<h3 id="motivation-14">Motivation</h3>
+<p>Having an API which is expressive of the intent of the class is important, and
+and contribute to making your code more consistent and maintaintable.</p>
+<p>When renaming methods global search and replace can be used, but is a shotgun approach and
+you may end up replacing many things you did not mean to replace (e.g. imagine renaming the method <code>name()</code>).</p>
+<p>This refactoring will:</p>
+<ol>
+<li>Scan for files in your project which contain the member name text.</li>
+<li>Parse all of the candidate files.</li>
+<li>Identify the members, and try and identify the containing class.</li>
+<li>Replace only the members which certainly belong to the target class.</li>
+</ol>
+<p>Due to the losely typed nature of PHP this refactoring may not find all of the member accesses for the given class. Run
+your tests before and after applying this refactoring.</p>
+<div class="alert alert-info">
+<b>Hint</b>: Use the CLI command to list all of the <b>risky</b> references. Risky references are those member accesses which match
+the query but whose containg classes could not be resolved.
+</div>
+<p><img src="images/risky.png" alt="Risky references" /></p>
+<h3 id="before-and-after-15">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+class Hello
+{
+    public function sa&lt;&gt;y()
+    {
+
+    }
+
+}
+
+$hello = new Hello();
+$hello-&gt;say();</code></pre>
+<p>Rename <code>Hello#say()</code> to <code>Hello#speak()</code></p>
+<pre><code class="language-php">&lt;?php
+
+class Hello
+{
+    public function speak()
+    {
+
+    }
+
+}
+
+$hello = new Hello();
+$hello-&gt;speak();</code></pre>
                 </section>
 
             </div>
+
         </main>
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -661,5 +775,15 @@ class Hello
             });
         </script>
 
-    </body>
+		<footer>
+<hr />
+<center>
+			<a href="https://github.com/phpactor/phpactor">
+				<i class="fa fa-github"></i>
+Fork me on Github!
+			</a>
+</center>
+		</footer>
+
+	</body>
 </html>

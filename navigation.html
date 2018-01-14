@@ -57,7 +57,7 @@
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
-                                                                    <li class="">
+                                                                    <li class="active">
                                         <a href="http://phpactor.github.io/phpactor/navigation.html">
                                             Navigation
                                         </a>
@@ -78,7 +78,7 @@
                                             History
                                         </a>
                                     </li>
-                                                                    <li class="active">
+                                                                    <li class="">
                                         <a href="http://phpactor.github.io/phpactor/screenshots.html">
                                             Screenshots
                                         </a>
@@ -93,21 +93,70 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="screenshots">Screenshots</h1>
-<p><strong>Disclaimer</strong>: These screenshots/recordings were made at varying points of
-Phpactors development and may not be representative of the current user
-experience (hopefully it will be better...).</p>
-<h2 id="code-completion">Code Completion</h2>
-<p><img src="https://user-images.githubusercontent.com/530801/29006615-94356fe2-7af3-11e7-9d73-775d6f9f487a.gif" alt="recording" /></p>
-<h2 id="context-menu">Context Menu</h2>
-<p><img src="https://user-images.githubusercontent.com/530801/31052985-96b96e10-a692-11e7-8d43-681f85c636d0.gif" alt="recording" />
-<em>Context menu</em></p>
-<h2 id="move-class">Move class</h2>
-<p><img src="https://user-images.githubusercontent.com/530801/27604530-7357d9d2-5b71-11e7-86ad-1921462b2f43.gif" alt="recording" /></p>
-<h2 id="transformations">Transformations</h2>
-<p><img src="https://user-images.githubusercontent.com/530801/27984415-92800230-63cd-11e7-8492-d5a7a93bb6f0.gif" alt="recording" /></p>
-<h2 id="create-class">Create Class</h2>
-<p><img src="https://user-images.githubusercontent.com/530801/28240939-2d17c42c-6982-11e7-9ddb-9ecddf55ac87.gif" alt="recording" /></p>
+                    <h1 id="navigation">Navigation</h1>
+<ul>
+<li><a href="#class-references">Class References</a></li>
+<li><a href="#class-member-references">Class Member References</a></li>
+<li><a href="#jump-to-definition">Jump to Definition</a></li>
+<li><a href="#jump-to-or-generate-related-file">Jump to or generate related file</a></li>
+</ul>
+<h2 id="class-references">Class References</h2>
+<p>Navigate / list all references to a given class.</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor references:class path/to/Class.php</code></li>
+<li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Find references</em>.</li>
+<li><strong>VIM Command</strong>: <code>call phpactor#FindReferences()</code></li>
+</ul>
+<h3 id="description">Description</h3>
+<p>Keep track of where a class is being used or perform an intial survey before
+deciding to rename a class.</p>
+<p>The VIM plugin will load the class references into a quick fix list which you can navigate through (see <code>:help quickfix</code>).</p>
+<p>The CLI command will list the references and show a highlighted line where the references was found.</p>
+<h2 id="class-member-references">Class Member References</h2>
+<p>Navigate / list all references to a given class member (method, property or constant).</p>
+<ul>
+<li><strong>Command</strong>: <code>$ phpactor references:member path/to/Class.php memberName</code></li>
+<li><strong>VIM Context Menu</strong>: <em>Member context menu &gt; Find references</em>.</li>
+<li><strong>VIM Command</strong>: <code>call phpactor#FindReferences()</code></li>
+</ul>
+<h3 id="description-1">Description</h3>
+<p>Scan for all references to a class member in the project.</p>
+<p>This functionality is very similar to <a href="#class-references">Class References</a>
+with the exception that it is possible not all members will be found as PHPHP
+is a loosely typed language and it may not be possible to determine all the
+class types of methods matching the query.</p>
+<h2 id="jump-to-definition">Jump to definition</h2>
+<p>Jump to the definition of a class or class member.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC Only</em></li>
+<li><strong>VIM Context Menu</strong>: <em>Member/class context menu &gt; Goto definition</em>.</li>
+<li><strong>VIM Command</strong>: <code>call phpactor#GotoDefinition()</code></li>
+</ul>
+<h3 id="description-2">Description</h3>
+<p>Open the file containing the class or class member under the cursor and move the cursor to the place where class or class member is defined.</p>
+<p>This feature is <strong>extremely useful</strong>! Be sure to map it to a keyboard shortcut and use it often to quickly navigate through your source code.</p>
+<h2 id="jump-to-or-generate-related-file">Jump to or generate related file</h2>
+<p>Jump to a related file (e.g. unit test, integration test, benchmark), and optionally generate it if it doesn't exist.</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC Only</em></li>
+<li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Navigate</em>.</li>
+<li><strong>VIM Command</strong>: <code>call phpactor#Navigate()</code></li>
+</ul>
+<h3 id="description-3">Description</h3>
+<p>Often classes will have a one-to-one relationship with another class, for example a single class will often have a matching unit test.</p>
+<p>Phpactor provides a way to define this relationship:</p>
+<pre><code class="language-yaml"># .phpactor.yml
+navigator.destinations:
+    source: lib/&lt;kernel&gt;.php
+    unit_test: tests/Unit/&lt;kernel&gt;Test.php
+
+navigator.autocreate:
+    source: default
+    unit_test: phpunit_test</code></pre>
+<p>Above we define a pattern which will match the source code of the project (and assign it an identifier <code>source</code>). We also identify a pattern to identify <code>unit_test</code> classes.</p>
+<p>When you are in a <code>source</code> file, the navigate option will offer you the possiblity of jumping to the unit test, and vice-versa.</p>
+<p>Above we additionally (and optionally) tell Phpactor that it can autogenerate
+these classes based on <a href="templates.html">templates</a>.</p>
                 </section>
 
             </div>

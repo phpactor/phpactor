@@ -3,7 +3,7 @@ body {
 }
 
 main {
-    margin-top: 90px;
+    margin-top: 20px;
 }
 
 section {
@@ -23,6 +23,10 @@ li {
 
 img {
     max-width: 100%;
+}
+
+.logo {
+    margin-bottom: 10px;
 }
 
 header.navbar {

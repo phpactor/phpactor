@@ -6,36 +6,27 @@
 
         <title>Phpactor</title>
 
-        <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/font-awesome.min.css">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/highlight.tomorrow-night.css">
         <link rel="stylesheet" href="http://phpactor.github.io/phpactor/css/main.css">
     </head>
     <body>
 
-        <header class="navbar navbar-default navbar-fixed-top">
-
-            <a class="navbar-brand" href="http://phpactor.github.io/phpactor/">
-                Phpactor
-                <small class="hidden-xs hidden-sm">
-                    Intelligent autocompletion and refactoring tool for PHP
-                </small>
-            </a>
-
-                            <a href="https://github.com/phpactor/phpactor">
-                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
-                </a>
-            
-        </header>
-
         <main class="container-fluid">
             <div class="row">
 
-                
                     <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+                        <div class="logo">
+<center>
+							<a href="http://phpactor.github.io/phpactor"><img src="http://phpactor.github.io/phpactor/images/logo-small.png" /></a>
+							<br/>
+							<b>Phpactor</b><br/> <i>Intelligent completion and refactoring tool for PHP</i>
+</center>
+						</div>
 
                                                     <p class="text-muted">
-                                About
+                                Home
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
@@ -44,25 +35,15 @@
                                             About
                                         </a>
                                     </li>
-                                                                    <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/history.html">
-                                            History
-                                        </a>
-                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
-                                Reference
+                                Usage
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/refactorings.html">
-                                            Refactorings etc.
-                                        </a>
-                                    </li>
-                                                                    <li class="">
-                                        <a href="http://phpactor.github.io/phpactor/rpc.html">
-                                            RPC Protocol
+                                        <a href="http://phpactor.github.io/phpactor/standalone.html">
+                                            Standalone
                                         </a>
                                     </li>
                                                                     <li class="">
@@ -72,20 +53,45 @@
                                     </li>
                                                             </ul>
                                                     <p class="text-muted">
-                                Other topics
+                                Reference
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/navigation.html">
+                                            Navigation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/refactorings.html">
+                                            Refactorings
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Other topics
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="active">
+                                        <a href="http://phpactor.github.io/phpactor/history.html">
+                                            History
+                                        </a>
+                                    </li>
+                                                                    <li class="">
                                         <a href="http://phpactor.github.io/phpactor/screenshots.html">
                                             Screenshots
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/rpc.html">
+                                            RPC Protocol
                                         </a>
                                     </li>
                                                             </ul>
                         
                     </nav>
 
-                
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="history">History</h1>
 <p><strong>Note</strong>: The following is personal history and opinion.</p>
@@ -104,10 +110,10 @@ typing, and developed muscle memory for class constructors and properties.</p>
 have a direct influence on the quality of my code and architecture (if would
 take an hour to move a bunch of classes, the chances are I probably wouldn't do
 that).</p>
-<p>Of course there were some ways to mitigate this and for some time I had been
-using ctags completion (basically regexy dumb completion) and code snippet
-generators, but a real contextually aware code completion and refactoring tool
-for PHP was simply not available.</p>
+<p>Of course there were a multitude of ways to mitigate this lack of functionality
+and for some time I had, for example, been using ctags completion (basically
+regexy dumb completion) and code snippet generators, but a real contextually
+aware code completion and refactoring tool for PHP was simply not available.</p>
 <p>I was excited to find out about projects like
 <a href="https://github.com/padawan-php/padawan.php">Padawan</a> and other similar
 efforts, but they all seemed either unstable or sub-optimal (at the time at
@@ -147,7 +153,7 @@ issues and has no start-up penalty. It uses short lived processes, which is
 what PHP is good at. We locate files quickly by depending on
 the <a href="https://getcomposer.org">Composer</a> autoloader. Bad because
 it cannot discover non-autoloadable classes or (at time of writing) provide
-completion for functions in the wild.</li>
+completion for functions in the wild. Phpactor does not work well without Composer.</li>
 <li><strong>Phpactor is also a refactoring tool</strong>: Phpactor provides <a href="refactorings.html">refactorings</a> and
 procedures to help you code faster and more accurately (such as complete
 constructor, generate method, implement contracts etc).</li>
@@ -167,6 +173,7 @@ be made redundant by the PHP Language Server <code>¯\_(ツ)_/¯</code>.</p>
                 </section>
 
             </div>
+
         </main>
 
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -181,5 +188,15 @@ be made redundant by the PHP Language Server <code>¯\_(ツ)_/¯</code>.</p>
             });
         </script>
 
-    </body>
+		<footer>
+<hr />
+<center>
+			<a href="https://github.com/phpactor/phpactor">
+				<i class="fa fa-github"></i>
+Fork me on Github!
+			</a>
+</center>
+		</footer>
+
+	</body>
 </html>
