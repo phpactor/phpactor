@@ -1,8 +1,6 @@
 language: php
 
 env:
-
-
   global:
     - GIT_NAME: "'Couscous auto deploy'"
     - GIT_EMAIL: phpactor@dantleech.com
@@ -23,12 +21,14 @@ cache:
 before_script:
   - git config --global user.email "you@example.com"
   - git config --global user.name "Your Name"
+  - curl -OS http://couscous.io/couscous.phar
+  - composer install
+
 
 script:
-  - composer require couscous/couscous
   - vendor/bin/phpunit
   - vendor/bin/phpbench run --store
   - .travis/testdeps
 
 after_success:
-  - vendor/bin/couscous travis-auto-deploy
+  - php couscous.phar travis-auto-deploy
