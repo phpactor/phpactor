@@ -258,8 +258,9 @@ This example is from an existing, empty, file. Note that you can also use
 the context menu to generate classes from non-existing class names in the current
 file
 </div>
+<p>Given a new file:</p>
 <pre><code class="language-php"># src/Blog/Post.php</code></pre>
-<p>After moving to <code>src/Writer.php</code>:</p>
+<p>After invoking <em>class new</em> using the <code>default</code> variant:</p>
 <pre><code class="language-php">&lt;?php
 
 namespace Acme/Blog;
@@ -291,7 +292,7 @@ class Post
     {
     }
 }</code></pre>
-<p>After moving to <code>src/Writer.php</code>:</p>
+<p>After:</p>
 <pre><code class="language-php">&lt;?php
 
 class Post
@@ -431,9 +432,7 @@ class Foobar
         return $this-&gt;barfoo;
     }
 }</code></pre>
-<div class="alert alert-primary">
-Note the accessor template can be customized see [Templates](templates.html).
-</div>
+<p>Note the accessor template can be customized see <a href="templates.html">Templates</a>.</p>
 <h2 id="generate-method">Generate Method</h2>
 <p>Generate or update a method based on the method call under the cursor.</p>
 <ul>
@@ -561,21 +560,6 @@ class Hello
     {
     }
 }</code></pre>
-<h3 id="before-and-after-11">Before and After</h3>
-<pre><code class="language-php">&lt;?php
-
-class Foobar implements Countable
-{
-}</code></pre>
-<p>After:</p>
-<pre><code class="language-php">&lt;?php
-
-class Foobar implements Countable
-{
-    public function count()
-    {
-    }
-}</code></pre>
 <h2 id="override-method">Override Method</h2>
 <p>Overide a method from a parent class.</p>
 <ul>
@@ -588,7 +572,7 @@ class Foobar implements Countable
 (for example when authoring a Symfony Command class).</p>
 <p>This refactoring will allow you to select a method to override and generate that method
 in your class.</p>
-<h3 id="before-and-after-12">Before and After</h3>
+<h3 id="before-and-after-11">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 use Symfony\Component\Console\Command\Command;
@@ -623,7 +607,7 @@ refactoring, but doing this with a simple search and replace can often have unin
 consequences (e.g. renaming the variable <code>$class</code> also changes the <code>class</code> keyword).</p>
 <p>This refactoring will rename a variable, and only variables, in either the method scope
 or the class scope.</p>
-<h3 id="before-and-after-13">Before and After</h3>
+<h3 id="before-and-after-12">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -665,7 +649,7 @@ class Hello
 <p>This refactoring is <em>similar</em> to <a href="#class-move">Move Class</a>, but without
 renaming the file. This is a useful refactoring when a dependant library has
 changed a class name and you need to update that class name in your project.</p>
-<h3 id="before-and-after-14">Before and After</h3>
+<h3 id="before-and-after-13">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -723,7 +707,7 @@ your tests before and after applying this refactoring.</p>
 the query but whose containing classes could not be resolved.
 </div>
 <p><img src="images/risky.png" alt="Risky references" /></p>
-<h3 id="before-and-after-15">Before and After</h3>
+<h3 id="before-and-after-14">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
