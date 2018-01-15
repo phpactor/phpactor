@@ -217,11 +217,13 @@ the context menu to generate classes from non-existing class names in the curren
 file
 </div>
 
+Given a new file:
+
 ```php
 # src/Blog/Post.php
 ```
 
-After moving to `src/Writer.php`:
+After invoking _class new_ using the `default` variant:
 
 ```php
 <?php
@@ -265,7 +267,7 @@ class Post
 }
 ```
 
-After moving to `src/Writer.php`:
+After:
 
 ```php
 <?php
@@ -450,9 +452,7 @@ class Foobar
 }
 ```
 
-<div class="alert alert-primary">
 Note the accessor template can be customized see [Templates](templates.md).
-</div>
 
 Generate Method
 ---------------
@@ -619,29 +619,6 @@ class Hello
     public function index(Request $request)
     {
 	}
-}
-```
-
-### Before and After
-
-```php
-<?php
-
-class Foobar implements Countable
-{
-}
-```
-
-After:
-
-```php
-<?php
-
-class Foobar implements Countable
-{
-    public function count()
-    {
-    }
 }
 ```
 
