@@ -371,6 +371,10 @@ Extract a method from a selection.
 - **VIM plugin**: _Function only_
 - **VIM function**:`:call phpactor#ExtractMethod()`
 
+This refactoring is NOT currently available through the context menu. You
+will need to [map it to a keyboard shortcut](vim-plugin.md#keyboard-mappings)
+or invoke it manually.
+
 ### Motivation
 
 This is one of the most common refactorings. Decomposing code into discrete
