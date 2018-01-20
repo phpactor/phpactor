@@ -65,6 +65,21 @@ endfunc
 """"""""""""""""""""""""
 " Expand a use statement
 """"""""""""""""""""""""
+function! phpactor#ExtractMethod()
+    let [lineStart, columnStart] = getpos("'<")[1:2]
+    let [lineEnd, columnEnd] = getpos("'>")[1:2]
+    let offsetStart = line2byte(lineStart) + columnStart -2
+
+    if (columnEnd > 100000)
+        let columnEnd = strlen(getline(lineEnd))
+    endif
+
+    let offsetEnd = line2byte(lineEnd) + columnEnd -1
+
+    let currentPath = expand('%')
+    call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": offsetStart, "offset_end": offsetEnd, "source": phpactor#_source()})
+endfunction
+
 function! phpactor#ClassExpand()
     let word = expand("<cword>")
     let classInfo = phpactor#rpc("class_search", { "short_name": word })

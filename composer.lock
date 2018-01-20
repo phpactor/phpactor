@@ -385,12 +385,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "e9112416fde47e609a2fa9974e60bbf9c998f8fb"
+                "reference": "c1ec432899be305e6ee205e158905ec8ad2b3add"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/e9112416fde47e609a2fa9974e60bbf9c998f8fb",
-                "reference": "e9112416fde47e609a2fa9974e60bbf9c998f8fb",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c1ec432899be305e6ee205e158905ec8ad2b3add",
+                "reference": "c1ec432899be305e6ee205e158905ec8ad2b3add",
                 "shasum": ""
             },
             "require": {
@@ -432,7 +432,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-01-07T10:35:46+00:00"
+            "time": "2018-01-20T11:55:05+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -1871,12 +1871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "8d1573c6859266e932c3586a9d943da54782e0e0"
+                "reference": "a987f901e55e56148a30fd5eeea2d16ab9ac4372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/8d1573c6859266e932c3586a9d943da54782e0e0",
-                "reference": "8d1573c6859266e932c3586a9d943da54782e0e0",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/a987f901e55e56148a30fd5eeea2d16ab9ac4372",
+                "reference": "a987f901e55e56148a30fd5eeea2d16ab9ac4372",
                 "shasum": ""
             },
             "require": {
@@ -1939,7 +1939,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-01-05T15:34:51+00:00"
+            "time": "2018-01-16T06:58:33+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2411,12 +2411,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "cbb36a6b4926faf84254b0fe5f846aa99dd9b402"
+                "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cbb36a6b4926faf84254b0fe5f846aa99dd9b402",
-                "reference": "cbb36a6b4926faf84254b0fe5f846aa99dd9b402",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9f10a4cedf118b9196325cab3033f5c060c4d35b",
+                "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b",
                 "shasum": ""
             },
             "require": {
@@ -2487,7 +2487,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-01-06T07:02:14+00:00"
+            "time": "2018-01-14T15:48:34+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

@@ -75,6 +75,9 @@ map <Leader>tt :call phpactor#Transform()<CR>
 
 " Generate a new class (replacing the current file)
 map <Leader>cc :call phpactor#ClassNew()<CR>
+
+" Extract method from selection
+map <Leader>em :call phpactor#ExtractMethod()<CR>
 ```
 
 See the [Refactorings](refactorings.md) chapter for more functions you can map

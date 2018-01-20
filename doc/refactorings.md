@@ -24,6 +24,7 @@ Refactoring:
 
 - [Class Move](#class-move)
 - [Extract Constant](#extract-constant)
+- [Extract Method](#extract-method)
 - [Rename Class](#rename-class)
 - [Rename Class Member](#rename-member)
 - [Rename Variable](#rename-variable)
@@ -358,6 +359,82 @@ class DecisionMaker
 	{
         return self::YES;
 	}
+}
+```
+
+Extract Method
+--------------
+
+Extract a method from a selection.
+
+- **Command**: _RPC only_
+- **VIM plugin**: _Function only_
+- **VIM function**:`:call phpactor#ExtractMethod()`
+
+### Motivation
+
+One of the major parts of the refactoring process is breaking code down intro
+manageable, understandable and logical units. This often involves moving code
+into well encapsulated and self-explaining methods.
+
+Extracting a method manually involes:
+
+1. Creating a new method
+2. Moving the relevant block of code to that method.
+3. Scanning the code for variables which are from the original code.
+4. Adding these variables as parameters to your new method.
+5. Calling the new method in place of the moved code.
+
+This refactoring takes care of steps 1 through 5.
+
+### Before and After
+
+Selection shown between the two `<>` markers:
+
+```php
+<?php
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        $foobar = 'yes';
+
+        <>
+        if ($foobar) {
+            return 'yes';
+        }
+
+        return $foobar;
+        <>
+
+    }
+}
+```
+
+After extracting method `newMethod`:
+
+```php
+<?php
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        $foobar = 'yes';
+
+        $this->newMethod($foobar);
+
+    }
+
+    private function newMethod(string $foobar)
+    {
+        if ($foobar) {
+            return 'yes';
+        }
+        
+        return $foobar;
+    }
 }
 ```
 

@@ -20,6 +20,7 @@ use Phpactor\Rpc\Handler\ClassNewHandler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Phpactor\Rpc\Handler\ExtractConstantHandler;
+use Phpactor\Rpc\Handler\ExtractMethodHandler;
 use Phpactor\Rpc\Handler\GenerateMethodHandler;
 use Phpactor\Rpc\Handler\GenerateAccessorHandler;
 use Phpactor\Rpc\Handler\RenameVariableHandler;
@@ -145,6 +146,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.extract_constant', function (Container $container) {
             return new ExtractConstantHandler(
                 $container->get('code_transform.refactor.extract_constant')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.extract_method', function (Container $container) {
+            return new ExtractMethodHandler(
+                $container->get('code_transform.refactor.extract_method')
             );
         }, [ 'rpc.handler' => [] ]);
 

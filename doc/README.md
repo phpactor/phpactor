@@ -37,7 +37,7 @@ Phpactor is made up of a few different packages:
 - [phpactor/code-builder](https://github.com/phpactor/code-builder): Library for creating and idempotently updating source code.
 - [phpactor/code-transform](https://github.com/phpactor/code-transform): Transform code.
 - [phpactor/path-finder](https://github.com/phpactor/path-finder): Simple for file relationships when they share common path segments.
-- [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Find and manage source code trees.
+- [phpactor/source-code-filesystem](https://github.com/phpactor/source-code-filesystem): Manage source code trees.
 - [phpactor/test-utils](https://github.com/phpactor/test-utils): Shared test utilities for Phpactor
 - [phpactor/worse-reflection](https://github.com/phpactor/worse-reflection): Static source reflection library.
 
