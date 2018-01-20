@@ -49,7 +49,8 @@ class ExtractMethodHandler extends AbstractHandler
     {
         $this->requireArgument(self::PARAM_METHOD_NAME, TextInput::fromNameLabelAndDefault(
             self::PARAM_METHOD_NAME,
-            self::INPUT_LABEL_NAME
+            self::INPUT_LABEL_NAME,
+            ''
         ));
 
         $this->requireArgument(self::PARAM_OFFSET_START, TextInput::fromNameLabelAndDefault(

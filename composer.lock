@@ -385,12 +385,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "c1ec432899be305e6ee205e158905ec8ad2b3add"
+                "reference": "8441449f05742e60bce9a8bb82fc2125b9c7ff5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c1ec432899be305e6ee205e158905ec8ad2b3add",
-                "reference": "c1ec432899be305e6ee205e158905ec8ad2b3add",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/8441449f05742e60bce9a8bb82fc2125b9c7ff5d",
+                "reference": "8441449f05742e60bce9a8bb82fc2125b9c7ff5d",
                 "shasum": ""
             },
             "require": {
@@ -432,7 +432,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-01-20T11:55:05+00:00"
+            "time": "2018-01-20T15:08:46+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -581,12 +581,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "c20fc2ac31059a407ca434bfd72411b20acd4a77"
+                "reference": "9971270fdd668a8cd01c7c96032a76929c1ba10a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/c20fc2ac31059a407ca434bfd72411b20acd4a77",
-                "reference": "c20fc2ac31059a407ca434bfd72411b20acd4a77",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/9971270fdd668a8cd01c7c96032a76929c1ba10a",
+                "reference": "9971270fdd668a8cd01c7c96032a76929c1ba10a",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +625,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-01-07T10:05:16+00:00"
+            "time": "2018-01-20T14:36:08+00:00"
         },
         {
             "name": "phpbench/container",
