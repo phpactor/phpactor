@@ -373,9 +373,8 @@ Extract a method from a selection.
 
 ### Motivation
 
-One of the major parts of the refactoring process is breaking code down intro
-manageable, understandable and logical units. This often involves moving code
-into well encapsulated and self-explaining methods.
+This is one of the most common refactorings. Decomposing code into discrete
+methods helps to make code understandable and maintainable.
 
 Extracting a method manually involes:
 
@@ -385,7 +384,15 @@ Extracting a method manually involes:
 4. Adding these variables as parameters to your new method.
 5. Calling the new method in place of the moved code.
 
-This refactoring takes care of steps 1 through 5.
+This refactoring takes care of steps 1 through 5 and:
+
+- If a _single_ variable that is declared in the selection which is used in the parent
+  scope, it will be returned.
+- If _multiple_ variables are used, the extract method will return a tuple.
+- In both cases the variable(s) will be assigned at the point of extraction.
+- Any class parameters which are not already imported, will be imported.
+
+See also [Extract Method](https://refactoring.com/catalog/extractMethod.html) (Fowler, Refactoring).
 
 ### Before and After
 

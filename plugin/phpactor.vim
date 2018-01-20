@@ -66,18 +66,11 @@ endfunc
 " Expand a use statement
 """"""""""""""""""""""""
 function! phpactor#ExtractMethod()
-    let [lineStart, columnStart] = getpos("'<")[1:2]
-    let [lineEnd, columnEnd] = getpos("'>")[1:2]
-    let offsetStart = line2byte(lineStart) + columnStart -2
-
-    if (columnEnd > 100000)
-        let columnEnd = strlen(getline(lineEnd))
-    endif
-
-    let offsetEnd = line2byte(lineEnd) + columnEnd -1
-
+    let selectionStart = phpactor#_selectionStart()
+    let selectionEnd = phpactor#_selectionEnd()
     let currentPath = expand('%')
-    call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": offsetStart, "offset_end": offsetEnd, "source": phpactor#_source()})
+
+    call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
 function! phpactor#ClassExpand()
@@ -261,6 +254,22 @@ endfunction
 
 function! phpactor#_source()
     return join(getline(1,'$'), "\n")
+endfunction
+
+function! phpactor#_selectionStart()
+    let [lineStart, columnStart] = getpos("'<")[1:2]
+    return line2byte(lineStart) + columnStart -2
+endfunction
+
+function! phpactor#_selectionEnd()
+    let [lineEnd, columnEnd] = getpos("'>")[1:2]
+
+    " Note VIM returns 2,147,483,647 on this system when in block select mode
+    if (columnEnd > 1000000)
+        let columnEnd = strlen(getline(lineEnd))
+    endif
+
+    return line2byte(lineEnd) + columnEnd -1
 endfunction
 
 
