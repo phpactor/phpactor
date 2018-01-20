@@ -1785,12 +1785,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "19af66eb2eb94e95646d29062619e12fe8330347"
+                "reference": "ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/19af66eb2eb94e95646d29062619e12fe8330347",
-                "reference": "19af66eb2eb94e95646d29062619e12fe8330347",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998",
+                "reference": "ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998",
                 "shasum": ""
             },
             "require-dev": {
@@ -1818,7 +1818,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2018-01-13T10:21:32+00:00"
+            "time": "2018-01-20T12:07:32+00:00"
         },
         {
             "name": "phpbench/dom",
