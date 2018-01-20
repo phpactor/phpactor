@@ -388,7 +388,7 @@ This refactoring takes care of steps 1 through 5 and:
 
 - If a _single_ variable that is declared in the selection which is used in the parent
   scope, it will be returned.
-- If _multiple_ variables are used, the extract method will return a tuple.
+- If _multiple_ variables are used, the extracted method will return a tuple.
 - In both cases the variable(s) will be assigned at the point of extraction.
 - Any class parameters which are not already imported, will be imported.
 
