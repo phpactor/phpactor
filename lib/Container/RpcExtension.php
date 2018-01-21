@@ -8,6 +8,7 @@ use Phpactor\Console\Command\RpcCommand;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Handler\EchoHandler;
+use Phpactor\Rpc\Handler\StatusHandler;
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
@@ -189,6 +190,12 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler(
                 $container->get('application.cache_clear')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.status', function (Container $container) {
+            return new StatusHandler(
+                $container->get('application.status')
             );
         }, [ 'rpc.handler' => [] ]);
     }

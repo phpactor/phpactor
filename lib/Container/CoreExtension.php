@@ -49,6 +49,8 @@ use Phpactor\Application\CacheClear;
 use Phpactor\Console\Command\CacheClearCommand;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
+use Phpactor\Application\Status;
+use Phpactor\Application\StatusCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -196,6 +198,13 @@ class CoreExtension implements ExtensionInterface
                 $container->get('application.cache_clear')
             );
         }, [ 'ui.console.command' => []]);
+
+        $container->register('command.status', function (Container $container) {
+            return new StatusCommand(
+                $container->get('application.status')
+            );
+        }, [ 'ui.console.command' => []]);
+
 
         // ---------------
         // Dumpers
@@ -423,6 +432,10 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
+        });
+
+        $container->register('application.status', function (Container $container) {
+            return new Status($container->get('source_code_filesystem.registry'));
         });
     }
 }

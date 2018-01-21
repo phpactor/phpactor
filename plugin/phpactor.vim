@@ -234,6 +234,10 @@ function! phpactor#CacheClear()
     call phpactor#rpc("cache_clear", {})
 endfunction
 
+function! phpactor#Status()
+    call phpactor#rpc("status", {})
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
