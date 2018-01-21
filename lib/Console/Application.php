@@ -12,6 +12,8 @@ use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Container\CoreExtension;
+use Psr\Log\LogLevel;
 
 class Application extends SymfonyApplication
 {
@@ -23,7 +25,6 @@ class Application extends SymfonyApplication
     public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
     {
         parent::__construct('Phpactor', '0.1');
-        $this->foobar = 'string';
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)

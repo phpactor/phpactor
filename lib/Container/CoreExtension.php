@@ -47,6 +47,10 @@ use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Application\CacheClear;
 use Phpactor\Console\Command\CacheClearCommand;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
+use Phpactor\Application\Status;
+use Phpactor\Application\StatusCommand;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -71,7 +75,7 @@ class CoreExtension implements ExtensionInterface
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => __DIR__ . '/../../cache',
-            self::LOGGING_ENABLED => false,
+            self::LOGGING_ENABLED => true,
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
@@ -195,6 +199,13 @@ class CoreExtension implements ExtensionInterface
             );
         }, [ 'ui.console.command' => []]);
 
+        $container->register('command.status', function (Container $container) {
+            return new StatusCommand(
+                $container->get('application.status')
+            );
+        }, [ 'ui.console.command' => []]);
+
+
         // ---------------
         // Dumpers
         // ---------------
@@ -247,11 +258,11 @@ class CoreExtension implements ExtensionInterface
             $autoloaders = [];
 
             foreach ($autoloaderPaths as $autoloaderPath) {
-                if (!file_exists($autoloaderPath)) {
-                    throw new \InvalidArgumentException(sprintf(
-                        'Could not locate autoloaderPath file "%s"',
-                        $autoloaderPath
+                if (false === file_exists($autoloaderPath)) {
+                    $container->get('monolog.logger')->warning(sprintf(
+                        'Could not find autoloader "%s"', $autoloaderPath
                     ));
+                    continue;
                 }
 
                 $autoloader = require $autoloaderPath;
@@ -290,6 +301,10 @@ class CoreExtension implements ExtensionInterface
                 $classToFiles[] = new ComposerClassToFile($classLoader);
             }
 
+            if (empty($classToFiles)) {
+                $classToFiles[] = new SimpleClassToFile($container->getParameter(self::WORKING_DIRECTORY));
+            }
+
             return new ChainClassToFile($classToFiles);
         });
 
@@ -298,6 +313,9 @@ class CoreExtension implements ExtensionInterface
             foreach ($container->get('composer.class_loaders') as $classLoader) {
                 $fileToClasses[] =  new ComposerFileToClass($classLoader);
             }
+
+            $fileToClasses[] = new SimpleFileToClass();
+
             return new ChainFileToClass($fileToClasses);
         });
     }
@@ -342,7 +360,7 @@ class CoreExtension implements ExtensionInterface
             return new ClassCopy(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_mover'),
-                $container->get('source_code_filesystem.git')
+                $container->get('source_code_filesystem.registry')->get('git')
             );
         });
 
@@ -417,6 +435,10 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.helper.class_file_normalizer', function (Container $container) {
             return new ClassFileNormalizer($container->get('class_to_file.converter'));
+        });
+
+        $container->register('application.status', function (Container $container) {
+            return new Status($container->get('source_code_filesystem.registry'));
         });
     }
 }

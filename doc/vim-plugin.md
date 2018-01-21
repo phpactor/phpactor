@@ -40,6 +40,16 @@ Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpa
 installation procedure!
 </div>
 
+Now issue the following command `:call phpactor#Status()`:
+
+```
+✔ Composer detected - faster class location and more features!
+✔ Git detected - enables faster refactorings in your repository scope!
+```
+
+Phpactor works best with Composer - but much functionality including
+auto-completion can still work (sometimes slowly depending on project size).
+
 Updating
 --------
 

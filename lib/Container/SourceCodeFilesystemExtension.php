@@ -11,6 +11,9 @@ use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Filesystem\Domain\Exception\NotSupported;
+use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
 
 class SourceCodeFilesystemExtension implements ExtensionInterface
 {
@@ -36,7 +39,13 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
         $container->register('source_code_filesystem.composer', function (Container $container) {
             $providers = [];
             $cwd = FilePath::fromString($container->getParameter('cwd'));
-            foreach ($container->get('composer.class_loaders') as $classLoader) {
+            $classLoaders = $container->get('composer.class_loaders');
+
+            if (!$classLoaders) {
+                throw new NotSupported('No composer class loaders found/configured');
+            }
+
+            foreach ($classLoaders as $classLoader) {
                 $providers[] = new ComposerFileListProvider($cwd, $classLoader);
             }
             return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
@@ -45,10 +54,21 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
         $container->register('source_code_filesystem.registry', function (Container $container) {
             $filesystems = [];
             foreach ($container->getServiceIdsForTag('source_code_filesystem.filesystem') as $serviceId => $attributes) {
-                $filesystems[$attributes['name']] = $container->get($serviceId);
+
+                try {
+                    $filesystems[$attributes['name']] = $container->get($serviceId);
+                } catch (NotSupported $exception)
+                {
+                    $container->get('monolog.logger')->warning(sprintf(
+                        'Filesystem "%s" not supported: "%s"', $attributes['name'], $exception->getMessage()
+                    ));
+                }
             }
 
-            return new MappedFilesystemRegistry($filesystems);
+            return new FallbackFilesystemRegistry(
+                new MappedFilesystemRegistry($filesystems),
+                'simple'
+            );
         });
     }
 }

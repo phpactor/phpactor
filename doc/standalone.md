@@ -41,6 +41,19 @@ with other libraries.
 
 At some undefined point in the future we may also create a PHAR distribution.
 
+Optimization
+------------
+
+Phpactor works best when used with Composer, and is slightly better when used
+with Git.
+
+Check support using the `status` command:
+
+```
+$ phpactor status
+✔ Composer detected - faster class location and more features!
+✔ Git detected - enables faster refactorings in your repository scope!
+```
 
 Configuration
 -------------
