@@ -110,6 +110,13 @@ $ sudo ln -s ~/your/projects/phpactor/bin/phpactor phpactor</code></pre>
 writing this isn't a good idea as the chances are good that it will conflict
 with other libraries.</p>
 <p>At some undefined point in the future we may also create a PHAR distribution.</p>
+<h2 id="optimization">Optimization</h2>
+<p>Phpactor works best when used with Composer, and is slightly better when used
+with Git.</p>
+<p>Check support using the <code>status</code> command:</p>
+<pre><code>$ phpactor status
+✔ Composer detected - faster class location and more features!
+✔ Git detected - enables faster refactorings in your repository scope!</code></pre>
 <h2 id="configuration">Configuration</h2>
 <p>Phpactor is configured with a YAML file. You can dump the configuration using the <code>config:dump</code> command.</p>
 <pre><code class="language-bash">$ phpactor config:dump
