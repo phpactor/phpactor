@@ -46,7 +46,7 @@
                                             Standalone
                                         </a>
                                     </li>
-                                                                    <li class="active">
+                                                                    <li class="">
                                         <a href="http://phpactor.github.io/phpactor/vim-plugin.html">
                                             VIM plugin
                                         </a>
@@ -88,7 +88,9 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
+                    <h2 id="currentmenu-vim-plugin">currentMenu: vim-plugin</h2>
+<hr />
+<h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
 <ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#updating">Updating</a></li>
@@ -121,19 +123,22 @@ need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the 
 <p>The Phpactor plugin will <strong>not</strong> automatically assume any shortcuts, copy
 the following configuration into your <code>.vimrc</code>:</p>
 <pre><code class="language-vimscript">" Include use statement
-map &lt;Leader&gt;u :call phpactor#UseAdd()&lt;CR&gt;
+nmap &lt;Leader&gt;u :call phpactor#UseAdd()&lt;CR&gt;
 
 " Invoke the context menu
-map &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
+nmap &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
 
 " Goto definition of class or class member under the cursor
-map &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
+nmap &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
 
 " Transform the classes in the current file
-map &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
+nmap &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
 
 " Generate a new class (replacing the current file)
-map &lt;Leader&gt;cc :call phpactor#ClassNew()&lt;CR&gt;</code></pre>
+nmap &lt;Leader&gt;cc :call phpactor#ClassNew()&lt;CR&gt;
+
+" Extract method from selection
+vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;</code></pre>
 <p>See the <a href="refactorings.html">Refactorings</a> chapter for more functions you can map
 shortcuts to.</p>
 <p>Phpactor requires at least PHP 7.0. If you use a different version of PHP
