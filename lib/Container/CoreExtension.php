@@ -301,7 +301,10 @@ class CoreExtension implements ExtensionInterface
                 $classToFiles[] = new ComposerClassToFile($classLoader);
             }
 
-            $classToFiles[] = new SimpleClassToFile($container->getParameter(self::WORKING_DIRECTORY));
+            if (empty($classToFiles)) {
+                $classToFiles[] = new SimpleClassToFile($container->getParameter(self::WORKING_DIRECTORY));
+            }
+
             return new ChainClassToFile($classToFiles);
         });
 
