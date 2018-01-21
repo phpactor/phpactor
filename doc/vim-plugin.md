@@ -1,5 +1,5 @@
----
 currentMenu: vim-plugin
+---
 ---
 Phpactor VIM Plugin
 ===================
@@ -62,19 +62,22 @@ the following configuration into your `.vimrc`:
 
 ```vimscript
 " Include use statement
-map <Leader>u :call phpactor#UseAdd()<CR>
+nmap <Leader>u :call phpactor#UseAdd()<CR>
 
 " Invoke the context menu
-map <Leader>mm :call phpactor#ContextMenu()<CR>
+nmap <Leader>mm :call phpactor#ContextMenu()<CR>
 
 " Goto definition of class or class member under the cursor
-map <Leader>o :call phpactor#GotoDefinition()<CR>
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
 
 " Transform the classes in the current file
-map <Leader>tt :call phpactor#Transform()<CR>
+nmap <Leader>tt :call phpactor#Transform()<CR>
 
 " Generate a new class (replacing the current file)
-map <Leader>cc :call phpactor#ClassNew()<CR>
+nmap <Leader>cc :call phpactor#ClassNew()<CR>
+
+" Extract method from selection
+vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 ```
 
 See the [Refactorings](refactorings.md) chapter for more functions you can map
