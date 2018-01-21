@@ -369,7 +369,7 @@ Extract a method from a selection.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Function only_
-- **VIM function**:`:call phpactor#ExtractMethod()`
+- **VIM function**:`:call phpactor#mxtractMethod()`
 
 This refactoring is NOT currently available through the context menu. You
 will need to [map it to a keyboard shortcut](vim-plugin.md#keyboard-mappings)
@@ -395,8 +395,6 @@ This refactoring takes care of steps 1 through 5 and:
 - If _multiple_ variables are used, the extracted method will return a tuple.
 - In both cases the variable(s) will be assigned at the point of extraction.
 - Any class parameters which are not already imported, will be imported.
-
-See also [Extract Method](https://refactoring.com/catalog/extractMethod.html) (Fowler, Refactoring).
 
 ### Before and After
 
