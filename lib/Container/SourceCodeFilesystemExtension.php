@@ -11,7 +11,6 @@ use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;

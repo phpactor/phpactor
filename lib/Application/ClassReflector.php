@@ -104,11 +104,13 @@ class ClassReflector
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }
 
-        /** @var $constant ReflectionConstant */
-        foreach ($reflection->constants() as $constant) {
-            $return['constants'][$constant->name()] = [
-                'name' => $constant->name()
-            ];
+        if (false === $reflection->isTrait()) {
+            /** @var $constant ReflectionConstant */
+            foreach ($reflection->constants() as $constant) {
+                $return['constants'][$constant->name()] = [
+                    'name' => $constant->name()
+                ];
+            }
         }
 
 

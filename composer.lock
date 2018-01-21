@@ -285,30 +285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-<<<<<<< HEAD
-<<<<<<< HEAD
                 "reference": "f752d27e03d096d5c2b42abe2befaf482646c780"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/f752d27e03d096d5c2b42abe2befaf482646c780",
                 "reference": "f752d27e03d096d5c2b42abe2befaf482646c780",
-=======
-                "reference": "3d211b23761e91dd0eea90cda5c29f1253e4b583"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/3d211b23761e91dd0eea90cda5c29f1253e4b583",
-                "reference": "3d211b23761e91dd0eea90cda5c29f1253e4b583",
->>>>>>> Updated composer
-=======
-                "reference": "f752d27e03d096d5c2b42abe2befaf482646c780"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/f752d27e03d096d5c2b42abe2befaf482646c780",
-                "reference": "f752d27e03d096d5c2b42abe2befaf482646c780",
->>>>>>> Log WARNINGs by default
                 "shasum": ""
             },
             "require": {
@@ -341,15 +323,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-<<<<<<< HEAD
-<<<<<<< HEAD
             "time": "2018-01-01T20:30:06+00:00"
-=======
-            "time": "2018-01-01 16:53:16"
->>>>>>> Updated composer
-=======
-            "time": "2018-01-01 20:30:06"
->>>>>>> Log WARNINGs by default
         },
         {
             "name": "phpactor/code-builder",
@@ -599,11 +573,7 @@
             "support": {
                 "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-<<<<<<< HEAD
             "time": "2018-01-01T15:57:16+00:00"
-=======
-            "time": "2018-01-01 15:57:16"
->>>>>>> Updated composer
         },
         {
             "name": "phpactor/worse-reflection",
@@ -2441,21 +2411,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-<<<<<<< HEAD
                 "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9f10a4cedf118b9196325cab3033f5c060c4d35b",
                 "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b",
-=======
-                "reference": "a8a78a4082b86924a005a7b1981b797a6ce64b49"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a8a78a4082b86924a005a7b1981b797a6ce64b49",
-                "reference": "a8a78a4082b86924a005a7b1981b797a6ce64b49",
->>>>>>> Updated composer
                 "shasum": ""
             },
             "require": {
@@ -2526,15 +2487,7 @@
                 "testing",
                 "xunit"
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
             "time": "2018-01-14T15:48:34+00:00"
-=======
-            "time": "2018-01-01T07:03:12+00:00"
->>>>>>> Updated composer
-=======
-            "time": "2018-01-01 07:03:12"
->>>>>>> Log WARNINGs by default
         },
         {
             "name": "phpunit/phpunit-mock-objects",

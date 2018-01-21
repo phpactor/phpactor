@@ -33,6 +33,10 @@ class Application extends SymfonyApplication
 
         $this->setCatchExceptions(false);
 
+        if ($output->isVerbose()) {
+            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDERR));
+        }
+
         $formatter = $output->getFormatter();
         $formatter->setStyle('highlight', new OutputFormatterStyle('red', null, [ 'bold' ]));
         $formatter->setStyle('diff-add', new OutputFormatterStyle('green', null, [  ]));
@@ -93,10 +97,6 @@ class Application extends SymfonyApplication
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
-        }
-
-        if ($input->hasParameterOption([ '--verbose', '-v' ])) {
-            $config[CoreExtension::LOGGING_STDERR_LEVEL] = LogLevel::DEBUG;
         }
 
         $this->container = new ApplicationContainer($config);
