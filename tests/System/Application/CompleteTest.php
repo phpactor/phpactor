@@ -46,6 +46,22 @@ EOT
                     ]
                 ]
             ],
+            'Private property' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    private $foo;
+}
+
+$foobar = new Foobar();
+$foobar->
+
+EOT
+        , 76,
+            [ ]
+            ],
             'Public property access' => [
                 <<<'EOT'
 <?php
@@ -122,6 +138,24 @@ EOT
                         'name' => 'foo',
                         'info' => 'pub foo(): Foobar|Barbar',
                     ]
+                ]
+            ],
+            'Private method' => [
+                <<<'EOT'
+<?php
+
+class Foobar
+{
+    private function foo(): Barbar
+    {
+    }
+}
+
+$foobar = new Foobar();
+$foobar->
+
+EOT
+                , 105, [
                 ]
             ],
             'Static method' => [
