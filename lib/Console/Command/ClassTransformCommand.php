@@ -26,7 +26,7 @@ class ClassTransformCommand extends Command
     public function configure()
     {
         $this->setName('class:transform');
-        $this->setDescription('Apply a transformation to an existing clss (path or FQN)');
+        $this->setDescription('Apply a transformation to an existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addOption('transform', 't', InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Tranformations to apply', []);
     }
