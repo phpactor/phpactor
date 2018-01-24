@@ -160,13 +160,13 @@ class Complete
             return $symbolInformation->withIssue(sprintf('Could not find class "%s"', (string) $type));
         }
 
-        $needsPublicAccess = !in_array($symbolInformation->symbol()->name(), ['this', 'self']);
+        $publicOnly = !in_array($symbolInformation->symbol()->name(), ['this', 'self'], true);
         /** @var $method ReflectionMethod */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
                 continue;
             }
-            if ($needsPublicAccess && !$method->visibility()->isPublic()) {
+            if ($publicOnly && false === $method->visibility()->isPublic()) {
                 continue;
             }
             $info = $this->getMethodInfo($method);
@@ -179,7 +179,7 @@ class Complete
 
         if ($classReflection instanceof ReflectionClass) {
             foreach ($classReflection->properties() as $property) {
-                if ($needsPublicAccess && !$property->visibility()->isPublic()) {
+                if ($publicOnly && false === $property->visibility()->isPublic()) {
                     continue;
                 }
                 $suggestions[] = [
