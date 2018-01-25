@@ -18,11 +18,7 @@ class CompleteBench extends BaseBenchCase
 
     public function benchComplete()
     {
-        $output = $this->runCommand([
-            'command' => 'complete',
-            'path' => 'tests/FoobarTest.php',
-            'offset'=> 145
-        ]);
-        Assert::assertContains('info:pub', $output->fetch());
+        $output = $this->runCommand('complete tests/FoobarTest.php 184'); //145?
+        Assert::assertContains('info:pub', $output);
     }
 }
