@@ -5,6 +5,7 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Phpactor\Application;
+use Composer\XdebugHandler\XdebugHandler;
 
 foreach ([
     __DIR__ . '/../../../autoload.php',
@@ -32,6 +33,10 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 }
 
 require_once $autoloadFile;
+
+$xdebug = new XdebugHandler('PHPACTOR', '--ansi');
+$xdebug->check();
+unset($xdebug);
 
 Debug::enable();
 
