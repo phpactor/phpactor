@@ -285,12 +285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "29def61ba4152f3f61467877abfe95fe480705b7"
+                "reference": "a2d586fee61ecf9f382cd8afc299dce2abbb6a65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/29def61ba4152f3f61467877abfe95fe480705b7",
-                "reference": "29def61ba4152f3f61467877abfe95fe480705b7",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/a2d586fee61ecf9f382cd8afc299dce2abbb6a65",
+                "reference": "a2d586fee61ecf9f382cd8afc299dce2abbb6a65",
                 "shasum": ""
             },
             "require": {
@@ -323,7 +323,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2018-01-21T16:17:15+00:00"
+            "time": "2018-01-28T09:43:54+00:00"
         },
         {
             "name": "phpactor/code-builder",
@@ -331,12 +331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "880674c7eb417256c49241572578f070a68bc725"
+                "reference": "a9c5b88008fc2319e772e6133629fed6a3d074ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/880674c7eb417256c49241572578f070a68bc725",
-                "reference": "880674c7eb417256c49241572578f070a68bc725",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/a9c5b88008fc2319e772e6133629fed6a3d074ef",
+                "reference": "a9c5b88008fc2319e772e6133629fed6a3d074ef",
                 "shasum": ""
             },
             "require": {
@@ -377,7 +377,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2017-12-30T19:23:49+00:00"
+            "time": "2018-01-28T09:10:01+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -581,12 +581,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "197b489873d0949adf05a6a1c1ca4be26de8f82c"
+                "reference": "bc3a68f46dfff2aa853aff20ef03bb036024674b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/197b489873d0949adf05a6a1c1ca4be26de8f82c",
-                "reference": "197b489873d0949adf05a6a1c1ca4be26de8f82c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/bc3a68f46dfff2aa853aff20ef03bb036024674b",
+                "reference": "bc3a68f46dfff2aa853aff20ef03bb036024674b",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +625,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-01-21T09:28:43+00:00"
+            "time": "2018-01-28T10:05:54+00:00"
         },
         {
             "name": "phpbench/container",
@@ -1265,16 +1265,16 @@
     "packages-dev": [
         {
             "name": "beberlei/assert",
-            "version": "v2.8.1",
+            "version": "v2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337"
+                "reference": "2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337",
-                "reference": "fd8dc8f6de4645ccf4d1a0b38a6b8fdaf2e8b337",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0",
+                "reference": "2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0",
                 "shasum": ""
             },
             "require": {
@@ -1316,7 +1316,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2017-11-30T13:25:15+00:00"
+            "time": "2018-01-25T13:33:16+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1997,16 +1997,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "66465776cfc249844bde6d117abff1d22e06c2da"
+                "reference": "94fd0001232e47129dd3504189fa1c7225010d08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/66465776cfc249844bde6d117abff1d22e06c2da",
-                "reference": "66465776cfc249844bde6d117abff1d22e06c2da",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/94fd0001232e47129dd3504189fa1c7225010d08",
+                "reference": "94fd0001232e47129dd3504189fa1c7225010d08",
                 "shasum": ""
             },
             "require": {
@@ -2044,7 +2044,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-11-27T17:38:31+00:00"
+            "time": "2017-11-30T07:14:17+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2411,12 +2411,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b"
+                "reference": "c4cdf0e12b3a5de0ee433338c95f6ec40a28bdfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9f10a4cedf118b9196325cab3033f5c060c4d35b",
-                "reference": "9f10a4cedf118b9196325cab3033f5c060c4d35b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c4cdf0e12b3a5de0ee433338c95f6ec40a28bdfd",
+                "reference": "c4cdf0e12b3a5de0ee433338c95f6ec40a28bdfd",
                 "shasum": ""
             },
             "require": {
@@ -2487,7 +2487,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-01-14T15:48:34+00:00"
+            "time": "2018-01-26T16:48:21+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3109,16 +3109,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "9b355654ea99460397b89c132b5c1087b6bf4473"
+                "reference": "d15f59a67ff805a44c50ea0516d2341740f81a38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9b355654ea99460397b89c132b5c1087b6bf4473",
-                "reference": "9b355654ea99460397b89c132b5c1087b6bf4473",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/d15f59a67ff805a44c50ea0516d2341740f81a38",
+                "reference": "d15f59a67ff805a44c50ea0516d2341740f81a38",
                 "shasum": ""
             },
             "require": {
@@ -3154,7 +3154,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2018-01-03T12:13:57+00:00"
+            "time": "2018-01-24T12:46:19+00:00"
         },
         {
             "name": "symfony/finder",
