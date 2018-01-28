@@ -48,6 +48,7 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
             foreach ($classLoaders as $classLoader) {
                 $providers[] = new ComposerFileListProvider($cwd, $classLoader);
             }
+
             return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
         }, [ 'source_code_filesystem.filesystem' => [ 'name' => self::FILESYSTEM_COMPOSER ]]);
 

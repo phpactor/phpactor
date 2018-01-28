@@ -314,7 +314,9 @@ class CoreExtension implements ExtensionInterface
                 $fileToClasses[] =  new ComposerFileToClass($classLoader);
             }
 
-            $fileToClasses[] = new SimpleFileToClass();
+            if (empty($fileToClasses)) {
+                $fileToClasses[] = new SimpleFileToClass();
+            }
 
             return new ChainFileToClass($fileToClasses);
         });
