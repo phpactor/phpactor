@@ -250,22 +250,25 @@ class ClassMemberReferences
             ));
         }
 
-        if (
-            true === $class->methods()->has($memberName) ||
-            true === $class->constants()->has($memberName) ||
-            true === $class->properties()->has($memberName)
-        ) {
+        $names = [];
+        $names = array_merge($names, $class->methods()->keys());
+
+        if ($class->isClass() || $class->isInterface()) {
+            $names = array_merge($names, $class->constants()->keys());
+        }
+
+        if ($class->isClass() || $class->isTrait()) {
+            $names = array_merge($names, $class->properties()->keys());
+        }
+
+        if (in_array($memberName, $names)) {
             return;
         }
 
         throw new \InvalidArgumentException(sprintf(
             'Member not known "%s", known members: "%s"',
             $memberName,
-            implode('", "', array_merge(
-                $class->constants()->keys(),
-                $class->methods()->keys(),
-                $class->properties()->keys()
-            ))
+            implode('", "', $names)
         ));
     }
 }
