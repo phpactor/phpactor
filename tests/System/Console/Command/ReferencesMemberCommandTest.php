@@ -59,7 +59,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:member "Animals\Badger" bad');
         $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('known members: "LODGING", "__construct"', $process->getErrorOutput());
+        $this->assertContains('known members: "__construct", "badge"', $process->getErrorOutput());
     }
 
     /**
