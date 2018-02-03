@@ -48,3 +48,6 @@ menu:
                 rpc:
                     text: RPC Protocol
                     relativeUrl: rpc.html
+                integrations:
+                    text: Integrations
+                    relativeUrl: integrations.html
