@@ -42,18 +42,18 @@ class Complete
             Offset::fromint($offset)
         );
 
-        $symbolInformation = $reflectionOffset->symbolInformation();
-        $types = $symbolInformation->types();
+        $symbolContext = $reflectionOffset->symbolContext();
+        $types = $symbolContext->types();
 
         $suggestions = [];
 
         foreach ($types as $type) {
-            $symbolInformation = $this->populateSuggestions($symbolInformation, $type, $suggestions);
+            $symbolContext = $this->populateSuggestions($symbolContext, $type, $suggestions);
         }
 
         return [
             'suggestions' => array_values($suggestions),
-            'issues' => $symbolInformation->issues(),
+            'issues' => $symbolContext->issues(),
         ];
 
     }
@@ -144,23 +144,23 @@ class Complete
         return implode('', $info);
     }
 
-    private function populateSuggestions(SymbolContext $symbolInformation, Type $type, array &$suggestions)
+    private function populateSuggestions(SymbolContext $symbolContext, Type $type, array &$suggestions)
     {
         if (false === $type->isDefined()) {
-            return $symbolInformation;
+            return $symbolContext;
         }
 
         if ($type->isPrimitive()) {
-            return $symbolInformation->withIssue(sprintf('Cannot complete members on scalar value (%s)', (string) $type));
+            return $symbolContext->withIssue(sprintf('Cannot complete members on scalar value (%s)', (string) $type));
         }
 
         try {
             $classReflection = $this->reflector->reflectClassLike(ClassName::fromString((string) $type));
         } catch (NotFound $e) {
-            return $symbolInformation->withIssue(sprintf('Could not find class "%s"', (string) $type));
+            return $symbolContext->withIssue(sprintf('Could not find class "%s"', (string) $type));
         }
 
-        $publicOnly = !in_array($symbolInformation->symbol()->name(), ['this', 'self'], true);
+        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
         /** @var $method ReflectionMethod */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
@@ -198,6 +198,6 @@ class Complete
             ];
         }
 
-        return $symbolInformation;
+        return $symbolContext;
     }
 }

@@ -75,7 +75,7 @@ class ContextMenuHandler implements Handler
     public function handle(array $arguments)
     {
         $offset = $this->offsetFromSourceAndOffset($arguments[self::PARAMETER_SOURCE], $arguments[self::PARAMETER_OFFSET]);
-        $symbol = $offset->symbolInformation()->symbol();
+        $symbol = $offset->symbolContext()->symbol();
 
         return $this->resolveAction($offset, $symbol, $arguments);
     }
@@ -142,7 +142,7 @@ class ContextMenuHandler implements Handler
 
     private function replaceTokens(array $parameters, ReflectionOffset $offset, array $arguments)
     {
-        $symbolInformation = $offset->symbolInformation();
+        $symbolContext = $offset->symbolContext();
         foreach ($parameters as $parameterName => $parameterValue) {
             switch ($parameterValue) {
                 case '%current_path%':
@@ -153,7 +153,7 @@ class ContextMenuHandler implements Handler
                     // this to be the current path but it is not. It is used
                     // when we want to act on the file in the "type" under the
                     // cursor. this shouldn't be a thing.
-                    $type = $symbolInformation->hasContainerType() ? $symbolInformation->containerType() : $symbolInformation->type();
+                    $type = $symbolContext->hasContainerType() ? $symbolContext->containerType() : $symbolContext->type();
                     $parameterValue = $this->classFileNormalizer->classToFile($type);
                     break;
                 case '%offset%':

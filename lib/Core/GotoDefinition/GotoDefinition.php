@@ -21,26 +21,26 @@ class GotoDefinition
         $this->reflector = $reflector;
     }
 
-    public function gotoDefinition(SymbolContext $symbolInformation): GotoDefinitionResult
+    public function gotoDefinition(SymbolContext $symbolContext): GotoDefinitionResult
     {
-        switch ($symbolInformation->symbol()->symbolType()) {
+        switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::METHOD:
             case Symbol::PROPERTY:
             case Symbol::CONSTANT:
-                return $this->gotoMember($symbolInformation);
+                return $this->gotoMember($symbolContext);
             case Symbol::CLASS_:
-                return $this->gotoClass($symbolInformation);
+                return $this->gotoClass($symbolContext);
         }
 
         throw new GotoDefinitionException(sprintf(
             'Do not know how to goto definition of symbol type "%s"',
-            $symbolInformation->symbol()->symbolType()
+            $symbolContext->symbol()->symbolType()
         ));
     }
 
-    public function gotoClass(SymbolContext $symbolInformation): GotoDefinitionResult
+    public function gotoClass(SymbolContext $symbolContext): GotoDefinitionResult
     {
-        $className = $symbolInformation->type();
+        $className = $symbolContext->type();
 
         try {
             $class = $this->reflector->reflectClassLike(ClassName::fromString((string) $className));
@@ -63,17 +63,17 @@ class GotoDefinition
         );
     }
 
-    private function gotoMember(SymbolContext $symbolInformation)
+    private function gotoMember(SymbolContext $symbolContext)
     {
-        $symbolName = $symbolInformation->symbol()->name();
-        $symbolType = $symbolInformation->symbol()->symbolType();
+        $symbolName = $symbolContext->symbol()->name();
+        $symbolType = $symbolContext->symbol()->symbolType();
 
-        if (null === $symbolInformation->containerType()) {
+        if (null === $symbolContext->containerType()) {
             throw new GotoDefinitionException(sprintf('Containing class for member "%s" could not be determined', $symbolName));
         }
 
         try {
-            $containingClass = $this->reflector->reflectClassLike(ClassName::fromString((string) $symbolInformation->containerType()));
+            $containingClass = $this->reflector->reflectClassLike(ClassName::fromString((string) $symbolContext->containerType()));
         } catch (NotFound $e) {
             throw new GotoDefinitionException($e->getMessage());
         }
