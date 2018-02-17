@@ -147,7 +147,8 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(
                 $container->get('reflection.reflector'),
-                $container->get('code_transform.updater')
+                $container->get('code_transform.updater'),
+                $container->get('code_transform.builder_factory')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
 
@@ -225,7 +226,7 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.refactor.generate_method', function (Container $container) {
             return new WorseGenerateMethod(
                 $container->get('reflection.reflector'),
-                new WorseBuilderFactory($container->get('reflection.reflector')),
+                $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
         });
@@ -246,7 +247,7 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.refactor.override_method', function (Container $container) {
             return new WorseOverrideMethod(
                 $container->get('reflection.reflector'),
-                new WorseBuilderFactory($container->get('reflection.reflector')),
+                $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
         });
@@ -254,7 +255,7 @@ class CodeTransformExtension implements ExtensionInterface
         $container->register('code_transform.refactor.extract_method', function (Container $container) {
             return new WorseExtractMethod(
                 $container->get('reflection.reflector'),
-                new WorseBuilderFactory($container->get('reflection.reflector')),
+                $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
         });
@@ -264,6 +265,9 @@ class CodeTransformExtension implements ExtensionInterface
     {
         $container->register('code_transform.updater', function (Container $container) {
             return new TolerantUpdater($container->get('code_transform.renderer'));
+        });
+        $container->register('code_transform.builder_factory', function (Container $container) {
+            return new WorseBuilderFactory($container->get('reflection.reflector'));
         });
     }
 }

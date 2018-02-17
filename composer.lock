@@ -300,12 +300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "a9c5b88008fc2319e772e6133629fed6a3d074ef"
+                "reference": "b9b3502cc493213aab4eed9e1f025202495d4678"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/a9c5b88008fc2319e772e6133629fed6a3d074ef",
-                "reference": "a9c5b88008fc2319e772e6133629fed6a3d074ef",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/b9b3502cc493213aab4eed9e1f025202495d4678",
+                "reference": "b9b3502cc493213aab4eed9e1f025202495d4678",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2018-01-28T09:10:01+00:00"
+            "time": "2018-02-17T16:13:26+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -354,12 +354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "7074e09d24142ed5988516e99d885c0b4c7e05e1"
+                "reference": "a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7074e09d24142ed5988516e99d885c0b4c7e05e1",
-                "reference": "7074e09d24142ed5988516e99d885c0b4c7e05e1",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da",
+                "reference": "a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-01-28T16:32:03+00:00"
+            "time": "2018-02-17T16:03:19+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "215f8635a60d79a1ce88e51a39231439597bb7b6"
+                "reference": "f8778af2841bee712f35964cee5291231b77a104"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/215f8635a60d79a1ce88e51a39231439597bb7b6",
-                "reference": "215f8635a60d79a1ce88e51a39231439597bb7b6",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f8778af2841bee712f35964cee5291231b77a104",
+                "reference": "f8778af2841bee712f35964cee5291231b77a104",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-02-17T15:01:30+00:00"
+            "time": "2018-02-17T15:28:39+00:00"
         },
         {
             "name": "phpbench/container",
