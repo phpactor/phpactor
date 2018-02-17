@@ -19,7 +19,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
     /**
      * @var ObjectProphecy
      */
-    private $symbolInformation;
+    private $symbolContext;
 
     public function setUp()
     {

@@ -43,15 +43,15 @@ final class OffsetInfo
             Offset::fromInt($offset)
         );
 
-        $symbolInformation = $result->symbolInformation();
+        $symbolContext = $result->symbolContext();
         $return = [
-            'symbol' => $symbolInformation->symbol()->name(),
-            'symbol_type' => $symbolInformation->symbol()->symbolType(),
-            'start' => $symbolInformation->symbol()->position()->start(),
-            'end' => $symbolInformation->symbol()->position()->end(),
-            'type' => (string) $symbolInformation->type(),
-            'class_type' => (string) $symbolInformation->containerType(),
-            'value' => var_export($symbolInformation->value(), true),
+            'symbol' => $symbolContext->symbol()->name(),
+            'symbol_type' => $symbolContext->symbol()->symbolType(),
+            'start' => $symbolContext->symbol()->position()->start(),
+            'end' => $symbolContext->symbol()->position()->end(),
+            'type' => (string) $symbolContext->type(),
+            'class_type' => (string) $symbolContext->containerType(),
+            'value' => var_export($symbolContext->value(), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -65,8 +65,8 @@ final class OffsetInfo
                     $info = sprintf(
                         '%s = (%s) %s',
                         $local->name(),
-                        $local->symbolInformation()->type(),
-                        str_replace(PHP_EOL, '', var_export($local->symbolInformation()->value(), true))
+                        $local->symbolContext()->type(),
+                        str_replace(PHP_EOL, '', var_export($local->symbolContext()->value(), true))
                     );
 
                     $frame[$assignmentType][$local->offset()->toInt()] = $info;
@@ -75,12 +75,12 @@ final class OffsetInfo
             $return['frame'] = $frame;
         }
 
-        if (Type::unknown() === $symbolInformation->type()) {
+        if (Type::unknown() === $symbolContext->type()) {
             return $return;
         }
 
-        $return['type_path'] = $symbolInformation->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolInformation->type(), true) : null;
-        $return['class_type_path'] = $symbolInformation->containerType() && false === $symbolInformation->containerType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['type_path'] = $symbolContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
+        $return['class_type_path'] = $symbolContext->containerType() && false === $symbolContext->containerType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }

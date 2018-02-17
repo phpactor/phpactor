@@ -52,7 +52,7 @@ class GotoDefinitionHandler implements Handler
             Offset::fromInt($arguments[self::PARAM_OFFSET])
         );
 
-        $result = $this->gotoDefinition->gotoDefinition($result->symbolInformation());
+        $result = $this->gotoDefinition->gotoDefinition($result->symbolContext());
 
         return OpenFileResponse::fromPathAndOffset($result->path(), $result->offset());
     }

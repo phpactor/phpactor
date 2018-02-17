@@ -53,16 +53,16 @@ class OffsetInfoHandler implements Handler
 
     private function serialize(int $offset, ReflectionOffset $reflectionOffset)
     {
-        $symbolInformation = $reflectionOffset->symbolInformation();
+        $symbolContext = $reflectionOffset->symbolContext();
 
         $return = [
-            'symbol' => $symbolInformation->symbol()->name(),
-            'symbol_type' => $symbolInformation->symbol()->symbolType(),
-            'start' => $symbolInformation->symbol()->position()->start(),
-            'end' => $symbolInformation->symbol()->position()->end(),
-            'type' => (string) $symbolInformation->type(),
-            'container_type' => (string) $symbolInformation->containerType(),
-            'value' => var_export($symbolInformation->value(), true),
+            'symbol' => $symbolContext->symbol()->name(),
+            'symbol_type' => $symbolContext->symbol()->symbolType(),
+            'start' => $symbolContext->symbol()->position()->start(),
+            'end' => $symbolContext->symbol()->position()->end(),
+            'type' => (string) $symbolContext->type(),
+            'container_type' => (string) $symbolContext->containerType(),
+            'value' => var_export($symbolContext->value(), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -74,8 +74,8 @@ class OffsetInfoHandler implements Handler
                 $info = sprintf(
                     '%s = (%s) %s',
                     $local->name(),
-                    $local->symbolInformation()->type(),
-                    str_replace(PHP_EOL, '', var_export($local->symbolInformation()->value(), true))
+                    $local->symbolContext()->type(),
+                    str_replace(PHP_EOL, '', var_export($local->symbolContext()->value(), true))
                 );
 
                 $frame[$assignmentType][$local->offset()->toInt()] = $info;
@@ -83,7 +83,7 @@ class OffsetInfoHandler implements Handler
         }
         $return['frame'] = $frame;
 
-        if (Type::unknown() === $symbolInformation->type()) {
+        if (Type::unknown() === $symbolContext->type()) {
             return $return;
         }
 
