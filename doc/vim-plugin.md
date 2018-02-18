@@ -29,7 +29,7 @@ Then in VIM:
 Now you will need to install the Phpactor dependencies with composer:
 
 ```
-$ cd ~/.vim/bundles/phpactor
+$ cd ~/.vim/bundle/phpactor
 $ composer install
 ```
 
