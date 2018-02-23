@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\Application\Complete;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class CompleteTest extends TestCase
 {
@@ -286,9 +286,7 @@ EOT
 
     private function complete(string $source, $offset)
     {
-        $logger = new ArrayLogger();
-
-        $reflector = Reflector::create(new StringSourceLocator(SourceCode::fromString($source)), $logger);
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $complete = new Complete($reflector);
 
         $result = $complete->complete($source, $offset);

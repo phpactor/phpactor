@@ -15,6 +15,7 @@ use Phpactor\Rpc\Request;
 use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {
@@ -48,7 +49,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function setUp()
     {
-        $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)));
+        $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
         $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);
         $this->requestHandler = $this->prophesize(RequestHandler::class);

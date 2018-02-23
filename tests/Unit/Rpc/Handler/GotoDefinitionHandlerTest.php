@@ -4,10 +4,10 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class GotoDefinitionHandlerTest extends HandlerTestCase
 {
@@ -23,7 +23,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
 
     public function setUp()
     {
-        $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)));
+        $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
     }
 
     public function createHandler(): Handler

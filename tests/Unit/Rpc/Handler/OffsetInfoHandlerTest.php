@@ -3,11 +3,11 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Rpc\Response\InformationResponse;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {
@@ -20,7 +20,7 @@ EOT
     public function createHandler(): Handler
     {
         return new OffsetInfoHandler(
-            Reflector::create(new StringSourceLocator(SourceCode::fromString(self::SOURCE)))
+            ReflectorBuilder::create()->addSource(self::SOURCE)->build()
         );
     }
 
