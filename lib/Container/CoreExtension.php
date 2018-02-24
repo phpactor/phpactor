@@ -44,7 +44,6 @@ use Phpactor\Application\ClassMemberReferences;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
-use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Application\CacheClear;
 use Phpactor\Console\Command\CacheClearCommand;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
@@ -260,7 +259,8 @@ class CoreExtension implements ExtensionInterface
             foreach ($autoloaderPaths as $autoloaderPath) {
                 if (false === file_exists($autoloaderPath)) {
                     $container->get('monolog.logger')->warning(sprintf(
-                        'Could not find autoloader "%s"', $autoloaderPath
+                        'Could not find autoloader "%s"',
+                        $autoloaderPath
                     ));
                     continue;
                 }

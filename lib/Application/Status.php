@@ -14,8 +14,7 @@ class Status
 
     public function __construct(
         FilesystemRegistry $registry
-    )
-    {
+    ) {
         $this->registry = $registry;
     }
 

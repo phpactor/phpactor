@@ -4,13 +4,11 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseReflectionExtension implements ExtensionInterface
 {
@@ -24,22 +22,22 @@ class WorseReflectionExtension implements ExtensionInterface
     public function load(Container $container)
     {
         $container->register('reflection.reflector', function (Container $container) {
-            $locators = [];
+            $builder = ReflectorBuilder::create()
+                ->enableCache()
+                ->enableContextualSourceLocation();
 
             foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
-                $locators[] = $container->get($locatorId);
+                $builder->addLocator($container->get($locatorId));
             }
-            return Reflector::create(
-                new ChainSourceLocator($locators),
-                new PsrLogger($container->get('monolog.logger'))
-            );
+
+            $builder->withLogger(new PsrLogger($container->get('monolog.logger')));
+
+            return $builder->build();
         });
 
         $container->register('reflection.locator.stub', function (Container $container) {
             return new StubSourceLocator(
-                // TODO: we do not need the location facility of the reflector in this case
-                //       need to separate responsiblities
-                Reflector::create(new StringSourceLocator(SourceCode::fromString(''))),
+                ReflectorBuilder::create()->build(),
                 $container->getParameter('reflection.stub_directory'),
                 $container->getParameter('cache_dir')
             );

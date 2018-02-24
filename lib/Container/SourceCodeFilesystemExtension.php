@@ -11,7 +11,6 @@ use Phpactor\Filesystem\Domain\ChainFileListProvider;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
 
@@ -55,13 +54,13 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
         $container->register('source_code_filesystem.registry', function (Container $container) {
             $filesystems = [];
             foreach ($container->getServiceIdsForTag('source_code_filesystem.filesystem') as $serviceId => $attributes) {
-
                 try {
                     $filesystems[$attributes['name']] = $container->get($serviceId);
-                } catch (NotSupported $exception)
-                {
+                } catch (NotSupported $exception) {
                     $container->get('monolog.logger')->warning(sprintf(
-                        'Filesystem "%s" not supported: "%s"', $attributes['name'], $exception->getMessage()
+                        'Filesystem "%s" not supported: "%s"',
+                        $attributes['name'],
+                        $exception->getMessage()
                     ));
                 }
             }

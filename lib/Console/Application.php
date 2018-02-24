@@ -12,8 +12,6 @@ use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Container\CoreExtension;
-use Psr\Log\LogLevel;
 
 class Application extends SymfonyApplication
 {

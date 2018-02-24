@@ -26,8 +26,7 @@ class Navigator
         PathFinder $pathFinder,
         ClassNew $classNew,
         array $autoCreateConfig
-    )
-    {
+    ) {
         $this->pathFinder = $pathFinder;
         $this->classNew = $classNew;
         $this->autoCreateConfig = $autoCreateConfig;
@@ -63,7 +62,8 @@ class Navigator
         if (false === isset($destinations[$destinationName])) {
             throw new RuntimeException(sprintf(
                 'Destination "%s" does not exist, known destinations: "%s"',
-                $destinationName, implode('", "', array_keys($destinations))
+                $destinationName,
+                implode('", "', array_keys($destinations))
             ));
         }
 

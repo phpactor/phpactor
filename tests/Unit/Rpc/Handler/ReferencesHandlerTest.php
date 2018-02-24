@@ -17,6 +17,7 @@ use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
@@ -35,6 +36,9 @@ class ReferencesHandlerTest extends HandlerTestCase
      */
     private $classMemberReferences;
 
+    /**
+     * @var ArrayLogger
+     */
     private $logger;
 
     /**
@@ -47,7 +51,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classReferences = $this->prophesize(ClassReferences::class);
         $this->classMemberReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
-        $this->reflector = Reflector::create(new StringSourceLocator(SourceCode::fromPath(__FILE__)), $this->logger);
+        $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->withLogger($this->logger)->build();
         $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
     }
 

@@ -55,7 +55,6 @@ class Complete
             'suggestions' => array_values($suggestions),
             'issues' => $symbolContext->issues(),
         ];
-
     }
 
     private function getOffetToReflect($source, $offset)

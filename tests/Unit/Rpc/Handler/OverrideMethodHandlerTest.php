@@ -4,7 +4,6 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\Rpc\Handler\OverrideMethodHandler;
 use Phpactor\Rpc\Handler;
@@ -15,6 +14,7 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Rpc\Response\Input\ListInput;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OverrideMethodHandlerTest extends HandlerTestCase
 {
@@ -30,9 +30,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
 
     public function setUp()
     {
-        $this->reflector = Reflector::create(
-            new StringSourceLocator(SourceCode::fromString('<?php class ParentClass { public function foobar() {} }'))
-        );
+        $this->reflector = ReflectorBuilder::create()->addSource('<?php class ParentClass { public function foobar() {} }')->build();
         $this->overrideMethod = $this->prophesize(OverrideMethod::class);
     }
 
