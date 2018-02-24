@@ -2,16 +2,12 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler\AbstractHandler;
 use Phpactor\Application\Navigator;
-use Phpactor\Rpc\Response\ErrorResponse;
 use RuntimeException;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\Input\Input;
 
 class NavigateHandler extends AbstractHandler
 {
@@ -48,7 +44,8 @@ class NavigateHandler extends AbstractHandler
     {
         if (null === $arguments[self::PARAM_SOURCE_PATH]) {
             throw new RuntimeException(sprintf(
-                'Param %s is required', self::PARAM_SOURCE_PATH
+                'Param %s is required',
+                self::PARAM_SOURCE_PATH
             ));
         }
 

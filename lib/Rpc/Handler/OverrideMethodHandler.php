@@ -2,11 +2,7 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Core\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Offset;
 use InvalidArgumentException;
 use Phpactor\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -14,9 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\Input\Input;
 
 class OverrideMethodHandler extends AbstractHandler
 {
@@ -37,7 +31,9 @@ class OverrideMethodHandler extends AbstractHandler
      */
     private $overrideMethod;
 
-    public function __construct(Reflector $reflector, OverrideMethod $overrideMethod
+    public function __construct(
+        Reflector $reflector,
+        OverrideMethod $overrideMethod
     ) {
         $this->reflector = $reflector;
         $this->overrideMethod = $overrideMethod;
@@ -120,7 +116,8 @@ class OverrideMethodHandler extends AbstractHandler
 
         if (null === $parentClass) {
             throw new InvalidArgumentException(sprintf(
-                'Class "%s" has no parent', $class->name()
+                'Class "%s" has no parent',
+                $class->name()
             ));
         }
 
