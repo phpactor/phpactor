@@ -198,12 +198,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "bbf8a434d624e8e513d64f515100d5d49736730b"
+                "reference": "73620cbc057bd91707346f1ce8f8ccea796b3e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/bbf8a434d624e8e513d64f515100d5d49736730b",
-                "reference": "bbf8a434d624e8e513d64f515100d5d49736730b",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/73620cbc057bd91707346f1ce8f8ccea796b3e60",
+                "reference": "73620cbc057bd91707346f1ce8f8ccea796b3e60",
                 "shasum": ""
             },
             "require": {
@@ -246,7 +246,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2018-02-17T14:52:49+00:00"
+            "time": "2018-02-24T13:50:01+00:00"
         },
         {
             "name": "phpactor/class-to-file",
@@ -300,12 +300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "b9b3502cc493213aab4eed9e1f025202495d4678"
+                "reference": "cd8ba636b83ce026e56337683e5ec72db00a169c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/b9b3502cc493213aab4eed9e1f025202495d4678",
-                "reference": "b9b3502cc493213aab4eed9e1f025202495d4678",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/cd8ba636b83ce026e56337683e5ec72db00a169c",
+                "reference": "cd8ba636b83ce026e56337683e5ec72db00a169c",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2018-02-17T16:13:26+00:00"
+            "time": "2018-02-24T13:49:49+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -354,12 +354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da"
+                "reference": "5b107b077477c9529ff910528cae26ab155297af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da",
-                "reference": "a1c2bdd26ef17ed0d7cae29cf688c60a9f17e9da",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5b107b077477c9529ff910528cae26ab155297af",
+                "reference": "5b107b077477c9529ff910528cae26ab155297af",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-02-17T16:03:19+00:00"
+            "time": "2018-02-24T14:03:39+00:00"
         },
         {
             "name": "phpactor/docblock",
