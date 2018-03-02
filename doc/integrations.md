@@ -21,16 +21,30 @@ Create the following bootstrap file `autoload_phpactor.php`, in (for example)
 // web/phpactor_autoload.php
 <?php
 
-use Drupal\Core\DrupalKernel;
+use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Bootstrap\DrupalKernel;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\Core\Database\Database;
 
-$autoload = require __DIR__ . '/autoload.php';
-$kernel = new DrupalKernel('prod', $autoload);
-$kernel->setSitePath(__DIR__);
-$request = Request::createFromGlobals();
-$kernel = DrupalKernel::createFromRequest($request,$autoload, 'prod' );
-$kernel->boot();
+$autoload = require_once __DIR__ . '/autoload.php';
+
+$root = getcwd();
+
+$drupalFinder = new DrupalFinder();
+if (!$drupalFinder->locateRoot($root)) {
+    die('DrupalConsole must be executed within a Drupal Site.');
+}
+
+chdir($drupalFinder->getDrupalRoot());
+
+$drupalKernel = DrupalKernel::createFromRequest(
+  Request::createFromGlobals(),
+  $autoload,
+  'dev',
+  true,
+  $drupalFinder->getDrupalRoot()
+);
+$drupalKernel->boot();
+chdir($root);
 
 return $autoload;
 ```
@@ -38,6 +52,14 @@ return $autoload;
 Then edit `.phpactor.yml` to use that:
 
 ```
-# .phpactor.yml
+# Use the special autoloader above
 autoload: web/phpactor_autoload.php
+
+# Drupal CS is 2 spaces
+code_transform.indentation: 2
+
+# Bootstrapping Drupal creates lots of implicit global
+# dependencies, so we will just keep the Drupal autoloader
+# registered and hope for the best.
+autoload.deregister: false
 ```

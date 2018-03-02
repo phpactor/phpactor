@@ -50,6 +50,7 @@ use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Application\Status;
 use Phpactor\Application\StatusCommand;
+use Symfony\Component\Debug\Debug;
 
 class CoreExtension implements ExtensionInterface
 {
@@ -64,6 +65,7 @@ class CoreExtension implements ExtensionInterface
     const LOGGING_ENABLED = 'logging.enabled';
     const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
     const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
+    const AUTOLOAD_DEREGISTER = 'autoload.deregister';
 
     public static $autoloader;
 
@@ -71,6 +73,7 @@ class CoreExtension implements ExtensionInterface
     {
         return [
             self::AUTOLOAD => 'vendor/autoload.php',
+            self::AUTOLOAD_DEREGISTER => true,
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => __DIR__ . '/../../cache',
@@ -274,12 +277,14 @@ class CoreExtension implements ExtensionInterface
                 $autoloaders[] = $autoloader;
             }
 
-            foreach (spl_autoload_functions() as $autoloadFunction) {
-                spl_autoload_unregister($autoloadFunction);
-            }
+            if ($container->getParameter(self::AUTOLOAD_DEREGISTER)) {
+                foreach (spl_autoload_functions() as $autoloadFunction) {
+                    spl_autoload_unregister($autoloadFunction);
+                }
 
-            foreach ($currentAutoloaders as $autoloader) {
-                spl_autoload_register($autoloader);
+                foreach ($currentAutoloaders as $autoloader) {
+                    spl_autoload_register($autoloader);
+                }
             }
 
             return $autoloaders;
