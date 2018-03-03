@@ -43,8 +43,17 @@ installation procedure!
 Now issue the following command `:call phpactor#Status()`:
 
 ```
-✔ Composer detected - faster class location and more features!
-✔ Git detected - enables faster refactorings in your repository scope!
+Support
+-------
+[✔] Composer detected - faster class location and more features!
+[✔] Git detected - enables faster refactorings in your repository scope!
+
+Config files
+------------
+[✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
+[✔] /home/daniel/.config/phpactor/phpactor.yml
+[✘] /etc/xdg/phpactor/phpactor.yml
+
 ```
 
 Phpactor works best with Composer - but much functionality including

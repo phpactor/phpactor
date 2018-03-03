@@ -238,6 +238,10 @@ function! phpactor#Status()
     call phpactor#rpc("status", {})
 endfunction
 
+function! phpactor#Config()
+    call phpactor#rpc("config", {})
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""

@@ -30,6 +30,7 @@ use Phpactor\Rpc\RequestHandler\LoggingHandler;
 use Phpactor\Rpc\Handler\NavigateHandler;
 use Phpactor\Rpc\Handler\OverrideMethodHandler;
 use Phpactor\Rpc\Handler\CacheClearHandler;
+use Phpactor\Rpc\Handler\ConfigHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -195,8 +196,12 @@ class RpcExtension implements ExtensionInterface
 
         $container->register('rpc.handler.status', function (Container $container) {
             return new StatusHandler(
-                $container->get('application.status')
+                $container->get('application.status'),
+                $container->configLoader()
             );
+        }, [ 'rpc.handler' => [] ]);
+        $container->register('rpc.handler.config', function (Container $container) {
+            return new ConfigHandler($container->getParameters());
         }, [ 'rpc.handler' => [] ]);
     }
 
