@@ -5,6 +5,7 @@ namespace Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\Status;
 use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Config\ConfigLoader;
 
 class StatusHandler implements Handler
 {
@@ -15,9 +16,15 @@ class StatusHandler implements Handler
      */
     private $status;
 
-    public function __construct(Status $status)
+    /**
+     * @var ConfigLoader
+     */
+    private $loader;
+
+    public function __construct(Status $status, ConfigLoader $loader)
     {
         $this->status = $status;
+        $this->loader = $loader;
     }
 
     public function name(): string
@@ -32,17 +39,39 @@ class StatusHandler implements Handler
 
     public function handle(array $arguments)
     {
-        $diagnostics = $this->status->check();
+        return EchoResponse::fromMessage(implode(
+            PHP_EOL,
+            [
+                'Support',
+                '-------',
+                $this->buildSupportMessage(),
+                'Config files',
+                '------------',
+                $this->buildConfigFileMessage(),
+            ]
+        ));
+    }
 
-        return EchoResponse::fromMessage(
-            implode(PHP_EOL, [
-                implode(PHP_EOL, array_map(function (string $message) {
-                    return '[✔] ' . $message;
-                }, $diagnostics['good'])),
-                implode(PHP_EOL, array_map(function (string $message) {
-                    return '[✘] ' . $message;
-                }, $diagnostics['bad'])),
-            ])
-        );
+    private function buildSupportMessage()
+    {
+        $diagnostics = $this->status->check();
+        return implode(PHP_EOL, [
+            implode(PHP_EOL, array_map(function (string $message) {
+                return '[✔] ' . $message;
+            }, $diagnostics['good'])),
+            implode(PHP_EOL, array_map(function (string $message) {
+                return '[✘] ' . $message;
+            }, $diagnostics['bad'])),
+        ]);
+    }
+
+    private function buildConfigFileMessage()
+    {
+        return implode(PHP_EOL, array_map(function ($file) {
+            if (file_exists($file)) {
+                return '[✔] ' . $file;
+            }
+            return '[✘] ' . $file;
+        }, $this->loader->configFiles()));
     }
 }
