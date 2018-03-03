@@ -74,7 +74,7 @@ class ContextMenuHandler implements Handler
 
     public function handle(array $arguments)
     {
-        $offset = $this->offsetFromSourceAndOffset($arguments[self::PARAMETER_SOURCE], $arguments[self::PARAMETER_OFFSET]);
+        $offset = $this->offsetFromSourceAndOffset($arguments[self::PARAMETER_SOURCE], $arguments[self::PARAMETER_OFFSET], $arguments[self::PARAMETER_CURRENT_PATH]);
         $symbol = $offset->symbolContext()->symbol();
 
         return $this->resolveAction($offset, $symbol, $arguments);
@@ -132,10 +132,10 @@ class ContextMenuHandler implements Handler
         );
     }
 
-    private function offsetFromSourceAndOffset(string $source, int $offset)
+    private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
         return $this->reflector->reflectOffset(
-            SourceCode::fromString($source),
+            SourceCode::fromPathAndString($currentPath, $source),
             Offset::fromInt($offset)
         );
     }
