@@ -116,7 +116,7 @@ Completion
 ### Omni-completion
 
 Omni-completion
-([Screenshot](http://localhost:8000/screenshots.html#code-completion)) is
+([Screenshot](./screenshots.html#code-completion)) is
 VIM's built-in auto-completion mechanism. 
 
 Add the following to your `.vimrc` in order to use Phpactor for omni-completion (for PHP files):
