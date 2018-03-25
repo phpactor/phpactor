@@ -660,7 +660,7 @@ Import a class into the current namespace based on the class name under the curs
 
 - **Command**: _VIM function only_
 - **VIM plugin**: _VIM function only_
-- **VIM function**:`:call phpactor#AddUse()`
+- **VIM function**:`:call phpactor#UseAdd()`
 
 ### Motivation
 
