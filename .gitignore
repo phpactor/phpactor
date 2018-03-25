@@ -8,3 +8,6 @@ cache
 lib/Foobar.php
 /.phpactor.yml
 /.phpactor/*
+
+# docs
+.couscous
