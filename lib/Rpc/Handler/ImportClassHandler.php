@@ -13,6 +13,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 
 class ImportClassHandler extends AbstractHandler
 {
@@ -23,8 +24,8 @@ class ImportClassHandler extends AbstractHandler
     const PARAM_ALIAS = 'alias';
     const PARAM_QUALIFIED_NAME = 'qualified_name';
 
-
     /**
+
      * @var ImportClass
      */
     private $classImport;
@@ -126,6 +127,8 @@ class ImportClassHandler extends AbstractHandler
             ));
 
             return $this->createInputCallback($arguments);
+        } catch (TransformException $e) {
+            return EchoResponse::fromMessage($e->getMessage());
         }
 
         return ReplaceFileSourceResponse::fromPathAndSource(
