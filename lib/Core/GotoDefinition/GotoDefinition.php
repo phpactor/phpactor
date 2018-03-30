@@ -51,9 +51,9 @@ class GotoDefinition
         $path = $class->sourceCode()->path();
 
         if (null === $path) {
-            throw new GotoDefinitionResult(sprintf(
+            throw new GotoDefinitionException(sprintf(
                 'The source code for class "%s" has no path associated with it.',
-                (string) $containingClass->name()
+                $class->name()
             ));
         }
 

@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "945a6c33e30b5ffeef81acd536abe566bfb6658f"
+                "reference": "0de6122320919d9bebf3f225385f170115621f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/945a6c33e30b5ffeef81acd536abe566bfb6658f",
-                "reference": "945a6c33e30b5ffeef81acd536abe566bfb6658f",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/0de6122320919d9bebf3f225385f170115621f20",
+                "reference": "0de6122320919d9bebf3f225385f170115621f20",
                 "shasum": ""
             },
             "type": "library",
@@ -70,7 +70,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-02-19T15:52:47+00:00"
+            "time": "2018-03-14T15:55:52+00:00"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -78,12 +78,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "faca5af49c6e915310eba627e0c64e31efa76b82"
+                "reference": "967243e41dc5e92afa6bcdd5fbd1740ae773a4e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/faca5af49c6e915310eba627e0c64e31efa76b82",
-                "reference": "faca5af49c6e915310eba627e0c64e31efa76b82",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/967243e41dc5e92afa6bcdd5fbd1740ae773a4e2",
+                "reference": "967243e41dc5e92afa6bcdd5fbd1740ae773a4e2",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2018-02-19T06:50:21+00:00"
+            "time": "2018-03-18T23:03:45+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -300,12 +300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "cd8ba636b83ce026e56337683e5ec72db00a169c"
+                "reference": "8bdfbe5f0710976fe9a02ebd81c92bc9278eae28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/cd8ba636b83ce026e56337683e5ec72db00a169c",
-                "reference": "cd8ba636b83ce026e56337683e5ec72db00a169c",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/8bdfbe5f0710976fe9a02ebd81c92bc9278eae28",
+                "reference": "8bdfbe5f0710976fe9a02ebd81c92bc9278eae28",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "source": "https://github.com/phpactor/code-builder/tree/master",
                 "issues": "https://github.com/phpactor/code-builder/issues"
             },
-            "time": "2018-02-24T13:49:49+00:00"
+            "time": "2018-03-30T11:20:32+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -354,12 +354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "5b107b077477c9529ff910528cae26ab155297af"
+                "reference": "ed3133a68d2b796acbf6ed941ec98d903631a74c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5b107b077477c9529ff910528cae26ab155297af",
-                "reference": "5b107b077477c9529ff910528cae26ab155297af",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/ed3133a68d2b796acbf6ed941ec98d903631a74c",
+                "reference": "ed3133a68d2b796acbf6ed941ec98d903631a74c",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-02-24T14:03:39+00:00"
+            "time": "2018-03-30T13:07:36+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -1030,12 +1030,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "45990c3644032f255824a6a3819ba5d828236eef"
+                "reference": "092871ad2d511b29191f4684bbd6b803e2f80aed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/45990c3644032f255824a6a3819ba5d828236eef",
-                "reference": "45990c3644032f255824a6a3819ba5d828236eef",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/092871ad2d511b29191f4684bbd6b803e2f80aed",
+                "reference": "092871ad2d511b29191f4684bbd6b803e2f80aed",
                 "shasum": ""
             },
             "require": {
@@ -1044,8 +1044,8 @@
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.3@dev"
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.3"
             },
             "type": "library",
             "extra": {
@@ -1088,7 +1088,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-01-30T13:51:48+00:00"
+            "time": "2018-03-20T04:31:47+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1237,16 +1237,16 @@
     "packages-dev": [
         {
             "name": "beberlei/assert",
-            "version": "v2.9.2",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0"
+                "reference": "7d8108458bbe3d063dc3315278b2001a7156fade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0",
-                "reference": "2d555f72f3f4ff9e72a7bc17cb8a53c86737c8a0",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/7d8108458bbe3d063dc3315278b2001a7156fade",
+                "reference": "7d8108458bbe3d063dc3315278b2001a7156fade",
                 "shasum": ""
             },
             "require": {
@@ -1288,7 +1288,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2018-01-25T13:33:16+00:00"
+            "time": "2018-03-16T17:46:00+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1843,12 +1843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "b370e7da22dac5ee08b0da735b9e1859275a19df"
+                "reference": "7a3b17198e56719195f16d516605944db4b92ef6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/b370e7da22dac5ee08b0da735b9e1859275a19df",
-                "reference": "b370e7da22dac5ee08b0da735b9e1859275a19df",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/7a3b17198e56719195f16d516605944db4b92ef6",
+                "reference": "7a3b17198e56719195f16d516605944db4b92ef6",
                 "shasum": ""
             },
             "require": {
@@ -1910,7 +1910,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-02-17T14:30:34+00:00"
+            "time": "2018-03-11T18:32:22+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2382,12 +2382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5a7bbc882349b77f3a2afd604ce14b4d88ae7925"
+                "reference": "ea739aae4742aa4eae1e98d4d06acdbf01692415"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5a7bbc882349b77f3a2afd604ce14b4d88ae7925",
-                "reference": "5a7bbc882349b77f3a2afd604ce14b4d88ae7925",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea739aae4742aa4eae1e98d4d06acdbf01692415",
+                "reference": "ea739aae4742aa4eae1e98d4d06acdbf01692415",
                 "shasum": ""
             },
             "require": {
@@ -2458,7 +2458,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-02-22T14:58:13+00:00"
+            "time": "2018-03-15T16:51:04+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2686,16 +2686,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "eb71ad57e2b937a06c91a60efc647f28187626e9"
+                "reference": "cd35e43a53ec1c10424a5dec250c30e952e09ced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/eb71ad57e2b937a06c91a60efc647f28187626e9",
-                "reference": "eb71ad57e2b937a06c91a60efc647f28187626e9",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/cd35e43a53ec1c10424a5dec250c30e952e09ced",
+                "reference": "cd35e43a53ec1c10424a5dec250c30e952e09ced",
                 "shasum": ""
             },
             "require": {
-                "ext-posix": "*",
                 "php": "^7.0"
             },
             "require-dev": {
@@ -2729,7 +2728,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-02-09T07:31:46+00:00"
+            "time": "2018-03-21T07:21:42+00:00"
         },
         {
             "name": "sebastian/exporter",
