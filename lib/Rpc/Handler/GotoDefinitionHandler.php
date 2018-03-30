@@ -14,6 +14,7 @@ class GotoDefinitionHandler implements Handler
     const NAME = 'goto_definition';
     const PARAM_OFFSET = 'offset';
     const PARAM_SOURCE = 'source';
+    const PARAM_PATH = 'path';
 
     /**
      * @var Reflector
@@ -42,13 +43,17 @@ class GotoDefinitionHandler implements Handler
         return [
             self::PARAM_OFFSET => null,
             self::PARAM_SOURCE => null,
+            self::PARAM_PATH => null,
         ];
     }
 
     public function handle(array $arguments)
     {
         $result = $this->reflector->reflectOffset(
-            SourceCode::fromString($arguments[self::PARAM_SOURCE]),
+            SourceCode::fromPathAndString(
+                $arguments[self::PARAM_PATH],
+                $arguments[self::PARAM_SOURCE]
+            ),
             Offset::fromInt($arguments[self::PARAM_OFFSET])
         );
 
