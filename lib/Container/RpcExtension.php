@@ -31,6 +31,7 @@ use Phpactor\Rpc\Handler\NavigateHandler;
 use Phpactor\Rpc\Handler\OverrideMethodHandler;
 use Phpactor\Rpc\Handler\CacheClearHandler;
 use Phpactor\Rpc\Handler\ConfigHandler;
+use Phpactor\Rpc\Handler\ImportClassHandler;
 
 class RpcExtension implements ExtensionInterface
 {
@@ -188,6 +189,14 @@ class RpcExtension implements ExtensionInterface
             );
         }, [ 'rpc.handler' => [] ]);
 
+        $container->register('rpc.handler.refactor.import_class', function (Container $container) {
+            return new ImportClassHandler(
+                $container->get('code_transform.refactor.class_import'),
+                $container->get('application.class_search'),
+                $container->getParameter('rpc.class_search.filesystem')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
         $container->register('rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler(
                 $container->get('application.cache_clear')
@@ -200,6 +209,7 @@ class RpcExtension implements ExtensionInterface
                 $container->configLoader()
             );
         }, [ 'rpc.handler' => [] ]);
+
         $container->register('rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
         }, [ 'rpc.handler' => [] ]);
@@ -212,7 +222,7 @@ class RpcExtension implements ExtensionInterface
     {
         return [
             'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
-            'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_GIT
+            'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_GIT,
         ];
     }
 }

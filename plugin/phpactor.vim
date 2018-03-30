@@ -99,81 +99,8 @@ endfunction
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
-
-    ""
-    " @return int Number of extra lines added
-    ""
-    function! UseAdd(savePos)
-        let word = expand("<cword>")
-        let classInfo = phpactor#rpc("class_search", { "short_name": word })
-
-        if (empty(classInfo))
-            return
-        endif
-
-        call cursor(1, 1)
-        let existing = search('^.*use.*\\' . classInfo['class_name'] . ';$')
-
-        if (existing > 0)
-            echo "Use statement already included on line:" . existing
-            call setpos('.', a:savePos)
-            return 0
-        endif
-
-        " START: Insert use statement
-        call cursor(1, 1)
-        let namespaceLineNb = search('^namespace') + 1
-
-        " Find an appropriate place to put the use statement,
-        " if there is no namespace, put it after the start tag
-        if (namespaceLineNb == 0)
-            let namespaceLineNb = 2
-        endif
-
-        " Search for the last use statement
-        call cursor(1, 1)
-        let lastUseLineNb = namespaceLineNb
-        let result = -1
-        while (result != 0)
-            let result = search('^use', '', line("w$"))
-
-            if (result > 0)
-                let lastUseLineNb = result
-            endif
-        endwhile
-
-        " Try and put the cursor at the best place
-        call cursor(lastUseLineNb, 1)
-
-        " Ensure an empty line before the use statement
-        let extraLines = 1
-        let line = getline(line('.') + 1)
-        if (!empty(line))
-            exec "normal! O"
-            let extraLines += 1
-        endif
-
-        " Insert use statement
-        execute "normal! ouse " . classInfo['class'] . ";"
-
-        " Ensure an empty line afterwards
-        let line = getline(line('.') + 1)
-        if (!empty(line))
-            exec "normal! o"
-            let extraLines += 1
-        endif
-
-        return extraLines
-    endfunc
-
-    let savePos = getpos(".")
-    let extraLines = UseAdd(savePos)
-
-    if extraLines
-        let savePos = [savePos[0], savePos[1] + extraLines, savePos[2], savePos[3]]
-    endif
-
-    call setpos('.', savePos)
+    let word = expand("<cword>")
+    call phpactor#rpc("import_class", {"name": word, "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""""""

@@ -34,6 +34,8 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariabl
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -254,6 +256,12 @@ class CodeTransformExtension implements ExtensionInterface
             return new WorseExtractMethod(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.builder_factory'),
+                $container->get('code_transform.updater')
+            );
+        });
+
+        $container->register('code_transform.refactor.class_import', function (Container $container) {
+            return new TolerantImportClass(
                 $container->get('code_transform.updater')
             );
         });
