@@ -77,7 +77,7 @@ class CoreExtension implements ExtensionInterface
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => __DIR__ . '/../../cache',
-            self::LOGGING_ENABLED => true,
+            self::LOGGING_ENABLED => false,
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
