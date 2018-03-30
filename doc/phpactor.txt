@@ -1,0 +1,123 @@
+*phpactor* *phpactor.txt* PHP introspection tools
+
+                          PHPACTOR REFERENCE MANUAL~
+
+1. Installation                 |phpactor-installation|
+2. Updating                     |phpactor-updating|
+3. Mappings                     |phpactor-mappings|
+4. Requirements                 |phpactor-requirements|
+5. Completion                   |phpactor-completion|
+6. Context Menu                 |phpactor-context-menu|
+
+================================================================================
+                                                            *phpactor-installation*
+Install Phpactor using your favorite VIM package manager, I am using Vundle.
+Add the plugin to your .vimrc:
+
+`Plugin 'phpactor/phpactor'`
+
+Then in VIM:
+`:VundleInstall`
+
+You will need to install the Phpactor dependencies with composer:
+`$ cd ~/.vim/bundle/phpactor`
+`$ composer install`
+
+Now issue the following command
+`:call phpactor#Status():`
+
+Support
+-------
+[✔] Composer detected - faster class location and more features!
+[✔] Git detected - enables faster refactorings in your repository scope!
+
+Config files
+------------
+[✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
+[✔] /home/daniel/.config/phpactor/phpactor.yml
+[✘] /etc/xdg/phpactor/phpactor.yml
+
+Phpactor works best with Composer - but much functionality
+including auto-completion can still work (sometimes slowly depending on project size).
+
+================================================================================
+UPDATING                                                      *phpactor-updating*
+
+Updating Phpactor from VIM is easy:
+
+`:call phpactor#Update()`
+
+Note that if the update included changes to the VIM plugin you will currently need
+to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin
+or reload VIM.
+
+================================================================================
+MAPPINGS                                                  *phpactor-mappings*
+
+The Phpactor plugin will not automatically assume any shortcuts,
+copy the following configuration into your .vimrc:
+
+" Include use statement
+`nmap <Leader>u :call phpactor#UseAdd()<CR>`
+
+" Invoke the context menu
+`nmap <Leader>mm :call phpactor#ContextMenu()<CR>`
+
+" Goto definition of class or class member under the cursor
+`nmap <Leader>o :call phpactor#GotoDefinition()<CR>`
+
+" Transform the classes in the current file
+`nmap <Leader>tt :call phpactor#Transform()<CR>`
+
+" Generate a new class (replacing the current file)
+`nmap <Leader>cc :call phpactor#ClassNew()<CR>`
+
+" Extract method from selection
+`vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>`
+
+See the Refactorings chapter for more functions you can map shortcuts to.
+
+================================================================================
+REQUIREMENTS                                               *phpactor-requirements*
+Phpactor requires at least PHP 7.0. If you use a different version of PHP locally,
+you may need to target a new version of PHP - add the following to your .vimrc to change the PHP binary:
+
+`let g:phpactorPhpBin = "/usr/bin/local/php6.0"`
+
+================================================================================
+COMPLETION                                                   *phpactor-completion*
+
+Omni-completion is VIM's built-in auto-completion mechanism.
+
+Add the following to your .vimrc in order to use Phpactor for omni-completion (for PHP files):
+`autocmd FileType php setlocal omnifunc=phpactor#Complete`
+
+To invoke omni complete in insert mode <C-x><C-o> (ctrl-x then ctrl-o). See :help compl-omni.
+
+The Omni-Complete method provides feedback messages when it cannot complete something.
+This information is useful. Other completion mehanisms may not provide this information.
+
+Always enable omni-completion. If another mechanism is failing to complete,
+invoke omni-complete to find out why.
+
+                                                *phpactor-neovim-completion-manager*
+If you are using Neovim with the Neovim Completion Manager you should certainly
+install ncm-phpactor to benefit from great asynchronous complete-as-you-type
+auto-completion.
+
+================================================================================
+CONTEXT MENU                                               *phpactor-context-menu*
+
+The context menu is the main point of contact with Phpactor.
+Invoke it on any class, member, variable, method call, or anything really.
+
+If you move over a method and invoke the context menu with
+`:call phpactor#ContextMenu()`
+
+You should see something like the following:
+
+`Method "execute":`
+`[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:`
+
+--------------------------------------------------------------------------------
+vim:tw=78:fo=tcq2:isk=!-~,^*,^\|,^\":ts=8:ft=help:norl:
