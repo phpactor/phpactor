@@ -162,6 +162,9 @@ class ContextMenuHandler implements Handler
                 case '%source%':
                     $parameterValue = $arguments[self::PARAMETER_SOURCE];
                     break;
+                case '%symbol%':
+                    $parameterValue = $symbolContext->symbol()->name();
+                    break;
             }
 
             $parameters[$parameterName] = $parameterValue;

@@ -119,6 +119,15 @@
                 "path": "%path%",
                 "source": "%source%"
             }
+        },
+        "import": {
+            "action": "import_class",
+            "parameters": {
+                "offset": "%offset%",
+                "path": "%path%",
+                "source": "%source%",
+                "name": "%symbol%"
+            }
         }
     },
     "property": {
