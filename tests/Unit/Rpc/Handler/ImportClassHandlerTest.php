@@ -21,7 +21,7 @@ class ImportClassHandlerTest extends HandlerTestCase
     const TEST_OFFSET = 1234;
     const TEST_PATH = '/path/to';
     const TEST_SOURCE = '<?php foo';
-
+    const TEST_ALIAS = 'Alias';
 
     /**
      * @var ObjectProphecy
@@ -137,7 +137,28 @@ class ImportClassHandlerTest extends HandlerTestCase
         /** @var TextInput $input */
         $input = reset($inputs);
         $this->assertInstanceOf(TextInput::class, $input);
-
     }
 
+    public function testUsesGivenAlias()
+    {
+        $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
+        $this->importClass->importClass(
+            SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
+            self::TEST_OFFSET,
+            self::TEST_NAME,
+            self::TEST_ALIAS
+        )->willReturn($transformed);
+
+        /** @var EchoResponse $response */
+        $response = $this->handle('import_class', [
+            ImportClassHandler::PARAM_ALIAS => self::TEST_ALIAS,
+            ImportClassHandler::PARAM_QUALIFIED_NAME => self::TEST_NAME,
+            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
+            ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
+            ImportClassHandler::PARAM_PATH => self::TEST_PATH,
+            ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
+        ]);
+
+        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $response);
+    }
 }

@@ -63,7 +63,7 @@ function! phpactor#Complete(findstart, base)
 endfunc
 
 """"""""""""""""""""""""
-" Expand a use statement
+" Extract method
 """"""""""""""""""""""""
 function! phpactor#ExtractMethod()
     let selectionStart = phpactor#_selectionStart()

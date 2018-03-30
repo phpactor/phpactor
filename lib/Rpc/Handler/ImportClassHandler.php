@@ -70,9 +70,6 @@ class ImportClassHandler extends AbstractHandler
     {
         if (null === $arguments[self::PARAM_QUALIFIED_NAME])    {
             $suggestions = $this->suggestions($arguments[self::PARAM_NAME]);
-            $suggestions = array_map(function (array $suggestion) {
-                return $suggestion['class'];
-            }, $suggestions);
 
             if (count($suggestions) === 0) {
                 return EchoResponse::fromMessage(sprintf(
@@ -86,7 +83,7 @@ class ImportClassHandler extends AbstractHandler
                     self::PARAM_QUALIFIED_NAME,
                     ListInput::fromNameLabelChoices(
                         self::PARAM_QUALIFIED_NAME,
-                        'Classes',
+                        'Select class:',
                         array_combine($suggestions, $suggestions)
                     )
                 );
@@ -110,6 +107,7 @@ class ImportClassHandler extends AbstractHandler
                 $arguments[self::PARAM_ALIAS]
             );
         } catch (NameAlreadyUsedException $e) {
+            $arguments[self::PARAM_ALIAS] = null;
             $this->requireArgument(self::PARAM_ALIAS, TextInput::fromNameLabelAndDefault(
                 self::PARAM_ALIAS,
                 sprintf(
@@ -130,9 +128,12 @@ class ImportClassHandler extends AbstractHandler
 
     private function suggestions(string $name)
     {
-        return $this->classSearch->classSearch(
+        $suggestions = $this->classSearch->classSearch(
             $this->filesystem,
             $name
         );
+        return array_map(function (array $suggestion) {
+            return $suggestion['class'];
+        }, $suggestions);
     }
 }
