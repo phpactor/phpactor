@@ -14,6 +14,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 
 class ImportClassHandlerTest extends HandlerTestCase
 {
@@ -114,13 +115,12 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testAsksForAliasIfClassAlreadyUsed()
     {
-        $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
         $this->importClass->importClass(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
             self::TEST_NAME,
             null
-        )->willThrow(new AliasAlreadyUsedException(self::TEST_NAME));
+        )->willThrow(new AliasAlreadyUsedException(self::TEST_ALIAS));
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
@@ -160,5 +160,26 @@ class ImportClassHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(ReplaceFileSourceResponse::class, $response);
+    }
+
+    public function testShowsMessageIfSelectedClassIsAlreadyImported()
+    {
+        $this->importClass->importClass(
+            SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
+            self::TEST_OFFSET,
+            self::TEST_NAME,
+            null
+        )->willThrow(new ClassAlreadyImportedException(self::TEST_NAME, self::TEST_NAME));
+
+        /** @var EchoResponse $response */
+        $response = $this->handle('import_class', [
+            ImportClassHandler::PARAM_QUALIFIED_NAME => self::TEST_NAME,
+            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
+            ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
+            ImportClassHandler::PARAM_PATH => self::TEST_PATH,
+            ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
+        ]);
+
+        $this->assertInstanceOf(EchoResponse::class, $response);
     }
 }

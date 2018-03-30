@@ -12,6 +12,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 
 class ImportClassHandler extends AbstractHandler
 {
@@ -42,8 +43,7 @@ class ImportClassHandler extends AbstractHandler
         ImportClass $classImport,
         ClassSearch $classSearch,
         string $filesystem
-    )
-    {
+    ) {
         $this->classImport = $classImport;
         $this->classSearch = $classSearch;
         $this->filesystem = $filesystem;
@@ -68,7 +68,7 @@ class ImportClassHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        if (null === $arguments[self::PARAM_QUALIFIED_NAME])    {
+        if (null === $arguments[self::PARAM_QUALIFIED_NAME]) {
             $suggestions = $this->suggestions($arguments[self::PARAM_NAME]);
 
             if (count($suggestions) === 0) {
@@ -107,6 +107,14 @@ class ImportClassHandler extends AbstractHandler
                 $arguments[self::PARAM_ALIAS]
             );
         } catch (NameAlreadyUsedException $e) {
+
+            if ($e instanceof ClassAlreadyImportedException && $e->existingName() === $arguments[self::PARAM_QUALIFIED_NAME]) {
+                return EchoResponse::fromMessage(sprintf(
+                    'Class "%s" is already imported',
+                    $arguments[self::PARAM_QUALIFIED_NAME]
+                ));
+            }
+
             $arguments[self::PARAM_ALIAS] = null;
             $this->requireArgument(self::PARAM_ALIAS, TextInput::fromNameLabelAndDefault(
                 self::PARAM_ALIAS,

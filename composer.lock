@@ -354,12 +354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "ed3133a68d2b796acbf6ed941ec98d903631a74c"
+                "reference": "24893143f98d0084e2dc1506509cf3f5ddbe456a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/ed3133a68d2b796acbf6ed941ec98d903631a74c",
-                "reference": "ed3133a68d2b796acbf6ed941ec98d903631a74c",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/24893143f98d0084e2dc1506509cf3f5ddbe456a",
+                "reference": "24893143f98d0084e2dc1506509cf3f5ddbe456a",
                 "shasum": ""
             },
             "require": {
@@ -401,7 +401,7 @@
                 "source": "https://github.com/phpactor/code-transform/tree/master",
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
-            "time": "2018-03-30T13:07:36+00:00"
+            "time": "2018-03-30T14:22:58+00:00"
         },
         {
             "name": "phpactor/docblock",
