@@ -47,18 +47,18 @@ class ExtractMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $this->requireArgument(self::PARAM_METHOD_NAME, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_METHOD_NAME,
             self::INPUT_LABEL_NAME,
             ''
         ));
 
-        $this->requireArgument(self::PARAM_OFFSET_START, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_OFFSET_START,
             'Offset start: '
         ));
 
-        $this->requireArgument(self::PARAM_OFFSET_END, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_OFFSET_END,
             'Offset end: '
         ));

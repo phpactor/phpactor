@@ -54,7 +54,7 @@ class NavigateHandler extends AbstractHandler
         }
 
         $destinations = $this->navigator->destinationsFor($arguments[self::PARAM_SOURCE_PATH]);
-        $this->requireArgument(self::PARAM_DESTINATION, ChoiceInput::fromNameLabelChoices(
+        $this->requireInput(ChoiceInput::fromNameLabelChoices(
             self::PARAM_DESTINATION,
             'Destination:',
             array_combine(array_keys($destinations), array_keys($destinations))
@@ -68,7 +68,7 @@ class NavigateHandler extends AbstractHandler
         $canCreate = $this->navigator->canCreateNew($arguments[self::PARAM_SOURCE_PATH], $arguments[self::PARAM_DESTINATION]);
 
         if ($canCreate) {
-            $this->requireArgument(self::PARAM_CONFIRM_CREATE, ConfirmInput::fromNameAndLabel(
+            $this->requireInput(ConfirmInput::fromNameAndLabel(
                 self::PARAM_CONFIRM_CREATE,
                 sprintf(
                     'File "%s" does not exist, generate new?: ',

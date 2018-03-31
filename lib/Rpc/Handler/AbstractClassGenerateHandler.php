@@ -53,7 +53,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $missingInputs = [];
 
         if (null === $arguments[self::PARAM_VARIANT]) {
-            $this->requireArgument(self::PARAM_VARIANT, ChoiceInput::fromNameLabelChoicesAndDefault(
+            $this->requireInput(ChoiceInput::fromNameLabelChoicesAndDefault(
                 self::PARAM_VARIANT,
                 'Variant: ',
                 array_combine(
@@ -63,7 +63,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             ));
         }
 
-        $this->requireArgument(self::PARAM_NEW_PATH, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_NEW_PATH,
             $this->newMessage(),
             $arguments[self::PARAM_CURRENT_PATH]

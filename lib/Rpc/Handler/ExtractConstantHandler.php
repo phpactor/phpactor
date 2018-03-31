@@ -45,7 +45,7 @@ class ExtractConstantHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $this->requireArgument(self::PARAM_CONSTANT_NAME, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_CONSTANT_NAME,
             self::INPUT_LABEL_NAME,
             $arguments[self::PARAM_CONSTANT_NAME_SUGGESTION] ?: ''

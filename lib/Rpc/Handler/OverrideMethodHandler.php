@@ -71,7 +71,7 @@ class OverrideMethodHandler extends AbstractHandler
         $class = $this->class($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_CLASS_NAME]);
         $parentClass = $this->parentClass($class);
 
-        $this->requireArgument(self::PARAM_METHOD_NAME, ListInput::fromNameLabelChoices(
+        $this->requireInput(ListInput::fromNameLabelChoices(
             self::PARAM_METHOD_NAME,
             sprintf('Methods from "%s"', $parentClass->name()),
             $this->methodChoices($parentClass)

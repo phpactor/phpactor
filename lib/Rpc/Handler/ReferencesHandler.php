@@ -96,7 +96,7 @@ class ReferencesHandler extends AbstractHandler
         $symbolContext = $offset->symbolContext();
 
         if (null === $arguments[self::PARAMETER_FILESYSTEM]) {
-            $this->requireArgument(self::PARAMETER_FILESYSTEM, ChoiceInput::fromNameLabelChoicesAndDefault(
+            $this->requireInput(ChoiceInput::fromNameLabelChoicesAndDefault(
                 self::PARAMETER_FILESYSTEM,
                 sprintf('%s "%s" in:', ucfirst($symbolContext->symbol()->symbolType()), $symbolContext->symbol()->name()),
                 array_combine($this->registry->names(), $this->registry->names()),
@@ -105,7 +105,7 @@ class ReferencesHandler extends AbstractHandler
         }
 
         if ($arguments[self::PARAMETER_MODE] === self::MODE_REPLACE) {
-            $this->requireArgument(self::PARAMETER_REPLACEMENT, TextInput::fromNameLabelAndDefault(
+            $this->requireInput(TextInput::fromNameLabelAndDefault(
                 self::PARAMETER_REPLACEMENT,
                 'Replacement: ',
                 $this->defaultReplacement($symbolContext)

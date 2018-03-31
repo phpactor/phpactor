@@ -80,8 +80,7 @@ class ImportClassHandler extends AbstractHandler
             }
 
             if (count($suggestions) > 1) {
-                $this->requireArgument(
-                    self::PARAM_QUALIFIED_NAME,
+                $this->requireInput(
                     ListInput::fromNameLabelChoices(
                         self::PARAM_QUALIFIED_NAME,
                         'Select class:',
@@ -117,7 +116,7 @@ class ImportClassHandler extends AbstractHandler
             }
 
             $arguments[self::PARAM_ALIAS] = null;
-            $this->requireArgument(self::PARAM_ALIAS, TextInput::fromNameLabelAndDefault(
+            $this->requireInput(TextInput::fromNameLabelAndDefault(
                 self::PARAM_ALIAS,
                 sprintf(
                     '"%s" is already used, choose an alias: ',

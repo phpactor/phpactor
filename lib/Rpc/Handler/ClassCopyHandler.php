@@ -39,7 +39,7 @@ class ClassCopyHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $this->requireArgument(self::PARAM_DEST_PATH, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_DEST_PATH,
             'Copy to: ',
             $arguments[self::PARAM_SOURCE_PATH]

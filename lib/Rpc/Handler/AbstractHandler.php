@@ -11,9 +11,9 @@ abstract class AbstractHandler implements Handler
 {
     private $requiredArguments = [];
 
-    protected function requireArgument($name, Input $callback)
+    protected function requireInput(Input $input)
     {
-        $this->requiredArguments[$name] = $callback;
+        $this->requiredArguments[$input->name()] = $input;
     }
 
     protected function hasMissingArguments(array $arguments)

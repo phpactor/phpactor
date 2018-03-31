@@ -48,13 +48,13 @@ class RenameVariableHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $this->requireArgument(self::PARAM_NAME, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_NAME,
             self::INPUT_LABEL,
             $arguments[self::PARAM_NAME_SUGGESTION] ?: ''
         ));
 
-        $this->requireArgument(self::PARAM_SCOPE, ChoiceInput::fromNameLabelChoices(
+        $this->requireInput(ChoiceInput::fromNameLabelChoices(
             self::PARAM_SCOPE,
             'Scope: ',
             [

@@ -53,14 +53,14 @@ class ClassMoveHandler extends AbstractHandler
             return EchoResponse::fromMessage('Cancelled');
         }
 
-        $this->requireArgument(self::PARAM_DEST_PATH, TextInput::fromNameLabelAndDefault(
+        $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_DEST_PATH,
             'Move to: ',
             $arguments[self::PARAM_SOURCE_PATH]
         ));
 
         if (null !== $arguments[self::PARAM_DEST_PATH] && null === $arguments[self::PARAM_CONFIRMED]) {
-            $this->requireArgument(self::PARAM_CONFIRMED, ConfirmInput::fromNameAndLabel(
+            $this->requireInput(ConfirmInput::fromNameAndLabel(
                 self::PARAM_CONFIRMED,
                 'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
                 '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
