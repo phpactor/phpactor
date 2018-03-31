@@ -170,7 +170,7 @@ class CoreExtension implements ExtensionInterface
             return new ConfigDumpCommand(
                 $container->getParameters(),
                 $container->get('console.dumper_registry'),
-                $container->configLoader()
+                $container->get('config.paths')
             );
         }, [ 'ui.console.command' => []]);
 

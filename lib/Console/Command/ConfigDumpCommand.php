@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Config\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Config\Paths;
 
 class ConfigDumpCommand extends Command
 {
@@ -22,20 +23,20 @@ class ConfigDumpCommand extends Command
     private $registry;
 
     /**
-     * @var ConfigLoader
+     * @var Paths
      */
-    private $configLoader;
+    private $paths;
 
     public function __construct(
         array $config,
         DumperRegistry $registry,
-        ConfigLoader $configLoader
+        Paths $paths
     ) {
         parent::__construct();
 
         $this->config = $config;
         $this->registry = $registry;
-        $this->configLoader = $configLoader;
+        $this->paths = $paths;
     }
 
     public function configure()
@@ -52,7 +53,7 @@ class ConfigDumpCommand extends Command
 
         if (false === $input->getOption('config-only')) {
             $output->writeln('<info>Config files:</>');
-            foreach ($this->configLoader->configFiles() as $i => $file) {
+            foreach ($this->paths->configFiles() as $i => $file) {
                 if (!file_exists($file)) {
                     $output->write(' [<error>𐄂</>]');
                 } else {
