@@ -36,6 +36,7 @@ use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
+use Phpactor\Config\Paths;
 
 class CodeTransformExtension implements ExtensionInterface
 {
@@ -48,13 +49,8 @@ class CodeTransformExtension implements ExtensionInterface
 
     public function getDefaultConfig()
     {
-        $configLoader = new ConfigLoader();
-        $templatePaths = array_map(function ($dir) {
-            return $dir . '/phpactor/templates';
-        }, $configLoader->configDirs());
-        $templatePaths = array_filter($templatePaths, function ($templatePath) {
-            return file_exists($templatePath);
-        });
+        $paths = new Paths();
+        $templatePaths = $paths->existingConfigPaths('templates');
 
         return [
             self::CLASS_NEW_VARIANTS => [],

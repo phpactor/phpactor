@@ -6,6 +6,7 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Application\Status;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Config\ConfigLoader;
+use Phpactor\Config\Paths;
 
 class StatusHandler implements Handler
 {
@@ -17,14 +18,14 @@ class StatusHandler implements Handler
     private $status;
 
     /**
-     * @var ConfigLoader
+     * @var Paths
      */
-    private $loader;
+    private $paths;
 
-    public function __construct(Status $status, ConfigLoader $loader)
+    public function __construct(Status $status, Paths $paths)
     {
         $this->status = $status;
-        $this->loader = $loader;
+        $this->paths = $paths;
     }
 
     public function name(): string
@@ -72,6 +73,6 @@ class StatusHandler implements Handler
                 return '[✔] ' . $file;
             }
             return '[✘] ' . $file;
-        }, $this->loader->configFiles()));
+        }, $this->paths->configFiles()));
     }
 }

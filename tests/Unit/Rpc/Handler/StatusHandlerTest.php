@@ -8,7 +8,7 @@ use Phpactor\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Handler\StatusHandler;
-use Phpactor\Config\ConfigLoader;
+use Phpactor\Config\Paths;
 
 class StatusHandlerTest extends HandlerTestCase
 {
@@ -18,21 +18,21 @@ class StatusHandlerTest extends HandlerTestCase
     private $status;
 
     /**
-     * @var ConfigLoader|ObjectProphecy
+     * @var ObjectProphecy
      */
-    private $loader;
+    private $paths;
 
     public function setUp()
     {
         $this->status = $this->prophesize(Status::class);
-        $this->loader = $this->prophesize(ConfigLoader::class);
+        $this->paths = $this->prophesize(Paths::class);
     }
 
     public function createHandler(): Handler
     {
         return new StatusHandler(
             $this->status->reveal(),
-            $this->loader->reveal()
+            $this->paths->reveal()
         );
     }
 
@@ -42,7 +42,7 @@ class StatusHandlerTest extends HandlerTestCase
             'good' => [ 'i am good' ],
             'bad' => [ 'i am bad' ],
         ]);
-        $this->loader->configFiles()->willReturn([
+        $this->paths->configFiles()->willReturn([
             'config/file1.yml',
             'config/file2.yml',
         ]);
