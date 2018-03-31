@@ -24,11 +24,21 @@ class RpcCommand extends Command
      */
     private $paths;
 
-    public function __construct(RequestHandler $handler, Paths $paths)
+    /**
+     * @var bool
+     */
+    private $storeReplay;
+
+    public function __construct(
+        RequestHandler $handler,
+        Paths $paths,
+        bool $storeReplay = false
+    )
     {
         parent::__construct();
         $this->handler = $handler;
         $this->paths = $paths;
+        $this->storeReplay = $storeReplay;
     }
 
     public function configure()
@@ -68,6 +78,11 @@ class RpcCommand extends Command
     private function resolveInput(bool $replay): string
     {
         if ($replay) {
+            if (false === $this->storeReplay) {
+                throw new RuntimeException(
+                    'You must explicitly enable replay, set `rpc.store_replay` to `true` in your config.'
+                );
+            }
             return $this->lastRequest();
         }
 
@@ -82,7 +97,9 @@ class RpcCommand extends Command
             $in .= $line;
         }
 
-        $this->storeReplay($in);
+        if ($this->storeReplay) {
+            $this->storeReplay($in);
+        }
 
         return $in;
     }
@@ -110,9 +127,9 @@ class RpcCommand extends Command
 
         if (false === file_exists(dirname($this->replayPath()))) {
             mkdir(dirname($path), 0700, true);
-            chmod($path, 0700);
         }
 
         file_put_contents($path, $in);
+        chmod($path, 0700);
     }
 }

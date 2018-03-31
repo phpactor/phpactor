@@ -45,7 +45,8 @@ class RpcExtension implements ExtensionInterface
         $container->register('rpc.command.rpc', function (Container $container) {
             return new RpcCommand(
                 $container->get('rpc.request_handler'),
-                $container->get('config.paths')
+                $container->get('config.paths'),
+                $container->getParameter('rpc.store_replay')
             );
         }, [ 'ui.console.command' => [] ]);
 
@@ -226,6 +227,7 @@ class RpcExtension implements ExtensionInterface
         return [
             'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
             'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            'rpc.store_replay' => false,
         ];
     }
 }

@@ -32,6 +32,9 @@ class RpcCommandTest extends SystemTestCase
 
     public function testReplaysLastRequest()
     {
+        // enable the feature
+        file_put_contents($this->workspace()->path('.phpactor.yml'), 'rpc.store_replay: true');
+
         $randomString = md5(rand(0, 100000));
         $stdin = json_encode([
             'action' => 'echo',
