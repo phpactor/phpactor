@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "84371fb14dd2005e594d914362fff7ac",
+    "content-hash": "915d92c09003256d88ba9a4a7e214c27",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -402,6 +402,52 @@
                 "issues": "https://github.com/phpactor/code-transform/issues"
             },
             "time": "2018-03-30T22:11:32+00:00"
+        },
+        {
+            "name": "phpactor/completion",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion.git",
+                "reference": "ad5e08bcd8cdc10247606befc192c91b34b576c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/ad5e08bcd8cdc10247606befc192c91b34b576c8",
+                "reference": "ad5e08bcd8cdc10247606befc192c91b34b576c8",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/worse-reflection": "^1.0@dev"
+            },
+            "require-dev": {
+                "phpactor/test-utils": "^1.0@dev",
+                "phpstan/phpstan": "^0.10.0@dev",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Completion\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Completion library for Worse Reflection",
+            "time": "2018-04-01T22:06:48+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -3332,6 +3378,7 @@
         "phpactor/path-finder": 20,
         "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20,
+        "phpactor/completion": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20
     },

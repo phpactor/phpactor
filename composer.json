@@ -16,7 +16,8 @@
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/yaml": "^3.3",
         "microsoft/tolerant-php-parser": "dev-master",
-        "monolog/monolog": "^2.0@dev"
+        "monolog/monolog": "^2.0@dev",
+        "phpactor/completion": "^1.0@dev"
     },
     "config": {
         "platform": {
