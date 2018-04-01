@@ -58,7 +58,7 @@ set this to `false` and hope that everything is *fine*.
 
 #### cache_dir
 
-Directory Phpactor uses for the cache (e.g. the PhpStorm stub index).
+Directory Phpactor uses for the cache (e.g. the index for the [jetbrains stubs](https://github.com/jetbrains/phpstorm-stubs)).
 
 #### logging.enabled
 
