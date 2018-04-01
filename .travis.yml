@@ -27,7 +27,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/phpbench run --store
+  - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
   - .travis/testdeps
 
 after_success:
