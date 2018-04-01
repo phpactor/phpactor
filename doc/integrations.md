@@ -79,7 +79,7 @@ Full details are available in the README for this plugin, however, the short ver
 ```json
 {
     "require": {
-        "fenetikm/autoload-drupal": "dev-master"
+        "fenetikm/autoload-drupal": "0.1"
     },
     "extra": {
         "autoload-drupal": {
