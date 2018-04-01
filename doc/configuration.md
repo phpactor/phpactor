@@ -23,7 +23,7 @@ and all of the current settings:
 ```bash
 $ phpactor config:dump
 Config files:               
- [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
+ [✔] /home/daniel/workspace/myproject/.phpactor.yml
  [✔] /home/daniel/.config/phpactor/phpactor.yml
  [𐄂] /etc/xdg/phpactor/phpactor.yml                                   
 
@@ -52,39 +52,39 @@ path. The autoloader helps Phpactor locate classes.
 *Default*: `true`
 
 By default Phpactor will deregister the included autoloader to prevent
-any potential conflicts
+any potential conflicts. However, some autoloaders may add global dependencies
+on the code available through that autoloader (e.g. Drupal). In such cases
+set this to `false` and hope that everything is *fine*.
 
 #### cache_dir
 
-*Default*: `true`
-
-> Directory Phpactor uses for the cache (e.g. the PhpStorm stub index).
+Directory Phpactor uses for the cache (e.g. the PhpStorm stub index).
 
 #### logging.enabled
 
 *Default*: `false`
 
-> Phpactor can log information, notably RPC requests and responses in addition
+Phpactor can log information, notably RPC requests and responses in addition
 to other debug information.
 
 #### logging.fingers_crossed
 
 *Default*: `false`
 
-> If set to `true` only log when an error occurs, but when an error does occur
+If set to `true` only log when an error occurs, but when an error does occur
 include all the log levels.
 
 #### logging.level
 
 *Default*: `DEBUG`
 
-> The default logging level.
+The default logging level.
 
 #### logging.path
 
 *Default*: `phpactor.log`
 
-> Where the log file is
+Where the log file is
 
 ### Code Transform Extension
 
@@ -112,10 +112,6 @@ or any of the XDG directories (e.g. `$HOME/.config/phpactor/templates`).
 *Default*: `<xdg paths>/templates` and local project `.phpactor/templates`
 
 Directories where class templates can be located.
-
-#### code_transform.indentation
-
-Indentation *characters* to use (e.g. `    ` rather than `4`).
 
 ### Navigator Extension
 
@@ -145,3 +141,13 @@ code_transform.class_new.variants:
   exception:exception                          
   symfony_command:symfony_command
 ```
+
+### RPC Extension
+
+#### rpc.store_replay
+
+*Default*: `false`
+
+The `rpc` command can replay the last request (useful when debugging an RPC
+client). For this to work enable this flag so that the requests are stored in
+a temporary location.
