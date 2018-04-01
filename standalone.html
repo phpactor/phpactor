@@ -51,6 +51,11 @@
                                             VIM plugin
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="http://phpactor.github.io/phpactor/configuration.html">
+                                            Configuration
+                                        </a>
+                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
                                 Reference
@@ -122,28 +127,6 @@ with Git.</p>
 <pre><code>$ phpactor status
 ✔ Composer detected - faster class location and more features!
 ✔ Git detected - enables faster refactorings in your repository scope!</code></pre>
-<h2 id="configuration">Configuration</h2>
-<p>Phpactor is configured with a YAML file. You can dump the configuration using the <code>config:dump</code> command.</p>
-<pre><code class="language-bash">$ phpactor config:dump
-Config files:               
- [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
- [✔] /home/daniel/.config/phpactor/phpactor.yml
- [𐄂] /etc/xdg/phpactor/phpactor.yml                                   
-
- code_transform.class_new.variants:
-    exception:exception    
-    autoload:vendor/autoload.php
-
- # ... etc</code></pre>
-<p>Note the <code>Config files</code> section above. This is a list of config files that
-Phpactor has attempted to load:</p>
-<ul>
-<li>From the current directory.</li>
-<li>From the users home directory.</li>
-<li>From the systems configuration directory.</li>
-</ul>
-<p>Phpactor will merge configuration files, with more specific configurations
-overriding the less specific ones.</p>
                 </section>
 
             </div>
