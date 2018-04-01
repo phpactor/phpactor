@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9d7c23ef3375453d85938d725abba68",
+    "content-hash": "84371fb14dd2005e594d914362fff7ac",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -409,12 +409,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "0c0799b5a613dbd63b13353595b2746f72f6c92c"
+                "reference": "45c6998ca89bf4ab30fa2a85996430f0b716427d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/0c0799b5a613dbd63b13353595b2746f72f6c92c",
-                "reference": "0c0799b5a613dbd63b13353595b2746f72f6c92c",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/45c6998ca89bf4ab30fa2a85996430f0b716427d",
+                "reference": "45c6998ca89bf4ab30fa2a85996430f0b716427d",
                 "shasum": ""
             },
             "require-dev": {
@@ -437,7 +437,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-01-28T16:27:28+00:00"
+            "time": "2018-04-01T11:00:51+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "934923a328fb83a49056e41f7c9da396a27e20b3"
+                "reference": "83d770bce2ac9ac47e892bfdc9ced5ecff7260d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/934923a328fb83a49056e41f7c9da396a27e20b3",
-                "reference": "934923a328fb83a49056e41f7c9da396a27e20b3",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/83d770bce2ac9ac47e892bfdc9ced5ecff7260d0",
+                "reference": "83d770bce2ac9ac47e892bfdc9ced5ecff7260d0",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-03-31T13:33:58+00:00"
+            "time": "2018-04-01T11:13:42+00:00"
         },
         {
             "name": "phpbench/container",
