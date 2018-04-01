@@ -54,32 +54,3 @@ $ phpactor status
 ✔ Composer detected - faster class location and more features!
 ✔ Git detected - enables faster refactorings in your repository scope!
 ```
-
-Configuration
--------------
-
-Phpactor is configured with a YAML file. You can dump the configuration using the `config:dump` command.
-
-```bash
-$ phpactor config:dump
-Config files:               
- [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
- [✔] /home/daniel/.config/phpactor/phpactor.yml
- [𐄂] /etc/xdg/phpactor/phpactor.yml                                   
-
- code_transform.class_new.variants:
-	exception:exception    
-	autoload:vendor/autoload.php
-
- # ... etc
-```
-
-Note the `Config files` section above. This is a list of config files that
-Phpactor has attempted to load:
-
-- From the current directory.
-- From the users home directory.
-- From the systems configuration directory.
-
-Phpactor will merge configuration files, with more specific configurations
-overriding the less specific ones.
