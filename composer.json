@@ -1,28 +1,6 @@
 {
     "name": "phpactor/phpactor",
     "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/code-transform"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/class-mover"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/code-builder"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/source-code-filesystem"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/path-finder"
-        }
-    ],
     "require": {
         "php": "^7.0",
         "symfony/console": "~2.7|^3.0@stable",
