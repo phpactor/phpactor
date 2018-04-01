@@ -30,6 +30,9 @@ menu:
                 vim-plugin:
                     text: VIM plugin
                     relativeUrl: vim-plugin.html
+                configuration:
+                    text: Configuration
+                    relativeUrl: configuration.html
         reference:
             name: Reference
             items:
