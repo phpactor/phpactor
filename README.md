@@ -9,6 +9,15 @@ This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
 
+Installation
+------------
+
+Phpactor is a general tool, it is not intended that it be installed as a project dependency.
+
+See
+[Installation](http://phpactor.github.io/phpactor/standalone.html#installation)
+for installation instructions.
+
 Prerequisites
 -------------
 
