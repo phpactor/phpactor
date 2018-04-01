@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "774f18b11bdd423f5f50883b10a963d23f826f0d"
+                "reference": "13a7488e66a8289b20d5711c4cebd9c801615bff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/774f18b11bdd423f5f50883b10a963d23f826f0d",
-                "reference": "774f18b11bdd423f5f50883b10a963d23f826f0d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/13a7488e66a8289b20d5711c4cebd9c801615bff",
+                "reference": "13a7488e66a8289b20d5711c4cebd9c801615bff",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-01T14:29:39+00:00"
+            "time": "2018-04-01T19:33:13+00:00"
         },
         {
             "name": "phpbench/container",
