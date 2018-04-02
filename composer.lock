@@ -724,12 +724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "63c9bb82e220f7748356e8c3b767d1b297c1477e"
+                "reference": "a788dd46bd3be628759c683acb2400345ae3fdf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/63c9bb82e220f7748356e8c3b767d1b297c1477e",
-                "reference": "63c9bb82e220f7748356e8c3b767d1b297c1477e",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/a788dd46bd3be628759c683acb2400345ae3fdf2",
+                "reference": "a788dd46bd3be628759c683acb2400345ae3fdf2",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +763,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-02T11:14:46+00:00"
+            "time": "2018-04-02T12:10:18+00:00"
         },
         {
             "name": "phpactor/docblock",
