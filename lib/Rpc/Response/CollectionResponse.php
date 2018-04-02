@@ -11,7 +11,7 @@ use Phpactor\Rpc\Response;
 class CollectionResponse implements Response
 {
     /**
-     * @var array
+     * @var Response[]
      */
     private $actions;
 

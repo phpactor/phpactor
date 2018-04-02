@@ -168,12 +168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "cc709ba91eee09540091ad5a5f2616727662e41b"
+                "reference": "464b5feb7c005a39414e3e17499dd90ac6a7df4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/cc709ba91eee09540091ad5a5f2616727662e41b",
-                "reference": "cc709ba91eee09540091ad5a5f2616727662e41b",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/464b5feb7c005a39414e3e17499dd90ac6a7df4c",
+                "reference": "464b5feb7c005a39414e3e17499dd90ac6a7df4c",
                 "shasum": ""
             },
             "require": {
@@ -214,7 +214,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2017-07-24T09:37:08+00:00"
+            "time": "2018-04-02T03:22:37+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -724,12 +724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "a788dd46bd3be628759c683acb2400345ae3fdf2"
+                "reference": "aad6d576f08145ddae5c87b4466228c2dd86f33d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/a788dd46bd3be628759c683acb2400345ae3fdf2",
-                "reference": "a788dd46bd3be628759c683acb2400345ae3fdf2",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/aad6d576f08145ddae5c87b4466228c2dd86f33d",
+                "reference": "aad6d576f08145ddae5c87b4466228c2dd86f33d",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +763,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-02T12:10:18+00:00"
+            "time": "2018-04-02T17:40:14+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -912,12 +912,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "224330d4fea29510606c5315556e27ce1b09afd3"
+                "reference": "0012814d6e11b7799ff0d3a74c2d447a750c2f90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/224330d4fea29510606c5315556e27ce1b09afd3",
-                "reference": "224330d4fea29510606c5315556e27ce1b09afd3",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/0012814d6e11b7799ff0d3a74c2d447a750c2f90",
+                "reference": "0012814d6e11b7799ff0d3a74c2d447a750c2f90",
                 "shasum": ""
             },
             "require": {
@@ -956,7 +956,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-01T19:42:59+00:00"
+            "time": "2018-04-02T18:40:25+00:00"
         },
         {
             "name": "phpbench/container",
@@ -1053,12 +1053,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "7a3b17198e56719195f16d516605944db4b92ef6"
+                "reference": "04a1a1b3a502dec4b57a9dbb5424d50f2caa65f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/7a3b17198e56719195f16d516605944db4b92ef6",
-                "reference": "7a3b17198e56719195f16d516605944db4b92ef6",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/04a1a1b3a502dec4b57a9dbb5424d50f2caa65f0",
+                "reference": "04a1a1b3a502dec4b57a9dbb5424d50f2caa65f0",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                 "doctrine/dbal": "^2.4",
                 "padraic/phar-updater": "^1.0",
                 "phpstan/phpstan": "^0.8.5",
-                "phpunit/phpunit": "^6.0"
+                "phpunit/phpunit": "^6.5 | ^7.0"
             },
             "suggest": {
                 "ext-curl": "For (web) reports extension",
@@ -1120,7 +1120,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-03-11T18:32:22+00:00"
+            "time": "2018-04-01T14:23:50+00:00"
         },
         {
             "name": "psr/container",
@@ -1713,12 +1713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "092871ad2d511b29191f4684bbd6b803e2f80aed"
+                "reference": "1dcb150c94188a550c779c17dc684f43210c2910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/092871ad2d511b29191f4684bbd6b803e2f80aed",
-                "reference": "092871ad2d511b29191f4684bbd6b803e2f80aed",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1dcb150c94188a550c779c17dc684f43210c2910",
+                "reference": "1dcb150c94188a550c779c17dc684f43210c2910",
                 "shasum": ""
             },
             "require": {
@@ -1771,7 +1771,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-20T04:31:47+00:00"
+            "time": "2018-04-02T09:25:02+00:00"
         },
         {
             "name": "webmozart/assert",
