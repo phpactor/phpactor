@@ -8,8 +8,10 @@ use Phpactor\Application\Complete;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Tests\IntegrationTestCase;
+use Phpactor\Container\ApplicationContainer;
 
-class CompleteTest extends TestCase
+class CompleteTest extends SystemTestCase
 {
     /**
      * @dataProvider provideComplete
@@ -286,10 +288,10 @@ EOT
 
     private function complete(string $source, $offset)
     {
-        $reflector = ReflectorBuilder::create()->addSource($source)->build();
-        $complete = new Complete($reflector);
-
-        $result = $complete->complete($source, $offset);
+        $container = new ApplicationContainer();
+        $container->init();
+        $complete = $container->get('application.complete');
+        $result =$complete->complete($source, $offset);
 
         return $result;
     }

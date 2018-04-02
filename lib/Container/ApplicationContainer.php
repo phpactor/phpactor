@@ -17,6 +17,7 @@ class ApplicationContainer extends BaseContainer
 
         parent::__construct([
             CodeTransformExtension::class,
+            CompletionExtension::class,
             CoreExtension::class,
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,

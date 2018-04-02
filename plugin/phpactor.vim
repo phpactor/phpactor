@@ -30,9 +30,19 @@ function! phpactor#Complete(findstart, base)
     if a:findstart
         let line = getline('.')
         let start = col('.')
+        let originalStart = start
         let triggers = [ "->", "::" ]
 
-        while start -2 > 0 && -1 == index(triggers, line[start-2:start-1])
+        while start -1 >= 0
+
+            if line[start-1:start-1] == "$"
+                return originalStart
+            endif
+
+            if index(triggers, line[start-3:start-1]) >= 0
+                return originalStart
+            endif
+
             let start -= 1
         endwhile
 
@@ -46,7 +56,6 @@ function! phpactor#Complete(findstart, base)
     let result = phpactor#rpc("complete", { "offset": offset, "source": source})
     let suggestions = result['suggestions']
     let issues = result['issues']
-
 
     let completions = []
     if !empty(suggestions)

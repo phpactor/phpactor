@@ -402,7 +402,7 @@ class CoreExtension implements ExtensionInterface
 
         $container->register('application.complete', function (Container $container) {
             return new Complete(
-                $container->get('reflection.reflector'),
+                $container->get('completion.completor'),
                 $container->get('application.helper.class_file_normalizer')
             );
         });
