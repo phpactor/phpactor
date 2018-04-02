@@ -4,9 +4,9 @@ namespace Phpactor\Container;
 
 use PhpBench\DependencyInjection\ExtensionInterface;
 use PhpBench\DependencyInjection\Container;
-use Phpactor\Completion\Completor;
-use Phpactor\Completion\Completor\ClassMemberCompletor;
-use Phpactor\Completion\Completor\LocalVariableCompletor;
+use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseClassMemberCompletor;
+use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseLocalVariableCompletor;
 
 class CompletionExtension implements ExtensionInterface
 {
@@ -24,11 +24,11 @@ class CompletionExtension implements ExtensionInterface
         });
 
         $container->register('completion.completor.class_member', function (Container $container) {
-            return new ClassMemberCompletor($container->get('reflection.reflector'));
+            return new WorseClassMemberCompletor($container->get('reflection.reflector'));
         }, [ 'completion.completor' => []]);
 
         $container->register('completion.completor.local_variable', function (Container $container) {
-            return new LocalVariableCompletor($container->get('reflection.reflector'));
+            return new WorseLocalVariableCompletor($container->get('reflection.reflector'));
         }, [ 'completion.completor' => []]);
     }
 

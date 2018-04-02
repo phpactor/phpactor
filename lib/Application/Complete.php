@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\Completion\Completor;
+use Phpactor\Completion\Core\Completor;
 
 class Complete
 {

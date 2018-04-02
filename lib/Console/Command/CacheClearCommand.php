@@ -9,9 +9,6 @@ use Phpactor\Application\CacheClear;
 
 class CacheClearCommand extends Command
 {
-    /**
-     * @var CacheClear
-     */
     private $cache;
 
     public function __construct(CacheClear $cache)

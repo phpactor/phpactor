@@ -36,6 +36,7 @@ class ClassSearch
     {
         $filesystem = $this->filesystemRegistry->get($filesystemName);
 
+        /** @var FileList<SplFileInfo> $files */
         $files = $filesystem->fileList('{' . $name . '}')->named($name . '.php');
 
         $results = [];
