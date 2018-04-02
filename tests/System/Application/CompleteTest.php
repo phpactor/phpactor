@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Tests\IntegrationTestCase;
+use Phpactor\Container\ApplicationContainer;
 
 class CompleteTest extends SystemTestCase
 {
@@ -287,9 +288,10 @@ EOT
 
     private function complete(string $source, $offset)
     {
-        $result = $this->phpactor('complete stdin --format=json ' . $offset, $source);
-
-        $result = json_decode($result->getOutput(), true);
+        $container = new ApplicationContainer();
+        $container->init();
+        $complete = $container->get('application.complete');
+        $result =$complete->complete($source, $offset);
 
         return $result;
     }
