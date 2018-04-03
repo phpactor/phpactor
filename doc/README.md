@@ -20,10 +20,9 @@ power can only be utilized through its RPC protocol. It ships with support for V
 would not involve a huge amount of effort to support other editors such as
 [GNU Emacs](https://www.gnu.org/s/emacs/).
 
-Phpactor is a bleeding-edge product, it is far from being perfect, it probably
-never will be. It's a work in progress. But, I have been using it extensively
-in my daily work and haven't felt especially compelled to add new features for
-some months.
+Phpactor is currently bleeding-edge software, none of it is perfect, but most
+of the features will get you most if not all of the way to where you want to
+go.
 
 Packages
 --------
