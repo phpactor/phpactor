@@ -18,11 +18,15 @@ See
 [Installation](http://phpactor.github.io/phpactor/standalone.html#installation)
 for installation instructions.
 
-Prerequisites
--------------
+Requirements
+------------
 
-- Projects MUST use Composer and GIT.
 - PHP 7.
+
+Recommended
+-----------
+
+- Composer and GIT
 
 Documentation
 -------------
