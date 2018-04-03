@@ -724,12 +724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "aad6d576f08145ddae5c87b4466228c2dd86f33d"
+                "reference": "171f68ef374ef8d46c8ea4ae8e87c88830475bf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/aad6d576f08145ddae5c87b4466228c2dd86f33d",
-                "reference": "aad6d576f08145ddae5c87b4466228c2dd86f33d",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/171f68ef374ef8d46c8ea4ae8e87c88830475bf5",
+                "reference": "171f68ef374ef8d46c8ea4ae8e87c88830475bf5",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +763,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-02T17:40:14+00:00"
+            "time": "2018-04-02T22:05:18+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -771,12 +771,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "45c6998ca89bf4ab30fa2a85996430f0b716427d"
+                "reference": "b3efee3b7d559ace4b81e3218317dc44dedc42d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/45c6998ca89bf4ab30fa2a85996430f0b716427d",
-                "reference": "45c6998ca89bf4ab30fa2a85996430f0b716427d",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/b3efee3b7d559ace4b81e3218317dc44dedc42d8",
+                "reference": "b3efee3b7d559ace4b81e3218317dc44dedc42d8",
                 "shasum": ""
             },
             "require-dev": {
@@ -799,7 +799,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-04-01T11:00:51+00:00"
+            "time": "2018-04-03T11:43:27+00:00"
         },
         {
             "name": "phpactor/path-finder",
