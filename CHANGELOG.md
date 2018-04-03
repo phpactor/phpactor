@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## Unreleased
+
+- **Docblock**
+   - Tolerate extra spaces, fixes #365
+
 ## 0.1.0 
 
 **2018-04-03**
