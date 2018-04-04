@@ -222,12 +222,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "0de6122320919d9bebf3f225385f170115621f20"
+                "reference": "1b21a068695dd8b16199307f7abf8436f170d191"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/0de6122320919d9bebf3f225385f170115621f20",
-                "reference": "0de6122320919d9bebf3f225385f170115621f20",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/1b21a068695dd8b16199307f7abf8436f170d191",
+                "reference": "1b21a068695dd8b16199307f7abf8436f170d191",
                 "shasum": ""
             },
             "type": "library",
@@ -247,7 +247,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-03-14T15:55:52+00:00"
+            "time": "2018-04-03T15:31:29+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -912,12 +912,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "0012814d6e11b7799ff0d3a74c2d447a750c2f90"
+                "reference": "d0d1ac209997bab6b1d151db7455a3e6ee71c73f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/0012814d6e11b7799ff0d3a74c2d447a750c2f90",
-                "reference": "0012814d6e11b7799ff0d3a74c2d447a750c2f90",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d0d1ac209997bab6b1d151db7455a3e6ee71c73f",
+                "reference": "d0d1ac209997bab6b1d151db7455a3e6ee71c73f",
                 "shasum": ""
             },
             "require": {
@@ -956,7 +956,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-02T18:40:25+00:00"
+            "time": "2018-04-04T19:25:35+00:00"
         },
         {
             "name": "phpbench/container",
@@ -1177,12 +1177,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+                "reference": "3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda",
+                "reference": "3490ba5925e6dcbe6de950c5c6b8dce9f6e96eda",
                 "shasum": ""
             },
             "require": {
@@ -1216,7 +1216,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2018-04-03T15:59:15+00:00"
         },
         {
             "name": "seld/jsonlint",
@@ -1713,12 +1713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "1dcb150c94188a550c779c17dc684f43210c2910"
+                "reference": "b4758ab49182791fe2d281646b6c165d494eb47f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1dcb150c94188a550c779c17dc684f43210c2910",
-                "reference": "1dcb150c94188a550c779c17dc684f43210c2910",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b4758ab49182791fe2d281646b6c165d494eb47f",
+                "reference": "b4758ab49182791fe2d281646b6c165d494eb47f",
                 "shasum": ""
             },
             "require": {
@@ -1771,7 +1771,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-04-02T09:25:02+00:00"
+            "time": "2018-04-03T16:31:00+00:00"
         },
         {
             "name": "webmozart/assert",

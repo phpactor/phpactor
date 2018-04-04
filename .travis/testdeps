@@ -5,7 +5,7 @@ echo "Testing Phpactor dependencies"
 echo "============================="
 echo ""
 
-for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection; do
+for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock; do
     echo ""
     echo "Testing: "$dep
     echo ""
