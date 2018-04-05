@@ -6,10 +6,14 @@ Changelog
 Bug fixes:
 
    - [Dockblock] Tolerate extra spaces, fixes #365
+   - [Completion] Was using the type of the first declared variable, instead
+     of the last before the offset.
+   - [Completion] Used `Type#__toString` to reflect class.
 
 Improvements:
    
    - [WorseReflection] `Type#__toString` represents arrays and collections
+   - [WorseReflection] Improved `Type` class.
 
 ## 0.1.0 
 

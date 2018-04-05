@@ -543,11 +543,7 @@
                     "Phpactor\\ClassMover\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\ClassMover\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -558,9 +554,6 @@
                 }
             ],
             "description": "Library for moving classes",
-            "support": {
-                "source": "https://github.com/phpactor/class-mover/tree/master"
-            },
             "time": "2018-02-24T13:50:01+00:00"
         },
         {
@@ -642,11 +635,7 @@
                     "Phpactor\\CodeBuilder\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\CodeBuilder\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -657,10 +646,6 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "support": {
-                "source": "https://github.com/phpactor/code-builder/tree/master",
-                "issues": "https://github.com/phpactor/code-builder/issues"
-            },
             "time": "2018-03-30T11:20:32+00:00"
         },
         {
@@ -697,11 +682,7 @@
                     "Phpactor\\CodeTransform\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\CodeTransform\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -712,10 +693,6 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "support": {
-                "source": "https://github.com/phpactor/code-transform/tree/master",
-                "issues": "https://github.com/phpactor/code-transform/issues"
-            },
             "time": "2018-03-30T22:11:32+00:00"
         },
         {
@@ -724,12 +701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "171f68ef374ef8d46c8ea4ae8e87c88830475bf5"
+                "reference": "aca7057f8ff7453973f60e6dec75a58f80c4b1e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/171f68ef374ef8d46c8ea4ae8e87c88830475bf5",
-                "reference": "171f68ef374ef8d46c8ea4ae8e87c88830475bf5",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/aca7057f8ff7453973f60e6dec75a58f80c4b1e8",
+                "reference": "aca7057f8ff7453973f60e6dec75a58f80c4b1e8",
                 "shasum": ""
             },
             "require": {
@@ -763,7 +740,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-02T22:05:18+00:00"
+            "time": "2018-04-05T19:42:55+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -833,11 +810,7 @@
                     "Phpactor\\ClassFileConverter\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\ClassFileConverter\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -848,10 +821,6 @@
                 }
             ],
             "description": "Utility for navigating to related source files",
-            "support": {
-                "source": "https://github.com/phpactor/path-finder/tree/master",
-                "issues": "https://github.com/phpactor/path-finder/issues"
-            },
             "time": "2017-11-04T12:57:48+00:00"
         },
         {
@@ -886,11 +855,7 @@
                     "Phpactor\\Filesystem\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Phpactor\\Filesystem\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -901,9 +866,6 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "support": {
-                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
-            },
             "time": "2018-01-01T15:57:16+00:00"
         },
         {
@@ -912,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "d0d1ac209997bab6b1d151db7455a3e6ee71c73f"
+                "reference": "859bbcf50d39499c88994a405fc0c96a45d1b5cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d0d1ac209997bab6b1d151db7455a3e6ee71c73f",
-                "reference": "d0d1ac209997bab6b1d151db7455a3e6ee71c73f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/859bbcf50d39499c88994a405fc0c96a45d1b5cd",
+                "reference": "859bbcf50d39499c88994a405fc0c96a45d1b5cd",
                 "shasum": ""
             },
             "require": {
@@ -956,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-04T19:25:35+00:00"
+            "time": "2018-04-05T20:17:46+00:00"
         },
         {
             "name": "phpbench/container",
