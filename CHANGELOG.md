@@ -3,8 +3,13 @@ Changelog
 
 ## Unreleased
 
-- **Docblock**
-   - Tolerate extra spaces, fixes #365
+Bug fixes:
+
+   - [Dockblock] Tolerate extra spaces, fixes #365
+
+Improvements:
+   
+   - [WorseReflection] `Type#__toString` represents arrays and collections
 
 ## 0.1.0 
 
