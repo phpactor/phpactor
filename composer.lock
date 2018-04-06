@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0229b6b20e27903d78de3750feb6bfac",
+    "content-hash": "915d92c09003256d88ba9a4a7e214c27",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -748,12 +748,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "feb759420a294817c58ef3cdeb472248a7b88df9"
+                "reference": "b365b4f33077c55445785a2b7e0cd4eb2b8210b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/feb759420a294817c58ef3cdeb472248a7b88df9",
-                "reference": "feb759420a294817c58ef3cdeb472248a7b88df9",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/b365b4f33077c55445785a2b7e0cd4eb2b8210b9",
+                "reference": "b365b4f33077c55445785a2b7e0cd4eb2b8210b9",
                 "shasum": ""
             },
             "require-dev": {
@@ -776,7 +776,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-04-06T14:44:41+00:00"
+            "time": "2018-04-06T21:52:05+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -3334,7 +3334,6 @@
     "stability-flags": {
         "symfony/console": 0,
         "phpactor/class-mover": 20,
-        "phpactor/docblock": 20,
         "phpactor/source-code-filesystem": 20,
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
