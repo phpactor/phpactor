@@ -17,6 +17,7 @@ Improvements:
    - [WorseReflection] Improved `Type` class.
    - [Completion] Use partial match to filter class members, fixes #321
    - [phpactor.vim] Correctly return start position for omni-complete
+   - [Docblock] Be tolerant of invalid tags, fixes #382
 
 ## 0.1.0 
 

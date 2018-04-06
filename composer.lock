@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "915d92c09003256d88ba9a4a7e214c27",
+    "content-hash": "0229b6b20e27903d78de3750feb6bfac",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -748,12 +748,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "b3efee3b7d559ace4b81e3218317dc44dedc42d8"
+                "reference": "feb759420a294817c58ef3cdeb472248a7b88df9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/b3efee3b7d559ace4b81e3218317dc44dedc42d8",
-                "reference": "b3efee3b7d559ace4b81e3218317dc44dedc42d8",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/feb759420a294817c58ef3cdeb472248a7b88df9",
+                "reference": "feb759420a294817c58ef3cdeb472248a7b88df9",
                 "shasum": ""
             },
             "require-dev": {
@@ -776,7 +776,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-04-03T11:43:27+00:00"
+            "time": "2018-04-06T14:44:41+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -2343,12 +2343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "982ce790a6f31b8f1319a15d86e4614b109af25e"
+                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/982ce790a6f31b8f1319a15d86e4614b109af25e",
-                "reference": "982ce790a6f31b8f1319a15d86e4614b109af25e",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/340d86b2c417f6966b8fa0aee339ba3f671ebab7",
+                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7",
                 "shasum": ""
             },
             "require": {
@@ -2398,7 +2398,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-07T10:13:30+00:00"
+            "time": "2018-04-06T14:09:56+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2592,12 +2592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ea739aae4742aa4eae1e98d4d06acdbf01692415"
+                "reference": "1b486041df1b93fae38460a34de37a26f5f268cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea739aae4742aa4eae1e98d4d06acdbf01692415",
-                "reference": "ea739aae4742aa4eae1e98d4d06acdbf01692415",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b486041df1b93fae38460a34de37a26f5f268cb",
+                "reference": "1b486041df1b93fae38460a34de37a26f5f268cb",
                 "shasum": ""
             },
             "require": {
@@ -2668,7 +2668,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-03-15T16:51:04+00:00"
+            "time": "2018-04-06T13:08:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3334,6 +3334,7 @@
     "stability-flags": {
         "symfony/console": 0,
         "phpactor/class-mover": 20,
+        "phpactor/docblock": 20,
         "phpactor/source-code-filesystem": 20,
         "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
