@@ -16,6 +16,7 @@ Improvements:
    - [WorseReflection] `Type#__toString` represents arrays and collections
    - [WorseReflection] Improved `Type` class.
    - [Completion] Use partial match to filter class members, fixes #321
+   - [phpactor.vim] Correctly return start position for omni-complete
 
 ## 0.1.0 
 
