@@ -36,11 +36,11 @@ function! phpactor#Complete(findstart, base)
         while start -1 >= 0
 
             if line[start-1:start-1] == "$"
-                return originalStart
+                return start
             endif
 
-            if index(triggers, line[start-3:start-1]) >= 0
-                return originalStart
+            if index(triggers, line[start-2:start-1]) >= 0
+                return start
             endif
 
             let start -= 1
@@ -51,6 +51,8 @@ function! phpactor#Complete(findstart, base)
 
     let offset = line2byte(line(".")) + col('.') - 2
     let source = join(getline(1,'.'), "\n")
+    let source = source . a:base
+    let offset = offset + strlen(a:base)
     let source = source . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
     let result = phpactor#rpc("complete", { "offset": offset, "source": source})
