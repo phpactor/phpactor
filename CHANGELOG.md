@@ -9,6 +9,7 @@ Bug fixes:
    - [Completion] Was using the type of the first declared variable, instead
      of the last before the offset.
    - [Completion] Used `Type#__toString` to reflect class.
+   - [CodeTransform] Extract method rewrites arguments #361
 
 Improvements:
    
