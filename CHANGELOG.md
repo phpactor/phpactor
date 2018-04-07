@@ -3,6 +3,13 @@ Changelog
 
 ## Unreleased
 
+Features:
+ 
+   - [WorseReflection] Can infer types from `if` and `assert` statements with
+     `instanceof` operator. Works both within the conditional scope and
+     outside if the conditional returns or throws an exception (i.e. better
+     completion).
+
 Bug fixes:
 
    - [Dockblock] Tolerate extra spaces, fixes #365
@@ -19,6 +26,7 @@ Improvements:
    - [phpactor.vim] Correctly return start position for omni-complete
    - [Docblock] Be tolerant of invalid tags, fixes #382
    - [WorseReflection] Refactored FrameBuilder: Extracted walkers
+   - [WorseReflection] [Expression evaluator](https://github.com/phpactor/worse-reflection/blob/master/lib/Core/Inference/ExpressionEvaluator.php).
 
 ## 0.1.0 
 

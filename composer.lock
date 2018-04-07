@@ -874,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "dd1563abec51eea66a5fbe23e861d6471201d8a6"
+                "reference": "fc1cc9719a88710aa5cb13e8295f7d8b73fcc049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/dd1563abec51eea66a5fbe23e861d6471201d8a6",
-                "reference": "dd1563abec51eea66a5fbe23e861d6471201d8a6",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/fc1cc9719a88710aa5cb13e8295f7d8b73fcc049",
+                "reference": "fc1cc9719a88710aa5cb13e8295f7d8b73fcc049",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-07T11:04:42+00:00"
+            "time": "2018-04-07T19:46:44+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2343,12 +2343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7"
+                "reference": "83f09c29758c52e71bdb81ad2cc9124b85b5a4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/340d86b2c417f6966b8fa0aee339ba3f671ebab7",
-                "reference": "340d86b2c417f6966b8fa0aee339ba3f671ebab7",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/83f09c29758c52e71bdb81ad2cc9124b85b5a4ef",
+                "reference": "83f09c29758c52e71bdb81ad2cc9124b85b5a4ef",
                 "shasum": ""
             },
             "require": {
@@ -2398,7 +2398,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-06T14:09:56+00:00"
+            "time": "2018-04-07T12:06:18+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2592,12 +2592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1b486041df1b93fae38460a34de37a26f5f268cb"
+                "reference": "8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b486041df1b93fae38460a34de37a26f5f268cb",
-                "reference": "1b486041df1b93fae38460a34de37a26f5f268cb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6",
+                "reference": "8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6",
                 "shasum": ""
             },
             "require": {
@@ -2668,7 +2668,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-06T13:08:38+00:00"
+            "time": "2018-04-07T13:03:22+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2780,12 +2780,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9"
+                "reference": "f77ea710f800679202c6d92c3e2f2f56457a19f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/34369daee48eafb2651bea869b4b15d75ccc35f9",
-                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/f77ea710f800679202c6d92c3e2f2f56457a19f2",
+                "reference": "f77ea710f800679202c6d92c3e2f2f56457a19f2",
                 "shasum": ""
             },
             "require": {
@@ -2794,7 +2794,7 @@
                 "sebastian/exporter": "^3.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4"
+                "phpunit/phpunit": "^6.5 || ^7.0"
             },
             "type": "library",
             "extra": {
@@ -2836,7 +2836,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-02-01T13:46:46+00:00"
+            "time": "2018-04-06T14:40:13+00:00"
         },
         {
             "name": "sebastian/diff",
