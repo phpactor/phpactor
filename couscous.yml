@@ -1,4 +1,4 @@
-baseUrl: http://phpactor.github.io/phpactor
+baseUrl: https://phpactor.github.io/phpactor
 
 include:
     - doc
