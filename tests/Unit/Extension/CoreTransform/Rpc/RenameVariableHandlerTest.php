@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;

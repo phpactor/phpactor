@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;

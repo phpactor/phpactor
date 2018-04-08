@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
-use Phpactor\Extension\CodeTransform\Application\ClassInflect;
+use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
@@ -13,41 +13,39 @@ use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 
-class ClassInflectHandlerTest extends HandlerTestCase
+class ClassNewHandlerTest extends HandlerTestCase
 {
     const CURRENT_PATH = '/path/to.php';
-    const GLOBBED_CURRENT_PATH = '/path/*.php';
     const NEW_PATH = '/path/to/new.php';
     const VARIANT = 'default';
 
     /**
-     * @var ClassInflect
+     * @var ClassNew
      */
-    private $classInflect;
+    private $classNew;
 
     public function setUp()
     {
-        $this->classInflect = $this->prophesize(ClassInflect::class);
+        $this->classNew = $this->prophesize(ClassNew::class);
     }
 
     public function createHandler(): Handler
     {
-        return new ClassInflectHandler($this->classInflect->reveal());
+        return new ClassNewHandler($this->classNew->reveal());
     }
 
     public function testDemandNewPathAndVariant()
     {
-        $this->classInflect->availableGenerators()->willReturn([
+        $this->classNew->availableGenerators()->willReturn([
             'A', 'B'
         ]);
 
-        $action = $this->handle('class_inflect', [
+        $action = $this->handle('class_new', [
             'current_path' => self::CURRENT_PATH
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $inputs = $action->inputs();
-        $this->assertCount(2, $inputs);
         $firstInput = array_shift($inputs);
         $this->assertInstanceOf(ChoiceInput::class, $firstInput);
         $this->assertEquals('variant', $firstInput->name());
@@ -63,14 +61,13 @@ class ClassInflectHandlerTest extends HandlerTestCase
 
     public function testFileExists()
     {
-        $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH,
+        $this->classNew->generate(
             self::NEW_PATH,
             self::VARIANT,
             false
         )->willThrow(new FileAlreadyExists(self::NEW_PATH));
 
-        $action = $this->handle('class_inflect', [
+        $action = $this->handle('class_new', [
             'current_path' => self::CURRENT_PATH,
             'new_path' => self::NEW_PATH,
             'variant' => self::VARIANT,
@@ -86,7 +83,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
 
     public function testNoOverwrite()
     {
-        $action = $this->handle('class_inflect', [
+        $action = $this->handle('class_new', [
             'current_path' => self::CURRENT_PATH,
             'new_path' => self::NEW_PATH,
             'variant' => self::VARIANT,
@@ -96,48 +93,15 @@ class ClassInflectHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(EchoResponse::class, $action);
     }
 
-    public function testExceptionOnGlob()
-    {
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('glob');
-
-        $this->handle('class_inflect', [
-            'current_path' => self::GLOBBED_CURRENT_PATH,
-            'new_path' => self::NEW_PATH,
-            'variant' => self::VARIANT,
-            'overwrite' => null,
-        ]);
-    }
-
-    public function testExceptionOnInvalidNumberOfPathsReturned()
-    {
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Expected 1 path from class generator, got 2');
-
-        $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH,
-            self::NEW_PATH,
-            self::VARIANT,
-            false
-        )->willReturn([ 'foo', self::NEW_PATH ]);
-
-        $this->handle('class_inflect', [
-            'current_path' => self::CURRENT_PATH,
-            'new_path' => self::NEW_PATH,
-            'variant' => self::VARIANT,
-        ]);
-    }
-
     public function testGenerate()
     {
-        $this->classInflect->generateFromExisting(
-            self::CURRENT_PATH,
+        $this->classNew->generate(
             self::NEW_PATH,
             self::VARIANT,
             false
-        )->willReturn([ self::NEW_PATH ]);
+        )->willReturn(self::NEW_PATH);
 
-        $action = $this->handle('class_inflect', [
+        $action = $this->handle('class_new', [
             'current_path' => self::CURRENT_PATH,
             'new_path' => self::NEW_PATH,
             'variant' => self::VARIANT,
