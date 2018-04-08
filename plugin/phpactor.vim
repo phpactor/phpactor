@@ -10,6 +10,7 @@ let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorPhpBin = 'php'
 let g:phpactorInitialCwd = getcwd()
+let g:phpactorBranch = 'master'
 
 """""""""""""""""
 " Update Phpactor
@@ -17,7 +18,8 @@ let g:phpactorInitialCwd = getcwd()
 function! phpactor#Update()
     let current = getcwd()
     execute 'cd ' . g:phpactorpath
-    echo system('git pull origin master')
+    echo system('git checkout ' . g:phpactorBranch)
+    echo system('git pull origin ' . g:phpactorBranch)
     echo system('composer install')
     execute 'cd ' .  current
 endfunction
