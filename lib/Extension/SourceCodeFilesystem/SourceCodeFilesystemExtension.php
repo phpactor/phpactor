@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\SourceCodeFilesystem;
 
 use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;

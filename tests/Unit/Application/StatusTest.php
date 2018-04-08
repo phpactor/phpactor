@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Application;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Application\Status;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class StatusTest extends TestCase
 {

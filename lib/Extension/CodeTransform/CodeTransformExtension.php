@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\CodeTransform;
 
 use Phpactor\Application\Transformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
@@ -191,7 +191,7 @@ class CodeTransformExtension implements Extension
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $loaders = [];
-            $loaders[] = new FilesystemLoader(__DIR__ . '/../../vendor/phpactor/code-builder/templates');
+            $loaders[] = new FilesystemLoader(__DIR__ . '/../../../vendor/phpactor/code-builder/templates');
 
             foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
                 $loaders[] = new FilesystemLoader($templatePath);

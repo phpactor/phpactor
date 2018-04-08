@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class ReferencesClassCommand extends Command
 {

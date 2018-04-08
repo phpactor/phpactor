@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassReferences;
 use Phpactor\Rpc\Handler\ReferencesHandler;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\WorseReflection\Reflector;

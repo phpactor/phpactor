@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\Completion;
 
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseClassMemberCompletor;

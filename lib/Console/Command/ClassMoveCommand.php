@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Console\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Console\Prompt\Prompt;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class ClassMoveCommand extends Command
 {

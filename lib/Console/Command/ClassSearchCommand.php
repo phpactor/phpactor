@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Console\Dumper\DumperRegistry;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class ClassSearchCommand extends Command
 {

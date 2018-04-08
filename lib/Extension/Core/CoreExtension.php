@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\Core;
 
 use Composer\Autoload\ClassLoader;
 use Phpactor\Application\ClassCopy;
@@ -43,7 +43,7 @@ use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\Application\CacheClear;
-use Phpactor\Console\Command\CacheClearCommand;
+use Phpactor\Extension\Core\Command\CacheClearCommand;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Application\Status;

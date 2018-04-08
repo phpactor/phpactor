@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\PathFinder;
 
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Extension\Extension;

@@ -3,7 +3,7 @@
 namespace Phpactor\Application;
 
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class Status
 {

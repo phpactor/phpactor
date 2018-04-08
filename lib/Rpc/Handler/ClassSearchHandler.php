@@ -4,7 +4,7 @@ namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Application\ClassSearch;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\ReturnResponse;
 use Phpactor\Rpc\Response\ReturnOption;
 use Phpactor\Rpc\Response\ReturnChoiceResponse;

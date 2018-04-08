@@ -10,6 +10,12 @@ use Phpactor\Extension\Extension;
 use RuntimeException;
 use Phpactor\Config\Paths;
 use Symfony\Component\Console\Input\InputInterface;
+use Phpactor\Extension\Core\CoreExtension;
+use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\PathFinder\PathFinderExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 
 class Bootstrap
 {
@@ -25,13 +31,13 @@ class Bootstrap
         }
 
         $extensionNames = [
-            Container\CoreExtension::class,
-            Container\CodeTransformExtension::class,
-            Container\CompletionExtension::class,
-            Container\PathFinderExtension::class,
+            CoreExtension::class,
+            CodeTransformExtension::class,
+            CompletionExtension::class,
+            PathFinderExtension::class,
             Container\RpcExtension::class,
-            Container\SourceCodeFilesystemExtension::class,
-            Container\WorseReflectionExtension::class
+            SourceCodeFilesystemExtension::class,
+            WorseReflectionExtension::class
         ];
 
         $container = new PhpactorContainer();

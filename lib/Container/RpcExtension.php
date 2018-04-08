@@ -34,6 +34,7 @@ use Phpactor\Extension\Extension;
 use Phpactor\Extension\ContainerBuilder;
 use Phpactor\Extension\Container;
 use Phpactor\Extension\Schema;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class RpcExtension implements Extension
 {

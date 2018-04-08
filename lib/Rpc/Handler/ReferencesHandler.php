@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Application\ClassReferences;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\FileReferencesResponse;
 use Phpactor\Rpc\Response\CollectionResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\Core\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

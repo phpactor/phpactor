@@ -11,7 +11,7 @@ use Prophecy\Argument;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Rpc\Handler\ClassMoveHandler;
-use Phpactor\Container\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\CloseFileResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\WorseReflection;
 
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
@@ -20,7 +20,7 @@ class WorseReflectionExtension implements Extension
     public function configure(Schema $schema)
     {
         $schema->setDefaults([
-            'reflection.stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
+            'reflection.stub_directory' => __DIR__ . '/../../../vendor/jetbrains/phpstorm-stubs',
         ]);
     }
 
