@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\CodeTransform\Application;
 
 use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\Application\Helper\ClassFileNormalizer;
@@ -17,7 +17,7 @@ class AbstractClassGenerator
     protected $normalizer;
 
     /**
-     * @var GenerateNew
+     * @var Generators
      */
     protected $generators;
 

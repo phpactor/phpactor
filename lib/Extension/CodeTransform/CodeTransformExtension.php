@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
-use Phpactor\Application\Transformer;
+use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
@@ -11,14 +11,14 @@ use Phpactor\Console\Command\ClassNewCommand;
 use Phpactor\Console\Command\ClassTransformCommand;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
-use Phpactor\Application\ClassNew;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Twig\Loader\ChainLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\Console\Command\ClassInflectCommand;
-use Phpactor\Application\ClassInflect;
+use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;

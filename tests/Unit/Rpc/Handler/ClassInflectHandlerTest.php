@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ClassInflectHandler;
-use Phpactor\Application\ClassInflect;
+use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\Input\TextInput;

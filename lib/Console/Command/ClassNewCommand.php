@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\Question;
-use Phpactor\Application\ClassNew;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Application\Exception\FileAlreadyExists;
 use Symfony\Component\Console\Question\ConfirmationQuestion;

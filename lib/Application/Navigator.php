@@ -4,6 +4,7 @@ namespace Phpactor\Application;
 
 use Phpactor\ClassFileConverter\PathFinder;
 use RuntimeException;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
 
 class Navigator
 {

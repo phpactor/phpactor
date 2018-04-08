@@ -3,7 +3,7 @@
 namespace Phpactor\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\Transformer;
+use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\InputCallbackResponse;

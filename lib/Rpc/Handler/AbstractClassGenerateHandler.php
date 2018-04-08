@@ -11,7 +11,7 @@ use Phpactor\Application\Exception\FileAlreadyExists;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Application\AbstractClassGenerator;
+use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
