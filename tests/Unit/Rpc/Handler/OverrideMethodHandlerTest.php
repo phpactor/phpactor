@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\Rpc\Handler\OverrideMethodHandler;
+use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;

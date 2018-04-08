@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler\RenameVariableHandler;
+use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Response\InputCallbackResponse;

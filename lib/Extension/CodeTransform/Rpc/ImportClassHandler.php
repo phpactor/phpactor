@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 class OverrideMethodHandler extends AbstractHandler
 {

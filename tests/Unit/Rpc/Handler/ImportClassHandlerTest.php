@@ -6,7 +6,7 @@ use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Application\ClassSearch;
-use Phpactor\Rpc\Handler\ImportClassHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\ListInput;
 use Phpactor\Rpc\Response\EchoResponse;

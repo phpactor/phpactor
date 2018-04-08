@@ -7,7 +7,7 @@ use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\Rpc\Handler\ExtractMethodHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
 use Phpactor\Rpc\Response\Input\TextInput;
 
 class ExtractMethodHandlerTest extends HandlerTestCase

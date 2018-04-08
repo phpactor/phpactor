@@ -1,11 +1,12 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 class ExtractConstantHandler extends AbstractHandler
 {

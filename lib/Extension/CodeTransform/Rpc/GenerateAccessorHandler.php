@@ -1,26 +1,28 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
-class GenerateMethodHandler extends AbstractHandler
+class GenerateAccessorHandler extends AbstractHandler
 {
-    const NAME = 'generate_method';
+    const NAME = 'generate_accessor';
     const PARAM_OFFSET = 'offset';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
 
     /**
-     * @var GenerateMethod
+     * @var GenerateAccessor
      */
-    private $generateMethod;
+    private $generateAccessor;
 
-    public function __construct(GenerateMethod $generateMethod)
-    {
-        $this->generateMethod = $generateMethod;
+    public function __construct(
+        GenerateAccessor $generateAccessor
+    ) {
+        $this->generateAccessor = $generateAccessor;
     }
 
     public function name(): string
@@ -39,7 +41,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $sourceCode = $this->generateMethod->generateMethod(
+        $sourceCode = $this->generateAccessor->generateAccessor(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
