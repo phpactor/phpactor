@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc;
 
-use Phpactor\Console\Command\RpcCommand;
+use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Handler\EchoHandler;
