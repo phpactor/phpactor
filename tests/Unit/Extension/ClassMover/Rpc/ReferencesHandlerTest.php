@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -15,8 +15,8 @@ use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 

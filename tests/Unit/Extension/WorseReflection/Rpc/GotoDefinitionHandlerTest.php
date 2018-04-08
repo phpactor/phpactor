@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;

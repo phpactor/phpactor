@@ -2,11 +2,11 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Handler\OffsetInfoHandler;
-use Phpactor\Rpc\Response\InformationResponse;
+use Phpactor\Extension\Rpc\Handler\OffsetInfoHandler;
+use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OffsetInfoHandlerTest extends HandlerTestCase

@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Completion\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Completion\Application\Complete;
-use Phpactor\Rpc\Response\ReturnResponse;
+use Phpactor\Extension\Rpc\Response\ReturnResponse;
 
 class CompleteHandler implements Handler
 {

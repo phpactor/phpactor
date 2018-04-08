@@ -3,8 +3,8 @@
 namespace Phpactor\Tests\Unit\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 
 class StackActionTest extends TestCase
 {

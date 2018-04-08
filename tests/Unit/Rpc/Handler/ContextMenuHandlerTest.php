@@ -2,17 +2,17 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Handler\ContextMenuHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Request;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Container\RpcExtension;
-use Phpactor\Rpc\RequestHandler\RequestHandler;
+use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Extension\Container;

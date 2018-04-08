@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
-use Phpactor\Rpc\Handler\ClassSearchHandler;
+use Phpactor\Extension\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 

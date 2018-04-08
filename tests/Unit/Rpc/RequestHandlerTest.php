@@ -3,11 +3,11 @@
 namespace Phpactor\Tests\Unit\Rpc;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\HandlerRegistry;
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Response;
-use Phpactor\Rpc\Request;
+use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
+use Phpactor\Extension\Rpc\Response;
+use Phpactor\Extension\Rpc\Request;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class RequestHandlerTest extends TestCase

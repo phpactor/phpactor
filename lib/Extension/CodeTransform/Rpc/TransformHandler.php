@@ -2,14 +2,14 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Request;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 
 class TransformHandler implements Handler
 {

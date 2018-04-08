@@ -2,16 +2,16 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 
 class ClassNewHandlerTest extends HandlerTestCase
 {

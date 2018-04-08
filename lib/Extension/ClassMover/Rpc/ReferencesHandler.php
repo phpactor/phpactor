@@ -4,9 +4,9 @@ namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\FileReferencesResponse;
-use Phpactor\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -14,10 +14,10 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class ReferencesHandler extends AbstractHandler
 {

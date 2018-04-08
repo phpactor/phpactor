@@ -4,14 +4,14 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
-use Phpactor\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class OverrideMethodHandler extends AbstractHandler
 {

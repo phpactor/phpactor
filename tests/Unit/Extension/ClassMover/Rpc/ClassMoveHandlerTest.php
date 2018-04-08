@@ -2,20 +2,20 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Request;
-use Phpactor\Extension\ClassMover\Application\ClassMoverLogger;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 use Prophecy\Argument;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\CollectionResponse;
-use Phpactor\Rpc\Response\CloseFileResponse;
-use Phpactor\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response\CloseFileResponse;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
 class ClassMoveHandlerTest extends HandlerTestCase

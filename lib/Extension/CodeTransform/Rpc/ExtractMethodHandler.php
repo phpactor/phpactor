@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class ExtractMethodHandler extends AbstractHandler
 {

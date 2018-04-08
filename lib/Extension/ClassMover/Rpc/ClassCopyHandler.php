@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class ClassCopyHandler extends AbstractHandler
 {

@@ -2,9 +2,9 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
 

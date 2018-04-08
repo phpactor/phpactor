@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\WorseReflection\Rpc;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;

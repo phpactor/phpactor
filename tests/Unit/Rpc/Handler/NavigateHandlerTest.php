@@ -2,15 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Handler\NavigateHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler\NavigateHandler;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Extension\PathFinder\Application\Navigator;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 
 class NavigateHandlerTest extends HandlerTestCase
 {

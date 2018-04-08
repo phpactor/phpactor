@@ -2,15 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
-use Phpactor\Rpc\Request;
+use Phpactor\Extension\Rpc\Request;
 use Prophecy\Argument;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\ClassMover\Application\NullLogger;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
 class ClassCopyHandlerTest extends HandlerTestCase

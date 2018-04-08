@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Webmozart\Glob\Glob;
 use Phpactor\Extension\CodeTransform\Rpc\AbstractClassGenerateHandler;
 

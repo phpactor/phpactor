@@ -3,16 +3,16 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Application\ClassGenerator;
-use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Request;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
-use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
-use Phpactor\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
