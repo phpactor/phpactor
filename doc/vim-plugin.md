@@ -73,6 +73,13 @@ Note that if the update included changes to the VIM plugin you will currently
 need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
 </div>
 
+If you are feeling dangerous, you may choose to track the `develop` branch,
+by specifying a branch name in your `.vimrc`:
+
+```vim
+let g:phpactorBranch = "develop"
+```
+
 Keyboard Mappings
 -----------------
 
