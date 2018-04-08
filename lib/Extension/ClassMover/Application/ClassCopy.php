@@ -9,7 +9,7 @@ use Phpactor\Phpactor;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\CopyReport;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
 
 class ClassCopy

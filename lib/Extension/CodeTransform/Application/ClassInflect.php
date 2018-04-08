@@ -4,7 +4,7 @@ namespace Phpactor\Extension\CodeTransform\Application;
 
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\Phpactor;
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Webmozart\Glob\Glob;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;

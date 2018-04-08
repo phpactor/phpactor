@@ -7,8 +7,8 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
-use Phpactor\Application\Helper\ClassFileNormalizer;
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 
 final class OffsetInfo
 {

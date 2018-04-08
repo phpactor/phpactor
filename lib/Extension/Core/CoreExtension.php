@@ -9,7 +9,7 @@ use Phpactor\Extension\WorseReflection\Application\ClassReflector;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\ClassToFile\Application\FileInfo;
 use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 use Phpactor\ClassFileConverter\Domain\ChainClassToFile;

@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Completion\Application\Complete;
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Console\Command\Handler\FormatHandler;
 
 class CompleteCommand extends Command

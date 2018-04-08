@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection\Application;
 
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Type;

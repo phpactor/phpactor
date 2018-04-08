@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\ClassRef;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;

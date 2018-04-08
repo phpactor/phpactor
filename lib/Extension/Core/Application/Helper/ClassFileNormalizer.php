@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\Helper;
+namespace Phpactor\Extension\Core\Application\Helper;
 
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\FilePath;

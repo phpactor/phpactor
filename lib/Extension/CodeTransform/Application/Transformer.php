@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Application;
 
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 class Transformer

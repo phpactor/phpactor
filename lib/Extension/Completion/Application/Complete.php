@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Completion\Application;
 
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;

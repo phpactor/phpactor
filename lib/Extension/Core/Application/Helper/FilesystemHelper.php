@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\Helper;
+namespace Phpactor\Extension\Core\Application\Helper;
 
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;

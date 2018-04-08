@@ -8,9 +8,9 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 
 class ClassMover

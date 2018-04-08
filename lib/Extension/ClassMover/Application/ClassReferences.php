@@ -4,7 +4,7 @@ namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassRef;

@@ -13,7 +13,7 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Extension\Container;
 
