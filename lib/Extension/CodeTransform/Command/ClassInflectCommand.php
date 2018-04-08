@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\CodeTransform\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,9 +11,10 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\Question;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Console\Dumper\DumperRegistry;
-use Phpactor\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
 class ClassInflectCommand extends Command
 {
@@ -45,7 +46,7 @@ class ClassInflectCommand extends Command
         $this->addArgument('variant', InputOption::VALUE_REQUIRED, 'Type of inflection', 'default');
         $this->addOption('list', null, InputOption::VALUE_NONE, 'List variants');
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Force overwriting');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

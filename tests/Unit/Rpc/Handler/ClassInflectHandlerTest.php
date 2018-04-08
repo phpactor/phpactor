@@ -3,12 +3,12 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Handler\ClassInflectHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\Input\ConfirmInput;

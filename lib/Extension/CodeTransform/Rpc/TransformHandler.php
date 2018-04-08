@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;

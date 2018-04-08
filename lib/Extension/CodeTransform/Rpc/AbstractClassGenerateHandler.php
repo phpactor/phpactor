@@ -1,17 +1,18 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Application\ClassGenerator;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Request;
-use Phpactor\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
