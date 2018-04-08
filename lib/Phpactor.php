@@ -5,7 +5,7 @@ namespace Phpactor;
 use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
 use Symfony\Component\Yaml\Yaml;
-use Phpactor\Console\Application;
+use Phpactor\Application;
 use Phpactor\Bootstrap;
 
 class Phpactor

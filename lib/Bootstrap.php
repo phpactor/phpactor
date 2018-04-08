@@ -3,7 +3,7 @@
 namespace Phpactor;
 
 use Phpactor\Config\ConfigLoader;
-use Phpactor\Console\Application;
+use Phpactor\Application;
 use Phpactor\Extension\PhpactorContainer;
 use Phpactor\Extension\Schema;
 use Phpactor\Extension\Extension;

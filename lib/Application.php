@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console;
+namespace Phpactor;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Phpactor\Phpactor;

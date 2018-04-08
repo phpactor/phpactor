@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Integration\Console;
 
-use Phpactor\Console\Application;
+use Phpactor\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Tests\IntegrationTestCase;
