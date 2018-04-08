@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;

@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
 use Phpactor\Rpc\Request;

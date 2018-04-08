@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;

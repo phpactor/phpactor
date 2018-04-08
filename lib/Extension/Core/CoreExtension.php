@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Core;
 
 use Composer\Autoload\ClassLoader;
-use Phpactor\Application\ClassCopy;
-use Phpactor\Application\ClassMover as ClassMoverApp;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
 use Phpactor\Application\ClassSearch;
 use Phpactor\Application\FileInfo;
@@ -35,10 +35,10 @@ use Phpactor\Console\Command\ConfigDumpCommand;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
 use Phpactor\Console\Command\CompleteCommand;
-use Phpactor\Application\ClassReferences;
+use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Console\Command\ReferencesClassCommand;
 use Phpactor\Console\Command\ReferencesMemberCommand;
-use Phpactor\Application\ClassMemberReferences;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
@@ -53,6 +53,7 @@ use Phpactor\Extension\Container;
 use Phpactor\Extension\Extension;
 use Phpactor\Extension\Schema;
 use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\ClassMover\Application\ClassMover;
 
 class CoreExtension implements Extension
 {

@@ -3,7 +3,7 @@
 namespace Phpactor\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Phpactor\Application\ClassReferences;
+use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;

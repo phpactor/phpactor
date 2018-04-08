@@ -2,7 +2,7 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;

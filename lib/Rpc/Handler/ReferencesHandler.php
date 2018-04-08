@@ -2,12 +2,12 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Application\ClassReferences;
+use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\FileReferencesResponse;
 use Phpactor\Rpc\Response\CollectionResponse;
-use Phpactor\Application\ClassMemberReferences;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;

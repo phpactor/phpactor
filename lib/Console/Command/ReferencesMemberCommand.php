@@ -11,7 +11,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
-use Phpactor\Application\ClassMemberReferences;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class ReferencesMemberCommand extends Command

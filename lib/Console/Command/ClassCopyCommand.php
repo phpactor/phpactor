@@ -5,7 +5,7 @@ namespace Phpactor\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Console\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;

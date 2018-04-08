@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
