@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
@@ -16,6 +16,7 @@ use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\CloseFileResponse;
 use Phpactor\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {

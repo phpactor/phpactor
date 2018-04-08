@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
@@ -11,8 +11,9 @@ use Prophecy\Argument;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\Application\Logger\NullLogger;
+use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
-class CopyFileHandlerTest extends HandlerTestCase
+class ClassCopyHandlerTest extends HandlerTestCase
 {
     const SOURCE_PATH = 'souce_path';
     const DEST_PATH = 'souce_path';

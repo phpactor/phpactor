@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
@@ -18,6 +18,7 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
