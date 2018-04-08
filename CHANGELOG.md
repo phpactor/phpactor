@@ -9,6 +9,7 @@ Features:
      `instanceof` operator. Works both within the conditional scope and
      outside if the conditional returns or throws an exception (i.e. better
      completion).
+   - [VIM Plugin] `g:phpactorBranch` can be used to set the update branch.
 
 Bug fixes:
 
@@ -27,6 +28,7 @@ Improvements:
    - [Docblock] Be tolerant of invalid tags, fixes #382
    - [WorseReflection] Refactored FrameBuilder: Extracted walkers
    - [WorseReflection] [Expression evaluator](https://github.com/phpactor/worse-reflection/blob/master/lib/Core/Inference/ExpressionEvaluator.php).
+   - [Application] Large restructuring of code, almost everything is now in an extension.
 
 ## 0.1.0 
 
