@@ -3,7 +3,6 @@
 namespace Phpactor\Container;
 
 use Composer\Autoload\ClassLoader;
-use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Application\ClassCopy;
 use Phpactor\Application\ClassMover as ClassMoverApp;
 use Phpactor\Application\ClassReflector;
@@ -33,7 +32,6 @@ use Phpactor\Console\Prompt\BashPrompt;
 use Phpactor\Console\Prompt\ChainPrompt;
 use Symfony\Component\Console\Application;
 use Phpactor\Console\Command\ConfigDumpCommand;
-use PhpBench\DependencyInjection\Container;
 use Monolog\Logger;
 use Phpactor\Application\Complete;
 use Phpactor\Console\Command\CompleteCommand;
@@ -51,8 +49,12 @@ use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Application\Status;
 use Phpactor\Application\StatusCommand;
 use Symfony\Component\Debug\Debug;
+use Phpactor\Extension\Container;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\Schema;
+use Phpactor\Extension\ContainerBuilder;
 
-class CoreExtension implements ExtensionInterface
+class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
@@ -71,7 +73,11 @@ class CoreExtension implements ExtensionInterface
 
     public function getDefaultConfig()
     {
-        return [
+    }
+
+    public function configure(Schema $schema)
+    {
+        $schema->setDefaults([
             self::AUTOLOAD => 'vendor/autoload.php',
             self::AUTOLOAD_DEREGISTER => true,
             self::WORKING_DIRECTORY => getcwd(),
@@ -82,10 +88,10 @@ class CoreExtension implements ExtensionInterface
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
             self::NAVIGATOR_AUTOCREATE => [],
-        ];
+        ]);
     }
 
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $this->registerMonolog($container);
         $this->registerConsole($container);
@@ -95,7 +101,7 @@ class CoreExtension implements ExtensionInterface
         $this->registerApplicationServices($container);
     }
 
-    private function registerMonolog(Container $container)
+    private function registerMonolog(ContainerBuilder $container)
     {
         $container->register('monolog.logger', function (Container $container) {
             $logger = new Logger('phpactor');
@@ -119,7 +125,7 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
-    private function registerConsole(Container $container)
+    private function registerConsole(ContainerBuilder $container)
     {
         // ---------------
         // Commands
@@ -243,7 +249,7 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
-    private function registerComposer(Container $container)
+    private function registerComposer(ContainerBuilder $container)
     {
         $container->register('composer.class_loaders', function (Container $container) {
             $currentAutoloaders = spl_autoload_functions();
@@ -327,7 +333,7 @@ class CoreExtension implements ExtensionInterface
         });
     }
 
-    private function registerClassMover(Container $container)
+    private function registerClassMover(ContainerBuilder $container)
     {
         $container->register('class_mover.class_mover', function (Container $container) {
             return new ClassMover(

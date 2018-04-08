@@ -2,8 +2,6 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\Container;
-use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Application\Transformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
@@ -37,8 +35,12 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\Config\Paths;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Container;
+use Phpactor\Extension\Schema;
 
-class CodeTransformExtension implements ExtensionInterface
+class CodeTransformExtension implements Extension
 {
     const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';
     const TEMPLATE_PATHS = 'code_transform.template_paths';
@@ -47,21 +49,24 @@ class CodeTransformExtension implements ExtensionInterface
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
 
 
-    public function getDefaultConfig()
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Schema $schema)
     {
         $paths = new Paths();
         $templatePaths = $paths->existingConfigPaths('templates');
 
-        return [
+        $schema->setDefaults([
             self::CLASS_NEW_VARIANTS => [],
             self::TEMPLATE_PATHS => $templatePaths,
             self::INDENTATION => '    ',
             self::GENERATE_ACCESSOR_PREFIX => '',
             self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
-        ];
+        ]);
     }
 
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $this->registerConsole($container);
         $this->registerTransformers($container);
@@ -72,7 +77,7 @@ class CodeTransformExtension implements ExtensionInterface
         $this->registerRefactorings($container);
     }
 
-    private function registerApplication(Container $container)
+    private function registerApplication(ContainerBuilder $container)
     {
         $container->register('application.transform', function (Container $container) {
             return new Transformer(
@@ -96,7 +101,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
     }
 
-    private function registerConsole(Container $container)
+    private function registerConsole(ContainerBuilder $container)
     {
         $container->register('command.transform', function (Container $container) {
             return new ClassTransformCommand(
@@ -119,7 +124,7 @@ class CodeTransformExtension implements ExtensionInterface
         }, [ 'ui.console.command' => []]);
     }
 
-    private function registerTransformers(Container $container)
+    private function registerTransformers(ContainerBuilder $container)
     {
         $container->register('code_transform.transformers', function (Container $container) {
             $transformers = [];
@@ -157,7 +162,7 @@ class CodeTransformExtension implements ExtensionInterface
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
     }
 
-    private function registerGenerators(Container $container)
+    private function registerGenerators(ContainerBuilder $container)
     {
         $container->register('code_transform.new_class_generators', function (Container $container) {
             $generators = [
@@ -182,7 +187,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
     }
 
-    private function registerRenderer(Container $container)
+    private function registerRenderer(ContainerBuilder $container)
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $loaders = [];
@@ -210,7 +215,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
     }
 
-    private function registerRefactorings(Container $container)
+    private function registerRefactorings(ContainerBuilder $container)
     {
         $container->register('code_transform.refactor.extract_constant', function (Container $container) {
             return new WorseExtractConstant(
@@ -263,7 +268,7 @@ class CodeTransformExtension implements ExtensionInterface
         });
     }
 
-    private function registerUpdater(Container $container)
+    private function registerUpdater(ContainerBuilder $container)
     {
         $container->register('code_transform.updater', function (Container $container) {
             return new TolerantUpdater($container->get('code_transform.renderer'));

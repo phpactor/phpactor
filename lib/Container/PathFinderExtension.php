@@ -2,18 +2,20 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\ExtensionInterface;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\ClassFileConverter\PathFinder;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Schema;
+use Phpactor\Extension\Container;
 
-class PathFinderExtension implements ExtensionInterface
+class PathFinderExtension implements Extension
 {
     const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
 
     /**
      * {@inheritDoc}
      */
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $container->register('path_finder.path_finder', function (Container $container) {
             return PathFinder::fromDestinations($container->getParameter(self::PATH_FINDER_DESTINATIONS));
@@ -23,10 +25,10 @@ class PathFinderExtension implements ExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function getDefaultConfig()
+    public function configure(Schema $schema)
     {
-        return [
+        $schema->setDefaults([
             self::PATH_FINDER_DESTINATIONS => [],
-        ];
+        ]);
     }
 }

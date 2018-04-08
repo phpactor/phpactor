@@ -2,18 +2,20 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\ExtensionInterface;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseClassMemberCompletor;
 use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseLocalVariableCompletor;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Schema;
+use Phpactor\Extension\Container;
 
-class CompletionExtension implements ExtensionInterface
+class CompletionExtension implements Extension
 {
     /**
      * {@inheritDoc}
      */
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $container->register('completion.completor', function (Container $container) {
             $completors = [];
@@ -35,8 +37,7 @@ class CompletionExtension implements ExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function getDefaultConfig()
+    public function configure(Schema $schema)
     {
-        return [];
     }
 }

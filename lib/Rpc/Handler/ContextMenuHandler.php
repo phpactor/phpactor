@@ -9,13 +9,13 @@ use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Request;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\Container\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Rpc\Response;
+use Phpactor\Extension\Container;
 
 class ContextMenuHandler implements Handler
 {

@@ -2,8 +2,6 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\Container;
-use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
@@ -13,19 +11,18 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Container;
+use Phpactor\Extension\Schema;
 
-class SourceCodeFilesystemExtension implements ExtensionInterface
+class SourceCodeFilesystemExtension implements Extension
 {
     const FILESYSTEM_GIT = 'git';
     const FILESYSTEM_COMPOSER = 'composer';
     const FILESYSTEM_SIMPLE = 'simple';
 
-    public function getDefaultConfig()
-    {
-        return [];
-    }
-
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $container->register('source_code_filesystem.git', function (Container $container) {
             return new GitFilesystem(FilePath::fromString($container->getParameter('cwd')));
@@ -70,5 +67,12 @@ class SourceCodeFilesystemExtension implements ExtensionInterface
                 'simple'
             );
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Schema $schema)
+    {
     }
 }

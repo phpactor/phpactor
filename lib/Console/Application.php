@@ -27,8 +27,6 @@ class Application extends SymfonyApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $this->initialize($input);
-
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
@@ -87,21 +85,5 @@ class Application extends SymfonyApplication
             'code' => $e->getCode(),
             'message' => $e->getMessage(),
         ];
-    }
-
-    private function initialize(InputInterface $input)
-    {
-        $config = [];
-
-        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
-        }
-
-        $this->container = new ApplicationContainer($config);
-        $this->container->init();
-
-        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
-            $this->add($this->container->get($commandId));
-        }
     }
 }

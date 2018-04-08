@@ -2,8 +2,6 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\ExtensionInterface;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\Console\Command\RpcCommand;
 use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
@@ -32,15 +30,19 @@ use Phpactor\Rpc\Handler\OverrideMethodHandler;
 use Phpactor\Rpc\Handler\CacheClearHandler;
 use Phpactor\Rpc\Handler\ConfigHandler;
 use Phpactor\Rpc\Handler\ImportClassHandler;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Container;
+use Phpactor\Extension\Schema;
 
-class RpcExtension implements ExtensionInterface
+class RpcExtension implements Extension
 {
     const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
     /**
      * {@inheritDoc}
      */
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $container->register('rpc.command.rpc', function (Container $container) {
             return new RpcCommand(
@@ -71,7 +73,7 @@ class RpcExtension implements ExtensionInterface
         $this->registerHandlers($container);
     }
 
-    private function registerHandlers(Container $container)
+    private function registerHandlers(ContainerBuilder $container)
     {
         $container->register('rpc.handler.echo', function (Container $container) {
             return new EchoHandler();
@@ -222,12 +224,12 @@ class RpcExtension implements ExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function getDefaultConfig()
+    public function configure(Schema $schema)
     {
-        return [
+        $schema->setDefaults([
             'rpc.class_search.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
             'rpc.class_move.filesystem' => SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'rpc.store_replay' => false,
-        ];
+        ]);
     }
 }

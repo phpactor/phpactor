@@ -5,6 +5,7 @@ use Phpactor\Console\Application;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Phpactor\Phpactor;
 
 foreach ([
     __DIR__ . '/../../../autoload.php',
@@ -33,9 +34,8 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 
 require_once $autoloadFile;
 
-Debug::enable();
 
-$application = new Application();
+$application = Phpactor::boot();
 $output = new ConsoleOutput();
 
 try {

@@ -2,24 +2,29 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use PhpBench\DependencyInjection\ExtensionInterface;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Extension\Extension;
+use Phpactor\Extension\Schema;
+use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Extension\Container;
 
-class WorseReflectionExtension implements ExtensionInterface
+class WorseReflectionExtension implements Extension
 {
-    public function getDefaultConfig()
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Schema $schema)
     {
-        return [
+        $schema->setDefaults([
             'reflection.stub_directory' => __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
-        ];
+        ]);
     }
 
-    public function load(Container $container)
+    public function load(ContainerBuilder $container)
     {
         $container->register('reflection.reflector', function (Container $container) {
             $builder = ReflectorBuilder::create()
