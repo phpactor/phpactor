@@ -11,6 +11,7 @@ use Phpactor\Extension\Extension;
 use Phpactor\Extension\Schema;
 use Phpactor\Extension\ContainerBuilder;
 use Phpactor\Extension\Container;
+use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
 
 class WorseReflectionExtension implements Extension
 {
@@ -26,20 +27,26 @@ class WorseReflectionExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
+        $this->registerReflection($container);
+        $this->registerGotoDefinition($container);
+    }
+
+    private function registerReflection(ContainerBuilder $container)
+    {
         $container->register('reflection.reflector', function (Container $container) {
             $builder = ReflectorBuilder::create()
                 ->enableCache()
                 ->enableContextualSourceLocation();
-
+        
             foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
                 $builder->addLocator($container->get($locatorId));
             }
-
+        
             $builder->withLogger(new PsrLogger($container->get('monolog.logger')));
-
+        
             return $builder->build();
         });
-
+        
         $container->register('reflection.locator.stub', function (Container $container) {
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
@@ -47,9 +54,18 @@ class WorseReflectionExtension implements Extension
                 $container->getParameter('cache_dir')
             );
         }, [ 'reflection.source_locator' => []]);
-
+        
         $container->register('reflection.locator.worse', function (Container $container) {
             return new ClassToFileSourceLocator($container->get('class_to_file.class_to_file'));
         }, [ 'reflection.source_locator' => []]);
+    }
+
+    private function registerGotoDefinition(ContainerBuilder $container)
+    {
+        $container->register('rpc.handler.goto_definition', function (Container $container) {
+            return new GotoDefinitionHandler(
+                $container->get('reflection.reflector')
+            );
+        }, [ 'rpc.handler' => [] ]);
     }
 }

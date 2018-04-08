@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\WorseReflection\Rpc;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Response\OpenFileResponse;
-use Phpactor\Core\GotoDefinition\GotoDefinition;
+use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;

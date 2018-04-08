@@ -1,6 +1,8 @@
 <?php
 
-namespace Phpactor\Core\GotoDefinition;
+namespace Phpactor\Extension\WorseReflection\GotoDefinition;
+
+use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinitionResult;
 
 final class GotoDefinitionResult implements \JsonSerializable
 {

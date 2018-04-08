@@ -7,7 +7,7 @@ use Phpactor\Rpc\HandlerRegistry;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Rpc\Handler\EchoHandler;
 use Phpactor\Rpc\Handler\StatusHandler;
-use Phpactor\Rpc\Handler\GotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler\CompleteHandler;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Rpc\Handler\ClassCopyHandler;
@@ -78,12 +78,6 @@ class RpcExtension implements Extension
     {
         $container->register('rpc.handler.echo', function (Container $container) {
             return new EchoHandler();
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.goto_definition', function (Container $container) {
-            return new GotoDefinitionHandler(
-                $container->get('reflection.reflector')
-            );
         }, [ 'rpc.handler' => [] ]);
 
         $container->register('rpc.handler.complete', function (Container $container) {

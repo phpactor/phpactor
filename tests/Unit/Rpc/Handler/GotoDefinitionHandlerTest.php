@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler\GotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
 use Phpactor\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;

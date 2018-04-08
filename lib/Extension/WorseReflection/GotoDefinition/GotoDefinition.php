@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Core\GotoDefinition;
+namespace Phpactor\Extension\WorseReflection\GotoDefinition;
 
-use Phpactor\Core\GotoDefinition\Exception\GotoDefinitionException;
+use Phpactor\Extension\WorseReflection\GotoDefinition\Exception\GotoDefinitionException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
