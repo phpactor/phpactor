@@ -31,14 +31,9 @@ class PhpactorContainer implements Container, ContainerBuilder
      */
     private $services;
 
-    /**
-     * @var array
-     */
-    private $config;
-
-    public function __construct(array $config = [])
+    public function __construct(array $parameters = [])
     {
-        $this->config = $config;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -67,7 +62,7 @@ class PhpactorContainer implements Container, ContainerBuilder
      */
     public function has($id)
     {
-        return isset($this->services[$id]);
+        return isset($this->factories[$id]);
     }
 
     public function getServiceIdsForTag(string $tag): array
@@ -96,7 +91,7 @@ class PhpactorContainer implements Container, ContainerBuilder
     public function getParameter(string $name)
     {
         if (!isset($this->parameters[$name])) {
-            throw new InvalidArgumentException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Unknown parameter "%s", known parameters "%s"',
                 $name, implode('", "', array_keys($this->parameters))
             ));
