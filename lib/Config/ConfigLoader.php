@@ -2,8 +2,6 @@
 
 namespace Phpactor\Config;
 
-use XdgBaseDir\Xdg;
-use Webmozart\PathUtil\Path;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigLoader
@@ -40,5 +38,4 @@ class ConfigLoader
 
         return $config;
     }
-
 }
