@@ -5,8 +5,6 @@ namespace Phpactor\Extension\ClassMover\Application\Logger;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\FoundReferences;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\Extension\ClassMover\Application\ClassCopyLogger;
-use Phpactor\Extension\ClassMover\Application\ClassMoverLogger;
 
 class NullLogger implements ClassCopyLogger, ClassMoverLogger
 {

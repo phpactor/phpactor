@@ -4,7 +4,7 @@ namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\ClassMover\Application\NullLogger;
+use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
 use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\EchoResponse;
