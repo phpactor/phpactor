@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Rpc\Response;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\Response\ErrorResponse;
+use Phpactor\Extension\Rpc\Response\ErrorResponse;
 
 class ErrorResponseTest extends TestCase
 {

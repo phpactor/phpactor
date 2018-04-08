@@ -2,13 +2,13 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
-use Phpactor\Rpc\Handler\ExtractConstantHandler;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 
 class ExtractConstantHandlerTest extends HandlerTestCase
 {

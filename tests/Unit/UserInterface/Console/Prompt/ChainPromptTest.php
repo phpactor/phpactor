@@ -3,8 +3,8 @@
 namespace Phpactor\Tests\Unit\UserInterface\Console\Prompt;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Console\Prompt\Prompt;
-use Phpactor\Console\Prompt\ChainPrompt;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
+use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
 
 class ChainPromptTest extends TestCase
 {

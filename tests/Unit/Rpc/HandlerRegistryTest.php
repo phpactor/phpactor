@@ -4,8 +4,8 @@ namespace Phpactor\Tests\Unit\Rpc;
 
 use PHPUnit\Framework\TestCase;
 
-use Phpactor\Rpc\HandlerRegistry;
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Rpc\Handler;
 
 class HandlerRegistryTest extends TestCase
 {

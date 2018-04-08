@@ -2,15 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Transformer;
-use Phpactor\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Rpc\Handler\TransformHandler;
+use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 
 class TransformHandlerTest extends HandlerTestCase
 {

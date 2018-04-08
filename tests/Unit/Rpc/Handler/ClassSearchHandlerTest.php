@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Application\ClassSearch;
-use Phpactor\Rpc\Handler\ClassSearchHandler;
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Response\ReturnResponse;
-use Phpactor\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\Rpc\Handler\ClassSearchHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\ReturnResponse;
+use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {

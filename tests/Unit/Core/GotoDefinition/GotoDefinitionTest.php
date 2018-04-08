@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Core\GotoDefinition;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\Core\GotoDefinition\GotoDefinition;
+use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Position;
@@ -15,12 +15,12 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Core\GotoDefinition\GotoDefinitionResult;
+use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinitionResult;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
-use Phpactor\Core\GotoDefinition\Exception\GotoDefinitionException;
+use Phpactor\Extension\WorseReflection\GotoDefinition\Exception\GotoDefinitionException;
 
 class GotoDefinitionTest extends TestCase
 {

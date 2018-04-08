@@ -3,11 +3,11 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\Request;
-use Phpactor\Rpc\HandlerRegistry;
-use Phpactor\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Response;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response;
 
 abstract class HandlerTestCase extends TestCase
 {

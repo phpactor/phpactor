@@ -3,14 +3,14 @@
 namespace Phpactor\Tests\Unit\Rpc\RequestHandler;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Rpc\RequestHandler;
-use Phpactor\Rpc\RequestHandler\ExceptionCatchingHandler;
-use Phpactor\Rpc\Request;
-use Phpactor\Rpc\Response;
+use Phpactor\Extension\Rpc\RequestHandler;
+use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Rpc\Response\ErrorResponse;
+use Phpactor\Extension\Rpc\Response\ErrorResponse;
 use Psr\Log\LoggerInterface;
-use Phpactor\Rpc\RequestHandler\LoggingHandler;
+use Phpactor\Extension\Rpc\RequestHandler\LoggingHandler;
 use Psr\Log\LogLevel;
 
 class LoggingHandlerTest extends TestCase

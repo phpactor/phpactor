@@ -5,15 +5,15 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\Rpc\Handler\OverrideMethodHandler;
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
-use Phpactor\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OverrideMethodHandlerTest extends HandlerTestCase

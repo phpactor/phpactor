@@ -3,17 +3,17 @@
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
-use Phpactor\Rpc\Handler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
-use Phpactor\Application\ClassSearch;
-use Phpactor\Rpc\Handler\ImportClassHandler;
-use Phpactor\Rpc\Response\InputCallbackResponse;
-use Phpactor\Rpc\Response\Input\ListInput;
-use Phpactor\Rpc\Response\EchoResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
-use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 
 class ImportClassHandlerTest extends HandlerTestCase
