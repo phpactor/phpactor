@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Console\Logger\SymfonyConsoleCopyLogger;
+use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Console\Prompt\Prompt;
 

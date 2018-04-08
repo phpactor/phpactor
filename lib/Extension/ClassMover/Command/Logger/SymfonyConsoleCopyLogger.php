@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Logger;
+namespace Phpactor\Extension\ClassMover\Command\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Filesystem\Domain\FilePath;
