@@ -17,6 +17,7 @@ use Phpactor\Extension\PathFinder\PathFinderExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
 
 class Bootstrap
 {
@@ -37,7 +38,7 @@ class Bootstrap
             CodeTransformExtension::class,
             CompletionExtension::class,
             PathFinderExtension::class,
-            Container\RpcExtension::class,
+            RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class
         ];

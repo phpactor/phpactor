@@ -9,7 +9,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Container\RpcExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Application\Helper\ClassFileNormalizer;

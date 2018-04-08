@@ -11,7 +11,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
-use Phpactor\Container\RpcExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\Extension\Rpc;
 
 use Phpactor\Console\Command\RpcCommand;
 use Phpactor\Extension\Rpc\HandlerRegistry;
@@ -142,7 +142,7 @@ class RpcExtension implements Extension
             return new ContextMenuHandler(
                 $container->get('reflection.reflector'),
                 $container->get('application.helper.class_file_normalizer'),
-                json_decode(file_get_contents(__DIR__ . '/config/menu.json'), true),
+                json_decode(file_get_contents(__DIR__ . '/menu.json'), true),
                 $container
             );
         }, [ 'rpc.handler' => [] ]);
