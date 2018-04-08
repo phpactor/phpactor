@@ -20,6 +20,7 @@ Bug fixes:
    - [Completion] Used `Type#__toString` to reflect class.
    - [CodeBuilder] Extract method rewrites arguments #361
    - [VimPlugin] Fixed goto definition, #398
+   - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
 
 Improvements:
    
