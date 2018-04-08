@@ -3,21 +3,8 @@
 namespace Phpactor\Extension\Core;
 
 use Composer\Autoload\ClassLoader;
-use Phpactor\Extension\WorseReflection\Application\ClassReflector;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\ClassToFile\Application\FileInfo;
-use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
-use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
-use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\Filesystem\Domain\Cwd;
-use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
-use Phpactor\Extension\SourceCodeFilesystem\Command\ClassSearchCommand;
-use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
-use Phpactor\Extension\ClassToFile\Command\FileInfoCommand;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
@@ -32,8 +19,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Core\Command\CacheClearCommand;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Core\Command\StatusCommand;
 use Phpactor\Container\Container;
@@ -57,10 +42,6 @@ class CoreExtension implements Extension
 
     public static $autoloader;
 
-    public function getDefaultConfig()
-    {
-    }
-
     public function configure(Schema $schema)
     {
         $schema->setDefaults([
@@ -81,7 +62,6 @@ class CoreExtension implements Extension
         $this->registerMonolog($container);
         $this->registerConsole($container);
         $this->registerComposer($container);
-        $this->registerClassToFile($container);
         $this->registerApplicationServices($container);
     }
 
@@ -111,37 +91,6 @@ class CoreExtension implements Extension
 
     private function registerConsole(ContainerBuilder $container)
     {
-        // ---------------
-        // Commands
-        // ---------------
-        $container->register('command.class_search', function (Container $container) {
-            return new ClassSearchCommand(
-                $container->get('application.class_search'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.offset_info', function (Container $container) {
-            return new OffsetInfoCommand(
-                $container->get('application.offset_info'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.file_info', function (Container $container) {
-            return new FileInfoCommand(
-                $container->get('application.file_info'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
-        $container->register('command.class_reflector', function (Container $container) {
-            return new ClassReflectorCommand(
-                $container->get('application.class_reflector'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
-
         $container->register('command.config_dump', function (Container $container) {
             return new ConfigDumpCommand(
                 $container->getParameters(),
@@ -164,9 +113,6 @@ class CoreExtension implements Extension
         }, [ 'ui.console.command' => []]);
 
 
-        // ---------------
-        // Dumpers
-        // ---------------
         $container->register('console.dumper_registry', function (Container $container) {
             $dumpers = [];
             foreach ($container->getServiceIdsForTag('console.dumper') as $dumperId => $attrs) {
@@ -188,10 +134,6 @@ class CoreExtension implements Extension
             return new TableDumper();
         }, [ 'console.dumper' => ['name' => 'fieldvalue']]);
 
-
-        // ---------------
-        // Misc
-        // ---------------
         $container->register('console.prompter', function (Container $container) {
             return new ChainPrompt([
                 new BashPrompt()
@@ -247,73 +189,8 @@ class CoreExtension implements Extension
         });
     }
 
-    private function registerClassToFile(Container $container)
-    {
-        $container->register('class_to_file.converter', function (Container $container) {
-            return new ClassToFileFileToClass(
-                $container->get('class_to_file.class_to_file'),
-                $container->get('class_to_file.file_to_class')
-            );
-        });
-
-        $container->register('class_to_file.class_to_file', function (Container $container) {
-            $classToFiles = [];
-            foreach ($container->get('composer.class_loaders') as $classLoader) {
-                $classToFiles[] = new ComposerClassToFile($classLoader);
-            }
-
-            if (empty($classToFiles)) {
-                $classToFiles[] = new SimpleClassToFile($container->getParameter(self::WORKING_DIRECTORY));
-            }
-
-            return new ChainClassToFile($classToFiles);
-        });
-
-        $container->register('class_to_file.file_to_class', function (Container $container) {
-            $fileToClasses = [];
-            foreach ($container->get('composer.class_loaders') as $classLoader) {
-                $fileToClasses[] =  new ComposerFileToClass($classLoader);
-            }
-
-            if (empty($fileToClasses)) {
-                $fileToClasses[] = new SimpleFileToClass();
-            }
-
-            return new ChainFileToClass($fileToClasses);
-        });
-    }
-
     private function registerApplicationServices(Container $container)
     {
-        $container->register('application.file_info', function (Container $container) {
-            return new FileInfo(
-                $container->get('class_to_file.converter'),
-                $container->get('source_code_filesystem.simple')
-            );
-        });
-
-        $container->register('application.offset_info', function (Container $container) {
-            return new OffsetInfo(
-                $container->get('reflection.reflector'),
-                $container->get('application.helper.class_file_normalizer')
-            );
-        });
-
-        $container->register('application.class_search', function (Container $container) {
-            return new ClassSearch(
-                $container->get('source_code_filesystem.registry'),
-                $container->get('class_to_file.converter'),
-                $container->get('reflection.reflector')
-            );
-        });
-
-        $container->register('application.class_reflector', function (Container $container) {
-            return new ClassReflector(
-                $container->get('application.helper.class_file_normalizer'),
-                $container->get('reflection.reflector')
-            );
-        });
-
         $container->register('application.cache_clear', function (Container $container) {
             return new CacheClear(
                 $container->getParameter(self::CACHE_DIR)

@@ -15,6 +15,8 @@ use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Container\Schema;
+use Phpactor\Extension\SourceCodeFilesystem\Command\ClassSearchCommand;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 
 class SourceCodeFilesystemExtension implements Extension
 {
@@ -32,6 +34,8 @@ class SourceCodeFilesystemExtension implements Extension
     public function load(ContainerBuilder $container)
     {
         $this->registerFilesystems($container);
+        $this->registerCommands($container);
+        $this->registerApplicationServices($container);
     }
 
     private function registerFilesystems(ContainerBuilder $container)
@@ -77,6 +81,27 @@ class SourceCodeFilesystemExtension implements Extension
             return new FallbackFilesystemRegistry(
                 new MappedFilesystemRegistry($filesystems),
                 'simple'
+            );
+        });
+    }
+
+    private function registerCommands(ContainerBuilder $container)
+    {
+        $container->register('command.class_search', function (Container $container) {
+            return new ClassSearchCommand(
+                $container->get('application.class_search'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+    }
+
+    private function registerApplicationServices(ContainerBuilder $container)
+    {
+        $container->register('application.class_search', function (Container $container) {
+            return new ClassSearch(
+                $container->get('source_code_filesystem.registry'),
+                $container->get('class_to_file.converter'),
+                $container->get('reflection.reflector')
             );
         });
     }

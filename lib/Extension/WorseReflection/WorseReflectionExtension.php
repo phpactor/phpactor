@@ -12,6 +12,10 @@ use Phpactor\Container\Schema;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
+use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
+use Phpactor\Extension\WorseReflection\Application\ClassReflector;
+use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
 
 class WorseReflectionExtension implements Extension
 {
@@ -29,6 +33,8 @@ class WorseReflectionExtension implements Extension
     {
         $this->registerReflection($container);
         $this->registerGotoDefinition($container);
+        $this->registerCommands($container);
+        $this->registerApplicationServices($container);
     }
 
     private function registerReflection(ContainerBuilder $container)
@@ -67,5 +73,37 @@ class WorseReflectionExtension implements Extension
                 $container->get('reflection.reflector')
             );
         }, [ 'rpc.handler' => [] ]);
+    }
+
+    private function registerApplicationServices(ContainerBuilder $container)
+    {
+        $container->register('application.offset_info', function (Container $container) {
+            return new OffsetInfo(
+                $container->get('reflection.reflector'),
+                $container->get('application.helper.class_file_normalizer')
+            );
+        });
+        $container->register('application.class_reflector', function (Container $container) {
+            return new ClassReflector(
+                $container->get('application.helper.class_file_normalizer'),
+                $container->get('reflection.reflector')
+            );
+        });
+    }
+
+    private function registerCommands(ContainerBuilder $container)
+    {
+        $container->register('command.offset_info', function (Container $container) {
+            return new OffsetInfoCommand(
+                $container->get('application.offset_info'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
+        $container->register('command.class_reflector', function (Container $container) {
+            return new ClassReflectorCommand(
+                $container->get('application.class_reflector'),
+                $container->get('console.dumper_registry')
+            );
+        }, [ 'ui.console.command' => []]);
     }
 }

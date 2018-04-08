@@ -17,6 +17,7 @@ use Phpactor\Container\Schema;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 
 class Phpactor
 {
@@ -33,6 +34,7 @@ class Phpactor
 
         $extensionNames = [
             CoreExtension::class,
+            ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
             CompletionExtension::class,
