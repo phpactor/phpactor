@@ -4,10 +4,10 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\Status;
+use Phpactor\Extension\Core\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Response\EchoResponse;
-use Phpactor\Rpc\Handler\StatusHandler;
+use Phpactor\Extension\Core\Rpc\StatusHandler;
 use Phpactor\Config\Paths;
 
 class StatusHandlerTest extends HandlerTestCase

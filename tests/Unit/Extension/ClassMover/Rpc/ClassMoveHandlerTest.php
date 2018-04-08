@@ -6,7 +6,7 @@ use Phpactor\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
 use Phpactor\Rpc\Response\InputCallbackResponse;
 use Phpactor\Rpc\Request;
-use Phpactor\Application\Logger\ClassMoverLogger;
+use Phpactor\Extension\ClassMover\Application\ClassMoverLogger;
 use Prophecy\Argument;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;

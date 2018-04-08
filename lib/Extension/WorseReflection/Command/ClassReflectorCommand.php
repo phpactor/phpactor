@@ -1,13 +1,14 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\WorseReflection\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\ClassReflector;
+use Phpactor\Extension\WorseReflection\Application\ClassReflector;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
 class ClassReflectorCommand extends Command
 {
@@ -35,7 +36,7 @@ class ClassReflectorCommand extends Command
         $this->setName('class:reflect');
         $this->setDescription('Reflect a given class (path or FQN)');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

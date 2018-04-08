@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\Core\Application;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Webmozart\PathUtil\Path;

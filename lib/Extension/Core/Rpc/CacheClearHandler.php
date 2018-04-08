@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\Core\Rpc;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\CacheClear;
+use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Rpc\Response\EchoResponse;
 
 class CacheClearHandler implements Handler

@@ -22,32 +22,44 @@ class SourceCodeFilesystemExtension implements Extension
     const FILESYSTEM_COMPOSER = 'composer';
     const FILESYSTEM_SIMPLE = 'simple';
 
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Schema $schema)
+    {
+    }
+
     public function load(ContainerBuilder $container)
+    {
+        $this->registerFilesystems($container);
+    }
+
+    private function registerFilesystems(ContainerBuilder $container)
     {
         $container->register('source_code_filesystem.git', function (Container $container) {
             return new GitFilesystem(FilePath::fromString($container->getParameter('cwd')));
         }, [ 'source_code_filesystem.filesystem' => [ 'name' => self::FILESYSTEM_GIT ]]);
-
+        
         $container->register('source_code_filesystem.simple', function (Container $container) {
             return new SimpleFilesystem(FilePath::fromString($container->getParameter('cwd')));
         }, [ 'source_code_filesystem.filesystem' => ['name' => self::FILESYSTEM_SIMPLE]]);
-
+        
         $container->register('source_code_filesystem.composer', function (Container $container) {
             $providers = [];
             $cwd = FilePath::fromString($container->getParameter('cwd'));
             $classLoaders = $container->get('composer.class_loaders');
-
+        
             if (!$classLoaders) {
                 throw new NotSupported('No composer class loaders found/configured');
             }
-
+        
             foreach ($classLoaders as $classLoader) {
                 $providers[] = new ComposerFileListProvider($cwd, $classLoader);
             }
-
+        
             return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
         }, [ 'source_code_filesystem.filesystem' => [ 'name' => self::FILESYSTEM_COMPOSER ]]);
-
+        
         $container->register('source_code_filesystem.registry', function (Container $container) {
             $filesystems = [];
             foreach ($container->getServiceIdsForTag('source_code_filesystem.filesystem') as $serviceId => $attributes) {
@@ -61,18 +73,11 @@ class SourceCodeFilesystemExtension implements Extension
                     ));
                 }
             }
-
+        
             return new FallbackFilesystemRegistry(
                 new MappedFilesystemRegistry($filesystems),
                 'simple'
             );
         });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function configure(Schema $schema)
-    {
     }
 }

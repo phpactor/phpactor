@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\NavigateHandler;
 use Phpactor\ClassFileConverter\PathFinder;
-use Phpactor\Application\Navigator;
+use Phpactor\Extension\PathFinder\Application\Navigator;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\InputCallbackResponse;

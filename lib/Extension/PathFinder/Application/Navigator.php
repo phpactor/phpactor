@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\PathFinder\Application;
 
 use Phpactor\ClassFileConverter\PathFinder;
 use RuntimeException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\Core\Application;
 
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;

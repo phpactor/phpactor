@@ -4,7 +4,7 @@ namespace Phpactor\Tests\System;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
-use Phpactor\Application\Complete;
+use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;

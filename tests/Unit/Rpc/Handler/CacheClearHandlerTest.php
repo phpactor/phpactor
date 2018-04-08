@@ -5,8 +5,8 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 use Phpactor\Rpc\Handler;
-use Phpactor\Rpc\Handler\CacheClearHandler;
-use Phpactor\Application\CacheClear;
+use Phpactor\Extension\Core\Rpc\CacheClearHandler;
+use Phpactor\Extension\Core\Application\CacheClear;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class CacheClearHandlerTest extends HandlerTestCase

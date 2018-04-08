@@ -10,7 +10,7 @@ use Phpactor\Rpc\Request;
 use Prophecy\Argument;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Application\Logger\NullLogger;
+use Phpactor\Extension\ClassMover\Application\NullLogger;
 use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
 
 class ClassCopyHandlerTest extends HandlerTestCase

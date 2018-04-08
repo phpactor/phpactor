@@ -1,14 +1,15 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\Completion\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Console\Dumper\DumperRegistry;
-use Phpactor\Application\Complete;
+use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Application\Helper\FilesystemHelper;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
 class CompleteCommand extends Command
 {
@@ -43,7 +44,7 @@ class CompleteCommand extends Command
         $this->setDescription('Suggest completions DEPRECATED! Use RPC instead');
         $this->addArgument('path', InputArgument::REQUIRED, 'STDIN, source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Offset to complete');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\Completion\Application;
 
 use Phpactor\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\ClassName;

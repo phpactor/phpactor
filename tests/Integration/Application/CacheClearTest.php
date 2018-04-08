@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Integration\Application;
 
 use Phpactor\Tests\IntegrationTestCase;
-use Phpactor\Application\CacheClear;
+use Phpactor\Extension\Core\Application\CacheClear;
 
 class CacheClearTest extends IntegrationTestCase
 {

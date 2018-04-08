@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Rpc\Handler;
 
-use Phpactor\Application\ClassSearch;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Response\EchoResponse;

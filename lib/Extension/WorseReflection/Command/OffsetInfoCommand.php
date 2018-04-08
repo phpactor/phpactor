@@ -1,14 +1,15 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\WorseReflection\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Application\OffsetInfo;
+use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
 class OffsetInfoCommand extends Command
 {
@@ -38,7 +39,7 @@ class OffsetInfoCommand extends Command
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');
         $this->addOption('frame', null, InputOption::VALUE_NONE, 'Show inferred frame state at offset');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

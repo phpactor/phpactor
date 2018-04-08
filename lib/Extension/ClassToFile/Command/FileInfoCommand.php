@@ -1,13 +1,14 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\ClassToFile\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Application\FileInfo;
 use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\ClassToFile\Application\FileInfo;
 
 class FileInfoCommand extends Command
 {
@@ -28,7 +29,7 @@ class FileInfoCommand extends Command
         $this->setName('file:info');
         $this->setDescription('Return information about given file');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

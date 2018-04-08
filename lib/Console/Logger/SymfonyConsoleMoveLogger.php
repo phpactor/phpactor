@@ -3,10 +3,10 @@
 namespace Phpactor\Console\Logger;
 
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Application\Logger\ClassMoverLogger;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\FoundReferences;
+use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 
 class SymfonyConsoleMoveLogger implements ClassMoverLogger
 {

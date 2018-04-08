@@ -1,14 +1,16 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\SourceCodeFilesystem\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Application\ClassSearch;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Console\Command\Handler\FilesystemHandler;
 
 class ClassSearchCommand extends Command
 {
@@ -36,8 +38,8 @@ class ClassSearchCommand extends Command
         $this->setName('class:search');
         $this->setDescription('Search for class by (short) name and return informations on candidates');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
-        Handler\FormatHandler::configure($this);
-        Handler\FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER);
+        FormatHandler::configure($this);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

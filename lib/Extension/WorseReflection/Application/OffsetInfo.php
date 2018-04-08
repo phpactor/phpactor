@@ -1,12 +1,14 @@
 <?php
 
-namespace Phpactor\Application;
+namespace Phpactor\Extension\WorseReflection\Application;
 
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
+use Phpactor\Application\Helper\ClassFileNormalizer;
+use Phpactor\Application\Helper\FilesystemHelper;
 
 final class OffsetInfo
 {
@@ -27,11 +29,11 @@ final class OffsetInfo
 
     public function __construct(
         Reflector $reflector,
-        Helper\ClassFileNormalizer $classFileNormalizer
+        ClassFileNormalizer $classFileNormalizer
     ) {
         $this->reflector = $reflector;
         $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystemHelper = new Helper\FilesystemHelper();
+        $this->filesystemHelper = new FilesystemHelper();
     }
 
     public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array

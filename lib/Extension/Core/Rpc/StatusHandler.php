@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\Core\Rpc;
 
 use Phpactor\Rpc\Handler;
-use Phpactor\Application\Status;
+use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\Config\Paths;

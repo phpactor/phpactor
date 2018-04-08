@@ -5,7 +5,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 use Phpactor\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Rpc\Handler\ClassSearchHandler;
-use Phpactor\Application\ClassSearch;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\Input\ListInput;
 use Phpactor\CodeTransform\Domain\SourceCode;

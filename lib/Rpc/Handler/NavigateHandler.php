@@ -2,7 +2,7 @@
 
 namespace Phpactor\Rpc\Handler;
 
-use Phpactor\Application\Navigator;
+use Phpactor\Extension\PathFinder\Application\Navigator;
 use RuntimeException;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Rpc\Response\Input\ConfirmInput;

@@ -5,11 +5,10 @@ namespace Phpactor\Extension\Core;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
-use Phpactor\Application\ClassReflector;
-use Phpactor\Application\ClassSearch;
-use Phpactor\Application\FileInfo;
-use Phpactor\Application\OffsetInfo;
-use Phpactor\Application\Navigator;
+use Phpactor\Extension\WorseReflection\Application\ClassReflector;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\ClassToFile\Application\FileInfo;
+use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
@@ -20,10 +19,10 @@ use Phpactor\ClassMover\ClassMover;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
 use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
-use Phpactor\Console\Command\ClassReflectorCommand;
-use Phpactor\Console\Command\ClassSearchCommand;
-use Phpactor\Console\Command\OffsetInfoCommand;
-use Phpactor\Console\Command\FileInfoCommand;
+use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
+use Phpactor\Extension\SourceCodeFilesystem\Command\ClassSearchCommand;
+use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
+use Phpactor\Extension\ClassToFile\Command\FileInfoCommand;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Console\Dumper\IndentedDumper;
 use Phpactor\Console\Dumper\JsonDumper;
@@ -31,19 +30,17 @@ use Phpactor\Console\Dumper\TableDumper;
 use Phpactor\Console\Prompt\BashPrompt;
 use Phpactor\Console\Prompt\ChainPrompt;
 use Symfony\Component\Console\Application;
-use Phpactor\Console\Command\ConfigDumpCommand;
+use Phpactor\Extension\Core\Command\ConfigDumpCommand;
 use Monolog\Logger;
-use Phpactor\Application\Complete;
-use Phpactor\Console\Command\CompleteCommand;
 use Psr\Log\LogLevel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FingersCrossedHandler;
-use Phpactor\Application\CacheClear;
+use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Core\Command\CacheClearCommand;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
-use Phpactor\Application\Status;
-use Phpactor\Application\StatusCommand;
+use Phpactor\Extension\Core\Application\Status;
+use Phpactor\Extension\Core\Command\StatusCommand;
 use Symfony\Component\Debug\Debug;
 use Phpactor\Extension\Container;
 use Phpactor\Extension\Extension;
@@ -62,7 +59,6 @@ class CoreExtension implements Extension
     const CACHE_DIR = 'cache_dir';
     const LOGGING_ENABLED = 'logging.enabled';
     const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
-    const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
     const AUTOLOAD_DEREGISTER = 'autoload.deregister';
 
     public static $autoloader;
@@ -83,7 +79,6 @@ class CoreExtension implements Extension
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
-            self::NAVIGATOR_AUTOCREATE => [],
         ]);
     }
 
@@ -161,12 +156,6 @@ class CoreExtension implements Extension
             );
         }, [ 'ui.console.command' => []]);
 
-        $container->register('command.complete', function (Container $container) {
-            return new CompleteCommand(
-                $container->get('application.complete'),
-                $container->get('console.dumper_registry')
-            );
-        }, [ 'ui.console.command' => []]);
 
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
@@ -328,21 +317,6 @@ class CoreExtension implements Extension
             return new ClassReflector(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('reflection.reflector')
-            );
-        });
-
-        $container->register('application.complete', function (Container $container) {
-            return new Complete(
-                $container->get('completion.completor'),
-                $container->get('application.helper.class_file_normalizer')
-            );
-        });
-
-        $container->register('application.navigator', function (Container $container) {
-            return new Navigator(
-                $container->get('path_finder.path_finder'),
-                $container->get('application.class_new'),
-                $container->getParameter(self::NAVIGATOR_AUTOCREATE)
             );
         });
 

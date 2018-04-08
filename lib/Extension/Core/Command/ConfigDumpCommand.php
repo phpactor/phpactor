@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\Core\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,6 +9,7 @@ use Phpactor\Console\Dumper\DumperRegistry;
 use Phpactor\Config\ConfigLoader;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Config\Paths;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
 class ConfigDumpCommand extends Command
 {
@@ -44,7 +45,7 @@ class ConfigDumpCommand extends Command
         $this->setName('config:dump');
         $this->setDescription('Show loaded config files and dump current configuration.');
         $this->addOption('config-only', null, InputOption::VALUE_NONE, 'Do not output configuration file locations');
-        Handler\FormatHandler::configure($this);
+        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

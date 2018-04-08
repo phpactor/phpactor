@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Application\Logger;
+namespace Phpactor\Extension\ClassMover\Application\Logger;
 
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\FoundReferences;
