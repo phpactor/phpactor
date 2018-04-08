@@ -45,7 +45,7 @@ class GotoDefinition
         try {
             $class = $this->reflector->reflectClassLike(ClassName::fromString((string) $className));
         } catch (NotFound $e) {
-            throw new GotoDefinitionException($e->getMessage());
+            throw new GotoDefinitionException($e->getMessage(), null, $e);
         }
 
         $path = $class->sourceCode()->path();
