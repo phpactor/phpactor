@@ -29,7 +29,8 @@
         "symfony/process": "^2.7|^3.0",
         "symfony/options-resolver": "^2.7|^3.0",
         "phpbench/phpbench": "^1.0@dev",
-        "phpactor/test-utils": "dev-master"
+        "phpactor/test-utils": "dev-master",
+        "friendsofphp/php-cs-fixer": "^2.12@dev"
     },
     "autoload": {
         "psr-4": {
