@@ -37,7 +37,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
     public function testHandler()
     {
         $action = $this->handle('goto_definition', [
-            'offset' => 790,
+            'offset' => 955,
             'path' => __FILE__,
             'source' => file_get_contents(__FILE__),
         ]);

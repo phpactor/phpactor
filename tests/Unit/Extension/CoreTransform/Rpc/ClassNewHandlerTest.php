@@ -12,6 +12,7 @@ use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ClassNewHandlerTest extends HandlerTestCase
 {

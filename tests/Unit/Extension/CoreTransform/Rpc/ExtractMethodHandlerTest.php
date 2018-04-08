@@ -9,6 +9,7 @@ use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ExtractMethodHandlerTest extends HandlerTestCase
 {

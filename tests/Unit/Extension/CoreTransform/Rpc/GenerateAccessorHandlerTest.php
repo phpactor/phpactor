@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class GenerateAccessorHandlerTest extends HandlerTestCase
 {
