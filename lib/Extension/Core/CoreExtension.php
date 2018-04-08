@@ -53,7 +53,6 @@ use Phpactor\Extension\Container;
 use Phpactor\Extension\Extension;
 use Phpactor\Extension\Schema;
 use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\ClassMover\Application\ClassMover;
 
 class CoreExtension implements Extension
 {

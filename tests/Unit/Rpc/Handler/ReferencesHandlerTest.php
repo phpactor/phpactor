@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 
 use Phpactor\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
-use Phpactor\Rpc\Handler\ReferencesHandler;
+use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CollectionResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -17,6 +17,7 @@ use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Rpc\Response\Input\TextInput;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 class ReferencesHandler extends AbstractHandler
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Rpc\Handler;
+namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
@@ -10,6 +10,7 @@ use Phpactor\Rpc\Response\CollectionResponse;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CloseFileResponse;
 use Phpactor\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Rpc\Handler\AbstractHandler;
 
 class ClassMoveHandler extends AbstractHandler
 {

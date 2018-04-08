@@ -10,7 +10,7 @@ use Phpactor\Application\Logger\ClassMoverLogger;
 use Prophecy\Argument;
 use Phpactor\Rpc\Response\OpenFileResponse;
 use Phpactor\Rpc\Response\Input\TextInput;
-use Phpactor\Rpc\Handler\ClassMoveHandler;
+use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Rpc\Response\EchoResponse;
 use Phpactor\Rpc\Response\CollectionResponse;
