@@ -42,10 +42,10 @@ use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Core\Command\StatusCommand;
 use Symfony\Component\Debug\Debug;
-use Phpactor\Extension\Container;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\Schema;
-use Phpactor\Extension\ContainerBuilder;
+use Phpactor\Container\Container;
+use Phpactor\Container\Extension;
+use Phpactor\Container\Schema;
+use Phpactor\Container\ContainerBuilder;
 
 class CoreExtension implements Extension
 {

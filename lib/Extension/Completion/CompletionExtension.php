@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\Completion;
 
 use Phpactor\Completion\Core\Completor;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Schema;
-use Phpactor\Extension\Container;
+use Phpactor\Container\Extension;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Schema;
+use Phpactor\Container\Container;
 use Phpactor\Extension\Completion\Command\CompleteCommand;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Completion\Adapter\WorseReflection\Completor\WorseClassMemberCompletor;

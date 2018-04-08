@@ -92,7 +92,7 @@ class Application extends SymfonyApplication
 
     private function initialize(InputInterface $input)
     {
-        $this->container = Bootstrap::boot($input);
+        $this->container = Phpactor::boot($input);
 
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
             $this->add($this->container->get($commandId));

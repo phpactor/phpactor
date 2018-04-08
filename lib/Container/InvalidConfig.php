@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension;
+namespace Phpactor\Container;
 
 use Exception;
 

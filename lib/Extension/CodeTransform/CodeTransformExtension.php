@@ -35,10 +35,10 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Container;
-use Phpactor\Extension\Schema;
+use Phpactor\Container\Extension;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Container;
+use Phpactor\Container\Schema;
 
 class CodeTransformExtension implements Extension
 {

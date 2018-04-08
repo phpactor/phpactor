@@ -15,7 +15,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Extension\Container;
+use Phpactor\Container\Container;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {

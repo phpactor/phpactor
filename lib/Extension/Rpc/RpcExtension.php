@@ -30,10 +30,10 @@ use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Container;
-use Phpactor\Extension\Schema;
+use Phpactor\Container\Extension;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Container;
+use Phpactor\Container\Schema;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class RpcExtension implements Extension

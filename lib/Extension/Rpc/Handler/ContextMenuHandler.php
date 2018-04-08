@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Container;
+use Phpactor\Container\Container;
 
 class ContextMenuHandler implements Handler
 {

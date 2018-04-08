@@ -11,10 +11,10 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Container;
-use Phpactor\Extension\Schema;
+use Phpactor\Container\Extension;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Container;
+use Phpactor\Container\Schema;
 
 class SourceCodeFilesystemExtension implements Extension
 {

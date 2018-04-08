@@ -7,10 +7,10 @@ use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\Schema;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Container;
+use Phpactor\Container\Extension;
+use Phpactor\Container\Schema;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
 
 class WorseReflectionExtension implements Extension

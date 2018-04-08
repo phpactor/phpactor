@@ -1,11 +1,13 @@
 <?php
 
-namespace Phpactor\Extension;
+namespace Phpactor\Container;
 
 use Pimple\Container as InnerPimpleContainer;
 use Closure;
 use InvalidArgumentException;
 use RuntimeException;
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
 
 class PhpactorContainer implements Container, ContainerBuilder
 {

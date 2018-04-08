@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Search;
 
-use Phpactor\Extension\Extension;
-use Phpactor\Extension\ContainerBuilder;
-use Phpactor\Extension\Schema;
+use Phpactor\Container\Extension;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Schema;
 
 class SearchExtension implements Extension
 {

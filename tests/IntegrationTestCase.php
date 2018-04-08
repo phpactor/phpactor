@@ -6,9 +6,9 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
-use Phpactor\Bootstrap;
 use Symfony\Component\Console\Input\ArrayInput;
-use Phpactor\Extension\Container;
+use Phpactor\Container\Container;
+use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
@@ -88,6 +88,6 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function container(): Container
     {
-        return Bootstrap::boot(new ArrayInput([]));
+        return Phpactor::boot(new ArrayInput([]));
     }
 }
