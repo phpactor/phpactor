@@ -7,7 +7,6 @@ use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Webmozart\Glob\Glob;
-use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
 
 class ClassInflect extends AbstractClassGenerator
 {

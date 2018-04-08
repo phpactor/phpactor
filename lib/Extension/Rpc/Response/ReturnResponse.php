@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Rpc\Response;
 
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Response\ReturnResponse;
 
 /**
  * Instruct the editor to return the value to the RPC caller.

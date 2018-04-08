@@ -3,7 +3,6 @@
 namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
-use Phpactor\Tests\Unit\Extension\Core\Console\Dumper\DumperTestCase;
 
 class JsonDumperTest extends DumperTestCase
 {

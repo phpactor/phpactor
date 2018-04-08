@@ -2,11 +2,6 @@
 
 namespace Phpactor\Tests\Benchmark;
 
-use Phpactor\Tests\IntegrationTestCase;
-use Phpactor\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
-
 /**
  * @BeforeMethods({"setUp"})
  * @Iterations(10)

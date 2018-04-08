@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Rpc\Response;
 
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
 
 /**
  * Instruct the editor to return the options to the RPC caller.

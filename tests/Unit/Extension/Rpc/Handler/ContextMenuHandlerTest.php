@@ -5,7 +5,6 @@ namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;

@@ -2,14 +2,9 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
-use Phpactor\WorseReflection\Core\SourceCodeLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -80,7 +75,7 @@ EOT
             'class_name' => 'ChildClass',
             'method_name' => 'foobar',
             'path' => __FILE__,
-            'source' => $source 
+            'source' => $source
         ]);
 
         $this->assertInstanceOf(ReplaceFileSourceResponse::class, $action);

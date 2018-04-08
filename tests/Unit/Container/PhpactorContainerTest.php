@@ -7,7 +7,6 @@ use RuntimeException;
 use Phpactor\Container\PhpactorContainer;
 use stdClass;
 use Phpactor\Container\Container;
-use InvalidArgumentException;
 
 class PhpactorContainerTest extends TestCase
 {
@@ -98,5 +97,4 @@ class PhpactorContainerTest extends TestCase
         $this->assertInstanceOf(Container::class, $container);
         $this->assertEquals('goodbye', $container->getParameter('hello'));
     }
-
 }

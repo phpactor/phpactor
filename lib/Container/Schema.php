@@ -2,9 +2,6 @@
 
 namespace Phpactor\Container;
 
-use Phpactor\Container\InvalidConfig;
-use Phpactor\Container\Schema;
-
 class Schema
 {
     /**

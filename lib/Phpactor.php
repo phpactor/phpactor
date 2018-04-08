@@ -2,10 +2,7 @@
 
 namespace Phpactor;
 
-use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
-use Symfony\Component\Yaml\Yaml;
-use Phpactor\Application;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
@@ -48,7 +45,9 @@ class Phpactor
         $container = new PhpactorContainer();
         // TODO: Put this in core ext??
 
-        $container->register('config.paths', function () { return new Paths(); });
+        $container->register('config.paths', function () {
+            return new Paths();
+        });
 
         // > method resolve config
         $masterSchema = new Schema();
@@ -59,7 +58,8 @@ class Phpactor
             if (!$extension instanceof Extension) {
                 throw new RuntimeException(sprintf(
                     'Phpactor extension "%s" must implement interface "%s"',
-                    get_class($extension), Extension::class
+                    get_class($extension),
+                    Extension::class
                 ));
             }
 

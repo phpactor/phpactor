@@ -3,7 +3,6 @@
 namespace Phpactor\Container;
 
 use Closure;
-use Phpactor\Container\Container;
 
 interface ContainerBuilder
 {

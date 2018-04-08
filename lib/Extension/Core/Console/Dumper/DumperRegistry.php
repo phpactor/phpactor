@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\Core\Console\Dumper;
 
-use Phpactor\Extension\Core\Console\Dumper\Dumper;
-
 final class DumperRegistry
 {
     private $default;

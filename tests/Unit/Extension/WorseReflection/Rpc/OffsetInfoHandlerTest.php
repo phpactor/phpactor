@@ -3,8 +3,6 @@
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;

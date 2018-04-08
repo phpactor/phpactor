@@ -33,8 +33,7 @@ class RpcCommand extends Command
         RequestHandler $handler,
         Paths $paths,
         bool $storeReplay = false
-    )
-    {
+    ) {
         parent::__construct();
         $this->handler = $handler;
         $this->paths = $paths;
@@ -109,7 +108,8 @@ class RpcCommand extends Command
         $path = $this->replayPath();
         if (false === file_exists($path)) {
             throw new RuntimeException(sprintf(
-                'Replace file does not exist at "%s"', $path
+                'Replace file does not exist at "%s"',
+                $path
             ));
         }
 

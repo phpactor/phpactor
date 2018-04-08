@@ -4,11 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Core\Application\Status;
-use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
-use Phpactor\Config\ConfigLoader;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 
 class ConfigHandlerTest extends HandlerTestCase

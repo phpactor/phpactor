@@ -4,7 +4,6 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
-use Phpactor\Extension\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
@@ -107,7 +106,6 @@ class ImportClassHandler extends AbstractHandler
                 $arguments[self::PARAM_ALIAS]
             );
         } catch (NameAlreadyUsedException $e) {
-
             if ($e instanceof ClassAlreadyImportedException && $e->existingName() === $arguments[self::PARAM_QUALIFIED_NAME]) {
                 return EchoResponse::fromMessage(sprintf(
                     'Class "%s" is already imported',

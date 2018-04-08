@@ -4,7 +4,6 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
 use Webmozart\Glob\Glob;
-use Phpactor\Extension\CodeTransform\Rpc\AbstractClassGenerateHandler;
 
 class ClassInflectHandler extends AbstractClassGenerateHandler
 {

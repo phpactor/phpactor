@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Rpc\Response;
 
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Response\ErrorResponse;
 
 class ErrorResponse implements Response
 {

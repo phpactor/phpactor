@@ -3,8 +3,6 @@
 namespace Phpactor\Extension\Core;
 
 use Composer\Autoload\ClassLoader;
-use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
 use Phpactor\Extension\WorseReflection\Application\ClassReflector;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\ClassToFile\Application\FileInfo;
@@ -15,10 +13,7 @@ use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
 use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\ClassMover\ClassMover;
 use Phpactor\Filesystem\Domain\Cwd;
-use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
-use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
 use Phpactor\Extension\SourceCodeFilesystem\Command\ClassSearchCommand;
 use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
@@ -41,7 +36,6 @@ use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Core\Command\StatusCommand;
-use Symfony\Component\Debug\Debug;
 use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
 use Phpactor\Container\Schema;

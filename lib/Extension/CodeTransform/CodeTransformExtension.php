@@ -22,7 +22,6 @@ use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Util\TextFormat;
-use Phpactor\Config\ConfigLoader;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
@@ -32,7 +31,6 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariabl
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\Config\Paths;
 use Phpactor\Container\Extension;

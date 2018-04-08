@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\Rpc\Response\Input;
 
-use Phpactor\Extension\Rpc\Response\Input\Input;
-
 class TextInput implements Input
 {
     /**

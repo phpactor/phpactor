@@ -15,7 +15,8 @@ class CacheClearTest extends IntegrationTestCase
     public function setUp()
     {
         $this->workspace()->reset();
-        $this->workspace()->loadManifest(<<<'EOT'
+        $this->workspace()->loadManifest(
+            <<<'EOT'
 // File: test.text
 Hello World
 // File: folder/test.text

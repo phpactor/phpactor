@@ -2,9 +2,6 @@
 
 namespace Phpactor\Container;
 
-use PhpBench\DependencyInjection\ExtensionInterface;
-use Phpactor\Container\ContainerBuilder;
-
 interface Extension
 {
     /**

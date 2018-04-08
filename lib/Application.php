@@ -3,16 +3,13 @@
 namespace Phpactor;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
-use Phpactor\Phpactor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Phpactor\Container\Container;
-use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Bootstrap;
 
 class Application extends SymfonyApplication
 {

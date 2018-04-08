@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;

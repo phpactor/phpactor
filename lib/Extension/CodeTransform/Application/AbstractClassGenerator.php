@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\CodeTransform\Application;
 
-use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Filesystem\Domain\FilePath;

@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Extension\CodeTransform\Rpc\AbstractClassGenerateHandler;
-
 class ClassNewHandler extends AbstractClassGenerateHandler
 {
     const NAME = 'class_new';

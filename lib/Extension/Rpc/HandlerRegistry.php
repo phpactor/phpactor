@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
-
 class HandlerRegistry
 {
     private $handlers = [];

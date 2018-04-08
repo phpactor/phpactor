@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Rpc\Response;
 
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Response\InformationResponse;
 
 final class InformationResponse implements Response
 {

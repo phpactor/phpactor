@@ -8,7 +8,6 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class NavigateHandler extends AbstractHandler
 {

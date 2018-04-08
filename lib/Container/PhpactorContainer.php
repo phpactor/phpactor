@@ -2,12 +2,8 @@
 
 namespace Phpactor\Container;
 
-use Pimple\Container as InnerPimpleContainer;
 use Closure;
-use InvalidArgumentException;
 use RuntimeException;
-use Phpactor\Container\Container;
-use Phpactor\Container\ContainerBuilder;
 
 class PhpactorContainer implements Container, ContainerBuilder
 {
@@ -79,7 +75,6 @@ class PhpactorContainer implements Container, ContainerBuilder
         $this->factories[$serviceId] = $factory;
 
         foreach ($tags as $tagName => $tagAttrs) {
-
             if (false === isset($this->tags[$tagName])) {
                 $this->tags[$tagName] = [];
             }
@@ -93,7 +88,8 @@ class PhpactorContainer implements Container, ContainerBuilder
         if (!isset($this->parameters[$name])) {
             throw new RuntimeException(sprintf(
                 'Unknown parameter "%s", known parameters "%s"',
-                $name, implode('", "', array_keys($this->parameters))
+                $name,
+                implode('", "', array_keys($this->parameters))
             ));
         }
 

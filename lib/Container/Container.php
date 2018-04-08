@@ -3,7 +3,6 @@
 namespace Phpactor\Container;
 
 use Psr\Container\ContainerInterface;
-use Closure;
 
 interface Container extends ContainerInterface
 {
