@@ -9,19 +9,21 @@ use Phpactor\Extension\Schema;
 use Phpactor\Extension\Extension;
 use RuntimeException;
 use Phpactor\Config\Paths;
+use Symfony\Component\Console\Input\InputInterface;
+use Phpactor\Extension\Container;
 
 class Bootstrap
 {
-    public function boot(): Application
+    public static function boot(InputInterface $input): Container
     {
         $config = [];
 
-        //if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-        //    $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
-        //}
-
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
+
+        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
+            $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
 
         $extensionNames = [
             CoreExtension::class,
@@ -34,8 +36,11 @@ class Bootstrap
         ];
 
         $container = new PhpactorContainer();
+        // TODO: Put this in core ext??
+
         $container->register('config.paths', function () { return new Paths(); });
 
+        // > method resolve config
         $masterSchema = new Schema();
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
@@ -52,20 +57,13 @@ class Bootstrap
             $extensions[] = $extension;
             $masterSchema = $masterSchema->merge($schema);
         }
-
         $config = $masterSchema->resolve($config);
 
+        // > method configure container
         foreach ($extensions as $extension) {
             $extension->load($container);
         }
 
-        $container = $container->build($config);
-        $application = new Application();
-
-        foreach ($container->getServiceIdsForTag('ui.console.command') as $serviceId => $serviceAttrs) {
-            $application->add($container->get($serviceId));
-        }
-
-        return $application;
+        return $container->build($config);
     }
 }

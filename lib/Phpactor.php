@@ -10,12 +10,6 @@ use Phpactor\Container\Bootstrap;
 
 class Phpactor
 {
-    public function boot(): Application
-    {
-        $boostrap = new Bootstrap();
-        return $boostrap->boot();
-    }
-
     /**
      * If the path is relative we need to use the current working path
      * because otherwise it will be the script path, which is wrong in the

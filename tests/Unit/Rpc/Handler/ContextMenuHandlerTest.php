@@ -5,7 +5,6 @@ namespace Phpactor\Tests\Unit\Rpc\Handler;
 use Phpactor\Rpc\Handler;
 use Phpactor\Rpc\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
-use PhpBench\DependencyInjection\Container;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Rpc\Response\EchoResponse;
@@ -16,6 +15,7 @@ use Phpactor\Container\RpcExtension;
 use Phpactor\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Extension\Container;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {

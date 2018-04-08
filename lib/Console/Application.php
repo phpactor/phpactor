@@ -12,6 +12,7 @@ use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
+use Phpactor\Container\Bootstrap;
 
 class Application extends SymfonyApplication
 {
@@ -27,6 +28,8 @@ class Application extends SymfonyApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->initialize($input);
+
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
@@ -85,5 +88,14 @@ class Application extends SymfonyApplication
             'code' => $e->getCode(),
             'message' => $e->getMessage(),
         ];
+    }
+
+    private function initialize(InputInterface $input)
+    {
+        $this->container = Bootstrap::boot($input);
+
+        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
+            $this->add($this->container->get($commandId));
+        }
     }
 }

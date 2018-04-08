@@ -6,6 +6,9 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
+use Phpactor\Container\Bootstrap;
+use Symfony\Component\Console\Input\ArrayInput;
+use Phpactor\Extension\Container;
 
 abstract class IntegrationTestCase extends TestCase
 {
@@ -81,5 +84,10 @@ abstract class IntegrationTestCase extends TestCase
         exec('composer install --quiet');
         chdir($currentDir);
         $this->cacheWorkspace($name);
+    }
+
+    protected function container(): Container
+    {
+        return Bootstrap::boot(new ArrayInput([]));
     }
 }

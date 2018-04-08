@@ -288,9 +288,7 @@ EOT
 
     private function complete(string $source, $offset)
     {
-        $container = new ApplicationContainer();
-        $container->init();
-        $complete = $container->get('application.complete');
+        $complete = $this->container()->get('application.complete');
         $result =$complete->complete($source, $offset);
 
         return $result;

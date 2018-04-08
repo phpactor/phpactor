@@ -6,6 +6,8 @@ use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Tests\IntegrationTestCase;
+use Phpactor\Container\Bootstrap;
+use Phpactor\Extension\InvalidConfig;
 
 class ApplicationTest extends IntegrationTestCase
 {
@@ -14,13 +16,15 @@ class ApplicationTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @testdox It should throw an exception when an invalid configuration key is present.
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown configuration
-     */
+    public function application()
+    {
+        return Bootstrap::createApplication();
+    }
+
     public function testConfig()
     {
+        $this->expectException(InvalidConfig::class);
+        $this->expectExceptionMessage('Keys "foobar_invalid" are not known');
         file_put_contents(
             $this->workspaceDir() . '/.phpactor.yml',
             <<<'EOT'
