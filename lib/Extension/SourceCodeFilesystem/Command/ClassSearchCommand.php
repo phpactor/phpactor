@@ -7,10 +7,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Console\Command\Handler\FormatHandler;
-use Phpactor\Console\Command\Handler\FilesystemHandler;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ClassSearchCommand extends Command
 {

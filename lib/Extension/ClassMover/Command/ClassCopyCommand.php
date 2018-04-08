@@ -9,7 +9,7 @@ use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Console\Prompt\Prompt;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
 
 class ClassCopyCommand extends Command
 {

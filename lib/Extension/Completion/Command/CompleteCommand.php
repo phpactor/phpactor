@@ -6,10 +6,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
-use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class CompleteCommand extends Command
 {

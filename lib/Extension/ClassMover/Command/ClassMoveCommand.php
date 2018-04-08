@@ -9,9 +9,9 @@ use Phpactor\Extension\ClassMover\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Console\Prompt\Prompt;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Console\Command\Handler\FilesystemHandler;
+use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ClassMoveCommand extends Command
 {

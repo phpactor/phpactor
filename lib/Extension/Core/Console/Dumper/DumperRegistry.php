@@ -1,6 +1,8 @@
 <?php
 
-namespace Phpactor\Console\Dumper;
+namespace Phpactor\Extension\Core\Console\Dumper;
+
+use Phpactor\Extension\Core\Console\Dumper\Dumper;
 
 final class DumperRegistry
 {

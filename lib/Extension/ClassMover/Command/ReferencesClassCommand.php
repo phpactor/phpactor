@@ -4,17 +4,17 @@ namespace Phpactor\Extension\ClassMover\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
-use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
-use Phpactor\Console\Formatter\Highlight;
+use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Console\Command\Handler\FilesystemHandler;
-use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ReferencesClassCommand extends Command
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Prompt;
+namespace Phpactor\Extension\Core\Console\Prompt;
 
 /**
  * Prompt the user for a value, ideally prefilling the prompt.

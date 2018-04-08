@@ -7,8 +7,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Extension\WorseReflection\Application\ClassReflector;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Console\Dumper\DumperRegistry;
-use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassReflectorCommand extends Command
 {

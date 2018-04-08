@@ -8,8 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
-use Phpactor\Console\Dumper\DumperRegistry;
-use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class OffsetInfoCommand extends Command
 {

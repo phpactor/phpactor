@@ -1,9 +1,10 @@
 <?php
 
-namespace Phpactor\Console\Dumper;
+namespace Phpactor\Extension\Core\Console\Dumper;
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
+use Phpactor\Extension\Core\Console\Dumper\Dumper;
 
 final class TableDumper implements Dumper
 {

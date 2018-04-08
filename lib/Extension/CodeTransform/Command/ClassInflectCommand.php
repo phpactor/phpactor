@@ -10,11 +10,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Question\Question;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
-use Phpactor\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
-use Phpactor\Console\Command\Handler\FormatHandler;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassInflectCommand extends Command
 {

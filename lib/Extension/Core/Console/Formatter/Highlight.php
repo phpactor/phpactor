@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Formatter;
+namespace Phpactor\Extension\Core\Console\Formatter;
 
 class Highlight
 {

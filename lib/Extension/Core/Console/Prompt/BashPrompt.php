@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Console\Prompt;
+namespace Phpactor\Extension\Core\Console\Prompt;
 
 use Symfony\Component\Process\ExecutableFinder;
 
