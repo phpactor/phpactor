@@ -16,6 +16,7 @@ use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\PathFinder\PathFinderExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\ClassMover\ClassMoverExtension;
 
 class Bootstrap
 {
@@ -32,6 +33,7 @@ class Bootstrap
 
         $extensionNames = [
             CoreExtension::class,
+            ClassMoverExtension::class,
             CodeTransformExtension::class,
             CompletionExtension::class,
             PathFinderExtension::class,

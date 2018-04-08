@@ -1,25 +1,27 @@
 <?php
 
-namespace Phpactor\Console\Command;
+namespace Phpactor\Extension\ClassMover\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\Console\Formatter\Highlight;
-use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Console\Command\Handler\FilesystemHandler;
+use Phpactor\Console\Command\Handler\FormatHandler;
 
-class ReferencesMemberCommand extends Command
+class ReferencesClassCommand extends Command
 {
     /**
-     * @var ClassMemberReferences
+     * @var ClassReferences
      */
-    private $memberReferences;
+    private $referenceFinder;
 
     /**
      * @var DumperRegistry
@@ -27,44 +29,38 @@ class ReferencesMemberCommand extends Command
     private $dumperRegistry;
 
     public function __construct(
-        ClassMemberReferences $memberReferences,
+        ClassReferences $referenceFinder,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->memberReferences = $memberReferences;
+        $this->referenceFinder = $referenceFinder;
         $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure()
     {
-        $this->setName('references:member');
-        $this->setDescription('Find reference to a member');
-        $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
-        $this->addArgument('member', InputArgument::OPTIONAL, 'Method');
-        $this->addOption('type', null, InputOption::VALUE_REQUIRED, 'Member type (constant, property or member)');
-        $this->addOption('risky', null, InputOption::VALUE_NONE, 'Show risky references (matching member with unknown class');
-        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
+        $this->setName('references:class');
+        $this->setDescription('Find and/or replace references for a given path or FQN');
+        $this->addArgument('class', InputArgument::REQUIRED, 'Class path or FQN');
+        $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
-        Handler\FormatHandler::configure($this);
-        Handler\FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
+        FormatHandler::configure($this);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
-    public function execute(InputInterface $input, OutputInterface $output, $bar = null)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $class = $input->getArgument('class');
-        $member = $input->getArgument('member');
-        $format = $input->getOption('format');
         $replace = $input->getOption('replace');
         $dryRun = $input->getOption('dry-run');
-        $risky = $input->getOption('risky');
-        $memberType = $input->getOption('type');
+        $format = $input->getOption('format');
         $filesystem = $input->getOption('filesystem');
-
-        $results = $this->memberReferences->findOrReplaceReferences($filesystem, $class, $member, $memberType, $replace, $dryRun);
 
         if ($replace && $dryRun) {
             $output->writeln('<info># DRY RUN</> No files will be modified');
         }
+
+        $results = $this->findOrReplaceReferences($filesystem, $class, $replace, $dryRun);
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
@@ -74,18 +70,6 @@ class ReferencesMemberCommand extends Command
         $output->writeln('<comment># References:</>');
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
-        if ($risky) {
-            $output->write(PHP_EOL);
-            $output->writeln('<comment># Risky (unknown classes):</>');
-            $riskyCount = $this->renderTable($output, $results, 'risky_references', $output->isDecorated());
-        } else {
-            $riskyCount = array_reduce($results, function ($acc, $result) {
-                return $acc += array_reduce($result, function ($acc, $result) {
-                    return $acc += count($result['risky_references']);
-                }, 0);
-            }, 0);
-        }
-
         if ($replace) {
             $output->write(PHP_EOL);
             $output->writeln('<comment># Replacements:</>');
@@ -93,7 +77,16 @@ class ReferencesMemberCommand extends Command
         }
 
         $output->write(PHP_EOL);
-        $output->writeln(sprintf('%s reference(s), %s risky references', $count, $riskyCount));
+        $output->writeln(sprintf('%s reference(s)', $count));
+    }
+
+    private function findOrReplaceReferences($filesystem, $class, $replace, $dryRun)
+    {
+        if ($replace) {
+            return $this->referenceFinder->replaceReferences($filesystem, $class, $replace, $dryRun);
+        }
+
+        return $this->referenceFinder->findReferences($filesystem, $class);
     }
 
     private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)

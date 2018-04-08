@@ -190,7 +190,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReturnNoneFound();',
-            'offset' => 86,
+            'offset' => 104,
             'filesystem' => 'git',
         ]);
 
@@ -223,7 +223,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
-            'offset' => 86,
+            'offset' => 104,
             'filesystem' => 'git',
         ]);
 
@@ -266,7 +266,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
-            'offset' => 86,
+            'offset' => 104,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
         ]);
@@ -291,7 +291,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
-            'offset' => 86,
+            'offset' => 104,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
             'replacement' => $replacement,
@@ -310,7 +310,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
-            'offset' => 86,
+            'offset' => 104,
             'filesystem' => 'git',
         ]);
 

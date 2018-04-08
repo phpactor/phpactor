@@ -15,7 +15,10 @@ use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Extension\ContainerBuilder;
 use Phpactor\Extension\Extension;
 use Phpactor\Extension\Schema;
-use Phpactor\Extension\ClassMover\Application\ClassMover;
+use Phpactor\Extension\Container;
+use Phpactor\Extension\ClassMover\Command\ReferencesMemberCommand;
+use Phpactor\Extension\ClassMover\Command\ReferencesClassCommand;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 
 class ClassMoverExtension implements Extension
 {
