@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\UserInterface\Console\Prompt;
+namespace Phpactor\Tests\Unit\Extension\Core\Console\Prompt;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;

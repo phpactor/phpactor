@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\Tests\Unit\UserInterface\Console\Dumper;
+namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
+use Phpactor\Tests\Unit\Extension\Core\Console\Dumper\DumperTestCase;
 
 class IndentedDumperTest extends DumperTestCase
 {

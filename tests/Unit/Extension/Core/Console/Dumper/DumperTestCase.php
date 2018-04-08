@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\UserInterface\Console\Dumper;
+namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
