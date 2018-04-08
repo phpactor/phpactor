@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Handler\NavigateHandler;
@@ -11,6 +11,7 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class NavigateHandlerTest extends HandlerTestCase
 {

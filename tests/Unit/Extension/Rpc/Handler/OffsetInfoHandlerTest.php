@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {

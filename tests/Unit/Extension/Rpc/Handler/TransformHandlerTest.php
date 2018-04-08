@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Transformer;
@@ -11,6 +11,7 @@ use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class TransformHandlerTest extends HandlerTestCase
 {

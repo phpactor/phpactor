@@ -16,7 +16,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\CloseFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;

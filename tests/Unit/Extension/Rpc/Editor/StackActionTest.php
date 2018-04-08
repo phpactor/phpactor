@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Editor;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Editor;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Response;

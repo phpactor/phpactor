@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\RequestHandler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\RequestHandler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\RequestHandler;

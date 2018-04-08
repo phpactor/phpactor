@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Rpc\Handler;

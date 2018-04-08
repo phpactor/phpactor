@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
@@ -10,6 +10,7 @@ use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class RenameVariableHandlerTest extends HandlerTestCase
 {

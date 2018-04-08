@@ -11,7 +11,7 @@ use Prophecy\Argument;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ClassCopyHandlerTest extends HandlerTestCase
 {

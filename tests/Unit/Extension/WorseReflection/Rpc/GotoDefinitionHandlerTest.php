@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Tests\Unit\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
 
 class GotoDefinitionHandlerTest extends HandlerTestCase

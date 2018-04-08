@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Rpc\Response;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Response;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Response\ErrorResponse;
