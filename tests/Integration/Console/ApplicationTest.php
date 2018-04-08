@@ -6,7 +6,7 @@ use Phpactor\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Tests\IntegrationTestCase;
-use Phpactor\Container\Bootstrap;
+use Phpactor\Bootstrap;
 use Phpactor\Extension\InvalidConfig;
 
 class ApplicationTest extends IntegrationTestCase

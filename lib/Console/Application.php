@@ -12,7 +12,7 @@ use Phpactor\Container\ApplicationContainer;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Container\Bootstrap;
+use Phpactor\Bootstrap;
 
 class Application extends SymfonyApplication
 {

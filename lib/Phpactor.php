@@ -6,7 +6,7 @@ use XdgBaseDir\Xdg;
 use Webmozart\PathUtil\Path;
 use Symfony\Component\Yaml\Yaml;
 use Phpactor\Console\Application;
-use Phpactor\Container\Bootstrap;
+use Phpactor\Bootstrap;
 
 class Phpactor
 {

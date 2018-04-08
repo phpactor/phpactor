@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
-use Phpactor\Container\Bootstrap;
+use Phpactor\Bootstrap;
 use Symfony\Component\Console\Input\ArrayInput;
 use Phpactor\Extension\Container;
 
