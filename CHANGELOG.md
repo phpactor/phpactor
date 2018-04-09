@@ -6,6 +6,7 @@ Changelog
 Features:
 
    - [VIM Plugin] `g:phpactorBranch` can be used to set the update branch.
+   - [WorseReflection] Support parenthesised expressions (i.e. complete for `(new Foobar())->`), #279
 
 Improvements:
 
