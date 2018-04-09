@@ -3,8 +3,16 @@ Changelog
 
 ## Develop
 
-   - [Application] Large restructuring of code, almost everything is now in an extension.
+Features:
+
    - [VIM Plugin] `g:phpactorBranch` can be used to set the update branch.
+
+Improvements:
+
+   - [Application] Large restructuring of code, almost everything is now in an extension.
+   - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
+   - [WorseReflection] All class members implement common interface, fixes
+     #283
 
 ## Master
 
@@ -22,7 +30,6 @@ Bug fixes:
      of the last before the offset.
    - [Completion] Used `Type#__toString` to reflect class.
    - [CodeBuilder] Extract method rewrites arguments #361
-   - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
 
 Improvements:
    
