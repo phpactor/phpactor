@@ -18,6 +18,7 @@ Improvements:
 Bugfixes:
 
    - [SourceCodeFilesystem] Support symlinks in vendor dir #396
+   - [WorseReflection] trait lists were not being correctly interpreted #320
 
 ## Master
 
