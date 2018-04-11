@@ -829,12 +829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "cf17d58909a37a3b02b31209a810b02d6096d26e"
+                "reference": "1cd5e6eebdf7eecd2106d7840b8720221e9603e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/cf17d58909a37a3b02b31209a810b02d6096d26e",
-                "reference": "cf17d58909a37a3b02b31209a810b02d6096d26e",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/1cd5e6eebdf7eecd2106d7840b8720221e9603e7",
+                "reference": "1cd5e6eebdf7eecd2106d7840b8720221e9603e7",
                 "shasum": ""
             },
             "require": {
@@ -866,7 +866,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2018-01-01T15:57:16+00:00"
+            "time": "2018-04-11T11:06:12+00:00"
         },
         {
             "name": "phpactor/worse-reflection",

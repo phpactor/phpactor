@@ -12,6 +12,7 @@ Features:
 
 Bug fixes:
 
+   - [SourceCodeFilesystem] Support symlinks in vendor dir #396
    - [Dockblock] Tolerate extra spaces, fixes #365
    - [Completion] Was using the type of the first declared variable, instead
      of the last before the offset.
