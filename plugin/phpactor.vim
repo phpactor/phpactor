@@ -8,10 +8,19 @@
 
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
-let g:phpactorPhpBin = 'php'
 let g:phpactorInitialCwd = getcwd()
-let g:phpactorBranch = 'master'
-let g:phpactorOmniError = v:false
+
+if !exists('g:phpactorPhpBin')
+    let g:phpactorPhpBin = 'php'
+endif 
+
+if !exists('g:phpactorBranch')
+    let g:phpactorBranch = 'master'
+endif
+
+if !exists('g:phpactorOmniError')
+    let g:phpactorOmniError = v:false
+endif
 
 """""""""""""""""
 " Update Phpactor

@@ -17,6 +17,7 @@ Improvements:
    - [VIM Plugin] Disable the omni-complete errors by default, as this breaks
      the assumptions of some auto-complete managers (set
      `g:phpactorOmniError` to `v:true` to enable again), fixes #370.
+   - [VIM Plugin] Only define settings if not already set.
 
 Bugfixes:
 
