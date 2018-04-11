@@ -1,13 +1,24 @@
-*phpactor* *phpactor.txt* PHP introspection tools
+*phpactor* *phpactor.txt* PHP completion and refactoring tool
 
                           PHPACTOR REFERENCE MANUAL~
 
-1. Installation                 |phpactor-installation|
-2. Updating                     |phpactor-updating|
-3. Mappings                     |phpactor-mappings|
-4. Requirements                 |phpactor-requirements|
-5. Completion                   |phpactor-completion|
-6. Context Menu                 |phpactor-context-menu|
+
+1. Introduction                 phpactor-introduction
+2. Installation                 |phpactor-installation|
+3. Updating                     |phpactor-updating|
+4. Mappings                     |phpactor-mappings|
+5. Configuration                phpactor-configuration
+6. Requirements                 |phpactor-requirements|
+7. Completion                   |phpactor-completion|
+8. Context Menu                 |phpactor-context-menu|
+
+================================================================================
+                                                            *phpactor-introduction*
+Phpactor is a completion and refactoring tool for PHP. This help file
+documents the VIM plugin. To see _all_ of the documentation, visit the
+website:
+
+    https://phpactor.github.io/phpactor/
 
 ================================================================================
                                                             *phpactor-installation*
@@ -76,6 +87,17 @@ copy the following configuration into your .vimrc:
 `vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>`
 
 See the Refactorings chapter for more functions you can map shortcuts to.
+
+================================================================================
+CONFIGURATION                                            *phpactor-configuration*
+
+The plugin has some configuration options:
+
+- `g:phpactorPhpBin`: PHP executable to use.
+- `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
+  bleeding edge).
+- `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
+  completion is invoked.
 
 ================================================================================
 REQUIREMENTS                                               *phpactor-requirements*

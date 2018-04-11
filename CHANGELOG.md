@@ -14,6 +14,9 @@ Improvements:
    - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
    - [WorseReflection] All class members implement common interface, fixes
      #283
+   - [VIM Plugin] Disable the omni-complete errors by default, as this breaks
+     the assumptions of some auto-complete managers (set
+     `g:phpactorOmniError` to `v:true` to enable again), fixes #370.
 
 Bugfixes:
 

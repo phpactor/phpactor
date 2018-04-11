@@ -11,6 +11,7 @@ let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorPhpBin = 'php'
 let g:phpactorInitialCwd = getcwd()
 let g:phpactorBranch = 'master'
+let g:phpactorOmniError = v:false
 
 """""""""""""""""
 " Update Phpactor
@@ -69,7 +70,9 @@ function! phpactor#Complete(findstart, base)
     endif
 
     if !empty(issues)
-        echoe join(issues, ', ')
+        if g:phpactorOmniError
+            echoe join(issues, ', ')
+        endif
     endif
 
     return completions

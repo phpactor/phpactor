@@ -76,10 +76,6 @@ need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the 
 If you are feeling dangerous, you may choose to track the `develop` branch,
 by specifying a branch name in your `.vimrc`:
 
-```vim
-let g:phpactorBranch = "develop"
-```
-
 Keyboard Mappings
 -----------------
 
@@ -116,6 +112,23 @@ your `.vimrc` to change the PHP binary:
 ```
 let g:phpactorPhpBin = "/usr/bin/local/php6.0"
 ```
+
+Configuration
+-------------
+
+The plugin has some configuration options:
+
+```
+let g:phpactorPhpBin = 'php'
+let g:phpactorBranch = 'master'
+let g:phpactorOmniError = v:false
+```
+
+- `g:phpactorPhpBin`: PHP executable to use.
+- `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
+  bleeding edge).
+- `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
+  completion is invoked.
 
 Completion
 ----------
