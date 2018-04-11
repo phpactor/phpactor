@@ -18,6 +18,7 @@ Bug fixes:
      of the last before the offset.
    - [Completion] Used `Type#__toString` to reflect class.
    - [CodeBuilder] Extract method rewrites arguments #361
+   - [VimPlugin] Fixed goto definition, #398
 
 Improvements:
    
