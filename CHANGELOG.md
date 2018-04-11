@@ -15,6 +15,10 @@ Improvements:
    - [WorseReflection] All class members implement common interface, fixes
      #283
 
+Bugfixes:
+
+   - [SourceCodeFilesystem] Support symlinks in vendor dir #396
+
 ## Master
 
 Features:
