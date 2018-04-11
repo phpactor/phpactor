@@ -168,12 +168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "464b5feb7c005a39414e3e17499dd90ac6a7df4c"
+                "reference": "0ae9b6019e78ec667b2c87d10822af89f707fd1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/464b5feb7c005a39414e3e17499dd90ac6a7df4c",
-                "reference": "464b5feb7c005a39414e3e17499dd90ac6a7df4c",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/0ae9b6019e78ec667b2c87d10822af89f707fd1d",
+                "reference": "0ae9b6019e78ec667b2c87d10822af89f707fd1d",
                 "shasum": ""
             },
             "require": {
@@ -214,7 +214,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2018-04-02T03:22:37+00:00"
+            "time": "2018-04-11T05:15:14+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -874,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "cc4004e0375539726a5f709216e995eb9fe4c9d3"
+                "reference": "8c5269ada896c556652e318e8be9da4665350112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/cc4004e0375539726a5f709216e995eb9fe4c9d3",
-                "reference": "cc4004e0375539726a5f709216e995eb9fe4c9d3",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8c5269ada896c556652e318e8be9da4665350112",
+                "reference": "8c5269ada896c556652e318e8be9da4665350112",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-09T16:58:56+00:00"
+            "time": "2018-04-11T19:33:30+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2849,12 +2849,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6"
+                "reference": "4f21a3c6b97c42952fd5c2837bb354ec0199b97b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6",
-                "reference": "8995bf5440fcdadd77522ae7ba577d2aa7ffaaa6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4f21a3c6b97c42952fd5c2837bb354ec0199b97b",
+                "reference": "4f21a3c6b97c42952fd5c2837bb354ec0199b97b",
                 "shasum": ""
             },
             "require": {
@@ -2925,7 +2925,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-07T13:03:22+00:00"
+            "time": "2018-04-10T11:38:34+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
