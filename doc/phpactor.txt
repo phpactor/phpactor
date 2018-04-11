@@ -3,11 +3,11 @@
                           PHPACTOR REFERENCE MANUAL~
 
 
-1. Introduction                 phpactor-introduction
+1. Introduction                 |phpactor-introduction|
 2. Installation                 |phpactor-installation|
 3. Updating                     |phpactor-updating|
 4. Mappings                     |phpactor-mappings|
-5. Configuration                phpactor-configuration
+5. Configuration                |phpactor-configuration|
 6. Requirements                 |phpactor-requirements|
 7. Completion                   |phpactor-completion|
 8. Context Menu                 |phpactor-context-menu|
