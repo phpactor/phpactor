@@ -874,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "5a1da7bf403f02380dbfa253888f38f7588cb420"
+                "reference": "6c95ef90144fd43eaca9b38a5637170f05ad0243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/5a1da7bf403f02380dbfa253888f38f7588cb420",
-                "reference": "5a1da7bf403f02380dbfa253888f38f7588cb420",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/6c95ef90144fd43eaca9b38a5637170f05ad0243",
+                "reference": "6c95ef90144fd43eaca9b38a5637170f05ad0243",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-14T10:19:42+00:00"
+            "time": "2018-04-14T11:14:43+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2002,12 +2002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "b85d9743a9e1714fda7c8433b1440934f0ba5e9e"
+                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b85d9743a9e1714fda7c8433b1440934f0ba5e9e",
-                "reference": "b85d9743a9e1714fda7c8433b1440934f0ba5e9e",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2729f42b9a89ba0074fc0cdba56d6843a1e69741",
+                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2090,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-14T09:38:54+00:00"
+            "time": "2018-04-14T11:10:05+00:00"
         },
         {
             "name": "myclabs/deep-copy",
