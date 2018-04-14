@@ -222,12 +222,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "1b21a068695dd8b16199307f7abf8436f170d191"
+                "reference": "14cd7fc017d6a079466b61ddefaa5de7455cbcb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/1b21a068695dd8b16199307f7abf8436f170d191",
-                "reference": "1b21a068695dd8b16199307f7abf8436f170d191",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/14cd7fc017d6a079466b61ddefaa5de7455cbcb8",
+                "reference": "14cd7fc017d6a079466b61ddefaa5de7455cbcb8",
                 "shasum": ""
             },
             "type": "library",
@@ -247,7 +247,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-03T15:31:29+00:00"
+            "time": "2018-04-12T09:37:52+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -874,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8c5269ada896c556652e318e8be9da4665350112"
+                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8c5269ada896c556652e318e8be9da4665350112",
-                "reference": "8c5269ada896c556652e318e8be9da4665350112",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b61d63b1856e708492b0ac83e6e3a010f9448a21",
+                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-11T19:33:30+00:00"
+            "time": "2018-04-14T07:18:27+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2002,12 +2002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "6c5de1c51c81b5d2dd16975d071366aa87756d57"
+                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/6c5de1c51c81b5d2dd16975d071366aa87756d57",
-                "reference": "6c5de1c51c81b5d2dd16975d071366aa87756d57",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/6b728c018f8cc44d384ca81ca447aa48657473e2",
+                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2090,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-05T14:15:14+00:00"
+            "time": "2018-04-13T22:58:32+00:00"
         },
         {
             "name": "myclabs/deep-copy",
