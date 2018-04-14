@@ -16,6 +16,8 @@ use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflection\Application\ClassReflector;
 use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 
 class WorseReflectionExtension implements Extension
 {
@@ -42,6 +44,7 @@ class WorseReflectionExtension implements Extension
         $container->register('reflection.reflector', function (Container $container) {
             $builder = ReflectorBuilder::create()
                 ->enableCache()
+                ->withSourceReflectorFactory(new TolerantFactory($container->get('reflection.tolerant_parser')))
                 ->enableContextualSourceLocation();
         
             foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
@@ -51,6 +54,10 @@ class WorseReflectionExtension implements Extension
             $builder->withLogger(new PsrLogger($container->get('monolog.logger')));
         
             return $builder->build();
+        });
+
+        $container->register('reflection.tolerant_parser', function (Container $container) {
+            return new CachedParser();
         });
         
         $container->register('reflection.locator.stub', function (Container $container) {

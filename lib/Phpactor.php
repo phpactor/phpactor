@@ -18,11 +18,13 @@ use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
 {
     public static function boot(InputInterface $input): PhpactorContainer
     {
+
         $config = [];
 
         $configLoader = new ConfigLoader();
@@ -30,6 +32,12 @@ class Phpactor
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
+
+        if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
+            $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
+            $xdebug->check();
+            unset($xdebug);
         }
 
         $extensionNames = [

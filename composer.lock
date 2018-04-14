@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c60b9bf9ebb32e1424bf0a886efb3e6",
+    "content-hash": "a494b517034431f17cca75e3312ff59e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -60,6 +60,50 @@
                 "validation"
             ],
             "time": "2018-04-09T14:40:28+00:00"
+        },
+        {
+            "name": "composer/xdebug-handler",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/xdebug-handler.git",
+                "reference": "c919dc6c62e221fc6406f861ea13433c0aa24f08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/c919dc6c62e221fc6406f861ea13433c0aa24f08",
+                "reference": "c919dc6c62e221fc6406f861ea13433c0aa24f08",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Composer\\XdebugHandler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Stevenson",
+                    "email": "john-stevenson@blueyonder.co.uk"
+                }
+            ],
+            "description": "Restarts a process without xdebug.",
+            "keywords": [
+                "Xdebug",
+                "performance"
+            ],
+            "time": "2018-04-11T15:42:36+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -701,12 +745,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "25a69cf42a7044a18d2089437658bc71f694034d"
+                "reference": "8d1447abe0d89705de0c21aceea724af4735b263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/25a69cf42a7044a18d2089437658bc71f694034d",
-                "reference": "25a69cf42a7044a18d2089437658bc71f694034d",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/8d1447abe0d89705de0c21aceea724af4735b263",
+                "reference": "8d1447abe0d89705de0c21aceea724af4735b263",
                 "shasum": ""
             },
             "require": {
@@ -740,7 +784,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-06T11:39:29+00:00"
+            "time": "2018-04-14T10:48:14+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -874,12 +918,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21"
+                "reference": "6c95ef90144fd43eaca9b38a5637170f05ad0243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b61d63b1856e708492b0ac83e6e3a010f9448a21",
-                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/6c95ef90144fd43eaca9b38a5637170f05ad0243",
+                "reference": "6c95ef90144fd43eaca9b38a5637170f05ad0243",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +962,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-14T07:18:27+00:00"
+            "time": "2018-04-14T11:14:43+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2002,12 +2046,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2"
+                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/6b728c018f8cc44d384ca81ca447aa48657473e2",
-                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2729f42b9a89ba0074fc0cdba56d6843a1e69741",
+                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2134,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-13T22:58:32+00:00"
+            "time": "2018-04-14T11:10:05+00:00"
         },
         {
             "name": "myclabs/deep-copy",

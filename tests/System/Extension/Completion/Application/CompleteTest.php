@@ -1,17 +1,19 @@
 <?php
 
-namespace Phpactor\Tests\System;
+namespace Phpactor\Tests\System\Extension\Completion\Application;
 
 use Phpactor\Extension\Completion\Application\Complete;
+use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteTest extends SystemTestCase
 {
     /**
      * @dataProvider provideComplete
      */
-    public function testComplete(string $source, int $offset, array $expected)
+    public function testComplete(string $source, array $expected)
     {
-        $result = $this->complete($source, $offset);
+        $result = $this->complete($source);
 
         $this->assertEquals($expected, $result['suggestions']);
         $this->assertEquals(json_encode($expected, true), json_encode($result['suggestions'], true));
@@ -30,10 +32,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->
+$foobar-><>
 
 EOT
-        , 75, [
+        , [
                     [
                         'type' => 'm',
                         'name' => 'foo',
@@ -51,10 +53,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->
+$foobar-><>
 
 EOT
-        , 76,
+        ,
             [ ]
             ],
             'Public property access' => [
@@ -75,10 +77,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->foo->
+$foobar->foo-><>
 
 EOT
-                , 148, [
+               , [
                     [
                         'type' => 'm',
                         'name' => 'bar',
@@ -98,10 +100,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->
+$foobar-><>
 
 EOT
-                , 132, [
+                , [
                     [
                         'type' => 'f',
                         'name' => 'foo',
@@ -124,10 +126,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->
+$foobar-><>
 
 EOT
-                , 141, [
+                , [
                     [
                         'type' => 'f',
                         'name' => 'foo',
@@ -147,10 +149,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->
+$foobar-><>
 
 EOT
-                , 105, [
+                , [
                 ]
             ],
             'Static method' => [
@@ -163,10 +165,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar::
+$foobar::<>
 
 EOT
-                , 82, [
+                , [
                     [
                         'type' => 'm',
                         'name' => 'foo',
@@ -189,10 +191,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->me::
+$foobar->me::<>
 
 EOT
-                , 138, [
+                , [
                     [
                         'type' => 'm',
                         'name' => 'foo',
@@ -216,10 +218,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar::f
+$foobar::f<>
 
 EOT
-                , 113, [
+                , [
                     [
                         'type' => 'm',
                         'name' => 'foobar',
@@ -238,10 +240,10 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar::
+$foobar::<>
 
 EOT
-                , 116, [
+                , [
                     [
                         'type' => 'm',
                         'name' => 'FOOBAR',
@@ -265,10 +267,10 @@ class Foobar
 
 $foobar = new Foobar();
 $foobar
-    ->
+    -><>
 
 EOT
-                , 83, [
+                , [
                     [
                         'type' => 'm',
                         'name' => 'foobar',
@@ -279,10 +281,11 @@ EOT
         ];
     }
 
-    private function complete(string $source, $offset)
+    private function complete(string $source)
     {
+        list($source, $offset) = ExtractOffset::fromSource($source);
         $complete = $this->container()->get('application.complete');
-        $result =$complete->complete($source, $offset);
+        $result = $complete->complete($source, $offset);
 
         return $result;
     }
@@ -290,9 +293,9 @@ EOT
     /**
      * @dataProvider provideErrors
      */
-    public function testErrors(string $source, int $offset, array $expected)
+    public function testErrors(string $source, array $expected)
     {
-        $results = $this->complete($source, $offset);
+        $results = $this->complete($source);
         $this->assertEquals($expected, $results['issues']);
     }
 
@@ -304,9 +307,9 @@ EOT
 <?php
 
 $asd = 'asd';
-$asd->
+$asd-><>
 EOT
-                ,27,
+                ,
                 [
                     'Cannot complete members on scalar value (string)',
                 ]
@@ -315,9 +318,9 @@ EOT
                 <<<'EOT'
 <?php
 
-$asd->
+$asd-><>
 EOT
-                ,13,
+                ,
                 [
                     'Variable "asd" is undefined',
                 ]
@@ -327,9 +330,9 @@ EOT
 <?php
 
 $asd = new BooBar();
-$asd->
+$asd-><>
 EOT
-                ,34,
+                ,
                 [
                     'Could not find class "BooBar"',
                 ]
@@ -344,9 +347,9 @@ class Foobar
 }
 
 $foobar = new Foobar();
-$foobar->barbar->;
+$foobar->barbar-><>;
 EOT
-                ,86,
+                ,
                 [
                     'Class "Foobar" has no properties named "barbar"',
                 ]

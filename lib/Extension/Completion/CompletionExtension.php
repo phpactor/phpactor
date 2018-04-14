@@ -42,11 +42,17 @@ class CompletionExtension implements Extension
         });
         
         $container->register('completion.completor.class_member', function (Container $container) {
-            return new WorseClassMemberCompletor($container->get('reflection.reflector'));
+            return new WorseClassMemberCompletor(
+                $container->get('reflection.reflector'),
+                $container->get('reflection.tolerant_parser')
+            );
         }, [ 'completion.completor' => []]);
         
         $container->register('completion.completor.local_variable', function (Container $container) {
-            return new WorseLocalVariableCompletor($container->get('reflection.reflector'));
+            return new WorseLocalVariableCompletor(
+                $container->get('reflection.reflector'),
+                $container->get('reflection.tolerant_parser')
+            );
         }, [ 'completion.completor' => []]);
     }
 
