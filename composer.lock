@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d1492b05fd0525de1986b25a9f09aed",
+    "content-hash": "a494b517034431f17cca75e3312ff59e",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -63,7 +63,7 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
@@ -3869,7 +3869,6 @@
         "microsoft/tolerant-php-parser": 20,
         "monolog/monolog": 20,
         "phpactor/completion": 20,
-        "composer/xdebug-handler": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
