@@ -8,6 +8,7 @@ Phpactor VIM Plugin
 - [Updating](#updating)
 - [Configuration](#configuration)
 - [Completion](#completion)
+- [Completion plugins](#completion-plugins)
 - [Context Menu](#context-menu)
 
 Installation
@@ -137,7 +138,7 @@ Completion
 
 Omni-completion
 ([Screenshot](./screenshots.html#code-completion)) is
-VIM's built-in auto-completion mechanism. 
+VIM's built-in auto-completion mechanism.
 
 Add the following to your `.vimrc` in order to use Phpactor for omni-completion (for PHP files):
 
@@ -158,12 +159,33 @@ is <b>useful</b>. Other completion mehanisms may not provide this information.
 </p>
 </div>
 
-### Neovim Completion Manager
+Completion plugins
+------------
+Several asynchronous completion frameworks support Phpactor
 
-If you are using [Neovim](https://neovim.io/) with the [Neovim Completion
-Manager](https://github.com/roxma/nvim-completion-manager) you should certainly
-install [ncm-phpactor](https://github.com/roxma/ncm-phpactor) to benefit from
-great asynchronous complete-as-you-type auto-completion:
+### Deoplete
+To use Phpactor with [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) add this to your vimrc/init.vim:
+
+*Using [vim-plug](https://github.com/junegunn/vim-plug)*
+```vimL
+Plug 'Shougo/deoplete.nvim'
+Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
+Plug 'kristijanhusak/deoplete-phpactor'
+```
+
++Run `PlugInstall` and you're good to go!
+
+### Neovim Completion Manager
+To use Phpactor with [Neovim Completion Manager](https://github.com/roxma/nvim-completion-manager) add this to your vimrc/init.vim:
+
+*Using [vim-plug](https://github.com/junegunn/vim-plug)*
+```vimL
+Plug 'roxma/nvim-completion-manager'
+Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
+Plug 'roxma/ncm-phpactor'
+```
+
++Run `PlugInstall` and you're good to go!
 
 Context Menu
 ------------
@@ -177,5 +199,5 @@ should see something like the following:
 
 ```
 Method "execute":
-[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition: 
+[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:
 ```
