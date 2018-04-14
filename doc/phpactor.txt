@@ -10,6 +10,7 @@
 5. Configuration                |phpactor-configuration|
 6. Requirements                 |phpactor-requirements|
 7. Completion                   |phpactor-completion|
+7. Completion plugins           |phpactor-completion-plugins|
 8. Context Menu                 |phpactor-context-menu|
 
 ================================================================================
@@ -22,17 +23,14 @@ website:
 
 ================================================================================
                                                             *phpactor-installation*
-Install Phpactor using your favorite VIM package manager, I am using Vundle.
+Install Phpactor using your favorite VIM package manager.
+If you don't use any, I recommend vim-plug.
 Add the plugin to your .vimrc:
 
-`Plugin 'phpactor/phpactor'`
+`Plug 'phpactor/phpactor', {'for': 'php', 'do': composer install'}`
 
 Then in VIM:
-`:VundleInstall`
-
-You will need to install the Phpactor dependencies with composer:
-`$ cd ~/.vim/bundle/phpactor`
-`$ composer install`
+`:PlugInstall`
 
 Now issue the following command
 `:call phpactor#Status():`
@@ -122,10 +120,26 @@ This information is useful. Other completion mehanisms may not provide this info
 Always enable omni-completion. If another mechanism is failing to complete,
 invoke omni-complete to find out why.
 
+================================================================================
+COMPLETION PLUGINS                                *phpactor-completion-plugins*
+
+Several asynchronous completion frameworks support Phpactor
+
+                                                *phpactor-deoplete*
+To use Phpactor with deoplete.nvim add this to your vimrc/init.vim:
+`Plug 'Shougo/deoplete.nvim'`
+`Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }`
+`Plug 'kristijanhusak/deoplete-phpactor'`
+
+Run `PlugInstall` and you're good to go!
+
                                                 *phpactor-neovim-completion-manager*
-If you are using Neovim with the Neovim Completion Manager you should certainly
-install ncm-phpactor to benefit from great asynchronous complete-as-you-type
-auto-completion.
+To use Phpactor with Neovim Completion manager add this to your vimrc/init.vim:
+`Plug 'roxma/nvim-completion-manager'`
+`Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }`
+`Plug 'roxma/ncm-phpactor'`
+
+Run `PlugInstall` and you're good to go!
 
 ================================================================================
 CONTEXT MENU                                               *phpactor-context-menu*
