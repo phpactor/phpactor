@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## Unreleased
+
+Improvements:
+
+    - [Completion] Do not evaluate left operand when completing expression,
+      #380
+
 ## 0.2.0
 
 Features:
