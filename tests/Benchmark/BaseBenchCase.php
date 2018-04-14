@@ -6,16 +6,17 @@ use Phpactor\Tests\IntegrationTestCase;
 use Phpactor\Application;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Process\Process;
 
 class BaseBenchCase extends IntegrationTestCase
 {
-    protected function runCommand(array $input): BufferedOutput
+    protected function runCommand(string $command): string
     {
         chdir($this->workspaceDir());
-        $application = new Application();
-        $output = new BufferedOutput();
-        $application->setAutoExit(false);
-        $application->run(new ArrayInput($input), $output);
-        return $output;
+
+        $process = new Process(__DIR__ . '/../../bin/phpactor ' . $command);
+        $process->setWorkingDirectory($this->workspaceDir());
+        $process->run();
+        return $process->getOutput();
     }
 }

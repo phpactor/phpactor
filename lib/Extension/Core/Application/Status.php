@@ -39,6 +39,12 @@ class Status
             $diagnostics['bad'][] = 'Git not detected. Some operations which would have been better scoped to your project repository will now include vendor paths.';
         }
 
+        if (extension_loaded('xdebug')) {
+            $diagnostics['bad'][] = 'XDebug is enabled. XDebug has a negative effect on performance.';
+        } else {
+            $diagnostics['good'][] = 'XDebug is disabled. XDebug has a negative effect on performance.';
+        }
+
         return $diagnostics;
     }
 }

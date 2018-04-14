@@ -22,4 +22,8 @@
         </whitelist>
     </filter>
 
+    <php>
+        <env name="PHPACTOR_ALLOW_XDEBUG" value="1"/>
+    </php>
+
 </phpunit>

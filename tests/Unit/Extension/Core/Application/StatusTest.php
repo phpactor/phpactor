@@ -24,7 +24,7 @@ class StatusTest extends TestCase
     {
         $this->registry->names()->willReturn(['simple']);
         $diagnostics = $this->status->check();
-        $this->assertCount(2, $diagnostics['bad']);
+        $this->assertCount(3, $diagnostics['bad']);
     }
 
     public function testStatusComposerOrGit()
