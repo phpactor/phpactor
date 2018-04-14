@@ -10,8 +10,8 @@
 5. Configuration                |phpactor-configuration|
 6. Requirements                 |phpactor-requirements|
 7. Completion                   |phpactor-completion|
-7. Completion plugins           |phpactor-completion-plugins|
-8. Context Menu                 |phpactor-context-menu|
+8. Completion plugins           |phpactor-completion-plugins|
+9. Context Menu                 |phpactor-context-menu|
 
 ================================================================================
                                                             *phpactor-introduction*
@@ -31,6 +31,10 @@ Add the plugin to your .vimrc:
 
 Then in VIM:
 `:PlugInstall`
+
+If you do not use vim-plug, you will need to install the Phpactor dependencies with composer manually:
+`$ cd ~/.vim/bundle/phpactor`
+`$ composer install`
 
 Now issue the following command
 `:call phpactor#Status():`
@@ -125,7 +129,7 @@ COMPLETION PLUGINS                                *phpactor-completion-plugins*
 
 Several asynchronous completion frameworks support Phpactor
 
-                                                *phpactor-deoplete*
+                                                              *phpactor-deoplete*
 To use Phpactor with deoplete.nvim add this to your vimrc/init.vim:
 `Plug 'Shougo/deoplete.nvim'`
 `Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }`

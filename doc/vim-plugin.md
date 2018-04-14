@@ -28,6 +28,12 @@ Then in VIM:
 :PlugInstall
 ```
 
+If you do not use [vim-plug](https://github.com/junegunn/vim-plug), you will need to install the Phpactor dependencies with composer manually:
+```
+$ cd ~/.vim/bundle/phpactor
+$ composer install
+```
+
 or using nvim, do the above where it counts.
 
 <div class="alert alert-info">
