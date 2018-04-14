@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## Develop
+## 0.2.0
 
 Features:
 
@@ -18,24 +18,19 @@ Improvements:
      the assumptions of some auto-complete managers (set
      `g:phpactorOmniError` to `v:true` to enable again), fixes #370.
    - [VIM Plugin] Only define settings if not already set.
+   - [WorseReflection] `Type#__toString` represents arrays and collections
+   - [WorseReflection] Improved `Type` class.
+   - [Completion] Use partial match to filter class members, fixes #321
+   - [phpactor.vim] Correctly return start position for omni-complete
+   - [Docblock] Be tolerant of invalid tags, fixes #382
+   - [WorseReflection] Refactored FrameBuilder: Extracted walkers
+   - [WorseReflection] [Expression evaluator](https://github.com/phpactor/worse-reflection/blob/master/lib/Core/Inference/ExpressionEvaluator.php).
 
 Bugfixes:
 
    - [SourceCodeFilesystem] Support symlinks in vendor dir #396
    - [WorseReflection] trait lists were not being correctly interpreted #320
    - [WorseReflection] could not find class "NULL"...
-
-## Master
-
-Features:
- 
-   - [WorseReflection] Can infer types from `if` and `assert` statements with
-     `instanceof` operator. Works both within the conditional scope and
-     outside if the conditional returns or throws an exception (i.e. better
-     completion).
-
-Bug fixes:
-
    - [SourceCodeFilesystem] Support symlinks in vendor dir #396
    - [Dockblock] Tolerate extra spaces, fixes #365
    - [Completion] Was using the type of the first declared variable, instead
@@ -44,16 +39,6 @@ Bug fixes:
    - [CodeBuilder] Extract method rewrites arguments #361
    - [VimPlugin] Fixed goto definition, #398
    - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
-
-Improvements:
-   
-   - [WorseReflection] `Type#__toString` represents arrays and collections
-   - [WorseReflection] Improved `Type` class.
-   - [Completion] Use partial match to filter class members, fixes #321
-   - [phpactor.vim] Correctly return start position for omni-complete
-   - [Docblock] Be tolerant of invalid tags, fixes #382
-   - [WorseReflection] Refactored FrameBuilder: Extracted walkers
-   - [WorseReflection] [Expression evaluator](https://github.com/phpactor/worse-reflection/blob/master/lib/Core/Inference/ExpressionEvaluator.php).
 
 ## 0.1.0 
 
