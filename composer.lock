@@ -701,12 +701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "25a69cf42a7044a18d2089437658bc71f694034d"
+                "reference": "8d1447abe0d89705de0c21aceea724af4735b263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/25a69cf42a7044a18d2089437658bc71f694034d",
-                "reference": "25a69cf42a7044a18d2089437658bc71f694034d",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/8d1447abe0d89705de0c21aceea724af4735b263",
+                "reference": "8d1447abe0d89705de0c21aceea724af4735b263",
                 "shasum": ""
             },
             "require": {
@@ -740,7 +740,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-06T11:39:29+00:00"
+            "time": "2018-04-14T10:48:14+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -874,12 +874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21"
+                "reference": "5a1da7bf403f02380dbfa253888f38f7588cb420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b61d63b1856e708492b0ac83e6e3a010f9448a21",
-                "reference": "b61d63b1856e708492b0ac83e6e3a010f9448a21",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/5a1da7bf403f02380dbfa253888f38f7588cb420",
+                "reference": "5a1da7bf403f02380dbfa253888f38f7588cb420",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +918,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-14T07:18:27+00:00"
+            "time": "2018-04-14T10:19:42+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2002,12 +2002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2"
+                "reference": "b85d9743a9e1714fda7c8433b1440934f0ba5e9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/6b728c018f8cc44d384ca81ca447aa48657473e2",
-                "reference": "6b728c018f8cc44d384ca81ca447aa48657473e2",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b85d9743a9e1714fda7c8433b1440934f0ba5e9e",
+                "reference": "b85d9743a9e1714fda7c8433b1440934f0ba5e9e",
                 "shasum": ""
             },
             "require": {
@@ -2090,7 +2090,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-13T22:58:32+00:00"
+            "time": "2018-04-14T09:38:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
