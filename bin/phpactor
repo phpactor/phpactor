@@ -34,10 +34,6 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 
 require_once $autoloadFile;
 
-$xdebug = new XdebugHandler('PHPACTOR', '--ansi');
-$xdebug->check();
-unset($xdebug);
-
 Debug::enable();
 
 $application = new Application();

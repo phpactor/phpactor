@@ -47,6 +47,13 @@ Phpactor will automatically look to see if it can use the
 [composer](https://getcomposer.org) autoloader at this
 path. The autoloader helps Phpactor locate classes.
 
+#### xdebug_disable
+
+*Default*: `true`
+
+Experimental: Disable XDebug if it's enabled. This can (likely will) have a
+very positive effect on performance.
+
 #### autoload.deregister
 
 *Default*: `true`
