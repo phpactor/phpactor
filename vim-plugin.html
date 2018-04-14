@@ -143,6 +143,8 @@ auto-completion can still work (sometimes slowly depending on project size).</p>
 Note that if the update included changes to the VIM plugin you will currently
 need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
 </div>
+<p>If you are feeling dangerous, you may choose to track the <code>develop</code> branch,
+by specifying a branch name in your <code>.vimrc</code>:</p>
 <h2 id="keyboard-mappings">Keyboard Mappings</h2>
 <p>The Phpactor plugin will <strong>not</strong> automatically assume any shortcuts, copy
 the following configuration into your <code>.vimrc</code>:</p>
@@ -169,6 +171,18 @@ shortcuts to.</p>
 locally, you may need to target a new version of PHP - add the following to
 your <code>.vimrc</code> to change the PHP binary:</p>
 <pre><code>let g:phpactorPhpBin = "/usr/bin/local/php6.0"</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The plugin has some configuration options:</p>
+<pre><code>let g:phpactorPhpBin = 'php'
+let g:phpactorBranch = 'master'
+let g:phpactorOmniError = v:false</code></pre>
+<ul>
+<li><code>g:phpactorPhpBin</code>: PHP executable to use.</li>
+<li><code>g:phpactorBranch</code>: Phpactor branch (default is <code>master</code>, use <code>develop</code> for
+bleeding edge).</li>
+<li><code>g:phpactorOmniError</code>: Set to <code>v:true</code> to enable useful error messages when
+completion is invoked.</li>
+</ul>
 <h2 id="completion">Completion</h2>
 <h3 id="omni-completion">Omni-completion</h3>
 <p>Omni-completion
