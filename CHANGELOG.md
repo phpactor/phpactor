@@ -17,6 +17,8 @@ Bug fixes:
 
     - [WorseReflection] Associated class for trait methods is the trait
       itself, not the class it's used in, #412
+    - [Completion] Class member completion on variable which is the right
+      operand in an assignment to a variable with the same name has no type.
 
 ## 0.2.0
 
