@@ -7,6 +7,7 @@ use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use SplFileInfo;
 
 class ClassSearch
 {
