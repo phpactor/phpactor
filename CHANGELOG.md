@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## Unreleased
+## Develop
 
 Features:
 
@@ -12,6 +12,11 @@ Improvements:
 
     - [Completion] Do not evaluate left operand when completing expression,
       #380
+
+Bug fixes:
+
+    - [WorseReflection] Associated class for trait methods is the trait
+      itself, not the class it's used in, #412
 
 ## 0.2.0
 
