@@ -13,6 +13,7 @@ Improvements:
     - [Completion] Do not evaluate left operand when completing expression,
       #380
     - [RPC] Request validation (no more undefined index errors).
+    - [WorseReflection] Classes inherit constants from interfaces.
 
 Bug fixes:
 
