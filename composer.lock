@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "beberlei/assert",
-            "version": "v2.9.4",
+            "version": "v2.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "7c24bedba95c600bba7b6021185a7d7fa2deb961"
+                "reference": "c07fe163d6a3b3e4b1275981ec004397954afa89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/7c24bedba95c600bba7b6021185a7d7fa2deb961",
-                "reference": "7c24bedba95c600bba7b6021185a7d7fa2deb961",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/c07fe163d6a3b3e4b1275981ec004397954afa89",
+                "reference": "c07fe163d6a3b3e4b1275981ec004397954afa89",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +59,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2018-04-09T14:40:28+00:00"
+            "time": "2018-04-16T11:18:27+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -212,16 +212,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "0ae9b6019e78ec667b2c87d10822af89f707fd1d"
+                "reference": "0cba197282d38956a3cc117f4b0b82b74ffb9749"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/0ae9b6019e78ec667b2c87d10822af89f707fd1d",
-                "reference": "0ae9b6019e78ec667b2c87d10822af89f707fd1d",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/0cba197282d38956a3cc117f4b0b82b74ffb9749",
+                "reference": "0cba197282d38956a3cc117f4b0b82b74ffb9749",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.5"
             },
             "type": "library",
             "extra": {
@@ -258,7 +261,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2018-04-11T05:15:14+00:00"
+            "time": "2018-04-17T13:18:24+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -266,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "14cd7fc017d6a079466b61ddefaa5de7455cbcb8"
+                "reference": "3f735371c41d60f6c321d5d4104d61f48dd7a0a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/14cd7fc017d6a079466b61ddefaa5de7455cbcb8",
-                "reference": "14cd7fc017d6a079466b61ddefaa5de7455cbcb8",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3f735371c41d60f6c321d5d4104d61f48dd7a0a7",
+                "reference": "3f735371c41d60f6c321d5d4104d61f48dd7a0a7",
                 "shasum": ""
             },
             "type": "library",
@@ -291,7 +294,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-12T09:37:52+00:00"
+            "time": "2018-04-17T14:57:22+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -873,12 +876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "1cd5e6eebdf7eecd2106d7840b8720221e9603e7"
+                "reference": "d6b132667a0d6808831d1cc4c31e99851b98f58c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/1cd5e6eebdf7eecd2106d7840b8720221e9603e7",
-                "reference": "1cd5e6eebdf7eecd2106d7840b8720221e9603e7",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/d6b132667a0d6808831d1cc4c31e99851b98f58c",
+                "reference": "d6b132667a0d6808831d1cc4c31e99851b98f58c",
                 "shasum": ""
             },
             "require": {
@@ -910,7 +913,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2018-04-11T11:06:12+00:00"
+            "time": "2018-04-16T18:26:28+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -918,12 +921,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "06ef5603b9886a527771d43dec641b0c5e8666ba"
+                "reference": "a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/06ef5603b9886a527771d43dec641b0c5e8666ba",
-                "reference": "06ef5603b9886a527771d43dec641b0c5e8666ba",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed",
+                "reference": "a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed",
                 "shasum": ""
             },
             "require": {
@@ -962,7 +965,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-15T10:12:16+00:00"
+            "time": "2018-04-17T19:09:54+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2046,12 +2049,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741"
+                "reference": "b31bc06ce2914925c8f14deeafadaf3d345d27b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2729f42b9a89ba0074fc0cdba56d6843a1e69741",
-                "reference": "2729f42b9a89ba0074fc0cdba56d6843a1e69741",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b31bc06ce2914925c8f14deeafadaf3d345d27b7",
+                "reference": "b31bc06ce2914925c8f14deeafadaf3d345d27b7",
                 "shasum": ""
             },
             "require": {
@@ -2081,6 +2084,8 @@
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.0",
                 "php-cs-fixer/accessible-object": "^1.0",
+                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0",
+                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0",
                 "phpunit/phpunit": "^5.7.23 || ^6.4.3 || ^7.0",
                 "phpunitgoodpractices/traits": "^1.3.2",
                 "symfony/phpunit-bridge": "^3.2.2 || ^4.0"
@@ -2109,9 +2114,6 @@
                     "tests/Test/AbstractIntegrationCaseFactory.php",
                     "tests/Test/AbstractIntegrationTestCase.php",
                     "tests/Test/Assert/AssertTokensTrait.php",
-                    "tests/Test/Constraint/SameStringsConstraint.php",
-                    "tests/Test/Constraint/SameStringsConstraintForV5.php",
-                    "tests/Test/Constraint/SameStringsConstraintForV7.php",
                     "tests/Test/IntegrationCase.php",
                     "tests/Test/IntegrationCaseFactory.php",
                     "tests/Test/IntegrationCaseFactoryInterface.php",
@@ -2134,7 +2136,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-14T11:10:05+00:00"
+            "time": "2018-04-16T09:31:38+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2893,12 +2895,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4f21a3c6b97c42952fd5c2837bb354ec0199b97b"
+                "reference": "1617f456e1522f9b32723549ddc5a370f8322e91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4f21a3c6b97c42952fd5c2837bb354ec0199b97b",
-                "reference": "4f21a3c6b97c42952fd5c2837bb354ec0199b97b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1617f456e1522f9b32723549ddc5a370f8322e91",
+                "reference": "1617f456e1522f9b32723549ddc5a370f8322e91",
                 "shasum": ""
             },
             "require": {
@@ -2969,7 +2971,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-10T11:38:34+00:00"
+            "time": "2018-04-16T03:59:19+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
