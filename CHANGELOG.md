@@ -19,6 +19,7 @@ Bug fixes:
     - [WorseReflection] Associated class for trait methods is the trait
       itself, not the class it's used in, #412
     - [WorseReflection] Do not evaluate assignments with missing tokens.
+    - [SourceCodeFilesystem] Non-existing paths not ignored.
 
 ## 0.2.0
 
