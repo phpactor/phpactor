@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "3f735371c41d60f6c321d5d4104d61f48dd7a0a7"
+                "reference": "ee455502a1f513b872942fd1f63bbcf440f86002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3f735371c41d60f6c321d5d4104d61f48dd7a0a7",
-                "reference": "3f735371c41d60f6c321d5d4104d61f48dd7a0a7",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/ee455502a1f513b872942fd1f63bbcf440f86002",
+                "reference": "ee455502a1f513b872942fd1f63bbcf440f86002",
                 "shasum": ""
             },
             "type": "library",
@@ -294,7 +294,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-17T14:57:22+00:00"
+            "time": "2018-04-18T16:42:02+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -921,12 +921,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed"
+                "reference": "c26114d015d3bf6724a3fbffe3473a3372ee0f33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed",
-                "reference": "a8dee1d8f849c939bc5bcf3b3e817a0c1a1b73ed",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/c26114d015d3bf6724a3fbffe3473a3372ee0f33",
+                "reference": "c26114d015d3bf6724a3fbffe3473a3372ee0f33",
                 "shasum": ""
             },
             "require": {
@@ -965,7 +965,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-17T19:09:54+00:00"
+            "time": "2018-04-18T18:27:10+00:00"
         },
         {
             "name": "phpbench/container",
@@ -1788,12 +1788,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a"
+                "reference": "20565957b3c4e389de9ef0d6a337a32321f8e47c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/0df1908962e7a3071564e857d86874dad1ef204a",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/20565957b3c4e389de9ef0d6a337a32321f8e47c",
+                "reference": "20565957b3c4e389de9ef0d6a337a32321f8e47c",
                 "shasum": ""
             },
             "require": {
@@ -1830,7 +1830,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-01-29T19:49:41+00:00"
+            "time": "2018-04-18T14:24:51+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -2584,19 +2584,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401"
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/dfd6be44111a7c41c2e884a336cc4f461b3b2401",
-                "reference": "dfd6be44111a7c41c2e884a336cc4f461b3b2401",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
+                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
-                "sebastian/comparator": "^1.1|^2.0",
+                "sebastian/comparator": "^1.1|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
@@ -2639,7 +2639,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-02-19T10:16:54+00:00"
+            "time": "2018-04-18T13:57:24+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
