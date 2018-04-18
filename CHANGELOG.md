@@ -21,6 +21,8 @@ Bug fixes:
       itself, not the class it's used in, #412
     - [WorseReflection] Do not evaluate assignments with missing tokens.
     - [SourceCodeFilesystem] Non-existing paths not ignored.
+    - [CodeTransform] Indentation not being taken into account for code
+      updates (fixes #423).
 
 ## 0.2.0
 

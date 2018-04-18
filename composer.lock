@@ -655,12 +655,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "22c426abbc62edc9b2627f527eacf19cbec043fd"
+                "reference": "dab1d9f5b338318e67a5d56e53009965314ffd24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/22c426abbc62edc9b2627f527eacf19cbec043fd",
-                "reference": "22c426abbc62edc9b2627f527eacf19cbec043fd",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/dab1d9f5b338318e67a5d56e53009965314ffd24",
+                "reference": "dab1d9f5b338318e67a5d56e53009965314ffd24",
                 "shasum": ""
             },
             "require": {
@@ -693,7 +693,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-04-06T06:51:29+00:00"
+            "time": "2018-04-18T12:24:53+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -2049,16 +2049,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "b31bc06ce2914925c8f14deeafadaf3d345d27b7"
+                "reference": "ccf3d176c9448b0976d014b9f3104ff34513664e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b31bc06ce2914925c8f14deeafadaf3d345d27b7",
-                "reference": "b31bc06ce2914925c8f14deeafadaf3d345d27b7",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/ccf3d176c9448b0976d014b9f3104ff34513664e",
+                "reference": "ccf3d176c9448b0976d014b9f3104ff34513664e",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
+                "composer/xdebug-handler": "^1.0",
                 "doctrine/annotations": "^1.2",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
@@ -2136,7 +2137,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-16T09:31:38+00:00"
+            "time": "2018-04-17T19:25:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3079,16 +3080,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "dev-master",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "f77ea710f800679202c6d92c3e2f2f56457a19f2"
+                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/f77ea710f800679202c6d92c3e2f2f56457a19f2",
-                "reference": "f77ea710f800679202c6d92c3e2f2f56457a19f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/34369daee48eafb2651bea869b4b15d75ccc35f9",
+                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9",
                 "shasum": ""
             },
             "require": {
@@ -3097,7 +3098,7 @@
                 "sebastian/exporter": "^3.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5 || ^7.0"
+                "phpunit/phpunit": "^6.4"
             },
             "type": "library",
             "extra": {
@@ -3139,7 +3140,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-04-06T14:40:13+00:00"
+            "time": "2018-02-01T13:46:46+00:00"
         },
         {
             "name": "sebastian/diff",

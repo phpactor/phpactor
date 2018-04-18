@@ -269,7 +269,10 @@ class CodeTransformExtension implements Extension
     private function registerUpdater(ContainerBuilder $container)
     {
         $container->register('code_transform.updater', function (Container $container) {
-            return new TolerantUpdater($container->get('code_transform.renderer'));
+            return new TolerantUpdater(
+                $container->get('code_transform.renderer'),
+                $container->get('code_transform.text_format')
+            );
         });
         $container->register('code_transform.builder_factory', function (Container $container) {
             return new WorseBuilderFactory($container->get('reflection.reflector'));
