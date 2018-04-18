@@ -10,13 +10,24 @@ play nicely with Phpactor, for the others there is this page.
 Drupal 8
 --------
 
+### Bootstrapping
+
 Drupal automatically adds its modules to the autoloader during the kernel
 boot process. It is therefore necessary to either 1) boot the kernel to have a fully
 useful autoloader *or* 2) to use a different mechanism to add the modules to the Composer autoloader.
 
 Depending on your setup option 1 or 2 will be preferable.
 
-### Option 1: Bootstrap Drupal on the fly to generate the autoloader
+In both cases deregister the autoloader in `.phpactor.yml`:
+
+```yaml
+# Bootstrapping Drupal creates lots of implicit global
+# dependencies, so we will just keep the Drupal autoloader
+# registered and hope for the best.
+autoload.deregister: false
+```
+
+#### Option 1: Bootstrap Drupal on the fly to generate the autoloader
 
 Create the following bootstrap file `autoload_phpactor.php`, in (for example)
 `web/`:
@@ -58,19 +69,11 @@ Then edit `.phpactor.yml` to use that:
 ```yaml
 # Use the special autoloader above
 autoload: web/phpactor_autoload.php
-
-# Drupal CS is 2 spaces
-code_transform.indentation: 2
-
-# Bootstrapping Drupal creates lots of implicit global
-# dependencies, so we will just keep the Drupal autoloader
-# registered and hope for the best.
-autoload.deregister: false
 ```
 
 The downside to this option is that it requires access to the DB from your current environment which may be tricky if you are running Drupal inside a VM.
 
-### Option 2: Add the modules into the Composer autoloader
+#### Option 2: Add the modules into the Composer autoloader
 
 This option requires merging in any modules (Drupal, contrib, custom) into the Composer autoloader via a discovery mechanism offered by the [Drupal Autoloader](https://github.com/fenetikm/autoload-drupal) composer plugin.
 
@@ -100,3 +103,18 @@ composer autoload-dump
 ```
 
 The upside to this option is that it won't require the relatively slow Drupal bootstrap (which will hit the DB) but the downside is that you will have to regenerate the autoloader every time you add / remove a module.
+
+#### Coding Standards
+
+Change your local `.phpactor.yml` to use 2 spaces for indentation:
+
+```
+# Drupal CS is 2 spaces
+code_transform.indentation: "  "
+```
+
+<div class="alert alert-info">
+Code will still be generated using the PSR-2 standard. It would be necessary
+to override twig templates in `.phpactor/templates` to rectify this (or just
+use a CS fixer).
+</div>
