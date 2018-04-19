@@ -33,6 +33,9 @@
         "phpactor/test-utils": "dev-master",
         "friendsofphp/php-cs-fixer": "^2.12@dev"
     },
+    "bin": [
+        "phpactor"
+    ],
     "autoload": {
         "psr-4": {
             "Phpactor\\": "lib/"
