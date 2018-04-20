@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "ee455502a1f513b872942fd1f63bbcf440f86002"
+                "reference": "c42e3e304597b22e705bc966213490342f5b9f58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/ee455502a1f513b872942fd1f63bbcf440f86002",
-                "reference": "ee455502a1f513b872942fd1f63bbcf440f86002",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c42e3e304597b22e705bc966213490342f5b9f58",
+                "reference": "c42e3e304597b22e705bc966213490342f5b9f58",
                 "shasum": ""
             },
             "type": "library",
@@ -294,7 +294,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-18T16:42:02+00:00"
+            "time": "2018-04-19T20:37:42+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -655,12 +655,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "dab1d9f5b338318e67a5d56e53009965314ffd24"
+                "reference": "64b522240297e646facafbaf27d91f06d885bb1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/dab1d9f5b338318e67a5d56e53009965314ffd24",
-                "reference": "dab1d9f5b338318e67a5d56e53009965314ffd24",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/64b522240297e646facafbaf27d91f06d885bb1a",
+                "reference": "64b522240297e646facafbaf27d91f06d885bb1a",
                 "shasum": ""
             },
             "require": {
@@ -693,7 +693,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-04-18T12:24:53+00:00"
+            "time": "2018-04-20T06:04:33+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -701,12 +701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "03d4c89fc92553724bf3c67ba2be9687dc81a9aa"
+                "reference": "91aa108c691bbd063c5b4d6184b5ff3ec686f6a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/03d4c89fc92553724bf3c67ba2be9687dc81a9aa",
-                "reference": "03d4c89fc92553724bf3c67ba2be9687dc81a9aa",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/91aa108c691bbd063c5b4d6184b5ff3ec686f6a6",
+                "reference": "91aa108c691bbd063c5b4d6184b5ff3ec686f6a6",
                 "shasum": ""
             },
             "require": {
@@ -740,7 +740,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-03-30T22:11:32+00:00"
+            "time": "2018-04-20T06:17:27+00:00"
         },
         {
             "name": "phpactor/completion",
@@ -1722,12 +1722,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b4758ab49182791fe2d281646b6c165d494eb47f"
+                "reference": "055dea2c6da65c3131171d91a9ca41e2e5ff0a6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b4758ab49182791fe2d281646b6c165d494eb47f",
-                "reference": "b4758ab49182791fe2d281646b6c165d494eb47f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/055dea2c6da65c3131171d91a9ca41e2e5ff0a6f",
+                "reference": "055dea2c6da65c3131171d91a9ca41e2e5ff0a6f",
                 "shasum": ""
             },
             "require": {
@@ -1771,16 +1771,16 @@
                 },
                 {
                     "name": "Twig Team",
-                    "homepage": "http://twig.sensiolabs.org/contributors",
+                    "homepage": "https://twig.symfony.com/contributors",
                     "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",
-            "homepage": "http://twig.sensiolabs.org",
+            "homepage": "https://twig.symfony.com",
             "keywords": [
                 "templating"
             ],
-            "time": "2018-04-03T16:31:00+00:00"
+            "time": "2018-04-20T06:10:29+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1788,12 +1788,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "20565957b3c4e389de9ef0d6a337a32321f8e47c"
+                "reference": "23bf61bc8a7cc229d7ce8689b1bf818a9e192cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/20565957b3c4e389de9ef0d6a337a32321f8e47c",
-                "reference": "20565957b3c4e389de9ef0d6a337a32321f8e47c",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/23bf61bc8a7cc229d7ce8689b1bf818a9e192cac",
+                "reference": "23bf61bc8a7cc229d7ce8689b1bf818a9e192cac",
                 "shasum": ""
             },
             "require": {
@@ -1830,7 +1830,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-04-18T14:24:51+00:00"
+            "time": "2018-04-19T15:46:26+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -2584,12 +2584,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712"
+                "reference": "5d4764d0b9beb04d5b36801c868cfc79a12c70a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
-                "reference": "33a7e3c4fda54e912ff6338c48823bd5c0f0b712",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/5d4764d0b9beb04d5b36801c868cfc79a12c70a3",
+                "reference": "5d4764d0b9beb04d5b36801c868cfc79a12c70a3",
                 "shasum": ""
             },
             "require": {
@@ -2639,7 +2639,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-04-18T13:57:24+00:00"
+            "time": "2018-04-19T14:17:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
