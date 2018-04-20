@@ -26,7 +26,8 @@ Bug fixes:
     - [SourceCodeFilesystem] Non-existing paths not ignored.
     - [CodeTransform] Indentation not being taken into account for code
       updates (fixes #423).
-    - [nWorseReflection] Tolerate incomplete if statements, fixes #424
+    - [WorseReflection] Tolerate incomplete if statements, fixes #424
+    - [WorseReflection] Tolerate missing token in expression evaluator #430
 
 ## 0.2.0
 
