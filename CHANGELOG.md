@@ -14,6 +14,9 @@ Improvements:
       #380
     - [RPC] Request validation (no more undefined index errors).
     - [WorseReflection] Classes inherit constants from interfaces.
+    - [CodeBuilder] Use statements added after the first
+      lexigraphically inferior existing use-statement, fixes #176. Thanks
+      @greg0ire.
 
 Bug fixes:
 
@@ -23,7 +26,7 @@ Bug fixes:
     - [SourceCodeFilesystem] Non-existing paths not ignored.
     - [CodeTransform] Indentation not being taken into account for code
       updates (fixes #423).
-    - [WorseReflection] Tolerate incomplete if statements, fixes #424
+    - [nWorseReflection] Tolerate incomplete if statements, fixes #424
 
 ## 0.2.0
 
