@@ -67,7 +67,7 @@ class ClassMemberReferences
         bool $dryRun = false
     ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
-        $reflection = $this->reflector->reflectClassLike($className);
+        $reflection = $className ? $this->reflector->reflectClassLike($className) : null;
         $filesystem = $this->filesystemRegistry->get($scope);
 
         $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName, $memberType);
@@ -82,11 +82,6 @@ class ClassMemberReferences
 
             $references['file'] = (string) $filePath;
             $results[] = $references;
-        }
-
-        if ($memberName && $className && empty($results)) {
-
-            $this->throwMemberNotFoundException($reflection, $memberName, $memberType);
         }
 
         return [
@@ -215,53 +210,5 @@ class ClassMemberReferences
         }
 
         return $query;
-    }
-
-    private function throwMemberNotFoundException(ReflectionClassLike $class, string $memberName, string $memberType = null)
-    {
-        if ($memberType == ClassMemberQuery::TYPE_METHOD && false === $class->methods()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Method not known "%s", known methods: "%s"',
-                $memberName,
-                implode('", "', $class->methods()->keys())
-            ));
-        }
-
-        if ($memberType == ClassMemberQuery::TYPE_PROPERTY && false === $class->properties()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Properties not known "%s", known properties: "%s"',
-                $memberName,
-                implode('", "', $class->properties()->keys())
-            ));
-        }
-
-        if ($memberType == ClassMemberQuery::TYPE_CONSTANT && false === $class->constants()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Constants not known "%s", known constants: "%s"',
-                $memberName,
-                implode('", "', $class->constants()->keys())
-            ));
-        }
-
-        $names = [];
-        $names = array_merge($names, $class->methods()->keys());
-
-        if ($class->isClass() || $class->isInterface()) {
-            $names = array_merge($names, $class->constants()->keys());
-        }
-
-        if ($class->isClass() || $class->isTrait()) {
-            $names = array_merge($names, $class->properties()->keys());
-        }
-
-        if (in_array($memberName, $names)) {
-            return;
-        }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Member not known "%s", known members: "%s"',
-            $memberName,
-            implode('", "', $names)
-        ));
     }
 }

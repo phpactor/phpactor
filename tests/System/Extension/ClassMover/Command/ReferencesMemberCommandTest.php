@@ -23,43 +23,13 @@ class ReferencesMemberCommandTest extends SystemTestCase
     }
 
     /**
-     * @testdox When non-existing member given, suggest existing mthods with exception.
+     * @testdox When non-existing member given, suggest existing members with exception.
      */
-    public function testNonExistingMethod()
+    public function testNonExistingMember()
     {
         $process = $this->phpactor('references:member "Animals\Badger" bad --type="method"');
         $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('known methods: "__construct"', $process->getErrorOutput());
-    }
-
-    /**
-     * @testdox When non-existing property given, suggest existing with exception.
-     */
-    public function testNonExistingProperties()
-    {
-        $process = $this->phpactor('references:member "Animals\Badger" bad --type="property"');
-        $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('known properties: "carnivorous"', $process->getErrorOutput());
-    }
-
-    /**
-     * @testdox When non-existing property given, suggest existing with exception.
-     */
-    public function testNonExistingConstants()
-    {
-        $process = $this->phpactor('references:member "Animals\Badger" bad --type="constant"');
-        $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('known constants: "LODGING"', $process->getErrorOutput());
-    }
-
-    /**
-     * @testdox When non-existing members given, suggest all available members.
-     */
-    public function testNonExistingMembers()
-    {
-        $process = $this->phpactor('references:member "Animals\Badger" bad');
-        $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('known members: "__construct", "badge"', $process->getErrorOutput());
+        $this->assertContains('Class has no member named "bad"', $process->getErrorOutput());
     }
 
     /**

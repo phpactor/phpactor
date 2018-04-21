@@ -27,7 +27,6 @@ class FileFinderTest extends TestCase
      */
     private $fileList;
 
-
     public function setUp()
     {
         $this->filesystem = $this->prophesize(Filesystem::class);
@@ -39,6 +38,13 @@ class FileFinderTest extends TestCase
         $this->setupAllFiles();
         $class = $this->reflectClass('class Foobar {}', 'Foobar');
         $files = $this->filesFor($class, null);
+        $this->assertEquals($this->fileList->reveal(), $files);
+    }
+
+    public function testReturnsAllPhpFilesIfNoClassReflectionGiven()
+    {
+        $this->setupAllFiles();
+        $files = $this->filesFor(null, null);
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 
@@ -81,7 +87,7 @@ class FileFinderTest extends TestCase
         $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo'], $files), $files);
     }
 
-    private function filesFor(ReflectionClassLike $class, string $memberName = null)
+    private function filesFor(ReflectionClassLike $class = null, string $memberName = null)
     {
         return (new FileFinder())->filesFor($this->filesystem->reveal(), $class, $memberName);
     }
@@ -95,7 +101,7 @@ class FileFinderTest extends TestCase
 
     private function reflectClass($source, string $name)
     {
-        $builder = ReflectorBuilder::create()->addSource('<?php ' . $source);
+        $builder = ReflectorBuilder::create()->addSource(SourceCode::fromPathAndString('foobar', '<?php ' . $source));
         return $builder->build()->reflectClassLike($name);
     }
 
