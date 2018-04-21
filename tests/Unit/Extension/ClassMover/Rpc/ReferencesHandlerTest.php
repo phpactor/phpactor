@@ -21,6 +21,8 @@ use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
+    const TEST_PATH = 'test_file.php';
+
     /**
      * @var ClassReferences
      */
@@ -71,7 +73,9 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => '<?php',
-            'offset' => 1,
+            'offset' => 2173,
+            'path' => self::TEST_PATH,
+            'filesystem' => null,
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
@@ -93,6 +97,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php',
             'offset' => 1,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
     }
 
@@ -111,6 +116,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php new \stdClass();',
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
@@ -128,6 +134,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php new \stdClass();',
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
 
         $this->assertInstanceOf(CollectionResponse::class, $action);
@@ -168,6 +175,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php new \stdClass();',
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
             'mode' => ReferencesHandler::MODE_REPLACE,
             'replacement' => 'newClass',
         ]);
@@ -190,6 +198,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReturnNoneFound();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
         ]);
 
@@ -223,6 +232,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
         ]);
 
@@ -266,6 +276,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
         ]);
@@ -290,6 +301,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'path' => self::TEST_PATH,
             'offset' => 104,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
@@ -309,6 +321,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'path' => self::TEST_PATH,
             'offset' => 104,
             'filesystem' => 'git',
         ]);

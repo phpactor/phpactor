@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
@@ -85,7 +86,7 @@ class ReferencesHandler extends AbstractHandler
             self::PARAMETER_SOURCE => null,
             self::PARAMETER_PATH => null,
             self::PARAMETER_MODE => self::MODE_FIND,
-            self::PARAMETER_FILESYSTEM => null,
+            self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
         ];
     }
@@ -123,7 +124,7 @@ class ReferencesHandler extends AbstractHandler
             case self::MODE_FIND:
                 return $this->findReferences($symbolContext, $arguments['filesystem']);
             case self::MODE_REPLACE:
-                return $this->replaceReferences1($symbolContext, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
+                return $this->replaceReferences($symbolContext, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT], $arguments['path']);
         }
 
         throw new \InvalidArgumentException(sprintf(
@@ -146,7 +147,7 @@ class ReferencesHandler extends AbstractHandler
         ]);
     }
 
-    private function replaceReferences1(SymbolContext $symbolContext, string $filesystem, string $replacement)
+    private function replaceReferences(SymbolContext $symbolContext, string $filesystem, string $replacement, string $path)
     {
         $references = $this->performFindOrReplaceReferences($symbolContext, $filesystem, $replacement);
 
@@ -157,6 +158,7 @@ class ReferencesHandler extends AbstractHandler
         return CollectionResponse::fromActions([
             $this->echoMessage('Replaced', $symbolContext, $filesystem, $references),
             EchoResponse::fromMessage('You will need to refresh any open files (:e<CR>)'),
+            OpenFileResponse::fromPath($path),
             FileReferencesResponse::fromArray($references),
         ]);
     }
