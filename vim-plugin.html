@@ -106,15 +106,17 @@
 <li><a href="#updating">Updating</a></li>
 <li><a href="#configuration">Configuration</a></li>
 <li><a href="#completion">Completion</a></li>
+<li><a href="#completion-plugins">Completion plugins</a></li>
 <li><a href="#context-menu">Context Menu</a></li>
 </ul>
 <h2 id="installation">Installation</h2>
-<p>Install Phpactor using your favorite VIM package manager, I am using Vundle.
-Add the plugin to your <code>.vimrc</code>:</p>
-<pre><code>Plugin 'phpactor/phpactor'</code></pre>
+<p>Install Phpactor using your favorite VIM package manager.
+If you don't use any, I recommend <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.
+Add the plugin to your .vimrc:</p>
+<pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': composer install'}</code></pre>
 <p>Then in VIM:</p>
-<pre><code>:VundleInstall</code></pre>
-<p>Now you will need to install the Phpactor dependencies with composer:</p>
+<pre><code>:PlugInstall</code></pre>
+<p>If you do not use <a href="https://github.com/junegunn/vim-plug">vim-plug</a>, you will need to install the Phpactor dependencies with composer manually:</p>
 <pre><code>$ cd ~/.vim/bundle/phpactor
 $ composer install</code></pre>
 <p>or using nvim, do the above where it counts.</p>
@@ -187,7 +189,7 @@ completion is invoked.</li>
 <h3 id="omni-completion">Omni-completion</h3>
 <p>Omni-completion
 (<a href="./screenshots.html#code-completion">Screenshot</a>) is
-VIM's built-in auto-completion mechanism. </p>
+VIM's built-in auto-completion mechanism.</p>
 <p>Add the following to your <code>.vimrc</code> in order to use Phpactor for omni-completion (for PHP files):</p>
 <pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
 <p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
@@ -201,18 +203,29 @@ is <b>useful</b>. Other completion mehanisms may not provide this information.
 <b>Always enable omni-completion</b>. If another mechanism is failing to complete, invoke omni-complete to find out why.
 </p>
 </div>
+<h2 id="completion-plugins">Completion plugins</h2>
+<p>Several asynchronous completion frameworks support Phpactor</p>
+<h3 id="deoplete">Deoplete</h3>
+<p>To use Phpactor with <a href="https://github.com/Shougo/deoplete.nvim">deoplete.nvim</a> add this to your vimrc/init.vim:</p>
+<p><em>Using <a href="https://github.com/junegunn/vim-plug">vim-plug</a></em></p>
+<pre><code class="language-vimL">Plug 'Shougo/deoplete.nvim'
+Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
+Plug 'kristijanhusak/deoplete-phpactor'</code></pre>
+<p>+Run <code>PlugInstall</code> and you're good to go!</p>
 <h3 id="neovim-completion-manager">Neovim Completion Manager</h3>
-<p>If you are using <a href="https://neovim.io/">Neovim</a> with the <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
-Manager</a> you should certainly
-install <a href="https://github.com/roxma/ncm-phpactor">ncm-phpactor</a> to benefit from
-great asynchronous complete-as-you-type auto-completion:</p>
+<p>To use Phpactor with <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion Manager</a> add this to your vimrc/init.vim:</p>
+<p><em>Using <a href="https://github.com/junegunn/vim-plug">vim-plug</a></em></p>
+<pre><code class="language-vimL">Plug 'roxma/nvim-completion-manager'
+Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
+Plug 'roxma/ncm-phpactor'</code></pre>
+<p>+Run <code>PlugInstall</code> and you're good to go!</p>
 <h2 id="context-menu">Context Menu</h2>
 <p>The context menu is the main point of contact with Phpactor. Invoke it on any
 class, member, variable, method call, or anything really.</p>
 <p>If you move over a method and invoke the context menu with <code>:call phpactor#ContextMenu()</code> (or with <code>&lt;Leader&gt;mm</code> as per the configuration above) you
 should see something like the following:</p>
 <pre><code>Method "execute":
-[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition: </code></pre>
+[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:</code></pre>
                 </section>
 
             </div>

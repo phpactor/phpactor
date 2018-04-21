@@ -131,8 +131,8 @@ Config files:
 path. The autoloader helps Phpactor locate classes.</p>
 <h4 id="autoloadderegister">autoload.deregister</h4>
 <p><em>Default</em>: <code>true</code></p>
-<p>By default Phpactor will deregister the included autoloader to prevent
-any potential conflicts. However, some autoloaders may add global dependencies
+<p>any potential conflicts. However, some autoloaders may add global dependencies
+By default Phpactor will deregister the included autoloader to prevent
 on the code available through that autoloader (e.g. Drupal). In such cases
 set this to <code>false</code> and hope that everything is <em>fine</em>.</p>
 <h4 id="cache_dir">cache_dir</h4>
@@ -151,6 +151,10 @@ include all the log levels.</p>
 <h4 id="loggingpath">logging.path</h4>
 <p><em>Default</em>: <code>phpactor.log</code></p>
 <p>Where the log file is</p>
+<h4 id="xdebug_disable">xdebug_disable</h4>
+<p><em>Default</em>: <code>true</code></p>
+<p>Disable XDebug if it's enabled. This can (likely will) have a very positive
+effect on performance.</p>
 <h3 id="code-transform-extension">Code Transform Extension</h3>
 <h4 id="code_transformclass_newvariants">code_transform.class_new.variants</h4>
 <pre><code>code_transform.class_new.variants:                                                             
