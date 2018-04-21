@@ -89,6 +89,24 @@ class ClassMemberReferences
         ];
     }
 
+    public function replaceInSource(
+        string $source,
+        string $class,
+        string $memberName,
+        string $memberType,
+        string $replacement
+    )
+    {
+        $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
+        $query = $this->createQuery($className, $memberName, $memberType);
+
+        $referenceList = $this->memberFinder->findMembers(
+            SourceCode::fromString($source),
+            $query
+        );
+        return (string) $this->replaceReferencesInCode($source, $referenceList->withClasses(), $replacement);
+    }
+
     private function referencesInFile(
         Filesystem $filesystem,
         $filePath,

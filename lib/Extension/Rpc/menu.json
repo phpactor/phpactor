@@ -35,7 +35,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%"
+                "path": "%current_path%"
             }
         },
         "goto_definition": {
@@ -51,7 +51,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%",
+                "path": "%current_path%",
                 "mode": "replace"
             }
         }
@@ -74,7 +74,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%"
+                "path": "%current_path%"
             }
         },
         "goto_definition": {
@@ -116,7 +116,7 @@
                 "offset": "%offset%",
                 "source": "%source%",
                 "mode": "replace",
-                "path": "%path%"
+                "path": "%current_path%"
             }
         },
         "transform_file": {
@@ -142,7 +142,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%"
+                "path": "%current_path%"
             }
         },
         "generate_accessor": {
@@ -166,7 +166,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%",
+                "path": "%current_path%",
                 "mode": "replace"
             }
         }
@@ -177,7 +177,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
-                "path": "%path%"
+                "path": "%current_path%"
             }
         },
         "generate_method": {
@@ -200,7 +200,7 @@
             "action": "references",
             "parameters": {
                 "offset": "%offset%",
-                "path": "%path%",
+                "path": "%current_path%",
                 "source": "%source%",
                 "mode": "replace"
             }

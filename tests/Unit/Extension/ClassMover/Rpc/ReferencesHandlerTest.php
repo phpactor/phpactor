@@ -5,6 +5,8 @@ namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
+use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
@@ -290,6 +292,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testReplaceMember()
     {
         $replacement = 'foobar';
+        $source = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();';
 
         $this->classMemberReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
@@ -299,14 +302,32 @@ class ReferencesHandlerTest extends HandlerTestCase
             $replacement
         )->willReturn($this->exampleMemberRiskyResponse());
 
+        $this->classMemberReferences->replaceInSource(
+            $source,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            $replacement
+        )->willReturn('<?php hallo');
+
         $action = $this->handle('references', [
-            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'source' => $source,
             'path' => self::TEST_PATH,
             'offset' => 104,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
             'replacement' => $replacement,
         ]);
+
+        assert($action instanceof CollectionResponse);
+        $first = $action->actions()[0];
+        $this->assertInstanceOf(EchoResponse::class, $first);
+        $second = $action->actions()[1];
+        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $second);
+        assert($second instanceof ReplaceFileSourceResponse);
+        $third = $action->actions()[2];
+        $this->assertEquals('<?php hallo', $second->replacementSource());
+        $this->assertInstanceOf(FileReferencesResponse::class, $third);
     }
 
     public function testMemberReferencesWithRisky()

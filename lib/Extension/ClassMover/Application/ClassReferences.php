@@ -29,7 +29,7 @@ class ClassReferences
     /**
      * @var ClassFileNormalizer
      */
-    private $classFileNormalizer;
+    private $classFileNormalizerasd;
 
     /**
      * @var ClassReplacer
@@ -42,7 +42,7 @@ class ClassReferences
         ClassReplacer $refReplacer,
         FilesystemRegistry $filesystemRegistry
     ) {
-        $this->classFileNormalizer = $classFileNormalizer;
+        $this->classFileNormalizerasd = $classFileNormalizer;
         $this->filesystemRegistry = $filesystemRegistry;
         $this->refFinder = $refFinder;
         $this->refReplacer = $refReplacer;
@@ -60,9 +60,9 @@ class ClassReferences
 
     public function findOrReplaceReferences(string $filesystemName, string $class, string $replace = null, bool $dryRun = false)
     {
-        $classPath = $this->classFileNormalizer->normalizeToFile($class);
+        $classPath = $this->classFileNormalizerasd->normalizeToFile($class);
         $classPath = Phpactor::normalizePath($classPath);
-        $className = $this->classFileNormalizer->normalizeToClass($class);
+        $className = $this->classFileNormalizerasd->normalizeToClass($class);
         $filesystem = $this->filesystemRegistry->get($filesystemName);
 
         $results = [];
