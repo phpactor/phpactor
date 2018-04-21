@@ -27,7 +27,7 @@ class FileFinder
         }
 
         $members = $reflection->members();
-        if ($members->byName('foobar')->count() === 0) {
+        if ($members->byName($memberName)->count() === 0) {
             throw new RuntimeException(sprintf(
                 'Class has no member named "%s", has the following member names: "%s"',
                 $memberName, implode('", "', $members->keys())
@@ -67,7 +67,13 @@ class FileFinder
             return $trait->sourceCode()->path();
         }, iterator_to_array($reflection->traits()));
 
-        $filePaths[] = $reflection->sourceCode()->path();
+        $filePaths[] = $path = $reflection->sourceCode()->path();
+
+        if (empty($path)) {
+            throw new RuntimeException(sprintf(
+                'Source has no path associated with it'
+            ));
+        }
         
         if ($private) {
             return FileList::fromFilePaths($filePaths);

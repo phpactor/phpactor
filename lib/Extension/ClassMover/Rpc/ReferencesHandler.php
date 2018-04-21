@@ -26,6 +26,7 @@ class ReferencesHandler extends AbstractHandler
     const PARAMETER_OFFSET = 'offset';
     const PARAMETER_SOURCE = 'source';
     const PARAMETER_MODE = 'mode';
+    const PARAMETER_PATH = 'path';
     const PARAMETER_FILESYSTEM = 'filesystem';
 
     const MODE_FIND = 'find';
@@ -82,6 +83,7 @@ class ReferencesHandler extends AbstractHandler
         return [
             self::PARAMETER_OFFSET => null,
             self::PARAMETER_SOURCE => null,
+            self::PARAMETER_PATH => null,
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => null,
             self::PARAMETER_REPLACEMENT => null,
@@ -91,7 +93,7 @@ class ReferencesHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            SourceCode::fromString($arguments[self::PARAMETER_SOURCE]),
+            SourceCode::fromPathAndString($arguments[self::PARAMETER_PATH], $arguments[self::PARAMETER_SOURCE]),
             Offset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $symbolContext = $offset->symbolContext();
