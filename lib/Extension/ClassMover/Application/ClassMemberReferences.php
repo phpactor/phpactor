@@ -15,7 +15,6 @@ use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\ClassName;
 use \SplFileInfo;
 
 class ClassMemberReferences
@@ -68,12 +67,12 @@ class ClassMemberReferences
         bool $dryRun = false
     ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
-        $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
+        $reflection = $this->reflector->reflectClassLike($className);
         $filesystem = $this->filesystemRegistry->get($scope);
-        $results = [];
 
         $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName, $memberType);
 
+        $results = [];
         foreach ($filePaths as $filePath) {
             $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $memberType, $replace, $dryRun);
 

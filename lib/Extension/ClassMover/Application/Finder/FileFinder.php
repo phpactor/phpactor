@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Application\Finder;
 
+use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -9,10 +10,15 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Visibility;
+use RuntimeException;
+use SplFileInfo;
 
 class FileFinder
 {
-    public function filesFor(Filesystem $filesystem, ReflectionClassLike $reflection, string $memberName = null, string $memberType = null)
+    /**
+     * @return FileList<SplFileInfo>
+     */
+    public function filesFor(Filesystem $filesystem, ReflectionClassLike $reflection, string $memberName = null): FileList
     {
         // if no member name, then we are searching for all members of the
         // class, and we can't really optimise this...
@@ -21,25 +27,25 @@ class FileFinder
         }
 
         $members = $reflection->members();
-        if ($members->count() === 0) {
+        if ($members->byName('foobar')->count() === 0) {
             throw new RuntimeException(sprintf(
                 'Class has no member named "%s", has the following member names: "%s"',
-                implode('", "', $members->keys())
+                $memberName, implode('", "', $members->keys())
             ));
         }
 
-        $members = $members->byName()->byVisibilities([
+        $publicMembers = $members->byName('foobar')->byVisibilities([
             Visibility::public()
         ]);
 
         if (
-            false === $reflection instanceof ReflectionClass &&
-            $members->count() > 1
+            false === $reflection instanceof ReflectionClass ||
+            $publicMembers->count() > 0
         ) {
             // we have public members or a non-class, we need to search the
             // whole tree, but we can discount any files which do not contain
             // the member name string.
-            return $this->allPhpFiles()->filter(function (SplFileInfo $file) use ($memberName) {
+            return $this->allPhpFiles($filesystem)->filter(function (SplFileInfo $file) use ($memberName) {
                 return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname()));
             });
         }
@@ -47,7 +53,7 @@ class FileFinder
         /** @var ReflectionMember $member */
         $private = false;
         foreach ($members as $member) {
-            if ($member->visibility() === Visibility::private()) {
+            if ($member->visibility() == Visibility::private()) {
                 $private = true;
             }
         }
@@ -60,21 +66,24 @@ class FileFinder
         $filePaths = array_map(function (ReflectionTrait $trait) {
             return $trait->sourceCode()->path();
         }, iterator_to_array($reflection->traits()));
+
         $filePaths[] = $reflection->sourceCode()->path();
         
         if ($private) {
-            return $filePaths;
+            return FileList::fromFilePaths($filePaths);
         }
         
-        while ($parent = $reflection->parent()) {
-            $filePaths[] = $parent->sourceCode()->path();
+        $context = $reflection;
+        while ($context) {
+            $filePaths[] = $context->sourceCode()->path();
+            $context = $context->parent();
         }
         
         foreach ($reflection->interfaces() as $interface) {
             $filePaths[] = $interface->sourceCode()->path();
         }
         
-        return $filePaths;
+        return FileList::fromFilePaths($filePaths);
     }
 
     private function allPhpFiles(Filesystem $filesystem)
