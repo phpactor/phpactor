@@ -2,20 +2,21 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
-use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\ClassRef;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\ClassName;
-use \SplFileInfo;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
+use Phpactor\ClassMover\Domain\Reference\MemberReferences;
+use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\ClassMover\Domain\ClassRef;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Core\ClassName;
+use \SplFileInfo;
 
 class ClassMemberReferences
 {
@@ -67,17 +68,11 @@ class ClassMemberReferences
         bool $dryRun = false
     ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
-
+        $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
         $filesystem = $this->filesystemRegistry->get($scope);
         $results = [];
-        $filePaths = $filesystem->fileList()->existing()->phpFiles();
 
-        // we can discount any files that do not contain the method name.
-        if ($memberName) {
-            $filePaths = $filePaths->filter(function (SplFileInfo $file) use ($memberName) {
-                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname()));
-            });
-        }
+        $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName, $memberType);
 
         foreach ($filePaths as $filePath) {
             $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $memberType, $replace, $dryRun);
@@ -91,7 +86,6 @@ class ClassMemberReferences
         }
 
         if ($memberName && $className && empty($results)) {
-            $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
 
             $this->throwMemberNotFoundException($reflection, $memberName, $memberType);
         }
