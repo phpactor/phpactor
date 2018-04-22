@@ -80,7 +80,7 @@ class FileFinderTest extends TestCase
     public function testParentsTraitsAndInterfacesIfMemberIsProtected()
     {
         $class = $this->reflectClass(
-            SourceCode::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { protected function foobar(){} }'), 
+            SourceCode::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'), 
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');

@@ -63,31 +63,23 @@ class FileFinder
 
     private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private)
     {
-        $filePaths = array_map(function (ReflectionTrait $trait) {
-            return $trait->sourceCode()->path();
-        }, iterator_to_array($reflection->traits()));
-
-        $filePaths[] = $path = $reflection->sourceCode()->path();
+        $path = $reflection->sourceCode()->path();
 
         if (empty($path)) {
             throw new RuntimeException(sprintf(
                 'Source has no path associated with it'
             ));
         }
+
+        $filePaths = [ $path ];
+        $filePaths = $this->traitFilePaths($reflection, $filePaths);
         
         if ($private) {
             return FileList::fromFilePaths($filePaths);
         }
         
-        $context = $reflection;
-        while ($context) {
-            $filePaths[] = $context->sourceCode()->path();
-            $context = $context->parent();
-        }
-        
-        foreach ($reflection->interfaces() as $interface) {
-            $filePaths[] = $interface->sourceCode()->path();
-        }
+        $filePaths = $this->parentFilePaths($reflection, $filePaths);
+        $filePaths = $this->interfaceFilePaths($reflection, $filePaths);
         
         return FileList::fromFilePaths($filePaths);
     }
@@ -95,6 +87,34 @@ class FileFinder
     private function allPhpFiles(Filesystem $filesystem)
     {
         $filePaths = $filesystem->fileList()->existing()->phpFiles();
+        return $filePaths;
+    }
+
+    private function parentFilePaths(ReflectionClass $reflection, $filePaths)
+    {
+        $context = $reflection->parent();
+        while ($context) {
+            $filePaths[] = $context->sourceCode()->path();
+            $context = $context->parent();
+        }
+
+        return $filePaths;
+    }
+
+    private function traitFilePaths(ReflectionClass $reflection, $filePaths)
+    {
+        foreach ($reflection->traits() as $trait) {
+            $filePaths[] = $trait->sourceCode()->path();
+        }
+        return $filePaths;
+    }
+
+    private function interfaceFilePaths(ReflectionClass $reflection, $filePaths)
+    {
+        foreach ($reflection->interfaces() as $interface) {
+            $filePaths[] = $interface->sourceCode()->path();
+        }
+
         return $filePaths;
     }
 }
