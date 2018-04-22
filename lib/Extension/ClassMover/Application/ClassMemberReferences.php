@@ -2,20 +2,20 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
-use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\ClassRef;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\ClassName;
-use \SplFileInfo;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
+use Phpactor\ClassMover\Domain\Reference\MemberReferences;
+use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\ClassMover\Domain\ClassRef;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Reflector;
+use \SplFileInfo;
 
 class ClassMemberReferences
 {
@@ -67,18 +67,12 @@ class ClassMemberReferences
         bool $dryRun = false
     ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
-
+        $reflection = $className ? $this->reflector->reflectClassLike($className) : null;
         $filesystem = $this->filesystemRegistry->get($scope);
+
+        $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName);
+
         $results = [];
-        $filePaths = $filesystem->fileList()->existing()->phpFiles();
-
-        // we can discount any files that do not contain the method name.
-        if ($memberName) {
-            $filePaths = $filePaths->filter(function (SplFileInfo $file) use ($memberName) {
-                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname()));
-            });
-        }
-
         foreach ($filePaths as $filePath) {
             $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $memberType, $replace, $dryRun);
 
@@ -90,15 +84,27 @@ class ClassMemberReferences
             $results[] = $references;
         }
 
-        if ($memberName && $className && empty($results)) {
-            $reflection = $this->reflector->reflectClassLike(ClassName::fromString($className));
-
-            $this->throwMemberNotFoundException($reflection, $memberName, $memberType);
-        }
-
         return [
             'references' => $results
         ];
+    }
+
+    public function replaceInSource(
+        string $source,
+        string $class,
+        string $memberName,
+        string $memberType,
+        string $replacement
+    )
+    {
+        $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
+        $query = $this->createQuery($className, $memberName, $memberType);
+
+        $referenceList = $this->memberFinder->findMembers(
+            SourceCode::fromString($source),
+            $query
+        );
+        return (string) $this->replaceReferencesInCode($source, $referenceList->withClasses(), $replacement);
     }
 
     private function referencesInFile(
@@ -153,7 +159,7 @@ class ClassMemberReferences
     private function serializeReferenceList(string $code, MemberReferences $referenceList)
     {
         $references = [];
-        /** @var $reference ClassRef */
+        /** @var MemberReference $reference */
         foreach ($referenceList as $reference) {
             $ref = $this->serializeReference($code, $reference);
 
@@ -222,53 +228,5 @@ class ClassMemberReferences
         }
 
         return $query;
-    }
-
-    private function throwMemberNotFoundException(ReflectionClassLike $class, string $memberName, string $memberType = null)
-    {
-        if ($memberType == ClassMemberQuery::TYPE_METHOD && false === $class->methods()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Method not known "%s", known methods: "%s"',
-                $memberName,
-                implode('", "', $class->methods()->keys())
-            ));
-        }
-
-        if ($memberType == ClassMemberQuery::TYPE_PROPERTY && false === $class->properties()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Properties not known "%s", known properties: "%s"',
-                $memberName,
-                implode('", "', $class->properties()->keys())
-            ));
-        }
-
-        if ($memberType == ClassMemberQuery::TYPE_CONSTANT && false === $class->constants()->has($memberName)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Constants not known "%s", known constants: "%s"',
-                $memberName,
-                implode('", "', $class->constants()->keys())
-            ));
-        }
-
-        $names = [];
-        $names = array_merge($names, $class->methods()->keys());
-
-        if ($class->isClass() || $class->isInterface()) {
-            $names = array_merge($names, $class->constants()->keys());
-        }
-
-        if ($class->isClass() || $class->isTrait()) {
-            $names = array_merge($names, $class->properties()->keys());
-        }
-
-        if (in_array($memberName, $names)) {
-            return;
-        }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Member not known "%s", known members: "%s"',
-            $memberName,
-            implode('", "', $names)
-        ));
     }
 }

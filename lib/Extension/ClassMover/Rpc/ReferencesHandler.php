@@ -3,6 +3,8 @@
 namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
@@ -18,7 +20,12 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\WorseReflection;
 
+/**
+ * TODO: Extract the responsiblities of this class, see
+ *       https://github.com/phpactor/phpactor/issues/440
+ */
 class ReferencesHandler extends AbstractHandler
 {
     const NAME = 'references';
@@ -26,6 +33,7 @@ class ReferencesHandler extends AbstractHandler
     const PARAMETER_OFFSET = 'offset';
     const PARAMETER_SOURCE = 'source';
     const PARAMETER_MODE = 'mode';
+    const PARAMETER_PATH = 'path';
     const PARAMETER_FILESYSTEM = 'filesystem';
 
     const MODE_FIND = 'find';
@@ -82,8 +90,9 @@ class ReferencesHandler extends AbstractHandler
         return [
             self::PARAMETER_OFFSET => null,
             self::PARAMETER_SOURCE => null,
+            self::PARAMETER_PATH => null,
             self::PARAMETER_MODE => self::MODE_FIND,
-            self::PARAMETER_FILESYSTEM => null,
+            self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
         ];
     }
@@ -91,7 +100,7 @@ class ReferencesHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            SourceCode::fromString($arguments[self::PARAMETER_SOURCE]),
+            SourceCode::fromPathAndString($arguments[self::PARAMETER_PATH], $arguments[self::PARAMETER_SOURCE]),
             Offset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $symbolContext = $offset->symbolContext();
@@ -121,7 +130,13 @@ class ReferencesHandler extends AbstractHandler
             case self::MODE_FIND:
                 return $this->findReferences($symbolContext, $arguments['filesystem']);
             case self::MODE_REPLACE:
-                return $this->replaceReferences1($symbolContext, $arguments['filesystem'], $arguments[self::PARAMETER_REPLACEMENT]);
+                return $this->replaceReferences(
+                    $symbolContext,
+                    $arguments['filesystem'],
+                    $arguments[self::PARAMETER_REPLACEMENT],
+                    $arguments[self::PARAMETER_PATH],
+                    $arguments[self::PARAMETER_SOURCE]
+                );
         }
 
         throw new \InvalidArgumentException(sprintf(
@@ -132,7 +147,7 @@ class ReferencesHandler extends AbstractHandler
 
     private function findReferences(SymbolContext $symbolContext, string $filesystem, string $replacement = null)
     {
-        $references = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
+        list($source, $references) = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
 
         if (count($references) === 0) {
             return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
@@ -144,30 +159,65 @@ class ReferencesHandler extends AbstractHandler
         ]);
     }
 
-    private function replaceReferences1(SymbolContext $symbolContext, string $filesystem, string $replacement)
+    private function replaceReferences(
+        SymbolContext $symbolContext,
+        string $filesystem,
+        string $replacement,
+        string $path,
+        string $source
+    )
     {
-        $references = $this->performFindOrReplaceReferences($symbolContext, $filesystem, $replacement);
+        list($source, $references) = $this->performFindOrReplaceReferences(
+            $symbolContext,
+            $filesystem,
+            $source,
+            $replacement
+        );
 
         if (count($references) === 0) {
             return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
         }
 
-        return CollectionResponse::fromActions([
+        $actions = [
             $this->echoMessage('Replaced', $symbolContext, $filesystem, $references),
-            EchoResponse::fromMessage('You will need to refresh any open files (:e<CR>)'),
-            FileReferencesResponse::fromArray($references),
-        ]);
+        ];
+
+        if ($source) {
+            $actions[] = ReplaceFileSourceResponse::fromPathAndSource($path, $source);
+        }
+
+        if (count($references)) {
+            $actions[] = FileReferencesResponse::fromArray($references);
+        }
+
+        return CollectionResponse::fromActions($actions);
     }
 
-    private function classReferences(string $filesystem, SymbolContext $symbolContext, string $replacement = null)
+    private function classReferences(string $filesystem, SymbolContext $symbolContext, string $source = null, string $replacement = null)
     {
         $classType = (string) $symbolContext->type();
         $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
 
-        return $references['references'];
+        $updatedSource = null;
+        if ($source) {
+            $updatedSource = $this->classReferences->replaceInSource(
+                $source,
+                $classType,
+                $replacement
+            );
+        }
+
+
+        return [$updatedSource, $references['references']];
     }
 
-    private function memberReferences(string $filesystem, SymbolContext $symbolContext, string $memberType, string $replacement = null)
+    private function memberReferences(
+        string $filesystem,
+        SymbolContext $symbolContext,
+        string $memberType,
+        string $source = null,
+        string $replacement = null
+    )
     {
         $classType = (string) $symbolContext->containerType();
 
@@ -179,20 +229,36 @@ class ReferencesHandler extends AbstractHandler
             $replacement
         );
 
-        return $references['references'];
+        $updatedSource = null;
+        if ($source && $replacement) {
+            $updatedSource = $this->classMemberReferences->replaceInSource(
+                $source,
+                $classType,
+                $symbolContext->symbol()->name(),
+                $memberType,
+                $replacement
+            );
+        }
+
+        return [$updatedSource, $references['references']];
     }
 
-    private function performFindOrReplaceReferences(SymbolContext $symbolContext, string $filesystem, string $replacement = null)
+    private function performFindOrReplaceReferences(
+        SymbolContext $symbolContext,
+        string $filesystem,
+        string $source = null,
+        string $replacement = null
+    )
     {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::CLASS_:
-                return $this->classReferences($filesystem, $symbolContext, $replacement);
+                return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
             case Symbol::METHOD:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $replacement);
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
             case Symbol::PROPERTY:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $replacement);
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
             case Symbol::CONSTANT:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $replacement);
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
         }
 
         throw new \RuntimeException(sprintf(

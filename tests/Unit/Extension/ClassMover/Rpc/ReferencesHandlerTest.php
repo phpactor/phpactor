@@ -5,6 +5,8 @@ namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
+use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
@@ -21,6 +23,8 @@ use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
+    const TEST_PATH = 'test_file.php';
+
     /**
      * @var ClassReferences
      */
@@ -71,7 +75,9 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => '<?php',
-            'offset' => 1,
+            'offset' => 2173,
+            'path' => self::TEST_PATH,
+            'filesystem' => null,
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
@@ -93,6 +99,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php',
             'offset' => 1,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
     }
 
@@ -111,6 +118,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php new \stdClass();',
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
@@ -128,6 +136,7 @@ class ReferencesHandlerTest extends HandlerTestCase
             'source' => '<?php new \stdClass();',
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
         ]);
 
         $this->assertInstanceOf(CollectionResponse::class, $action);
@@ -157,6 +166,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
     public function testReplaceClassReferences()
     {
+        $source = '<?php new \stdClass();';
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
@@ -164,10 +174,17 @@ class ReferencesHandlerTest extends HandlerTestCase
             null
         )->willReturn($this->exampleClassResponse());
 
+        $this->classReferences->replaceInSource(
+            $source,
+            'stdClass',
+            'newClass'
+        )->willReturn($source);
+
         $action = $this->handle('references', [
-            'source' => '<?php new \stdClass();',
+            'source' => $source,
             'offset' => 15,
             'filesystem' => 'git',
+            'path' => self::TEST_PATH,
             'mode' => ReferencesHandler::MODE_REPLACE,
             'replacement' => 'newClass',
         ]);
@@ -190,6 +207,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReturnNoneFound();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
         ]);
 
@@ -223,6 +241,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
         ]);
 
@@ -266,6 +285,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $action = $this->handle('references', [
             'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
             'offset' => 104,
+            'path' => self::TEST_PATH,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
         ]);
@@ -279,6 +299,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testReplaceMember()
     {
         $replacement = 'foobar';
+        $source = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();';
 
         $this->classMemberReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
@@ -288,13 +309,32 @@ class ReferencesHandlerTest extends HandlerTestCase
             $replacement
         )->willReturn($this->exampleMemberRiskyResponse());
 
+        $this->classMemberReferences->replaceInSource(
+            $source,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            $replacement
+        )->willReturn('<?php hallo');
+
         $action = $this->handle('references', [
-            'source' => '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'source' => $source,
+            'path' => self::TEST_PATH,
             'offset' => 104,
             'filesystem' => 'git',
             'mode' => ReferencesHandler::MODE_REPLACE,
             'replacement' => $replacement,
         ]);
+
+        assert($action instanceof CollectionResponse);
+        $first = $action->actions()[0];
+        $this->assertInstanceOf(EchoResponse::class, $first);
+        $second = $action->actions()[1];
+        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $second);
+        assert($second instanceof ReplaceFileSourceResponse);
+        $third = $action->actions()[2];
+        $this->assertEquals('<?php hallo', $second->replacementSource());
+        $this->assertInstanceOf(FileReferencesResponse::class, $third);
     }
 
     public function testMemberReferencesWithRisky()
@@ -309,6 +349,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $action = $this->handle('references', [
             'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'path' => self::TEST_PATH,
             'offset' => 104,
             'filesystem' => 'git',
         ]);

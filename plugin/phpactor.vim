@@ -158,7 +158,6 @@ function! phpactor#ClassNew()
 endfunction
 
 function! phpactor#ClassInflect()
-    let currentPath = expand('%')
     call phpactor#rpc("class_inflect", { "current_path": currentPath })
 endfunction
 
@@ -168,7 +167,7 @@ function! phpactor#ClassReferences()
 endfunction
 
 function! phpactor#FindReferences()
-    call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+    call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": phpactor#_path()})
 endfunction
 
 function! phpactor#Navigate()
@@ -208,6 +207,10 @@ endfunction
 
 function! phpactor#_source()
     return join(getline(1,'$'), "\n")
+endfunction
+
+function! phpactor#_path()
+    return expand('%')
 endfunction
 
 function! phpactor#_selectionStart()

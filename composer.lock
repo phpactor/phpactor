@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "c42e3e304597b22e705bc966213490342f5b9f58"
+                "reference": "07a712def7205d8921e6ff93c9ee12119def463e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c42e3e304597b22e705bc966213490342f5b9f58",
-                "reference": "c42e3e304597b22e705bc966213490342f5b9f58",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/07a712def7205d8921e6ff93c9ee12119def463e",
+                "reference": "07a712def7205d8921e6ff93c9ee12119def463e",
                 "shasum": ""
             },
             "type": "library",
@@ -294,7 +294,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-19T20:37:42+00:00"
+            "time": "2018-04-20T16:19:58+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -921,12 +921,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "ed8dbf735bc7af117b1ea64f1ead9887c949ac37"
+                "reference": "8f3b5e7531cd303841c028c5bff1cf373c96ab4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/ed8dbf735bc7af117b1ea64f1ead9887c949ac37",
-                "reference": "ed8dbf735bc7af117b1ea64f1ead9887c949ac37",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8f3b5e7531cd303841c028c5bff1cf373c96ab4c",
+                "reference": "8f3b5e7531cd303841c028c5bff1cf373c96ab4c",
                 "shasum": ""
             },
             "require": {
@@ -965,7 +965,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-20T11:02:53+00:00"
+            "time": "2018-04-21T11:59:48+00:00"
         },
         {
             "name": "phpbench/container",
