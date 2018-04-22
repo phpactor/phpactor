@@ -43,16 +43,24 @@ function! phpactor#Complete(findstart, base)
         let line = getline('.')
         let start = col('.')
         let originalStart = start
-        let triggers = [ "->", "::" ]
+        let triggers = [ "$", "->", "::", "extends", "use", "implements", "new" ]
+        let buffer = []
 
         while start -1 >= 0
 
-            if line[start-1:start-1] == "$"
-                return start
-            endif
+            let char = line[start-1:start-1]
 
-            if index(triggers, line[start-2:start-1]) >= 0
-                return start
+            if char != " " && char != "\n" && char != ""
+                call add(buffer, char)
+                for trigger in triggers
+                    if len(buffer) >= len(trigger)
+                        let toCompare = join(reverse(copy(buffer)), '')
+                        let toCompare = toCompare[0:strlen(trigger) - 1]
+                        if trigger == toCompare
+                            return start + strlen(trigger) - 1
+                        endif
+                    endif
+                endfor
             endif
 
             let start -= 1

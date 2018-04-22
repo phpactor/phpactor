@@ -3,6 +3,11 @@ Changelog
 
 ## Develop
 
+Functions:
+
+  - [Completion] _Experimental_ class completion: complete use, new and
+    extends. Class names inferred from file names.
+
 Improvements:
 
   - [ClassMover] Find/replace references will only traverse possible classes
@@ -18,6 +23,9 @@ Non-functional:
     class-likes have a `members(): ReflectionMemberCollection` method.
   - [Completion] Refactored to make interface more efficient, decoupled
     formatting from completion.
+  - [Completion] Made existing completors a subset of tolerant-parser
+    completors (means there is one "chain" tolerant completor which delegates
+    to the other completors and we only have to parse once).
 
 ## 0.3.0
 
