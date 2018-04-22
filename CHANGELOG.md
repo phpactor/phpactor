@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Improvements:
+
+  - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire 
+
 ## 0.3.0
 
 Features:
