@@ -20,6 +20,7 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\WorseReflection;
 
 /**
  * TODO: Extract and re[write|factor] the spaghetti business logic in this
@@ -197,7 +198,17 @@ class ReferencesHandler extends AbstractHandler
         $classType = (string) $symbolContext->type();
         $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
 
-        return [$source, $references['references']];
+        $updatedSource = null;
+        if ($source) {
+            $updatedSource = $this->classReferences->replaceInSource(
+                $source,
+                $classType,
+                $replacement
+            );
+        }
+
+
+        return [$updatedSource, $references['references']];
     }
 
     private function memberReferences(
@@ -219,7 +230,7 @@ class ReferencesHandler extends AbstractHandler
         );
 
         $updatedSource = null;
-        if ($source) {
+        if ($source && $replacement) {
             $updatedSource = $this->classMemberReferences->replaceInSource(
                 $source,
                 $classType,

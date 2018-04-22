@@ -82,6 +82,16 @@ class ClassReferences
         ];
     }
 
+    public function replaceInSource(string $source, $className, $replace): string
+    {
+        $referenceList = $this->refFinder
+            ->findIn(SourceCode::fromString($source))
+            ->filterForName(FullyQualifiedName::fromString($className));
+        $updatedSource = $this->replaceReferencesInCode($source, $referenceList, $className, $replace);
+
+        return (string) $updatedSource;
+    }
+
     private function fileReferences(Filesystem $filesystem, $filePath, $className, $replace = null, $dryRun = false)
     {
         $code = $filesystem->getContents($filePath);
@@ -99,6 +109,7 @@ class ClassReferences
             return $result;
         }
 
+        $updatedSource = null;
         if ($replace) {
             $updatedSource = $this->replaceReferencesInCode($code, $referenceList, $className, $replace);
 
@@ -109,7 +120,7 @@ class ClassReferences
 
         $result['references'] = $this->serializeReferenceList($code, $referenceList);
 
-        if ($replace) {
+        if ($updatedSource && $replace) {
             $newReferenceList = $this->refFinder
                 ->findIn(SourceCode::fromString((string) $updatedSource))
                 ->filterForName(FullyQualifiedName::fromString($replace));
@@ -123,7 +134,7 @@ class ClassReferences
     private function serializeReferenceList(string $code, NamespacedClassReferences $referenceList)
     {
         $references = [];
-        /** @var $reference ClassRef */
+        /** @var ClassReference $reference */
         foreach ($referenceList as $reference) {
             $ref = $this->serializeReference($code, $reference);
 

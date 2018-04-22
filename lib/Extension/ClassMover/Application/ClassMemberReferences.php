@@ -70,7 +70,7 @@ class ClassMemberReferences
         $reflection = $className ? $this->reflector->reflectClassLike($className) : null;
         $filesystem = $this->filesystemRegistry->get($scope);
 
-        $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName, $memberType);
+        $filePaths = (new FileFinder())->filesFor($filesystem, $reflection, $memberName);
 
         $results = [];
         foreach ($filePaths as $filePath) {
@@ -159,7 +159,7 @@ class ClassMemberReferences
     private function serializeReferenceList(string $code, MemberReferences $referenceList)
     {
         $references = [];
-        /** @var $reference ClassRef */
+        /** @var MemberReference $reference */
         foreach ($referenceList as $reference) {
             $ref = $this->serializeReference($code, $reference);
 

@@ -166,6 +166,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
     public function testReplaceClassReferences()
     {
+        $source = '<?php new \stdClass();';
         $this->classReferences->findOrReplaceReferences(
             SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
@@ -173,8 +174,14 @@ class ReferencesHandlerTest extends HandlerTestCase
             null
         )->willReturn($this->exampleClassResponse());
 
+        $this->classReferences->replaceInSource(
+            $source,
+            'stdClass',
+            'newClass'
+        )->willReturn($source);
+
         $action = $this->handle('references', [
-            'source' => '<?php new \stdClass();',
+            'source' => $source,
             'offset' => 15,
             'filesystem' => 'git',
             'path' => self::TEST_PATH,

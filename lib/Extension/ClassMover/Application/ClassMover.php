@@ -16,7 +16,7 @@ use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 class ClassMover
 {
     /**
-     * @var ClassToFileFileToClass
+     * @var ClassFileNormalizer
      */
     private $classFileNormalizer;
 
