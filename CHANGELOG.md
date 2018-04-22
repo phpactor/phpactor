@@ -12,10 +12,12 @@ Improvements:
   - [ClassMover] (RPC) Will update current (unsaved) source.
   - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire 
 
-API:
+Non-functional:
 
-  - [WorseReflection] (API) All member collections extend common interface,
+  - [WorseReflection] All member collections extend common interface,
     class-likes have a `members(): ReflectionMemberCollection` method.
+  - [Completion] Refactored to make interface more efficient, decoupled
+    formatting from completion.
 
 ## 0.3.0
 

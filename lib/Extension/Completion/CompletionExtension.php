@@ -2,6 +2,15 @@
 
 namespace Phpactor\Extension\Completion;
 
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\MethodFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\VariableFormatter;
+use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\ParameterFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\PropertyFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\TypeFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\TypesFormatter;
+use Phpactor\Completion\Adapter\WorseReflection\Formatter\VariableWithNodeFormatter;
+use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
@@ -38,22 +47,35 @@ class CompletionExtension implements Extension
             foreach (array_keys($container->getServiceIdsForTag('completion.completor')) as $serviceId) {
                 $completors[] = $container->get($serviceId);
             }
-            return new Completor($completors);
+            return new ChainCompletor($completors);
         });
         
         $container->register('completion.completor.class_member', function (Container $container) {
             return new WorseClassMemberCompletor(
                 $container->get('reflection.reflector'),
-                $container->get('reflection.tolerant_parser')
+                $container->get('reflection.tolerant_parser'),
+                $container->get('completion.formatter')
             );
         }, [ 'completion.completor' => []]);
         
         $container->register('completion.completor.local_variable', function (Container $container) {
             return new WorseLocalVariableCompletor(
                 $container->get('reflection.reflector'),
-                $container->get('reflection.tolerant_parser')
+                $container->get('reflection.tolerant_parser'),
+                $container->get('completion.formatter')
             );
         }, [ 'completion.completor' => []]);
+
+        $container->register('completion.formatter', function (Container $container) {
+            return new ObjectFormatter([
+                new TypeFormatter(),
+                new TypesFormatter(),
+                new MethodFormatter(),
+                new ParameterFormatter(),
+                new PropertyFormatter(),
+                new VariableFormatter(),
+            ]);
+        });
     }
 
     private function registerCommands(ContainerBuilder $container)
