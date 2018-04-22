@@ -23,8 +23,8 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\WorseReflection;
 
 /**
- * TODO: Extract and re[write|factor] the spaghetti business logic in this
- * class.
+ * TODO: Extract the responsiblities of this class, see
+ *       https://github.com/phpactor/phpactor/issues/440
  */
 class ReferencesHandler extends AbstractHandler
 {
