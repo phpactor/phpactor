@@ -1,39 +1,48 @@
 Changelog
 =========
 
-## develop
+## Develop
 
 Improvements:
 
+  - [ClassMover] Find/replace references will only traverse possible classes
+    when givn a known class member #349 (also it will no longer ask the scope,
+    instead defaulting to either composer or full-filesystem search depending
+    on env).
+  - [ClassMover] (RPC) Will update current (unsaved) source.
   - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire 
+
+API:
+
+  - [WorseReflection] (API) All member collections extend common interface,
+    class-likes have a `members(): ReflectionMemberCollection` method.
 
 ## 0.3.0
 
 Features:
 
-    - [Application] Disable XDebug by default, very much improve performance.
+  - [Application] Disable XDebug by default, very much improve performance.
       Fixes #317
 
 Improvements:
 
-    - [Completion] Do not evaluate left operand when completing expression,
-      #380
-    - [RPC] Request validation (no more undefined index errors).
-    - [WorseReflection] Classes inherit constants from interfaces.
-    - [CodeBuilder] Use statements added after the first
-      lexigraphically inferior existing use-statement, fixes #176. Thanks
-      @greg0ire.
+  - [Completion] Do not evaluate left operand when completing expression,
+    #380
+  - [RPC] Request validation (no more undefined index errors).
+  - [WorseReflection] Classes inherit constants from interfaces.
+  - [CodeBuilder] Use statements added after the first lexigraphically
+    inferior existing use-statement, fixes #176. Thanks @greg0ire.
 
 Bug fixes:
 
-    - [WorseReflection] Associated class for trait methods is the trait
-      itself, not the class it's used in, #412
-    - [WorseReflection] Do not evaluate assignments with missing tokens.
-    - [SourceCodeFilesystem] Non-existing paths not ignored.
-    - [CodeTransform] Indentation not being taken into account for code
-      updates (fixes #423).
-    - [WorseReflection] Tolerate incomplete if statements, fixes #424
-    - [WorseReflection] Tolerate missing token in expression evaluator #430
+  - [WorseReflection] Associated class for trait methods is the trait
+    itself, not the class it's used in, #412
+  - [WorseReflection] Do not evaluate assignments with missing tokens.
+  - [SourceCodeFilesystem] Non-existing paths not ignored.
+  - [CodeTransform] Indentation not being taken into account for code
+    updates (fixes #423).
+  - [WorseReflection] Tolerate incomplete if statements, fixes #424
+  - [WorseReflection] Tolerate missing token in expression evaluator #430
 
 ## 0.2.0
 
