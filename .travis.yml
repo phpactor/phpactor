@@ -23,9 +23,10 @@ before_script:
   - git config --global user.name "Your Name"
   - curl -OS http://couscous.io/couscous.phar
   - composer install
-
+  - git clone https://github.com/junegunn/vader.vim.git
 
 script:
+  - ./.travis/vim-plugin-test.sh
   - vendor/bin/phpunit
   - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
   - .travis/testdeps
