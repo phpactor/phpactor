@@ -29,8 +29,8 @@ before_script:
   - curl -OS http://couscous.io/couscous.phar
 
   # Upgrade VIM from trusty's 7.x version
-  - sudo add-apt-repository ppa:pkg-vim/vim-daily
-  - sudo apt-get update
+  - sudo add-apt-repository ppa:pkg-vim/vim-daily -y
+  - sudo apt-get update -y
 
   # Install the VIM testing framework
   - git clone https://github.com/junegunn/vader.vim.git
