@@ -21,14 +21,31 @@ cache:
 before_script:
   - git config --global user.email "you@example.com"
   - git config --global user.name "Your Name"
-  - curl -OS http://couscous.io/couscous.phar
+
+  # Install the PHP dependencies
   - composer install
+
+  # We generate documentation with couscous
+  - curl -OS http://couscous.io/couscous.phar
+
+  # Upgrade VIM from trusty's 7.x version
+  - sudo add-apt-repository ppa:pkg-vim/vim-daily
+  - sudo apt-get update
+
+  # Install the VIM testing framework
   - git clone https://github.com/junegunn/vader.vim.git
 
 script:
+  # Run the VIM Plugin tests
   - ./.travis/vim-plugin-test.sh
+
+  # Run all the PHPUnit tests
   - vendor/bin/phpunit
+
+  # Run the benchmarks and send the results to the PHPBench reports server
   - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
+
+  # Run the test suites for all the Phpactor packages
   - .travis/testdeps
 
 after_success:
