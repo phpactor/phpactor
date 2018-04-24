@@ -46,9 +46,11 @@ jobs:
         # Run the VIM Plugin tests
         - .travis/vim-plugin-test.sh
     - stage: docs
+      if: branch = master
       before_script:
         - git config --global user.email "you@example.com"
         - git config --global user.name "Your Name"
         - curl -OS http://couscous.io/couscous.phar
       script:
         - php couscous.phar travis-auto-deploy
+
