@@ -12,11 +12,6 @@ php:
   - 7.1
   - 7.2
 
-matrix:
-  include:
-    - php: 7.2
-      env: TESTVIM=vim
-
 sudo: false
 
 cache:
@@ -41,18 +36,21 @@ before_script:
   # Install the VIM testing framework
   - git clone https://github.com/junegunn/vader.vim.git
 
-script:
-  # Run the VIM Plugin tests
-  - if [ "$TESTVIM" = "vim" ]; then ./.travis/vim-plugin-test.sh; fi;
+jobs:
+  include:
+    - script:
+        # Run all the PHPUnit tests
+        - vendor/bin/phpunit
 
-  # Run all the PHPUnit tests
-  - vendor/bin/phpunit
+        # Run the benchmarks and send the results to the PHPBench reports server
+        - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
 
-  # Run the benchmarks and send the results to the PHPBench reports server
-  - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
-
-  # Run the test suites for all the Phpactor packages
-  - .travis/testdeps
+        # Run the test suites for all the Phpactor packages
+        - .travis/testdeps
+    - stage: vim
+      script:
+        # Run the VIM Plugin tests
+        - ./.travis/vim-plugin-test.sh
 
 after_success:
   - php couscous.phar travis-auto-deploy
