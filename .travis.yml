@@ -48,8 +48,8 @@ jobs:
     - stage: docs
       if: branch = master
       before_script:
-        - git config --global user.email "you@example.com"
-        - git config --global user.name "Your Name"
+        - git config --global user.email "phpactor@dantleech.com"
+        - git config --global user.name "Phpactor"
         - curl -OS http://couscous.io/couscous.phar
       script:
         - php couscous.phar travis-auto-deploy
