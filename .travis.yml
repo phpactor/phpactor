@@ -23,7 +23,6 @@ before_script:
   # We generate documentation with couscous
   - curl -OS http://couscous.io/couscous.phar
 
-
 script:
   # Run all the PHPUnit tests
   - vendor/bin/phpunit
@@ -42,6 +41,9 @@ jobs:
       php: 7.2
     - stage: vim
       before_script:
+        # Install the PHP dependencies
+        - composer install
+        - ./bin/phpactor --version
         # Upgrade VIM from trusty's 7.x version
         - sudo add-apt-repository ppa:jonathonf/vim -y
         - sudo apt-get update -y
