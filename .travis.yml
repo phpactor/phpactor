@@ -33,13 +33,9 @@ script:
 
 jobs:
   include:
-    - stage: php
-      php: 7.0
-    - stage: php
-      php: 7.1
-    - stage: php
+    - stage: test
       php: 7.2
-    - stage: vim
+      env: VIM_PLUGIN=true
       before_script:
         # Install the PHP dependencies
         - composer install
@@ -53,6 +49,12 @@ jobs:
       script:
         # Run the VIM Plugin tests
         - ./.travis/vim-plugin-test.sh
+    - stage: test
+      php: 7.0
+    - stage: test
+      php: 7.1
+    - stage: test
+      php: 7.2
 
 after_success:
   - php couscous.phar travis-auto-deploy
