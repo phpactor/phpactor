@@ -27,10 +27,7 @@ script:
 jobs:
   include:
     - stage: test
-      php: 7.0
-    - php: 7.1
-    - php: 7.2
-    - stage: vim
+      env: VIM
       php: 7.2
       before_script:
         # Install the PHP dependencies
@@ -45,6 +42,9 @@ jobs:
       script:
         # Run the VIM Plugin tests
         - .travis/vim-plugin-test.sh
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
     - stage: docs
       if: branch = master
       before_script:
