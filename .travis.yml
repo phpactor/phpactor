@@ -12,6 +12,11 @@ php:
   - 7.1
   - 7.2
 
+matrix:
+  include:
+    - php: 7.2
+      env: TESTVIM=vim
+
 sudo: false
 
 cache:
@@ -38,7 +43,7 @@ before_script:
 
 script:
   # Run the VIM Plugin tests
-  - ./.travis/vim-plugin-test.sh
+  - if [ "$TESTVIM" = "vim" ]; then ./.travis/vim-plugin-test.sh; fi;
 
   # Run all the PHPUnit tests
   - vendor/bin/phpunit

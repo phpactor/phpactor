@@ -19,7 +19,7 @@ if !exists('g:phpactorBranch')
 endif
 
 if !exists('g:phpactorOmniError')
-    let g:phpactorOmniError = 0
+    let g:phpactorOmniError = v:false
 endif
 
 """""""""""""""""
@@ -275,12 +275,12 @@ function! phpactor#_input_choice(label, choices)
 
     for choiceLabel in keys(a:choices)
         let buffer = []
-        let foundShortcut = 0
+        let foundShortcut = v:false
 
         for char in split(choiceLabel, '\zs')
-            if 0 == foundShortcut && -1 == index(usedShortcuts, tolower(char))
+            if v:false == foundShortcut && -1 == index(usedShortcuts, tolower(char))
                 call add(buffer, '&')
-                let foundShortcut = 1
+                let foundShortcut = v:true
                 call add(usedShortcuts, tolower(char))
             endif
 
@@ -497,10 +497,10 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
         let choice = confirm(a:parameters["label"], "&Yes\n&No\n")
 
         if choice == 1
-            return 1
+            return v:true
         endif
 
-        return 0
+        return v:false
     endif
 
 
