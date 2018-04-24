@@ -1,0 +1,20 @@
+Given php (matches expects):
+  <?php class Foobar extends
+
+Execute:
+    execute "normal! $"
+    AssertEqual 26, phpactor#Complete(1,0)
+
+Given php (matches implements):
+  <?php class Foobar implements
+
+Execute:
+    execute "normal! $"
+    AssertEqual 29, phpactor#Complete(1,0)
+
+Given php (matches new):
+  <?php new Fo
+
+Execute:
+    execute "normal! $"
+    AssertEqual 9, phpactor#Complete(1,0)
