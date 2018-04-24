@@ -28,11 +28,9 @@ jobs:
   include:
     - stage: test
       php: 7.0
-    - stage: test
-      php: 7.1
-    - stage: test
-      php: 7.2
-    - stage: test
+    - php: 7.1
+    - php: 7.2
+    - stage: vim
       php: 7.2
       before_script:
         # Install the PHP dependencies
