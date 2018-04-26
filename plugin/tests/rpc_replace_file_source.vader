@@ -1,0 +1,10 @@
+Given php (matches expects):
+   <?php
+
+   // hello world
+
+Execute:
+   call phpactor#_rpc_dispatch("replace_file_source", {"path": "[Vader]", "source": "<?php // goodbye world"})
+
+Expect:
+  <?php // goodbye world

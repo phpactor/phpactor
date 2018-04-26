@@ -1,0 +1,6 @@
+Execute (populates quickfix list):
+    call setqflist([])
+    call phpactor#_rpc_dispatch("file_references", {"file_references": [ {"file": "file1", "references": [ {"line_no": 10, "col_no": 1}]}]})
+    let list = getqflist()
+    AssertEqual 10, list[0]['lnum']
+    AssertEqual 2, list[0]['col']
