@@ -413,6 +413,16 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         endfor
 
         call setqflist(list)
+
+        " if there is only one file, and it is the open file, don't
+        " bother opening the quick fix window
+        if len(a:parameters['file_references']) == 1
+            let fileRefs = a:parameters['file_references'][0]
+            if -1 != match(fileRefs['file'], bufname('%') . '$')
+                return 
+            endif
+        endif
+
         execute ':cwindow'
         return
     endif
@@ -452,6 +462,13 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> replace_file_source
     if a:actionName == "replace_file_source"
+
+        " if the file is open in a buffer, reload it before replacing it's
+        " source (avoid file-modified-on-disk errors)
+        if -1 != bufnr(a:parameters['path'] . '$')
+            exec ":edit! " . a:parameters['path']
+        endif
+
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
         " save the cursor position

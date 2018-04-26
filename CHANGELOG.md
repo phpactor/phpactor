@@ -16,6 +16,9 @@ Improvements:
     on env).
   - [ClassMover] (RPC) Will update current (unsaved) source.
   - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire 
+  - [vim-plugin] Reload file before replacing contents, fixes #445
+  - [vim-plugin] File references, do not show quick fix list if all references
+    are in current file.
 
 Non-functional:
 
