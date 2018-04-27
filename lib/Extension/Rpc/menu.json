@@ -130,7 +130,7 @@
             "action": "import_class",
             "parameters": {
                 "offset": "%offset%",
-                "path": "%path%",
+                "path": "%current_path%",
                 "source": "%source%",
                 "name": "%symbol%"
             }

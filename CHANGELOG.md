@@ -20,6 +20,11 @@ Improvements:
   - [vim-plugin] File references, do not show quick fix list if all references
     are in current file.
 
+Bug fixes:
+
+  - [RPC] Import class from context menu, uses context class path
+    instead of current #448
+
 Non-functional:
 
   - [WorseReflection] All member collections extend common interface,
