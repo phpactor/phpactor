@@ -263,6 +263,11 @@ function! phpactor#_input_choice(label, choices)
     let choices = []
     let usedShortcuts = []
 
+    if empty(a:choices)
+        call confirm("No choices available")
+        throw "cancelled"
+    endif
+
     for choiceLabel in keys(a:choices)
         let buffer = []
         let foundShortcut = v:false
