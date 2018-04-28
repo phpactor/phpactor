@@ -19,6 +19,7 @@ Improvements:
   - [vim-plugin] Reload file before replacing contents, fixes #445
   - [vim-plugin] File references, do not show quick fix list if all references
     are in current file.
+  - [vim-plugin] Completion - trigger on any word-like, fixes #443
 
 Non-functional:
 
