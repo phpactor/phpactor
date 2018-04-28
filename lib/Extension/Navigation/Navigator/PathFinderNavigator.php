@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Navigation\Navigator;
 
+use Phpactor\ClassFileConverter\Exception\NoMatchingSourceException;
 use Phpactor\ClassFileConverter\PathFinder;
 
 class PathFinderNavigator implements Navigator
@@ -18,6 +19,10 @@ class PathFinderNavigator implements Navigator
 
     public function destinationsFor(string $path): array
     {
-        return $this->pathFinder->destinationsFor($path);
+        try {
+            return $this->pathFinder->destinationsFor($path);
+        } catch (NoMatchingSourceException $e) {
+            return [];
+        }
     }
 }
