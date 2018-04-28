@@ -753,12 +753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "eec6b6248ed8ecd974f98c0e5abd30482a8daa8e"
+                "reference": "328ab2012f80f1486574d31d8d4c4ed46b9391c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/eec6b6248ed8ecd974f98c0e5abd30482a8daa8e",
-                "reference": "eec6b6248ed8ecd974f98c0e5abd30482a8daa8e",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/328ab2012f80f1486574d31d8d4c4ed46b9391c7",
+                "reference": "328ab2012f80f1486574d31d8d4c4ed46b9391c7",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-28T09:38:43+00:00"
+            "time": "2018-04-28T12:51:55+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -802,12 +802,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "b365b4f33077c55445785a2b7e0cd4eb2b8210b9"
+                "reference": "746f0c61ca738b5148ddc6d5b2f155c6d8e16183"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/b365b4f33077c55445785a2b7e0cd4eb2b8210b9",
-                "reference": "b365b4f33077c55445785a2b7e0cd4eb2b8210b9",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/746f0c61ca738b5148ddc6d5b2f155c6d8e16183",
+                "reference": "746f0c61ca738b5148ddc6d5b2f155c6d8e16183",
                 "shasum": ""
             },
             "require-dev": {
@@ -830,7 +830,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-04-06T21:52:05+00:00"
+            "time": "2018-04-28T16:56:30+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -928,12 +928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8f3b5e7531cd303841c028c5bff1cf373c96ab4c"
+                "reference": "7a32da18ea11e8342c1736d6238558f8090da85a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8f3b5e7531cd303841c028c5bff1cf373c96ab4c",
-                "reference": "8f3b5e7531cd303841c028c5bff1cf373c96ab4c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/7a32da18ea11e8342c1736d6238558f8090da85a",
+                "reference": "7a32da18ea11e8342c1736d6238558f8090da85a",
                 "shasum": ""
             },
             "require": {
@@ -972,7 +972,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-21T11:59:48+00:00"
+            "time": "2018-04-28T17:05:09+00:00"
         },
         {
             "name": "phpbench/container",

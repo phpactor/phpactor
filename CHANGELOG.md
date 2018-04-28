@@ -22,6 +22,8 @@ Improvements:
   - [vim-plugin] File references, do not show quick fix list if all references
     are in current file.
   - [vim-plugin] Completion - trigger on any word-like, fixes #443
+  - [WorseReflection] Support for `@property` type override (but doesn't
+    create a "pretend" property).
 
 Bug fixes:
 
