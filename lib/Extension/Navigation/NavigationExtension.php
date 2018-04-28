@@ -11,6 +11,7 @@ use Phpactor\Extension\Navigation\Application\Navigator;
 use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Handler\NavigateHandler;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
+use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
 
 class NavigationExtension implements Extension
 {
@@ -34,6 +35,12 @@ class NavigationExtension implements Extension
 
         $container->register('navigation.navigator.path_finder', function (Container $container) {
             return new PathFinderNavigator($container->get('navigation.path_finder'));
+        }, [ 'navigation.navigator' => [] ]);
+
+        $this->registerRpc($container);
+
+        $container->register('navigation.navigator.worse_reflection', function (Container $container) {
+            return new WorseReflectionNavigator($container->get('reflection.reflector'));
         }, [ 'navigation.navigator' => [] ]);
 
         $this->registerRpc($container);
