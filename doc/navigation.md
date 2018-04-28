@@ -4,6 +4,10 @@ currentMenu: navigation
 Navigation
 ==========
 
+Phpactor provides some functionality for navigating to (and generating)
+contextually relevant files such as parent classes, definitions, unit tests,
+references etc.
+
 - [Class References](#class-references)
 - [Class Member References](#class-member-references)
 - [Jump to Definition](#jump-to-definition)
@@ -65,7 +69,9 @@ This feature is **extremely useful**! Be sure to map it to a keyboard shortcut a
 Jump to or generate related file
 --------------------------------
 
-Jump to a related file (e.g. unit test, integration test, benchmark), and optionally generate it if it doesn't exist.
+Jump to a related file (e.g. parent class, interfaces, unit test, integration
+test, benchmark), and optionally generate it if it doesn't exist (where
+supported).
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Class context menu > Navigate_.
