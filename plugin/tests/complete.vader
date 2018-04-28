@@ -6,15 +6,11 @@ Execute:
     AssertEqual 11, phpactor#Complete(1,0)
 
 Given php (multiple):
-  <?php 
-  
-  class Foobar extends F
-  {
-  }
+  <?php class Foobar extends B
 
 Execute:
-    execute "normal! jjA"
-    AssertEqual 21, phpactor#Complete(1,0)
+    execute "normal! A "
+    AssertEqual 28, phpactor#Complete(1,0)
 
 Given php (name in parameter list):
   <?php 
@@ -27,3 +23,12 @@ Given php (name in parameter list):
 Execute:
     execute "normal! /Baz\<Enter>fz"
     AssertEqual 22, phpactor#Complete(1,0)
+
+Given php (name method call):
+  <?php 
+  $suggestions->add(Suggestion::cre('k', 'implements ', ''));
+  $suggestions->add(Suggestion::cre('k', 'implements ', ''));
+
+Execute:
+    execute "normal! /cre\<Enter>ll"
+    AssertEqual 30, phpactor#Complete(1,0)

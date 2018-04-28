@@ -41,11 +41,12 @@ function! phpactor#Complete(findstart, base)
 
     let lineOffset = line2byte(line("."))
 
+    " get the source up until the cursor
+    let source = join(getline(1,line('.') - 1), "\n")
+    let partialLine = getline(line('.'))[0:col('.') - 2]
+    let source = source . "\n" . partialLine
+
     if a:findstart
-        " get the source up until the cursor
-        let source = join(getline(1,line('.') - 1), "\n")
-        let partialLine = getline(line('.'))[0:col('.') - 1]
-        let source = source . "\n" . partialLine
 
         let patterns = ["[\$0-9A-Za-z_]\\+$"]
 
@@ -61,10 +62,8 @@ function! phpactor#Complete(findstart, base)
     endif
 
     let offset = lineOffset + col('.') - 2
-    let source = join(getline(1,'.'), "\n")
-    let source = source . a:base
     let offset = offset + strlen(a:base)
-    let source = source . "\n" . join(getline(line('.') + 1, '$'), "\n")
+    let source = source . a:base . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
     let result = phpactor#rpc("complete", { "offset": offset, "source": source})
     let suggestions = result['suggestions']
