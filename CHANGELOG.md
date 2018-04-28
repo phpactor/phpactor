@@ -5,8 +5,8 @@ Changelog
 
 Features:
 
-  - [Navigation] Reflection navigation, navigate to related classes (currently
-    only parent navigation supported).
+  - [Navigation] Reflection navigation: navigate to related classes (currently
+    supports parent class and interfaces).
   - [Completion] _Experimental_ class completion: complete use, new and
     extends. Class names inferred from file names.
 
