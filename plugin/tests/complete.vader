@@ -1,20 +1,29 @@
-Given php (matches expects):
-  <?php class Foobar extends
-
-Execute:
-    execute "normal! $"
-    AssertEqual 26, phpactor#Complete(1,0)
-
-Given php (matches implements):
-  <?php class Foobar implements
-
-Execute:
-    execute "normal! $"
-    AssertEqual 29, phpactor#Complete(1,0)
-
-Given php (matches new):
+Given php (single):
   <?php new Fo
 
 Execute:
     execute "normal! $"
-    AssertEqual 9, phpactor#Complete(1,0)
+    AssertEqual 11, phpactor#Complete(1,0)
+
+Given php (multiple):
+  <?php 
+  
+  class Foobar extends F
+  {
+  }
+
+Execute:
+    execute "normal! jjA"
+    AssertEqual 21, phpactor#Complete(1,0)
+
+Given php (name in parameter list):
+  <?php 
+  
+  class Foobar
+  {
+    public function bar(Baz$foo, Foo)
+  }
+
+Execute:
+    execute "normal! /Baz\<Enter>fz"
+    AssertEqual 22, phpactor#Complete(1,0)

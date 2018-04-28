@@ -39,37 +39,28 @@ endfunction
 """"""""""""""""""""""""
 function! phpactor#Complete(findstart, base)
 
+    let lineOffset = line2byte(line("."))
+
     if a:findstart
-        let line = getline('.')
-        let start = col('.')
-        let originalStart = start
-        let triggers = [ "$", "->", "::", "extends", "use", "implements", "new" ]
-        let buffer = []
+        " get the source up until the cursor
+        let source = join(getline(1,line('.') - 1), "\n")
+        let partialLine = getline(line('.'))[0:col('.') - 1]
+        let source = source . "\n" . partialLine
 
-        while start -1 >= 0
+        let patterns = ["[\$0-9A-Za-z_]\\+$"]
 
-            let char = line[start-1:start-1]
+        for pattern in patterns
+            let pos = match(source, pattern)
 
-            if char != " " && char != "\n" && char != ""
-                call add(buffer, char)
-                for trigger in triggers
-                    if len(buffer) >= len(trigger)
-                        let toCompare = join(reverse(copy(buffer)), '')
-                        let toCompare = toCompare[0:strlen(trigger) - 1]
-                        if trigger == toCompare
-                            return start + strlen(trigger) - 1
-                        endif
-                    endif
-                endfor
+            if -1 != pos
+                return pos - lineOffset + 1
             endif
+        endfor
 
-            let start -= 1
-        endwhile
-
-        return start
+        return -1
     endif
 
-    let offset = line2byte(line(".")) + col('.') - 2
+    let offset = lineOffset + col('.') - 2
     let source = join(getline(1,'.'), "\n")
     let source = source . a:base
     let offset = offset + strlen(a:base)
