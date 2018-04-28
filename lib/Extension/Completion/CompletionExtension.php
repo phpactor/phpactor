@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Completion;
 
-use Phpactor\Completion\Bridge\TolerantParser\KeywordCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
@@ -84,10 +83,6 @@ class CompletionExtension implements Extension
                 $container->get('reflection.reflector'),
                 $container->get('completion.formatter')
             );
-        }, [ 'completion.tolerant_completor' => []]);
-
-        $container->register('completion.completor.keyword', function (Container $container) {
-            return new KeywordCompletor();
         }, [ 'completion.tolerant_completor' => []]);
 
         $container->register('completion.formatter', function (Container $container) {

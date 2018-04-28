@@ -24,25 +24,7 @@ class NavigationExtension implements Extension
     public function load(ContainerBuilder $container)
     {
         $this->registerPathFinder($container);
-        $container->register('navigation.navigator.chain', function (Container $container) {
-            $navigators = [];
-            foreach ($container->getServiceIdsForTag('navigation.navigator') as $serviceId => $attrs) {
-                $navigators[] = $container->get($serviceId);
-            }
-
-            return new ChainNavigator($navigators);
-        });
-
-        $container->register('navigation.navigator.path_finder', function (Container $container) {
-            return new PathFinderNavigator($container->get('navigation.path_finder'));
-        }, [ 'navigation.navigator' => [] ]);
-
-        $this->registerRpc($container);
-
-        $container->register('navigation.navigator.worse_reflection', function (Container $container) {
-            return new WorseReflectionNavigator($container->get('reflection.reflector'));
-        }, [ 'navigation.navigator' => [] ]);
-
+        $this->registerNavigators($container);
         $this->registerRpc($container);
     }
 
@@ -79,5 +61,24 @@ class NavigationExtension implements Extension
                 $container->get('application.navigator')
             );
         }, [ 'rpc.handler' => [] ]);
+    }
+
+    private function registerNavigators(ContainerBuilder $container)
+    {
+        $container->register('navigation.navigator.chain', function (Container $container) {
+            $navigators = [];
+            foreach ($container->getServiceIdsForTag('navigation.navigator') as $serviceId => $attrs) {
+                $navigators[] = $container->get($serviceId);
+            }
+        
+            return new ChainNavigator($navigators);
+        });
+        $container->register('navigation.navigator.path_finder', function (Container $container) {
+            return new PathFinderNavigator($container->get('navigation.path_finder'));
+        }, [ 'navigation.navigator' => [] ]);
+        
+        $container->register('navigation.navigator.worse_reflection', function (Container $container) {
+            return new WorseReflectionNavigator($container->get('reflection.reflector'));
+        }, [ 'navigation.navigator' => [] ]);
     }
 }
