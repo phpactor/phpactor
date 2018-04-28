@@ -26,12 +26,22 @@ class WorseReflectionNavigator implements Navigator
 
         foreach ($classes as $class) {
             if ($class instanceof ReflectionClass) {
-                $parentClass = $class->parent();
-
-                if ($parentClass instanceof ReflectionClass) {
-                    $destinations['parent (' . $parentClass->name()->short() . ')'] = $parentClass->sourceCode()->path();
-                }
+                $destinations = $this->forReflectionClass($destinations, $class);
             }
+        }
+
+        return $destinations;
+    }
+
+    private function forReflectionClass(array $destinations, ReflectionClass $class)
+    {
+        $parentClass = $class->parent();
+        if ($parentClass instanceof ReflectionClass) {
+            $destinations['parent (' . $parentClass->name()->short() . ')'] = $parentClass->sourceCode()->path();
+        }
+
+        foreach ($class->interfaces() as $interface) {
+            $destinations['interface (' . $interface->name()->short() . ')'] = $interface->sourceCode()->path();
         }
 
         return $destinations;
