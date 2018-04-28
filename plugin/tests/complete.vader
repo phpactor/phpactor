@@ -3,7 +3,7 @@ Given php (single):
 
 Execute:
     execute "normal! $"
-    AssertEqual 10, phpactor#Complete(1,0)
+    AssertEqual 11, phpactor#Complete(1,0)
 
 Given php (multiple):
   <?php 
@@ -15,3 +15,15 @@ Given php (multiple):
 Execute:
     execute "normal! jjA"
     AssertEqual 21, phpactor#Complete(1,0)
+
+Given php (name in parameter list):
+  <?php 
+  
+  class Foobar
+  {
+    public function bar(Baz$foo, Foo)
+  }
+
+Execute:
+    execute "normal! /Baz\<Enter>fz"
+    AssertEqual 22, phpactor#Complete(1,0)
