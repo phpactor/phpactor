@@ -39,12 +39,14 @@ endfunction
 """"""""""""""""""""""""
 function! phpactor#Complete(findstart, base)
 
-    let source = join(getline(1,line('.') - 1), "\n")
     let lineOffset = line2byte(line("."))
 
     if a:findstart
+        " get the source up until the cursor
+        let source = join(getline(1,line('.') - 1), "\n")
         let partialLine = getline(line('.'))[0:col('.') - 1]
         let source = source . "\n" . partialLine
+
         let patterns = ["[\$0-9A-Za-z_]\\+$"]
 
         for pattern in patterns
@@ -56,7 +58,6 @@ function! phpactor#Complete(findstart, base)
         endfor
 
         return -1
-
     endif
 
     let offset = lineOffset + col('.') - 2
