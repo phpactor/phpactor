@@ -50,7 +50,7 @@ class CoreExtension implements Extension
             self::AUTOLOAD_DEREGISTER => true,
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
-            self::CACHE_DIR => __DIR__ . '/../../cache',
+            self::CACHE_DIR => __DIR__ . '/../../../cache',
             self::LOGGING_ENABLED => false,
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',

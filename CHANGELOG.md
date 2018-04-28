@@ -29,6 +29,9 @@ Bug fixes:
 
   - [RPC] Import class from context menu, uses context class path
     instead of current #448
+  - [CodeBuilder] Regression where already-existing names are imported fixes
+    #452
+  - [Application] Fixed location of cache directory.
 
 Non-functional:
 
