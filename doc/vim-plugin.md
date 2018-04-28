@@ -54,7 +54,6 @@ Config files
 [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
 [✔] /home/daniel/.config/phpactor/phpactor.yml
 [✘] /etc/xdg/phpactor/phpactor.yml
-
 ```
 
 Phpactor works best with Composer - but much functionality including
@@ -89,6 +88,9 @@ nmap <Leader>u :call phpactor#UseAdd()<CR>
 
 " Invoke the context menu
 nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+
+" Invoke the navigation menu
+nmap <Leader>nn :call phpactor#Navigate()<CR>
 
 " Goto definition of class or class member under the cursor
 nmap <Leader>o :call phpactor#GotoDefinition()<CR>
