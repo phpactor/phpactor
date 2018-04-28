@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\PathFinder\Rpc;
+namespace Phpactor\Tests\Unit\Extension\Navigation\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Rpc\Handler\NavigateHandler;
-use Phpactor\Extension\PathFinder\Application\Navigator;
+use Phpactor\Extension\Navigation\Handler\NavigateHandler;
+use Phpactor\Extension\Navigation\Application\Navigator;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
