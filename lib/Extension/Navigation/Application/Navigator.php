@@ -1,17 +1,18 @@
 <?php
 
-namespace Phpactor\Extension\PathFinder\Application;
+namespace Phpactor\Extension\Navigation\Application;
 
 use Phpactor\ClassFileConverter\PathFinder;
+use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
 use RuntimeException;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 
 class Navigator
 {
     /**
-     * @var PathFinder
+     * @var Navigator
      */
-    private $pathFinder;
+    private $navigator;
 
     /**
      * @var ClassNew
@@ -24,18 +25,18 @@ class Navigator
     private $autoCreateConfig;
 
     public function __construct(
-        PathFinder $pathFinder,
+        NavigatorInterface $navigator,
         ClassNew $classNew,
         array $autoCreateConfig
     ) {
-        $this->pathFinder = $pathFinder;
+        $this->navigator = $navigator;
         $this->classNew = $classNew;
         $this->autoCreateConfig = $autoCreateConfig;
     }
 
     public function destinationsFor(string $path)
     {
-        return $this->pathFinder->destinationsFor($path);
+        return $this->navigator->destinationsFor($path);
     }
 
     public function canCreateNew(string $path, string $destinationName)

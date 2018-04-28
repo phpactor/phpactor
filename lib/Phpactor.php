@@ -7,7 +7,7 @@ use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
-use Phpactor\Extension\PathFinder\PathFinderExtension;
+use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
@@ -46,7 +46,7 @@ class Phpactor
             ClassMoverExtension::class,
             CodeTransformExtension::class,
             CompletionExtension::class,
-            PathFinderExtension::class,
+            NavigationExtension::class,
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class

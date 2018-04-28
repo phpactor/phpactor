@@ -23,7 +23,6 @@ use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
 use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
 use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Extension\Rpc\RequestHandler\LoggingHandler;
-use Phpactor\Extension\Rpc\Handler\NavigateHandler;
 use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
@@ -172,12 +171,6 @@ class RpcExtension implements Extension
         $container->register('rpc.handler.rename_variable', function (Container $container) {
             return new RenameVariableHandler(
                 $container->get('code_transform.refactor.rename_variable')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.navigate', function (Container $container) {
-            return new NavigateHandler(
-                $container->get('application.navigator')
             );
         }, [ 'rpc.handler' => [] ]);
 
