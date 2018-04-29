@@ -5,7 +5,8 @@
             "parameters": {
                 "path": "%current_path%",
                 "offset": "%offset%",
-                "source": "%source%"
+                "source": "%source%",
+                "name_suggestion": "%symbol%"
             }
         }
     },

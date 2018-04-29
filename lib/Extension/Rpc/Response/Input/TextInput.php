@@ -19,16 +19,22 @@ class TextInput implements Input
      */
     private $default;
 
-    private function __construct(string $name, string $label, string $default = null)
+    /*
+     * @var string
+     */
+    private $type;
+
+    private function __construct(string $name, string $label, string $default = null, string $type = null)
     {
         $this->name = $name;
         $this->label = $label;
         $this->default = $default;
+        $this->type = $type;
     }
 
-    public static function fromNameLabelAndDefault(string $name, string $label, string $default = null)
+    public static function fromNameLabelAndDefault(string $name, string $label, string $default = null, string $type = null)
     {
-        return new self($name, $label, $default);
+        return new self($name, $label, $default, $type);
     }
 
     public function type(): string
@@ -56,7 +62,7 @@ class TextInput implements Input
         return [
             'default' => $this->default,
             'label' => $this->label,
-            'type' => 'file',
+            'type' => $this->type,
         ];
     }
 }

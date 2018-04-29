@@ -43,7 +43,8 @@ class ClassCopyHandler extends AbstractHandler
         $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_DEST_PATH,
             'Copy to: ',
-            $arguments[self::PARAM_SOURCE_PATH]
+            $arguments[self::PARAM_SOURCE_PATH],
+            'file'
         ));
 
         if ($this->hasMissingArguments($arguments)) {

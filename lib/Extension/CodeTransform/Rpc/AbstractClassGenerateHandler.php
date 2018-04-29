@@ -67,7 +67,8 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_NEW_PATH,
             $this->newMessage(),
-            $arguments[self::PARAM_CURRENT_PATH]
+            $arguments[self::PARAM_CURRENT_PATH],
+            'file'
         ));
 
         if ($this->hasMissingArguments($arguments)) {
