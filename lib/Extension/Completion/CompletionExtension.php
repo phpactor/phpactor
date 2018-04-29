@@ -3,10 +3,12 @@
 namespace Phpactor\Extension\Completion;
 
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\FunctionFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
 use Phpactor\Completion\Bridge\TolerantParser\ChainTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseBuiltInFunctionCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseLocalVariableCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParameterFormatter;
@@ -85,6 +87,13 @@ class CompletionExtension implements Extension
             );
         }, [ 'completion.tolerant_completor' => []]);
 
+        $container->register('completion.completor.builtin_function', function (Container $container) {
+            return new WorseBuiltInFunctionCompletor(
+                $container->get('reflection.reflector'),
+                $container->get('completion.formatter')
+            );
+        }, [ 'completion.tolerant_completor' => []]);
+
         $container->register('completion.formatter', function (Container $container) {
             return new ObjectFormatter([
                 new TypeFormatter(),
@@ -92,6 +101,7 @@ class CompletionExtension implements Extension
                 new MethodFormatter(),
                 new ParameterFormatter(),
                 new PropertyFormatter(),
+                new FunctionFormatter(),
                 new VariableFormatter(),
             ]);
         });
