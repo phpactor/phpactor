@@ -7,10 +7,12 @@ Features:
 
   - [Navigation] Reflection navigation: navigate to related classes (currently
     supports parent class and interfaces).
+  - [Completion] Built-in function completion, #371
   - [Completion] _Experimental_ class completion: complete use, new and
     extends. Class names inferred from file names.
   - [GotoDefinition] Goto function definitions (currently limited to functions
     defined by the PHPStorm stubs).
+
 
 Improvements:
 
