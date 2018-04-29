@@ -9,6 +9,8 @@ Features:
     supports parent class and interfaces).
   - [Completion] _Experimental_ class completion: complete use, new and
     extends. Class names inferred from file names.
+  - [GotoDefinition] Goto function definitions (currently limited to functions
+    defined by the PHPStorm stubs).
 
 Improvements:
 
@@ -32,9 +34,11 @@ Bug fixes:
   - [CodeBuilder] Regression where already-existing names are imported fixes
     #452
   - [Application] Fixed location of cache directory.
+  - [Application] Fixed binary path, thanks @talbergs
 
 Non-functional:
 
+  - [WorseReflection] Full support for reflecting functions.
   - [WorseReflection] All member collections extend common interface,
     class-likes have a `members(): ReflectionMemberCollection` method.
   - [Completion] Refactored to make interface more efficient, decoupled

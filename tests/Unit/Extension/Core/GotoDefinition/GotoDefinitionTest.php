@@ -3,6 +3,8 @@
 namespace Phpactor\Tests\Unit\Extension\Core\GotoDefinition;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -29,7 +31,7 @@ class GotoDefinitionTest extends TestCase
      */
     private $reflector;
     /**
-     * @var GotoDefinitionAction
+     * @var GotoDefinition
      */
     private $action;
 
@@ -55,6 +57,7 @@ class GotoDefinitionTest extends TestCase
         $this->action = new GotoDefinition($this->reflector->reveal());
 
         $this->reflectionClass = $this->prophesize(ReflectionClass::class);
+        $this->reflectionFunction = $this->prophesize(ReflectionFunction::class);
 
         $this->reflectionMethod = $this->prophesize(ReflectionMethod::class);
         $this->reflectionMethodCollection = $this->prophesize(ReflectionMethodCollection::class);
@@ -127,6 +130,37 @@ class GotoDefinitionTest extends TestCase
         $this->reflectionClass->name()->willReturn(ClassName::fromString('asd'));
 
         $result = $this->action->gotoDefinition($info);
+    }
+
+    public function testGotoDefinitionFunctionNoSourceCode()
+    {
+        $this->expectException(GotoDefinitionException::class);
+        $this->expectExceptionMessage('The source code for function "asd" has no path associated with it');
+        $info = SymbolContext::for(
+            Symbol::fromTypeNameAndPosition(Symbol::FUNCTION, 'aaa', Position::fromStartAndEnd(1, 2))
+        );
+        $info = $info->withName(Name::fromString('Foobar'));
+        $this->reflector->reflectFunction(Name::fromString('Foobar'))->willReturn($this->reflectionFunction->reveal());
+        $this->reflectionFunction->sourceCode()->willReturn(SourceCode::fromString('asd'));
+        $this->reflectionFunction->name()->willReturn(Name::fromString('asd'));
+
+        $this->action->gotoDefinition($info);
+    }
+
+    public function testGotoDefinitionFunction()
+    {
+        $info = SymbolContext::for(
+            Symbol::fromTypeNameAndPosition(Symbol::FUNCTION, 'aaa', Position::fromStartAndEnd(1, 2))
+        );
+        $info = $info->withName(Name::fromString('Foobar'));
+        $this->reflector->reflectFunction(Name::fromString('Foobar'))->willReturn($this->reflectionFunction->reveal());
+        $this->reflectionFunction->sourceCode()->willReturn(SourceCode::fromPath(__FILE__));
+        $this->reflectionFunction->name()->willReturn(Name::fromString('asd'));
+        $this->reflectionFunction->position()->willReturn(Position::fromStartAndEnd(10, 20));
+
+        $result = $this->action->gotoDefinition($info);
+        $this->assertEquals(10, $result->offset());
+        $this->assertEquals(__FILE__, $result->path());
     }
 
     /**
