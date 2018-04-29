@@ -34,6 +34,7 @@ Bug fixes:
   - [CodeBuilder] Regression where already-existing names are imported fixes
     #452
   - [Application] Fixed location of cache directory.
+  - [Application] Fixed binary path, thanks @talbergs
 
 Non-functional:
 
