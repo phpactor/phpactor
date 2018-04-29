@@ -26,7 +26,6 @@ class Application extends SymfonyApplication
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->initialize($input);
-
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {

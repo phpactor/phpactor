@@ -37,6 +37,7 @@ Bug fixes:
     #452
   - [Application] Fixed location of cache directory.
   - [Application] Fixed binary path, thanks @talbergs
+  - [RPC] Specify completion type for text input, fixes #455
 
 Non-functional:
 

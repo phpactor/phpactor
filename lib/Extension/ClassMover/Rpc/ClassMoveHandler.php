@@ -57,7 +57,8 @@ class ClassMoveHandler extends AbstractHandler
         $this->requireInput(TextInput::fromNameLabelAndDefault(
             self::PARAM_DEST_PATH,
             'Move to: ',
-            $arguments[self::PARAM_SOURCE_PATH]
+            $arguments[self::PARAM_SOURCE_PATH],
+            'file'
         ));
 
         if (null !== $arguments[self::PARAM_DEST_PATH] && null === $arguments[self::PARAM_CONFIRMED]) {
