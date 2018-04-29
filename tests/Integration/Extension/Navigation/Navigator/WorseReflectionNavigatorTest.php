@@ -35,7 +35,7 @@ EOT
         $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Two.php');
 
         $this->assertEquals([
-            'parent (One)' => $this->workspaceDir() . '/One.php',
+            'parent' => $this->workspaceDir() . '/One.php',
         ], $destinations);
     }
 
@@ -64,11 +64,40 @@ EOT
         $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Three.php');
 
         $this->assertEquals([
-            'interface (One)' => $this->workspaceDir() . '/One.php',
-            'interface (Two)' => $this->workspaceDir() . '/Two.php',
+            'interface:One' => $this->workspaceDir() . '/One.php',
+            'interface:Two' => $this->workspaceDir() . '/Two.php',
         ], $destinations);
     }
 
+    public function testNavigateFromInterfaceToParents()
+    {
+        $navigator = $this->create(<<<'EOT'
+// File:One.php
+<?php
+
+interface One
+{
+}
+// File:Two.php
+<?php
+
+interface Two
+{
+}
+// File:Three.php
+<?php
+interface Three extends One, Two
+{
+}
+EOT
+        );
+        $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Three.php');
+
+        $this->assertEquals([
+            'interface:One' => $this->workspaceDir() . '/One.php',
+            'interface:Two' => $this->workspaceDir() . '/Two.php',
+        ], $destinations);
+    }
     private function create(string $manifest): WorseReflectionNavigator
     {
         $workspace = $this->workspace()->create($this->workspaceDir());

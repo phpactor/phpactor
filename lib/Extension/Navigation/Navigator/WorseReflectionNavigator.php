@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Navigation\Navigator;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
@@ -28,6 +29,10 @@ class WorseReflectionNavigator implements Navigator
             if ($class instanceof ReflectionClass) {
                 $destinations = $this->forReflectionClass($destinations, $class);
             }
+
+            if ($class instanceof ReflectionInterface) {
+                $destinations = $this->forReflectionInterface($destinations, $class);
+            }
         }
 
         return $destinations;
@@ -37,11 +42,20 @@ class WorseReflectionNavigator implements Navigator
     {
         $parentClass = $class->parent();
         if ($parentClass instanceof ReflectionClass) {
-            $destinations['parent (' . $parentClass->name()->short() . ')'] = $parentClass->sourceCode()->path();
+            $destinations['parent'] = $parentClass->sourceCode()->path();
         }
 
         foreach ($class->interfaces() as $interface) {
-            $destinations['interface (' . $interface->name()->short() . ')'] = $interface->sourceCode()->path();
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
+        }
+
+        return $destinations;
+    }
+
+    private function forReflectionInterface($destinations, ReflectionInterface $class)
+    {
+        foreach ($class->parents() as $interface) {
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
         }
 
         return $destinations;

@@ -30,6 +30,8 @@ class GotoDefinition
                 return $this->gotoMember($symbolContext);
             case Symbol::CLASS_:
                 return $this->gotoClass($symbolContext);
+            case Symbol::FUNCTION:
+                return $this->gotoFunction($symbolContext);
         }
 
         throw new GotoDefinitionException(sprintf(
@@ -60,6 +62,31 @@ class GotoDefinition
         return GotoDefinitionResult::fromClassPathAndOffset(
             $path,
             $class->position()->start()
+        );
+    }
+
+    public function gotoFunction(SymbolContext $symbolContext): GotoDefinitionResult
+    {
+        $functionName = $symbolContext->name();
+
+        try {
+            $function = $this->reflector->reflectFunction($functionName);
+        } catch (NotFound $e) {
+            throw new GotoDefinitionException($e->getMessage(), null, $e);
+        }
+
+        $path = $function->sourceCode()->path();
+
+        if (null === $path) {
+            throw new GotoDefinitionException(sprintf(
+                'The source code for function "%s" has no path associated with it.',
+                $function->name()
+            ));
+        }
+
+        return GotoDefinitionResult::fromClassPathAndOffset(
+            $path,
+            $function->position()->start()
         );
     }
 
