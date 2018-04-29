@@ -34,7 +34,7 @@
         "friendsofphp/php-cs-fixer": "^2.12@dev"
     },
     "bin": [
-        "phpactor"
+        "bin/phpactor"
     ],
     "autoload": {
         "psr-4": {
