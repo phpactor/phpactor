@@ -58,7 +58,7 @@ class PhpactorContainer implements Container, ContainerBuilder
      */
     public function has($id)
     {
-        return isset($this->factories[$id]);
+        return array_key_exists($id, $this->factories);
     }
 
     public function getServiceIdsForTag(string $tag): array

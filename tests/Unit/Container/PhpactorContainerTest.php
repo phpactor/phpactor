@@ -19,6 +19,7 @@ class PhpactorContainerTest extends TestCase
     {
         $this->container = new PhpactorContainer([
             'configKey1' => 'value1',
+            'nullKey' => null,
         ]);
     }
 
@@ -86,6 +87,12 @@ class PhpactorContainerTest extends TestCase
     {
         $result = $this->container->getParameter('configKey1');
         $this->assertEquals('value1', $result);
+    }
+
+    public function testReturnsNullParameter()
+    {
+        $result = $this->container->getParameter('nullKey');
+        $this->assertEquals(null, $result);
     }
 
     public function testBuildReturnsAConfiguredContainer()
