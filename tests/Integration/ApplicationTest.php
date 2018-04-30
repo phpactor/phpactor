@@ -13,6 +13,8 @@ class ApplicationTest extends IntegrationTestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         $this->workspace()->reset();
     }
 

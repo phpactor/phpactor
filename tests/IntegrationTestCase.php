@@ -12,6 +12,15 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!defined('__VENDOR_DIR__')) {
+            define('__VENDOR_DIR__', realpath(dirname(__FILE__) . '/../vendor'));
+        }
+    }
+
     protected function workspaceDir()
     {
         return __DIR__ . '/Assets/Workspace';
