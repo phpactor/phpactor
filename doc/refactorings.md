@@ -452,7 +452,7 @@ Extract Interface
 
 Extract an interface from a class. If a wildcard is given (CLI only) generate an interface per class.
 
-- **Command**: `$ phpactor class:inflect path/to/Class.php path/to/Interface.php` (wild card accepted).
+- **Command**: `$ phpactor class:inflect path/to/Class.php path/to/Interface.php interface` (wild card accepted).
 - **VIM plugin**: _Class context menu > Inflect > Extract interface_.
 - **VIM function**:`:call phpactor#ClassInflect()`
 
