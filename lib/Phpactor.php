@@ -59,8 +59,8 @@ class Phpactor
             return $paths;
         });
 
-        if (!isset($config['cache_dir'])) {
-            $config['cache_dir'] = $paths->userData('cache');
+        if (false === isset($config[CoreExtension::CACHE_DIR])) {
+            $config[CoreExtension::CACHE_DIR] = $paths->userData('cache');
         }
 
         // > method resolve config
