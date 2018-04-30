@@ -27,7 +27,7 @@ class WorseReflectionExtension implements Extension
     public function configure(Schema $schema)
     {
         $schema->setDefaults([
-            'reflection.stub_directory' => __DIR__ . '/../../../vendor/jetbrains/phpstorm-stubs',
+            'reflection.stub_directory' => __VENDOR_DIR__ . '/jetbrains/phpstorm-stubs',
         ]);
     }
 
@@ -46,20 +46,20 @@ class WorseReflectionExtension implements Extension
                 ->enableCache()
                 ->withSourceReflectorFactory(new TolerantFactory($container->get('reflection.tolerant_parser')))
                 ->enableContextualSourceLocation();
-        
+
             foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
                 $builder->addLocator($container->get($locatorId));
             }
-        
+
             $builder->withLogger(new PsrLogger($container->get('monolog.logger')));
-        
+
             return $builder->build();
         });
 
         $container->register('reflection.tolerant_parser', function (Container $container) {
             return new CachedParser();
         });
-        
+
         $container->register('reflection.locator.stub', function (Container $container) {
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
@@ -67,7 +67,7 @@ class WorseReflectionExtension implements Extension
                 $container->getParameter('cache_dir')
             );
         }, [ 'reflection.source_locator' => []]);
-        
+
         $container->register('reflection.locator.worse', function (Container $container) {
             return new ClassToFileSourceLocator($container->get('class_to_file.class_to_file'));
         }, [ 'reflection.source_locator' => []]);
