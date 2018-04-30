@@ -28,6 +28,10 @@ Improvements:
   - [vim-plugin] Completion - trigger on any word-like, fixes #443
   - [WorseReflection] Support for `@property` type override (but doesn't
     create a "pretend" property).
+  - [Application] Pass the Phpactor vendor directory as an argument to the
+    Application and include vendor files (e.g. stubs) relative to that, fixes
+    #460
+  - [Application] Use XDG data directory for cache.
 
 Bug fixes:
 
