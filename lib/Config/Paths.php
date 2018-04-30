@@ -67,9 +67,4 @@ class Paths
 
         return $path;
     }
-
-    public function userCacheDir(): string
-    {
-        return $this->userData('cache');
-    }
 }
