@@ -22,16 +22,16 @@ use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
 {
-    public static function boot(InputInterface $input): PhpactorContainer
+    public static function boot(InputInterface $input, string $vendorDir): PhpactorContainer
     {
-
         $config = [];
 
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
+        $config[CoreExtension::VENDOR_DIRECTORY] = $vendorDir;
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config['cwd'] = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[CoreExtension::WORKING_DIRECTORY] = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
@@ -53,7 +53,6 @@ class Phpactor
         ];
 
         $container = new PhpactorContainer();
-        // TODO: Put this in core ext??
 
         $container->register('config.paths', function () {
             return new Paths();

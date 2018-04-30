@@ -88,6 +88,6 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function container(): Container
     {
-        return Phpactor::boot(new ArrayInput([]));
+        return Phpactor::boot(new ArrayInput([]), __DIR__ . '/../vendor');
     }
 }

@@ -85,7 +85,7 @@ class PhpactorContainer implements Container, ContainerBuilder
 
     public function getParameter(string $name)
     {
-        if (!isset($this->parameters[$name])) {
+        if (!array_key_exists($name, $this->parameters)) {
             throw new RuntimeException(sprintf(
                 'Unknown parameter "%s", known parameters "%s"',
                 $name,

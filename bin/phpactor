@@ -36,7 +36,7 @@ require_once $autoloadFile;
 
 Debug::enable();
 
-$application = new Application();
+$application = new Application(realpath(dirname($autoloadFile)));
 $output = new ConsoleOutput();
 
 try {

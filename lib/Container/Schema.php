@@ -41,7 +41,7 @@ class Schema
         if ($diff = array_diff(array_keys($config), $allowedKeys)) {
             throw new InvalidConfig(sprintf(
                 'Keys "%s" are not known, known keys: "%s"',
-                implode('", "', array_keys($config)),
+                implode('", "', ($diff)),
                 implode('", "', $allowedKeys)
             ));
         }
