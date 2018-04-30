@@ -13,7 +13,7 @@ foreach ([
 ] as $file) {
     if (file_exists($file)) {
         $autoloadFile = $file;
-        define('VENDOR_DIR', realpath(basename($autoloadFile)));
+        define('__VENDOR_DIR__', realpath(basename($autoloadFile)));
         break;
     }
 }

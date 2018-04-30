@@ -189,11 +189,7 @@ class CodeTransformExtension implements Extension
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $loaders = [];
-            
-            $userPath = __DIR__ . '/../../../vendor/phpactor/code-builder/templates';
-            $corePath = __DIR__ . '/../../../../../../vendor/phpactor/code-builder/templates';
-            
-            $loaders[] = new FilesystemLoader(is_dir($userPath) ? $userPath : $corePath);
+            $loaders[] = new FilesystemLoader(__VENDOR_DIR__ . '/phpactor/code-builder/templates');
 
             foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
                 $loaders[] = new FilesystemLoader($templatePath);

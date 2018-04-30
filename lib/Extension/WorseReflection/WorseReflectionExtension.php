@@ -26,12 +26,8 @@ class WorseReflectionExtension implements Extension
      */
     public function configure(Schema $schema)
     {
-        $userPath = __DIR__ . '/../../../vendor/jetbrains/phpstorm-stubs';
-        $corePath = __DIR__ . '/../../../../../../vendor/jetbrains/phpstorm-stubs';
-        $path = is_dir($userPath) ? $userPath : $corePath;
-
         $schema->setDefaults([
-            'reflection.stub_directory' => $path,
+            'reflection.stub_directory' => __VENDOR_DIR__ . '/jetbrains/phpstorm-stubs',
         ]);
     }
 
