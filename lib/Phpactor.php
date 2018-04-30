@@ -54,9 +54,14 @@ class Phpactor
 
         $container = new PhpactorContainer();
 
-        $container->register('config.paths', function () {
-            return new Paths();
+        $paths = new Paths();
+        $container->register('config.paths', function () use ($paths) {
+            return $paths;
         });
+
+        if (!isset($config['cache_dir'])) {
+            $config['cache_dir'] = $paths->userCacheDir();
+        }
 
         // > method resolve config
         $masterSchema = new Schema();

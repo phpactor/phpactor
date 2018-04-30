@@ -16,8 +16,8 @@ class Paths
      * @var string
      */
     private $cwd;
-
     public function __construct(Xdg $xdg = null, string $cwd = null)
+
     {
         $this->xdg = $xdg ?: new Xdg();
         $this->cwd = $cwd ?: getcwd();
@@ -66,5 +66,10 @@ class Paths
         }
 
         return $path;
+    }
+
+    public function userCacheDir(): string
+    {
+        return $this->userData('cache');
     }
 }
