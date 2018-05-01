@@ -58,7 +58,7 @@ class PhpactorContainer implements Container, ContainerBuilder
      */
     public function has($id)
     {
-        return isset($this->factories[$id]);
+        return array_key_exists($id, $this->factories);
     }
 
     public function getServiceIdsForTag(string $tag): array
@@ -85,7 +85,7 @@ class PhpactorContainer implements Container, ContainerBuilder
 
     public function getParameter(string $name)
     {
-        if (!isset($this->parameters[$name])) {
+        if (!array_key_exists($name, $this->parameters)) {
             throw new RuntimeException(sprintf(
                 'Unknown parameter "%s", known parameters "%s"',
                 $name,

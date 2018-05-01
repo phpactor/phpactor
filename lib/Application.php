@@ -18,9 +18,15 @@ class Application extends SymfonyApplication
      */
     private $container;
 
-    public function __construct($name = 'UNKNOWN', $version = 'UNKNOWN')
+    /**
+     * @var string
+     */
+    private $vendorDir;
+
+    public function __construct(string $vendorDir)
     {
         parent::__construct('Phpactor', '0.1');
+        $this->vendorDir = $vendorDir;
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)
@@ -88,7 +94,7 @@ class Application extends SymfonyApplication
 
     private function initialize(InputInterface $input)
     {
-        $this->container = Phpactor::boot($input);
+        $this->container = Phpactor::boot($input, $this->vendorDir);
 
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
             $this->add($this->container->get($commandId));

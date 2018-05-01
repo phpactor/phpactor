@@ -27,7 +27,7 @@ class WorseReflectionExtension implements Extension
     public function configure(Schema $schema)
     {
         $schema->setDefaults([
-            'reflection.stub_directory' => __DIR__ . '/../../../vendor/jetbrains/phpstorm-stubs',
+            'reflection.stub_directory' => 'jetbrains/phpstorm-stubs',
         ]);
     }
 
@@ -63,7 +63,7 @@ class WorseReflectionExtension implements Extension
         $container->register('reflection.locator.stub', function (Container $container) {
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
-                $container->getParameter('reflection.stub_directory'),
+                $container->getParameter('vendor_dir') . '/' . $container->getParameter('reflection.stub_directory'),
                 $container->getParameter('cache_dir')
             );
         }, [ 'reflection.source_locator' => []]);

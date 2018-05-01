@@ -16,9 +16,14 @@ class ApplicationTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    public function application()
+    public function tearDown()
     {
-        return Bootstrap::createApplication();
+        $this->workspace()->reset();
+    }
+
+    public function application(): Application
+    {
+        return new Application(__DIR__ . '/../../vendor');
     }
 
     public function testConfig()
@@ -34,7 +39,7 @@ EOT
 
         chdir($this->workspaceDir());
         $output = new BufferedOutput();
-        $application = new Application();
+        $application = $this->application();
         $application->setAutoExit(false);
         $application->setCatchExceptions(false);
         $application->run(new ArrayInput([
@@ -48,7 +53,7 @@ EOT
     {
         $output = new BufferedOutput();
 
-        $application = new Application();
+        $application = $this->application();
         $application->setAutoExit(false);
         $application->run(new ArrayInput([
             'command' => 'class:reflect',
@@ -65,7 +70,7 @@ EOT
         $this->loadProject('Animals');
         $output = new BufferedOutput();
 
-        $application = new Application();
+        $application = $this->application();
         $application->setAutoExit(false);
         $application->setCatchExceptions(false);
         $exitCode = $application->run(new ArrayInput([

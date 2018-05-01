@@ -21,7 +21,6 @@ abstract class SystemTestCase extends IntegrationTestCase
             $process->setInput($stdin);
         }
 
-
         $process->run();
 
         return $process;

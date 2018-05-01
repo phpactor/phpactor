@@ -40,6 +40,7 @@ class CoreExtension implements Extension
     const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
     const AUTOLOAD_DEREGISTER = 'autoload.deregister';
     const XDEBUG_DISABLE = 'xdebug_disable';
+    const VENDOR_DIRECTORY = 'vendor_dir';
 
     public static $autoloader;
 
@@ -50,12 +51,13 @@ class CoreExtension implements Extension
             self::AUTOLOAD_DEREGISTER => true,
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
-            self::CACHE_DIR => __DIR__ . '/../../../cache',
+            self::CACHE_DIR => null,
             self::LOGGING_ENABLED => false,
             self::LOGGING_FINGERS_CROSSED => true,
             self::LOGGING_PATH => 'phpactor.log',
             self::LOGGING_LEVEL => LogLevel::WARNING,
             self::XDEBUG_DISABLE => true,
+            self::VENDOR_DIRECTORY => null,
         ]);
     }
 
