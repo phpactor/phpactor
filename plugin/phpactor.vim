@@ -492,7 +492,8 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
 
     " >> text
     if a:type == 'text'
-        if !empty(a:parameters['type'])
+        echo a:parameters['type']
+        if v:null != a:parameters['type']
             return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
         endif
         return input(a:parameters['label'], a:parameters['default'])
