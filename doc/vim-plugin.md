@@ -19,7 +19,7 @@ If you don't use any, I recommend [vim-plug](https://github.com/junegunn/vim-plu
 Add the plugin to your .vimrc:
 
 ```
-Plug 'phpactor/phpactor', {'for': 'php', 'do': composer install'}
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 ```
 
 Then in VIM:
