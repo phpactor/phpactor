@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - [Documentation] Updated VIM completion plugin docs including
+    `phpactor/ncm-phpactor` fork (mainline is not maintained currently).
+
 ## 2018-05-01 0.4.0
 
 Features:

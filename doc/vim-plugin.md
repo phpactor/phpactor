@@ -162,32 +162,38 @@ is <b>useful</b>. Other completion mehanisms may not provide this information.
 </div>
 
 Completion plugins
-------------
-Several asynchronous completion frameworks support Phpactor
+------------------
 
-### Deoplete
-To use Phpactor with [deoplete.nvim](https://github.com/Shougo/deoplete.nvim) add this to your vimrc/init.vim:
+Completion plugins provide a significantly better experience, they can be
+installed using a VIM plugin manager, we will use
+[vim-plug](https://github.com/junegunn/vim-plug) in the following examples.
 
-*Using [vim-plug](https://github.com/junegunn/vim-plug)*
-```vimL
-Plug 'Shougo/deoplete.nvim'
-Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
-Plug 'kristijanhusak/deoplete-phpactor'
-```
-
-+Run `PlugInstall` and you're good to go!
+After adding the configuration you will need to execute `:PlugInstall` from
+within VIM.
 
 ### Neovim Completion Manager
-To use Phpactor with [Neovim Completion Manager](https://github.com/roxma/nvim-completion-manager) add this to your vimrc/init.vim:
 
-*Using [vim-plug](https://github.com/junegunn/vim-plug)*
+The [Neovim Completion
+Manager](https://github.com/roxma/nvim-completion-manager) add this to your
+(e.g. `~/.config/nvim/init.vim`) (NCM) is a very fast completion manager for
+[Neovim](https://neovim.io/), install it and the Phpactor integration as
+follows:
+
 ```vimL
 Plug 'roxma/nvim-completion-manager'
-Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
-Plug 'roxma/ncm-phpactor'
+Plug 'phpactor/ncm-phpactor'
 ```
 
-+Run `PlugInstall` and you're good to go!
+### Deoplete
+
+[deoplete.nvim](https://github.com/Shougo/deoplete.nvim) is a completion
+plugin for both standard VIM Neovim, install it and the Phpactor integration
+as follows:
+
+```vimL
+Plug 'Shougo/deoplete.nvim'
+Plug 'kristijanhusak/deoplete-phpactor'
+```
 
 Context Menu
 ------------
