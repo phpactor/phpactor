@@ -1,7 +1,14 @@
 Changelog
 =========
 
-## Develop
+## master
+
+Improvements:
+
+  - [Documentation] Updated VIM completion plugin docs including
+    `phpactor/ncm-phpactor` fork (mainline is not maintained currently).
+
+## 2018-05-01 0.4.0
 
 Features:
 
@@ -12,7 +19,6 @@ Features:
     extends. Class names inferred from file names.
   - [GotoDefinition] Goto function definitions (currently limited to functions
     defined by the PHPStorm stubs).
-
 
 Improvements:
 
@@ -32,6 +38,7 @@ Improvements:
     Application and include vendor files (e.g. stubs) relative to that, fixes
     #460
   - [Application] Use XDG data directory for cache.
+  - [Documentation] Typo fix, thanks @pierreboissinot
 
 Bug fixes:
 
