@@ -14,27 +14,36 @@ Phpactor VIM Plugin
 Installation
 ------------
 
-Install Phpactor using your favorite VIM package manager.
-If you don't use any, I recommend [vim-plug](https://github.com/junegunn/vim-plug).
-Add the plugin to your .vimrc:
+<div class="alert alert-info">
+Phpactor requires <a href="https://getcomposer.org/download">composer</a>,
+to install its dependencies.
+</div>
+
+<div class="alert alert-info">
+It is recommended (but not necessary) for you to use a VIM plugin manager. In
+this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
+plugin manager, but other plugin managers are quite similar.
+</div>
+
+Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
+`~/.config/nvim/init.vim` when using Neovim):
 
 ```
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 ```
 
-Then in VIM:
+Then update your plugins:
 
 ```
 :PlugInstall
 ```
 
-If you do not use [vim-plug](https://github.com/junegunn/vim-plug), you will need to install the Phpactor dependencies with composer manually:
+If you need to install the dependencies manually, then:
+
 ```
-$ cd ~/.vim/bundle/phpactor
+$ cd ~/.vim/plugged/phpactor
 $ composer install
 ```
-
-or using nvim, do the above where it counts.
 
 <div class="alert alert-info">
 Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
@@ -48,6 +57,7 @@ Support
 -------
 [✔] Composer detected - faster class location and more features!
 [✔] Git detected - enables faster refactorings in your repository scope!
+[✔] XDebug is disabled. XDebug has a negative effect on performance.
 
 Config files
 ------------
@@ -74,7 +84,11 @@ need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the 
 </div>
 
 If you are feeling dangerous, you may choose to track the `develop` branch,
-by specifying a branch name in your `.vimrc`:
+by specifying a branch name in your VIM configuration file:
+
+```
+let g:phpactorBranch = "develop"
+```
 
 Keyboard Mappings
 -----------------
@@ -151,33 +165,24 @@ autocmd FileType php setlocal omnifunc=phpactor#Complete
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
-<div class="alert alert-info">
-<p>
-The Omni-Complete method provides <i>feedback</i> messages when it cannot complete something. This information
-is <b>useful</b>. Other completion mehanisms may not provide this information.
-</p>
-<p>
-<b>Always enable omni-completion</b>. If another mechanism is failing to complete, invoke omni-complete to find out why.
-</p>
-</div>
+Omni complete can also provide feedback when something fails to complete, this
+can be useful, enable it with:
+
+```
+let g:phpactorOmniError = v:true
+```
 
 Completion plugins
 ------------------
 
-Completion plugins provide a significantly better experience, they can be
-installed using a VIM plugin manager, we will use
-[vim-plug](https://github.com/junegunn/vim-plug) in the following examples.
-
-After adding the configuration you will need to execute `:PlugInstall` from
-within VIM.
+Completion plugins provide a significantly better completion experience.
 
 ### Neovim Completion Manager
 
 The [Neovim Completion
 Manager](https://github.com/roxma/nvim-completion-manager) add this to your
 (e.g. `~/.config/nvim/init.vim`) (NCM) is a very fast completion manager for
-[Neovim](https://neovim.io/), install it and the Phpactor integration as
-follows:
+[Neovim](https://neovim.io/), install using the Plug plugin manager:
 
 ```vimL
 Plug 'roxma/nvim-completion-manager'
