@@ -46,7 +46,7 @@
                                             Standalone
                                         </a>
                                     </li>
-                                                                    <li class="">
+                                                                    <li class="active">
                                         <a href="https://phpactor.github.io/phpactor/vim-plugin.html">
                                             VIM plugin
                                         </a>
@@ -98,9 +98,7 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h2 id="currentmenu-vim-plugin">currentMenu: vim-plugin</h2>
-<hr />
-<h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
+                    <h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
 <ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#updating">Updating</a></li>
@@ -113,7 +111,7 @@
 <p>Install Phpactor using your favorite VIM package manager.
 If you don't use any, I recommend <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.
 Add the plugin to your .vimrc:</p>
-<pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': composer install'}</code></pre>
+<pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}</code></pre>
 <p>Then in VIM:</p>
 <pre><code>:PlugInstall</code></pre>
 <p>If you do not use <a href="https://github.com/junegunn/vim-plug">vim-plug</a>, you will need to install the Phpactor dependencies with composer manually:</p>
@@ -134,8 +132,7 @@ Config files
 ------------
 [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
 [✔] /home/daniel/.config/phpactor/phpactor.yml
-[✘] /etc/xdg/phpactor/phpactor.yml
-</code></pre>
+[✘] /etc/xdg/phpactor/phpactor.yml</code></pre>
 <p>Phpactor works best with Composer - but much functionality including
 auto-completion can still work (sometimes slowly depending on project size).</p>
 <h2 id="updating">Updating</h2>
@@ -155,6 +152,9 @@ nmap &lt;Leader&gt;u :call phpactor#UseAdd()&lt;CR&gt;
 
 " Invoke the context menu
 nmap &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
+
+" Invoke the navigation menu
+nmap &lt;Leader&gt;nn :call phpactor#Navigate()&lt;CR&gt;
 
 " Goto definition of class or class member under the cursor
 nmap &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
@@ -204,21 +204,25 @@ is <b>useful</b>. Other completion mehanisms may not provide this information.
 </p>
 </div>
 <h2 id="completion-plugins">Completion plugins</h2>
-<p>Several asynchronous completion frameworks support Phpactor</p>
-<h3 id="deoplete">Deoplete</h3>
-<p>To use Phpactor with <a href="https://github.com/Shougo/deoplete.nvim">deoplete.nvim</a> add this to your vimrc/init.vim:</p>
-<p><em>Using <a href="https://github.com/junegunn/vim-plug">vim-plug</a></em></p>
-<pre><code class="language-vimL">Plug 'Shougo/deoplete.nvim'
-Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
-Plug 'kristijanhusak/deoplete-phpactor'</code></pre>
-<p>+Run <code>PlugInstall</code> and you're good to go!</p>
+<p>Completion plugins provide a significantly better experience, they can be
+installed using a VIM plugin manager, we will use
+<a href="https://github.com/junegunn/vim-plug">vim-plug</a> in the following examples.</p>
+<p>After adding the configuration you will need to execute <code>:PlugInstall</code> from
+within VIM.</p>
 <h3 id="neovim-completion-manager">Neovim Completion Manager</h3>
-<p>To use Phpactor with <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion Manager</a> add this to your vimrc/init.vim:</p>
-<p><em>Using <a href="https://github.com/junegunn/vim-plug">vim-plug</a></em></p>
+<p>The <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
+Manager</a> add this to your
+(e.g. <code>~/.config/nvim/init.vim</code>) (NCM) is a very fast completion manager for
+<a href="https://neovim.io/">Neovim</a>, install it and the Phpactor integration as
+follows:</p>
 <pre><code class="language-vimL">Plug 'roxma/nvim-completion-manager'
-Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }
-Plug 'roxma/ncm-phpactor'</code></pre>
-<p>+Run <code>PlugInstall</code> and you're good to go!</p>
+Plug 'phpactor/ncm-phpactor'</code></pre>
+<h3 id="deoplete">Deoplete</h3>
+<p><a href="https://github.com/Shougo/deoplete.nvim">deoplete.nvim</a> is a completion
+plugin for both standard VIM Neovim, install it and the Phpactor integration
+as follows:</p>
+<pre><code class="language-vimL">Plug 'Shougo/deoplete.nvim'
+Plug 'kristijanhusak/deoplete-phpactor'</code></pre>
 <h2 id="context-menu">Context Menu</h2>
 <p>The context menu is the main point of contact with Phpactor. Invoke it on any
 class, member, variable, method call, or anything really.</p>
