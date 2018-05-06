@@ -565,12 +565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "73620cbc057bd91707346f1ce8f8ccea796b3e60"
+                "reference": "f5f2b9db5ed624643b00eac042fabe80a00d32a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/73620cbc057bd91707346f1ce8f8ccea796b3e60",
-                "reference": "73620cbc057bd91707346f1ce8f8ccea796b3e60",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/f5f2b9db5ed624643b00eac042fabe80a00d32a9",
+                "reference": "f5f2b9db5ed624643b00eac042fabe80a00d32a9",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +606,7 @@
                 }
             ],
             "description": "Library for moving classes",
-            "time": "2018-02-24T13:50:01+00:00"
+            "time": "2018-05-04T12:44:57+00:00"
         },
         {
             "name": "phpactor/class-to-file",
@@ -753,12 +753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "6ade3d49e90810e3f122b55e5470fc2d7db32d4f"
+                "reference": "3f4305b6e8af0ea06a57922ede04d4ff318ee6ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/6ade3d49e90810e3f122b55e5470fc2d7db32d4f",
-                "reference": "6ade3d49e90810e3f122b55e5470fc2d7db32d4f",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/3f4305b6e8af0ea06a57922ede04d4ff318ee6ed",
+                "reference": "3f4305b6e8af0ea06a57922ede04d4ff318ee6ed",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +794,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-04-29T15:24:32+00:00"
+            "time": "2018-05-06T20:27:33+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -883,18 +883,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "d6b132667a0d6808831d1cc4c31e99851b98f58c"
+                "reference": "16f8406af3343bce700ea44e19d8b8945f049ff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/d6b132667a0d6808831d1cc4c31e99851b98f58c",
-                "reference": "d6b132667a0d6808831d1cc4c31e99851b98f58c",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/16f8406af3343bce700ea44e19d8b8945f049ff4",
+                "reference": "16f8406af3343bce700ea44e19d8b8945f049ff4",
                 "shasum": ""
             },
             "require": {
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
+                "phpstan/phpstan": "^0.9.2",
                 "phpunit/phpunit": "^6.2",
                 "symfony/filesystem": "^3.3"
             },
@@ -920,7 +921,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2018-04-16T18:26:28+00:00"
+            "time": "2018-05-06T20:02:36+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -2056,12 +2057,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "1fc62636ea54c3f34a25d749958e02d37a3a2ee9"
+                "reference": "62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1fc62636ea54c3f34a25d749958e02d37a3a2ee9",
-                "reference": "1fc62636ea54c3f34a25d749958e02d37a3a2ee9",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3",
+                "reference": "62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2145,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-04-23T22:06:07+00:00"
+            "time": "2018-05-02T22:12:17+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2903,12 +2904,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1617f456e1522f9b32723549ddc5a370f8322e91"
+                "reference": "bf040932271d851d3e94145bc09dd10e2db9b8fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1617f456e1522f9b32723549ddc5a370f8322e91",
-                "reference": "1617f456e1522f9b32723549ddc5a370f8322e91",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bf040932271d851d3e94145bc09dd10e2db9b8fe",
+                "reference": "bf040932271d851d3e94145bc09dd10e2db9b8fe",
                 "shasum": ""
             },
             "require": {
@@ -2979,7 +2980,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-16T03:59:19+00:00"
+            "time": "2018-05-06T12:34:25+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

@@ -9,6 +9,7 @@ use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
 use Phpactor\Completion\Bridge\TolerantParser\ChainTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseBuiltInFunctionCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseParameterCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseLocalVariableCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParameterFormatter;
@@ -65,6 +66,13 @@ class CompletionExtension implements Extension
                 $container->get('reflection.tolerant_parser')
             );
         }, [ 'completion.completor' => []]);
+
+        $container->register('completion.completor.param_function', function (Container $container) {
+            return new WorseParameterCompletor(
+                $container->get('reflection.reflector'),
+                $container->get('completion.formatter')
+            );
+        }, [ 'completion.tolerant_completor' => []]);
         
         $container->register('completion.completor.tolerant.class_member', function (Container $container) {
             return new WorseClassMemberCompletor(
