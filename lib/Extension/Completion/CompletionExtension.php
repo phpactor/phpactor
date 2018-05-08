@@ -67,7 +67,7 @@ class CompletionExtension implements Extension
             );
         }, [ 'completion.completor' => []]);
 
-        $container->register('completion.completor.param_function', function (Container $container) {
+        $container->register('completion.completor.parameter', function (Container $container) {
             return new WorseParameterCompletor(
                 $container->get('reflection.reflector'),
                 $container->get('completion.formatter')
