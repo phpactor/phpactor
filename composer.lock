@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "d5fd088949a717b477a08ed8e24e7e64a814ae10"
+                "reference": "33bd0966389d83034b165569c3a30e3392921a17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/d5fd088949a717b477a08ed8e24e7e64a814ae10",
-                "reference": "d5fd088949a717b477a08ed8e24e7e64a814ae10",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/33bd0966389d83034b165569c3a30e3392921a17",
+                "reference": "33bd0966389d83034b165569c3a30e3392921a17",
                 "shasum": ""
             },
             "require-dev": {
@@ -299,20 +299,20 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-04-25T12:26:46+00:00"
+            "time": "2018-05-07T13:01:28+00:00"
         },
         {
             "name": "lstrojny/functional-php",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lstrojny/functional-php.git",
-                "reference": "7c2091ddea572e012aa980e5d19d242d3a06ad5b"
+                "reference": "7d677bbc1dbf8338946cd3b31f0d5c2beb2b5a26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/7c2091ddea572e012aa980e5d19d242d3a06ad5b",
-                "reference": "7c2091ddea572e012aa980e5d19d242d3a06ad5b",
+                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/7d677bbc1dbf8338946cd3b31f0d5c2beb2b5a26",
+                "reference": "7d677bbc1dbf8338946cd3b31f0d5c2beb2b5a26",
                 "shasum": ""
             },
             "require": {
@@ -333,6 +333,7 @@
                 },
                 "files": [
                     "src/Functional/Average.php",
+                    "src/Functional/ButLast.php",
                     "src/Functional/Capture.php",
                     "src/Functional/ConstFunction.php",
                     "src/Functional/CompareOn.php",
@@ -437,7 +438,7 @@
             "keywords": [
                 "functional"
             ],
-            "time": "2018-01-03T10:08:50+00:00"
+            "time": "2018-03-19T16:14:14+00:00"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -753,12 +754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "3f4305b6e8af0ea06a57922ede04d4ff318ee6ed"
+                "reference": "e9f8be882027f0c71b8affa62ac9071ec6263d9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/3f4305b6e8af0ea06a57922ede04d4ff318ee6ed",
-                "reference": "3f4305b6e8af0ea06a57922ede04d4ff318ee6ed",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/e9f8be882027f0c71b8affa62ac9071ec6263d9c",
+                "reference": "e9f8be882027f0c71b8affa62ac9071ec6263d9c",
                 "shasum": ""
             },
             "require": {
@@ -794,7 +795,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-05-06T20:27:33+00:00"
+            "time": "2018-05-08T20:21:55+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -929,12 +930,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "4ada649872c8705b41b4246afa1b26c99469d20f"
+                "reference": "1a54bb7fbbf87a3ea7e7b7dabed24cd74ca81179"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4ada649872c8705b41b4246afa1b26c99469d20f",
-                "reference": "4ada649872c8705b41b4246afa1b26c99469d20f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/1a54bb7fbbf87a3ea7e7b7dabed24cd74ca81179",
+                "reference": "1a54bb7fbbf87a3ea7e7b7dabed24cd74ca81179",
                 "shasum": ""
             },
             "require": {
@@ -973,7 +974,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-04-29T11:16:13+00:00"
+            "time": "2018-05-08T07:00:34+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2057,12 +2058,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3"
+                "reference": "1ef9e193f762e825a3416a32c0e8dc8867d1c34a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3",
-                "reference": "62e53b6ac134c56277c95c6d9ccdc4ee82f2d4c3",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1ef9e193f762e825a3416a32c0e8dc8867d1c34a",
+                "reference": "1ef9e193f762e825a3416a32c0e8dc8867d1c34a",
                 "shasum": ""
             },
             "require": {
@@ -2145,7 +2146,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-05-02T22:12:17+00:00"
+            "time": "2018-05-08T20:07:20+00:00"
         },
         {
             "name": "myclabs/deep-copy",
