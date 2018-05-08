@@ -754,12 +754,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "e9f8be882027f0c71b8affa62ac9071ec6263d9c"
+                "reference": "2eb1820136fae1ca334773f30a4d050399f1040e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/e9f8be882027f0c71b8affa62ac9071ec6263d9c",
-                "reference": "e9f8be882027f0c71b8affa62ac9071ec6263d9c",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/2eb1820136fae1ca334773f30a4d050399f1040e",
+                "reference": "2eb1820136fae1ca334773f30a4d050399f1040e",
                 "shasum": ""
             },
             "require": {
@@ -795,7 +795,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-05-08T20:21:55+00:00"
+            "time": "2018-05-08T20:57:47+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -2058,12 +2058,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "1ef9e193f762e825a3416a32c0e8dc8867d1c34a"
+                "reference": "7d63c764054ccafbef89ae4ca258da90c8284cd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1ef9e193f762e825a3416a32c0e8dc8867d1c34a",
-                "reference": "1ef9e193f762e825a3416a32c0e8dc8867d1c34a",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7d63c764054ccafbef89ae4ca258da90c8284cd5",
+                "reference": "7d63c764054ccafbef89ae4ca258da90c8284cd5",
                 "shasum": ""
             },
             "require": {
@@ -2146,7 +2146,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-05-08T20:07:20+00:00"
+            "time": "2018-05-08T20:51:41+00:00"
         },
         {
             "name": "myclabs/deep-copy",
