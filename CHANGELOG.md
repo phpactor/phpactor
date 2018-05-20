@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2018-05-20 0.5.0
 
 Features:
 
@@ -12,8 +12,6 @@ Refactoring:
 
   - [SourceCodeFilesystem] Public API accepts scalar paths in addition to
     value objects.
-
-## master
 
 Improvements:
 
