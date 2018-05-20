@@ -1,7 +1,17 @@
 Changelog
 =========
 
-## master
+## 2018-05-20 0.5.0
+
+Features:
+
+  - [Completion] Parameter completion, suggests variables that are valid for
+    the parameter position.
+
+Refactoring:
+
+  - [SourceCodeFilesystem] Public API accepts scalar paths in addition to
+    value objects.
 
 Improvements:
 
@@ -50,7 +60,7 @@ Bug fixes:
   - [Application] Fixed binary path, thanks @talbergs
   - [RPC] Specify completion type for text input, fixes #455
 
-Non-functional:
+Refactoring:
 
   - [WorseReflection] Full support for reflecting functions.
   - [WorseReflection] All member collections extend common interface,
