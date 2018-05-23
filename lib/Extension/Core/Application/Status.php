@@ -2,8 +2,11 @@
 
 namespace Phpactor\Extension\Core\Application;
 
+use Phpactor\Config\Paths;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Symfony\Component\Process\ExecutableFinder;
+use Symfony\Component\Process\Process;
 
 class Status
 {
@@ -12,10 +15,24 @@ class Status
      */
     private $registry;
 
+    /**
+     * @var ExecutableFinder
+     */
+    private $executableFinder;
+
+    /**
+     * @var Paths
+     */
+    private $paths;
+
     public function __construct(
-        FilesystemRegistry $registry
+        FilesystemRegistry $registry,
+        Paths $paths,
+        ExecutableFinder $executableFinder = null
     ) {
         $this->registry = $registry;
+        $this->executableFinder = $executableFinder ?: new ExecutableFinder();
+        $this->paths = $paths;
     }
 
     public function check(): array
@@ -23,6 +40,7 @@ class Status
         $filesystems = $this->registry->names();
         $diagnostics = [
             'filesystems' => $filesystems,
+            'config_files' => [],
             'good' => [],
             'bad' => [],
         ];
@@ -43,6 +61,20 @@ class Status
             $diagnostics['bad'][] = 'XDebug is enabled. XDebug has a negative effect on performance.';
         } else {
             $diagnostics['good'][] = 'XDebug is disabled. XDebug has a negative effect on performance.';
+        }
+
+        foreach ($this->paths->configFiles() as $configFile) {
+            $diagnostics['config_files'][$configFile] = file_exists($configFile);
+        }
+
+        if ($path = $this->executableFinder->find('git')) {
+            $process = new Process('git log -1 --pretty=format:"%h (%ad) %f" --date=relative', __DIR__ . '/../../../..');
+            $process->run();
+            if ($process->getExitCode() === 0) {
+                $diagnostics['phpactor_version'] = $process->getOutput();
+            } else {
+                $diagnostics['phpactor_version'] = 'ERROR: ' . $process->getErrorOutput();
+            }
         }
 
         return $diagnostics;

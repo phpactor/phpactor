@@ -39,12 +39,16 @@ class StatusHandler implements Handler
 
     public function handle(array $arguments)
     {
+        $diagnostics = $this->status->check();
         return EchoResponse::fromMessage(implode(
             PHP_EOL,
             [
-                'Support',
+                'Version',
                 '-------',
-                $this->buildSupportMessage(),
+                $diagnostics['phpactor_version'] . PHP_EOL,
+                'Diagnostics',
+                '-----------',
+                $this->buildSupportMessage($diagnostics),
                 'Config files',
                 '------------',
                 $this->buildConfigFileMessage(),
@@ -52,9 +56,8 @@ class StatusHandler implements Handler
         ));
     }
 
-    private function buildSupportMessage()
+    private function buildSupportMessage(array $diagnostics)
     {
-        $diagnostics = $this->status->check();
         return implode(PHP_EOL, [
             implode(PHP_EOL, array_map(function (string $message) {
                 return '[✔] ' . $message;

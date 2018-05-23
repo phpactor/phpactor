@@ -206,7 +206,7 @@ class CoreExtension implements Extension
         });
 
         $container->register('application.status', function (Container $container) {
-            return new Status($container->get('source_code_filesystem.registry'));
+            return new Status($container->get('source_code_filesystem.registry'), $container->get('config.paths'));
         });
     }
 }

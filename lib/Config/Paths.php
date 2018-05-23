@@ -16,6 +16,7 @@ class Paths
      * @var string
      */
     private $cwd;
+
     public function __construct(Xdg $xdg = null, string $cwd = null)
 
     {
