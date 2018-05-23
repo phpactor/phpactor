@@ -34,6 +34,7 @@ class StatusCommand extends Command
             '<info>Filesystems:</info> %s',
             implode(', ', $diagnostics['filesystems'])
         ));
+        $output->writeln('<info>Working directory:</info> ' . $diagnostics['cwd']);
         $output->write(PHP_EOL);
 
         $output->writeln('<comment>Config files (missing is not bad):</>');

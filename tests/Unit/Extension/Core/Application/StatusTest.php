@@ -19,7 +19,7 @@ class StatusTest extends TestCase
     {
         $this->registry = $this->prophesize(FilesystemRegistry::class);
         $this->paths = new Paths();
-        $this->status = new Status($this->registry->reveal(), $this->paths);
+        $this->status = new Status($this->registry->reveal(), $this->paths, '/path/to/here');
     }
 
     public function testStatusNoComposerOrGit()

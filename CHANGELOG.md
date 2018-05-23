@@ -3,10 +3,15 @@ Changelog
 
 ## develop
 
+Improvements:
+
+  - [Application] Improved status (show current version) #481
+
 Bug fixes:
 
   - [Vim Plugin] Goto reference in a modified file causes warning #477.
-  - [Application] Improved status (show current version) #481
+  - [Application] Overridden CWD not being passed to `Paths` (affected config
+    file resolution).
 
 ## master
 

@@ -25,14 +25,21 @@ class Status
      */
     private $paths;
 
+    /**
+     * @var string
+     */
+    private $workingDirectory;
+
     public function __construct(
         FilesystemRegistry $registry,
         Paths $paths,
+        string $workingDirectory,
         ExecutableFinder $executableFinder = null
     ) {
         $this->registry = $registry;
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
         $this->paths = $paths;
+        $this->workingDirectory = $workingDirectory;
     }
 
     public function check(): array
@@ -40,6 +47,7 @@ class Status
         $filesystems = $this->registry->names();
         $diagnostics = [
             'filesystems' => $filesystems,
+            'cwd' => $this->workingDirectory,
             'config_files' => [],
             'good' => [],
             'bad' => [],

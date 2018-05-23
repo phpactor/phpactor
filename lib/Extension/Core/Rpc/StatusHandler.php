@@ -43,9 +43,10 @@ class StatusHandler implements Handler
         return EchoResponse::fromMessage(implode(
             PHP_EOL,
             [
-                'Version',
-                '-------',
-                $diagnostics['phpactor_version'] . PHP_EOL,
+                'Info',
+                '----',
+                'Version: ' . $diagnostics['phpactor_version'],
+                'Work dir: ' . $diagnostics['cwd'] . PHP_EOL,
                 'Diagnostics',
                 '-----------',
                 $this->buildSupportMessage($diagnostics),
