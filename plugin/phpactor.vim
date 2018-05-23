@@ -376,7 +376,6 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> open_file
     if a:actionName == "open_file"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
-        exec ":edit"
 
         if (a:parameters['offset'])
             exec ":goto " .  (a:parameters['offset'] + 1)
