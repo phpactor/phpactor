@@ -10,4 +10,4 @@ Do:
   :call phpactor#GotoDefinition()\<Enter>
 
 Then:
-  AssertEqual "lib/Phpactor.php", expand('%')
+  AssertEqual "Phpactor.php", expand('%:t')
