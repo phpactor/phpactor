@@ -52,9 +52,8 @@ Initially I also used the [Nickic PHP
 parser](https://github.com/nikic/PHP-Parser) - the defacto PHP parser in the
 PHP world today, but I found the TPP much easier to work with as it
 provides node tree-traversal (and was matched to Phpactor's use case - I _believe_
-it was essentially created to support the [VS
-Code](https://en.wikipedia.org/wiki/Visual_Studio_Code) eco-system and
-contribute to Microsoft's efforts to _take control of the market_).
+it was Initially created to support the [VS
+Code](https://en.wikipedia.org/wiki/Visual_Studio_Code) eco-system.
 
 It is also worth mentioning that the backbone of Phpactor is
 [worse-reflection](https://github.com/phpactor/worse-reflection), which was
