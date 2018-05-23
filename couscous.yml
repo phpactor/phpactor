@@ -45,12 +45,15 @@ menu:
         other:
             name: Other topics
             items:
-                history:
-                    text: History
-                    relativeUrl: history.html
-                rpc:
-                    text: RPC Protocol
-                    relativeUrl: rpc.html
                 integrations:
                     text: Integrations
                     relativeUrl: integrations.html
+                history:
+                    text: History
+                    relativeUrl: history.html
+                development:
+                    text: Debugging Phpactor
+                    relativeUrl: developing.html
+                rpc:
+                    text: RPC Protocol
+                    relativeUrl: rpc.html
