@@ -29,12 +29,32 @@ class StatusCommand extends Command
     {
         $diagnostics = $this->status->check();
 
+        $output->writeln('<info>Version:</info> ' . $diagnostics['phpactor_version']);
+        $output->writeln(sprintf(
+            '<info>Filesystems:</info> %s',
+            implode(', ', $diagnostics['filesystems'])
+        ));
+        $output->writeln('<info>Working directory:</info> ' . $diagnostics['cwd']);
+        $output->write(PHP_EOL);
+
+        $output->writeln('<comment>Config files (missing is not bad):</>');
+        $output->write(PHP_EOL);
+        foreach ($diagnostics['config_files'] as $configFile => $exists) {
+            $check = $exists ? '<info>✔</>' : '<error>✘</>';
+            $output->writeln(sprintf('  %s %s', $check, $configFile));
+        }
+
+        $output->write(PHP_EOL);
+
+        $output->writeln('<comment>Diagnostics:</comment>');
+        $output->write(PHP_EOL);
         foreach ($diagnostics['good'] as $good) {
-            $output->writeln('<info>✔</> ' . $good);
+            $output->writeln('  <info>✔</> ' . $good);
         }
 
         foreach ($diagnostics['bad'] as $bad) {
-            $output->writeln('<error>✘</> ' . $bad);
+            $output->writeln('  <error>✘</> ' . $bad);
         }
+        $output->write(PHP_EOL);
     }
 }

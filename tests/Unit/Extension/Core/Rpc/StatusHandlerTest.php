@@ -39,6 +39,8 @@ class StatusHandlerTest extends HandlerTestCase
     public function testStatus()
     {
         $this->status->check()->willReturn([
+            'phpactor_version' => 'version one',
+            'cwd' => '/path/to/here',
             'good' => [ 'i am good' ],
             'bad' => [ 'i am bad' ],
         ]);

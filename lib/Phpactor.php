@@ -30,8 +30,9 @@ class Phpactor
         $config = $configLoader->loadConfig();
         $config[CoreExtension::VENDOR_DIRECTORY] = $vendorDir;
 
+        $cwd = getcwd();
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[CoreExtension::WORKING_DIRECTORY] = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
@@ -54,7 +55,7 @@ class Phpactor
 
         $container = new PhpactorContainer();
 
-        $paths = new Paths();
+        $paths = new Paths(null, $cwd);
         $container->register('config.paths', function () use ($paths) {
             return $paths;
         });
