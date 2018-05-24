@@ -79,18 +79,23 @@
 
                             <ul class="nav nav-pills nav-stacked">
                                                                     <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/integrations.html">
+                                            Integrations
+                                        </a>
+                                    </li>
+                                                                    <li class="">
                                         <a href="https://phpactor.github.io/phpactor/history.html">
                                             History
                                         </a>
                                     </li>
                                                                     <li class="">
-                                        <a href="https://phpactor.github.io/phpactor/rpc.html">
-                                            RPC Protocol
+                                        <a href="https://phpactor.github.io/phpactor/developing.html">
+                                            Debugging Phpactor
                                         </a>
                                     </li>
                                                                     <li class="">
-                                        <a href="https://phpactor.github.io/phpactor/integrations.html">
-                                            Integrations
+                                        <a href="https://phpactor.github.io/phpactor/rpc.html">
+                                            RPC Protocol
                                         </a>
                                     </li>
                                                             </ul>
@@ -108,16 +113,23 @@
 <li><a href="#context-menu">Context Menu</a></li>
 </ul>
 <h2 id="installation">Installation</h2>
-<p>Install Phpactor using your favorite VIM package manager.
-If you don't use any, I recommend <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.
-Add the plugin to your .vimrc:</p>
+<div class="alert alert-info">
+Phpactor requires <a href="https://getcomposer.org/download">composer</a>,
+to install its dependencies.
+</div>
+<div class="alert alert-info">
+It is recommended (but not necessary) for you to use a VIM plugin manager. In
+this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
+plugin manager, but other plugin managers are quite similar.
+</div>
+<p>Require Phpactor in your VIM configuration file (e.g. <code>~/.vimrc</code> or
+<code>~/.config/nvim/init.vim</code> when using Neovim):</p>
 <pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}</code></pre>
-<p>Then in VIM:</p>
+<p>Then update your plugins:</p>
 <pre><code>:PlugInstall</code></pre>
-<p>If you do not use <a href="https://github.com/junegunn/vim-plug">vim-plug</a>, you will need to install the Phpactor dependencies with composer manually:</p>
-<pre><code>$ cd ~/.vim/bundle/phpactor
+<p>If you need to install the dependencies manually, then:</p>
+<pre><code>$ cd ~/.vim/plugged/phpactor
 $ composer install</code></pre>
-<p>or using nvim, do the above where it counts.</p>
 <div class="alert alert-info">
 Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
 installation procedure!
@@ -127,6 +139,7 @@ installation procedure!
 -------
 [✔] Composer detected - faster class location and more features!
 [✔] Git detected - enables faster refactorings in your repository scope!
+[✔] XDebug is disabled. XDebug has a negative effect on performance.
 
 Config files
 ------------
@@ -143,7 +156,8 @@ Note that if the update included changes to the VIM plugin you will currently
 need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
 </div>
 <p>If you are feeling dangerous, you may choose to track the <code>develop</code> branch,
-by specifying a branch name in your <code>.vimrc</code>:</p>
+by specifying a branch name in your VIM configuration file:</p>
+<pre><code>let g:phpactorBranch = "develop"</code></pre>
 <h2 id="keyboard-mappings">Keyboard Mappings</h2>
 <p>The Phpactor plugin will <strong>not</strong> automatically assume any shortcuts, copy
 the following configuration into your <code>.vimrc</code>:</p>
@@ -194,27 +208,16 @@ VIM's built-in auto-completion mechanism.</p>
 <pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
 <p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
 See <code>:help compl-omni</code>.</p>
-<div class="alert alert-info">
-<p>
-The Omni-Complete method provides <i>feedback</i> messages when it cannot complete something. This information
-is <b>useful</b>. Other completion mehanisms may not provide this information.
-</p>
-<p>
-<b>Always enable omni-completion</b>. If another mechanism is failing to complete, invoke omni-complete to find out why.
-</p>
-</div>
+<p>Omni complete can also provide feedback when something fails to complete, this
+can be useful, enable it with:</p>
+<pre><code>let g:phpactorOmniError = v:true</code></pre>
 <h2 id="completion-plugins">Completion plugins</h2>
-<p>Completion plugins provide a significantly better experience, they can be
-installed using a VIM plugin manager, we will use
-<a href="https://github.com/junegunn/vim-plug">vim-plug</a> in the following examples.</p>
-<p>After adding the configuration you will need to execute <code>:PlugInstall</code> from
-within VIM.</p>
+<p>Completion plugins provide a significantly better completion experience.</p>
 <h3 id="neovim-completion-manager">Neovim Completion Manager</h3>
 <p>The <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
 Manager</a> add this to your
 (e.g. <code>~/.config/nvim/init.vim</code>) (NCM) is a very fast completion manager for
-<a href="https://neovim.io/">Neovim</a>, install it and the Phpactor integration as
-follows:</p>
+<a href="https://neovim.io/">Neovim</a>, install using the Plug plugin manager:</p>
 <pre><code class="language-vimL">Plug 'roxma/nvim-completion-manager'
 Plug 'phpactor/ncm-phpactor'</code></pre>
 <h3 id="deoplete">Deoplete</h3>
