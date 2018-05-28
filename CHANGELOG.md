@@ -12,6 +12,8 @@ Bug fixes:
   - [Vim Plugin] Goto reference in a modified file causes warning #477.
   - [Application] Overridden CWD not being passed to `Paths` (affected config
     file resolution).
+  - [Application] Fixed find references regression (only the current class
+    wasn't being checked for references..)
 
 ## master
 
