@@ -53,6 +53,7 @@ class FileFinderTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Class has no member named "foobar"');
         $this->setupAllFiles();
+
         $class = $this->reflectClass('class Foobar { public function bar() {} }', 'Foobar');
         $files = $this->filesFor($class, 'foobar');
         $this->assertEquals($this->fileList->reveal(), $files);
@@ -61,9 +62,9 @@ class FileFinderTest extends TestCase
     public function testReturnsAllPhpFilesFilteredByMemberIfMemberIsPublic()
     {
         $this->setupAllFiles();
-        $class = $this->reflectClass('class Foobar { public function foobar() {} }', 'Foobar');
+        $class = $this->reflectClass('class Foobar { public function abcde() {} }', 'Foobar');
         $this->fileList->filter(Argument::type(Closure::class))->willReturn($this->fileList->reveal());
-        $files = $this->filesFor($class, 'foobar');
+        $files = $this->filesFor($class, 'abcde');
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 

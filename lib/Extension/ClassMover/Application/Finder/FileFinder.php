@@ -34,7 +34,7 @@ class FileFinder
             ));
         }
 
-        $publicMembers = $members->byName('foobar')->byVisibilities([
+        $publicMembers = $members->byName($memberName)->byVisibilities([
             Visibility::public()
         ]);
 
