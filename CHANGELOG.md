@@ -9,6 +9,7 @@ Improvements:
 
 Bug fixes:
 
+  - [CodeTransform] Generate method does can use pseudo type for return type #486
   - [Vim Plugin] Goto reference in a modified file causes warning #477.
   - [Application] Overridden CWD not being passed to `Paths` (affected config
     file resolution).
