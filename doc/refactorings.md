@@ -8,6 +8,7 @@ Fixes:
 
 - [Add Missing Assignments](#add-missing-assignments)
 - [Complete Constructor](#complete-constructor)
+- [Fix namespace and/or class name](#fix-namespace-or-classname)
 - [Generate Accessor](#generate-accessor)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
@@ -75,6 +76,7 @@ class AcmeBlogTest extends TestCase
     }
 }
 ```
+
 Class Copy
 ----------
 
@@ -290,6 +292,64 @@ class Post
         $this->hello = $hello;
         $this->goodbye = $goodbye;
 	}
+}
+```
+
+Fix Namespace or Class Name
+---------------------------
+
+Update a file's namespace (and/or class name) based on the composer
+configuration.
+
+- **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
+- **VIM plugin**: _Class context menu > Transform > Fix namespace or classname_.
+- **VIM function**: `:call phpactor#Transform()`
+
+<div class="alert alert-warning">
+This refactoring will currently only work fully on Composer based projects.
+</div>
+
+### Motivation
+
+Phpactor already has the possibility of generating new classes, and moving
+classes. But sometimes your project may get into a state where
+class-containing files have an incorrect namespace or class name.
+
+This refactoring will:
+
+- Update the namespace based on the file path (and the autoloading config).
+- Update the class name.
+- When given an empty file, it will generate a PHP tag and the namespace.
+
+### Before and After
+
+```php
+// lib/Barfoo/Hello.php
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        echo 'hello';
+    }
+}
+```
+
+After:
+
+```php
+// lib/Barfoo/Hello.php
+<?php
+
+namespace Barfoo;
+
+class Hello
+{
+    public function hello()
+    {
+        echo 'hello';
+    }
 }
 ```
 

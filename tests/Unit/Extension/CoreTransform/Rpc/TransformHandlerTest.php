@@ -67,7 +67,7 @@ class TransformHandlerTest extends HandlerTestCase
                 'aaa' => $transformer->reveal()
             ])
         );
-        $source = SourceCode::fromString(self::SOURCE);
+        $source = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $this->transformer->transform($source, [ 'aaa' ])->willReturn(SourceCode::fromString(self::TRANSFORMED_SOURCE));
 
         $action = $this->createHandler('transformer')->handle([

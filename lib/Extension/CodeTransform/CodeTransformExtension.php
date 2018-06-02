@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
+use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
@@ -151,6 +152,12 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.builder_factory')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'implement_contracts' ]]);
+
+        $container->register('code_transform.transformer.fix_namespace_class_name', function (Container $container) {
+            return new ClassNameFixerTransformer(
+                $container->get('class_to_file.file_to_class')
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'fix_namespace_class_name' ]]);
 
         $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
