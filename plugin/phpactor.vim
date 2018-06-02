@@ -146,7 +146,7 @@ function! phpactor#OffsetTypeInfo()
 endfunction
 
 function! phpactor#Transform()
-    let currentPath = expand('%')
+    let currentPath = expand('%:p')
     call phpactor#rpc("transform", { "path": currentPath, "source": phpactor#_source() })
 endfunction
 

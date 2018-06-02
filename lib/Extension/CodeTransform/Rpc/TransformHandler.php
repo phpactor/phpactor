@@ -14,7 +14,7 @@ use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 class TransformHandler implements Handler
 {
     /**
-     * @var Transformer
+     * @var CodeTransform
      */
     private $codeTransform;
 
@@ -43,7 +43,7 @@ class TransformHandler implements Handler
             return $this->transformerChoiceAction($arguments['path'], $arguments['source']);
         }
 
-        $code = SourceCode::fromString($arguments['source']);
+        $code = SourceCode::fromStringAndPath($arguments['source'], $arguments['path']);
 
         $transformedCode = $this->codeTransform->transform($code, [
             $arguments['transform']

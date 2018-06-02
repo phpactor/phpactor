@@ -25,14 +25,16 @@ class Transformer
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function transform(string $src, array $transformations)
+    public function transform($source, array $transformations)
     {
-        $code = $this->filesystemHelper->contentsFromFileOrStdin($src);
-        $code = SourceCode::fromString($code);
+        if (!$source instanceof SourceCode) {
+            $source = $this->filesystemHelper->contentsFromFileOrStdin($source);
+            $source = SourceCode::fromString($source);
+        }
 
-        $transformedCode = $this->transform->transform($code, $transformations);
+        $transformedCode = $this->transform->transform($source, $transformations);
 
-        if ($code == $transformedCode) {
+        if ($source == $transformedCode) {
             return null;
         }
 
