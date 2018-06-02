@@ -8,6 +8,7 @@ Fixes:
 
 - [Add Missing Assignments](#add-missing-assignments)
 - [Complete Constructor](#complete-constructor)
+- [Fix namespace and/or class name](#fix-namespace-or-classname)
 - [Generate Accessor](#generate-accessor)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
@@ -75,6 +76,7 @@ class AcmeBlogTest extends TestCase
     }
 }
 ```
+
 Class Copy
 ----------
 
@@ -244,6 +246,68 @@ Complete the assignments and add properties for an incomplete constructor.
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
 - **VIM plugin**: _Class context menu > Complete Constructor_.
 - **VIM function**:`:call phpactor#Transform()`
+
+### Motivation
+
+When authoring a new class, it is often required to:
+
+1. Create a constructor method with typed arguments.
+2. Assign the arguments to class properties.
+3. Create the class properties with docblocks.
+
+This refactoring will automatically take care of 2 and 3.
+
+### Before and After
+
+```php
+<?php
+
+class Post
+{
+	public function __construct(Hello $hello, Goodbye $goodbye)
+	{
+	}
+}
+```
+
+After:
+
+```php
+<?php
+
+class Post
+{
+    /**
+     * @var Hello
+     */
+    private $hello;
+
+    /**
+     * @var Goodbye
+     */
+    private $goodbye;
+
+	public function __construct(Hello $hello, Goodbye $goodbye)
+	{
+        $this->hello = $hello;
+        $this->goodbye = $goodbye;
+	}
+}
+```
+
+Fix Namespace or Class Name
+---------------------------
+
+Update the files namespace (and/or class name) based on the composer
+configuration.
+
+- **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
+- **VIM plugin**: _Class context menu > Complete Constructor_.
+- **VIM function**:`:call phpactor#Transform()`
+
+<div class="alert alert-warning">
+This refactoring will currently only work fully on Composer based projects.
+</div>
 
 ### Motivation
 

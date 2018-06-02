@@ -3,6 +3,10 @@ Changelog
 
 ## develop
 
+Features:
+
+  - [CodeTransform] Transformer to fix namesapce / class name
+
 Improvements:
 
   - [Application] Improved status (show current version) #481

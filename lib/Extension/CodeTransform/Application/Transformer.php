@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CodeTransform\Application;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Webmozart\PathUtil\Path;
 
 class Transformer
 {
@@ -27,6 +28,11 @@ class Transformer
 
     public function transform($source, array $transformations)
     {
+        if (file_exists($source)) {
+            $source = Path::makeAbsolute($source, getcwd());
+            $source = SourceCode::fromStringAndPath(file_get_contents($source), $source);
+        }
+
         if (!$source instanceof SourceCode) {
             $source = $this->filesystemHelper->contentsFromFileOrStdin($source);
             $source = SourceCode::fromString($source);
