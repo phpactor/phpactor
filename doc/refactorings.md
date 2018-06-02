@@ -298,12 +298,12 @@ class Post
 Fix Namespace or Class Name
 ---------------------------
 
-Update the files namespace (and/or class name) based on the composer
+Update a file's namespace (and/or class name) based on the composer
 configuration.
 
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
-- **VIM plugin**: _Class context menu > Complete Constructor_.
-- **VIM function**:`:call phpactor#Transform()`
+- **VIM plugin**: _Class context menu > Transform > Fix namespace or classname_.
+- **VIM function**: `:call phpactor#Transform()`
 
 <div class="alert alert-warning">
 This refactoring will currently only work fully on Composer based projects.
@@ -311,49 +311,45 @@ This refactoring will currently only work fully on Composer based projects.
 
 ### Motivation
 
-When authoring a new class, it is often required to:
+Phpactor already has the possibility of generating new classes, and moving
+classes. But sometimes your project may get into a state where
+class-containing files have an incorrect namespace or class name.
 
-1. Create a constructor method with typed arguments.
-2. Assign the arguments to class properties.
-3. Create the class properties with docblocks.
+This refactoring will:
 
-This refactoring will automatically take care of 2 and 3.
+- Update the namespace based on the file path (and the autoloading config).
+- Update the class name.
+- When given an empty file, it will generate a PHP tag and the namespace.
 
 ### Before and After
 
 ```php
+// lib/Barfoo/Hello.php
 <?php
 
-class Post
+class Foobar
 {
-	public function __construct(Hello $hello, Goodbye $goodbye)
-	{
-	}
+    public function hello()
+    {
+        echo 'hello';
+    }
 }
 ```
 
 After:
 
 ```php
+// lib/Barfoo/Hello.php
 <?php
 
-class Post
+namespace Barfoo;
+
+class Hello
 {
-    /**
-     * @var Hello
-     */
-    private $hello;
-
-    /**
-     * @var Goodbye
-     */
-    private $goodbye;
-
-	public function __construct(Hello $hello, Goodbye $goodbye)
-	{
-        $this->hello = $hello;
-        $this->goodbye = $goodbye;
-	}
+    public function hello()
+    {
+        echo 'hello';
+    }
 }
 ```
 

@@ -707,15 +707,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "9ece6851061549adffc5a0401980becffb543606"
+                "reference": "a5fd85fd24376f140e230dbaa36b1623b7eaf8b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/9ece6851061549adffc5a0401980becffb543606",
-                "reference": "9ece6851061549adffc5a0401980becffb543606",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/a5fd85fd24376f140e230dbaa36b1623b7eaf8b4",
+                "reference": "a5fd85fd24376f140e230dbaa36b1623b7eaf8b4",
                 "shasum": ""
             },
             "require": {
+                "phpactor/class-to-file": "^1.0@dev",
                 "phpactor/code-builder": "dev-master",
                 "webmozart/path-util": "^2.3@dev"
             },
@@ -746,7 +747,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-05-30T06:29:44+00:00"
+            "time": "2018-06-02T09:25:44+00:00"
         },
         {
             "name": "phpactor/completion",

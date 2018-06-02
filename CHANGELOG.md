@@ -5,7 +5,7 @@ Changelog
 
 Features:
 
-  - [CodeTransform] Transformer to fix namesapce / class name
+  - [CodeTransform] Transformer to fix namesapce / class name #474
 
 Improvements:
 
