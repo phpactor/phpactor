@@ -9,10 +9,13 @@ Features:
 
 Improvements:
 
+  - [WorseReflection] Resolve UseNameVariables (e.g. context menu `use ($f<>oo)`). #466
   - [Application] Improved status (show current version) #481
 
 Bug fixes:
 
+  - [WorseReflection] access property on null error when resolving incomplete
+    function variable use.
   - [CodeTransform] Generate method does can use pseudo type for return type #486
   - [Vim Plugin] Goto reference in a modified file causes warning #477.
   - [Application] Overridden CWD not being passed to `Paths` (affected config
