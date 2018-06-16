@@ -179,8 +179,14 @@ nmap &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
 " Generate a new class (replacing the current file)
 nmap &lt;Leader&gt;cc :call phpactor#ClassNew()&lt;CR&gt;
 
+" Extract expression (normal mode)
+nmap &lt;silent&gt;&lt;Leader&gt;ee :call phpactor#ExtractExpression(v:false)&lt;CR&gt;
+
 " Extract method from selection
-vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;</code></pre>
+vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;
+
+" Extract expression from selection
+vmap &lt;silent&gt;&lt;Leader&gt;ee :&lt;C-U&gt;call phpactor#ExtractMethod(v:true)&lt;CR&gt;</code></pre>
 <p>See the <a href="refactorings.html">Refactorings</a> chapter for more functions you can map
 shortcuts to.</p>
 <p>Phpactor requires at least PHP 7.0. If you use a different version of PHP
