@@ -96,9 +96,16 @@ function! phpactor#ExtractMethod()
     call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
-function! phpactor#ExtractExpression()
-    let selectionStart = phpactor#_selectionStart()
-    let selectionEnd = phpactor#_selectionEnd()
+function! phpactor#ExtractExpression(isSelection)
+
+    if a:isSelection 
+        let selectionStart = phpactor#_selectionStart()
+        let selectionEnd = phpactor#_selectionEnd()
+    else
+        let selectionStart = phpactor#_offset()
+        let selectionEnd = v:null
+    endif
+
     let currentPath = expand('%')
 
     call phpactor#rpc("extract_expression", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})

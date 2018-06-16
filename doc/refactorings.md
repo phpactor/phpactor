@@ -8,7 +8,7 @@ Fixes:
 
 - [Add Missing Assignments](#add-missing-assignments)
 - [Complete Constructor](#complete-constructor)
-- [Fix namespace and/or class name](#fix-namespace-or-classname)
+- [Fix namespace and/or class name](#fix-namespace-or-class-name)
 - [Generate Accessor](#generate-accessor)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
@@ -25,6 +25,7 @@ Refactoring:
 
 - [Class Move](#class-move)
 - [Extract Constant](#extract-constant)
+- [Extract Expression](#extract-expression)
 - [Extract Method](#extract-method)
 - [Rename Class](#rename-class)
 - [Rename Class Member](#rename-member)
@@ -419,6 +420,66 @@ class DecisionMaker
 	{
         return self::YES;
 	}
+}
+```
+
+Extract Expression
+------------------
+
+Extract an expression
+
+- **Command**: _VIM function only_
+- **VIM plugin**: _VIM function only_
+- **VIM function**:`:call phpactor#ExtractExpression()` (call with
+  `v:true` to invoke on a selection)
+
+### Motivation
+
+Sometimes you find yourself using inline expressions, and later you realise
+that you want to re-use that value.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+if (<>1 + 2 + 3 + 5 === 6) {
+    echo 'You win!';
+}
+```
+
+After (entering `$hasWon` as a variable name):
+
+```php
+<?php
+
+$hasWon = 1 + 2 + 3 + 5 === 6;
+if ($hasWon) {
+    echo 'You win!';
+}
+```
+
+Note that this also works with a visual selection if you invoke the VIM
+function with `v:true`:
+
+```php
+<?php
+
+if (<>1 + 2 + 3 + 5<> === 6) {
+    echo 'You win!';
+}
+```
+
+After (using `$winningCombination` as a variable name):
+
+```php
+<?php
+
+$winningCombination = 1 + 2 + 3 + 5;
+if ($winningCombination == 6) {
+    echo 'You win!';
 }
 ```
 

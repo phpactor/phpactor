@@ -115,8 +115,14 @@ nmap <Leader>tt :call phpactor#Transform()<CR>
 " Generate a new class (replacing the current file)
 nmap <Leader>cc :call phpactor#ClassNew()<CR>
 
+" Extract expression (normal mode)
+nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
+
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+
+" Extract expression from selection
+vmap <silent><Leader>ee :<C-U>call phpactor#ExtractMethod(v:true)<CR>
 ```
 
 See the [Refactorings](refactorings.md) chapter for more functions you can map
