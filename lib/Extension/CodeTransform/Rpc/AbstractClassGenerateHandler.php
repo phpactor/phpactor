@@ -3,6 +3,8 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Application\ClassGenerator;
+use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -13,6 +15,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
@@ -22,7 +25,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     const PARAM_OVERWRITE = 'overwrite';
 
     /**
-     * @var ClassGenerator
+     * @var AbstractClassGenerator
      */
     protected $classGenerator;
 
@@ -41,7 +44,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         ];
     }
 
-    abstract protected function generate(array $arguments);
+    abstract protected function generate(array $arguments): SourceCode;
 
     abstract protected function newMessage(): string;
 
@@ -76,7 +79,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         }
 
         try {
-            $newPath = $this->generate($arguments);
+            $code = $this->generate($arguments);
         } catch (FileAlreadyExists $e) {
             return InputCallbackResponse::fromCallbackAndInputs(
                 Request::fromNameAndParameters(
@@ -97,6 +100,6 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             );
         }
 
-        return OpenFileResponse::fromPath($newPath);
+        return ReplaceFileSourceResponse::fromPathAndSource($code->path(), (string) $code);
     }
 }

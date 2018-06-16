@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler;
 use Webmozart\Glob\Glob;
 
@@ -9,7 +10,7 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
 {
     const NAME = 'class_inflect';
 
-    protected function generate(array $arguments)
+    protected function generate(array $arguments): SourceCode
     {
         if (Glob::isDynamic($arguments['current_path'])) {
             throw new \RuntimeException(sprintf(
@@ -18,21 +19,21 @@ class ClassInflectHandler extends AbstractClassGenerateHandler
             ));
         }
 
-        $newPaths = $this->classGenerator->generateFromExisting(
+        $newCodes = $this->classGenerator->generateFromExisting(
             $arguments[self::PARAM_CURRENT_PATH],
             $arguments[self::PARAM_NEW_PATH],
             $arguments[self::PARAM_VARIANT],
             (bool) $arguments[self::PARAM_OVERWRITE]
         );
 
-        if (count($newPaths) !== 1) {
+        if (count($newCodes) !== 1) {
             throw new \RuntimeException(sprintf(
                 'Expected 1 path from class generator, got %s',
-                count($newPaths)
+                count($newCodes)
             ));
         }
 
-        return reset($newPaths);
+        return reset($newCodes);
     }
 
     public function name(): string

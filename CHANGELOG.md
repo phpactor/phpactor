@@ -11,6 +11,7 @@ Improvements:
 
   - [WorseReflection] Resolve UseNameVariables (e.g. context menu `use ($f<>oo)`). #466
   - [Application] Improved status (show current version) #481
+  - [CodeTransform] Better handling of new file generation
 
 Bug fixes:
 

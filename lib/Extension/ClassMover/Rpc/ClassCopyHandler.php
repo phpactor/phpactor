@@ -14,7 +14,6 @@ class ClassCopyHandler extends AbstractHandler
     const PARAM_SOURCE_PATH = 'source_path';
     const PARAM_DEST_PATH = 'dest_path';
 
-
     /**
      * @var ClassCopy
      */

@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Application;
 
 use Phpactor\CodeTransform\Domain\ClassName;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -13,7 +14,7 @@ class ClassInflect extends AbstractClassGenerator
     public function generateFromExisting(string $srcPath, string $dest, string $variant = 'default', bool $overwrite = false): array
     {
         $srcPath = Phpactor::normalizePath($srcPath);
-        $newPaths = [];
+        $newCodes = [];
 
         if (false === Glob::isDynamic($srcPath) && false === file_exists($srcPath)) {
             throw new \RuntimeException(sprintf(
@@ -28,16 +29,16 @@ class ClassInflect extends AbstractClassGenerator
             }
 
             try {
-                $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
+                $newCodes[] = $this->doGenerateFromExisting($globSrc, $globDest, $variant, $overwrite);
             } catch (NotFound $e) {
                 $this->logger()->error($e->getMessage());
             }
         }
 
-        return $newPaths;
+        return $newCodes;
     }
 
-    private function doGenerateFromExisting(string $src, string $dest, string $variant, bool $overwrite): string
+    private function doGenerateFromExisting(string $src, string $dest, string $variant, bool $overwrite): SourceCode
     {
         $srcClassName = $this->normalizer->normalizeToClass($src);
         $destClassName = $this->normalizer->normalizeToClass($dest);
@@ -48,9 +49,10 @@ class ClassInflect extends AbstractClassGenerator
         );
 
         $filePath = $this->normalizer->normalizeToFile($destClassName);
+        $code = $code->withPath($filePath);
 
         $this->writeFile($filePath, (string) $code, $overwrite);
 
-        return (string) $filePath;
+        return $code;
     }
 }
