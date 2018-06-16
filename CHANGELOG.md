@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Features:
+
+  - [CodeTransforn] Extract expression
+
 ## 2018-06-16 0.6.0
 
 Features:

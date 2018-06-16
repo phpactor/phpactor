@@ -96,6 +96,21 @@ function! phpactor#ExtractMethod()
     call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
+function! phpactor#ExtractExpression(isSelection)
+
+    if a:isSelection 
+        let selectionStart = phpactor#_selectionStart()
+        let selectionEnd = phpactor#_selectionEnd()
+    else
+        let selectionStart = phpactor#_offset()
+        let selectionEnd = v:null
+    endif
+
+    let currentPath = expand('%')
+
+    call phpactor#rpc("extract_expression", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
+endfunction
+
 function! phpactor#ClassExpand()
     let word = expand("<cword>")
     let classInfo = phpactor#rpc("class_search", { "short_name": word })
@@ -491,7 +506,6 @@ function! phpactor#_rpc_dispatch_input(type, parameters)
 
     " >> text
     if a:type == 'text'
-        echo a:parameters['type']
         if v:null != a:parameters['type']
             return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
         endif
