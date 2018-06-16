@@ -2,42 +2,54 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
+use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
+use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
+use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeBuilder\Util\TextFormat;
+use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
-use Phpactor\Extension\CodeTransform\Application\Transformer;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
+use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Transformers;
+use Phpactor\Config\Paths;
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
+use Phpactor\Container\Schema;
+use Phpactor\Extension\CodeTransform\Application\ClassInflect;
+use Phpactor\Extension\CodeTransform\Application\ClassNew;
+use Phpactor\Extension\CodeTransform\Application\Transformer;
+use Phpactor\Extension\CodeTransform\Command\ClassInflectCommand;
 use Phpactor\Extension\CodeTransform\Command\ClassNewCommand;
 use Phpactor\Extension\CodeTransform\Command\ClassTransformCommand;
-use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
-use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
-use Twig\Loader\FilesystemLoader;
+use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ExtractExpressionHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
+use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
+use Phpactor\Extension\CodeTransform\Rpc\GenerateMethodHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
+use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
+use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
+use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Twig\Environment;
-use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Twig\Loader\ChainLoader;
-use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
-use Phpactor\Extension\CodeTransform\Command\ClassInflectCommand;
-use Phpactor\Extension\CodeTransform\Application\ClassInflect;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
-use Phpactor\CodeBuilder\Util\TextFormat;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
-use Phpactor\Config\Paths;
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Container;
-use Phpactor\Container\Schema;
+use Twig\Loader\FilesystemLoader;
 
 class CodeTransformExtension implements Extension
 {
@@ -46,7 +58,6 @@ class CodeTransformExtension implements Extension
     const INDENTATION = 'code_transform.indentation';
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
-
 
     /**
      * {@inheritDoc}
@@ -74,6 +85,7 @@ class CodeTransformExtension implements Extension
         $this->registerRenderer($container);
         $this->registerUpdater($container);
         $this->registerRefactorings($container);
+        $this->registerRpc($container);
     }
 
     private function registerApplication(ContainerBuilder $container)
@@ -266,6 +278,10 @@ class CodeTransformExtension implements Extension
             );
         });
 
+        $container->register('code_transform.refactor.extract_expression', function (Container $container) {
+            return new TolerantExtractExpression();
+        });
+
         $container->register('code_transform.refactor.class_import', function (Container $container) {
             return new TolerantImportClass(
                 $container->get('code_transform.updater')
@@ -284,5 +300,77 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform.builder_factory', function (Container $container) {
             return new WorseBuilderFactory($container->get('reflection.reflector'));
         });
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('rpc.handler.class_inflect', function (Container $container) {
+            return new ClassInflectHandler(
+                $container->get('application.class_inflect')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.class_new', function (Container $container) {
+            return new ClassNewHandler(
+                $container->get('application.class_new')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.extract_constant', function (Container $container) {
+            return new ExtractConstantHandler(
+                $container->get('code_transform.refactor.extract_constant')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.extract_method', function (Container $container) {
+            return new ExtractMethodHandler(
+                $container->get('code_transform.refactor.extract_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.generate_accessor', function (Container $container) {
+            return new GenerateAccessorHandler(
+                $container->get('code_transform.refactor.generate_accessor')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.generate_method', function (Container $container) {
+            return new GenerateMethodHandler(
+                $container->get('code_transform.refactor.generate_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.refactor.import_class', function (Container $container) {
+            return new ImportClassHandler(
+                $container->get('code_transform.refactor.class_import'),
+                $container->get('application.class_search'),
+                $container->getParameter('rpc.class_search.filesystem')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.rename_variable', function (Container $container) {
+            return new RenameVariableHandler(
+                $container->get('code_transform.refactor.rename_variable')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.override_method', function (Container $container) {
+            return new OverrideMethodHandler(
+                $container->get('reflection.reflector'),
+                $container->get('code_transform.refactor.override_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.transform', function (Container $container) {
+            return new TransformHandler(
+                $container->get('code_transform.transform')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.extract_expression', function (Container $container) {
+            return new ExtractExpressionHandler(
+                $container->get('code_transform.refactor.extract_expression')
+            );
+        }, [ 'rpc.handler' => [] ]);
     }
 }
