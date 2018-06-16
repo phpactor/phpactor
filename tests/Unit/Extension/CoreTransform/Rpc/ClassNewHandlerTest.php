@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
@@ -12,6 +13,7 @@ use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ClassNewHandlerTest extends HandlerTestCase
@@ -100,7 +102,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             self::NEW_PATH,
             self::VARIANT,
             false
-        )->willReturn(self::NEW_PATH);
+        )->willReturn(SourceCode::fromStringAndPath('fo', self::NEW_PATH));
 
         $action = $this->handle('class_new', [
             'current_path' => self::CURRENT_PATH,
@@ -108,7 +110,7 @@ class ClassNewHandlerTest extends HandlerTestCase
             'variant' => self::VARIANT,
         ]);
 
-        $this->assertInstanceOf(OpenFileResponse::class, $action);
+        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $action);
         $this->assertEquals(self::NEW_PATH, $action->path());
     }
 }

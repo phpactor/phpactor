@@ -2,11 +2,13 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\CodeTransform\Domain\SourceCode;
+
 class ClassNewHandler extends AbstractClassGenerateHandler
 {
     const NAME = 'class_new';
 
-    protected function generate(array $arguments)
+    protected function generate(array $arguments): SourceCode
     {
         return $this->classGenerator->generate($arguments['new_path'], $arguments['variant'], (bool) $arguments['overwrite']);
     }
