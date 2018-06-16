@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2018-06-16 0.6.0
 
 Features:
 
@@ -12,6 +12,7 @@ Improvements:
   - [WorseReflection] Resolve UseNameVariables (e.g. context menu `use ($f<>oo)`). #466
   - [Application] Improved status (show current version) #481
   - [CodeTransform] Better handling of new file generation
+  - [Docs] Added Development section
 
 Bug fixes:
 
@@ -23,10 +24,6 @@ Bug fixes:
     file resolution).
   - [Application] Fixed find references regression (only the current class
     wasn't being checked for references..)
-
-## master
-
-  - [Docs] Added Development section
 
 ## 2018-05-20 0.5.0
 
