@@ -36,6 +36,9 @@ menu:
         reference:
             name: Reference
             items:
+                completion:
+                    text: Completion
+                    relativeUrl: completion.html
                 navigation:
                     text: Navigation
                     relativeUrl: navigation.html

@@ -6,6 +6,12 @@ Changelog
 Features:
 
   - [CodeTransforn] Extract expression
+  - [Completion] Support constant completion
+
+Improvements:
+
+  - [Completion] Support namespaced functions, fixes #473
+  - [Docs] Added section on completion
 
 ## 2018-06-16 0.6.0
 
