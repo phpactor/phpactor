@@ -107,7 +107,6 @@ class CompletionExtension implements Extension
             return new WorseConstantCompletor();
         }, [ 'completion.tolerant_completor' => []]);
 
-
         $container->register('completion.formatter', function (Container $container) {
             return new ObjectFormatter([
                 new TypeFormatter(),
