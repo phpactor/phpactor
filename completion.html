@@ -123,7 +123,7 @@ if not using composer). For non-autoloadable entities (e.g. functions) it is
 assumed that these are defined during bootstrap.</p>
 <h2 id="type-inference">Type inference</h2>
 <p>Phpactors type inference is based on
-<a href="https://github.com/phpactot/worse-reflection">WorseReflection</a>.</p>
+<a href="https://github.com/phpactor/worse-reflection">WorseReflection</a>.</p>
 <h3 id="assert">Assert</h3>
 <p>When encountering an <code>assert</code> with <code>instanceof</code> it will cast the variable
 to that type, or a union of that type. See also <a href="#instanceof">#instanceof</a>.</p>
@@ -136,6 +136,7 @@ $foo-&gt; // type: Hello|Goodbye</code></pre>
 <pre><code class="language-php">$a = 'hello';
 $b = $a;
 $b; // type: string</code></pre>
+<p>... and assignments from method calls, class properties, anything reflectable, etc.</p>
 <h3 id="catch">Catch</h3>
 <pre><code class="language-php">
 try {
@@ -183,6 +184,12 @@ $foobar-&gt; // type: Hello</code></pre>
 <p>Phpactor supports type injection via. docblock:</p>
 <pre><code>/** @var Foobar $foobar */
 $foobar-&gt; // type: Foobar</code></pre>
+<p>and inference from parameters:</p>
+<pre><code>function foobar(Barfoo $foobar, $barbar = 'foofoo')
+{
+    $foobar; // type: Barfoo
+    $barbar; // type: foofoo
+}</code></pre>
                 </section>
 
             </div>
