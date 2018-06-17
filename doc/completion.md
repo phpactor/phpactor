@@ -18,7 +18,7 @@ Type inference
 --------------
 
 Phpactors type inference is based on
-[WorseReflection](https://github.com/phpactot/worse-reflection).
+[WorseReflection](https://github.com/phpactor/worse-reflection).
 
 ### Assert
 
@@ -41,6 +41,8 @@ $a = 'hello';
 $b = $a;
 $b; // type: string
 ```
+
+... and assignments from method calls, class properties, anything reflectable, etc.
 
 ### Catch
 
@@ -121,4 +123,14 @@ Phpactor supports type injection via. docblock:
 ```
 /** @var Foobar $foobar */
 $foobar-> // type: Foobar
+```
+
+and inference from parameters:
+
+```
+function foobar(Barfoo $foobar, $barbar = 'foofoo')
+{
+    $foobar; // type: Barfoo
+    $barbar; // type: foofoo
+}
 ```
