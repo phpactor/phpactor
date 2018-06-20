@@ -40,10 +40,6 @@ class Transformer
 
         $transformedCode = $this->transform->transform($source, $transformations);
 
-        if ($source == $transformedCode) {
-            return null;
-        }
-
         return $transformedCode;
     }
 }

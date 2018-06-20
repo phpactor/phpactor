@@ -6,6 +6,9 @@ Changelog
 Features:
 
   - [CodeTransforn] Extract expression
+  - [Application] Changed behavior of Transform command: accepts globs, shows
+    diffs and writes to files (rather than just dumping them to stdout if they
+    changed).
   - [Completion] Support constant completion
 
 Improvements:

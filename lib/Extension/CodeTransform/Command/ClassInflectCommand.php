@@ -24,7 +24,7 @@ class ClassInflectCommand extends Command
     private $dumperRegistry;
 
     /**
-     * @var ClassNew
+     * @var ClassInflect
      */
     private $classInflect;
 

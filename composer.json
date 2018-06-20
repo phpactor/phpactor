@@ -18,7 +18,8 @@
         "microsoft/tolerant-php-parser": "dev-master",
         "monolog/monolog": "^2.0@dev",
         "phpactor/completion": "^1.0@dev",
-        "composer/xdebug-handler": "^1.1"
+        "composer/xdebug-handler": "^1.1",
+        "sebastian/diff": "2.0.x-dev"
     },
     "config": {
         "platform": {
