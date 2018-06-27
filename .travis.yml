@@ -25,6 +25,8 @@ script:
   - .travis/testdeps
 
 jobs:
+  allow_failures:
+    - env: VIM
   include:
     - stage: test
       env: VIM
