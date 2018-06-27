@@ -16,6 +16,10 @@ Improvements:
   - [Completion] Support namespaced functions, fixes #473
   - [Docs] Added section on completion
 
+Misc
+
+  - Downgraded composer to 1.x as 2.x-dev now requires PHP 7.2
+
 ## 2018-06-16 0.6.0
 
 Features:
