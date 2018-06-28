@@ -10,6 +10,8 @@ Features:
     diffs and writes to files (rather than just dumping them to stdout if they
     changed).
   - [Completion] Support constant completion
+  - [Application] Use version from composer instead of hard-coded version.
+    Thanks @weirdan
 
 Improvements:
 
