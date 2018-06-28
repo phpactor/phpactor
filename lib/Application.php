@@ -10,6 +10,7 @@ use Phpactor\Container\Container;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
+use PackageVersions\Versions;
 
 class Application extends SymfonyApplication
 {
@@ -25,7 +26,7 @@ class Application extends SymfonyApplication
 
     public function __construct(string $vendorDir)
     {
-        parent::__construct('Phpactor', '0.1');
+        parent::__construct('Phpactor', Versions::getVersion('phpactor/phpactor'));
         $this->vendorDir = $vendorDir;
     }
 

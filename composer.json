@@ -19,7 +19,8 @@
         "monolog/monolog": "^1.0",
         "phpactor/completion": "^1.0@dev",
         "composer/xdebug-handler": "^1.1",
-        "sebastian/diff": "2.0.x-dev"
+        "sebastian/diff": "2.0.x-dev",
+        "ocramius/package-versions": "^1.2"
     },
     "config": {
         "platform": {
