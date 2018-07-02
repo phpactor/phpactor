@@ -246,13 +246,13 @@ EOT
                 , [
                     [
                         'type' => 'm',
-                        'name' => 'FOOBAR',
-                        'info' => 'const FOOBAR',
+                        'name' => 'BARFOO',
+                        'info' => 'const BARFOO',
                     ],
                     [
                         'type' => 'm',
-                        'name' => 'BARFOO',
-                        'info' => 'const BARFOO',
+                        'name' => 'FOOBAR',
+                        'info' => 'const FOOBAR',
                     ],
                 ],
             ],
