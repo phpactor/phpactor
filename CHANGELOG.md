@@ -24,6 +24,7 @@ Improvements:
 Bug fixes:
 
   - [WorseReflection] Do not parse non-PHP files when building stub cache.
+  - [Completion] Fixed last non-whitespace char detection, fixes #504
 
 Misc
 
