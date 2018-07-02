@@ -21,7 +21,7 @@ class Complete
         $result = $this->competor->complete($source, $offset);
 
         return [
-            'suggestions' => $result->suggestions()->toArray(),
+            'suggestions' => $result->suggestions()->sorted()->toArray(),
             'issues' => $result->issues()->toArray(),
         ];
     }

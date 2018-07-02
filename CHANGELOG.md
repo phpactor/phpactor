@@ -16,9 +16,11 @@ Features:
 Improvements:
 
   - [Completion] Support namespaced functions, fixes #473
+  - [Completion] Sort completion results alphabetically.
   - [Docs] Added section on completion
   - [WorseReflection] Explicitly do not support anonymous classes when
     resolving nodes, fixes #505
+
 
 Misc
 
