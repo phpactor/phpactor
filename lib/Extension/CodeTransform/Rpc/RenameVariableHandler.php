@@ -68,7 +68,7 @@ class RenameVariableHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->renameVariable->renameVariable(
+        $sourceCode = $this->renameVariable->__invoke(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]

@@ -53,7 +53,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
 
     public function testExtractConstant()
     {
-        $this->extractConstant->extractConstant(
+        $this->extractConstant->__invoke(
             self::SOURCE,
             self::OFFSET,
             self::CONSTANT_NAME

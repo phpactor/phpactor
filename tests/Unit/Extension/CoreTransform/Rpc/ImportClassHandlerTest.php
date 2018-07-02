@@ -95,7 +95,7 @@ class ImportClassHandlerTest extends HandlerTestCase
             ],
         ]);
         $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
-        $this->importClass->importClass(
+        $this->importClass->__invoke(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
             self::TEST_NAME,
@@ -115,7 +115,7 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testAsksForAliasIfClassAlreadyUsed()
     {
-        $this->importClass->importClass(
+        $this->importClass->__invoke(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
             self::TEST_NAME,
@@ -142,7 +142,7 @@ class ImportClassHandlerTest extends HandlerTestCase
     public function testUsesGivenAlias()
     {
         $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
-        $this->importClass->importClass(
+        $this->importClass->__invoke(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
             self::TEST_NAME,
@@ -164,7 +164,7 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testShowsMessageIfSelectedClassIsAlreadyImported()
     {
-        $this->importClass->importClass(
+        $this->importClass->__invoke(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
             self::TEST_NAME,

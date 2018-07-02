@@ -56,7 +56,7 @@ class ExtractConstantHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->extractConstant->extractConstant(
+        $sourceCode = $this->extractConstant->__invoke(
             SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),
             $arguments[self::PARAM_OFFSET],
             $arguments[self::PARAM_CONSTANT_NAME]

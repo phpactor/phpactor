@@ -96,7 +96,7 @@ class ImportClassHandler extends AbstractHandler
         }
 
         try {
-            $sourceCode = $this->classImport->importClass(
+            $sourceCode = $this->classImport->__invoke(
                 SourceCode::fromStringAndPath(
                     $arguments[self::PARAM_SOURCE],
                     $arguments[self::PARAM_PATH]

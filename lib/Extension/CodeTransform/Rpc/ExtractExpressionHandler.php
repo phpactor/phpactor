@@ -63,7 +63,7 @@ class ExtractExpressionHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->extractExpression->extractExpression(
+        $sourceCode = $this->extractExpression->__invoke(
             SourceCode::fromString($arguments[self::PARAM_SOURCE]),
             $arguments[self::PARAM_OFFSET_START],
             $arguments[self::PARAM_OFFSET_END],

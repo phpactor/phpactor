@@ -41,7 +41,7 @@ class GenerateAccessorHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $sourceCode = $this->generateAccessor->generateAccessor(
+        $sourceCode = $this->generateAccessor->__invoke(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
