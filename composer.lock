@@ -979,12 +979,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "3d5f15d4606bfde980b2f2c06d0201d923928255"
+                "reference": "3cbf6182f821e3380ebd7cd431fd72bf74b6714b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3d5f15d4606bfde980b2f2c06d0201d923928255",
-                "reference": "3d5f15d4606bfde980b2f2c06d0201d923928255",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3cbf6182f821e3380ebd7cd431fd72bf74b6714b",
+                "reference": "3cbf6182f821e3380ebd7cd431fd72bf74b6714b",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1023,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-07-01T20:32:01+00:00"
+            "time": "2018-07-02T15:09:07+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2219,12 +2219,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "b116e6ecd459ce13e3afa6d515439efd02d69c44"
+                "reference": "d024fab7586da7d48215035ec86f94e42e87f56a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b116e6ecd459ce13e3afa6d515439efd02d69c44",
-                "reference": "b116e6ecd459ce13e3afa6d515439efd02d69c44",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/d024fab7586da7d48215035ec86f94e42e87f56a",
+                "reference": "d024fab7586da7d48215035ec86f94e42e87f56a",
                 "shasum": ""
             },
             "require": {
@@ -2307,7 +2307,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-06-28T09:04:11+00:00"
+            "time": "2018-07-02T06:23:10+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2563,12 +2563,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998"
+                "reference": "7656d1f81ace08495791831742f124fa70b75cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998",
-                "reference": "ad6be6e8ddad8d3ea5ec8bbf9ee2e2b3c649c998",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/7656d1f81ace08495791831742f124fa70b75cb2",
+                "reference": "7656d1f81ace08495791831742f124fa70b75cb2",
                 "shasum": ""
             },
             "require-dev": {
@@ -2596,7 +2596,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2018-01-20T12:07:32+00:00"
+            "time": "2018-07-02T14:39:46+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

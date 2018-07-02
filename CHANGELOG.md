@@ -21,6 +21,9 @@ Improvements:
   - [WorseReflection] Explicitly do not support anonymous classes when
     resolving nodes, fixes #505
 
+Bug fixes:
+
+  - [WorseReflection] Do not parse non-PHP files when building stub cache.
 
 Misc
 
