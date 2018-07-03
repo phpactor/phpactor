@@ -36,6 +36,10 @@ class TransformHandler implements Handler
             'transform' => null,
             'source' => null,
         ]);
+        $schema->setRequired([
+            'path' => null,
+            'source' => null,
+        ]);
     }
 
     public function handle(array $arguments)

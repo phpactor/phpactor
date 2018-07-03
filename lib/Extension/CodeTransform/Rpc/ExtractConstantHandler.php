@@ -43,6 +43,11 @@ class ExtractConstantHandler extends AbstractHandler
             self::PARAM_CONSTANT_NAME => null,
             self::PARAM_CONSTANT_NAME_SUGGESTION => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+        ]);
     }
 
     public function handle(array $arguments)

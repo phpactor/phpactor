@@ -47,6 +47,9 @@ class ClassMoveHandler extends AbstractHandler
             self::PARAM_DEST_PATH => null,
             self::PARAM_CONFIRMED => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_SOURCE_PATH
+        ]);
     }
 
     public function handle(array $arguments)

@@ -38,6 +38,11 @@ class GenerateAccessorHandler extends AbstractHandler
             self::PARAM_SOURCE => null,
             self::PARAM_OFFSET => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_SOURCE,
+            self::PARAM_OFFSET,
+        ]);
     }
 
     public function handle(array $arguments)

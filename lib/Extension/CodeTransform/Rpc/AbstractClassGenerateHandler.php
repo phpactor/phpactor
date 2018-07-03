@@ -43,6 +43,9 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             self::PARAM_VARIANT => null,
             self::PARAM_OVERWRITE => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_CURRENT_PATH
+        ]);
     }
 
     abstract protected function generate(array $arguments): SourceCode;

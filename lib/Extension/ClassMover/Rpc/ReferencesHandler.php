@@ -96,12 +96,20 @@ class ReferencesHandler extends AbstractHandler
             self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
         ]);
+        $schema->setRequired([
+            self::PARAMETER_PATH,
+            self::PARAMETER_OFFSET,
+            self::PARAMETER_SOURCE,
+        ]);
     }
 
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            SourceCode::fromPathAndString($arguments[self::PARAMETER_PATH], $arguments[self::PARAMETER_SOURCE]),
+            SourceCode::fromPathAndString(
+                $arguments[self::PARAMETER_PATH],
+                $arguments[self::PARAMETER_SOURCE]
+            ),
             Offset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $symbolContext = $offset->symbolContext();

@@ -65,6 +65,12 @@ class ImportClassHandler extends AbstractHandler
             self::PARAM_ALIAS => null,
             self::PARAM_PATH => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_NAME,
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
+        ]);
     }
 
     public function handle(array $arguments)

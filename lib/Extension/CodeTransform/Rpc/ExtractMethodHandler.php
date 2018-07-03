@@ -45,6 +45,10 @@ class ExtractMethodHandler extends AbstractHandler
             self::PARAM_OFFSET_START => null,
             self::PARAM_OFFSET_END => null,
         ]);
+        $schema->setRequired([
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
+        ]);
     }
 
     public function handle(array $arguments)
