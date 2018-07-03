@@ -5,7 +5,7 @@ namespace Phpactor\Extension\Navigation;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Navigation\Application\Navigator;
 use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
@@ -31,7 +31,7 @@ class NavigationExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
         $schema->setDefaults([
             self::PATH_FINDER_DESTINATIONS => [],

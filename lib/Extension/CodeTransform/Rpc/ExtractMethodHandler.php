@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -35,15 +36,17 @@ class ExtractMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
+        $resolver->setDefaults([
             self::PARAM_METHOD_NAME => null,
             self::PARAM_OFFSET_START => null,
             self::PARAM_OFFSET_END => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
+        ]);
     }
 
     public function handle(array $arguments)

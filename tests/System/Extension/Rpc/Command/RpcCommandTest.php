@@ -30,6 +30,19 @@ class RpcCommandTest extends SystemTestCase
         ], $response);
     }
 
+    public function testPrettyPrintsOutput()
+    {
+        $stdin = json_encode([
+            'action' => 'echo',
+            'parameters' => [
+                'message' => 'Hello World',
+            ],
+        ]);
+
+        $process = $this->phpactor('rpc --pretty', $stdin);
+        $this->assertSuccess($process);
+    }
+
     public function testReplaysLastRequest()
     {
         // enable the feature

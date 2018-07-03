@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
@@ -17,10 +18,9 @@ class OverrideMethodHandler extends AbstractHandler
 {
     const NAME = 'override_method';
     const PARAM_SOURCE = 'source';
-    const PARAM_CLASS_NAME = self::CLASS_NAME;
+    const PARAM_CLASS_NAME = 'class_name';
     const PARAM_METHOD_NAME = 'method_name';
     const PARAM_PATH = 'path';
-    const CLASS_NAME = 'class_name';
 
     /**
      * @var Reflector
@@ -45,30 +45,21 @@ class OverrideMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
+        $resolver->setDefaults([
             self::PARAM_METHOD_NAME => null,
-            self::CLASS_NAME => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_SOURCE,
+            self::PARAM_CLASS_NAME,
+        ]);
+
     }
 
     public function handle(array $arguments)
     {
-        if (null === $arguments[self::PARAM_SOURCE]) {
-            throw new InvalidArgumentException(
-                '"source" parameter is mandatory'
-            );
-        }
-
-        if (null === $arguments[self::PARAM_PATH]) {
-            throw new InvalidArgumentException(
-                '"path" parameter is required'
-            );
-        }
-
         $class = $this->class($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_CLASS_NAME]);
         $parentClass = $this->parentClass($class);
 

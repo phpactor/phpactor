@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -62,14 +63,17 @@ class ContextMenuHandler implements Handler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAMETER_SOURCE => null,
-            self::PARAMETER_OFFSET => null,
+        $resolver->setRequired([
+            self::PARAMETER_SOURCE,
+            self::PARAMETER_OFFSET,
+        ]);
+
+        $resolver->setDefaults([
             self::PARAMETER_ACTION => null,
             self::PARAMETER_CURRENT_PATH => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

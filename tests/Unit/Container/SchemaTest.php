@@ -3,8 +3,8 @@
 namespace Phpactor\Tests\Unit\Container;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Container\Schema;
-use Phpactor\Container\InvalidConfig;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\MapResolver\InvalidConfig;
 use stdClass;
 
 class SchemaTest extends TestCase
@@ -16,7 +16,7 @@ class SchemaTest extends TestCase
 
     public function setUp()
     {
-        $this->schema = new Schema();
+        $this->schema = new Resolver();
     }
 
     public function testResolvesDefaults()

@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -33,15 +34,17 @@ class ExtractConstantHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
+        $resolver->setDefaults([
             self::PARAM_CONSTANT_NAME => null,
             self::PARAM_CONSTANT_NAME_SUGGESTION => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+        ]);
     }
 
     public function handle(array $arguments)

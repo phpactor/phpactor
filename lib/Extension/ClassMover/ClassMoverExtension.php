@@ -14,7 +14,7 @@ use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
 use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\ClassMover\Command\ReferencesMemberCommand;
 use Phpactor\Extension\ClassMover\Command\ReferencesClassCommand;
@@ -25,7 +25,7 @@ class ClassMoverExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
     }
 

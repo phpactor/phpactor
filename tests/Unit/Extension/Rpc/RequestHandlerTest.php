@@ -3,11 +3,13 @@
 namespace Phpactor\Tests\Unit\Extension\Rpc;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Request;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class RequestHandlerTest extends TestCase
@@ -37,33 +39,17 @@ class RequestHandlerTest extends TestCase
         );
     }
 
-    public function testInvalidArguments()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid arguments "foo" for handler "handler1", valid arguments: "bbb"');
-
-        $this->handlerRegistry->get('aaa')->willReturn($this->handler->reveal());
-        $this->handler->name()->willReturn('handler1');
-        $this->handler->defaultParameters()->willReturn([
-            'bbb' => 'ccc',
-        ]);
-
-        $request = Request::fromNameAndParameters('aaa', [
-            'foo' => 'bar',
-        ]);
-
-        $response = $this->requestHandler->handle($request);
-    }
-
     public function testHandle()
     {
         $expectedResponse = $this->prophesize(Response::class);
 
         $this->handlerRegistry->get('aaa')->willReturn($this->handler->reveal());
         $this->handler->name()->willReturn('handler1');
-        $this->handler->defaultParameters()->willReturn([
-            'one' => 'foo',
-        ]);
+        $this->handler->configure(Argument::type(Resolver::class))->will(function ($args) {
+            $args[0]->setDefaults([
+                'one' => null,
+            ]);
+        });;
 
         $request = Request::fromNameAndParameters('aaa', [
             'one' => 'bar',

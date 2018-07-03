@@ -14,7 +14,7 @@ use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\SourceCodeFilesystem\Command\ClassSearchCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 
@@ -27,7 +27,7 @@ class SourceCodeFilesystemExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
     }
 

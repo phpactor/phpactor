@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -35,16 +36,18 @@ class RenameVariableHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
+        $resolver->setDefaults([
             self::PARAM_NAME => null,
             self::PARAM_NAME_SUGGESTION => null,
             self::PARAM_SCOPE => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_SOURCE,
+            self::PARAM_OFFSET,
+        ]);
     }
 
     public function handle(array $arguments)

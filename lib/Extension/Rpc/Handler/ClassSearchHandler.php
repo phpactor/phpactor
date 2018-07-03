@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -39,11 +40,11 @@ class ClassSearchHandler implements Handler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::SHORT_NAME => null,
-        ];
+        $resolver->setRequired([
+            self::SHORT_NAME,
+        ]);
     }
 
     public function handle(array $arguments)

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
@@ -38,13 +39,13 @@ class GotoDefinitionHandler implements Handler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_OFFSET => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_PATH => null,
-        ];
+        $resolver->setRequired([
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
+        ]);
     }
 
     public function handle(array $arguments)

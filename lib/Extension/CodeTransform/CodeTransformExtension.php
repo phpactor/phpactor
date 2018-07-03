@@ -29,7 +29,7 @@ use Phpactor\Config\Paths;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
@@ -62,7 +62,7 @@ class CodeTransformExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
         $paths = new Paths();
         $templatePaths = $paths->existingConfigPaths('templates');

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
@@ -28,13 +29,15 @@ class TransformHandler implements Handler
         return 'transform';
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            'path' => null,
+        $resolver->setDefaults([
             'transform' => null,
+        ]);
+        $resolver->setRequired([
+            'path' => null,
             'source' => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

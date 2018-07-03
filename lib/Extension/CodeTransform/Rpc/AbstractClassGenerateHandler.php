@@ -4,6 +4,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Application\ClassGenerator;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -34,14 +35,16 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->classGenerator = $classGenerator;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_CURRENT_PATH => null,
+        $resolver->setDefaults([
             self::PARAM_NEW_PATH => null,
             self::PARAM_VARIANT => null,
             self::PARAM_OVERWRITE => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_CURRENT_PATH
+        ]);
     }
 
     abstract protected function generate(array $arguments): SourceCode;

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 
@@ -12,11 +13,11 @@ class EchoHandler implements Handler
         return 'echo';
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            'message' => '',
-        ];
+        $resolver->setRequired([
+            'message',
+        ]);
     }
 
     public function handle(array $arguments)

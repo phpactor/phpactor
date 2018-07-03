@@ -2,6 +2,8 @@
 
 namespace Phpactor\Container;
 
+use Phpactor\MapResolver\Resolver;
+
 interface Extension
 {
     /**
@@ -16,5 +18,5 @@ interface Extension
      *
      * @return array
      */
-    public function configure(Schema $schema);
+    public function configure(Resolver $schema);
 }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -27,12 +28,12 @@ class OffsetInfoHandler implements Handler
         return 'offset_info';
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            'offset' => null,
-            'source' => null,
-        ];
+        $resolver->setRequired([
+            'offset',
+            'source',
+        ]);
     }
 
     public function handle(array $arguments)

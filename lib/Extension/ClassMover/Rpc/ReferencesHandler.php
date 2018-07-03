@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -85,22 +86,27 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAMETER_OFFSET => null,
-            self::PARAMETER_SOURCE => null,
-            self::PARAMETER_PATH => null,
+        $resolver->setDefaults([
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAMETER_PATH,
+            self::PARAMETER_OFFSET,
+            self::PARAMETER_SOURCE,
+        ]);
     }
 
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            SourceCode::fromPathAndString($arguments[self::PARAMETER_PATH], $arguments[self::PARAMETER_SOURCE]),
+            SourceCode::fromPathAndString(
+                $arguments[self::PARAMETER_PATH],
+                $arguments[self::PARAMETER_SOURCE]
+            ),
             Offset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $symbolContext = $offset->symbolContext();

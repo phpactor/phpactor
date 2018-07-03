@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Navigation\Handler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Navigation\Application\Navigator;
 use RuntimeException;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -32,13 +33,13 @@ class NavigateHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
+        $resolver->setDefaults([
             self::PARAM_SOURCE_PATH => null,
             self::PARAM_DESTINATION => null,
             self::PARAM_CONFIRM_CREATE => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

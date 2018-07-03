@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\RequestHandler;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler as CoreRequestHandler;
 use Phpactor\Extension\Rpc\Request;
@@ -24,18 +25,11 @@ class RequestHandler implements CoreRequestHandler
         $counterActions = [];
         $handler = $this->registry->get($request->name());
 
+        $resolver = new Resolver();
         $parameters = $request->parameters();
-        $defaults = $handler->defaultParameters();
+        $defaults = $handler->configure($resolver);
+        $arguments = $resolver->resolve($parameters);
 
-        if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
-                implode('", "', $diff),
-                $handler->name(),
-                implode('", "', array_keys($defaults))
-            ));
-        }
-
-        return $handler->handle(array_merge($defaults, $parameters));
+        return $handler->handle($arguments);
     }
 }

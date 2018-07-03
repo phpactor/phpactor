@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
@@ -54,16 +55,18 @@ class ImportClassHandler extends AbstractHandler
         return 'import_class';
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_OFFSET => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_NAME => null,
+        $resolver->setDefaults([
             self::PARAM_QUALIFIED_NAME => null,
             self::PARAM_ALIAS => null,
-            self::PARAM_PATH => null,
-        ];
+        ]);
+        $resolver->setRequired([
+            self::PARAM_NAME,
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
+        ]);
     }
 
     public function handle(array $arguments)

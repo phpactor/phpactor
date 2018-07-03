@@ -13,7 +13,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Config\ConfigLoader;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
@@ -65,10 +65,10 @@ class Phpactor
         }
 
         // > method resolve config
-        $masterSchema = new Schema();
+        $masterSchema = new Resolver();
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
-            $schema = new Schema();
+            $schema = new Resolver();
             $extension = new $extensionClass();
             if (!$extension instanceof Extension) {
                 throw new RuntimeException(sprintf(

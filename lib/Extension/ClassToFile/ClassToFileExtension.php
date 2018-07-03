@@ -4,7 +4,7 @@ namespace Phpactor\Extension\ClassToFile;
 
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassToFile\Command\FileInfoCommand;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
@@ -74,7 +74,7 @@ class ClassToFileExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
     }
 }

@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
@@ -30,13 +31,13 @@ class GenerateAccessorHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
-        ];
+        $resolver->setRequired([
+            self::PARAM_PATH,
+            self::PARAM_SOURCE,
+            self::PARAM_OFFSET,
+        ]);
     }
 
     public function handle(array $arguments)

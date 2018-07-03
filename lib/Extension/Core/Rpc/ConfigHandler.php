@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 
@@ -24,9 +25,8 @@ class ConfigHandler implements Handler
         return self::CONFIG;
     }
 
-    public function defaultParameters(): array
+    public function configure(Resolver $resolver)
     {
-        return [];
     }
 
     public function handle(array $arguments)

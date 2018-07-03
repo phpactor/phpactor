@@ -45,6 +45,7 @@ class RpcCommand extends Command
         $this->setName('rpc');
         $this->setDescription('Execute one or many actions from stdin and receive an imperative response');
         $this->addOption('replay', null, InputOption::VALUE_NONE, 'Replay the last request');
+        $this->addOption('pretty', null, InputOption::VALUE_NONE, 'Pretty print JSON');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -60,11 +61,16 @@ class RpcCommand extends Command
         }
 
         $response = $this->processRequest($request);
+        $flags = 0;
+
+        if ($input->getOption('pretty')) {
+            $flags = JSON_PRETTY_PRINT;
+        }
 
         $output->write(json_encode([
             'action' => $response->name(),
             'parameters' => $response->parameters(),
-        ]), false, OutputInterface::OUTPUT_RAW);
+        ], $flags), false, OutputInterface::OUTPUT_RAW);
     }
 
     private function processRequest(array $request = null)
