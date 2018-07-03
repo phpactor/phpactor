@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\MapResolver;
 
 use Exception;
 

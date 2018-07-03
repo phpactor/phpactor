@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -28,7 +28,7 @@ class OffsetInfoHandler implements Handler
         return 'offset_info';
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             'offset' => null,

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
@@ -39,7 +39,7 @@ class GotoDefinitionHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_OFFSET => null,

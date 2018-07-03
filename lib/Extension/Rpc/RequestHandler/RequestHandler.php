@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\RequestHandler;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler as CoreRequestHandler;
 use Phpactor\Extension\Rpc\Request;
@@ -25,7 +25,7 @@ class RequestHandler implements CoreRequestHandler
         $counterActions = [];
         $handler = $this->registry->get($request->name());
 
-        $schema = new Schema();
+        $schema = new Resolver();
         $parameters = $request->parameters();
         $defaults = $handler->configure($schema);
         $arguments = $schema->resolve($parameters);

@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
@@ -24,7 +24,7 @@ class WorseReflectionExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
         $schema->setDefaults([
             'reflection.stub_directory' => 'jetbrains/phpstorm-stubs',

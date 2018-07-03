@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Completion\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
@@ -28,7 +28,7 @@ class CompleteHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_SOURCE => null,

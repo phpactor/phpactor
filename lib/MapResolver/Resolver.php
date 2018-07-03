@@ -1,8 +1,10 @@
 <?php
 
-namespace Phpactor\Container;
+namespace Phpactor\MapResolver;
 
-class Schema
+use Phpactor\MapResolver\Resolver;
+
+class Resolver
 {
     /**
      * @var array
@@ -84,7 +86,7 @@ class Schema
         return $config;
     }
 
-    public function merge(Schema $schema): Schema
+    public function merge(Resolver $schema): Resolver
     {
         foreach ($schema->required as $required) {
             $this->required[] = $required;

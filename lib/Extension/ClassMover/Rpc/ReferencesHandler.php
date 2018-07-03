@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -86,7 +86,7 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAMETER_OFFSET => null,

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -33,7 +33,7 @@ class StatusHandler implements Handler
         return self::STATUS;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
     }
 

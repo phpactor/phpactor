@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -36,7 +36,7 @@ class RenameVariableHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_PATH => null,

@@ -24,7 +24,7 @@ use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Core\Command\StatusCommand;
 use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 
 class CoreExtension implements Extension
@@ -45,7 +45,7 @@ class CoreExtension implements Extension
 
     public static $autoloader;
 
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
         $schema->setDefaults([
             self::AUTOLOAD => 'vendor/autoload.php',

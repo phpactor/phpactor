@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Navigation\Handler;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Navigation\Application\Navigator;
 use RuntimeException;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -33,7 +33,7 @@ class NavigateHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_SOURCE_PATH => null,

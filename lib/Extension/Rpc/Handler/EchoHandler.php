@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 
@@ -13,7 +13,7 @@ class EchoHandler implements Handler
         return 'echo';
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             'message' => '',

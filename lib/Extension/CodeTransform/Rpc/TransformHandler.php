@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
@@ -29,7 +29,7 @@ class TransformHandler implements Handler
         return 'transform';
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             'path' => null,

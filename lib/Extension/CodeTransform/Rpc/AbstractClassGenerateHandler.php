@@ -4,7 +4,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\Application\ClassGenerator;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -35,7 +35,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->classGenerator = $classGenerator;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_CURRENT_PATH => null,

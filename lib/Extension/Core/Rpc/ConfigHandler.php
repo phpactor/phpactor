@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 
@@ -25,7 +25,7 @@ class ConfigHandler implements Handler
         return self::CONFIG;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
     }
 

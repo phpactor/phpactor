@@ -22,7 +22,7 @@ use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Completion\Command\CompleteCommand;
 use Phpactor\Extension\Completion\Application\Complete;
@@ -42,7 +42,7 @@ class CompletionExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Schema $schema)
+    public function configure(Resolver $schema)
     {
     }
 

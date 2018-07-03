@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\Rpc;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
@@ -45,7 +45,7 @@ class RequestHandlerTest extends TestCase
 
         $this->handlerRegistry->get('aaa')->willReturn($this->handler->reveal());
         $this->handler->name()->willReturn('handler1');
-        $this->handler->configure(Argument::type(Schema::class))->will(function ($args) {
+        $this->handler->configure(Argument::type(Resolver::class))->will(function ($args) {
             $args[0]->setDefaults([
                 'one' => null,
             ]);

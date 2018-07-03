@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Container\Schema;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -63,7 +63,7 @@ class ContextMenuHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Schema $schema): void
+    public function configure(Resolver $schema): void
     {
         $schema->setRequired([
             self::PARAMETER_SOURCE,
