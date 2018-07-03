@@ -89,9 +89,6 @@ class ReferencesHandler extends AbstractHandler
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAMETER_OFFSET => null,
-            self::PARAMETER_SOURCE => null,
-            self::PARAMETER_PATH => null,
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,

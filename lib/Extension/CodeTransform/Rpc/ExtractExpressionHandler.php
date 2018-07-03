@@ -39,11 +39,8 @@ class ExtractExpressionHandler extends AbstractHandler
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
             self::PARAM_VARIABLE_NAME => null,
             self::PARAM_OFFSET_START => null,
-            self::PARAM_OFFSET_END => null,
         ]);
         $schema->setRequired([
             self::PARAM_PATH,

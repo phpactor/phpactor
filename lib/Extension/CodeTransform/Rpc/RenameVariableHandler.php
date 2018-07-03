@@ -39,9 +39,6 @@ class RenameVariableHandler extends AbstractHandler
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
             self::PARAM_NAME => null,
             self::PARAM_NAME_SUGGESTION => null,
             self::PARAM_SCOPE => null,

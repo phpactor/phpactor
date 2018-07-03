@@ -30,9 +30,9 @@ class CompleteHandler implements Handler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
+        $schema->setRequired([
+            self::PARAM_SOURCE,
+            self::PARAM_OFFSET,
         ]);
     }
 

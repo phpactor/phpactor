@@ -41,10 +41,10 @@ class GotoDefinitionHandler implements Handler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_OFFSET => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_PATH => null,
+        $schema->setRequired([
+            self::PARAM_OFFSET,
+            self::PARAM_SOURCE,
+            self::PARAM_PATH,
         ]);
     }
 

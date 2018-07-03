@@ -42,8 +42,8 @@ class ClassSearchHandler implements Handler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::SHORT_NAME => null,
+        $schema->setRequired([
+            self::SHORT_NAME,
         ]);
     }
 

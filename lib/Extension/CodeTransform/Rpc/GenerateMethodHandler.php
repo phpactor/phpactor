@@ -32,11 +32,6 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
-            self::PARAM_OFFSET => null,
-        ]);
         $schema->setRequired([
             self::PARAM_PATH,
             self::PARAM_SOURCE,

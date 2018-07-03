@@ -15,8 +15,8 @@ class EchoHandler implements Handler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            'message' => '',
+        $schema->setRequired([
+            'message',
         ]);
     }
 

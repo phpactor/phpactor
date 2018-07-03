@@ -64,7 +64,8 @@ class ImportClassHandlerTest extends HandlerTestCase
         $response = $this->handle('import_class', [
             ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
-            ImportClassHandler::PARAM_PATH => self::TEST_PATH
+            ImportClassHandler::PARAM_PATH => self::TEST_PATH,
+            ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
         ]);
         $this->assertInstanceOf(InputCallbackResponse::class, $response);
         $inputs = $response->inputs();
@@ -82,7 +83,8 @@ class ImportClassHandlerTest extends HandlerTestCase
         $response = $this->handle('import_class', [
             ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
-            ImportClassHandler::PARAM_PATH => self::TEST_PATH
+            ImportClassHandler::PARAM_PATH => self::TEST_PATH,
+            ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
         ]);
         $this->assertInstanceOf(EchoResponse::class, $response);
     }

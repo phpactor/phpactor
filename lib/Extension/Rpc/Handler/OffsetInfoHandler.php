@@ -30,9 +30,9 @@ class OffsetInfoHandler implements Handler
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            'offset' => null,
-            'source' => null,
+        $schema->setRequired([
+            'offset',
+            'source',
         ]);
     }
 

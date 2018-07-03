@@ -48,10 +48,7 @@ class OverrideMethodHandler extends AbstractHandler
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_PATH => null,
-            self::PARAM_SOURCE => null,
             self::PARAM_METHOD_NAME => null,
-            self::PARAM_CLASS_NAME => null,
         ]);
         $schema->setRequired([
             self::PARAM_PATH,

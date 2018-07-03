@@ -32,9 +32,7 @@ class TransformHandler implements Handler
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            'path' => null,
             'transform' => null,
-            'source' => null,
         ]);
         $schema->setRequired([
             'path' => null,
