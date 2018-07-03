@@ -39,9 +39,9 @@ class GotoDefinitionHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_OFFSET,
             self::PARAM_SOURCE,
             self::PARAM_PATH,

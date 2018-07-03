@@ -86,14 +86,14 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAMETER_PATH,
             self::PARAMETER_OFFSET,
             self::PARAMETER_SOURCE,

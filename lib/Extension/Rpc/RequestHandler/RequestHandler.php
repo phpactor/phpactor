@@ -25,10 +25,10 @@ class RequestHandler implements CoreRequestHandler
         $counterActions = [];
         $handler = $this->registry->get($request->name());
 
-        $schema = new Resolver();
+        $resolver = new Resolver();
         $parameters = $request->parameters();
-        $defaults = $handler->configure($schema);
-        $arguments = $schema->resolve($parameters);
+        $defaults = $handler->configure($resolver);
+        $arguments = $resolver->resolve($parameters);
 
         return $handler->handle($arguments);
     }

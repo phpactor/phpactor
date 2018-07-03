@@ -34,13 +34,13 @@ class ExtractConstantHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAM_CONSTANT_NAME => null,
             self::PARAM_CONSTANT_NAME_SUGGESTION => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_PATH,
             self::PARAM_OFFSET,
             self::PARAM_SOURCE,

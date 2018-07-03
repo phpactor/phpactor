@@ -55,13 +55,13 @@ class ImportClassHandler extends AbstractHandler
         return 'import_class';
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAM_QUALIFIED_NAME => null,
             self::PARAM_ALIAS => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_NAME,
             self::PARAM_OFFSET,
             self::PARAM_SOURCE,

@@ -40,13 +40,13 @@ class ClassMoveHandler extends AbstractHandler
         return 'move_class';
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAM_DEST_PATH => null,
             self::PARAM_CONFIRMED => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_SOURCE_PATH
         ]);
     }

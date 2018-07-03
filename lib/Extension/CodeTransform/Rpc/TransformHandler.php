@@ -29,12 +29,12 @@ class TransformHandler implements Handler
         return 'transform';
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             'transform' => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             'path' => null,
             'source' => null,
         ]);

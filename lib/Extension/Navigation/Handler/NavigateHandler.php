@@ -33,9 +33,9 @@ class NavigateHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAM_SOURCE_PATH => null,
             self::PARAM_DESTINATION => null,
             self::PARAM_CONFIRM_CREATE => null,

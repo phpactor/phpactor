@@ -30,9 +30,9 @@ class GenerateMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_PATH,
             self::PARAM_SOURCE,
             self::PARAM_OFFSET,

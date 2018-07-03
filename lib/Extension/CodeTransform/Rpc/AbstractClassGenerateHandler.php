@@ -35,14 +35,14 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->classGenerator = $classGenerator;
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setDefaults([
+        $resolver->setDefaults([
             self::PARAM_NEW_PATH => null,
             self::PARAM_VARIANT => null,
             self::PARAM_OVERWRITE => null,
         ]);
-        $schema->setRequired([
+        $resolver->setRequired([
             self::PARAM_CURRENT_PATH
         ]);
     }

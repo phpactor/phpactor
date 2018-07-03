@@ -13,9 +13,9 @@ class EchoHandler implements Handler
         return 'echo';
     }
 
-    public function configure(Resolver $schema): void
+    public function configure(Resolver $resolver): void
     {
-        $schema->setRequired([
+        $resolver->setRequired([
             'message',
         ]);
     }
