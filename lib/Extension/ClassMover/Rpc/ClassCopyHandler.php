@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
@@ -29,12 +30,12 @@ class ClassCopyHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_SOURCE_PATH => null,
             self::PARAM_DEST_PATH => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

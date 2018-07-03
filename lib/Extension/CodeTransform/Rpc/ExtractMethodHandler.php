@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -35,15 +36,15 @@ class ExtractMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_PATH => null,
             self::PARAM_SOURCE => null,
             self::PARAM_METHOD_NAME => null,
             self::PARAM_OFFSET_START => null,
             self::PARAM_OFFSET_END => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

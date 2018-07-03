@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -85,16 +86,16 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAMETER_OFFSET => null,
             self::PARAMETER_SOURCE => null,
             self::PARAMETER_PATH => null,
             self::PARAMETER_MODE => self::MODE_FIND,
             self::PARAMETER_FILESYSTEM => $this->defaultFilesystem,
             self::PARAMETER_REPLACEMENT => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

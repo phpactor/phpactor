@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Completion\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
@@ -27,12 +28,12 @@ class CompleteHandler implements Handler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_SOURCE => null,
             self::PARAM_OFFSET => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

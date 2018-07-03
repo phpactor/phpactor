@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
@@ -39,13 +40,13 @@ class ClassMoveHandler extends AbstractHandler
         return 'move_class';
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_SOURCE_PATH => null,
             self::PARAM_DEST_PATH => null,
             self::PARAM_CONFIRMED => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

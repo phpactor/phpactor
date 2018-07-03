@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
@@ -28,13 +29,13 @@ class TransformHandler implements Handler
         return 'transform';
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             'path' => null,
             'transform' => null,
             'source' => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

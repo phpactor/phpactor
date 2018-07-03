@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -62,14 +63,17 @@ class ContextMenuHandler implements Handler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
-            self::PARAMETER_SOURCE => null,
-            self::PARAMETER_OFFSET => null,
+        $schema->setRequired([
+            self::PARAMETER_SOURCE,
+            self::PARAMETER_OFFSET,
+        ]);
+
+        $schema->setDefaults([
             self::PARAMETER_ACTION => null,
             self::PARAMETER_CURRENT_PATH => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

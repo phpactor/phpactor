@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -25,9 +26,8 @@ class CacheClearHandler implements Handler
         return self::CACHE_CLEAR;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [];
     }
 
     public function handle(array $arguments)

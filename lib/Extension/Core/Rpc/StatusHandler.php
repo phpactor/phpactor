@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -32,9 +33,8 @@ class StatusHandler implements Handler
         return self::STATUS;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [];
     }
 
     public function handle(array $arguments)

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
@@ -45,14 +46,14 @@ class OverrideMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_PATH => null,
             self::PARAM_SOURCE => null,
             self::PARAM_METHOD_NAME => null,
             self::CLASS_NAME => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

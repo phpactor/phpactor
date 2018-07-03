@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -27,12 +28,12 @@ class OffsetInfoHandler implements Handler
         return 'offset_info';
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             'offset' => null,
             'source' => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

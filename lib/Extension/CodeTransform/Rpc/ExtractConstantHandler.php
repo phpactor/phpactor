@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -33,15 +34,15 @@ class ExtractConstantHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_PATH => null,
             self::PARAM_SOURCE => null,
             self::PARAM_OFFSET => null,
             self::PARAM_CONSTANT_NAME => null,
             self::PARAM_CONSTANT_NAME_SUGGESTION => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

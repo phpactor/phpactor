@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
@@ -30,13 +31,13 @@ class GenerateAccessorHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_PATH => null,
             self::PARAM_SOURCE => null,
             self::PARAM_OFFSET => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)

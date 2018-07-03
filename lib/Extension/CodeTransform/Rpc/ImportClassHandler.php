@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\Container\Schema;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
@@ -54,16 +55,16 @@ class ImportClassHandler extends AbstractHandler
         return 'import_class';
     }
 
-    public function defaultParameters(): array
+    public function configure(Schema $schema): void
     {
-        return [
+        $schema->setDefaults([
             self::PARAM_OFFSET => null,
             self::PARAM_SOURCE => null,
             self::PARAM_NAME => null,
             self::PARAM_QUALIFIED_NAME => null,
             self::PARAM_ALIAS => null,
             self::PARAM_PATH => null,
-        ];
+        ]);
     }
 
     public function handle(array $arguments)
