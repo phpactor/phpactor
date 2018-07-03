@@ -28,7 +28,7 @@ class OffsetInfoHandler implements Handler
         return 'offset_info';
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setRequired([
             'offset',
