@@ -36,7 +36,7 @@ class ExtractExpressionHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
             self::PARAM_VARIABLE_NAME => null,

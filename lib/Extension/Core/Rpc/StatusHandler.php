@@ -33,7 +33,7 @@ class StatusHandler implements Handler
         return self::STATUS;
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
     }
 

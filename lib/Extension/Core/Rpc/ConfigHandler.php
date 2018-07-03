@@ -25,7 +25,7 @@ class ConfigHandler implements Handler
         return self::CONFIG;
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
     }
 

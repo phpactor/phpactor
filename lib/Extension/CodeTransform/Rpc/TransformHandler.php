@@ -29,7 +29,7 @@ class TransformHandler implements Handler
         return 'transform';
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
             'transform' => null,

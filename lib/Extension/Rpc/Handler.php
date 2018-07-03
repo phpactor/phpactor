@@ -8,7 +8,7 @@ interface Handler
 {
     public function name(): string;
 
-    public function configure(Resolver $schema): void;
+    public function configure(Resolver $resolver);
 
     public function handle(array $arguments);
 }

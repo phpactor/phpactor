@@ -40,7 +40,7 @@ class ClassSearchHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setRequired([
             self::SHORT_NAME,

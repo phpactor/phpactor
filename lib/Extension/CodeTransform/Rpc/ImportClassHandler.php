@@ -55,7 +55,7 @@ class ImportClassHandler extends AbstractHandler
         return 'import_class';
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
             self::PARAM_QUALIFIED_NAME => null,

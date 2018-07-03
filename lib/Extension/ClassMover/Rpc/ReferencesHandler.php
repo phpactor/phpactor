@@ -86,7 +86,7 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver): void
+    public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
             self::PARAMETER_MODE => self::MODE_FIND,
