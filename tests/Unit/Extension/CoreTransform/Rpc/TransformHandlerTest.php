@@ -42,7 +42,7 @@ class TransformHandlerTest extends HandlerTestCase
             ])
         );
 
-        $action = $this->createHandler('transformer')->handle([
+        $action = $this->handle('transform', [
             'transform' => null,
             'source' => self::SOURCE,
             'path' => self::PATH,
