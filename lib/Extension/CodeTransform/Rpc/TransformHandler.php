@@ -35,8 +35,8 @@ class TransformHandler implements Handler
             'transform' => null,
         ]);
         $resolver->setRequired([
-            'path' => null,
-            'source' => null,
+            'path',
+            'source',
         ]);
     }
 
