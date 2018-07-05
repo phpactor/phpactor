@@ -69,7 +69,7 @@ class ChildClass extends ParentClass
 EOT
         ;
 
-        $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
+        $this->overrideMethod->__invoke($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
 
         $action = $this->handle('override_method', [
             'class_name' => 'ChildClass',

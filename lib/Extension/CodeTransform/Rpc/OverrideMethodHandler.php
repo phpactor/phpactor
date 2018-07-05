@@ -73,7 +73,7 @@ class OverrideMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $transformedCode = $this->overrideMethod->overrideMethod(
+        $transformedCode = $this->overrideMethod->__invoke(
             SourceCode::fromString($arguments[self::PARAM_SOURCE]),
             (string) $class->name(),
             $arguments[self::PARAM_METHOD_NAME]

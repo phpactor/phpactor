@@ -11,14 +11,14 @@ use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Macro\TolerantImportClass;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Macro\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Macro\WorseExtractConstant;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Macro\WorseExtractMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Macro\WorseGenerateAccessor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Macro\WorseGenerateMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Macro\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
@@ -50,7 +50,6 @@ use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
-
 class CodeTransformExtension implements Extension
 {
     const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';

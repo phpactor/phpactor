@@ -55,7 +55,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
 
     public function testExtractMethod()
     {
-        $this->extractMethod->extractMethod(
+        $this->extractMethod->__invoke(
             self::SOURCE,
             self::OFFSET_START,
             self::OFFSET_END,

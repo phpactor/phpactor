@@ -55,7 +55,7 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
 
     public function testExtractExpression()
     {
-        $this->extractExpression->extractExpression(
+        $this->extractExpression->__invoke(
             self::SOURCE,
             self::OFFSET_START,
             self::OFFSET_END,

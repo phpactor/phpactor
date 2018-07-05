@@ -74,7 +74,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
 
     public function testRenameVariable()
     {
-        $this->renameVariable->renameVariable(
+        $this->renameVariable->__invoke(
             self::SOURCE,
             self::OFFSET,
             self::VARIABLE_NAME,

@@ -71,7 +71,7 @@ class ExtractMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->extractMethod->extractMethod(
+        $sourceCode = $this->extractMethod->__invoke(
             SourceCode::fromString($arguments[self::PARAM_SOURCE]),
             $arguments[self::PARAM_OFFSET_START],
             $arguments[self::PARAM_OFFSET_END],

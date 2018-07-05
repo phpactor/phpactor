@@ -8,7 +8,7 @@
         "phpactor/class-mover": "dev-master",
         "phpactor/source-code-filesystem": "dev-master",
         "phpactor/class-to-file": "dev-master",
-        "phpactor/code-transform": "dev-master",
+        "phpactor/code-transform": "dev-reflection_macro",
         "phpactor/worse-reflection": "dev-master",
         "phpactor/path-finder": "dev-master",
         "symfony/filesystem": "^3.3",

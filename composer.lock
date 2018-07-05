@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a5ba0bab5ce366befabebe7509be4e3",
+    "content-hash": "8cba6ef586281b0ecfdc11ac8c5b659d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -104,6 +104,48 @@
                 "performance"
             ],
             "time": "2018-04-11T15:42:36+00:00"
+        },
+        {
+            "name": "dantleech/argument-resolver",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/dantleech/argument-resolver.git",
+                "reference": "852f995ee469647d9996e120fc71546b264f9ac7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=852f995ee469647d9996e120fc71546b264f9ac7",
+                "reference": "852f995ee469647d9996e120fc71546b264f9ac7",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\ArgumentResolver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Resolve method arguments from an associative array",
+            "time": "2018-07-02T08:30:07+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -751,19 +793,20 @@
         },
         {
             "name": "phpactor/code-transform",
-            "version": "dev-master",
+            "version": "dev-reflection_macro",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "520f7a99d4c3aca45eef4df1b257bd3c5d9a99a5"
+                "reference": "3738f4c87e48b25a2338df203fed94d245cee285"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/520f7a99d4c3aca45eef4df1b257bd3c5d9a99a5",
-                "reference": "520f7a99d4c3aca45eef4df1b257bd3c5d9a99a5",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/3738f4c87e48b25a2338df203fed94d245cee285",
+                "reference": "3738f4c87e48b25a2338df203fed94d245cee285",
                 "shasum": ""
             },
             "require": {
+                "dantleech/argument-resolver": "^1.0@dev",
                 "phpactor/class-to-file": "^1.0@dev",
                 "phpactor/code-builder": "dev-master",
                 "webmozart/path-util": "^2.3@dev"
@@ -795,7 +838,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-06-27T19:45:12+00:00"
+            "time": "2018-07-02T20:23:39+00:00"
         },
         {
             "name": "phpactor/completion",

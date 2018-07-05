@@ -41,7 +41,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $sourceCode = $this->generateMethod->generateMethod(
+        $sourceCode = $this->generateMethod->__invoke(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
