@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## develop
+
+Improvements:
+
+  - [WorseReflectoin] Smoke test for find parsing errors.
+  - [WorseReflection] Improved efficiency for frame building.
+    non-variable.
+
+Bug fixes:
+
+  - [WorseReflection] Handle fatal error on incomplete extends.
+  - [WorseReflection] Handle fatal error on instanceof coercion on
+
 ## 2018-07-02 0.7.0
 
 Features:
@@ -20,16 +33,11 @@ Improvements:
   - [Docs] Added section on completion.
   - [WorseReflection] Explicitly do not support anonymous classes when
     resolving nodes, fixes #505.
-  - [WorseReflectoin] Smoke test to find parsing errors.
-  - [WorseReflection] Improved efficiency for frame building.
 
 Bug fixes:
 
   - [WorseReflection] Do not parse non-PHP files when building stub cache.
   - [Completion] Fixed last non-whitespace char detection, fixes #504
-  - [WorseReflection] Handle fatal error on incomplete extends.
-  - [WorseReflection] Handle fatal error on instanceof coercion on
-    non-variable.
 
 Misc
 
