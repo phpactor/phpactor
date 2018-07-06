@@ -15,16 +15,21 @@ Features:
 
 Improvements:
 
-  - [Completion] Support namespaced functions, fixes #473
+  - [Completion] Support namespaced functions, fixes #473.
   - [Completion] Sort completion results alphabetically.
-  - [Docs] Added section on completion
+  - [Docs] Added section on completion.
   - [WorseReflection] Explicitly do not support anonymous classes when
-    resolving nodes, fixes #505
+    resolving nodes, fixes #505.
+  - [WorseReflectoin] Smoke test to find parsing errors.
+  - [WorseReflection] Improved efficiency for frame building.
 
 Bug fixes:
 
   - [WorseReflection] Do not parse non-PHP files when building stub cache.
   - [Completion] Fixed last non-whitespace char detection, fixes #504
+  - [WorseReflection] Handle fatal error on incomplete extends.
+  - [WorseReflection] Handle fatal error on instanceof coercion on
+    non-variable.
 
 Misc
 
