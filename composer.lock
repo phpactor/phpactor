@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "15620ee9d8df58a209000a81759277570bc89317"
+                "reference": "97d03e77f270b0f94cc48f1f60aa01c91d99d87a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/15620ee9d8df58a209000a81759277570bc89317",
-                "reference": "15620ee9d8df58a209000a81759277570bc89317",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/97d03e77f270b0f94cc48f1f60aa01c91d99d87a",
+                "reference": "97d03e77f270b0f94cc48f1f60aa01c91d99d87a",
                 "shasum": ""
             },
             "require-dev": {
@@ -299,7 +299,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-08-02 10:56:10"
+            "time": "2018-08-03 16:08:21"
         },
         {
             "name": "lstrojny/functional-php",
@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "0c93b5f3790d499db946e7fb8b8683072a4035ba"
+                "reference": "361dd405952762f576c436569077aa4e021e11a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/0c93b5f3790d499db946e7fb8b8683072a4035ba",
-                "reference": "0c93b5f3790d499db946e7fb8b8683072a4035ba",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/361dd405952762f576c436569077aa4e021e11a2",
+                "reference": "361dd405952762f576c436569077aa4e021e11a2",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-08-02 17:47:52"
+            "time": "2018-08-04 07:22:41"
         },
         {
             "name": "phpactor/docblock",
@@ -3068,12 +3068,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5744955af9c0a2de74a5eb5287c50bf025100d39"
+                "reference": "bc49df663c00971dcb1025e396f7283adc105121"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5744955af9c0a2de74a5eb5287c50bf025100d39",
-                "reference": "5744955af9c0a2de74a5eb5287c50bf025100d39",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bc49df663c00971dcb1025e396f7283adc105121",
+                "reference": "bc49df663c00971dcb1025e396f7283adc105121",
                 "shasum": ""
             },
             "require": {
@@ -3144,7 +3144,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-03 05:27:14"
+            "time": "2018-08-03T15:43:31+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

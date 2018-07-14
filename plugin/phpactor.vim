@@ -9,6 +9,9 @@
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
+let g:_phpactor_completion_meta = {}
+
+autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
@@ -70,9 +73,12 @@ function! phpactor#Complete(findstart, base)
     let issues = result['issues']
 
     let completions = []
+    let g:_phpactor_completion_meta = {}
+
     if !empty(suggestions)
         for suggestion in suggestions
             call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
+            let g:_phpactor_completion_meta[suggestion['name']] = suggestion
         endfor
     endif
 
@@ -84,6 +90,31 @@ function! phpactor#Complete(findstart, base)
 
     return completions
 endfunc
+
+function! phpactor#_completeImportClass(completedItem)
+
+    if !has_key(a:completedItem, "word")
+        return
+    endif
+
+    if !has_key(g:_phpactor_completion_meta, a:completedItem['word'])
+        return
+    endif
+
+    let suggestion = g:_phpactor_completion_meta[a:completedItem['word']]
+
+    if has_key(suggestion, "class_import")
+        call phpactor#rpc("import_class", {
+                    \ "qualified_name": suggestion['class_import'], 
+                    \ "name": suggestion['name'], 
+                    \ "offset": phpactor#_offset(), 
+                    \ "source": phpactor#_source(), 
+                    \ "path": expand('%:p')})
+    endif
+
+    let g:_phpactor_completion_meta = {}
+
+endfunction
 
 """"""""""""""""""""""""
 " Extract method
