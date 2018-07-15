@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
+use RuntimeException;
+
 class Server
 {
     /**
@@ -91,7 +93,7 @@ class Server
 
     private function dispatchRequest($socketResource)
     {
-        $buffer = socket_read($socketResource, 2048, PHP_BINARY_READ);
+        $buffer = socket_read($socketResource, 2048, PHP_NORMAL_READ);
 
         if (false === $buffer) {
             throw new RuntimeException(sprintf(
@@ -99,7 +101,32 @@ class Server
                 socket_strerror(socket_last_error($socketResource))
             ));
         }
+
+        $headers = $this->parseHeaders($buffer);
+
+        if (!isset($headers['Content-Length'])) {
+            throw new RuntimeException(sprintf(
+                'Could not read Content-Length header, raw request: %s',
+                $buffer
+            ));
+        }
+        socket_read($socketResource, 2048, PHP_NORMAL_READ);
+
+        $buffer = socket_read($socketResource, $headers['Content-Length'], PHP_BINARY_READ);
         
         echo $buffer;
+    }
+
+    private function parseHeaders(string $rawHeaders)
+    {
+        $headers = [];
+        $headerLines = explode(PHP_EOL, $rawHeaders);
+        foreach ($headerLines as $headerLine) {
+            $headerName = substr($headerLine, 0, strpos($headerLine, ':'));
+            $headerValue = trim(substr($headerLine, stripos($headerLine, ':') + 1));
+            $headers[$headerName] = $headerValue;
+        }
+
+        return $headers;
     }
 }
