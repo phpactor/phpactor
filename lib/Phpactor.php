@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
@@ -47,6 +48,7 @@ class Phpactor
             ClassMoverExtension::class,
             CodeTransformExtension::class,
             CompletionExtension::class,
+            LanguageServerExtension::class,
             NavigationExtension::class,
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
