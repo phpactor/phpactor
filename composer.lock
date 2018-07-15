@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a5ba0bab5ce366befabebe7509be4e3",
+    "content-hash": "9ae1243a83dae9b35f419455765147c1",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -104,6 +104,48 @@
                 "performance"
             ],
             "time": "2018-04-11T15:42:36+00:00"
+        },
+        {
+            "name": "dantleech/argument-resolver",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/dantleech/argument-resolver.git",
+                "reference": "852f995ee469647d9996e120fc71546b264f9ac7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=852f995ee469647d9996e120fc71546b264f9ac7",
+                "reference": "852f995ee469647d9996e120fc71546b264f9ac7",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\ArgumentResolver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Resolve method arguments from an associative array",
+            "time": "2018-07-02T08:30:07+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -269,12 +311,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "0d7d6522e121a9761eb11aff59506a1ac5dc9d1b"
+                "reference": "1508824b38f726e4ca11b2985a5d22989936d770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/0d7d6522e121a9761eb11aff59506a1ac5dc9d1b",
-                "reference": "0d7d6522e121a9761eb11aff59506a1ac5dc9d1b",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/1508824b38f726e4ca11b2985a5d22989936d770",
+                "reference": "1508824b38f726e4ca11b2985a5d22989936d770",
                 "shasum": ""
             },
             "require-dev": {
@@ -299,7 +341,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-07-04T16:07:31+00:00"
+            "time": "2018-06-27T12:12:24+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -979,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "86e3fbdea0755df50aeeb038656761f56be33773"
+                "reference": "3cbf6182f821e3380ebd7cd431fd72bf74b6714b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/86e3fbdea0755df50aeeb038656761f56be33773",
-                "reference": "86e3fbdea0755df50aeeb038656761f56be33773",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3cbf6182f821e3380ebd7cd431fd72bf74b6714b",
+                "reference": "3cbf6182f821e3380ebd7cd431fd72bf74b6714b",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1065,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-07-06T14:18:15+00:00"
+            "time": "2018-07-02T15:09:07+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2219,12 +2261,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "87284f2e212071c78e42f00efda13d80da2ac9f4"
+                "reference": "d024fab7586da7d48215035ec86f94e42e87f56a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/87284f2e212071c78e42f00efda13d80da2ac9f4",
-                "reference": "87284f2e212071c78e42f00efda13d80da2ac9f4",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/d024fab7586da7d48215035ec86f94e42e87f56a",
+                "reference": "d024fab7586da7d48215035ec86f94e42e87f56a",
                 "shasum": ""
             },
             "require": {
@@ -2258,7 +2300,7 @@
                 "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0.1",
                 "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0.1",
                 "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1",
-                "phpunitgoodpractices/traits": "^1.5.1",
+                "phpunitgoodpractices/traits": "^1.5",
                 "symfony/phpunit-bridge": "^4.0"
             },
             "suggest": {
@@ -2307,7 +2349,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-07-06T10:36:05+00:00"
+            "time": "2018-07-02T06:23:10+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3068,12 +3110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "093ca5508174cd8ab8efe44fd1dde447adfdec8f"
+                "reference": "343f8dcc4d8d4bea44d64cc20069533d56c483a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/093ca5508174cd8ab8efe44fd1dde447adfdec8f",
-                "reference": "093ca5508174cd8ab8efe44fd1dde447adfdec8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/343f8dcc4d8d4bea44d64cc20069533d56c483a7",
+                "reference": "343f8dcc4d8d4bea44d64cc20069533d56c483a7",
                 "shasum": ""
             },
             "require": {
@@ -3144,7 +3186,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-07-03T06:40:40+00:00"
+            "time": "2018-06-25T11:48:15+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3840,12 +3882,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
-                "reference": "c5c7d9c5e30e8c37d78886052310490e96081228"
+                "reference": "a4576e282d782ad82397f3e4ec1df8e0f0cafb46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/c5c7d9c5e30e8c37d78886052310490e96081228",
-                "reference": "c5c7d9c5e30e8c37d78886052310490e96081228",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/a4576e282d782ad82397f3e4ec1df8e0f0cafb46",
+                "reference": "a4576e282d782ad82397f3e4ec1df8e0f0cafb46",
                 "shasum": ""
             },
             "require": {
@@ -3887,7 +3929,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-07-01T15:19:55+00:00"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -3992,6 +4034,7 @@
         "microsoft/tolerant-php-parser": 20,
         "phpactor/completion": 20,
         "sebastian/diff": 20,
+        "dantleech/argument-resolver": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20

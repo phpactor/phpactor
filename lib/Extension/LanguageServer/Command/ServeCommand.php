@@ -11,20 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ServeCommand extends Command
 {
     /**
-     * @var string
+     * @var Server
      */
-    private $address;
+    private $server;
 
-    /**
-     * @var string
-     */
-    private $port;
-
-    public function __construct(string $address, string $port)
+    public function __construct(Server $server)
     {
-        $this->address = $address;
-        $this->port = $port;
         parent::__construct();
+        $this->server = $server;
     }
 
     protected function configure()
@@ -34,8 +28,7 @@ class ServeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf('Serving at %s:%s', $this->address, $this->port));
-        $server = new Server($this->address, $this->port);
-        $server->serve();
+        $output->writeln(sprintf('Serving at %s:%s', $this->server->address(), $this->server->port()));
+        $this->server->serve();
     }
 }

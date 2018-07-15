@@ -20,7 +20,8 @@
         "phpactor/completion": "^1.0@dev",
         "composer/xdebug-handler": "^1.1",
         "sebastian/diff": "2.0.x-dev",
-        "ocramius/package-versions": "^1.2"
+        "ocramius/package-versions": "^1.2",
+        "dantleech/argument-resolver": "^1.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",

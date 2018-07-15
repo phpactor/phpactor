@@ -16,10 +16,16 @@ class Server
      */
     private $port;
 
-    public function __construct(string $address, string $port)
+    /**
+     * @var Dispatcher
+     */
+    private $dispatcher;
+
+    public function __construct(Dispatcher $dispatcher, string $address, string $port)
     {
         $this->address = $address;
         $this->port = $port;
+        $this->dispatcher = $dispatcher;
     }
 
     public function serve()
@@ -118,7 +124,7 @@ class Server
         $buffer = trim(socket_read($socketResource, $length, PHP_BINARY_READ));
         $request = json_decode($buffer, true);
 
-        var_dump($request);
+        return json_encode($this->dispatcher->dispatch($request['method'], $request['params']));
     }
 
     private function parseHeaders(string $rawHeaders)
@@ -132,5 +138,15 @@ class Server
         }
 
         return $headers;
+    }
+
+    public function address(): string
+    {
+        return $this->address;
+    }
+
+    public function port(): string
+    {
+        return $this->port;
     }
 }

@@ -2,28 +2,36 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
+use Phpactor\Extension\LanguageServer\Exception\UnknownMethod;
+
 class MethodRegistry
 {
     /**
      * @var array
      */
-    private $methods;
+    private $methods = [];
 
     public function __construct(array $methods)
     {
-        $this->methods = $methods;
+        foreach ($methods as $method) {
+            $this->add($method);
+        }
     }
 
     public function get(string $methodName): Method
     {
         if (!isset($this->methods[$methodName])) {
-            throw new RuntimeException(sprintf(
-                'Unknown method "%s", known methods: "%s"',
+            throw new UnknownMethod(
                 $methodName,
-                implode('", "', $this->methods)
-            ));
+                array_keys($this->methods)
+            );
         }
 
         return $this->methods[$methodName];
+    }
+
+    private function add(Method $method)
+    {
+        $this->methods[$method->name()] = $method;
     }
 }
