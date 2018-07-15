@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Server\Method;
+namespace Phpactor\Extension\LanguageServer\Server\Method\TextDocument;
 
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TextEdit;
 use Phpactor\Completion\Core\Completor;
@@ -8,64 +8,54 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\LanguageServer\Protocol\CompletionItem;
 use Phpactor\Extension\LanguageServer\Protocol\CompletionList;
+use Phpactor\Extension\LanguageServer\Protocol\Position;
 use Phpactor\Extension\LanguageServer\Protocol\Range;
 use Phpactor\Extension\LanguageServer\Server\Method;
+use Phpactor\Extension\LanguageServer\Server\Protocol\TextDocument;
+use Phpactor\Extension\LanguageServer\Server\Workspace;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\WorseReflection\Core\Position;
 
-class CompletionMethod implements Method
+class Completion implements Method
 {
     /**
-     * @var Completor
+     * @var Workspace
      */
-    private $completor;
+    private $workspace;
 
-    public function __construct(Completor $completor)
+    public function __construct(Workspace $workspace)
     {
-        $this->completor = $completor;
+        $this->workspace = $workspace;
     }
 
     public function name(): string
     {
-        return 'textDocument/completion';
+        return 'textDocument/didOpen';
     }
 
-    public function __invoke(array $params): CompletionList
+    public function __invoke(TextDocument $textDocument, Position $position): CompletionList
     {
         $offset = null;
-        $response = $this->completor->complete(file_get_contents($params['textDocument']['uri']), $offset);
+        $textDocument = $this->workspace->get($textDocument->uri);
+        $response = $this->completor->complete($textDocument->text, $offset);
+
         $suggestions = $response->suggestions();
+
         $completionList = new CompletionList();
 
         /** @var Suggestion $suggestion */
         foreach ($suggestions as $suggestion) {
+
             $item = new CompletionItem();
             $item->label = $suggestion->info();
             $item->textEdit = new TextEdit(
-                new Range(
-                    new Position(
-                        $params['position']['line'],
-                        $params['position']['character']
-                    ),
-                    new Position(
-                        $params['position']['line'],
-                        $params['position']['character']
-                    )
-                ),
+                new Range($position, $position),
                 $suggestion->name()
             );
 
             $completionList->items[] = $item;
+
         }
 
         return $completionList;
-    }
-
-    public function configure(Resolver $resolver)
-    {
-        $resolver->setRequired([
-            'position',
-            'textDocument',
-        ]);
     }
 }

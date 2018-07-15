@@ -2,21 +2,36 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
+use DTL\ArgumentResolver\ArgumentResolver;
+use Phpactor\Extension\LanguageServer\Server\MethodRegistry;
+
 class Dispatcher
 {
     /**
-     * @var LanguageServerHandler[]
+     * @var MethodRegistry
      */
-    private $handlers = [];
+    private $registry;
 
-    public function __construct(array $handlers)
+    /**
+     * @var ArgumentResolver
+     */
+    private $argumentResolver;
+
+    public function __construct(MethodRegistry $registry, ArgumentResolver $argumentResolver)
     {
-        foreach ($handlers as $handler) {
-            $this->handlers[$handler->name()] = $handler;
-        }
+        $this->registry = $registry;
+        $this->argumentResolver = $argumentResolver;
     }
 
-    public function dispatch(string $method, array $params)
+    public function dispatch(string $method, array $arguments)
     {
+        $method = $this->registry->get($method);
+        $arguments = $this->argumentResolver->resolveArguments(
+            get_class($method),
+            '__invoke',
+            $arguments
+        );
+
+        return $method->__invoke(...$arguments);
     }
 }
