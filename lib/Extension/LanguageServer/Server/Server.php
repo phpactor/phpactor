@@ -112,9 +112,13 @@ class Server
         }
         socket_read($socketResource, 2048, PHP_NORMAL_READ);
 
-        $buffer = socket_read($socketResource, $headers['Content-Length'], PHP_BINARY_READ);
-        
-        echo $buffer;
+        // add two because we read up until the first \r or \n, but the
+        // delimtier is \r\n, and then there is an additional \n to remove
+        $length = $headers['Content-Length'] + 2;
+        $buffer = trim(socket_read($socketResource, $length, PHP_BINARY_READ));
+        $request = json_decode($buffer, true);
+
+        var_dump($request);
     }
 
     private function parseHeaders(string $rawHeaders)

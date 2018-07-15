@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 
 abstract class SystemTestCase extends IntegrationTestCase
 {
-    protected function phpactor(string $args, string $stdin = null): Process
+    protected function phpactor(string $args, string $stdin = null, bool $async = false): Process
     {
         chdir($this->workspaceDir());
         $bin = __DIR__ . '/../../bin/phpactor --verbose ';
@@ -21,7 +21,7 @@ abstract class SystemTestCase extends IntegrationTestCase
             $process->setInput($stdin);
         }
 
-        $process->run();
+        $async ? $process->start() : $process->run();
 
         return $process;
     }
