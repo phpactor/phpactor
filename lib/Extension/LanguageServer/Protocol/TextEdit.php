@@ -1,6 +1,8 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Response;
+namespace Phpactor\Extension\LanguageServer\Protocol;
+
+use Phpactor\Extension\LanguageServer\Protocol\Range;
 
 class TextEdit
 {

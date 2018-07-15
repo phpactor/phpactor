@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Response;
+namespace Phpactor\Extension\LanguageServer\Protocol;
 
 class CompletionList
 {
