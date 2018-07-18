@@ -15,7 +15,13 @@ class CompletionList
     /**
      * The completion items
      *
-     * @var array
+     * @var CompletionItem[]
      */
     public $items = [];
+
+    public function __construct(array $items, bool $isIncomplete = false)
+    {
+        $this->items = $items;
+        $this->isIncomplete = $isIncomplete;
+    }
 }

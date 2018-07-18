@@ -11,7 +11,7 @@ use Phpactor\Extension\LanguageServer\Protocol\CompletionList;
 use Phpactor\Extension\LanguageServer\Protocol\Position;
 use Phpactor\Extension\LanguageServer\Protocol\Range;
 use Phpactor\Extension\LanguageServer\Server\Method;
-use Phpactor\Extension\LanguageServer\Server\Protocol\TextDocument;
+use Phpactor\Extension\LanguageServer\Protocol\TextDocument;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
 use Phpactor\MapResolver\Resolver;
 

@@ -142,5 +142,39 @@ class CompletionItem
      * @var mixed
      */
     public $data;
-}
 
+    public function __construct(
+        string $label,
+        int $kind = null,
+        string $detail = null,
+        string $documentation = null,
+        bool $deprecated = false,
+        bool $preselect = false,
+        string $sortText = null,
+        string $filterText = null,
+        string $insertText = null,
+        string $insertTextFormat = null,
+        TextEdit $textEdit = null,
+        array $additionalTextEdits = [],
+        array $commitCharacters = [],
+        Command $command = null,
+        $data = null
+    )
+    {
+        $this->label = $label;
+        $this->kind = $kind;
+        $this->detail = $detail;
+        $this->documentation = $documentation;
+        $this->deprecated = $deprecated;
+        $this->preselect = $preselect;
+        $this->sortText = $sortText;
+        $this->filterText = $filterText;
+        $this->insertText = $insertText;
+        $this->insertTextFormat = $insertTextFormat;
+        $this->textEdit = $textEdit;
+        $this->additionalTextEdits = $additionalTextEdits;
+        $this->commitCharacters = $commitCharacters;
+        $this->command = $command;
+        $this->data = $data;
+    }
+}

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
-use Phpactor\Extension\LanguageServer\Server\Protocol\TextDocument;
+use Phpactor\Extension\LanguageServer\Protocol\TextDocument;
 use RuntimeException;
 
 class Workspace

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Server\Protocol;
+namespace Phpactor\Extension\LanguageServer\Protocol;
 
 class TextDocument
 {
