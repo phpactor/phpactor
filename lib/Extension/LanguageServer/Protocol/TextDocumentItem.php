@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\Protocol;
 
-class TextDocument
+class TextDocumentItem
 {
     /**
      * @var string
@@ -19,10 +19,16 @@ class TextDocument
      */
     public $uri;
 
-    public function __construct(string $languageId, string $text, string $uri)
+    /**
+     * @var string
+     */
+    public $version;
+
+    public function __construct(string $uri, string $text = null, string $languageId = null, string $version = null)
     {
         $this->languageId = $languageId;
         $this->text = $text;
         $this->uri = $uri;
+        $this->version = $version;
     }
 }

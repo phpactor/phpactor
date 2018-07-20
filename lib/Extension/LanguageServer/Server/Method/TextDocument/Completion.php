@@ -11,8 +11,9 @@ use Phpactor\Extension\LanguageServer\Protocol\CompletionList;
 use Phpactor\Extension\LanguageServer\Protocol\Position;
 use Phpactor\Extension\LanguageServer\Protocol\Range;
 use Phpactor\Extension\LanguageServer\Server\Method;
-use Phpactor\Extension\LanguageServer\Protocol\TextDocument;
+use Phpactor\Extension\LanguageServer\Protocol\TextDocumentItem;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
+use Phpactor\Extension\LanguageServer\Util\OffsetHelper;
 use Phpactor\MapResolver\Resolver;
 
 class Completion implements Method
@@ -22,22 +23,33 @@ class Completion implements Method
      */
     private $workspace;
 
-    public function __construct(Workspace $workspace)
+    /**
+     * @var Completor
+     */
+    private $completor;
+
+    public function __construct(Completor $completor, Workspace $workspace)
     {
         $this->workspace = $workspace;
+        $this->completor = $completor;
     }
 
     public function name(): string
     {
-        return 'textDocument/didOpen';
+        return 'textDocument/completion';
     }
 
-    public function __invoke(TextDocument $textDocument, Position $position): CompletionList
+    public function __invoke(TextDocumentItem $textDocument, Position $position): CompletionList
     {
-        $offset = null;
         $textDocument = $this->workspace->get($textDocument->uri);
-        $response = $this->completor->complete($textDocument->text, $offset);
 
+        $offset = OffsetHelper::lineAndCharacterNumberToOffset(
+            $textDocument->text,
+            $position->line,
+            $position->character
+        );
+
+        $response = $this->completor->complete($textDocument->text, $offset);
         $suggestions = $response->suggestions();
 
         $completionList = new CompletionList();
@@ -45,8 +57,7 @@ class Completion implements Method
         /** @var Suggestion $suggestion */
         foreach ($suggestions as $suggestion) {
 
-            $item = new CompletionItem();
-            $item->label = $suggestion->info();
+            $item = new CompletionItem($suggestion->info());
             $item->textEdit = new TextEdit(
                 new Range($position, $position),
                 $suggestion->name()

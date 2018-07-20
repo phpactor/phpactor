@@ -124,7 +124,8 @@ class Server
         $buffer = trim(socket_read($socketResource, $length, PHP_BINARY_READ));
         $request = json_decode($buffer, true);
 
-        return json_encode($this->dispatcher->dispatch($request['method'], $request['params']));
+        $response = json_encode($this->dispatcher->dispatch($request['method'], $request['params']));
+        return $response;
     }
 
     private function parseHeaders(string $rawHeaders)

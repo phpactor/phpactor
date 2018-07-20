@@ -7,7 +7,7 @@ use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
 use Phpactor\MapResolver\Resolver;
 
-class DidOpen implements Method
+class DidSave implements Method
 {
     /**
      * @var Workspace
@@ -21,7 +21,7 @@ class DidOpen implements Method
 
     public function name(): string
     {
-        return 'textDocument/didOpen';
+        return 'textDocument/didSave';
     }
 
     public function __invoke(TextDocumentItem $textDocument)

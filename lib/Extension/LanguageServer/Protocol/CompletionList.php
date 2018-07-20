@@ -10,7 +10,7 @@ class CompletionList
      *
      * @var bool
      */
-    public $isIncomplete;
+    public $isIncomplete = false;
 
     /**
      * The completion items
@@ -18,10 +18,4 @@ class CompletionList
      * @var CompletionItem[]
      */
     public $items = [];
-
-    public function __construct(array $items, bool $isIncomplete = false)
-    {
-        $this->items = $items;
-        $this->isIncomplete = $isIncomplete;
-    }
 }

@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\LanguageServer\Server;
 
 use DTL\ArgumentResolver\ArgumentResolver;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServer\Server\Dispatcher;
+use Phpactor\Extension\LanguageServer\Server\Dispatcher\InvokingDispatcher;
 use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Server\MethodRegistry;
 
@@ -31,7 +31,7 @@ class DispatcherTest extends TestCase
         $this->argumentResolver = $this->prophesize(ArgumentResolver::class);
         $this->methodRegistry = $this->prophesize(MethodRegistry::class);
 
-        $this->dispatcher = new Dispatcher(
+        $this->dispatcher = new InvokingDispatcher(
             $this->methodRegistry->reveal(),
             $this->argumentResolver->reveal()
         );

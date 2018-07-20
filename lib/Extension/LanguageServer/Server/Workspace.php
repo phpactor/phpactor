@@ -2,35 +2,42 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
-use Phpactor\Extension\LanguageServer\Protocol\TextDocument;
+use Phpactor\Extension\LanguageServer\Protocol\TextDocumentItem;
 use RuntimeException;
 
 class Workspace
 {
     /**
-     * @var string[]
+     * @var TextDocumentItem[]
      */
-    private $files = [];
+    private $items = [];
 
-    public function register(string $uri, string $contents)
+    public function get(string $uri): TextDocumentItem
     {
-        $this->files[$uri] = $contents;
-    }
-
-    public function deregister(string $uri)
-    {
-        unset($this->files[$uri]);
-    }
-
-    public function get(string $uri): TextDocument
-    {
-        if (!isset($this->files[$uri])) {
+        if (!isset($this->items[$uri])) {
             throw new RuntimeException(sprintf(
                 'File "%s" has not been registered',
                 $uri
             ));
         }
 
-        return $this->files[$uri];
+        return $this->items[$uri];
+    }
+
+    public function open(TextDocumentItem $textDocument)
+    {
+        $this->items[$textDocument->uri] = $textDocument;
+    }
+
+    public function update(TextDocumentItem $textDocument, $updatedText)
+    {
+        if (!isset($this->items[$textDocument->uri])) {
+            throw new RuntimeException(sprintf(
+                'Unknown document "%s"',
+                $textDocument->uri
+            ));
+        }
+
+        $this->items[$textDocument->uri]->text = $updatedText;
     }
 }

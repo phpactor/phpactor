@@ -7,7 +7,7 @@ use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
 use Phpactor\MapResolver\Resolver;
 
-class DidOpen implements Method
+class DidChange implements Method
 {
     /**
      * @var Workspace
@@ -21,11 +21,14 @@ class DidOpen implements Method
 
     public function name(): string
     {
-        return 'textDocument/didOpen';
+        return 'textDocument/didChange';
+
     }
 
-    public function __invoke(TextDocumentItem $textDocument)
+    public function __invoke(TextDocumentItem $textDocument, array $contentChanges)
     {
-        $this->workspace->open($textDocument);
+        foreach ($contentChanges as $contentChange) {
+            $this->workspace->update($textDocument, $contentChange['text']);
+        }
     }
 }
