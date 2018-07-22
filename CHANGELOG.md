@@ -13,6 +13,7 @@ Bug fixes:
 
   - [WorseReflection] Handle fatal error on incomplete extends.
   - [WorseReflection] Handle fatal error on instanceof coercion on
+  - [composer] Removed useless platform requirement configuration.
 
 ## 2018-07-02 0.7.0
 
