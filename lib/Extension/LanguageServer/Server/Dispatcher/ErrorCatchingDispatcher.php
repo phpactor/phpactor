@@ -18,10 +18,10 @@ class ErrorCatchingDispatcher implements Dispatcher
         $this->innerDispatcher = $innerDispatcher;
     }
 
-    public function dispatch(string $method, array $arguments): ResponseMessage
+    public function dispatch(array $request): ResponseMessage
     {
         try {
-            return $this->innerDispatcher->dispatch($method, $arguments);
+            return $this->innerDispatcher->dispatch($request);
         } catch (\Exception $e) {
             return new ResponseMessage(1, null, new ResponseError(ResponseError::InternalError, $e->getMessage(), $e->getTraceAsString()));
         }

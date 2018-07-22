@@ -27,9 +27,9 @@ class InitializingDispatcher implements Dispatcher
         $this->project = $project;
     }
 
-    public function dispatch(string $method, array $arguments): ResponseMessage
+    public function dispatch(array $request): ResponseMessage
     {
-        if ($method !== 'initialize' && false === $this->project->isInitialized($method, $arguments)) {
+        if ($request['method'] !== 'initialize' && false === $this->project->isInitialized($request)) {
             return new ResponseMessage(
                 1,
                 null,
@@ -40,6 +40,6 @@ class InitializingDispatcher implements Dispatcher
             );
         }
 
-        return $this->innerDispatcher->dispatch($method, $arguments);
+        return $this->innerDispatcher->dispatch($request);
     }
 }

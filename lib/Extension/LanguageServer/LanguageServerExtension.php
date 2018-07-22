@@ -20,6 +20,7 @@ use Phpactor\Extension\LanguageServer\Server\Method\TextDocument\DidSave;
 use Phpactor\Extension\LanguageServer\Server\Project;
 use Phpactor\Extension\LanguageServer\Server\Server;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\InvokingDispatcher;
+use Phpactor\Extension\LanguageServer\Server\ServerFactory;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerExtension implements Extension
@@ -47,11 +48,11 @@ class LanguageServerExtension implements Extension
     private function loadInfrastructure(ContainerBuilder $container)
     {
         $container->register('language_server.command.serve', function (Container $container) {
-            return new ServeCommand($container->get('language_server.server'));
+            return new ServeCommand($container->get('language_server.server_factory'));
         }, [ 'ui.console.command' => []]);
         
-        $container->register('language_server.server', function (Container $container) {
-            return new Server(
+        $container->register('language_server.server_factory', function (Container $container) {
+            return new ServerFactory(
                 $container->get('language_server.dispatcher'),
                 $container->getParameter('language_server.address'),
                 $container->getParameter('language_server.port')

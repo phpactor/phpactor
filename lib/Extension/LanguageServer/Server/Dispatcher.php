@@ -6,5 +6,5 @@ use Phpactor\Extension\LanguageServer\Protocol\ResponseMessage;
 
 interface Dispatcher
 {
-    public function dispatch(string $method, array $arguments): ResponseMessage;
+    public function dispatch(array $request): ResponseMessage;
 }

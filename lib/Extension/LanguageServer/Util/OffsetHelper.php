@@ -45,6 +45,6 @@ class OffsetHelper
         $lines = array_slice($lines, 0, $lineNb);
         $text = implode(PHP_EOL, $lines);
 
-        return mb_strlen($text) + mb_strlen($line) + $lineNb;
+        return mb_strlen($text) + mb_strlen($line) + 1;
     }
 }

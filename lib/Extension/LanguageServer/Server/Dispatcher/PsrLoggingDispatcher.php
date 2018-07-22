@@ -24,13 +24,13 @@ class PsrLoggingDispatcher implements Dispatcher
         $this->innerDispatcher = $innerDispatcher;
     }
 
-    public function dispatch(string $method, array $arguments): ResponseMessage
+    public function dispatch(array $request): ResponseMessage
     {
-        $this->logger->debug(sprintf('>> %s', $method), $arguments);
+        $this->logger->debug('>> IN ', $request);
 
-        $result = $this->innerDispatcher->dispatch($method, $arguments);
+        $result = $this->innerDispatcher->dispatch($request);
 
-        $this->logger->debug(sprintf('<< %s', $method), (array) $result);
+        $this->logger->debug('<< OUT', (array) $result);
 
         return $result;
     }

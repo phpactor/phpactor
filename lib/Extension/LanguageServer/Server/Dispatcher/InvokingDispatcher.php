@@ -25,8 +25,11 @@ class InvokingDispatcher implements Dispatcher
         $this->argumentResolver = $argumentResolver;
     }
 
-    public function dispatch(string $method, array $arguments): ResponseMessage
+    public function dispatch(array $request): ResponseMessage
     {
+        $method = $request['method'];
+        $arguments = $request['params'];
+
         $method = $this->registry->get($method);
         $arguments = $this->argumentResolver->resolveArguments(
             get_class($method),

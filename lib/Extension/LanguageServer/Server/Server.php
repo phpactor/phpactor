@@ -1,8 +1,11 @@
-<?php
+<?php declare(ticks=1);
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
+use Closure;
+use InvalidArgumentException;
 use RuntimeException;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Server
 {
@@ -21,17 +24,27 @@ class Server
      */
     private $dispatcher;
 
-    public function __construct(Dispatcher $dispatcher, string $address, string $port)
+    /**
+     * @var Closure
+     */
+    private $infoMessageCallback;
+
+    public function __construct(
+        Dispatcher $dispatcher,
+        string $address,
+        string $port,
+        Closure $infoMessageCallback
+    )
     {
         $this->address = $address;
         $this->port = $port;
         $this->dispatcher = $dispatcher;
+        $this->infoMessageCallback = $infoMessageCallback;
     }
 
     public function serve()
     {
         set_time_limit(0);
-        ob_implicit_flush();
 
         $socket = $this->createSocket();
         $this->bindAndListenToSocket($socket);
@@ -41,8 +54,8 @@ class Server
 
             do {
                 $this->dispatchRequest($socketResource);
-
             } while (true);
+
             socket_close($socketResource);
         } while (true);
 
@@ -52,7 +65,7 @@ class Server
     private function createSocket()
     {
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        
+
         if (false === $socket) {
             throw new RuntimeException(sprintf(
                 'Could not create socket: %s',
@@ -81,6 +94,8 @@ class Server
                 socket_strerror(socket_last_error($socket))
             ));
         }
+
+        $this->infoMessage(sprintf('PID: %s Listening on %s:%s', getmypid(), $this->address, $this->port));
     }
 
     private function waitForSocketResource($socket)
@@ -99,21 +114,21 @@ class Server
 
     private function dispatchRequest($socketResource)
     {
-        $buffer = socket_read($socketResource, 2048, PHP_NORMAL_READ);
+        $request = socket_read($socketResource, 2048, PHP_NORMAL_READ);
 
-        if (false === $buffer) {
+        if (false === $request) {
             throw new RuntimeException(sprintf(
                 'Could not read from socket: %s',
                 socket_strerror(socket_last_error($socketResource))
             ));
         }
 
-        $headers = $this->parseHeaders($buffer);
+        $headers = $this->parseHeaders($request);
 
         if (!isset($headers['Content-Length'])) {
             throw new RuntimeException(sprintf(
                 'Could not read Content-Length header, raw request: %s',
-                $buffer
+                $request
             ));
         }
         socket_read($socketResource, 2048, PHP_NORMAL_READ);
@@ -121,10 +136,10 @@ class Server
         // add two because we read up until the first \r or \n, but the
         // delimtier is \r\n, and then there is an additional \n to remove
         $length = $headers['Content-Length'] + 2;
-        $buffer = trim(socket_read($socketResource, $length, PHP_BINARY_READ));
-        $request = json_decode($buffer, true);
+        $request = trim(socket_read($socketResource, $length, PHP_BINARY_READ));
+        $request = json_decode($request, true);
+        $response = json_encode($this->dispatcher->dispatch($request));
 
-        $response = json_encode($this->dispatcher->dispatch($request['method'], $request['params']));
         return $response;
     }
 
@@ -141,13 +156,10 @@ class Server
         return $headers;
     }
 
-    public function address(): string
+    private function infoMessage(string $message)
     {
-        return $this->address;
+        $logger = $this->infoMessageCallback;
+        $logger($message);
     }
 
-    public function port(): string
-    {
-        return $this->port;
-    }
 }
