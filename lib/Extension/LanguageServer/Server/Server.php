@@ -77,6 +77,8 @@ class Server
             ));
         }
 
+        // at least some language clients (vim-lsp) depend on keys being absent
+        // from the payload rather than being null... therefore we do an array filter.
         $response = array_filter((array) $this->dispatcher->dispatch($request));
         $response['request'] = $request;
         $response = json_encode($response);
