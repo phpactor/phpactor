@@ -35,6 +35,7 @@ class Server
         $this->dispatcher = $dispatcher;
         $this->infoMessageCallback = $infoMessageCallback;
         $this->io = new Tcp($address, $port, new EchoStdOut());
+        $this->registerSignalHandlers();
     }
 
     public function serve()
@@ -82,5 +83,11 @@ class Server
         }
 
         return $headers;
+    }
+
+    private function registerSignalHandlers()
+    {
+        pcntl_signal(SIGINT, [$this->io, 'terminate']);
+        pcntl_signal(SIGTERM, [$this->io, 'terminate']);
     }
 }

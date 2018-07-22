@@ -26,15 +26,15 @@ EOT
     );
 
         $response = socket_read($socket, 2048);
+        socket_close($socket);
         $process->stop();
 
         $this->assertEquals(<<<EOT
-Content-Length: 119\r\n
+Content-Length: 120\r\n
 \r\n
-{"json_rpc": "2.0", "id": 1}
+{"id":"1","result":null,"error":{"code":-32002,"message":"Server has not been initialized","data":null},"jsonrpc":"2.0"}
 EOT
         ,
         trim($response));
-        socket_close($socket);
     }
 }

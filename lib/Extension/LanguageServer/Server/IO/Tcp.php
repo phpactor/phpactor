@@ -18,6 +18,7 @@ class Tcp
     private $port;
 
     private $socket;
+
     private $socketResource;
 
     /**
@@ -126,6 +127,12 @@ EOT
             $this->address,
             $this->port
         ));
+    }
+
+    public function terminate()
+    {
+        $this->stdOut->writeln('Shutting down');
+        socket_close($this->socket);
     }
 
 }
