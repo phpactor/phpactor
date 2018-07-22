@@ -57,7 +57,12 @@ class Completion implements Method
         /** @var Suggestion $suggestion */
         foreach ($suggestions as $suggestion) {
 
-            $item = new CompletionItem('LSP:' .$suggestion->info());
+            $item = new CompletionItem($suggestion->name());
+            $item->insertText = $suggestion->name();
+            $item->detail = $suggestion->info();
+            $item->documentation = $suggestion->info();
+            $item->kind = null;
+
             $item->textEdit = new TextEdit(
                 new Range($position, $position),
                 $suggestion->name()

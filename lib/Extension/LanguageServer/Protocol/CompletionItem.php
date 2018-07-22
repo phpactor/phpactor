@@ -4,6 +4,32 @@ namespace Phpactor\Extension\LanguageServer\Protocol;
 
 class CompletionItem
 {
+	public const Text = 1;
+	public const Method = 2;
+	public const Function = 3;
+	public const Constructor = 4;
+	public const Field = 5;
+	public const Variable = 6;
+	public const Class_ = 7;
+	public const Interface = 8;
+	public const Module = 9;
+	public const Property = 10;
+	public const Unit = 11;
+	public const Value = 12;
+	public const Enum = 13;
+	public const Keyword = 14;
+	public const Snippet = 15;
+	public const Color = 16;
+	public const File = 17;
+	public const Reference = 18;
+	public const Folder = 19;
+	public const EnumMember = 20;
+	public const Constant = 21;
+	public const Struct = 22;
+	public const Event = 23;
+	public const Operator = 24;
+    public const TypeParameter = 25;
+
     /**
      * The label of this completion item. By default
      * also the text that is inserted when selecting
