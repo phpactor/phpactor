@@ -4,7 +4,6 @@ namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;

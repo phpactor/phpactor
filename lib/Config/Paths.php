@@ -18,7 +18,6 @@ class Paths
     private $cwd;
 
     public function __construct(Xdg $xdg = null, string $cwd = null)
-
     {
         $this->xdg = $xdg ?: new Xdg();
         $this->cwd = $cwd ?: getcwd();

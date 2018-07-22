@@ -3,7 +3,6 @@
 namespace Phpactor\Tests\System\Extension\LanguageServer\Server\ProtocolIO;
 
 use Phpactor\Tests\System\SystemTestCase;
-use Symfony\Component\Process\InputStream;
 
 class StdIOTest extends SystemTestCase
 {

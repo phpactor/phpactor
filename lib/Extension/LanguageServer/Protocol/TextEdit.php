@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServer\Protocol;
 
-use Phpactor\Extension\LanguageServer\Protocol\Range;
-
 class TextEdit
 {
     /**

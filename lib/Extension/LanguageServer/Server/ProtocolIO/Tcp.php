@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServer\Server\ProtocolIO;
 
-use Generator;
 use Phpactor\Extension\LanguageServer\Server\ProtocolIO;
 use Phpactor\Extension\LanguageServer\Server\StdOut;
 
@@ -130,5 +129,4 @@ class Tcp implements ProtocolIO
         $this->stdOut->writeln('Shutting down');
         socket_close($this->socket);
     }
-
 }

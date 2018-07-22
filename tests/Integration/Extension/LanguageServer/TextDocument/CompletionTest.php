@@ -6,7 +6,6 @@ use Phpactor\Tests\Integration\Extension\LanguageServer\LanguageServerTestCase;
 
 class CompletionTest extends LanguageServerTestCase
 {
-
     public function testComplete()
     {
         $this->initialize();

@@ -42,10 +42,14 @@ class InvokingDispatcherTest extends TestCase
     {
         $arguments = [ 'one', 'two' ];
         $method = new class implements Method {
-            public function name(): string { 
-                return 'methodOne'; 
+            public function name(): string
+            {
+                return 'methodOne';
             }
-            public function __invoke($one, $two) { return 'return_value'; }
+            public function __invoke($one, $two)
+            {
+                return 'return_value';
+            }
         };
         $this->methodRegistry->get('methodOne')->willReturn($method);
 
@@ -55,5 +59,4 @@ class InvokingDispatcherTest extends TestCase
         $this->assertInstanceOf(ResponseMessage::class, $result);
         $this->assertEquals('return_value', $result->result);
     }
-
 }

@@ -27,7 +27,8 @@ class OffsetHelper
         if ($lineNb > count($lines)) {
             throw new OutOfBoundsException(sprintf(
                 'Invalid line number ("%s") for text with %s lines',
-                $lineNb, count($lines)
+                $lineNb,
+                count($lines)
             ));
         }
 
@@ -38,7 +39,8 @@ class OffsetHelper
         if ($col > mb_strlen($line)) {
             throw new OutOfBoundsException(sprintf(
                 'Invalid character offset "%s" for line of length "%s"',
-                $col, mb_strlen($line)
+                $col,
+                mb_strlen($line)
             ));
         }
 

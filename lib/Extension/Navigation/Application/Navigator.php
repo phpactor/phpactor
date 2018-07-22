@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Navigation\Application;
 
-use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
 use RuntimeException;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;

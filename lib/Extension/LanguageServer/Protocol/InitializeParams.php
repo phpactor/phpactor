@@ -5,8 +5,8 @@ namespace Phpactor\Extension\LanguageServer\Protocol;
 class InitializeParams
 {
     /**
-	 * The process Id of the parent process that started
-	 * the server. Is null if the process has not been started by another process.
+     * The process Id of the parent process that started
+     * the server. Is null if the process has not been started by another process.
      * If the parent process is not alive then the server should exit (see exit notification) its process.
      *
      * @var int
@@ -15,7 +15,7 @@ class InitializeParams
 
     /*
      * The rootPath of the workspace. Is null
-	 * if no folder is open.
+     * if no folder is open.
      *
      * @var string
      */
@@ -50,10 +50,10 @@ class InitializeParams
 
     /**
      * The workspace folders configured in the client when the server starts.
-	 * This property is only available if the client supports workspace folders.
-	 * It can be `null` if the client supports workspace folders but none are
-	 * configured.
-	 *
+     * This property is only available if the client supports workspace folders.
+     * It can be `null` if the client supports workspace folders but none are
+     * configured.
+     *
      * @since 3.6.0
      *
      * @var array
@@ -68,8 +68,7 @@ class InitializeParams
         array $capabilities = [],
         string $trace = null,
         array $workspaceFolders = []
-    )
-    {
+    ) {
         $this->rootPath = $rootPath;
         $this->rootUri = $rootUri;
         $this->initializationOptions = $initializationOptions;

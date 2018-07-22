@@ -3,7 +3,6 @@
 namespace Phpactor\Tests\System;
 
 use Phpactor\Tests\IntegrationTestCase;
-use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 
 abstract class SystemTestCase extends IntegrationTestCase

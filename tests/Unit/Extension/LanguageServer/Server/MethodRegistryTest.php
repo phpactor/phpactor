@@ -20,8 +20,11 @@ class MethodRegistryTest extends TestCase
     public function testReturnsMethod()
     {
         $method = new class implements Method {
-            function name(): string { return 'methodOne'; }
-    };
+            public function name(): string
+            {
+                return 'methodOne';
+            }
+        };
 
         $registry = $this->create([ $method ]);
 

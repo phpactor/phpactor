@@ -2,15 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
-use Closure;
 use Exception;
-use InvalidArgumentException;
 use Phpactor\Extension\LanguageServer\Exception\TerminateServer;
-use Phpactor\Extension\LanguageServer\Server\ProtocolIO\StdIO;
-use Phpactor\Extension\LanguageServer\Server\ProtocolIO\Tcp;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Server
 {
@@ -33,8 +28,7 @@ class Server
         Dispatcher $dispatcher,
         ProtocolIO $protocolIO,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->dispatcher = $dispatcher;
         $this->protocolIO = $protocolIO;
         $this->logger = $logger;
@@ -78,7 +72,8 @@ class Server
 
         if (null === $request) {
             throw new RuntimeException(sprintf(
-                'Could not decode JSON request: "%s"',$rawRequest
+                'Could not decode JSON request: "%s"',
+                $rawRequest
             ));
         }
 

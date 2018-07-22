@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServer\Server\Method\TextDocument;
 use Phpactor\Extension\LanguageServer\Protocol\TextDocumentItem;
 use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
-use Phpactor\MapResolver\Resolver;
 
 class DidChange implements Method
 {
@@ -22,7 +21,6 @@ class DidChange implements Method
     public function name(): string
     {
         return 'textDocument/didChange';
-
     }
 
     public function __invoke(TextDocumentItem $textDocument, array $contentChanges)

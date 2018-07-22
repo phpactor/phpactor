@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Integration\Extension\LanguageServer;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServer\Protocol\ResponseMessage;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher;
 use Phpactor\Tests\IntegrationTestCase;

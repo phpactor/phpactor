@@ -2,12 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServer\Server;
 
-use Closure;
 use InvalidArgumentException;
-use Phpactor\Extension\LanguageServer\Server\Dispatcher\WriteRequestsToFileDispatcher;
 use Phpactor\Extension\LanguageServer\Server\ProtocolIO\StdIO;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 
 class ServerFactory
 {
@@ -24,8 +21,7 @@ class ServerFactory
     public function __construct(
         Dispatcher $dispatcher,
         LoggerInterface $logger
-    )
-    {
+    ) {
         $this->dispatcher = $dispatcher;
         $this->logger = $logger;
     }
@@ -37,7 +33,8 @@ class ServerFactory
         if ($diff = array_diff(array_keys($options), array_keys($defaults))) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid options given to LSP server "%s", allowed options: "%s"',
-                implode('", "', $diff), implode('", "', array_keys($defaults))
+                implode('", "', $diff),
+                implode('", "', array_keys($defaults))
             ));
         }
 

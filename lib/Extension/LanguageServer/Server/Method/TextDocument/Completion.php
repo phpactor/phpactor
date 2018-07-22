@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServer\Server\Method\TextDocument;
 
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\LanguageServer\Protocol\CompletionItem;
 use Phpactor\Extension\LanguageServer\Protocol\CompletionList;
 use Phpactor\Extension\LanguageServer\Protocol\Position;
@@ -14,7 +13,6 @@ use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Protocol\TextDocumentItem;
 use Phpactor\Extension\LanguageServer\Server\Workspace;
 use Phpactor\Extension\LanguageServer\Util\OffsetHelper;
-use Phpactor\MapResolver\Resolver;
 
 class Completion implements Method
 {
@@ -56,7 +54,6 @@ class Completion implements Method
 
         /** @var Suggestion $suggestion */
         foreach ($suggestions as $suggestion) {
-
             $item = new CompletionItem($suggestion->name());
             $item->insertText = $suggestion->name();
             $item->detail = $suggestion->info();

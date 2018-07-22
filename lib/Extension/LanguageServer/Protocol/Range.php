@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServer\Protocol;
 
-use Phpactor\Extension\LanguageServer\Protocol\Position;
-
 class Range
 {
     /**

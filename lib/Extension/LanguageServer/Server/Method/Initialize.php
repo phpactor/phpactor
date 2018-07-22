@@ -32,8 +32,7 @@ class Initialize implements Method
         string $rootPath = null,
         string $rootUri = null,
         string $trace = null
-    )
-    {
+    ) {
         if (!$rootPath && $rootUri) {
             $rootPath = $rootUri;
         }

@@ -10,7 +10,6 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Command\ServeCommand;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\ErrorCatchingDispatcher;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\InitializingDispatcher;
-use Phpactor\Extension\LanguageServer\Server\Dispatcher\PsrLoggingDispatcher;
 use Phpactor\Extension\LanguageServer\Server\MethodRegistry;
 use Phpactor\Extension\LanguageServer\Server\Method\Initialize;
 use Phpactor\Extension\LanguageServer\Server\Method\TextDocument\Completion;
@@ -18,7 +17,6 @@ use Phpactor\Extension\LanguageServer\Server\Method\TextDocument\DidChange;
 use Phpactor\Extension\LanguageServer\Server\Method\TextDocument\DidOpen;
 use Phpactor\Extension\LanguageServer\Server\Method\TextDocument\DidSave;
 use Phpactor\Extension\LanguageServer\Server\Project;
-use Phpactor\Extension\LanguageServer\Server\Server;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\InvokingDispatcher;
 use Phpactor\Extension\LanguageServer\Server\ServerFactory;
 use Phpactor\MapResolver\Resolver;
@@ -70,7 +68,7 @@ class LanguageServerExtension implements Extension
         
         $container->register('language_server.dispatcher', function (Container $container) {
             $dispatcher = new InvokingDispatcher(
-                $container->get('language_server.method_registry'), 
+                $container->get('language_server.method_registry'),
                 $container->get('language_server.argument_resolver')
             );
         

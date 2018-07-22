@@ -2,8 +2,6 @@
 
 namespace Phpactor\MapResolver;
 
-use Phpactor\MapResolver\Resolver;
-
 class Resolver
 {
     /**

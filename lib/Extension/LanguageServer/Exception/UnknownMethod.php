@@ -10,7 +10,8 @@ class UnknownMethod extends RuntimeException implements LanguageServerException
     {
         parent::__construct(sprintf(
             'Method "%s" is not known, known methods: "%s"',
-            $methodName, implode('", "', $knownMethods)
+            $methodName,
+            implode('", "', $knownMethods)
         ));
     }
 }
