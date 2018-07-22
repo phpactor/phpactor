@@ -2,7 +2,6 @@
 
 namespace Phpactor;
 
-
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

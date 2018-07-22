@@ -57,7 +57,14 @@ class Tcp
 
     public function send(string $response): void
     {
-        socket_write($this->socketResource, $response);
+        $contentLength = mb_strlen($response);
+        $response = <<<EOT
+Content-Length: {$contentLength}\r\n
+\r\n
+{$response}
+EOT
+        ;
+        socket_write($this->socketResource, $response, mb_strlen($response));
     }
 
     public function readPayload(int $length): string
