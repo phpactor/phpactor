@@ -12,6 +12,11 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
+    /**
+     * @var Container
+     */
+    private $container;
+
     protected function workspaceDir()
     {
         return __DIR__ . '/Assets/Workspace';
@@ -88,12 +93,12 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function container(): Container
     {
-        static $container;
-        if ($container) {
-            return $container;
+        if ($this->container) {
+            return $this->container;
         }
-        $container = Phpactor::boot(new ArrayInput([]), __DIR__ . '/../vendor');
 
-        return $container;
+        $this->container = Phpactor::boot(new ArrayInput([]), __DIR__ . '/../vendor');
+
+        return $this->container;
     }
 }

@@ -20,11 +20,11 @@ class OffsetHelperTest extends TestCase
     public function provideLineToOffset()
     {
         yield 'Empty' => [
-            '', 0, 0, 0
+            '', 0, 0, 1
         ];
 
         yield 'char 3' => [
-            'hello', 0, 3, 3
+            'hello', 0, 3, 4
         ];
 
         yield 'line 3 char 0' => [
@@ -33,7 +33,7 @@ hello
 hello
 hello
 EOT
-            , 2, 0, 13
+            , 2, 0, 14
         ];
 
         yield 'line 3 char 0' => [
@@ -42,7 +42,7 @@ hello
 hello
 hello
 EOT
-            , 2, 4, 17
+            , 2, 4, 16
         ];
     }
 

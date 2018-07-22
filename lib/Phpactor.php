@@ -36,6 +36,12 @@ class Phpactor
             $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
+        if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
+            $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
+            $xdebug->check();
+            unset($xdebug);
+        }
+
         $extensionNames = [
             CoreExtension::class,
             ClassToFileExtension::class,

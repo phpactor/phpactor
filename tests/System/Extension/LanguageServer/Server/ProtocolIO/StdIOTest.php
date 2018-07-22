@@ -19,16 +19,15 @@ Content-Length: 1234\r\n
 	"params": {}
 }
 EOT;
-        $process = $this->phpactor('lsp:serve', $payload);
-        $response = $process->getOutput();
+        $process = $this->phpactor('lsp:serve', $payload, true);
+
+        while (empty($response)) {
+            $response = $process->getOutput();
+        }
+
         $process->stop();
 
-        $this->assertEquals(<<<EOT
-Content-Length: 120\r\n
-\r\n
-{"id":"1","result":null,"error":{"code":-32002,"message":"Server has not been initialized","data":null},"jsonrpc":"2.0"}
-EOT
-        ,
-        trim($response));
+        $this->assertContains('Content-Length', $response);
+        $this->assertContains('Server has not been initialized', $response);
     }
 }

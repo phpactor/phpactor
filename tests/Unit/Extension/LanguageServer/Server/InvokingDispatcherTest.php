@@ -4,11 +4,12 @@ namespace Phpactor\Tests\Unit\Extension\LanguageServer\Server;
 
 use DTL\ArgumentResolver\ArgumentResolver;
 use PHPUnit\Framework\TestCase;
+use Phpactor\Extension\LanguageServer\Protocol\ResponseMessage;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\InvokingDispatcher;
 use Phpactor\Extension\LanguageServer\Server\Method;
 use Phpactor\Extension\LanguageServer\Server\MethodRegistry;
 
-class DispatcherTest extends TestCase
+class InvokingDispatcherTest extends TestCase
 {
     /**
      * @var ObjectProphecy
@@ -50,8 +51,9 @@ class DispatcherTest extends TestCase
 
         $this->argumentResolver->resolveArguments(get_class($method), '__invoke', $arguments)->willReturn($arguments);
 
-        $result = $this->dispatcher->dispatch('methodOne', $arguments);
-        $this->assertEquals('return_value', $result);
+        $result = $this->dispatcher->dispatch(['method' => 'methodOne', 'params' => $arguments]);
+        $this->assertInstanceOf(ResponseMessage::class, $result);
+        $this->assertEquals('return_value', $result->result);
     }
 
 }
