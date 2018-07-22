@@ -5,7 +5,7 @@ namespace Phpactor\Tests\System\Extension\LanguageServer\Server\ProtocolIO;
 use Phpactor\Tests\System\SystemTestCase;
 use Symfony\Component\Process\InputStream;
 
-class TcpTest extends SystemTestCase
+class StdIOTest extends SystemTestCase
 {
     public function testIntitialize()
     {

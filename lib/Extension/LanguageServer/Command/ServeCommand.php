@@ -26,6 +26,15 @@ class ServeCommand extends Command
     protected function configure()
     {
         $this->setName('lsp:serve');
+        $this->setDescription('Start a Language Server Protocol server');
+        $this->setHelp(<<<'EOT'
+Start a Phpactor Language Server which understands the Language Server Protocol:
+
+    https://microsoft.github.io/language-server-protocol/specification
+
+Currently the server only supports communication over STDIN/STDOUT.
+EOT
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -9,8 +9,6 @@ use Phpactor\Extension\LanguageServer\Server\Project;
 
 class InitializingDispatcher implements Dispatcher
 {
-    private $initialized = false;
-
     /**
      * @var Dispatcher
      */
@@ -29,7 +27,7 @@ class InitializingDispatcher implements Dispatcher
 
     public function dispatch(array $request): ResponseMessage
     {
-        if ($request['method'] !== 'initialize' && false === $this->project->isInitialized($request)) {
+        if ($request['method'] !== 'initialize' && false === $this->project->isInitialized()) {
             return new ResponseMessage(
                 1,
                 null,

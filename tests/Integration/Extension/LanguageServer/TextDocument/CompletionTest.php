@@ -11,7 +11,6 @@ class CompletionTest extends LanguageServerTestCase
     {
         $this->initialize();
         $response = $this->runRequests(__DIR__ . '/completion.json');
-        var_dump($response);
     }
 
     protected function runRequests(string $filename)
