@@ -11,3 +11,6 @@ lib/Foobar.php
 
 # docs
 .couscous
+couscous.phar
+.php_cs.cache
+.phpunit.result.cache
