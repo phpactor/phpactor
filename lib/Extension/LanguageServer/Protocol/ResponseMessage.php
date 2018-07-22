@@ -19,7 +19,7 @@ class ResponseMessage extends Message
      */
     public $error;
 
-    public function __construct(string $id, $result, ResponseError $error = null)
+    public function __construct(string $id = null, $result, ResponseError $error = null)
     {
         $this->id = $id;
         $this->result = $result;

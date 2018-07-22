@@ -1,11 +1,12 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Server\IO;
+namespace Phpactor\Extension\LanguageServer\Server\ProtocolIO;
 
 use Generator;
+use Phpactor\Extension\LanguageServer\Server\ProtocolIO;
 use Phpactor\Extension\LanguageServer\Server\StdOut;
 
-class Tcp
+class Tcp implements ProtocolIO
 {
     /**
      * @var string
@@ -58,20 +59,15 @@ class Tcp
 
     public function send(string $response): void
     {
-        $contentLength = mb_strlen($response);
-        $response = <<<EOT
-Content-Length: {$contentLength}\r\n
-\r\n
-{$response}
-EOT
-        ;
         socket_write($this->socketResource, $response, mb_strlen($response));
     }
 
     public function readPayload(int $length): string
     {
-        return socket_read($this->socketResource, $length, PHP_BINARY_READ);
+        $read = socket_read($this->socketResource, $length, PHP_BINARY_READ);
         socket_close($this->socketResource);
+
+        return $read;
     }
 
     private function createSocket()

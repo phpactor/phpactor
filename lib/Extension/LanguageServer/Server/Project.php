@@ -38,12 +38,12 @@ class Project
         $this->workspace = new Workspace();
     }
 
-    public function initialize(string $rootPath, array $capabilities, string $processId)
+    public function initialize(string $rootPath, array $capabilities, string $processId = null)
     {
         if ($this->isInitialized) {
-            throw new RuntimeException(sprintf(
-                'Project has already been initialized, will not re-initialize'
-            ));
+            //throw new RuntimeException(sprintf(
+            //    'Project has already been initialized, will not re-initialize'
+            //));
         }
 
         $this->rootPath = $rootPath;

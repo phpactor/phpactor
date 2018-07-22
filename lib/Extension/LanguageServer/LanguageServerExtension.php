@@ -54,6 +54,7 @@ class LanguageServerExtension implements Extension
         $container->register('language_server.server_factory', function (Container $container) {
             return new ServerFactory(
                 $container->get('language_server.dispatcher'),
+                $container->get('monolog.logger'),
                 $container->getParameter('language_server.address'),
                 $container->getParameter('language_server.port')
             );
@@ -86,11 +87,6 @@ class LanguageServerExtension implements Extension
 
             $dispatcher = new ErrorCatchingDispatcher(
                 $dispatcher
-            );
-        
-            $dispatcher = new PsrLoggingDispatcher(
-                $dispatcher,
-                $container->get('monolog.logger')
             );
         
             return $dispatcher;

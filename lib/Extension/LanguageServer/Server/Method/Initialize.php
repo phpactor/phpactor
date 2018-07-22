@@ -26,13 +26,17 @@ class Initialize implements Method
     }
 
     public function __invoke(
-        array $capabilities,
-        string $processId,
-        string $rootPath,
-        string $rootUri,
-        string $trace
+        array $capabilities = [],
+        array $initializationOptions = [],
+        string $processId = null,
+        string $rootPath = null,
+        string $rootUri = null,
+        string $trace = null
     )
     {
+        if (!$rootPath && $rootUri) {
+            $rootPath = $rootUri;
+        }
         $this->project->initialize($rootPath, $capabilities, $processId);
 
         $capabilities = new ServerCapabilities();

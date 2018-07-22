@@ -39,6 +39,6 @@ class InvokingDispatcher implements Dispatcher
 
         $result = $method->__invoke(...$arguments);
 
-        return new ResponseMessage(1, $result);
+        return new ResponseMessage($request['id'] ?? null, $result);
     }
 }

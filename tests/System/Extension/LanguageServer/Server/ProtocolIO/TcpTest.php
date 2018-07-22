@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Tests\System\Extension\LanguageServer\Server;
+namespace Phpactor\Tests\System\Extension\LanguageServer\Server\ProtocolIO;
 
 use Phpactor\Tests\System\SystemTestCase;
 
-class ServerTest extends SystemTestCase
+class TcpTest extends SystemTestCase
 {
     public function testIntitialize()
     {

@@ -32,9 +32,6 @@ class ServeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $server = $this->serverFactory->create([
-            'info-message-callback' => function (string $message) use ($output) {
-                $output->writeln($message);
-            },
             'save-requests-to-file' => $input->getOption('save-requests-to'),
         ]);
         $saveFile = $input->getOption('save-requests-to');

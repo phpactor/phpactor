@@ -5,6 +5,8 @@ namespace Phpactor\Extension\LanguageServer\Server;
 use Closure;
 use InvalidArgumentException;
 use Phpactor\Extension\LanguageServer\Server\Dispatcher\WriteRequestsToFileDispatcher;
+use Phpactor\Extension\LanguageServer\Server\ProtocolIO\StdIO;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class ServerFactory
@@ -24,8 +26,14 @@ class ServerFactory
      */
     private $defaultPort;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         Dispatcher $dispatcher,
+        LoggerInterface $logger,
         string $defaultAddress,
         string $defaultPort
     )
@@ -33,6 +41,7 @@ class ServerFactory
         $this->dispatcher = $dispatcher;
         $this->defaultAddress = $defaultAddress;
         $this->defaultPort = $defaultPort;
+        $this->logger = $logger;
     }
 
     public function create(array $options): Server
@@ -40,7 +49,6 @@ class ServerFactory
         $defaults = array_merge([
             'address' => $this->defaultAddress,
             'port' => $this->defaultPort,
-            'info-message-callback' => function (string $message) {},
             'save-requests-to-file' => null,
         ]);
 
@@ -61,10 +69,8 @@ class ServerFactory
 
         return new Server(
             $dispatcher,
-            $options['address'],
-            $options['port'],
-            $options['info-message-callback'],
-            $options['save-requests-to-file']
+            new StdIO($this->logger),
+            $this->logger
         );
     }
 }
