@@ -34,13 +34,13 @@ class InitializeParams
      *
      * @var array
      */
-    public $initializationOptions;
+    public $initializationOptions = [];
 
     /**
      * The capabilities provided by the client (editor or tool)
      * @var array
      */
-    public $capabilities;
+    public $capabilities = [];
 
     /**
      * The initial trace setting. If omitted trace is disabled ('off').
@@ -69,10 +69,12 @@ class InitializeParams
         string $trace = null,
         array $workspaceFolders = []
     )
+    {
         $this->rootPath = $rootPath;
         $this->rootUri = $rootUri;
         $this->initializationOptions = $initializationOptions;
         $this->capabilities = $capabilities;
         $this->trace = $trace;
         $this->workspaceFolders = $workspaceFolders;
+    }
 }

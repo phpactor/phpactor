@@ -39,10 +39,6 @@ class LanguageServerExtension implements Extension
      */
     public function configure(Resolver $schema)
     {
-        $schema->setDefaults([
-            'language_server.address' => '127.0.0.1',
-            'language_server.port' => '8383',
-        ]);
     }
 
     private function loadInfrastructure(ContainerBuilder $container)
@@ -54,9 +50,7 @@ class LanguageServerExtension implements Extension
         $container->register('language_server.server_factory', function (Container $container) {
             return new ServerFactory(
                 $container->get('language_server.dispatcher'),
-                $container->get('monolog.logger'),
-                $container->getParameter('language_server.address'),
-                $container->getParameter('language_server.port')
+                $container->get('monolog.logger')
             );
         });
         

@@ -26,15 +26,11 @@ class ServeCommand extends Command
     protected function configure()
     {
         $this->setName('lsp:serve');
-        $this->addOption('save-requests-to', null, InputOption::VALUE_REQUIRED, 'File to store requests in');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $server = $this->serverFactory->create([
-            'save-requests-to-file' => $input->getOption('save-requests-to'),
-        ]);
-        $saveFile = $input->getOption('save-requests-to');
+        $server = $this->serverFactory->create();
         $server->serve();
     }
 }

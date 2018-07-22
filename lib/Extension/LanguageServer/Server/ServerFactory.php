@@ -17,40 +17,22 @@ class ServerFactory
     private $dispatcher;
 
     /**
-     * @var string
-     */
-    private $defaultAddress;
-
-    /**
-     * @var string
-     */
-    private $defaultPort;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
 
     public function __construct(
         Dispatcher $dispatcher,
-        LoggerInterface $logger,
-        string $defaultAddress,
-        string $defaultPort
+        LoggerInterface $logger
     )
     {
         $this->dispatcher = $dispatcher;
-        $this->defaultAddress = $defaultAddress;
-        $this->defaultPort = $defaultPort;
         $this->logger = $logger;
     }
 
-    public function create(array $options): Server
+    public function create(array $options = []): Server
     {
-        $defaults = array_merge([
-            'address' => $this->defaultAddress,
-            'port' => $this->defaultPort,
-            'save-requests-to-file' => null,
-        ]);
+        $defaults = array_merge([]);
 
         if ($diff = array_diff(array_keys($options), array_keys($defaults))) {
             throw new InvalidArgumentException(sprintf(
@@ -62,10 +44,6 @@ class ServerFactory
         $options = array_merge($defaults, $options);
 
         $dispatcher = $this->dispatcher;
-
-        if ($options['save-requests-to-file']) {
-            $dispatcher = new WriteRequestsToFileDispatcher($dispatcher, $options['save-requests-to-file']);
-        }
 
         return new Server(
             $dispatcher,

@@ -21,12 +21,22 @@ class StdIO implements ProtocolIO
 
     public function initialize(): void
     {
+        stream_set_blocking(STDIN, false);
         $this->logger->info(sprintf('Listening on STDIN, PID: %s', getmypid()));
+    }
+
+    public function wait()
+    {
     }
 
     public function readHeaders(): string
     {
-        $headers = fgets(STDIN);
+        do {
+            pcntl_signal_dispatch();
+            $headers = fgets(STDIN);
+            usleep(5000);
+        } while ($headers === false);
+
         if (false === $headers) {
             throw new RuntimeException(
                 'Could not read headers'
