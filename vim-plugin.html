@@ -191,45 +191,32 @@ nmap &lt;silent&gt;&lt;Leader&gt;ee :call phpactor#ExtractExpression(v:false)&lt
 vmap &lt;silent&gt;&lt;Leader&gt;ee :&lt;C-U&gt;call phpactor#ExtractExpression(v:true)&lt;CR&gt;
 
 " Extract method from selection
-vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;
-
-See the [Refactorings](refactorings.html) chapter for more functions you can map
-shortcuts to.
-
-Phpactor requires at least PHP 7.0. If you use a different version of PHP
+vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;</code></pre>
+<p>See the <a href="refactorings.html">Refactorings</a> chapter for more functions you can map
+shortcuts to.</p>
+<p>Phpactor requires at least PHP 7.0. If you use a different version of PHP
 locally, you may need to target a new version of PHP - add the following to
-your `.vimrc` to change the PHP binary:
-</code></pre>
-<p>let g:phpactorPhpBin = &quot;/usr/bin/local/php6.0&quot;</p>
-<pre><code>
-Configuration
--------------
-
-The plugin has some configuration options:
-</code></pre>
-<p>let g:phpactorPhpBin = 'php'
+your <code>.vimrc</code> to change the PHP binary:</p>
+<pre><code>let g:phpactorPhpBin = "/usr/bin/local/php6.0"</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The plugin has some configuration options:</p>
+<pre><code>let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
-let g:phpactorOmniError = v:false</p>
-<pre><code>
-- `g:phpactorPhpBin`: PHP executable to use.
-- `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
-  bleeding edge).
-- `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
-  completion is invoked.
-
-Completion
-----------
-
-### Omni-completion
-
-Omni-completion
-([Screenshot](./screenshots.html#code-completion)) is
-VIM's built-in auto-completion mechanism.
-
-Add the following to your `.vimrc` in order to use Phpactor for omni-completion (for PHP files):
-
-```vimscript
-autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
+let g:phpactorOmniError = v:false</code></pre>
+<ul>
+<li><code>g:phpactorPhpBin</code>: PHP executable to use.</li>
+<li><code>g:phpactorBranch</code>: Phpactor branch (default is <code>master</code>, use <code>develop</code> for
+bleeding edge).</li>
+<li><code>g:phpactorOmniError</code>: Set to <code>v:true</code> to enable useful error messages when
+completion is invoked.</li>
+</ul>
+<h2 id="completion">Completion</h2>
+<h3 id="omni-completion">Omni-completion</h3>
+<p>Omni-completion
+(<a href="./screenshots.html#code-completion">Screenshot</a>) is
+VIM's built-in auto-completion mechanism.</p>
+<p>Add the following to your <code>.vimrc</code> in order to use Phpactor for omni-completion (for PHP files):</p>
+<pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
 <p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
 See <code>:help compl-omni</code>.</p>
 <p>Omni complete can also provide feedback when something fails to complete, this
