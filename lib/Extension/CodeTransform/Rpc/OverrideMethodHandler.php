@@ -49,11 +49,11 @@ class OverrideMethodHandler extends AbstractHandler
     {
         $resolver->setDefaults([
             self::PARAM_METHOD_NAME => null,
+            self::PARAM_CLASS_NAME => null,
         ]);
         $resolver->setRequired([
             self::PARAM_PATH,
             self::PARAM_SOURCE,
-            self::PARAM_CLASS_NAME,
         ]);
 
     }

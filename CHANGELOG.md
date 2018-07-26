@@ -15,6 +15,10 @@ Bug fixes:
   - [WorseReflection] Handle fatal error on instanceof coercion on
   - [composer] Removed useless platform requirement configuration.
 
+Misc
+
+  - [RPC] Refactored handlers to define input requirements more explicitly.
+
 ## 2018-07-02 0.7.0
 
 Features:
