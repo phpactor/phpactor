@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a5ba0bab5ce366befabebe7509be4e3",
+    "content-hash": "7b984e71d366e0e9234c2dd7c35041d5",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "f91df683ae8a52018b76dffdf76c35edc7c95951"
+                "reference": "6fa0580d70eebb4166a7a361e6b8381dc7b2ad23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/f91df683ae8a52018b76dffdf76c35edc7c95951",
-                "reference": "f91df683ae8a52018b76dffdf76c35edc7c95951",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/6fa0580d70eebb4166a7a361e6b8381dc7b2ad23",
+                "reference": "6fa0580d70eebb4166a7a361e6b8381dc7b2ad23",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-07-02T16:26:13+00:00"
+            "time": "2018-07-27T19:52:35+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -4001,8 +4001,5 @@
     "platform": {
         "php": "^7.0"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "7.0.0"
-    }
+    "platform-dev": []
 }

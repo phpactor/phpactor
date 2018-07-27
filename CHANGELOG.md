@@ -8,6 +8,7 @@ Improvements:
   - [WorseReflectoin] Smoke test for find parsing errors.
   - [WorseReflection] Improved efficiency for frame building.
     non-variable.
+  - [Completion] Fixed multi-byte performance issue, fixes #537
 
 Bug fixes:
 
