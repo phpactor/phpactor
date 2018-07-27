@@ -6,7 +6,6 @@ use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
-use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;

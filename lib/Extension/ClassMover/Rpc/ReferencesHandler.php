@@ -4,7 +4,6 @@ namespace Phpactor\Extension\ClassMover\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -21,7 +20,6 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use Phpactor\WorseReflection;
 
 /**
  * TODO: Extract the responsiblities of this class, see
@@ -171,8 +169,7 @@ class ReferencesHandler extends AbstractHandler
         string $replacement,
         string $path,
         string $source
-    )
-    {
+    ) {
         list($source, $references) = $this->performFindOrReplaceReferences(
             $symbolContext,
             $filesystem,
@@ -223,8 +220,7 @@ class ReferencesHandler extends AbstractHandler
         string $memberType,
         string $source = null,
         string $replacement = null
-    )
-    {
+    ) {
         $classType = (string) $symbolContext->containerType();
 
         $references = $this->classMemberReferences->findOrReplaceReferences(
@@ -254,8 +250,7 @@ class ReferencesHandler extends AbstractHandler
         string $filesystem,
         string $source = null,
         string $replacement = null
-    )
-    {
+    ) {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::CLASS_:
                 return $this->classReferences($filesystem, $symbolContext, $source, $replacement);

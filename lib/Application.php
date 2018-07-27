@@ -63,6 +63,7 @@ class Application extends SymfonyApplication
     {
         $definition = parent::getDefaultInputDefinition();
         $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
+        $definition->addOption(new InputOption('no-disable-xdebug', null, InputOption::VALUE_NONE, 'Do not automatically disable XDebug if it is enabled'));
 
         return $definition;
     }

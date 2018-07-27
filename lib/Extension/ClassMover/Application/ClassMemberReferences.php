@@ -10,12 +10,9 @@ use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\ClassMover\Domain\ClassRef;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Reflector;
-use \SplFileInfo;
 
 class ClassMemberReferences
 {
@@ -95,8 +92,7 @@ class ClassMemberReferences
         string $memberName,
         string $memberType,
         string $replacement
-    )
-    {
+    ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
         $query = $this->createQuery($className, $memberName, $memberType);
 

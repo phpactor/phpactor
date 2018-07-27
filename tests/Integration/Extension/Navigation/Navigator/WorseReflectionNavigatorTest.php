@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Integration\Extension\Navigation\Navigator;
 
-use PhpCsFixer\Tests\TestCase;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
 use Phpactor\Tests\IntegrationTestCase;
@@ -18,7 +17,8 @@ class WorseReflectionNavigatorTest extends IntegrationTestCase
 
     public function testNavigateToParent()
     {
-        $navigator = $this->create(<<<'EOT'
+        $navigator = $this->create(
+            <<<'EOT'
 // File:One.php
 <?php
 
@@ -41,7 +41,8 @@ EOT
 
     public function testNavigateToInterfaces()
     {
-        $navigator = $this->create(<<<'EOT'
+        $navigator = $this->create(
+            <<<'EOT'
 // File:One.php
 <?php
 
@@ -71,7 +72,8 @@ EOT
 
     public function testNavigateFromInterfaceToParents()
     {
-        $navigator = $this->create(<<<'EOT'
+        $navigator = $this->create(
+            <<<'EOT'
 // File:One.php
 <?php
 

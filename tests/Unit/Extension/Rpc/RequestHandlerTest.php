@@ -49,7 +49,8 @@ class RequestHandlerTest extends TestCase
             $args[0]->setDefaults([
                 'one' => null,
             ]);
-        });;
+        });
+        ;
 
         $request = Request::fromNameAndParameters('aaa', [
             'one' => 'bar',

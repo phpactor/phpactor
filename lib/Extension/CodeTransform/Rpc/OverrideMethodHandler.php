@@ -55,7 +55,6 @@ class OverrideMethodHandler extends AbstractHandler
             self::PARAM_PATH,
             self::PARAM_SOURCE,
         ]);
-
     }
 
     public function handle(array $arguments)
