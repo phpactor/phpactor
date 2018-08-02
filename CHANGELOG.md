@@ -8,13 +8,15 @@ Improvements:
   - [WorseReflectoin] Smoke test for find parsing errors.
   - [WorseReflection] Improved efficiency for frame building.
     non-variable.
-  - [Completion] Fixed multi-byte performance issue, fixes #537
+  - [Completion] Improved multi-byte performance, fixes #537 thanks
+    @weirdan
 
 Bug fixes:
 
   - [WorseReflection] Handle fatal error on incomplete extends.
   - [WorseReflection] Handle fatal error on instanceof coercion on
   - [composer] Removed useless platform requirement configuration.
+  - [Completion] Fixed class member container resolution accuracy
 
 Misc
 

@@ -269,12 +269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "38ff1a581b297f7901e961b8c923862ea80c3b96"
+                "reference": "15620ee9d8df58a209000a81759277570bc89317"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/38ff1a581b297f7901e961b8c923862ea80c3b96",
-                "reference": "38ff1a581b297f7901e961b8c923862ea80c3b96",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/15620ee9d8df58a209000a81759277570bc89317",
+                "reference": "15620ee9d8df58a209000a81759277570bc89317",
                 "shasum": ""
             },
             "require-dev": {
@@ -299,7 +299,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-07-23 12:16:12"
+            "time": "2018-08-02 10:56:10"
         },
         {
             "name": "lstrojny/functional-php",
@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "58814f104f8de9c96d295487b70c5734b9c77959"
+                "reference": "e88881b2b70ef20d45a53c8c57c158d0f7919d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/58814f104f8de9c96d295487b70c5734b9c77959",
-                "reference": "58814f104f8de9c96d295487b70c5734b9c77959",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/e88881b2b70ef20d45a53c8c57c158d0f7919d78",
+                "reference": "e88881b2b70ef20d45a53c8c57c158d0f7919d78",
                 "shasum": ""
             },
             "require": {
@@ -479,7 +479,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2018-07-27 16:59:32"
+            "time": "2018-08-02 18:03:33"
         },
         {
             "name": "monolog/monolog",
@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "22d5ba1925ea428390afdf521f8cdd2052f7bccd"
+                "reference": "0c93b5f3790d499db946e7fb8b8683072a4035ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/22d5ba1925ea428390afdf521f8cdd2052f7bccd",
-                "reference": "22d5ba1925ea428390afdf521f8cdd2052f7bccd",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/0c93b5f3790d499db946e7fb8b8683072a4035ba",
+                "reference": "0c93b5f3790d499db946e7fb8b8683072a4035ba",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-08-02 07:24:03"
+            "time": "2018-08-02 17:47:52"
         },
         {
             "name": "phpactor/docblock",
@@ -2563,12 +2563,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "aa7b5cf19e88ac158438762b4d8aca1d350837be"
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/aa7b5cf19e88ac158438762b4d8aca1d350837be",
-                "reference": "aa7b5cf19e88ac158438762b4d8aca1d350837be",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/0d3dfe00925f1f541bcbbeeec1749a845c15897b",
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b",
                 "shasum": ""
             },
             "require-dev": {
@@ -2596,7 +2596,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2018-07-28 05:49:46"
+            "time": "2018-08-02 17:38:22"
         },
         {
             "name": "phpdocumentor/reflection-common",
