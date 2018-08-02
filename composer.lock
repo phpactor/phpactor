@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "ad5f13bacb1bf6d5f8a9e389c6b62ec8b042aec3"
+                "reference": "22d5ba1925ea428390afdf521f8cdd2052f7bccd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/ad5f13bacb1bf6d5f8a9e389c6b62ec8b042aec3",
-                "reference": "ad5f13bacb1bf6d5f8a9e389c6b62ec8b042aec3",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/22d5ba1925ea428390afdf521f8cdd2052f7bccd",
+                "reference": "22d5ba1925ea428390afdf521f8cdd2052f7bccd",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-08-01 19:07:55"
+            "time": "2018-08-02 07:24:03"
         },
         {
             "name": "phpactor/docblock",
@@ -2211,7 +2211,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14T21:17:01+00:00"
+            "time": "2015-06-14 21:17:01"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
