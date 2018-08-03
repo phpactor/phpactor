@@ -202,8 +202,8 @@ Plug 'phpactor/ncm-phpactor'
 The [NCM2](https://github.com/ncm2/ncm2) is the successor to NCM.
 
 See the
-[README](https://github.com/phpactor/ncm2-phpactor/blob/master/README.md) file
-for installation instructions.
+[README](https://github.com/phpactor/ncm2-phpactor) file
+for instructions on installing NCM2 and the Phpactor plugin.
 
 ### Deoplete
 

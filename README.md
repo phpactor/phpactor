@@ -9,11 +9,13 @@ This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
 
-- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html)
-- [Refactoring,fixes and code generation](https://phpactor.github.io/phpactor/refactorings.html)
-- Native [VIM Plugin](https://phpactor.github.io/phpactor/refactorings.html)
+- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html).
+- [Various](https://phpactor.github.io/phpactor/refactorings.html) refactoring,fixes and code generation options.
+- Native [VIM plugin](https://phpactor.github.io/phpactor/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
 - [Navigation](https://phpactor.github.io/phpactor/navigation.html) (jump to
   definition, related classes, references etc).
+- Context menu.
+- [More](http://phpactor.github.io/phpactor).
 
 Installation
 ------------
@@ -28,12 +30,13 @@ Requirements
 ------------
 
 - PHP 7.0+
-- Composer.
+- Composer
 
-Recommended
------------
+Project Recommendations
+-----------------------
 
-- Composer and GIT
+Phpactor will perform better with [Composer](https://getcomposer.org) and, to
+a lesser extent, with [GiT](https://git-scm.org).
 
 Documentation
 -------------
