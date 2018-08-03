@@ -42,5 +42,10 @@
         "psr-4": {
             "Phpactor\\Tests\\": "tests/"
         }
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.0"
+        }
     }
 }

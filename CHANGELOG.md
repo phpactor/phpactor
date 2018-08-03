@@ -15,7 +15,6 @@ Bug fixes:
 
   - [WorseReflection] Handle fatal error on incomplete extends.
   - [WorseReflection] Handle fatal error on instanceof coercion on
-  - [composer] Removed useless platform requirement configuration.
   - [Completion] Fixed class member container resolution accuracy
   - [SourceCodeFilesystem] Quote regular expressions in file list filter, fixes #543
 
