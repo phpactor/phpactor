@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2018-08-03 0.8.0
 
 Improvements:
 
