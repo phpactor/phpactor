@@ -118,15 +118,16 @@
 <li><a href="#context-menu">Context Menu</a></li>
 </ul>
 <h2 id="installation">Installation</h2>
-<div class="alert alert-info">
-Phpactor requires <a href="https://getcomposer.org/download">composer</a>,
-to install its dependencies.
-</div>
-<div class="alert alert-info">
-It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
-plugin manager, but other plugin managers are quite similar.
-</div>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li><a href="https://getcomposer.org/download">Composer</a></li>
+<li>PHP 7.0</li>
+<li><a href="https://github.com/vim/vim">VIM 8</a> or
+<a href="https://github.com/neovim/neovim">Neovim</a></li>
+</ul>
+<p>It is recommended (but not necessary) for you to use a VIM plugin manager. In
+this document we will use the <a href="https://github.com/neovim/neovim">vim-plug</a>
+plugin manager, but other plugin managers are quite similar.</p>
 <p>Require Phpactor in your VIM configuration file (e.g. <code>~/.vimrc</code> or
 <code>~/.config/nvim/init.vim</code> when using Neovim):</p>
 <pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}</code></pre>
@@ -224,13 +225,19 @@ can be useful, enable it with:</p>
 <pre><code>let g:phpactorOmniError = v:true</code></pre>
 <h2 id="completion-plugins">Completion plugins</h2>
 <p>Completion plugins provide a significantly better completion experience.</p>
-<h3 id="neovim-completion-manager">Neovim Completion Manager</h3>
+<h3 id="neovim-completion-manager-ncm">Neovim Completion Manager (NCM)</h3>
+<p><em>deprecated, use NCM2 below</em></p>
 <p>The <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
 Manager</a> add this to your
 (e.g. <code>~/.config/nvim/init.vim</code>) (NCM) is a very fast completion manager for
 <a href="https://neovim.io/">Neovim</a>, install using the Plug plugin manager:</p>
-<pre><code class="language-vimL">Plug 'roxma/nvim-completion-manager'
+<pre><code class="language-vim">Plug 'roxma/nvim-completion-manager'
 Plug 'phpactor/ncm-phpactor'</code></pre>
+<h3 id="ncm2">NCM2</h3>
+<p>The <a href="https://github.com/ncm2/ncm2">NCM2</a> is the successor to NCM.</p>
+<p>See the
+<a href="https://github.com/phpactor/ncm2-phpactor/blob/master/index.html">README</a> file
+for installation instructions.</p>
 <h3 id="deoplete">Deoplete</h3>
 <p><a href="https://github.com/Shougo/deoplete.nvim">deoplete.nvim</a> is a completion
 plugin for both standard VIM Neovim, install it and the Phpactor integration
