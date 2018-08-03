@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae951d104dd8e8c21a714f676ea150b8",
+    "content-hash": "2a5ba0bab5ce366befabebe7509be4e3",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -933,12 +933,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "16f8406af3343bce700ea44e19d8b8945f049ff4"
+                "reference": "a0b641b9ed4be27810895fdffc31a2cb1c69b31c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/16f8406af3343bce700ea44e19d8b8945f049ff4",
-                "reference": "16f8406af3343bce700ea44e19d8b8945f049ff4",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/a0b641b9ed4be27810895fdffc31a2cb1c69b31c",
+                "reference": "a0b641b9ed4be27810895fdffc31a2cb1c69b31c",
                 "shasum": ""
             },
             "require": {
@@ -971,7 +971,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2018-05-06 20:02:36"
+            "time": "2018-08-03 06:31:35"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -3068,12 +3068,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2d53bd5ae8ec6f81bb3be9d397f1f4cfac69ff97"
+                "reference": "5744955af9c0a2de74a5eb5287c50bf025100d39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2d53bd5ae8ec6f81bb3be9d397f1f4cfac69ff97",
-                "reference": "2d53bd5ae8ec6f81bb3be9d397f1f4cfac69ff97",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5744955af9c0a2de74a5eb5287c50bf025100d39",
+                "reference": "5744955af9c0a2de74a5eb5287c50bf025100d39",
                 "shasum": ""
             },
             "require": {
@@ -3144,7 +3144,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-07-19 06:58:00"
+            "time": "2018-08-03 05:27:14"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4003,6 +4003,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.0"
+        "php": "7.0.0"
     }
 }
