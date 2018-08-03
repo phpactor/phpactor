@@ -6,23 +6,23 @@ About Phpactor
 
 Phpactor is an intelligent code-completion and refactoring tool for PHP.
 
-- **Code Completion**: Provides accurate context aware code completion for
-  classes.
-- **No indexing**: Phpactor uses composer to guess class locations.
+- **Code Completion**: Provides broad and accurate context aware code completion.
+- **No indexing**: Phpactor works in real-time and is optimied with
+  [composer](https://getcomposer.org). It is fast.
 - **Introspection**: Jump to class and method definitions, find references.
 - **Refactoring**: Move classes, complete constructors, implement contracts,
   generate methods, etc.
-- **VIM plugin**: Lightweight VIM plugin.
+- **Native VIM plugin**: Lightweight VIM plugin.
 - **CLI interface**: Most/some functionality is exposed through CLI commands.
 
 Phpactor can be used in a limited way as a **standalone application**, but its full
-power can only be utilized through its RPC protocol. It ships with support for VIM, but it
-would not involve a huge amount of effort to support other editors such as
-[GNU Emacs](https://www.gnu.org/s/emacs/).
+power can only be utilized through its RPC protocol. It ships with support for
+VIM and there is also a plugin for
+[Emacs](https://github.com/emacs-php/phpactor.el).
 
-Phpactor is currently bleeding-edge software, none of it is perfect, but most
-of the features will get you most if not all of the way to where you want to
-go.
+Phpactor is pronounced "factor", as in "factorisation" and "re-factoring". It
+is a large project and some parts are more fully realised than others but it
+is used as an essential tool in day-to-day PHP work.
 
 Packages
 --------

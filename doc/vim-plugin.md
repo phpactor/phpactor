@@ -14,16 +14,16 @@ Phpactor VIM Plugin
 Installation
 ------------
 
-<div class="alert alert-info">
-Phpactor requires <a href="https://getcomposer.org/download">composer</a>,
-to install its dependencies.
-</div>
+**Prerequisites**:
 
-<div class="alert alert-info">
+- [Composer](https://getcomposer.org/download)
+- PHP 7.0
+- [VIM 8](https://github.com/vim/vim) or
+  [Neovim](https://github.com/neovim/neovim)
+
 It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
+this document we will use the [vim-plug](https://github.com/neovim/neovim)
 plugin manager, but other plugin managers are quite similar.
-</div>
 
 Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
 `~/.config/nvim/init.vim` when using Neovim):
@@ -183,17 +183,27 @@ Completion plugins
 
 Completion plugins provide a significantly better completion experience.
 
-### Neovim Completion Manager
+### Neovim Completion Manager (NCM)
+
+*deprecated, use NCM2 below*
 
 The [Neovim Completion
 Manager](https://github.com/roxma/nvim-completion-manager) add this to your
 (e.g. `~/.config/nvim/init.vim`) (NCM) is a very fast completion manager for
 [Neovim](https://neovim.io/), install using the Plug plugin manager:
 
-```vimL
+```vim
 Plug 'roxma/nvim-completion-manager'
 Plug 'phpactor/ncm-phpactor'
 ```
+
+### NCM2
+
+The [NCM2](https://github.com/ncm2/ncm2) is the successor to NCM.
+
+See the
+[README](https://github.com/phpactor/ncm2-phpactor) file
+for instructions on installing NCM2 and the Phpactor plugin.
 
 ### Deoplete
 
