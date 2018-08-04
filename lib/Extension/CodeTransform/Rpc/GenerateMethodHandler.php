@@ -51,7 +51,7 @@ class GenerateMethodHandler extends AbstractHandler
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $sourceCode->path(),
-            $arguments[self::PARAM_SOURCE],
+            file_get_contents($sourceCode->path()),
             (string) $sourceCode
         );
     }

@@ -18,6 +18,8 @@ class Differ
 
     public function chunkDiff(string $original, string $new)
     {
+        // TODO: Test for empty edits
+        $edits = [];
         $diff = $this->differ->diffToArray($original, $new);
         $lineNumber = -1;
 

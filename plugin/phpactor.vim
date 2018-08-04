@@ -273,6 +273,46 @@ function! phpactor#_selectionEnd()
     return line2byte(lineEnd) + columnEnd -1
 endfunction
 
+function! phpactor#_applyTextEdits(path, edits)
+    call phpactor#_switchToBufferOrEdit(a:path)
+
+    let postCursorPosition = getpos('.')
+
+    for edit in a:edits
+
+        let newLines = 0
+
+        " start = { line: 1234, character: 0 }
+        let start = edit['start']
+
+        " move the cursor into the start position
+        call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
+
+        if edit['length'] > 0
+            " delete $length characters
+            call execute('normal ' . edit['length'] . 'x')
+        endif
+
+        if edit['text'] == "\n"
+            " if this is just a new line, add a new line
+            call append(line('.') - 1, '')
+            let newLines = 1
+        else
+            " insert characters after the current line
+            let appendLines = split(edit['text'], "\n")
+            call append(line('.') - 1, appendLines)
+            let newLines = newLines + len(appendLines)
+        endif
+
+        if postCursorPosition[1] > start['line']
+            let postCursorPosition[1] = postCursorPosition[1] + newLines
+        endif
+
+    endfor
+
+    call setpos('.', postCursorPosition)
+endfunction
+
 
 """""""""""""""""""""""
 " RPC -->-->-->-->-->--
@@ -506,42 +546,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     "       supported by Phpactor.
     "
     if a:actionName == "update_file_source"
-        let postCursorPosition = getpos('.')
-        if !empty(a:parameters['edits'])
-            for edit in a:parameters['edits']
-
-                let newLines = 0
-
-                " start = { line: 1234, character: 0 }
-                let start = edit['start']
-
-                " move the cursor into the start position
-                call setpos('.', [ 0, start['line'], start['character'] + 1 ])
-
-                if edit['length'] > 0
-                    " delete $length characters
-                    call execute('normal ' . edit['length'] . 'x')
-                endif
-
-                if edit['text'] == "\n"
-                    " if this is just a new line, add a new line
-                    call append(line('.'), '')
-                    let newLines = 1
-                else
-                    " insert characters after the current line
-                    let appendLines = split(edit['text'], "\n")
-                    call append(line('.'), appendLines)
-                    let newLines = newLines + len(appendLines)
-                endif
-
-                if postCursorPosition[1] > start['line']
-                    let postCursorPosition[1] = postCursorPosition[1] + newLines
-                endif
-
-            endfor
-
-        endif
-        call setpos('.', postCursorPosition)
+        call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
         return
     endif
 
