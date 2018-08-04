@@ -1,6 +1,33 @@
 Changelog
 =========
 
+## develop
+
+BC Breaks:
+
+  - [RPC Plugins] `update_file_source` MUST now used instead of `replace_file_source`.
+    `replace_file_source`. See [https://github.com/phpactor/phpactor/issues/550](#550) for details
+
+Deprecations:
+
+  - [Completion|Completion Plugins] Serialized key `info` is deprecated in favour of
+    `short_description` and could be removed, at least, in 0.10.0.
+
+Features:
+
+  - [Completion|Vim Plugin] Auto-import class names.
+  - [Completion] Suggestion types now have more explicit types (e.g. `method`,
+    `constant`, `class`, rather than the VIM-centric kind characters).
+
+Improvements:
+
+  - [Rpc|Vim Plugin] Source code is now updated (by way of a diff algorithm)
+    not replaced. The cursor position and undo history are maintained.
+
+Bug fixes:
+
+  - [Completion] Fixed multi-byte issue with class completor.
+
 ## 2018-08-03 0.8.0
 
 Improvements:
