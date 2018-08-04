@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Response;
 
-use Phpactor\Extension\Rpc\Diff\Differ;
+use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 use Phpactor\Extension\Rpc\Response;
 
 class UpdateFileSourceResponse implements Response
@@ -23,16 +23,18 @@ class UpdateFileSourceResponse implements Response
     private $originalSource;
 
     /**
-     * @var Differ
+     * @var TextEditBuilder
      */
-    private $differ;
+    private $textEditBuilder;
 
     private function __construct(string $path, string $originalSource, string $replacementSource)
     {
         $this->replacementSource = $replacementSource;
         $this->path = $path;
         $this->originalSource = $originalSource;
-        $this->differ = new Differ();
+
+        // TODO: This should be a service
+        $this->textEditBuilder = new TextEditBuilder();
     }
 
     public static function fromPathOldAndNewSource(string $path, string $originalSource, string $replacementSource)
@@ -50,7 +52,7 @@ class UpdateFileSourceResponse implements Response
         return [
             'path' => $this->path,
             'source' => $this->replacementSource,
-            'edits' => $this->differ->chunkDiff($this->originalSource, $this->replacementSource),
+            'edits' => $this->textEditBuilder->calculateTextEdits($this->originalSource, $this->replacementSource),
         ];
     }
 

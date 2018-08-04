@@ -9,9 +9,7 @@
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
-let g:_phpactor_completion_meta = {}
-
-autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
+let g:_phpactorCompletionMeta = {}
 
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
@@ -23,6 +21,14 @@ endif
 
 if !exists('g:phpactorOmniError')
     let g:phpactorOmniError = v:false
+endif
+
+if !exists('g:phpactorAutoClassImport')
+    let g:phpactorAutoClassImport = v:true
+endif
+
+if g:phpactorAutoClassImport == v:true
+    autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
 
 """""""""""""""""
@@ -73,12 +79,18 @@ function! phpactor#Complete(findstart, base)
     let issues = result['issues']
 
     let completions = []
-    let g:_phpactor_completion_meta = {}
+    let g:_phpactorCompletionMeta = {}
 
     if !empty(suggestions)
         for suggestion in suggestions
-            call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
-            let g:_phpactor_completion_meta[suggestion['name']] = suggestion
+            let completion = { 
+                        \ 'word': suggestion['name'], 
+                        \ 'menu': suggestion['short_description'],
+                        \ 'kind': suggestion['type'],
+                        \ 'dup': 1
+                        \ }
+            call add(completions, completion)
+            let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
         endfor
     endif
 
@@ -91,17 +103,22 @@ function! phpactor#Complete(findstart, base)
     return completions
 endfunc
 
+function! phpactor#_completionItemHash(completion)
+    return a:completion['word'] . a:completion['menu'] . a:completion['kind']
+endfunction
+
 function! phpactor#_completeImportClass(completedItem)
 
     if !has_key(a:completedItem, "word")
         return
     endif
 
-    if !has_key(g:_phpactor_completion_meta, a:completedItem['word'])
+    let hash = phpactor#_completionItemHash(a:completedItem)
+    if !has_key(g:_phpactorCompletionMeta, hash)
         return
     endif
 
-    let suggestion = g:_phpactor_completion_meta[a:completedItem['word']]
+    let suggestion = g:_phpactorCompletionMeta[hash]
 
     if has_key(suggestion, "class_import")
         call phpactor#rpc("import_class", {
@@ -112,7 +129,7 @@ function! phpactor#_completeImportClass(completedItem)
                     \ "path": expand('%:p')})
     endif
 
-    let g:_phpactor_completion_meta = {}
+    let g:_phpactorCompletionMeta = {}
 
 endfunction
 
@@ -546,6 +563,11 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     "       supported by Phpactor.
     "
     if a:actionName == "update_file_source"
+        " if the file is open in a buffer, reload it before replacing it's
+        " source (avoid file-modified-on-disk errors)
+        if -1 != bufnr(a:parameters['path'] . '$')
+            exec ":edit! " . a:parameters['path']
+        endif
         call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
         return
     endif

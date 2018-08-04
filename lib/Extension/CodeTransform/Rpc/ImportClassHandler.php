@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
@@ -131,11 +132,17 @@ class ImportClassHandler extends AbstractHandler
             return EchoResponse::fromMessage($e->getMessage());
         }
 
-        return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $sourceCode->path(),
-            $arguments[self::PARAM_SOURCE],
-            (string) $sourceCode
-        );
+        return CollectionResponse::fromActions([
+            UpdateFileSourceResponse::fromPathOldAndNewSource(
+                $sourceCode->path(),
+                $arguments[self::PARAM_SOURCE],
+                (string) $sourceCode
+            ),
+            EchoResponse::fromMessage(sprintf(
+                'Imported class "%s"',
+                $arguments[self::PARAM_QUALIFIED_NAME]
+            ))
+        ]);
     }
 
     private function suggestions(string $name)

@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Rpc\Diff;
 
 use SebastianBergmann\Diff\Differ as BergmannDiffer;
 
-class Differ
+class TextEditBuilder
 {
     /**
      * @var BergmannDiffer
@@ -16,7 +16,7 @@ class Differ
         $this->differ = $differ ?: new BergmannDiffer();
     }
 
-    public function chunkDiff(string $original, string $new)
+    public function calculateTextEdits(string $original, string $new)
     {
         // TODO: Test for empty edits
         $edits = [];

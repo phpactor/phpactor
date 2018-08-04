@@ -3,23 +3,39 @@
 namespace Phpactor\Tests\Unit\Extension\Rpc\Differ;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Rpc\Diff\Differ;
+use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 
-class DifferTest extends TestCase
+class TextEditBuilderTest extends TestCase
 {
     /**
      * @dataProvider provideDiff
      */
     public function testDiff(string $one, string $two, array $expected)
     {
-        $differ = new Differ();
-        $chunks = $differ->chunkDiff($one, $two);
+        $textEditBuilder = new TextEditBuilder();
+        $chunks = $textEditBuilder->calculateTextEdits($one, $two);
         $this->assertEquals($expected, $chunks);
     }
 
     public function provideDiff()
     {
-        yield [
+        yield 'no edits' => [
+            <<<'EOT'
+original
+original
+original
+EOT
+            ,
+            <<<'EOT'
+original
+original
+original
+EOT
+        ,
+            [ ]
+        ];
+
+        yield 'addition at start of file' => [
             <<<'EOT'
 original
 original
@@ -35,14 +51,14 @@ EOT
         ,
             [
                 [
-                    'start' => 0,
+                    'start' => [ 'line' => 0, 'character' => 0 ],
                     'length' => 0,
                     'text' => 'new' . PHP_EOL,
                 ],
             ],
         ];
 
-        yield [
+        yield 'first line changed' => [
             <<<'EOT'
 original
 original
@@ -57,24 +73,23 @@ EOT
         ,
             [
                 [
-                    'start' => 0,
+                    'start' => [ 'line' => 0, 'character' => 0 ],
                     'length' => 9,
                     'text' => '',
                 ],
                 [
-                    'start' => 0,
+                    'start' => [ 'line' => 0, 'character' => 0 ],
                     'length' => 0,
                     'text' => 'neworiginal' . PHP_EOL,
                 ],
             ],
         ];
 
-        yield [
+        yield 'last line changed' => [
             <<<'EOT'
 original
 original
 middle
-original
 EOT
             ,
             <<<'EOT'
@@ -85,9 +100,14 @@ EOT
         ,
             [
                 [
-                    'start' => 18,
-                    'length' => 7,
+                    'start' => [ 'line' => 2, 'character' => 0 ],
+                    'length' => 6,
                     'text' => '',
+                ],
+                [
+                    'start' => [ 'line' => 2, 'character' => 0 ],
+                    'length' => 0,
+                    'text' => 'original',
                 ],
             ],
         ];
