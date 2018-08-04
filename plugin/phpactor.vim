@@ -500,6 +500,51 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         return
     endif
 
+    " >> update file source
+    "
+    " NOTE: This method currently works on a line-by-line basis as currently
+    "       supported by Phpactor.
+    "
+    if a:actionName == "update_file_source"
+        let postCursorPosition = getpos('.')
+        if !empty(a:parameters['edits'])
+            for edit in a:parameters['edits']
+
+                let newLines = 0
+
+                " start = { line: 1234, character: 0 }
+                let start = edit['start']
+
+                " move the cursor into the start position
+                call setpos('.', [ 0, start['line'], start['character'] + 1 ])
+
+                if edit['length'] > 0
+                    " delete $length characters
+                    call execute('normal ' . edit['length'] . 'x')
+                endif
+
+                if edit['text'] == "\n"
+                    " if this is just a new line, add a new line
+                    call append(line('.'), '')
+                    let newLines = 1
+                else
+                    " insert characters after the current line
+                    let appendLines = split(edit['text'], "\n")
+                    call append(line('.'), appendLines)
+                    let newLines = newLines + len(appendLines)
+                endif
+
+                if postCursorPosition[1] > start['line']
+                    let postCursorPosition[1] = postCursorPosition[1] + newLines
+                endif
+
+            endfor
+
+        endif
+        call setpos('.', postCursorPosition)
+        return
+    endif
+
     " >> replace_file_source
     if a:actionName == "replace_file_source"
 

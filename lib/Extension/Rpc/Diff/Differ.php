@@ -19,9 +19,10 @@ class Differ
     public function chunkDiff(string $original, string $new)
     {
         $diff = $this->differ->diffToArray($original, $new);
-        $offset = 0;
+        $lineNumber = -1;
 
         foreach ($diff as $line) {
+            $lineNumber++;
             $token = $line[0];
             switch ($line[1]) {
                 // Nothing
@@ -31,7 +32,10 @@ class Differ
                 // Added
                 case 1:
                     $edits[] = [
-                        'start' => $offset,
+                        'start' => [
+                            'line' => $lineNumber,
+                            'character' => 0,
+                        ],
                         'length' => 0,
                         'text' => $token,
                     ];
@@ -40,14 +44,16 @@ class Differ
                 // Removed
                 case 2:
                     $edits[] = [
-                        'start' => $offset,
+                        'start' => [
+                            'line' => $lineNumber,
+                            'character' => 0,
+                        ],
                         'length' => strlen($token),
                         'text' => '',
                     ];
-                    $offset -= strlen($token);
+                    $lineNumber--;
                     break;
             }
-            $offset = $offset + strlen($token);
         }
 
         return $edits;
