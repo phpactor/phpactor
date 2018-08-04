@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Rpc\Response;
 
 use Phpactor\Extension\Rpc\Response;
 
-class ReplaceFileSourceResponse implements Response
+class UpdateFileSourceResponse implements Response
 {
     /**
      * @var string
@@ -16,15 +16,26 @@ class ReplaceFileSourceResponse implements Response
      */
     private $path;
 
-    private function __construct(string $path, string $replacementSource)
+    /**
+     * @var string
+     */
+    private $originalSource;
+
+    /**
+     * @var string
+     */
+    private $newSource;
+
+    private function __construct(string $path, string $originalSource, string $replacementSource)
     {
         $this->replacementSource = $replacementSource;
         $this->path = $path;
+        $this->originalSource = $originalSource;
     }
 
-    public static function fromPathAndSource(string $path, string $replacementSource)
+    public static function fromPathOldAndNewSource(string $path, string $originalSource, string $replacementSource)
     {
-        return new self($path, $replacementSource);
+        return new self($path, $originalSource, $replacementSource);
     }
 
     public function name(): string
@@ -48,5 +59,10 @@ class ReplaceFileSourceResponse implements Response
     public function path(): string
     {
         return $this->path;
+    }
+
+    public function newSource(): string
+    {
+        return $this->newSource;
     }
 }

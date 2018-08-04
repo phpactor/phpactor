@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
@@ -79,7 +79,11 @@ class OverrideMethodHandler extends AbstractHandler
             $arguments[self::PARAM_METHOD_NAME]
         );
 
-        return ReplaceFileSourceResponse::fromPathAndSource($arguments[self::PARAM_PATH], (string) $transformedCode);
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
+            $arguments[self::PARAM_PATH],
+            $arguments[self::PARAM_SOURCE],
+            (string) $transformedCode
+        );
     }
 
     private function class($source, $className = null)

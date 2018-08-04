@@ -10,7 +10,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -131,8 +131,9 @@ class ImportClassHandler extends AbstractHandler
             return EchoResponse::fromMessage($e->getMessage());
         }
 
-        return ReplaceFileSourceResponse::fromPathAndSource(
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $sourceCode->path(),
+            $arguments[self::PARAM_SOURCE],
             (string) $sourceCode
         );
     }

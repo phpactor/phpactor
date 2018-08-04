@@ -5,7 +5,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
@@ -78,8 +78,9 @@ class ExtractMethodHandler extends AbstractHandler
             $arguments[self::PARAM_METHOD_NAME]
         );
 
-        return ReplaceFileSourceResponse::fromPathAndSource(
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $arguments[self::PARAM_PATH],
+            $arguments[self::PARAM_SOURCE],
             (string) $sourceCode
         );
     }

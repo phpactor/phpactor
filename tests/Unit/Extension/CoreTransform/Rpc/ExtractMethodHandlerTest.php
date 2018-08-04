@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
@@ -70,6 +70,6 @@ class ExtractMethodHandlerTest extends HandlerTestCase
             'method_name' => self::METHOD_NAME,
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
+        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
     }
 }
