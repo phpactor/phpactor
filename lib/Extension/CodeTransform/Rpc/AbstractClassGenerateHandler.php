@@ -16,7 +16,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
@@ -103,6 +103,6 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             );
         }
 
-        return UpdateFileSourceResponse::fromPathOldAndNewSource($code->path(), '', (string) $code);
+        return ReplaceFileSourceResponse::fromPathOldAndNewSource($code->path(), '', (string) $code);
     }
 }

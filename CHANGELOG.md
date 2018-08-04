@@ -5,8 +5,10 @@ Changelog
 
 BC Breaks:
 
-  - [RPC Plugins] `update_file_source` MUST now used instead of `replace_file_source`.
-    `replace_file_source`. See [https://github.com/phpactor/phpactor/issues/550](#550) for details
+  - [RPC Plugins] a new `update_file_source` method is now returned by most
+    code-transforming RPC handlers (e.g. import class, complete constructors).
+    this is used in place of `replace_file_source`.
+    See [https://github.com/phpactor/phpactor/issues/550](#550) for details
 
 Deprecations:
 
