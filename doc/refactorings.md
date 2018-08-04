@@ -490,7 +490,7 @@ Extract a method from a selection.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Function only_
-- **VIM function**:`:call phpactor#mxtractMethod()`
+- **VIM function**:`:call phpactor#ExtractMethod()`
 
 This refactoring is NOT currently available through the context menu. You
 will need to [map it to a keyboard shortcut](vim-plugin.md#keyboard-mappings)
