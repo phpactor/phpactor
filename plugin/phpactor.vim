@@ -252,6 +252,11 @@ endfunction
 " Utility functions
 """""""""""""""""""""""
 function! phpactor#_switchToBufferOrEdit(filePath)
+    if expand('%:p') == a:filePath
+        " filePath is currently open
+        return
+    endif
+
     let bufferNumber = bufnr(a:filePath . '$')
 
     if (bufferNumber == -1)
