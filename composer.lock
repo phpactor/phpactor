@@ -803,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "361dd405952762f576c436569077aa4e021e11a2"
+                "reference": "049e309ad2eafebae3c57adc346f6ea178d7d249"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/361dd405952762f576c436569077aa4e021e11a2",
-                "reference": "361dd405952762f576c436569077aa4e021e11a2",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/049e309ad2eafebae3c57adc346f6ea178d7d249",
+                "reference": "049e309ad2eafebae3c57adc346f6ea178d7d249",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-08-04 07:22:41"
+            "time": "2018-08-04 17:04:39"
         },
         {
             "name": "phpactor/docblock",
@@ -3144,7 +3144,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-03T15:43:31+00:00"
+            "time": "2018-08-03 15:43:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
