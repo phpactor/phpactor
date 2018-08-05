@@ -10,7 +10,7 @@ class UpdateFileSourceResponse implements Response
     /**
      * @var string
      */
-    private $replacementSource;
+    private $newSource;
 
     /**
      * @var string
@@ -20,26 +20,26 @@ class UpdateFileSourceResponse implements Response
     /**
      * @var string
      */
-    private $originalSource;
+    private $oldSource;
 
     /**
      * @var TextEditBuilder
      */
     private $textEditBuilder;
 
-    private function __construct(string $path, string $originalSource, string $replacementSource)
+    private function __construct(string $path, string $oldSource, string $newSource)
     {
-        $this->replacementSource = $replacementSource;
+        $this->newSource = $newSource;
         $this->path = $path;
-        $this->originalSource = $originalSource;
+        $this->oldSource = $oldSource;
 
         // TODO: This should be a service
         $this->textEditBuilder = new TextEditBuilder();
     }
 
-    public static function fromPathOldAndNewSource(string $path, string $originalSource, string $replacementSource)
+    public static function fromPathOldAndNewSource(string $path, string $oldSource, string $newSource)
     {
-        return new self($path, $originalSource, $replacementSource);
+        return new self($path, $oldSource, $newSource);
     }
 
     public function name(): string
@@ -51,19 +51,19 @@ class UpdateFileSourceResponse implements Response
     {
         return [
             'path' => $this->path,
-            'source' => $this->replacementSource,
-            'edits' => $this->textEditBuilder->calculateTextEdits($this->originalSource, $this->replacementSource),
+            'source' => $this->newSource,
+            'edits' => $this->textEditBuilder->calculateTextEdits($this->oldSource, $this->newSource),
         ];
-    }
-
-    public function replacementSource(): string
-    {
-        return $this->replacementSource;
     }
 
     public function path(): string
     {
         return $this->path;
+    }
+
+    public function oldSource(): string
+    {
+        return $this->oldSource;
     }
 
     public function newSource(): string
