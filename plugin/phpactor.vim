@@ -208,9 +208,17 @@ function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-function! phpactor#Transform()
+function! phpactor#Transform(...)
+    let transform = get(a:, 1, '')
+
     let currentPath = expand('%:p')
-    call phpactor#rpc("transform", { "path": currentPath, "source": phpactor#_source() })
+    let args = { "path": currentPath, "source": phpactor#_source() }
+
+    if transform != ''
+        let args.transform = transform
+    endif
+
+    call phpactor#rpc("transform", args)
 endfunction
 
 function! phpactor#ClassNew()
