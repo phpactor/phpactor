@@ -140,7 +140,7 @@ class ImportClassHandler extends AbstractHandler
             ),
             EchoResponse::fromMessage(sprintf(
                 'Imported class "%s"',
-                $arguments[self::PARAM_QUALIFIED_NAME]
+                $arguments[self::PARAM_NAME]
             ))
         ]);
     }

@@ -18,7 +18,6 @@ class TextEditBuilder
 
     public function calculateTextEdits(string $original, string $new)
     {
-        // TODO: Test for empty edits
         $edits = [];
         $diff = $this->differ->diffToArray($original, $new);
         $lineNumber = -1;
@@ -38,7 +37,10 @@ class TextEditBuilder
                             'line' => $lineNumber,
                             'character' => 0,
                         ],
-                        'length' => 0,
+                        'end' => [
+                            'line' => $lineNumber,
+                            'character' => 0,
+                        ],
                         'text' => $token,
                     ];
                     break;
@@ -50,7 +52,10 @@ class TextEditBuilder
                             'line' => $lineNumber,
                             'character' => 0,
                         ],
-                        'length' => strlen($token),
+                        'end' => [
+                            'line' => $lineNumber + 1,
+                            'character' => 0,
+                        ],
                         'text' => '',
                     ];
                     $lineNumber--;

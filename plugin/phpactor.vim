@@ -307,22 +307,30 @@ function! phpactor#_applyTextEdits(path, edits)
         " start = { line: 1234, character: 0 }
         let start = edit['start']
 
+        " end = { line: 1234, character: 0 }
+        let end = edit['end']
+
         " move the cursor into the start position
         call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
 
-        if edit['length'] > 0
-            " delete $length characters
-            call execute('normal ' . edit['length'] . 'x')
+        if start['character'] != 0 || end['character'] != 0
+            throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
+        endif
+
+        " to delete
+        let linesToDelete = end['line'] - start['line']
+        if linesToDelete > 0
+            call execute('normal ' . linesToDelete . 'dd')
         endif
 
         if edit['text'] == "\n"
             " if this is just a new line, add a new line
-            call append(line('.') - 1, '')
+            call append(start['line'], '')
             let newLines = 1
         else
             " insert characters after the current line
             let appendLines = split(edit['text'], "\n")
-            call append(line('.') - 1, appendLines)
+            call append(start['line'], appendLines)
             let newLines = newLines + len(appendLines)
         endif
 
@@ -568,11 +576,6 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     "       supported by Phpactor.
     "
     if a:actionName == "update_file_source"
-        " if the file is open in a buffer, reload it before replacing it's
-        " source (avoid file-modified-on-disk errors)
-        if -1 != bufnr(a:parameters['path'] . '$')
-            exec ":edit! " . a:parameters['path']
-        endif
         call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
         return
     endif
