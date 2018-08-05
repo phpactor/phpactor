@@ -581,7 +581,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> update file source
     "
     " NOTE: This method currently works on a line-by-line basis as currently
-    "       supported by Phpactor.
+    "       supported by Phpactor. We calculate the cursor offset by the
+    "       number of lines inserted before the actual cursor line. Character
+    "       offset is not taken into account, so same-line edits will cause an
+    "       incorrect post-edit cursor character offset.
     "
     if a:actionName == "update_file_source"
         call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
