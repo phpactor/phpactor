@@ -79,6 +79,6 @@ EOT
         ]);
 
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
-        $this->assertEquals('hello', $action->replacementSource());
+        $this->assertEquals('hello', $action->newSource());
     }
 }

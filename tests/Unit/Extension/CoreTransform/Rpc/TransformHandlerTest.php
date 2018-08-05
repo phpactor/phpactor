@@ -77,7 +77,7 @@ class TransformHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
-        $this->assertEquals(self::TRANSFORMED_SOURCE, $action->replacementSource());
+        $this->assertEquals(self::TRANSFORMED_SOURCE, $action->newSource());
         $this->assertEquals(self::PATH, $action->path());
     }
 }

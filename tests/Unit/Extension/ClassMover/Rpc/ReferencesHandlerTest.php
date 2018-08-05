@@ -333,7 +333,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $second);
         assert($second instanceof UpdateFileSourceResponse);
         $third = $action->actions()[2];
-        $this->assertEquals('<?php hallo', $second->replacementSource());
+        $this->assertEquals('<?php hallo', $second->newSource());
         $this->assertInstanceOf(FileReferencesResponse::class, $third);
     }
 
