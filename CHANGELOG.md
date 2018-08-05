@@ -20,6 +20,7 @@ Features:
   - [Completion|Vim Plugin] Auto-import class names.
   - [Completion] Suggestion types now have more explicit types (e.g. `method`,
     `constant`, `class`, rather than the VIM-centric kind characters).
+  - [WorseReflection] Fallback to inferring property types from constructor assignments.
 
 Improvements:
 

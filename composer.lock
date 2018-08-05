@@ -614,12 +614,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "f5f2b9db5ed624643b00eac042fabe80a00d32a9"
+                "reference": "529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/f5f2b9db5ed624643b00eac042fabe80a00d32a9",
-                "reference": "f5f2b9db5ed624643b00eac042fabe80a00d32a9",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01",
+                "reference": "529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01",
                 "shasum": ""
             },
             "require": {
@@ -655,7 +655,7 @@
                 }
             ],
             "description": "Library for moving classes",
-            "time": "2018-05-04 12:44:57"
+            "time": "2018-08-04 19:37:16"
         },
         {
             "name": "phpactor/class-to-file",
@@ -979,12 +979,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "86e3fbdea0755df50aeeb038656761f56be33773"
+                "reference": "bd308e2ecad2e536cc90071a202e688bf0f2c83b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/86e3fbdea0755df50aeeb038656761f56be33773",
-                "reference": "86e3fbdea0755df50aeeb038656761f56be33773",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/bd308e2ecad2e536cc90071a202e688bf0f2c83b",
+                "reference": "bd308e2ecad2e536cc90071a202e688bf0f2c83b",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1023,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-07-06 14:18:15"
+            "time": "2018-08-05 15:01:44"
         },
         {
             "name": "phpbench/container",
@@ -3781,16 +3781,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "77454693d8f10dd23bb24955cffd2d82db1007a6"
+                "reference": "eecb388ec0f7e949747cc919458c9b990dd1c319"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/77454693d8f10dd23bb24955cffd2d82db1007a6",
-                "reference": "77454693d8f10dd23bb24955cffd2d82db1007a6",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/eecb388ec0f7e949747cc919458c9b990dd1c319",
+                "reference": "eecb388ec0f7e949747cc919458c9b990dd1c319",
                 "shasum": ""
             },
             "require": {
-                "paragonie/random_compat": "~1.0|~2.0",
+                "paragonie/random_compat": "~1.0|~2.0|~9.99",
                 "php": ">=5.3.3"
             },
             "type": "library",
@@ -3832,7 +3832,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-07-10 08:04:24"
         },
         {
             "name": "symfony/polyfill-php72",
