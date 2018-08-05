@@ -9,7 +9,7 @@ This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
 
-- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html).
+- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html) including class name auto-import.
 - [Various](https://phpactor.github.io/phpactor/refactorings.html) refactoring,fixes and code generation options.
 - Native [VIM plugin](https://phpactor.github.io/phpactor/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
 - [Navigation](https://phpactor.github.io/phpactor/navigation.html) (jump to
