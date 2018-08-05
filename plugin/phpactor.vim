@@ -23,11 +23,11 @@ if !exists('g:phpactorOmniError')
     let g:phpactorOmniError = v:false
 endif
 
-if !exists('g:phpactorAutoClassImport')
-    let g:phpactorAutoClassImport = v:true
+if !exists('g:phpactorOmniAutoClassImport')
+    let g:phpactorOmniAutoClassImport = v:true
 endif
 
-if g:phpactorAutoClassImport == v:true
+if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
 
