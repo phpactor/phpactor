@@ -145,6 +145,7 @@ The plugin has some configuration options:
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniError = v:false
+let g:phpactorOmniAutoClassImport = v:true
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -152,6 +153,8 @@ let g:phpactorOmniError = v:false
   bleeding edge).
 - `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
   completion is invoked.
+- `g:phpactorOmniAutoClassImport`: Automatically import classes when
+  completing class names with OmniComplete.
 
 Completion
 ----------
