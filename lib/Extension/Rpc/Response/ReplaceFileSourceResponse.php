@@ -17,15 +17,15 @@ class ReplaceFileSourceResponse implements Response
      */
     private $path;
 
-    private function __construct(string $path, string $originalSource, string $replacementSource)
+    private function __construct(string $path, string $replacementSource)
     {
         $this->replacementSource = $replacementSource;
         $this->path = $path;
     }
 
-    public static function fromPathOldAndNewSource(string $path, string $originalSource, string $replacementSource)
+    public static function fromPathAndSource(string $path, string $replacementSource)
     {
-        return new self($path, $originalSource, $replacementSource);
+        return new self($path, $replacementSource);
     }
 
     public function name(): string
@@ -44,10 +44,5 @@ class ReplaceFileSourceResponse implements Response
     public function path(): string
     {
         return $this->path;
-    }
-
-    public function newSource(): string
-    {
-        return $this->newSource;
     }
 }

@@ -103,6 +103,6 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             );
         }
 
-        return ReplaceFileSourceResponse::fromPathOldAndNewSource($code->path(), '', (string) $code);
+        return ReplaceFileSourceResponse::fromPathAndSource($code->path(), (string) $code);
     }
 }
