@@ -23,12 +23,15 @@ Features:
 
 Improvements:
 
-  - [Rpc|Vim Plugin] Source code is now updated (by way of a diff algorithm)
+  - [Rpc|VIM Plugin] Source code is now updated (by way of a diff algorithm)
     not replaced. The cursor position and undo history are maintained.
+  - [VIM Plugin] Regression test for Transform RPC call.
 
 Bug fixes:
 
   - [Completion] Fixed multi-byte issue with class completor.
+  - [VIM Plugin] Allow duplicate name suggestions (e.g. same class short-name
+    different FQNs) in omni-complete results.
 
 ## 2018-08-03 0.8.0
 
