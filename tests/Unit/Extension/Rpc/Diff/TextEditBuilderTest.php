@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\Rpc\Differ;
+namespace Phpactor\Tests\Unit\Extension\Rpc\Diff;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
@@ -52,7 +52,7 @@ EOT
             [
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
-                    'length' => 0,
+                    'end' => [ 'line' => 0, 'character' => 0 ],
                     'text' => 'new' . PHP_EOL,
                 ],
             ],
@@ -74,12 +74,12 @@ EOT
             [
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
-                    'length' => 9,
+                    'end' => [ 'line' => 1, 'character' => 0 ],
                     'text' => '',
                 ],
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
-                    'length' => 0,
+                    'end' => [ 'line' => 0, 'character' => 0 ],
                     'text' => 'neworiginal' . PHP_EOL,
                 ],
             ],
@@ -101,12 +101,12 @@ EOT
             [
                 [
                     'start' => [ 'line' => 2, 'character' => 0 ],
-                    'length' => 6,
+                    'end' => [ 'line' => 3, 'character' => 0 ],
                     'text' => '',
                 ],
                 [
                     'start' => [ 'line' => 2, 'character' => 0 ],
-                    'length' => 0,
+                    'end' => [ 'line' => 2, 'character' => 0 ],
                     'text' => 'original',
                 ],
             ],
