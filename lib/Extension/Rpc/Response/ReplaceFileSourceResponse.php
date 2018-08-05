@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Response;
 
+use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 use Phpactor\Extension\Rpc\Response;
 
 class ReplaceFileSourceResponse implements Response
@@ -38,11 +39,6 @@ class ReplaceFileSourceResponse implements Response
             'path' => $this->path,
             'source' => $this->replacementSource,
         ];
-    }
-
-    public function replacementSource(): string
-    {
-        return $this->replacementSource;
     }
 
     public function path(): string

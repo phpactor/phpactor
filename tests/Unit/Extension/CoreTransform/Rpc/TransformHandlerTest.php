@@ -10,7 +10,7 @@ use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class TransformHandlerTest extends HandlerTestCase
@@ -76,8 +76,8 @@ class TransformHandlerTest extends HandlerTestCase
             'path' => self::PATH,
         ]);
 
-        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $action);
-        $this->assertEquals(self::TRANSFORMED_SOURCE, $action->replacementSource());
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
+        $this->assertEquals(self::TRANSFORMED_SOURCE, $action->newSource());
         $this->assertEquals(self::PATH, $action->path());
     }
 }

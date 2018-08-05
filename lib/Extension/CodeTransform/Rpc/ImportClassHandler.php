@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
@@ -10,7 +11,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -131,10 +132,17 @@ class ImportClassHandler extends AbstractHandler
             return EchoResponse::fromMessage($e->getMessage());
         }
 
-        return ReplaceFileSourceResponse::fromPathAndSource(
-            $sourceCode->path(),
-            (string) $sourceCode
-        );
+        return CollectionResponse::fromActions([
+            UpdateFileSourceResponse::fromPathOldAndNewSource(
+                $sourceCode->path(),
+                $arguments[self::PARAM_SOURCE],
+                (string) $sourceCode
+            ),
+            EchoResponse::fromMessage(sprintf(
+                'Imported class "%s"',
+                $arguments[self::PARAM_NAME]
+            ))
+        ]);
     }
 
     private function suggestions(string $name)

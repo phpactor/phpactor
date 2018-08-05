@@ -8,7 +8,7 @@ use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
@@ -89,6 +89,6 @@ class RenameVariableHandlerTest extends HandlerTestCase
             RenameVariableHandler::PARAM_SCOPE => RenameVariable::SCOPE_FILE
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
+        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
     }
 }

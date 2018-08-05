@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
@@ -11,7 +12,7 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
@@ -112,7 +113,7 @@ class ImportClassHandlerTest extends HandlerTestCase
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
         ]);
 
-        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $response);
+        $this->assertInstanceOf(CollectionResponse::class, $response);
     }
 
     public function testAsksForAliasIfClassAlreadyUsed()
@@ -161,7 +162,7 @@ class ImportClassHandlerTest extends HandlerTestCase
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
         ]);
 
-        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $response);
+        $this->assertInstanceOf(CollectionResponse::class, $response);
     }
 
     public function testShowsMessageIfSelectedClassIsAlreadyImported()

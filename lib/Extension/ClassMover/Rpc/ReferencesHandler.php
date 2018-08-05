@@ -5,7 +5,7 @@ namespace Phpactor\Extension\ClassMover\Rpc;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
@@ -173,6 +173,7 @@ class ReferencesHandler extends AbstractHandler
         string $source
     )
     {
+        $originalSource = $source;
         list($source, $references) = $this->performFindOrReplaceReferences(
             $symbolContext,
             $filesystem,
@@ -189,7 +190,7 @@ class ReferencesHandler extends AbstractHandler
         ];
 
         if ($source) {
-            $actions[] = ReplaceFileSourceResponse::fromPathAndSource($path, $source);
+            $actions[] = UpdateFileSourceResponse::fromPathOldAndNewSource($path, $originalSource, $source);
         }
 
         if (count($references)) {

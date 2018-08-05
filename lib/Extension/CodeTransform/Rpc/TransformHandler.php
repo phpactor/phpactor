@@ -10,7 +10,7 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 
 class TransformHandler implements Handler
 {
@@ -52,7 +52,11 @@ class TransformHandler implements Handler
             $arguments['transform']
         ]);
 
-        return ReplaceFileSourceResponse::fromPathAndSource($arguments['path'], (string) $transformedCode);
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
+            $arguments['path'],
+            $arguments['source'],
+            (string) $transformedCode
+        );
     }
 
     private function transformerChoiceAction(string $path, string $source)

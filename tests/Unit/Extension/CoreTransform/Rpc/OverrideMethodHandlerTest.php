@@ -7,7 +7,7 @@ use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -78,7 +78,7 @@ EOT
             'source' => $source
         ]);
 
-        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $action);
-        $this->assertEquals('hello', $action->replacementSource());
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
+        $this->assertEquals('hello', $action->newSource());
     }
 }
