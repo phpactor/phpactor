@@ -56,7 +56,7 @@ class Status
         if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER, $filesystems)) {
             $diagnostics['good'][] = 'Composer detected - faster class location and more features!';
         } else {
-            $diagnostics['bad'][] = 'Composer not found - some functionality will not be available (e.g. class creation) and class location will fallback to scanning the filesystem - this can be slow.';
+            $diagnostics['bad'][] = 'Composer not found - some functionality will not be available (e.g. class creation) and class location will fallback to scanning the filesystem - this can be slow. Make sure you\'ve run `composer install` in your project!';
         }
 
         if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_GIT, $filesystems)) {
