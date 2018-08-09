@@ -29,6 +29,8 @@ use Phpactor\Extension\Completion\Application\Complete;
 
 class CompletionExtension implements Extension
 {
+    const CLASS_COMPLETOR_LIMIT = 'completion.completor.class.limit';
+
     /**
      * {@inheritDoc}
      */
@@ -44,6 +46,9 @@ class CompletionExtension implements Extension
      */
     public function configure(Resolver $schema)
     {
+        $schema->setDefaults([
+            self::CLASS_COMPLETOR_LIMIT => 100,
+        ]);
     }
 
     private function registerCompletion(ContainerBuilder $container)
@@ -85,7 +90,8 @@ class CompletionExtension implements Extension
         $container->register('completion.completor.tolerant.class', function (Container $container) {
             return new ScfClassCompletor(
                 $container->get('source_code_filesystem.registry')->get('composer'),
-                $container->get('class_to_file.file_to_class')
+                $container->get('class_to_file.file_to_class'),
+                $container->getParameter(self::CLASS_COMPLETOR_LIMIT)
             );
         }, [ 'completion.tolerant_completor' => []]);
 

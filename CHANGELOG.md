@@ -27,6 +27,7 @@ Improvements:
   - [Rpc|VIM Plugin] Source code is now updated (by way of a diff algorithm)
     not replaced. The cursor position and undo history are maintained.
   - [VIM Plugin] Regression test for Transform RPC call.
+  - [Application] Make class completion candidate limit configurable.
 
 Bug fixes:
 
