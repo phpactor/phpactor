@@ -4,11 +4,28 @@ namespace Phpactor\Tests\Unit\Extension\ClassToFile\Rpc;
 
 use Phpactor\Extension\ClassToFile\Application\FileInfo;
 use Phpactor\Extension\ClassToFile\Rpc\FileInfoHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
-use PHPUnit\Framework\TestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
-class FileInfoHandlerTest extends TestCase
+class FileInfoHandlerTest extends HandlerTestCase
 {
+    /**
+     * @var ObjectProphecy
+     */
+    private $fileInfo;
+
+    public function setUp()
+    {
+        $this->fileInfo = $this->prophesize(FileInfo::class);
+    }
+
+    protected function createHandler(): Handler
+    {
+        return new FileInfoHandler($this->fileInfo->reveal());
+    }
+
     public function testReturnsAResponseWithAFileInfo()
     {
         $path =  'src/Controller/BlogController.php';
@@ -18,12 +35,9 @@ class FileInfoHandlerTest extends TestCase
             'class_namespace' => 'App\Controller',
         ];
 
-        $fileInfo = $this->prophesize(FileInfo::class);
-        $fileInfo->infoForFile($path)->willReturn($result);
+        $this->fileInfo->infoForFile($path)->willReturn($result);
 
-        $handler = new FileInfoHandler($fileInfo->reveal());
-
-        $response = $handler->handle(['path' => $path]);
+        $response = $this->handle('file_info', ['path' => $path]);
 
         $this->assertInstanceOf(ReturnResponse::class, $response);
         $this->assertEquals($result, $response->parameters()['value']);
