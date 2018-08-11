@@ -6,7 +6,7 @@ use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 
-final class FileInfo
+class FileInfo
 {
     /**
      * @var FileToClass
