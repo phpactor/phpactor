@@ -256,6 +256,12 @@ function! phpactor#Config()
     call phpactor#rpc("config", {})
 endfunction
 
+function! phpactor#GetNamespace()
+    let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
+
+    return fileInfo['class_namespace']
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
