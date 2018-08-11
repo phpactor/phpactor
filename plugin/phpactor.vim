@@ -262,6 +262,12 @@ function! phpactor#GetNamespace()
     return fileInfo['class_namespace']
 endfunction
 
+function! phpactor#GetClassFullName()
+    let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
+
+    return fileInfo['class']
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
