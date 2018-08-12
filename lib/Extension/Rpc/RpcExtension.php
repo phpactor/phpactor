@@ -27,6 +27,7 @@ use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
+use Phpactor\Extension\ClassToFile\Rpc\FileInfoHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
@@ -153,6 +154,12 @@ class RpcExtension implements Extension
         $container->register('rpc.handler.extract_method', function (Container $container) {
             return new ExtractMethodHandler(
                 $container->get('code_transform.refactor.extract_method')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.file_info', function (Container $container) {
+            return new FileInfoHandler(
+                $container->get('application.file_info')
             );
         }, [ 'rpc.handler' => [] ]);
 

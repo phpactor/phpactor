@@ -1,0 +1,4 @@
+Execute:
+  execute "edit lib/Foo/Bar.php"
+  let fqn = phpactor#GetClassFullName()
+  AssertEqual 'Phpactor\Foo\Bar', fqn
