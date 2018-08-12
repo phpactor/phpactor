@@ -21,6 +21,9 @@ Features:
   - [Completion] Suggestion types now have more explicit types (e.g. `method`,
     `constant`, `class`, rather than the VIM-centric kind characters).
   - [WorseReflection] Fallback to inferring property types from constructor assignments.
+  - [RPC|Vim Plugin] RPC handler for file class info (e.g. namespace, class
+    FQN) and VIM functions new `phpactor#getNamespace()` and
+    `phpactir#getClassFullName()`. Thanks @voronkovich
 
 Improvements:
 
