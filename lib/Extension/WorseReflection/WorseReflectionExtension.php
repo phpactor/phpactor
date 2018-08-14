@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Phpactor\WorseReflection\Core\SourceCodeLocator\ReflectionFunctionSourceLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -74,7 +74,7 @@ class WorseReflectionExtension implements Extension
         }, [ 'reflection.source_locator' => []]);
 
         $container->register('reflection.locator.reflection_function', function (Container $container) {
-            return new ReflectionFunctionSourceLocator();
+            return new NativeReflectionFunctionSourceLocator();
         }, [ 'reflection.source_locator' => []]);
     }
 
