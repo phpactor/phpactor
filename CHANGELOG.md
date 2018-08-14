@@ -37,6 +37,8 @@ Bug fixes:
   - [Completion] Fixed multi-byte issue with class completor.
   - [VIM Plugin] Allow duplicate name suggestions (e.g. same class short-name
     different FQNs) in omni-complete results.
+  - [CodeBuilder] Builder attempts to act on a string (when return type is f.e.
+    self). #529
 
 ## 2018-08-03 0.8.0
 
