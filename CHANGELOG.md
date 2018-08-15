@@ -24,6 +24,8 @@ Features:
   - [RPC|Vim Plugin] RPC handler for file class info (e.g. namespace, class
     FQN) and VIM functions new `phpactor#getNamespace()` and
     `phpactir#getClassFullName()`. Thanks @voronkovich
+  - [WorseReflection] Reflect any user-defined functions parsed when including
+    the Composer autoloader. #562
 
 Improvements:
 
