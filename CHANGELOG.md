@@ -41,6 +41,8 @@ Bug fixes:
     different FQNs) in omni-complete results.
   - [CodeBuilder] Builder attempts to act on a string (when return type is f.e.
     self). #529
+  - [WorseReflection] Fix fatal error when `Parameter#getName()` returns NULL in
+    SymbolContextResolver. #533
 
 ## 2018-08-03 0.8.0
 
