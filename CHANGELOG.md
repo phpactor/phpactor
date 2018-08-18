@@ -26,6 +26,7 @@ Features:
     `phpactir#getClassFullName()`. Thanks @voronkovich
   - [WorseReflection] Reflect any user-defined functions parsed when including
     the Composer autoloader. #562
+  - [WorseReflection] Support trait alias maps. #540
 
 Improvements:
 
