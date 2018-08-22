@@ -980,12 +980,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8ea0e64927a94a48152e58d888aeaa59d5bc8201"
+                "reference": "c9950bc114e537fe0324c943f59c967ff863f61d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8ea0e64927a94a48152e58d888aeaa59d5bc8201",
-                "reference": "8ea0e64927a94a48152e58d888aeaa59d5bc8201",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/c9950bc114e537fe0324c943f59c967ff863f61d",
+                "reference": "c9950bc114e537fe0324c943f59c967ff863f61d",
                 "shasum": ""
             },
             "require": {
@@ -1024,7 +1024,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-08-18 21:23:16"
+            "time": "2018-08-22 19:45:51"
         },
         {
             "name": "phpbench/container",
@@ -2220,17 +2220,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "fab6cde4899dad966f26b49ac20a1c99becf3df9"
+                "reference": "791a415ba1a87a48f2916f918d708649e41ef375"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/fab6cde4899dad966f26b49ac20a1c99becf3df9",
-                "reference": "fab6cde4899dad966f26b49ac20a1c99becf3df9",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/791a415ba1a87a48f2916f918d708649e41ef375",
+                "reference": "791a415ba1a87a48f2916f918d708649e41ef375",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
-                "composer/xdebug-handler": "^1.0",
+                "composer/xdebug-handler": "^1.2",
                 "doctrine/annotations": "^1.2",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
@@ -2308,7 +2308,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-08-10 11:20:40"
+            "time": "2018-08-22 19:06:11"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3061,12 +3061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "814ba320fe659956f52e02ab3c6e36df50641929"
+                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/814ba320fe659956f52e02ab3c6e36df50641929",
-                "reference": "814ba320fe659956f52e02ab3c6e36df50641929",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/24da433d7384824d65ea93fbb462e2f31bbb494e",
+                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e",
                 "shasum": ""
             },
             "require": {
@@ -3137,7 +3137,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-14 09:46:01"
+            "time": "2018-08-22 06:32:48"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
