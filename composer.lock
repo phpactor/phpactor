@@ -63,16 +63,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "e1809da56ce1bd1b547a752936817341ac244d8e"
+                "reference": "e37cbd80da64afe314c72de8d2d2fec0e40d9373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/e1809da56ce1bd1b547a752936817341ac244d8e",
-                "reference": "e1809da56ce1bd1b547a752936817341ac244d8e",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/e37cbd80da64afe314c72de8d2d2fec0e40d9373",
+                "reference": "e37cbd80da64afe314c72de8d2d2fec0e40d9373",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-08-16T10:54:23+00:00"
+            "time": "2018-08-23T12:00:19+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -804,12 +804,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "9497d3c351a23f5f1a6fca60d83108dfbdd1b177"
+                "reference": "3efb6196dee8776846c2c7d6a0709764204e8af1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/9497d3c351a23f5f1a6fca60d83108dfbdd1b177",
-                "reference": "9497d3c351a23f5f1a6fca60d83108dfbdd1b177",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/3efb6196dee8776846c2c7d6a0709764204e8af1",
+                "reference": "3efb6196dee8776846c2c7d6a0709764204e8af1",
                 "shasum": ""
             },
             "require": {
@@ -845,7 +845,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-08-18 21:22:44"
+            "time": "2018-08-25 14:38:14"
         },
         {
             "name": "phpactor/docblock",
@@ -2220,12 +2220,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "791a415ba1a87a48f2916f918d708649e41ef375"
+                "reference": "7136aa4e0c5f912e8af82383775460d906168a10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/791a415ba1a87a48f2916f918d708649e41ef375",
-                "reference": "791a415ba1a87a48f2916f918d708649e41ef375",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7136aa4e0c5f912e8af82383775460d906168a10",
+                "reference": "7136aa4e0c5f912e8af82383775460d906168a10",
                 "shasum": ""
             },
             "require": {
@@ -2308,7 +2308,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-08-22 19:06:11"
+            "time": "2018-08-23 13:15:44"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3061,12 +3061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e"
+                "reference": "6a24e4d487727e799d2ffa33a1b2f4164f412cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/24da433d7384824d65ea93fbb462e2f31bbb494e",
-                "reference": "24da433d7384824d65ea93fbb462e2f31bbb494e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6a24e4d487727e799d2ffa33a1b2f4164f412cc4",
+                "reference": "6a24e4d487727e799d2ffa33a1b2f4164f412cc4",
                 "shasum": ""
             },
             "require": {
@@ -3137,7 +3137,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-08-22 06:32:48"
+            "time": "2018-08-24 14:02:14"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
