@@ -6,7 +6,7 @@ Phpactor
 | Branch       | Status                                                                                                                         |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | master       | [![Build Status: master](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)  |
-| develop      | [![Build Status: develop](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor) |
+| develop      | [![Build Status: develop](https://travis-ci.org/phpactor/phpactor.svg?branch=develop)](https://travis-ci.org/phpactor/phpactor) |
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
