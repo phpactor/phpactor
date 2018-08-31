@@ -3,7 +3,8 @@ Phpactor
 
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
-[![Build Status](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)
+[![Build Status: master](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)
+[![Build Status: develop](https://travis-ci.org/phpactor/phpactor.svg?branch=develop)](https://travis-ci.org/phpactor/phpactor)
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
