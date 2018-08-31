@@ -151,13 +151,17 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function findReferences(SymbolContext $symbolContext, string $filesystem, string $replacement = null)
+    private function findReferences(SymbolContext $symbolContext, string $filesystem)
     {
         list($source, $references) = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
 
         if (count($references) === 0) {
             return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
         }
+
+        $references = array_filter($references, function (array $referenceList) {
+            return false === empty($referenceList['references']);
+        });
 
         return CollectionResponse::fromActions([
             $this->echoMessage('Found', $symbolContext, $filesystem, $references),
