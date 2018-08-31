@@ -63,16 +63,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "e37cbd80da64afe314c72de8d2d2fec0e40d9373"
+                "reference": "b8e9745fb9b06ea6664d8872c4505fb16df4611c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/e37cbd80da64afe314c72de8d2d2fec0e40d9373",
-                "reference": "e37cbd80da64afe314c72de8d2d2fec0e40d9373",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/b8e9745fb9b06ea6664d8872c4505fb16df4611c",
+                "reference": "b8e9745fb9b06ea6664d8872c4505fb16df4611c",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-08-23T12:00:19+00:00"
+            "time": "2018-08-31T19:07:57+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -980,12 +980,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "1371dc51460abc1d1b1e648c9a1231652fb1aaf5"
+                "reference": "768a91ffaa66d555cd3219fa31278d71ab4097b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/1371dc51460abc1d1b1e648c9a1231652fb1aaf5",
-                "reference": "1371dc51460abc1d1b1e648c9a1231652fb1aaf5",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/768a91ffaa66d555cd3219fa31278d71ab4097b8",
+                "reference": "768a91ffaa66d555cd3219fa31278d71ab4097b8",
                 "shasum": ""
             },
             "require": {
@@ -1024,7 +1024,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-08-27 17:18:01"
+            "time": "2018-08-31 20:50:00"
         },
         {
             "name": "phpbench/container",

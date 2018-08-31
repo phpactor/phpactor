@@ -35,6 +35,7 @@ Improvements:
     not replaced. The cursor position and undo history are maintained.
   - [VIM Plugin] Regression test for Transform RPC call.
   - [Application] Make class completion candidate limit configurable.
+  - [WorseReflection] Foreach Frame walker: inject keys in foreach loop, #578
 
 Bug fixes:
 
