@@ -36,6 +36,8 @@ Improvements:
   - [VIM Plugin] Regression test for Transform RPC call.
   - [Application] Make class completion candidate limit configurable.
   - [WorseReflection] Foreach Frame walker: inject keys in foreach loop, #578
+  - [RPC] find references: Do not return files with no concrete references,
+    #581
 
 Bug fixes:
 
