@@ -57,7 +57,7 @@ class OpenFileResponse implements Response
         return $this->path;
     }
 
-    public function withForcedReload(bool $bool)
+    public function withForcedReload(bool $bool): OpenFileResponse
     {
         $new = clone $this;
         $new->forceReload = $bool;
