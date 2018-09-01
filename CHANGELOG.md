@@ -17,6 +17,7 @@ Deprecations:
 
 Features:
 
+  - [RPC] `open_file` command now has a `force_reload` flag
   - [Completion|Vim Plugin] Auto-import class names (thanks @kermorgant for
     improvements)
   - [Completion] Suggestion types now have more explicit types (e.g. `method`,

@@ -194,6 +194,15 @@ class ReferencesHandler extends AbstractHandler
         ];
 
         if ($source) {
+            // renaming methods modifies files on disk. some editors track if
+            // the file has been modified on the disk and issue a warning if
+            // the open file is not in sync. below we reload the file before
+            // applying changes (the changes from the rename operation,
+            // including any changes made after the file was last saved).
+            if (file_exists($path)) {
+                $actions[] = OpenFileResponse::fromPath($path)->withForcedReload(true);
+                $originalSource = file_get_contents($path);
+            }
             $actions[] = UpdateFileSourceResponse::fromPathOldAndNewSource($path, $originalSource, $source);
         }
 

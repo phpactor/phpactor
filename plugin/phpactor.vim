@@ -513,6 +513,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "open_file"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
+        if a:parameters['force_reload'] == v:true
+            exec ":e!"
+        endif
+
         if (a:parameters['offset'])
             exec ":goto " .  (a:parameters['offset'] + 1)
             normal! zz
