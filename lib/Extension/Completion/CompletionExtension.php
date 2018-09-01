@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Completion;
 
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\FunctionFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
@@ -75,6 +76,13 @@ class CompletionExtension implements Extension
 
         $container->register('completion.completor.parameter', function (Container $container) {
             return new WorseParameterCompletor(
+                $container->get('reflection.reflector'),
+                $container->get('completion.formatter')
+            );
+        }, [ 'completion.tolerant_completor' => []]);
+
+        $container->register('completion.completor.constructor', function (Container $container) {
+            return new WorseConstructorCompletor(
                 $container->get('reflection.reflector'),
                 $container->get('completion.formatter')
             );
