@@ -212,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d"
+                "reference": "3cab40356d8f30a0bb9d817ed4c33c097a4f0edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/c0970c7889bfd33504c4fa54f35451c27897381d",
-                "reference": "c0970c7889bfd33504c4fa54f35451c27897381d",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/3cab40356d8f30a0bb9d817ed4c33c097a4f0edf",
+                "reference": "3cab40356d8f30a0bb9d817ed4c33c097a4f0edf",
                 "shasum": ""
             },
             "require": {
@@ -255,13 +255,16 @@
                     "email": "schmittjoh@gmail.com"
                 }
             ],
-            "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "http://www.doctrine-project.org",
+            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
             "keywords": [
+                "annotations",
+                "docblock",
                 "lexer",
-                "parser"
+                "parser",
+                "php"
             ],
-            "time": "2018-05-14 15:49:16"
+            "time": "2018-09-01 01:23:47"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -709,12 +712,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "db575ea5c438ec93f21334ff77f3fde63da80a27"
+                "reference": "68832ef137c9af323180f42c3787d54f3c94579e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/db575ea5c438ec93f21334ff77f3fde63da80a27",
-                "reference": "db575ea5c438ec93f21334ff77f3fde63da80a27",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/68832ef137c9af323180f42c3787d54f3c94579e",
+                "reference": "68832ef137c9af323180f42c3787d54f3c94579e",
                 "shasum": ""
             },
             "require": {
@@ -748,7 +751,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-08-13 21:01:48"
+            "time": "2018-09-01 11:49:03"
         },
         {
             "name": "phpactor/code-transform",
@@ -2166,12 +2169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+                "reference": "83b5716aee90e1f733512942c635ac350cbd533c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/83b5716aee90e1f733512942c635ac350cbd533c",
+                "reference": "83b5716aee90e1f733512942c635ac350cbd533c",
                 "shasum": ""
             },
             "require": {
@@ -2212,7 +2215,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2018-09-01 02:07:49"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
