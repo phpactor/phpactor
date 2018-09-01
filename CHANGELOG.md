@@ -29,6 +29,7 @@ Features:
   - [WorseReflection] Reflect any user-defined functions parsed when including
     the Composer autoloader. #562
   - [WorseReflection] Support trait alias maps. #540
+  - [RPC] Return semantic RPC protocol version in response (starting at `1.0.0`).
 
 Improvements:
 
