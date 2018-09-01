@@ -38,6 +38,8 @@ Improvements:
   - [WorseReflection] Foreach Frame walker: inject keys in foreach loop, #578
   - [RPC] find references: Do not return files with no concrete references,
     #581
+  - [CodeBuilder] Tracks which nodes have been modified after factory
+    creation.
 
 Bug fixes:
 
@@ -48,6 +50,7 @@ Bug fixes:
     self). #529
   - [WorseReflection] Fix fatal error when `Parameter#getName()` returns NULL in
     SymbolContextResolver. #533
+  - [CodeBuilder] Fix for unrelated methods being updated, #583
 
 ## 2018-08-03 0.8.0
 
