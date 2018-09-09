@@ -43,6 +43,8 @@ Improvements:
     #581
   - [CodeBuilder] Tracks which nodes have been modified after factory
     creation.
+  - [ClassToFile] Composer class-to-file strategy no longer discards inferior
+    prefix lengths from consideration, fixes #576
 
 Bug fixes:
 
