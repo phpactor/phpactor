@@ -857,12 +857,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "9d06f3955d555594558cb9163ee2ca4a3996a1bb"
+                "reference": "ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/9d06f3955d555594558cb9163ee2ca4a3996a1bb",
-                "reference": "9d06f3955d555594558cb9163ee2ca4a3996a1bb",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52",
+                "reference": "ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52",
                 "shasum": ""
             },
             "require-dev": {
@@ -885,7 +885,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-09-04 20:31:28"
+            "time": "2018-09-09 14:00:15"
         },
         {
             "name": "phpactor/path-finder",
