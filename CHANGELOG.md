@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2018-08-04 0.9.0
 
 BC Breaks:
 
