@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
@@ -66,6 +66,6 @@ class ExtractConstantHandlerTest extends HandlerTestCase
             'constant_name' => self::CONSTANT_NAME,
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
+        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
     }
 }

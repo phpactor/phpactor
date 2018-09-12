@@ -1,6 +1,62 @@
 Changelog
 =========
 
+## 2018-08-04 0.9.0
+
+BC Breaks:
+
+  - [RPC Plugins] a new `update_file_source` method is now returned by most
+    code-transforming RPC handlers (e.g. import class, complete constructors).
+    this is used in place of `replace_file_source`.
+    See [https://github.com/phpactor/phpactor/issues/550](#550) for details
+
+Deprecations:
+
+  - [Completion|Completion Plugins] Serialized key `info` is deprecated in favour of
+    `short_description` and could be removed, at least, in 0.10.0.
+
+Features:
+
+  - [RPC] `open_file` command now has a `force_reload` flag
+  - [Completion|Vim Plugin] Auto-import class names (thanks @kermorgant for
+    improvements)
+  - [Completion] Suggestion types now have more explicit types (e.g. `method`,
+    `constant`, `class`, rather than the VIM-centric kind characters).
+  - [WorseReflection] Fallback to inferring property types from constructor assignments.
+  - [RPC|Vim Plugin] RPC handler for file class info (e.g. namespace, class
+    FQN) and VIM functions new `phpactor#getNamespace()` and
+    `phpactir#getClassFullName()`. Thanks @voronkovich
+  - [WorseReflection] Reflect any user-defined functions parsed when including
+    the Composer autoloader. #562
+  - [WorseReflection] Support trait alias maps. #540
+  - [RPC] Return semantic RPC protocol version in response (starting at `1.0.0`).
+  - [Completion] Complete constructor parameters.
+
+Improvements:
+
+  - [Rpc|VIM Plugin] Source code is now updated (by way of a diff algorithm)
+    not replaced. The cursor position and undo history are maintained.
+  - [VIM Plugin] Regression test for Transform RPC call.
+  - [Application] Make class completion candidate limit configurable.
+  - [WorseReflection] Foreach Frame walker: inject keys in foreach loop, #578
+  - [RPC] find references: Do not return files with no concrete references,
+    #581
+  - [CodeBuilder] Tracks which nodes have been modified after factory
+    creation.
+  - [ClassToFile] Composer class-to-file strategy no longer discards inferior
+    prefix lengths from consideration, fixes #576
+
+Bug fixes:
+
+  - [Completion] Fixed multi-byte issue with class completor.
+  - [VIM Plugin] Allow duplicate name suggestions (e.g. same class short-name
+    different FQNs) in omni-complete results.
+  - [CodeBuilder] Builder attempts to act on a string (when return type is f.e.
+    self). #529
+  - [WorseReflection] Fix fatal error when `Parameter#getName()` returns NULL in
+    SymbolContextResolver. #533
+  - [CodeBuilder] Fix for unrelated methods being updated, #583
+
 ## 2018-08-03 0.8.0
 
 Improvements:

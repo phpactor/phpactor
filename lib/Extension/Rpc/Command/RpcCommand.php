@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Command;
 
+use Phpactor\Extension\Rpc\RpcVersion;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -68,6 +69,7 @@ class RpcCommand extends Command
         }
 
         $output->write(json_encode([
+            'version' => RpcVersion::asString(),
             'action' => $response->name(),
             'parameters' => $response->parameters(),
         ], $flags), false, OutputInterface::OUTPUT_RAW);

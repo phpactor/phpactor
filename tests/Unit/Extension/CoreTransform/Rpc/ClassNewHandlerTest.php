@@ -14,6 +14,7 @@ use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
 class ClassNewHandlerTest extends HandlerTestCase

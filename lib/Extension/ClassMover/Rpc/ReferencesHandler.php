@@ -5,7 +5,7 @@ namespace Phpactor\Extension\ClassMover\Rpc;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
@@ -151,13 +151,17 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function findReferences(SymbolContext $symbolContext, string $filesystem, string $replacement = null)
+    private function findReferences(SymbolContext $symbolContext, string $filesystem)
     {
         list($source, $references) = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
 
         if (count($references) === 0) {
             return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
         }
+
+        $references = array_filter($references, function (array $referenceList) {
+            return false === empty($referenceList['references']);
+        });
 
         return CollectionResponse::fromActions([
             $this->echoMessage('Found', $symbolContext, $filesystem, $references),
@@ -173,6 +177,7 @@ class ReferencesHandler extends AbstractHandler
         string $source
     )
     {
+        $originalSource = $source;
         list($source, $references) = $this->performFindOrReplaceReferences(
             $symbolContext,
             $filesystem,
@@ -189,7 +194,16 @@ class ReferencesHandler extends AbstractHandler
         ];
 
         if ($source) {
-            $actions[] = ReplaceFileSourceResponse::fromPathAndSource($path, $source);
+            // renaming methods modifies files on disk. some editors track if
+            // the file has been modified on the disk and issue a warning if
+            // the open file is not in sync. below we reload the file before
+            // applying changes (the changes from the rename operation,
+            // including any changes made after the file was last saved).
+            if (file_exists($path)) {
+                $actions[] = OpenFileResponse::fromPath($path)->withForcedReload(true);
+                $originalSource = file_get_contents($path);
+            }
+            $actions[] = UpdateFileSourceResponse::fromPathOldAndNewSource($path, $originalSource, $source);
         }
 
         if (count($references)) {

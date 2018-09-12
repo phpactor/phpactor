@@ -7,7 +7,7 @@ use Phpactor\Extension\CodeTransform\Rpc\ExtractExpressionHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 
@@ -70,6 +70,6 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
             'variable_name' => self::VARIABLE_NAME,
         ]);
 
-        $this->assertInstanceof(ReplaceFileSourceResponse::class, $action);
+        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
     }
 }

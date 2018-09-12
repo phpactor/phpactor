@@ -6,7 +6,7 @@ use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
@@ -330,10 +330,10 @@ class ReferencesHandlerTest extends HandlerTestCase
         $first = $action->actions()[0];
         $this->assertInstanceOf(EchoResponse::class, $first);
         $second = $action->actions()[1];
-        $this->assertInstanceOf(ReplaceFileSourceResponse::class, $second);
-        assert($second instanceof ReplaceFileSourceResponse);
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $second);
+        assert($second instanceof UpdateFileSourceResponse);
         $third = $action->actions()[2];
-        $this->assertEquals('<?php hallo', $second->replacementSource());
+        $this->assertEquals('<?php hallo', $second->newSource());
         $this->assertInstanceOf(FileReferencesResponse::class, $third);
     }
 

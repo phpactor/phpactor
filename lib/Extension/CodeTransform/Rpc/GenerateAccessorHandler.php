@@ -4,7 +4,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
@@ -50,8 +50,9 @@ class GenerateAccessorHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        return ReplaceFileSourceResponse::fromPathAndSource(
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $sourceCode->path(),
+            $arguments[self::PARAM_SOURCE],
             (string) $sourceCode
         );
     }

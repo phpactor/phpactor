@@ -3,11 +3,22 @@ Phpactor
 
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
-[![Build Status](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)
+| Branch       | Status                                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| master       | [![Build Status: master](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)  |
+| develop      | [![Build Status: develop](https://travis-ci.org/phpactor/phpactor.svg?branch=develop)](https://travis-ci.org/phpactor/phpactor) |
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
+
+- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html) including class name auto-import.
+- [Various](https://phpactor.github.io/phpactor/refactorings.html) refactoring,fixes and code generation options.
+- Native [VIM plugin](https://phpactor.github.io/phpactor/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
+- [Navigation](https://phpactor.github.io/phpactor/navigation.html) (jump to
+  definition, related classes, references etc).
+- Context menu.
+- [More](http://phpactor.github.io/phpactor).
 
 Installation
 ------------
@@ -21,12 +32,14 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 7.
+- PHP 7.0+
+- Composer
 
-Recommended
------------
+Project Recommendations
+-----------------------
 
-- Composer and GIT
+Phpactor will perform better with [Composer](https://getcomposer.org) and, to
+a lesser extent, with [GiT](https://git-scm.org).
 
 Documentation
 -------------

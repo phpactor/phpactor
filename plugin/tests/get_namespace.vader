@@ -1,0 +1,4 @@
+Execute:
+  execute "edit lib/Foo/Bar.php"
+  let namespace = phpactor#GetNamespace()
+  AssertEqual 'Phpactor\Foo', namespace

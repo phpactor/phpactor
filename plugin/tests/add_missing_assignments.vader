@@ -1,0 +1,39 @@
+Given php ():
+  <?php
+
+  use Phpactor\Phpactor;
+  
+  class Foobar
+  {
+      public function foobar()
+      {
+          $this->phpactor = new Phpactor();
+          $this->foobar = 'string';
+      }
+  }
+Do (put the cursor over an existing class name and add use):
+  :call phpactor#Transform("add_missing_properties")\<Enter>
+
+Expect php (assignments to be added):
+  <?php
+
+  use Phpactor\Phpactor;
+  
+  class Foobar
+  {
+      /**
+       * @var Phpactor
+       */
+      private $phpactor;
+      /**
+       * @var string
+       */
+      private $foobar;
+
+      public function foobar()
+      {
+          $this->phpactor = new Phpactor();
+          $this->foobar = 'string';
+      }
+  }
+

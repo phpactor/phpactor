@@ -4,7 +4,7 @@ namespace Phpactor\Extension\CodeTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
@@ -49,9 +49,21 @@ class GenerateMethodHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        return ReplaceFileSourceResponse::fromPathAndSource(
+        $originalSource = $this->determineOriginalSource($sourceCode, $arguments);
+
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $sourceCode->path(),
+            $originalSource,
             (string) $sourceCode
         );
+    }
+
+    private function determineOriginalSource(SourceCode $sourceCode, array $arguments)
+    {
+        $originalSource = $sourceCode->path() === $arguments[self::PARAM_PATH] ? 
+            $arguments[self::PARAM_SOURCE] : 
+            file_get_contents($sourceCode->path());
+
+        return $originalSource;
     }
 }

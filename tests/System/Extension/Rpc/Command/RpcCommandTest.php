@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Rpc\Command;
 
+use Phpactor\Extension\Rpc\RpcVersion;
 use Phpactor\Tests\System\SystemTestCase;
 
 class RpcCommandTest extends SystemTestCase
@@ -27,6 +28,7 @@ class RpcCommandTest extends SystemTestCase
             'parameters' => [
                 'message' => 'Hello World',
             ],
+            'version' => RpcVersion::asString(),
         ], $response);
     }
 
@@ -68,6 +70,7 @@ class RpcCommandTest extends SystemTestCase
             'parameters' => [
                 'message' => $randomString,
             ],
+            'version' => RpcVersion::asString(),
         ], $response);
     }
 }

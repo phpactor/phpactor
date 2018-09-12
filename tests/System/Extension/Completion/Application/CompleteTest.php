@@ -15,8 +15,9 @@ class CompleteTest extends SystemTestCase
     {
         $result = $this->complete($source);
 
-        $this->assertEquals($expected, $result['suggestions']);
-        $this->assertEquals(json_encode($expected, true), json_encode($result['suggestions'], true));
+        foreach ($expected as $index => $expectedSuggestion) {
+            $this->assertArraySubset($expectedSuggestion, $result['suggestions'][$index]);
+        }
     }
 
     public function provideComplete()
@@ -37,9 +38,9 @@ $foobar-><>
 EOT
         , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'foo',
-                        'info' => 'pub $foo',
+                        'short_description' => 'pub $foo',
                     ]
                 ]
             ],
@@ -82,9 +83,9 @@ $foobar->foo-><>
 EOT
                , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'bar',
-                        'info' => 'pub $bar',
+                        'short_description' => 'pub $bar',
                     ]
                 ]
             ],
@@ -105,9 +106,9 @@ $foobar-><>
 EOT
                 , [
                     [
-                        'type' => 'f',
+                        'type' => 'method',
                         'name' => 'foo',
-                        'info' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
+                        'short_description' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
                     ]
                 ]
             ],
@@ -131,9 +132,9 @@ $foobar-><>
 EOT
                 , [
                     [
-                        'type' => 'f',
+                        'type' => 'method',
                         'name' => 'foo',
-                        'info' => 'pub foo(): Foobar|Barbar',
+                        'short_description' => 'pub foo(): Foobar|Barbar',
                     ]
                 ]
             ],
@@ -155,7 +156,7 @@ EOT
                 , [
                 ]
             ],
-            'Static method' => [
+            'Static property' => [
                 <<<'EOT'
 <?php
 
@@ -170,13 +171,13 @@ $foobar::<>
 EOT
                 , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'foo',
-                        'info' => 'pub static $foo',
+                        'short_description' => 'pub static $foo',
                     ]
                 ]
             ],
-            'Static method with previous arrow accessor' => [
+            'Static property with previous arrow accessor' => [
                 <<<'EOT'
 <?php
 
@@ -196,14 +197,14 @@ $foobar->me::<>
 EOT
                 , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'foo',
-                        'info' => 'pub static $foo',
+                        'short_description' => 'pub static $foo',
                     ],
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'me',
-                        'info' => 'pub $me: Foobar',
+                        'short_description' => 'pub $me: Foobar',
                     ]
                 ]
             ],
@@ -223,9 +224,9 @@ $foobar::f<>
 EOT
                 , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'foobar',
-                        'info' => 'pub static $foobar',
+                        'short_description' => 'pub static $foobar',
                     ]
                 ]
             ],
@@ -245,14 +246,14 @@ $foobar::<>
 EOT
                 , [
                     [
-                        'type' => 'm',
+                        'type' => 'constant',
                         'name' => 'BARFOO',
-                        'info' => 'const BARFOO',
+                        'short_description' => 'const BARFOO',
                     ],
                     [
-                        'type' => 'm',
+                        'type' => 'constant',
                         'name' => 'FOOBAR',
-                        'info' => 'const FOOBAR',
+                        'short_description' => 'const FOOBAR',
                     ],
                 ],
             ],
@@ -272,9 +273,9 @@ $foobar
 EOT
                 , [
                     [
-                        'type' => 'm',
+                        'type' => 'property',
                         'name' => 'foobar',
-                        'info' => 'pub $foobar',
+                        'short_description' => 'pub $foobar',
                     ],
                 ],
             ]

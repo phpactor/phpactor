@@ -9,6 +9,7 @@
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
+let g:_phpactorCompletionMeta = {}
 
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
@@ -20,6 +21,14 @@ endif
 
 if !exists('g:phpactorOmniError')
     let g:phpactorOmniError = v:false
+endif
+
+if !exists('g:phpactorOmniAutoClassImport')
+    let g:phpactorOmniAutoClassImport = v:true
+endif
+
+if g:phpactorOmniAutoClassImport == v:true
+    autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
 
 """""""""""""""""
@@ -70,9 +79,18 @@ function! phpactor#Complete(findstart, base)
     let issues = result['issues']
 
     let completions = []
+    let g:_phpactorCompletionMeta = {}
+
     if !empty(suggestions)
         for suggestion in suggestions
-            call add(completions, { 'word': suggestion['name'], 'menu': suggestion['info'], 'kind': suggestion['type']})
+            let completion = { 
+                        \ 'word': suggestion['name'], 
+                        \ 'menu': suggestion['short_description'],
+                        \ 'kind': suggestion['type'],
+                        \ 'dup': 1
+                        \ }
+            call add(completions, completion)
+            let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
         endfor
     endif
 
@@ -84,6 +102,36 @@ function! phpactor#Complete(findstart, base)
 
     return completions
 endfunc
+
+function! phpactor#_completionItemHash(completion)
+    return a:completion['word'] . a:completion['menu'] . a:completion['kind']
+endfunction
+
+function! phpactor#_completeImportClass(completedItem)
+
+    if !has_key(a:completedItem, "word")
+        return
+    endif
+
+    let hash = phpactor#_completionItemHash(a:completedItem)
+    if !has_key(g:_phpactorCompletionMeta, hash)
+        return
+    endif
+
+    let suggestion = g:_phpactorCompletionMeta[hash]
+
+    if has_key(suggestion, "class_import")
+        call phpactor#rpc("import_class", {
+                    \ "qualified_name": suggestion['class_import'], 
+                    \ "name": suggestion['name'], 
+                    \ "offset": phpactor#_offset(), 
+                    \ "source": phpactor#_source(), 
+                    \ "path": expand('%:p')})
+    endif
+
+    let g:_phpactorCompletionMeta = {}
+
+endfunction
 
 """"""""""""""""""""""""
 " Extract method
@@ -160,9 +208,17 @@ function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-function! phpactor#Transform()
+function! phpactor#Transform(...)
+    let transform = get(a:, 1, '')
+
     let currentPath = expand('%:p')
-    call phpactor#rpc("transform", { "path": currentPath, "source": phpactor#_source() })
+    let args = { "path": currentPath, "source": phpactor#_source() }
+
+    if transform != ''
+        let args.transform = transform
+    endif
+
+    call phpactor#rpc("transform", args)
 endfunction
 
 function! phpactor#ClassNew()
@@ -200,10 +256,27 @@ function! phpactor#Config()
     call phpactor#rpc("config", {})
 endfunction
 
+function! phpactor#GetNamespace()
+    let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
+
+    return fileInfo['class_namespace']
+endfunction
+
+function! phpactor#GetClassFullName()
+    let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
+
+    return fileInfo['class']
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
 function! phpactor#_switchToBufferOrEdit(filePath)
+    if expand('%:p') == a:filePath
+        " filePath is currently open
+        return
+    endif
+
     let bufferNumber = bufnr(a:filePath . '$')
 
     if (bufferNumber == -1)
@@ -240,6 +313,54 @@ function! phpactor#_selectionEnd()
     endif
 
     return line2byte(lineEnd) + columnEnd -1
+endfunction
+
+function! phpactor#_applyTextEdits(path, edits)
+    call phpactor#_switchToBufferOrEdit(a:path)
+
+    let postCursorPosition = getpos('.')
+
+    for edit in a:edits
+
+        let newLines = 0
+
+        " start = { line: 1234, character: 0 }
+        let start = edit['start']
+
+        " end = { line: 1234, character: 0 }
+        let end = edit['end']
+
+        " move the cursor into the start position
+        call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
+
+        if start['character'] != 0 || end['character'] != 0
+            throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
+        endif
+
+        " to delete
+        let linesToDelete = end['line'] - start['line']
+        if linesToDelete > 0
+            call execute('normal ' . linesToDelete . 'dd')
+        endif
+
+        if edit['text'] == "\n"
+            " if this is just a new line, add a new line
+            call append(start['line'], '')
+            let newLines = 1
+        else
+            " insert characters after the current line
+            let appendLines = split(edit['text'], "\n")
+            call append(start['line'], appendLines)
+            let newLines = newLines + len(appendLines)
+        endif
+
+        if postCursorPosition[1] > start['line']
+            let postCursorPosition[1] = postCursorPosition[1] + newLines
+        endif
+
+    endfor
+
+    call setpos('.', postCursorPosition)
 endfunction
 
 
@@ -392,6 +513,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "open_file"
         call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
+        if a:parameters['force_reload'] == v:true
+            exec ":e!"
+        endif
+
         if (a:parameters['offset'])
             exec ":goto " .  (a:parameters['offset'] + 1)
             normal! zz
@@ -466,6 +591,19 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         execute ":1"
         silent write!
         wincmd p
+        return
+    endif
+
+    " >> update file source
+    "
+    " NOTE: This method currently works on a line-by-line basis as currently
+    "       supported by Phpactor. We calculate the cursor offset by the
+    "       number of lines inserted before the actual cursor line. Character
+    "       offset is not taken into account, so same-line edits will cause an
+    "       incorrect post-edit cursor character offset.
+    "
+    if a:actionName == "update_file_source"
+        call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
         return
     endif
 
