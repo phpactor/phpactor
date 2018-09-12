@@ -374,7 +374,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
+    let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . getcwd()
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)
