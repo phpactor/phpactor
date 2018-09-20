@@ -3,6 +3,10 @@ Changelog
 
 ## develop
 
+Features:
+
+  - [Completion] Class alias completor, #592
+
 Improvements:
 
   - [Transform] Complete constructor will work work on ! interfaces #597
