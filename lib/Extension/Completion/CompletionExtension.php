@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Completion;
 
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassAliasCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\FunctionFormatter;
@@ -119,6 +120,12 @@ class CompletionExtension implements Extension
 
         $container->register('completion.completor.constant', function (Container $container) {
             return new WorseConstantCompletor();
+        }, [ 'completion.tolerant_completor' => []]);
+
+        $container->register('completion.completor.class_alias', function (Container $container) {
+            return new WorseClassAliasCompletor(
+                $container->get('reflection.reflector')
+            );
         }, [ 'completion.tolerant_completor' => []]);
 
         $container->register('completion.formatter', function (Container $container) {
