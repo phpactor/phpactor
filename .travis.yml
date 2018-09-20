@@ -46,6 +46,7 @@ jobs:
     - php: 7.1
     - php: 7.2
     - stage: docs
+      php: 7.2
       if: branch = master
       before_script:
         - git config --global user.email "phpactor@dantleech.com"
