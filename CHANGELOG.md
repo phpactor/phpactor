@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Improvements:
+
+  - [Transform] Complete constructor will work work on ! interfaces #597
+
 ## 2018-08-04 0.9.0
 
 BC Breaks:
