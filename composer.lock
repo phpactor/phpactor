@@ -808,12 +808,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "68d5b5e4ff41e2591ea8ac5ac3aa9b991b8ceff7"
+                "reference": "925080fe0bf371a27744fdb2e53a31c629e1a787"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/68d5b5e4ff41e2591ea8ac5ac3aa9b991b8ceff7",
-                "reference": "68d5b5e4ff41e2591ea8ac5ac3aa9b991b8ceff7",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/925080fe0bf371a27744fdb2e53a31c629e1a787",
+                "reference": "925080fe0bf371a27744fdb2e53a31c629e1a787",
                 "shasum": ""
             },
             "require": {
@@ -849,7 +849,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-09-20 20:23:34"
+            "time": "2018-09-24 19:53:04"
         },
         {
             "name": "phpactor/docblock",
@@ -1733,12 +1733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "2ebfe5ac6657af23239c852f8129a148e46285d9"
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ebfe5ac6657af23239c852f8129a148e46285d9",
-                "reference": "2ebfe5ac6657af23239c852f8129a148e46285d9",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
                 "shasum": ""
             },
             "require": {
@@ -1784,7 +1784,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-09-20 10:06:00"
+            "time": "2018-09-21 13:07:52"
         },
         {
             "name": "symfony/process",
@@ -3778,12 +3778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "1e24b0c4a56d55aaf368763a06c6d1c7d3194934"
+                "reference": "6b88000cdd431cd2e940caa2cb569201f3f84224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/1e24b0c4a56d55aaf368763a06c6d1c7d3194934",
-                "reference": "1e24b0c4a56d55aaf368763a06c6d1c7d3194934",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/6b88000cdd431cd2e940caa2cb569201f3f84224",
+                "reference": "6b88000cdd431cd2e940caa2cb569201f3f84224",
                 "shasum": ""
             },
             "require": {
@@ -3829,7 +3829,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-08-06 14:22:27"
+            "time": "2018-09-21 06:26:08"
         },
         {
             "name": "symfony/polyfill-php72",
@@ -3837,12 +3837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
-                "reference": "04614652b1e906e18f5bc5fcc2f18b7b0b88d683"
+                "reference": "9050816e2ca34a8e916c3a0ae8b9c2fccf68b631"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/04614652b1e906e18f5bc5fcc2f18b7b0b88d683",
-                "reference": "04614652b1e906e18f5bc5fcc2f18b7b0b88d683",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/9050816e2ca34a8e916c3a0ae8b9c2fccf68b631",
+                "reference": "9050816e2ca34a8e916c3a0ae8b9c2fccf68b631",
                 "shasum": ""
             },
             "require": {
@@ -3884,7 +3884,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-09-20 10:06:00"
+            "time": "2018-09-21 13:07:52"
         },
         {
             "name": "symfony/stopwatch",

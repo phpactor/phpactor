@@ -10,6 +10,8 @@ Features:
 Improvements:
 
   - [Transform] Complete constructor will work work on ! interfaces #597
+  - [Completion] Completion qualifiers to allow reusable way to determine
+    candidate completors.
 
 ## 2018-08-04 0.9.0
 
