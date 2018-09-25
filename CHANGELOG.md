@@ -3,6 +3,10 @@ Changelog
 
 ## develop
 
+BC Break:
+
+  - [php] Bumped minimum PHP version to 7.1
+
 Features:
 
   - [Completion] Class alias completor, #592
