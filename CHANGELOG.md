@@ -3,6 +3,10 @@ Changelog
 
 ## develop
 
+BC Break:
+
+  - [php] Bumped minimum PHP version to 7.1
+
 Features:
 
   - [Completion] Class alias completor, #592
@@ -10,6 +14,8 @@ Features:
 Improvements:
 
   - [Transform] Complete constructor will work work on ! interfaces #597
+  - [Completion] Completion qualifiers to allow reusable way to determine
+    candidate completors.
 
 ## 2018-08-04 0.9.0
 
