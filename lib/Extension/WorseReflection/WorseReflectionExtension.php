@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
@@ -12,7 +13,8 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler as RpcGotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler as LspGotoDefinitionHandler;
 use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflection\Application\ClassReflector;
@@ -36,6 +38,7 @@ class WorseReflectionExtension implements Extension
     {
         $this->registerReflection($container);
         $this->registerGotoDefinition($container);
+        $this->registerLanguageServer($container);
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
     }
@@ -81,7 +84,7 @@ class WorseReflectionExtension implements Extension
     private function registerGotoDefinition(ContainerBuilder $container)
     {
         $container->register('rpc.handler.goto_definition', function (Container $container) {
-            return new GotoDefinitionHandler(
+            return new RpcGotoDefinitionHandler(
                 $container->get('reflection.reflector')
             );
         }, [ 'rpc.handler' => [] ]);
@@ -117,5 +120,15 @@ class WorseReflectionExtension implements Extension
                 $container->get('console.dumper_registry')
             );
         }, [ 'ui.console.command' => []]);
+    }
+
+    private function registerLanguageServer(ContainerBuilder $container)
+    {
+        $container->register('language_server.handler.goto_definition', function (Container $container) {
+            return new LspGotoDefinitionHandler(
+                $container->get('language_server.session_manager'),
+                $container->get('reflection.reflector')
+            );
+        }, [ 'language_server.handler' => [] ]);
     }
 }

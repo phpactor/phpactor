@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Handler;
+namespace Phpactor\Extension\Completion\LanguageServer;
 
 use Generator;
 use LanguageServerProtocol\CompletionItem;

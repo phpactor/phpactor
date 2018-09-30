@@ -6,8 +6,8 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
-use Phpactor\Extension\LanguageServer\Handler\CompletionHandler;
-use Phpactor\Extension\LanguageServer\Handler\GotoDefinitionHandler;
+use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
+use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\MapResolver\Resolver;
@@ -48,19 +48,5 @@ class LanguageServerExtension implements Extension
         $container->register('language_server.session_manager', function (Container $container) {
             return new Manager();
         });
-
-        $container->register('language_server.handler.completion', function (Container $container) {
-            return new CompletionHandler(
-                $container->get('language_server.session_manager'),
-                $container->get('completion.completor')
-            );
-        }, [ 'language_server.handler' => [] ]);
-
-        $container->register('language_server.handler.goto_definition', function (Container $container) {
-            return new GotoDefinitionHandler(
-                $container->get('language_server.session_manager'),
-                $container->get('reflection.reflector')
-            );
-        }, [ 'language_server.handler' => [] ]);
     }
 }

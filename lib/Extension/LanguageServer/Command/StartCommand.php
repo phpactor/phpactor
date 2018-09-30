@@ -40,6 +40,4 @@ class StartCommand extends Command
 
         $builder->build()->start();
     }
-
-
 }
