@@ -51,7 +51,7 @@ class CompletionHandler implements Handler
         foreach ($response->suggestions() as $suggestion) {
             $completionList->items[] = new CompletionItem(
                 $suggestion->name(),
-                null,
+                PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                 $suggestion->shortDescription()
             );
         }
