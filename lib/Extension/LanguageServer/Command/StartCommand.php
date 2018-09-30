@@ -34,11 +34,16 @@ class StartCommand extends Command
         $this->setDescription('EXPERIMENTAL start a Phpactor language server');
         $this->addOption('stdio', null, InputOption::VALUE_NONE);
         $this->addOption('address', null, InputOption::VALUE_REQUIRED, 'Address to start TCP serve', '127.0.0.1:8888');
+        $this->addOption('record', null, InputOption::VALUE_REQUIRED, 'Record the incoming requests');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $builder = $this->languageServerBuilder;
+
+        if ($input->getOption('record')) {
+            $builder->recordTo($input->getOption('record'));
+        }
 
         if ($input->getOption('stdio')) {
             $builder->stdIoServer();

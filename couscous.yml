@@ -48,6 +48,9 @@ menu:
         other:
             name: Other topics
             items:
+                lsp:
+                    text: Language Server (experimental)
+                    relativeUrl: lsp.html
                 integrations:
                     text: Integrations
                     relativeUrl: integrations.html
