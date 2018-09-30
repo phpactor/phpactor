@@ -61,17 +61,17 @@ class GotoDefinitionHandler implements Handler
         );
         $result = $this->gotoDefinition->gotoDefinition($offsetReflection->symbolContext());
 
+        // this _should_ exist for sure, but would be better to refactor the
+        // goto definition result to return the source code.
+        $sourceCode = file_get_contents($result->path());
+
         $startPosition = OffsetHelper::offsetToPosition(
-            file_get_contents($result->path()),
-            $result->offset()
-        );
-        $endPosition = OffsetHelper::offsetToPosition(
-            file_get_contents($result->path()),
+            $sourceCode,
             $result->offset()
         );
 
         $location = new Location('file://'.$result->path(), new Range(
-            $startPosition, $endPosition
+            $startPosition, $startPosition
         ));
 
         yield $location;
