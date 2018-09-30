@@ -49,16 +49,7 @@ class GotoDefinitionHandler implements Handler
 
     public function __invoke(
         TextDocumentIdentifier $textDocument,
-        Position $position,
-        string $buftype = null,
-        string $character = null,
-        string $filename = null,
-        string $gotoCmd = null,
-        string $handle = null,
-        string $languageId = null,
-        string $line = null,
-        string $method = null,
-        array $text = null
+        Position $position
     ): Generator
     {
         $textDocument = $this->sessionManager->current()->workspace()->get($textDocument->uri);
