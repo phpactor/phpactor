@@ -10,6 +10,8 @@ BC Break:
 Features:
 
   - [Completion] Class alias completor, #592
+  - [LSP] Experimental language server support (completion and goto
+    definition)
 
 Improvements:
 

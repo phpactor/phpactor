@@ -1,11 +1,9 @@
-#!/usr/bin/env bash
-set -e
 
 echo "Testing Phpactor dependencies"
 echo "============================="
 echo ""
 
-for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock; do
+for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock language-server; do
     echo ""
     echo "Testing: "$dep
     echo ""

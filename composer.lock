@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "edea83d2ffbc98c2d3c593bbd9243ad6",
+    "content-hash": "9f3a13d10ee9eabb68bd81f5fe939f66",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -105,6 +105,48 @@
                 "performance"
             ],
             "time": "2018-08-31T19:07:57+00:00"
+        },
+        {
+            "name": "dantleech/argument-resolver",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/dantleech/argument-resolver.git",
+                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=a3bb13ed9cff37ae46638924f02b6159250c3726",
+                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DTL\\ArgumentResolver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Resolve method arguments from an associative array",
+            "time": "2018-09-30 09:50:30"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -266,6 +308,53 @@
                 "php"
             ],
             "time": "2018-09-01 01:23:47"
+        },
+        {
+            "name": "felixfbecker/language-server-protocol",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/felixfbecker/php-language-server-protocol.git",
+                "reference": "1bdd1bcc95428edf85ec04c7b558d0886c07280f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/felixfbecker/php-language-server-protocol/zipball/1bdd1bcc95428edf85ec04c7b558d0886c07280f",
+                "reference": "1bdd1bcc95428edf85ec04c7b558d0886c07280f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": "^6.3",
+                "squizlabs/php_codesniffer": "^3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LanguageServerProtocol\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Felix Becker",
+                    "email": "felix.b@outlook.com"
+                }
+            ],
+            "description": "PHP classes for the Language Server Protocol",
+            "keywords": [
+                "language",
+                "microsoft",
+                "php",
+                "server"
+            ],
+            "time": "2018-09-25T11:42:25+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -450,12 +539,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "7ea773435b57ede3507c162c86e8a013625bcccf"
+                "reference": "54a84f1250dcde5641e86b5e966fec5f0e201f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/7ea773435b57ede3507c162c86e8a013625bcccf",
-                "reference": "7ea773435b57ede3507c162c86e8a013625bcccf",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/54a84f1250dcde5641e86b5e966fec5f0e201f71",
+                "reference": "54a84f1250dcde5641e86b5e966fec5f0e201f71",
                 "shasum": ""
             },
             "require": {
@@ -483,7 +572,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2018-09-10 01:10:27"
+            "time": "2018-09-26 05:43:26"
         },
         {
             "name": "monolog/monolog",
@@ -886,6 +975,54 @@
             ],
             "description": "Simple Docblock Parser",
             "time": "2018-09-09 14:00:15"
+        },
+        {
+            "name": "phpactor/language-server",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/language-server.git",
+                "reference": "bb6e99518e8ebabee60fa016951c7f917773d96c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/bb6e99518e8ebabee60fa016951c7f917773d96c",
+                "reference": "bb6e99518e8ebabee60fa016951c7f917773d96c",
+                "shasum": ""
+            },
+            "require": {
+                "dantleech/argument-resolver": "^1.0@dev",
+                "felixfbecker/language-server-protocol": "^1.0",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.3",
+                "phpunit/phpunit": "^7.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\LanguageServer\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Phpactor Language Server",
+            "time": "2018-09-30 16:13:18"
         },
         {
             "name": "phpactor/path-finder",
@@ -1394,16 +1531,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.15",
+            "version": "v3.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "6b217594552b9323bcdcfc14f8a0ce126e84cd73"
+                "reference": "1cbaac35024c9dfc9612b7e2310e82677bf85709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/6b217594552b9323bcdcfc14f8a0ce126e84cd73",
-                "reference": "6b217594552b9323bcdcfc14f8a0ce126e84cd73",
+                "url": "https://api.github.com/repos/symfony/console/zipball/1cbaac35024c9dfc9612b7e2310e82677bf85709",
+                "reference": "1cbaac35024c9dfc9612b7e2310e82677bf85709",
                 "shasum": ""
             },
             "require": {
@@ -1459,7 +1596,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T11:19:56+00:00"
+            "time": "2018-09-30T03:37:36+00:00"
         },
         {
             "name": "symfony/debug",
@@ -1523,12 +1660,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "68bc3e48dcdc144f8595e1374861ff3b348b0042"
+                "reference": "f89ab242d915d188fca95ee3291c72c5a094a195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/68bc3e48dcdc144f8595e1374861ff3b348b0042",
-                "reference": "68bc3e48dcdc144f8595e1374861ff3b348b0042",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/f89ab242d915d188fca95ee3291c72c5a094a195",
+                "reference": "f89ab242d915d188fca95ee3291c72c5a094a195",
                 "shasum": ""
             },
             "require": {
@@ -1565,7 +1702,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2018-09-08 13:15:14"
+            "time": "2018-09-30 03:32:28"
         },
         {
             "name": "symfony/finder",
@@ -1901,12 +2038,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "e90c78610221f9d8e9d00a4baa2f71bb2b6ba189"
+                "reference": "5dd532eed87b6b3b1aec28957dd7a4b67ac6e79a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e90c78610221f9d8e9d00a4baa2f71bb2b6ba189",
-                "reference": "e90c78610221f9d8e9d00a4baa2f71bb2b6ba189",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/5dd532eed87b6b3b1aec28957dd7a4b67ac6e79a",
+                "reference": "5dd532eed87b6b3b1aec28957dd7a4b67ac6e79a",
                 "shasum": ""
             },
             "require": {
@@ -1960,7 +2097,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-09-20 14:27:31"
+            "time": "2018-09-27 14:33:35"
         },
         {
             "name": "webmozart/assert",
@@ -2175,19 +2312,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3"
+                "reference": "8f58c558d3263405c13df40489c35fe1eefd8f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8788c31191242bca77a260b1d2c2621f18c9c1c3",
-                "reference": "8788c31191242bca77a260b1d2c2621f18c9c1c3",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8f58c558d3263405c13df40489c35fe1eefd8f0e",
+                "reference": "8f58c558d3263405c13df40489c35fe1eefd8f0e",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^4.0",
+                "doctrine/coding-standard": "^5.0",
                 "ext-pdo": "*",
                 "ext-phar": "*",
                 "phpbench/phpbench": "^0.13",
@@ -2222,7 +2359,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2018-09-05 19:40:54"
+            "time": "2018-09-25 21:32:24"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -3648,7 +3785,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": "^7.1"
             },
             "type": "library",
             "extra": {
@@ -3998,6 +4135,7 @@
         "microsoft/tolerant-php-parser": 20,
         "phpactor/completion": 20,
         "sebastian/diff": 20,
+        "phpactor/language-server": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20

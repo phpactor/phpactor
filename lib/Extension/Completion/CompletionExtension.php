@@ -24,6 +24,7 @@ use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Completion\Command\CompleteCommand;
@@ -40,6 +41,7 @@ class CompletionExtension implements Extension
     {
         $this->registerCompletion($container);
         $this->registerCommands($container);
+        $this->registerLanguageServer($container);
         $this->registerApplicationServices($container);
     }
 
@@ -159,5 +161,16 @@ class CompletionExtension implements Extension
                 $container->get('application.helper.class_file_normalizer')
             );
         });
+    }
+
+    private function registerLanguageServer(ContainerBuilder $container)
+    {
+        $container->register('completion.language_server.completion', function (Container $container) {
+            return new CompletionHandler(
+                $container->get('language_server.session_manager'),
+                $container->get('completion.completor')
+            );
+        }, [ 'language_server.handler' => [] ]);
+
     }
 }
