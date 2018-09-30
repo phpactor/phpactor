@@ -112,12 +112,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/dantleech/argument-resolver.git",
-                "reference": "ad145cb1be62a24f579a3464b921c515749acaf2"
+                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=ad145cb1be62a24f579a3464b921c515749acaf2",
-                "reference": "ad145cb1be62a24f579a3464b921c515749acaf2",
+                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=a3bb13ed9cff37ae46638924f02b6159250c3726",
+                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726",
                 "shasum": ""
             },
             "require-dev": {
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Resolve method arguments from an associative array",
-            "time": "2018-07-22 16:57:30"
+            "time": "2018-09-30 09:50:30"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -982,12 +982,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "8fac6ff8be769ca3b80caa1337ef1a50f5112587"
+                "reference": "03082d2d3481f088a10cb8b3f3d35979559c1a72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/8fac6ff8be769ca3b80caa1337ef1a50f5112587",
-                "reference": "8fac6ff8be769ca3b80caa1337ef1a50f5112587",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/03082d2d3481f088a10cb8b3f3d35979559c1a72",
+                "reference": "03082d2d3481f088a10cb8b3f3d35979559c1a72",
                 "shasum": ""
             },
             "require": {
@@ -1022,7 +1022,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2018-09-29 17:53:35"
+            "time": "2018-09-30 10:27:04"
         },
         {
             "name": "phpactor/path-finder",
@@ -1531,16 +1531,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.15",
+            "version": "v3.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "6b217594552b9323bcdcfc14f8a0ce126e84cd73"
+                "reference": "1cbaac35024c9dfc9612b7e2310e82677bf85709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/6b217594552b9323bcdcfc14f8a0ce126e84cd73",
-                "reference": "6b217594552b9323bcdcfc14f8a0ce126e84cd73",
+                "url": "https://api.github.com/repos/symfony/console/zipball/1cbaac35024c9dfc9612b7e2310e82677bf85709",
+                "reference": "1cbaac35024c9dfc9612b7e2310e82677bf85709",
                 "shasum": ""
             },
             "require": {
@@ -1596,7 +1596,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-07-26T11:19:56+00:00"
+            "time": "2018-09-30T03:37:36+00:00"
         },
         {
             "name": "symfony/debug",
@@ -1660,12 +1660,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "68bc3e48dcdc144f8595e1374861ff3b348b0042"
+                "reference": "f89ab242d915d188fca95ee3291c72c5a094a195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/68bc3e48dcdc144f8595e1374861ff3b348b0042",
-                "reference": "68bc3e48dcdc144f8595e1374861ff3b348b0042",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/f89ab242d915d188fca95ee3291c72c5a094a195",
+                "reference": "f89ab242d915d188fca95ee3291c72c5a094a195",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1702,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2018-09-08 13:15:14"
+            "time": "2018-09-30 03:32:28"
         },
         {
             "name": "symfony/finder",
