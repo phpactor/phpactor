@@ -34,15 +34,25 @@ class LanguageServerExtension implements Extension
             );
             $builder->coreHandlers();
 
-            foreach ($container->getServiceIdsForTag('language_server.handler') as $handlerId => $attrs) {
-                $builder->addHandler($container->get($handlerId));
+            foreach ($container->get('language_server.handlers') as $handler) {
+                $builder->addHandler($handler);
             }
 
             return $builder;
         });
 
+        $container->register('language_server.handlers', function (Container $container) {
+            $handlers = [];
+            foreach ($container->getServiceIdsForTag('language_server.handler') as $handlerId => $attrs) {
+                $handler = $container->get($handlerId);
+                $handlers[$handler->name()] = $handler;
+            }
+
+            return $handlers;
+        });
+
         $container->register('language_server.command.lsp_start', function (Container $container) {
-            return new StartCommand($container->get('language_server.builder'));
+            return new StartCommand($container->get('language_server.builder'), array_keys($container->get('language_server.handlers')));
         }, [ 'ui.console.command' => []]);
 
         $container->register('language_server.session_manager', function (Container $container) {
