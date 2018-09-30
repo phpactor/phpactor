@@ -24,14 +24,15 @@ class StartCommand extends Command
 
     protected function configure()
     {
-        $this->setName('lsp:start');
+        $this->setName('server:start');
         $this->addOption('stdio', null, InputOption::VALUE_NONE);
+        $this->addOption('address', null, InputOption::VALUE_REQUIRED, 'Address to start TCP serve', '127.0.0.1:8888');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $builder = $this->languageServerBuilder;
-        $builder->tcpServer();
+        $builder->tcpServer($input->getOption('address'));
 
         if ($input->getOption('stdio')) {
             $builder->stdIoServer();
