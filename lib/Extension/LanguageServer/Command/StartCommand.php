@@ -21,7 +21,6 @@ class StartCommand extends Command
      */
     private $handlerNames;
 
-
     public function __construct(LanguageServerBuilder $languageServerBuilder, array $handlerNames)
     {
         parent::__construct();
@@ -50,7 +49,7 @@ class StartCommand extends Command
         $builder->tcpServer($input->getOption('address'));
 
         $output->writeln('<info>Starting TCP server, use -vvv for verbose output</>');
-        $output->writeln('<info>Registered Phpactor handlers:</>: ' . implode(', ', $this->handlerNames));
+        $output->writeln('<info>Phpactor handlers:</>: ' . implode(', ', $this->handlerNames));
 
         $server = $builder->build();
         $server->start();
