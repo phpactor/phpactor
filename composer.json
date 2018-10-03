@@ -21,7 +21,7 @@
         "composer/xdebug-handler": "^1.1",
         "sebastian/diff": "2.0.x-dev",
         "ocramius/package-versions": "^1.2",
-        "phpactor/language-server": "^1.0@dev"
+        "phpactor/language-server": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
