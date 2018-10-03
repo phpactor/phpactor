@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\WorseReflection;
 
 use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler;
+use Phpactor\Extension\WorseReflection\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
@@ -124,11 +125,11 @@ class WorseReflectionExtension implements Extension
 
     private function registerLanguageServer(ContainerBuilder $container)
     {
-        $container->register('language_server.handler.goto_definition', function (Container $container) {
-            return new LspGotoDefinitionHandler(
+        $container->register('reflection.language_server.extension', function (Container $container) {
+            return new WorseReflectionLanguageExtension(
                 $container->get('language_server.session_manager'),
                 $container->get('reflection.reflector')
             );
-        }, [ 'language_server.handler' => [] ]);
+        }, [ 'language_server.extension' => [] ]);
     }
 }
