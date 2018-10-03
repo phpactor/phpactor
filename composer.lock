@@ -982,12 +982,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "bb6e99518e8ebabee60fa016951c7f917773d96c"
+                "reference": "0a659af6a8417e2953a5e7c79d58685482152a8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/bb6e99518e8ebabee60fa016951c7f917773d96c",
-                "reference": "bb6e99518e8ebabee60fa016951c7f917773d96c",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/0a659af6a8417e2953a5e7c79d58685482152a8a",
+                "reference": "0a659af6a8417e2953a5e7c79d58685482152a8a",
                 "shasum": ""
             },
             "require": {
@@ -1022,7 +1022,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2018-09-30 16:13:18"
+            "time": "2018-10-03 14:17:45"
         },
         {
             "name": "phpactor/path-finder",
