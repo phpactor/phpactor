@@ -29,6 +29,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Completion\Command\CompleteCommand;
 use Phpactor\Extension\Completion\Application\Complete;
+use Phpactor\Extension\Completion\LanguageServer\CompletionLanguageExtension;
 
 class CompletionExtension implements Extension
 {
@@ -166,11 +167,11 @@ class CompletionExtension implements Extension
     private function registerLanguageServer(ContainerBuilder $container)
     {
         $container->register('completion.language_server.completion', function (Container $container) {
-            return new CompletionHandler(
+            return new CompletionLanguageExtension(
                 $container->get('language_server.session_manager'),
                 $container->get('completion.completor')
             );
-        }, [ 'language_server.handler' => [] ]);
+        }, [ 'language_server.extension' => [] ]);
 
     }
 }
