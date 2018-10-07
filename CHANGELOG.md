@@ -19,6 +19,11 @@ Improvements:
   - [Completion] Completion qualifiers to allow reusable way to determine
     candidate completors.
 
+Other:
+
+  - [Completion] Completors now `yield` suggestions and problems are no longer
+    returned. The `issues` key returned from suggestions is now deprecated.
+
 ## 2018-08-04 0.9.0
 
 BC Breaks:
