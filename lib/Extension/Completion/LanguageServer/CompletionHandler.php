@@ -38,22 +38,23 @@ class CompletionHandler implements Handler
     public function __invoke(TextDocumentItem $textDocument, Position $position): Generator
     {
         $textDocument = $this->sessionManager->current()->workspace()->get($textDocument->uri);
-        $completionList = new CompletionList();
 
-        $response = $this->completor->complete(
+        $suggestions = $this->completor->complete(
             $textDocument->text,
             $position->toOffset($textDocument->text)
         );
 
-        /**
-         * @var Suggestion $suggestion
-         */
-        foreach ($response->suggestions() as $suggestion) {
+        $completionList = new CompletionList();
+        $completionList->isIncomplete = true;
+
+        foreach ($suggestions as $suggestion) {
+            /** @var Suggestion $suggestion */
             $completionList->items[] = new CompletionItem(
                 $suggestion->name(),
                 PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                 $suggestion->shortDescription()
             );
+
         }
 
         yield $completionList;

@@ -362,12 +362,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "7c563fb4fe2c671419b0937445df1dc563e95ab5"
+                "reference": "7faeb15c4dae254e3aadc1176463ca1b6e098b80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/7c563fb4fe2c671419b0937445df1dc563e95ab5",
-                "reference": "7c563fb4fe2c671419b0937445df1dc563e95ab5",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/7faeb15c4dae254e3aadc1176463ca1b6e098b80",
+                "reference": "7faeb15c4dae254e3aadc1176463ca1b6e098b80",
                 "shasum": ""
             },
             "require-dev": {
@@ -392,7 +392,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-10-01 16:12:09"
+            "time": "2018-10-04 13:34:19"
         },
         {
             "name": "lstrojny/functional-php",
@@ -897,12 +897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "a526eb922d30a96887541c746cdba8007f2fde10"
+                "reference": "d0385f91b168a6800ca0788295a5fb0289eebe7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/a526eb922d30a96887541c746cdba8007f2fde10",
-                "reference": "a526eb922d30a96887541c746cdba8007f2fde10",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/d0385f91b168a6800ca0788295a5fb0289eebe7b",
+                "reference": "d0385f91b168a6800ca0788295a5fb0289eebe7b",
                 "shasum": ""
             },
             "require": {
@@ -912,6 +912,7 @@
                 "phpbench/phpbench": "^1.0@dev"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/test-utils": "^1.0@dev",
                 "phpstan/phpstan": "^0.10.0@dev",
                 "phpunit/phpunit": "^7.0"
@@ -938,7 +939,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-09-25 21:13:24"
+            "time": "2018-10-07 10:19:30"
         },
         {
             "name": "phpactor/docblock",
@@ -1262,12 +1263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "7a33cea9dcb39fd14c29e69f1dea3070ebecae21"
+                "reference": "dcbe193e1696326b2f026f6d44a16637a61f8e1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/7a33cea9dcb39fd14c29e69f1dea3070ebecae21",
-                "reference": "7a33cea9dcb39fd14c29e69f1dea3070ebecae21",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/dcbe193e1696326b2f026f6d44a16637a61f8e1a",
+                "reference": "dcbe193e1696326b2f026f6d44a16637a61f8e1a",
                 "shasum": ""
             },
             "require": {
@@ -1283,7 +1284,7 @@
                 "phpbench/container": "~1.2",
                 "phpbench/dom": "~0.2.0",
                 "seld/jsonlint": "^1.0",
-                "symfony/console": "^2.6|^3.0|^4.0",
+                "symfony/console": "^3.2|^4.0",
                 "symfony/debug": "^2.4|^3.0|^4.0",
                 "symfony/filesystem": "^2.4|^3.0|^4.0",
                 "symfony/finder": "^2.4|^3.0|^4.0",
@@ -1330,7 +1331,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-09-08 09:00:14"
+            "time": "2018-10-06 15:25:58"
         },
         {
             "name": "psr/container",
@@ -2367,12 +2368,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "7136aa4e0c5f912e8af82383775460d906168a10"
+                "reference": "a06a649aae5e777094a626897e3b044b65c3a715"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7136aa4e0c5f912e8af82383775460d906168a10",
-                "reference": "7136aa4e0c5f912e8af82383775460d906168a10",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/a06a649aae5e777094a626897e3b044b65c3a715",
+                "reference": "a06a649aae5e777094a626897e3b044b65c3a715",
                 "shasum": ""
             },
             "require": {
@@ -2455,7 +2456,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-08-23 13:15:44"
+            "time": "2018-10-05 09:22:44"
         },
         {
             "name": "myclabs/deep-copy",

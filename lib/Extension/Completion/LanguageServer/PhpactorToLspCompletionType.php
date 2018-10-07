@@ -7,7 +7,7 @@ use Phpactor\Completion\Core\Suggestion;
 
 class PhpactorToLspCompletionType
 {
-    public static function fromPhpactorType(string $suggestionType)
+    public static function fromPhpactorType(?string $suggestionType)
     {
         switch ($suggestionType):
             case Suggestion::TYPE_METHOD:

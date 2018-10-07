@@ -13,10 +13,13 @@ class CompleteTest extends SystemTestCase
      */
     public function testComplete(string $source, array $expected)
     {
-        $result = $this->complete($source);
+        $suggestions = $this->complete($source)['suggestions'];
+        usort($suggestions, function ($one, $two) {
+            return $one['name'] <=> $two['name'];
+        });
 
         foreach ($expected as $index => $expectedSuggestion) {
-            $this->assertArraySubset($expectedSuggestion, $result['suggestions'][$index]);
+            $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }
     }
 
@@ -289,72 +292,5 @@ EOT
         $result = $complete->complete($source, $offset);
 
         return $result;
-    }
-
-    /**
-     * @dataProvider provideErrors
-     */
-    public function testErrors(string $source, array $expected)
-    {
-        $results = $this->complete($source);
-        $this->assertEquals($expected, $results['issues']);
-    }
-
-    public function provideErrors()
-    {
-        return [
-            [
-                <<<'EOT'
-<?php
-
-$asd = 'asd';
-$asd-><>
-EOT
-                ,
-                [
-                    'Cannot complete members on scalar value (string)',
-                ]
-            ],
-            [
-                <<<'EOT'
-<?php
-
-$asd-><>
-EOT
-                ,
-                [
-                    'Variable "asd" is undefined',
-                ]
-            ],
-            [
-                <<<'EOT'
-<?php
-
-$asd = new BooBar();
-$asd-><>
-EOT
-                ,
-                [
-                    'Could not find class "BooBar"',
-                ]
-            ],
-            [
-                <<<'EOT'
-<?php
-
-class Foobar
-{
-    public $foobar;
-}
-
-$foobar = new Foobar();
-$foobar->barbar-><>;
-EOT
-                ,
-                [
-                    'Class "Foobar" has no properties named "barbar"',
-                ]
-            ]
-        ];
     }
 }
