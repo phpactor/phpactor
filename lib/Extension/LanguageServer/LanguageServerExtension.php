@@ -61,7 +61,7 @@ class LanguageServerExtension implements Extension
             return new Manager();
         });
 
-        $container->register('language_server.extension.code', function (Container $container) {
+        $container->register('language_server.extension.core', function (Container $container) {
             return new CoreLanguageExtension($container->get('language_server.session_manager'));
         }, [ 'language_server.extension' => [] ]);
     }

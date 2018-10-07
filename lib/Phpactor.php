@@ -30,12 +30,13 @@ class Phpactor
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
         $config[CoreExtension::VENDOR_DIRECTORY] = $vendorDir;
+        $config[CoreExtension::COMMAND] = $input->getFirstArgument();
 
         $cwd = getcwd();
+
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
-        $config['command'] = $input->getFirstArgument();
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
             $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
