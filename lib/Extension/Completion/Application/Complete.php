@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Completion\Application;
 
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\Suggestion;
 
 class Complete
 {
@@ -18,11 +19,14 @@ class Complete
 
     public function complete(string $source, int $offset): array
     {
-        $result = $this->competor->complete($source, $offset);
+        $suggestions = iterator_to_array($this->competor->complete($source, $offset));
+        $suggestions = array_map(function (Suggestion $suggestion) {
+            return $suggestion->toArray();
+        }, $suggestions);
 
         return [
-            'suggestions' => $result->suggestions()->sorted()->toArray(),
-            'issues' => $result->issues()->toArray(),
+            'suggestions' => $suggestions,
+            'issues' => [],
         ];
     }
 }
