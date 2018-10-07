@@ -2,9 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Extension\LanguageServer\Extension;
 
+use LanguageServerProtocol\Position;
+use LanguageServerProtocol\Range;
+use LanguageServerProtocol\TextDocumentContentChangeEvent;
+use LanguageServerProtocol\TextDocumentItem;
+use LanguageServerProtocol\VersionedTextDocumentIdentifier;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServer\Extension\DidChangeHandler;
 use Phpactor\LanguageServer\Core\Session\Manager;
+use Phpactor\LanguageServer\Core\Transport\NotificationMessage;
 
 class DidChangeHandlerTest extends TestCase
 {
@@ -17,11 +23,6 @@ class DidChangeHandlerTest extends TestCase
      */
     private $handler;
 
-    /**
-     * @var DidChangeHandler
-     */
-    private $handler2;
-
     public function setUp()
     {
         $this->manager = new Manager('foo');
@@ -30,6 +31,17 @@ class DidChangeHandlerTest extends TestCase
 
     public function testClearsDiagnostics()
     {
-        $this->handler->name();
+        $this->manager->initialize('foo');
+        $this->manager->current()->workspace()->open(new TextDocumentItem('foo', 'bar'));
+
+        $document = new VersionedTextDocumentIdentifier('foo', 0);
+        $generator = $this->handler->__invoke($document, [
+            new TextDocumentContentChangeEvent(new Range(new Position(0, 0), new Position(0, 0)))
+        ]);
+
+        $notification = $generator->current();
+        $this->assertInstanceOf(NotificationMessage::class, $notification);
+        assert($notification instanceof NotificationMessage);
+        $this->assertEquals('textDocument/publishDiagnostics', $notification->method);
     }
 }
