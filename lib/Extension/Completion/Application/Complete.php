@@ -26,6 +26,8 @@ class Complete
 
         return [
             'suggestions' => $suggestions,
+
+            // deprecated
             'issues' => [],
         ];
     }

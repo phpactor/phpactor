@@ -23,6 +23,8 @@ Other:
 
   - [Completion] Completors now `yield` suggestions and problems are no longer
     returned. The `issues` key returned from suggestions is now deprecated.
+  - [Vim Plugin] The "omni error" feature has been removed (as completion no
+    longer returns them).
 
 ## 2018-08-04 0.9.0
 
