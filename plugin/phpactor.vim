@@ -19,10 +19,6 @@ if !exists('g:phpactorBranch')
     let g:phpactorBranch = 'master'
 endif
 
-if !exists('g:phpactorOmniError')
-    let g:phpactorOmniError = v:false
-endif
-
 if !exists('g:phpactorOmniAutoClassImport')
     let g:phpactorOmniAutoClassImport = v:true
 endif
@@ -92,12 +88,6 @@ function! phpactor#Complete(findstart, base)
             call add(completions, completion)
             let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
         endfor
-    endif
-
-    if !empty(issues)
-        if g:phpactorOmniError
-            echoe join(issues, ', ')
-        endif
     endif
 
     return completions
