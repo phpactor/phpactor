@@ -25,13 +25,17 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 
 class WorseReflectionExtension implements Extension
 {
+    const ENABLE_CACHE = 'reflection.enable_cache';
+    const STUB_DIRECTORY = 'reflection.stub_directory';
+
     /**
      * {@inheritDoc}
      */
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            'reflection.stub_directory' => 'jetbrains/phpstorm-stubs',
+            self::STUB_DIRECTORY => 'jetbrains/phpstorm-stubs',
+            self::ENABLE_CACHE => true,
         ]);
     }
 
@@ -48,9 +52,12 @@ class WorseReflectionExtension implements Extension
     {
         $container->register('reflection.reflector', function (Container $container) {
             $builder = ReflectorBuilder::create()
-                ->enableCache()
                 ->withSourceReflectorFactory(new TolerantFactory($container->get('reflection.tolerant_parser')))
                 ->enableContextualSourceLocation();
+
+            if ($container->getParameter(self::ENABLE_CACHE)) {
+                $builder->enableCache();
+            }
         
             foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
                 $builder->addLocator($container->get($locatorId));
@@ -68,7 +75,7 @@ class WorseReflectionExtension implements Extension
         $container->register('reflection.locator.stub', function (Container $container) {
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
-                $container->getParameter('vendor_dir') . '/' . $container->getParameter('reflection.stub_directory'),
+                $container->getParameter('vendor_dir') . '/' . $container->getParameter(self::STUB_DIRECTORY),
                 $container->getParameter('cache_dir')
             );
         }, [ 'reflection.source_locator' => []]);

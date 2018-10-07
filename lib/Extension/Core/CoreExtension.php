@@ -42,6 +42,7 @@ class CoreExtension implements Extension
     const AUTOLOAD_DEREGISTER = 'autoload.deregister';
     const XDEBUG_DISABLE = 'xdebug_disable';
     const VENDOR_DIRECTORY = 'vendor_dir';
+    const COMMAND = 'command';
 
     public static $autoloader;
 
@@ -59,6 +60,7 @@ class CoreExtension implements Extension
             self::LOGGING_LEVEL => LogLevel::WARNING,
             self::XDEBUG_DISABLE => true,
             self::VENDOR_DIRECTORY => null,
+            self::COMMAND => null,
         ]);
     }
 

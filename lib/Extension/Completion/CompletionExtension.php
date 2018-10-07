@@ -158,8 +158,7 @@ class CompletionExtension implements Extension
     {
         $container->register('application.complete', function (Container $container) {
             return new Complete(
-                $container->get('completion.completor'),
-                $container->get('application.helper.class_file_normalizer')
+                $container->get('completion.completor')
             );
         });
     }
@@ -169,7 +168,8 @@ class CompletionExtension implements Extension
         $container->register('completion.language_server.completion', function (Container $container) {
             return new CompletionLanguageExtension(
                 $container->get('language_server.session_manager'),
-                $container->get('completion.completor')
+                $container->get('completion.completor'),
+                $container->get('reflection.reflector')
             );
         }, [ 'language_server.extension' => [] ]);
 

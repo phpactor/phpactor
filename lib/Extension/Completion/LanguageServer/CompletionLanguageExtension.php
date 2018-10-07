@@ -9,6 +9,7 @@ use Phpactor\Completion\Core\Completor;
 use Phpactor\LanguageServer\Core\Extension;
 use Phpactor\LanguageServer\Core\Handlers;
 use Phpactor\LanguageServer\Core\Session\Manager;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 
 class CompletionLanguageExtension implements Extension
 {
@@ -22,16 +23,22 @@ class CompletionLanguageExtension implements Extension
      */
     private $completor;
 
-    public function __construct(Manager $sessionManager, Completor $completor)
+    /**
+     * @var SourceCodeReflector
+     */
+    private $reflector;
+
+    public function __construct(Manager $sessionManager, Completor $completor, SourceCodeReflector $reflector)
     {
         $this->sessionManager = $sessionManager;
         $this->completor = $completor;
+        $this->reflector = $reflector;
     }
 
     public function handlers(): Handlers
     {
         return new Handlers([
-            new CompletionHandler($this->sessionManager, $this->completor),
+            new CompletionHandler($this->sessionManager, $this->completor, $this->reflector),
         ]);
     }
 

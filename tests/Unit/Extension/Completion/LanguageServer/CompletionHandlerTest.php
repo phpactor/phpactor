@@ -13,6 +13,7 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
 use Phpactor\LanguageServer\Core\Handler;
 use Phpactor\LanguageServer\Core\Session\Manager;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class CompletionHandlerTest extends TestCase
 {
@@ -31,6 +32,11 @@ class CompletionHandlerTest extends TestCase
      */
     private $position;
 
+    /**
+     * @var Reflector
+     */
+    private $reflector;
+
 
     public function setUp()
     {
@@ -40,6 +46,8 @@ class CompletionHandlerTest extends TestCase
         $this->document->uri = 'test';
         $this->document->text = 'hello';
         $this->position = new Position(1, 1);
+
+        $this->reflector = ReflectorBuilder::create()->build();
 
         $this->manager->current()->workspace()->open($this->document);
     }
@@ -83,6 +91,6 @@ class CompletionHandlerTest extends TestCase
                     yield $suggestion;
                 }
             }
-        });
+        }, $this->reflector);
     }
 }
