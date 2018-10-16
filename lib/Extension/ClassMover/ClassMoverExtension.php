@@ -128,11 +128,11 @@ class ClassMoverExtension implements Extension
             );
         }, [ 'ui.console.command' => [ 'name' => 'references:class' ]]);
         
-        $container->register('command.method_references', function (Container $container) {
+        $container->register('command.member_references', function (Container $container) {
             return new ReferencesMemberCommand(
                 $container->get('application.method_references'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'references:method' ]]);
+        }, [ 'ui.console.command' => [ 'name' => 'references:member' ]]);
     }
 }
