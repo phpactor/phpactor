@@ -38,7 +38,6 @@ class ClassNewCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:new');
         $this->setDescription('Create new class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addOption('variant', null, InputOption::VALUE_REQUIRED, 'Variant', 'default');

@@ -34,7 +34,6 @@ class OffsetInfoCommand extends Command
 
     public function configure()
     {
-        $this->setName('offset:info');
         $this->setDescription('Return information about given file at the given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Destination path or FQN');

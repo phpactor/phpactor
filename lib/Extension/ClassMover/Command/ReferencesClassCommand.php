@@ -39,7 +39,6 @@ class ReferencesClassCommand extends Command
 
     public function configure()
     {
-        $this->setName('references:class');
         $this->setDescription('Find and/or replace references for a given path or FQN');
         $this->addArgument('class', InputArgument::REQUIRED, 'Class path or FQN');
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN');

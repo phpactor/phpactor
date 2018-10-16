@@ -33,7 +33,6 @@ class ClassReflectorCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:reflect');
         $this->setDescription('Reflect a given class (path or FQN)');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
         FormatHandler::configure($this);

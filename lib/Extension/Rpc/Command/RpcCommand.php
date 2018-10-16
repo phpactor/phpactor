@@ -43,7 +43,6 @@ class RpcCommand extends Command
 
     public function configure()
     {
-        $this->setName('rpc');
         $this->setDescription('Execute one or many actions from stdin and receive an imperative response');
         $this->addOption('replay', null, InputOption::VALUE_NONE, 'Replay the last request');
         $this->addOption('pretty', null, InputOption::VALUE_NONE, 'Pretty print JSON');

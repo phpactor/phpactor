@@ -22,7 +22,7 @@ class StatusCommand extends Command
 
     protected function configure()
     {
-        $this->setName('status');
+        $this->setDescription('Information about the current status of Phpactor');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -40,7 +40,6 @@ class CompleteCommand extends Command
 
     public function configure()
     {
-        $this->setName('complete');
         $this->setDescription('Suggest completions DEPRECATED! Use RPC instead');
         $this->addArgument('path', InputArgument::REQUIRED, 'STDIN, source path or FQN');
         $this->addArgument('offset', InputArgument::REQUIRED, 'Offset to complete');

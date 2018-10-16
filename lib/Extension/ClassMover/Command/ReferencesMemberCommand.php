@@ -39,7 +39,6 @@ class ReferencesMemberCommand extends Command
 
     public function configure()
     {
-        $this->setName('references:member');
         $this->setDescription('Find reference to a member');
         $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
         $this->addArgument('member', InputArgument::OPTIONAL, 'Method');

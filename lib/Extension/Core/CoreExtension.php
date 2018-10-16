@@ -118,7 +118,7 @@ class CoreExtension implements Extension
             return new StatusCommand(
                 $container->get('application.status')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'status' ]]);
 
 
         $container->register('console.dumper_registry', function (Container $container) {
