@@ -105,14 +105,14 @@ class CoreExtension implements Extension
                 $container->get('console.dumper_registry'),
                 $container->get('config.paths')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'config:dump']]);
 
 
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
                 $container->get('application.cache_clear')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'cache:clear' ]]);
 
         $container->register('command.status', function (Container $container) {
             return new StatusCommand(

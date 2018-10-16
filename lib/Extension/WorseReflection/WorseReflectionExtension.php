@@ -121,13 +121,13 @@ class WorseReflectionExtension implements Extension
                 $container->get('application.offset_info'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'offset:info' ]]);
         $container->register('command.class_reflector', function (Container $container) {
             return new ClassReflectorCommand(
                 $container->get('application.class_reflector'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'class:reflect' ]]);
     }
 
     private function registerLanguageServer(ContainerBuilder $container)

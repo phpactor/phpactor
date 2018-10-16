@@ -118,21 +118,21 @@ class CodeTransformExtension implements Extension
             return new ClassTransformCommand(
                 $container->get('application.transform')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'class:transform' ]]);
 
         $container->register('command.class_new', function (Container $container) {
             return new ClassNewCommand(
                 $container->get('application.class_new'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'class:new' ]]);
 
         $container->register('command.class_inflect', function (Container $container) {
             return new ClassInflectCommand(
                 $container->get('application.class_inflect'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'class:inflect' ]]);
     }
 
     private function registerTransformers(ContainerBuilder $container)
