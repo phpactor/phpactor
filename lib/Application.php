@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use InvalidArgumentException;
 use Phpactor\Extension\Core\Console\PhpactorCommandLoader;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
@@ -102,8 +103,12 @@ class Application extends SymfonyApplication
         $map = [];
         foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
             if (!isset($attrs['name'])) {
-                continue;
+                throw new InvalidArgumentException(sprintf(
+                    'Command with service ID "%s" must have the "name" attribute',
+                    $commandId
+                ));
             }
+
             $map[$attrs['name']] = $commandId;
         }
 
