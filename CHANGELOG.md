@@ -15,6 +15,7 @@ Features:
 
 Improvements:
 
+  - [Application] Do not eagerly load commands (~20% baseline improvement)
   - [Transform] Complete constructor will work work on ! interfaces #597
   - [Completion] Completion qualifiers to allow reusable way to determine
     candidate completors.
