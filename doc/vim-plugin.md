@@ -22,7 +22,7 @@ Installation
   [Neovim](https://github.com/neovim/neovim)
 
 It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the [vim-plug](https://github.com/neovim/neovim)
+this document we will use the [vim-plug](https://github.com/junegunn/vim-plug)
 plugin manager, but other plugin managers are quite similar.
 
 Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
