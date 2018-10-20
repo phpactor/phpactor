@@ -10,6 +10,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantChangeVisiblity;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
@@ -37,6 +38,7 @@ use Phpactor\Extension\CodeTransform\Command\ClassInflectCommand;
 use Phpactor\Extension\CodeTransform\Command\ClassNewCommand;
 use Phpactor\Extension\CodeTransform\Command\ClassTransformCommand;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
+use Phpactor\Extension\CodeTransform\Rpc\ChangeVisiblityHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractExpressionHandler;
@@ -287,6 +289,10 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.updater')
             );
         });
+
+        $container->register('code_transform.refactor.change_visiblity', function (Container $container) {
+            return new TolerantChangeVisiblity();
+        });
     }
 
     private function registerUpdater(ContainerBuilder $container)
@@ -351,6 +357,12 @@ class CodeTransformExtension implements Extension
         $container->register('rpc.handler.rename_variable', function (Container $container) {
             return new RenameVariableHandler(
                 $container->get('code_transform.refactor.rename_variable')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('rpc.handler.change_visiblity', function (Container $container) {
+            return new ChangeVisiblityHandler(
+                $container->get('code_transform.refactor.change_visiblity')
             );
         }, [ 'rpc.handler' => [] ]);
 

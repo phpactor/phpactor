@@ -258,6 +258,10 @@ function! phpactor#GetClassFullName()
     return fileInfo['class']
 endfunction
 
+function! phpactor#ChangeVisibility()
+    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
