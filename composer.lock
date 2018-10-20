@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "216e7667233b6115f07d809ebd9a0816",
+    "content-hash": "14aad57f441273051622a0fd587b2b50",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -941,6 +941,45 @@
             ],
             "description": "Completion library for Worse Reflection",
             "time": "2018-10-07 10:19:30"
+        },
+        {
+            "name": "phpactor/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/container.git",
+                "reference": "5762301c5db9e2cec767161199316974cd9d009c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/5762301c5db9e2cec767161199316974cd9d009c",
+                "reference": "5762301c5db9e2cec767161199316974cd9d009c",
+                "shasum": ""
+            },
+            "require": {
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Container\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Phpactor's DI Container",
+            "time": "2018-08-25T14:00:43+00:00"
         },
         {
             "name": "phpactor/docblock",
