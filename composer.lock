@@ -801,12 +801,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "219a65552c8b5aa7083f698513590b11bf1a52de"
+                "reference": "fe31386b176c96e8c0d83e2c4a302bcb6cf5c007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/219a65552c8b5aa7083f698513590b11bf1a52de",
-                "reference": "219a65552c8b5aa7083f698513590b11bf1a52de",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/fe31386b176c96e8c0d83e2c4a302bcb6cf5c007",
+                "reference": "fe31386b176c96e8c0d83e2c4a302bcb6cf5c007",
                 "shasum": ""
             },
             "require": {
@@ -840,7 +840,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-10-19 20:02:43"
+            "time": "2018-10-20 07:24:29"
         },
         {
             "name": "phpactor/code-transform",
@@ -848,12 +848,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "1df212a1434a79a7c82e8db4a8ee1cd8598e8082"
+                "reference": "018c70080aa0d5427a9fad7d976785f67628947c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1df212a1434a79a7c82e8db4a8ee1cd8598e8082",
-                "reference": "1df212a1434a79a7c82e8db4a8ee1cd8598e8082",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/018c70080aa0d5427a9fad7d976785f67628947c",
+                "reference": "018c70080aa0d5427a9fad7d976785f67628947c",
                 "shasum": ""
             },
             "require": {
@@ -862,9 +862,11 @@
                 "webmozart/path-util": "^2.3@dev"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/test-utils": "^1.0@dev",
                 "phpactor/worse-reflection": "^1.0@dev",
-                "phpunit/phpunit": "^6.2"
+                "phpstan/phpstan": "^0.10.3",
+                "phpunit/phpunit": "^7.3"
             },
             "type": "library",
             "extra": {
@@ -888,7 +890,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-10-19 20:37:06"
+            "time": "2018-10-20 11:17:51"
         },
         {
             "name": "phpactor/completion",
@@ -946,12 +948,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52"
+                "reference": "1fe552ca83d7359539cf47e4519a03c4e91488a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52",
-                "reference": "ae0dd14ff4ddfd263315a82a93758fd7e1c7ed52",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/1fe552ca83d7359539cf47e4519a03c4e91488a5",
+                "reference": "1fe552ca83d7359539cf47e4519a03c4e91488a5",
                 "shasum": ""
             },
             "require-dev": {
@@ -974,7 +976,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-09-09 14:00:15"
+            "time": "2018-10-20 07:11:24"
         },
         {
             "name": "phpactor/language-server",

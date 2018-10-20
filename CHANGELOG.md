@@ -10,6 +10,7 @@ BC Break:
 Features:
 
   - [Completion] Class alias completor, #592
+  - [CodeTransform] Cycle class member visiblity #521
   - [LSP] Experimental language server support (completion and goto
     definition)
 
