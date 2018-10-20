@@ -31,6 +31,14 @@
         }
     },
     "constant": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
         "find_references": {
             "action": "references",
             "parameters": {
@@ -138,6 +146,14 @@
         }
     },
     "property": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
         "find_references": {
             "action": "references",
             "parameters": {
@@ -173,6 +189,14 @@
         }
     },
     "method": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
         "find_references": {
             "action": "references",
             "parameters": {
