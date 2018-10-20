@@ -23,6 +23,7 @@ Generation:
 
 Refactoring:
 
+- [Change Visibility](#change-visibility)
 - [Class Move](#class-move)
 - [Extract Constant](#extract-constant)
 - [Extract Expression](#extract-expression)
@@ -130,6 +131,65 @@ class Article
 	}
 }
 ```
+
+Change Visibility
+-----------------
+
+Change the visibility of a class member
+
+- **Command**: __RPC only__
+- **VIM context menu**: _Class member context menu > Change Visiblity_
+- **VIM function**:`:call phpactor#ChangeVisibility()`
+
+Currently this will cycle through the 3 visibilities: `public`, `protected` and
+`private`.
+
+### Motivation
+
+Sometimes you may want to extract a class from an existing class in order to
+isolate some of it's responsibility. When doing this you may:
+
+1. Create a new class using [Class New](#class-new).
+2. Copy the method(s) which you want to extract to the new class.
+3. Change the visibility of the main method from `private` to `public`.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+# src/Blog/Post.php
+<?php
+
+namespace Acme\Blog;
+
+class FoobarResolver
+{
+    private function resolveFoobar()
+    {
+        <>
+    }
+}
+```
+
+After invoking "change visibility" on or within the method.
+
+```php
+# src/Blog/Post.php
+<?php
+
+namespace Acme\Blog;
+
+class FoobarResolver
+{
+    public function resolveFoobar();
+    {
+    }
+}
+```
+
+*Note*: This also works on constants and properties. It will NOT change
+        the visibility of any related parent or child class members.
 
 Class Move
 ----------
