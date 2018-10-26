@@ -254,12 +254,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "32e1aa524970130eb66e2170dca01705a9ad83ec"
+                "reference": "4ab6ea7c838ccb340883fd78915af079949cc64d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/32e1aa524970130eb66e2170dca01705a9ad83ec",
-                "reference": "32e1aa524970130eb66e2170dca01705a9ad83ec",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/4ab6ea7c838ccb340883fd78915af079949cc64d",
+                "reference": "4ab6ea7c838ccb340883fd78915af079949cc64d",
                 "shasum": ""
             },
             "require": {
@@ -306,7 +306,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-10-10 09:08:56"
+            "time": "2018-10-21 19:22:05"
         },
         {
             "name": "felixfbecker/language-server-protocol",
@@ -898,12 +898,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "d0385f91b168a6800ca0788295a5fb0289eebe7b"
+                "reference": "927737766d03c754823921e3f3d9bf7ddb717f9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/d0385f91b168a6800ca0788295a5fb0289eebe7b",
-                "reference": "d0385f91b168a6800ca0788295a5fb0289eebe7b",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/927737766d03c754823921e3f3d9bf7ddb717f9d",
+                "reference": "927737766d03c754823921e3f3d9bf7ddb717f9d",
                 "shasum": ""
             },
             "require": {
@@ -940,23 +940,24 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-10-07 10:19:30"
+            "time": "2018-10-26 12:09:45"
         },
         {
             "name": "phpactor/container",
-            "version": "1.0.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "5762301c5db9e2cec767161199316974cd9d009c"
+                "reference": "703c0a4c1e909054328a38eb534f38f57b61ef6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/5762301c5db9e2cec767161199316974cd9d009c",
-                "reference": "5762301c5db9e2cec767161199316974cd9d009c",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/703c0a4c1e909054328a38eb534f38f57b61ef6a",
+                "reference": "703c0a4c1e909054328a38eb534f38f57b61ef6a",
                 "shasum": ""
             },
             "require": {
+                "phpactor/map-resolver": "^1.0",
                 "psr/container": "^1.0"
             },
             "require-dev": {
@@ -979,7 +980,7 @@
                 }
             ],
             "description": "Phpactor's DI Container",
-            "time": "2018-08-25T14:00:43+00:00"
+            "time": "2018-10-21T14:34:14+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -987,18 +988,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "1fe552ca83d7359539cf47e4519a03c4e91488a5"
+                "reference": "976ddf308b51a33a64f822d499c4d61f21f7470e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/1fe552ca83d7359539cf47e4519a03c4e91488a5",
-                "reference": "1fe552ca83d7359539cf47e4519a03c4e91488a5",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/976ddf308b51a33a64f822d499c4d61f21f7470e",
+                "reference": "976ddf308b51a33a64f822d499c4d61f21f7470e",
                 "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.5"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Phpactor\\Docblock\\": "lib/"
@@ -1015,7 +1021,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-10-20 07:11:24"
+            "time": "2018-10-26 11:35:24"
         },
         {
             "name": "phpactor/language-server",
@@ -1064,6 +1070,42 @@
             ],
             "description": "Phpactor Language Server",
             "time": "2018-10-14 09:32:33"
+        },
+        {
+            "name": "phpactor/map-resolver",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/map-resolver.git",
+                "reference": "c5d3c3e7907e8a8ee250418ac366ddc96c16335b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/c5d3c3e7907e8a8ee250418ac366ddc96c16335b",
+                "reference": "c5d3c3e7907e8a8ee250418ac366ddc96c16335b",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\MapResolver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Map Resolver",
+            "time": "2018-08-25T13:40:04+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -2408,12 +2450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "efc1758edac5011789229e94ebc6011777530c5e"
+                "reference": "95e2be76e93c62ed4a377113125ffc3a31c18021"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/efc1758edac5011789229e94ebc6011777530c5e",
-                "reference": "efc1758edac5011789229e94ebc6011777530c5e",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/95e2be76e93c62ed4a377113125ffc3a31c18021",
+                "reference": "95e2be76e93c62ed4a377113125ffc3a31c18021",
                 "shasum": ""
             },
             "require": {
@@ -2496,7 +2538,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-10-18 16:52:14"
+            "time": "2018-10-21T00:33:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3252,12 +3294,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "538d4cebaca0a2eb7ec756278b6b5761ee1740c0"
+                "reference": "27f782132fe6af0d0950bc635a6c51c7fc3fa7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/538d4cebaca0a2eb7ec756278b6b5761ee1740c0",
-                "reference": "538d4cebaca0a2eb7ec756278b6b5761ee1740c0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/27f782132fe6af0d0950bc635a6c51c7fc3fa7f4",
+                "reference": "27f782132fe6af0d0950bc635a6c51c7fc3fa7f4",
                 "shasum": ""
             },
             "require": {
@@ -3328,7 +3370,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-10 05:14:22"
+            "time": "2018-10-23T05:11:21+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
