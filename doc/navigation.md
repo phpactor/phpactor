@@ -56,7 +56,7 @@ Hover
 -----
 
 While not a navigation function as such, this RPC command will show
-breif information about the symbol underneath the cursor.
+brief information about the symbol underneath the cursor.
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Context menu_ > Hover_.
