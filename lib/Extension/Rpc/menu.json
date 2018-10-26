@@ -8,6 +8,13 @@
                 "source": "%source%",
                 "name_suggestion": "%symbol%"
             }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
         }
     },
     "string": {
@@ -62,6 +69,13 @@
                 "source": "%source%",
                 "path": "%current_path%",
                 "mode": "replace"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
             }
         }
     },
@@ -143,6 +157,13 @@
                 "source": "%source%",
                 "name": "%symbol%"
             }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
         }
     },
     "property": {
@@ -186,6 +207,13 @@
                 "path": "%current_path%",
                 "mode": "replace"
             }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
         }
     },
     "method": {
@@ -228,6 +256,13 @@
                 "path": "%current_path%",
                 "source": "%source%",
                 "mode": "replace"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
             }
         }
     }

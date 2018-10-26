@@ -109,7 +109,7 @@ nmap <Leader>nn :call phpactor#Navigate()<CR>
 " Goto definition of class or class member under the cursor
 nmap <Leader>o :call phpactor#GotoDefinition()<CR>
 
-" Show breif information about the symbol under the cursor
+" Show brief information about the symbol under the cursor
 nmap <Leader>K :call phpactor#Hover()<CR>
 
 " Transform the classes in the current file
