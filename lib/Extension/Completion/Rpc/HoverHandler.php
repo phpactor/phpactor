@@ -94,7 +94,22 @@ class HoverHandler implements Handler
 
         try {
             $class = $this->reflector->reflectClassLike((string) $container);
-            $member = $class->members()->get($name);
+
+            // note that all class-likes (classes, traits and interfaces) have
+            // methods but not all have constants or properties, so we play safe
+            // with members() which is first-come-first-serve, rather than risk
+            // a fatal error because of a non-existing method.
+            switch ($symbolContext->symbol()->symbolType()) {
+                case Symbol::METHOD:
+                    $member = $class->methods()->get($name);
+                    break;
+                case Symbol::CONSTANT:
+                    $member = $class->members()->get($name);
+                    break;
+                case Symbol::PROPERTY:
+                    $member = $class->members()->get($name);
+                    break;
+            }
             return $this->formatter->format($member);
         } catch (NotFound $e) {
             return $e->getMessage();
