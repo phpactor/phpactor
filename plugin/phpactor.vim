@@ -180,6 +180,10 @@ function! phpactor#GotoDefinition()
     call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
+function! phpactor#Hover()
+    call phpactor#rpc("hover", { "offset": phpactor#_offset(), "source": phpactor#_source() })
+endfunction
+
 function! phpactor#ContextMenu()
     call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source(), "current_path": expand('%:p') })
 endfunction

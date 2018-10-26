@@ -2,16 +2,13 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Application\ClassGenerator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;

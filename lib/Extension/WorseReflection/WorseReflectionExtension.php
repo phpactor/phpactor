@@ -2,10 +2,8 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler;
 use Phpactor\Extension\WorseReflection\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
@@ -15,7 +13,6 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler as RpcGotoDefinitionHandler;
-use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler as LspGotoDefinitionHandler;
 use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflection\Application\ClassReflector;

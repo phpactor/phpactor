@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServer\Helper;
 
 use LanguageServerProtocol\Position;
-use OutOfBoundsException;
 
 class OffsetHelper
 {

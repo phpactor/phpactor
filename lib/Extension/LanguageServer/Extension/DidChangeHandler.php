@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServer\Extension;
 
 use Generator;
 use LanguageServerProtocol\VersionedTextDocumentIdentifier;
-use Phpactor\LanguageServer\Core\Handler;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\LanguageServer\Core\Transport\NotificationMessage;
 use Phpactor\LanguageServer\Extension\Core\TextDocument\DidChange;
@@ -31,7 +30,8 @@ class DidChangeHandler extends DidChange
     {
         parent::__invoke($textDocument, $contentChanges);
 
-        yield $this->clearDiagnostics($textDocument);;
+        yield $this->clearDiagnostics($textDocument);
+        ;
     }
 
     private function clearDiagnostics(VersionedTextDocumentIdentifier $textDocument)

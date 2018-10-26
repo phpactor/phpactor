@@ -47,7 +47,6 @@ class ExtractExpressionHandler extends AbstractHandler
             self::PARAM_SOURCE,
             self::PARAM_OFFSET_END,
         ]);
-
     }
 
     public function handle(array $arguments)

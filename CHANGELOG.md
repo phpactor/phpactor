@@ -13,6 +13,8 @@ Features:
   - [CodeTransform] Cycle class member visiblity #521
   - [LSP] Experimental language server support (completion and goto
     definition)
+  - [RPC] Adds `hover` handler which shows the synopsis of the symbol
+    underneath the cursor.
 
 Improvements:
 

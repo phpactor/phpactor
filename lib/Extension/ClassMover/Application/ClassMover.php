@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\FilePath;

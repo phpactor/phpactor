@@ -6,7 +6,6 @@ use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Handler\EchoHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Completion\Rpc\CompleteHandler;
 use Phpactor\Extension\Rpc\Handler\ClassSearchHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
@@ -76,12 +75,6 @@ class RpcExtension implements Extension
     {
         $container->register('rpc.handler.echo', function (Container $container) {
             return new EchoHandler();
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.complete', function (Container $container) {
-            return new CompleteHandler(
-                $container->get('application.complete')
-            );
         }, [ 'rpc.handler' => [] ]);
 
         $container->register('rpc.handler.class_search', function (Container $container) {

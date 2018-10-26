@@ -10,7 +10,9 @@ class ClassTransformCommandTest extends SystemTestCase
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
-        file_put_contents($this->workspace()->path('lib/Foobar.php'), <<<'EOT'
+        file_put_contents(
+            $this->workspace()->path('lib/Foobar.php'),
+            <<<'EOT'
 <?php
 
 class Foobar implements Countable

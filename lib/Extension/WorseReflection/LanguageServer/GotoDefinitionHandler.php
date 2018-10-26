@@ -3,15 +3,10 @@
 namespace Phpactor\Extension\WorseReflection\LanguageServer;
 
 use Generator;
-use LanguageServerProtocol\CompletionItem;
-use LanguageServerProtocol\CompletionList;
 use LanguageServerProtocol\Location;
 use LanguageServerProtocol\Position;
 use LanguageServerProtocol\Range;
 use LanguageServerProtocol\TextDocumentIdentifier;
-use LanguageServerProtocol\TextDocumentItem;
-use Phpactor\Completion\Core\Completor;
-use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\LanguageServer\Helper\OffsetHelper;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\LanguageServer\Core\Handler;
@@ -50,8 +45,7 @@ class GotoDefinitionHandler implements Handler
     public function __invoke(
         TextDocumentIdentifier $textDocument,
         Position $position
-    ): Generator
-    {
+    ): Generator {
         $textDocument = $this->sessionManager->current()->workspace()->get($textDocument->uri);
 
         $offset = $position->toOffset($textDocument->text);
@@ -71,7 +65,8 @@ class GotoDefinitionHandler implements Handler
         );
 
         $location = new Location('file://'.$result->path(), new Range(
-            $startPosition, $startPosition
+            $startPosition,
+            $startPosition
         ));
 
         yield $location;

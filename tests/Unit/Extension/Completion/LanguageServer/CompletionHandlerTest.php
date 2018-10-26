@@ -80,7 +80,7 @@ class CompletionHandlerTest extends TestCase
     {
         return new CompletionHandler($this->manager, new class($suggestions) implements Completor {
             private $suggestions;
-            public function __construct(array $suggestions) 
+            public function __construct(array $suggestions)
             {
                 $this->suggestions = $suggestions;
             }

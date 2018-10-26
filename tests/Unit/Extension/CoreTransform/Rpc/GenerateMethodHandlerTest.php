@@ -8,7 +8,6 @@ use Phpactor\Extension\CodeTransform\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
-use Prophecy\Argument;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
 {

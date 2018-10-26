@@ -3,9 +3,6 @@
 namespace Phpactor\Tests\Benchmark;
 
 use Phpactor\Tests\IntegrationTestCase;
-use Phpactor\Application;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Process\Process;
 
 class BaseBenchCase extends IntegrationTestCase
