@@ -78,12 +78,6 @@ class RpcExtension implements Extension
             return new EchoHandler();
         }, [ 'rpc.handler' => [] ]);
 
-        $container->register('rpc.handler.complete', function (Container $container) {
-            return new CompleteHandler(
-                $container->get('application.complete')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
         $container->register('rpc.handler.class_search', function (Container $container) {
             return new ClassSearchHandler(
                 $container->get('application.class_search')

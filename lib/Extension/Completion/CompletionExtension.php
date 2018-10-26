@@ -7,7 +7,9 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassAliasCom
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\FunctionFormatter;
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParametersFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
 use Phpactor\Completion\Bridge\TolerantParser\ChainTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
@@ -25,6 +27,8 @@ use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
+use Phpactor\Extension\Completion\Rpc\CompleteHandler;
+use Phpactor\Extension\Completion\Rpc\HoverHandler;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Completion\Command\CompleteCommand;
@@ -44,6 +48,7 @@ class CompletionExtension implements Extension
         $this->registerCommands($container);
         $this->registerLanguageServer($container);
         $this->registerApplicationServices($container);
+        $this->registerRpc($container);
     }
 
     /**
@@ -133,10 +138,12 @@ class CompletionExtension implements Extension
 
         $container->register('completion.formatter', function (Container $container) {
             return new ObjectFormatter([
+                new ClassFormatter(),
                 new TypeFormatter(),
                 new TypesFormatter(),
                 new MethodFormatter(),
                 new ParameterFormatter(),
+                new ParametersFormatter(),
                 new PropertyFormatter(),
                 new FunctionFormatter(),
                 new VariableFormatter(),
@@ -173,5 +180,21 @@ class CompletionExtension implements Extension
             );
         }, [ 'language_server.extension' => [] ]);
 
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('completion.rpc.handler.complete', function (Container $container) {
+            return new CompleteHandler(
+                $container->get('application.complete')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('completion.rpc.handler.hover', function (Container $container) {
+            return new HoverHandler(
+                $container->get('reflection.reflector'),
+                $container->get('completion.formatter')
+            );
+        }, [ 'rpc.handler' => [] ]);
     }
 }
