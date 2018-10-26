@@ -1073,16 +1073,16 @@
         },
         {
             "name": "phpactor/map-resolver",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/map-resolver.git",
-                "reference": "c5d3c3e7907e8a8ee250418ac366ddc96c16335b"
+                "reference": "99cab3dcec9ada1010d972682701df81e061bb2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/c5d3c3e7907e8a8ee250418ac366ddc96c16335b",
-                "reference": "c5d3c3e7907e8a8ee250418ac366ddc96c16335b",
+                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/99cab3dcec9ada1010d972682701df81e061bb2e",
+                "reference": "99cab3dcec9ada1010d972682701df81e061bb2e",
                 "shasum": ""
             },
             "require-dev": {
@@ -1105,7 +1105,7 @@
                 }
             ],
             "description": "Map Resolver",
-            "time": "2018-08-25T13:40:04+00:00"
+            "time": "2018-10-26T13:29:57+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -2538,7 +2538,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-10-21T00:33:01+00:00"
+            "time": "2018-10-21 00:33:01"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3370,7 +3370,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-23T05:11:21+00:00"
+            "time": "2018-10-23 05:11:21"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
