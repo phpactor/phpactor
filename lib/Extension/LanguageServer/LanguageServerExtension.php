@@ -6,12 +6,9 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
-use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
-use Phpactor\Extension\WorseReflection\LanguageServer\GotoDefinitionHandler;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Session\Manager;
-use Phpactor\LanguageServer\Extension\Core\CoreExtension;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\MapResolver\Resolver;
 
@@ -38,7 +35,6 @@ class LanguageServerExtension implements Extension
     public function load(ContainerBuilder $container)
     {
         $container->register('language_server.builder', function (Container $container) {
-
             $builder = LanguageServerBuilder::create(
                 $container->get('monolog.logger'),
                 $container->get('language_server.session_manager')

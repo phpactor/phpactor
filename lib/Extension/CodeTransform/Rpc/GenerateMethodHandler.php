@@ -60,8 +60,8 @@ class GenerateMethodHandler extends AbstractHandler
 
     private function determineOriginalSource(SourceCode $sourceCode, array $arguments)
     {
-        $originalSource = $sourceCode->path() === $arguments[self::PARAM_PATH] ? 
-            $arguments[self::PARAM_SOURCE] : 
+        $originalSource = $sourceCode->path() === $arguments[self::PARAM_PATH] ?
+            $arguments[self::PARAM_SOURCE] :
             file_get_contents($sourceCode->path());
 
         return $originalSource;

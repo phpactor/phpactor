@@ -3,7 +3,6 @@
 namespace Phpactor\MapResolver;
 
 use Closure;
-use Phpactor\MapResolver\Resolver;
 
 class Resolver
 {

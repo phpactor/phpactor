@@ -21,12 +21,9 @@ use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParameterFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\PropertyFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypesFormatter;
-use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableWithNodeFormatter;
 use Phpactor\Completion\Core\ChainCompletor;
-use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
 use Phpactor\Extension\Completion\Rpc\CompleteHandler;
 use Phpactor\Extension\Completion\Rpc\HoverHandler;
 use Phpactor\MapResolver\Resolver;
@@ -179,7 +176,6 @@ class CompletionExtension implements Extension
                 $container->get('reflection.reflector')
             );
         }, [ 'language_server.extension' => [] ]);
-
     }
 
     private function registerRpc(ContainerBuilder $container)

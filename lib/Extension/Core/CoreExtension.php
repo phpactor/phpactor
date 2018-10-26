@@ -12,7 +12,6 @@ use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
 use Phpactor\Extension\Core\Console\Dumper\TableDumper;
 use Phpactor\Extension\Core\Console\Prompt\BashPrompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
-use Symfony\Component\Console\Application;
 use Phpactor\Extension\Core\Command\ConfigDumpCommand;
 use Monolog\Logger;
 use Psr\Log\LogLevel;

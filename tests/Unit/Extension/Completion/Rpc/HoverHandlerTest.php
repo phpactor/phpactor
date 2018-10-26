@@ -33,7 +33,7 @@ class HoverHandlerTest extends HandlerTestCase
     {
         [ $source, $offset ] = ExtractOffset::fromSource($source);
 
-        $response = $this->handle(HoverHandler::NAME, [ 
+        $response = $this->handle(HoverHandler::NAME, [
             'source' => $source,
             'offset' => $offset,
         ]);

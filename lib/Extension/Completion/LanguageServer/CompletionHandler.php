@@ -10,7 +10,6 @@ use LanguageServerProtocol\DiagnosticSeverity;
 use LanguageServerProtocol\Position;
 use LanguageServerProtocol\Range;
 use LanguageServerProtocol\TextDocumentItem;
-use Microsoft\PhpParser\DiagnosticKind;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\LanguageServer\Helper\OffsetHelper;
@@ -67,7 +66,6 @@ class CompletionHandler implements Handler
                 PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                 $suggestion->shortDescription()
             );
-
         }
 
         yield $completionList;
@@ -76,7 +74,7 @@ class CompletionHandler implements Handler
 
         yield new NotificationMessage('textDocument/publishDiagnostics', [
             'uri' => $textDocument->uri,
-            'diagnostics' => $diagnostics 
+            'diagnostics' => $diagnostics
         ]);
     }
 

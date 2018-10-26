@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Rpc\Response;
 
-use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 use Phpactor\Extension\Rpc\Response;
 
 class ReplaceFileSourceResponse implements Response

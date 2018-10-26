@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CodeTransform\Command;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Phpactor;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Console\Command\Command;
@@ -78,7 +77,7 @@ class ClassTransformCommand extends Command
             $changed = trim($existing->__toString()) != trim($transformed);
 
             if ($changed) {
-              $affected++;
+                $affected++;
             }
 
             if ($changed && $diff) {
