@@ -55,15 +55,12 @@ class HoverHandler implements Handler
         $types = $offset->symbolContext()->types();
         $symbolContext = $offset->symbolContext();
 
-        try {
-            $info = $this->renderSymbolContext($symbolContext);
-        } catch (CouldNotFormat $e) {
-            $info = sprintf(
-                '%s %s',
-                $symbolContext->symbol()->symbolType(),
-                $symbolContext->symbol()->name()
-            );
-        }
+        $info = $this->messageFromSymbolContext($symbolContext);
+        $info = $info ?: sprintf(
+            '%s %s',
+            $symbolContext->symbol()->symbolType(),
+            $symbolContext->symbol()->name()
+        );
 
         return EchoResponse::fromMessage($info);
     }
@@ -99,15 +96,15 @@ class HoverHandler implements Handler
             // with members() which is first-come-first-serve, rather than risk
             // a fatal error because of a non-existing method.
             switch ($symbolContext->symbol()->symbolType()) {
-                case Symbol::METHOD:
-                    $member = $class->methods()->get($name);
-                    break;
-                case Symbol::CONSTANT:
-                    $member = $class->members()->get($name);
-                    break;
-                case Symbol::PROPERTY:
-                    $member = $class->members()->get($name);
-                    break;
+            case Symbol::METHOD:
+                $member = $class->methods()->get($name);
+                break;
+            case Symbol::CONSTANT:
+                $member = $class->members()->get($name);
+                break;
+            case Symbol::PROPERTY:
+                $member = $class->members()->get($name);
+                break;
             }
             return $this->formatter->format($member);
         } catch (NotFound $e) {
@@ -136,5 +133,15 @@ class HoverHandler implements Handler
         } catch (NotFound $e) {
             return $e->getMessage();
         }
+    }
+
+    private function messageFromSymbolContext(SymbolContext $symbolContext): ?string
+    {
+        try {
+            return $this->renderSymbolContext($symbolContext);
+        } catch (CouldNotFormat $e) {
+        }
+
+        return null;
     }
 }

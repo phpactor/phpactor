@@ -67,5 +67,10 @@ class HoverHandlerTest extends HandlerTestCase
             '<?php $f<>oo = "bar"',
             'variable foo',
         ];
+
+        yield 'unknown' => [
+            '<?php <> $foo = "bar"',
+            '<unknown> <unknown>',
+        ];
     }
 }
