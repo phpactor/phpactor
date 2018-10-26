@@ -7,7 +7,6 @@ use Phpactor\MapResolver\InvalidMap;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Tests\IntegrationTestCase;
-use Phpactor\MapResolver\InvalidConfig;
 
 class ApplicationTest extends IntegrationTestCase
 {
