@@ -11,7 +11,7 @@ use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class TransformHandlerTest extends HandlerTestCase
 {

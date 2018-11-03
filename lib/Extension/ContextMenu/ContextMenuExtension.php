@@ -30,6 +30,7 @@ use Phpactor\Extension\ClassToFileConsole\Rpc\FileInfoHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 
@@ -44,7 +45,7 @@ class ContextMenuExtension implements Extension
     {
         $container->register('rpc.handler.context_menu', function (Container $container) {
             return new ContextMenuHandler(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('application.helper.class_file_normalizer'),
                 json_decode(file_get_contents(__DIR__ . '/menu.json'), true),
                 $container

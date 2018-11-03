@@ -351,7 +351,7 @@ class CodeTransformExtension implements Extension
             return new ImportClassHandler(
                 $container->get('code_transform.refactor.class_import'),
                 $container->get('application.class_search'),
-                $container->getParameter('rpc.class_search.filesystem')
+                'composer'
             );
         }, [ 'rpc.handler' => [] ]);
 

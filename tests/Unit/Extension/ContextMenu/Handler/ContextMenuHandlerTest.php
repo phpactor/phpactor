@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
+namespace Phpactor\Tests\Unit\Extension\ContextMenu\Handler;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
@@ -15,6 +15,7 @@ use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {

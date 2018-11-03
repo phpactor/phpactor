@@ -8,7 +8,7 @@ use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {

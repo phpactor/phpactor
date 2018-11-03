@@ -6,7 +6,7 @@ use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {

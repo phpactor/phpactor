@@ -19,7 +19,7 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {

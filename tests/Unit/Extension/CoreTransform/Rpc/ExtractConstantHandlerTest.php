@@ -9,7 +9,7 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ExtractConstantHandlerTest extends HandlerTestCase
 {

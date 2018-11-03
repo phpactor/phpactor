@@ -5,7 +5,7 @@ namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler;
 
 class GotoDefinitionHandlerTest extends HandlerTestCase
