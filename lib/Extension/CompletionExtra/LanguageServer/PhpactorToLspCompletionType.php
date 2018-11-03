@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Completion\LanguageServer;
+namespace Phpactor\Extension\CompletionExtra\LanguageServer;
 
 use LanguageServerProtocol\CompletionItemKind;
 use Phpactor\Completion\Core\Suggestion;

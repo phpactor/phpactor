@@ -7,18 +7,22 @@ use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\ClassToFileConsole\ClassToFileConsoleExtension;
 use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
@@ -46,15 +50,18 @@ class Phpactor
 
         $extensionNames = [
             CoreExtension::class,
+            ClassToFileConsoleExtension::class,
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
+            CompletionExtraExtension::class,
             CompletionExtension::class,
             NavigationExtension::class,
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
-            LanguageServerExtension::class,
+            FilePathResolverExtension::class,
+            LoggingExtension::class,
         ];
 
         $container = new PhpactorContainer();

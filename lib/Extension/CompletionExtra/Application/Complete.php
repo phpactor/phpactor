@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Completion\Application;
+namespace Phpactor\Extension\CompletionExtra\Application;
 
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;

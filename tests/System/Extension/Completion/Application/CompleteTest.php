@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Application;
 
-use Phpactor\Extension\Completion\Application\Complete;
+use Phpactor\Extension\CompletionExtra\Application\Complete;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\System\SystemTestCase;
 

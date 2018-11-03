@@ -14,6 +14,7 @@ use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
 use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\ClassMover\Command\ReferencesMemberCommand;
@@ -54,7 +55,7 @@ class ClassMoverExtension implements Extension
 
         $container->register('class_mover.member_finder', function (Container $container) {
             return new WorseTolerantMemberFinder(
-                $container->get('reflection.reflector')
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
 
@@ -100,7 +101,7 @@ class ClassMoverExtension implements Extension
                 $container->get('class_mover.member_finder'),
                 $container->get('class_mover.member_replacer'),
                 $container->get('source_code_filesystem.registry'),
-                $container->get('reflection.reflector')
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
     }

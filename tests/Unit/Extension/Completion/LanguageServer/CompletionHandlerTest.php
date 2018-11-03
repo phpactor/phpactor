@@ -10,7 +10,7 @@ use LanguageServerProtocol\TextDocumentItem;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Extension\Completion\LanguageServer\CompletionHandler;
+use Phpactor\Extension\CompletionExtra\LanguageServer\CompletionHandler;
 use Phpactor\LanguageServer\Core\Handler;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\WorseReflection\ReflectorBuilder;

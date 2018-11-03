@@ -2,8 +2,8 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassToFile\Rpc;
 
-use Phpactor\Extension\ClassToFile\Application\FileInfo;
-use Phpactor\Extension\ClassToFile\Rpc\FileInfoHandler;
+use Phpactor\Extension\ClassToFileConsole\Application\FileInfo;
+use Phpactor\Extension\ClassToFileConsole\Rpc\FileInfoHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;

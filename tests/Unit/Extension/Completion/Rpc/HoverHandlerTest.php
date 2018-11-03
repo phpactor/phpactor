@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\Completion\Rpc;
 
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
-use Phpactor\Extension\Completion\Rpc\HoverHandler;
+use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;

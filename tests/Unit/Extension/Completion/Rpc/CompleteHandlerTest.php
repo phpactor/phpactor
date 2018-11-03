@@ -3,9 +3,9 @@
 namespace Phpactor\Tests\Unit\Extension\Completion\Rpc;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Completion\Application\Complete;
+use Phpactor\Extension\CompletionExtra\Application\Complete;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
-use Phpactor\Extension\Completion\Rpc\CompleteHandler;
+use Phpactor\Extension\CompletionExtra\Rpc\CompleteHandler;
 
 class CompleteHandlerTest extends TestCase
 {

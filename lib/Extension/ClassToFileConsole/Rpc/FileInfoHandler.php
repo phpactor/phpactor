@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Extension\ClassToFile\Rpc;
+namespace Phpactor\Extension\ClassToFileConsole\Rpc;
 
-use Phpactor\Extension\ClassToFile\Application\FileInfo;
+use Phpactor\Extension\ClassToFileConsole\Application\FileInfo;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\MapResolver\Resolver;

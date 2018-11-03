@@ -26,7 +26,7 @@ use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
-use Phpactor\Extension\ClassToFile\Rpc\FileInfoHandler;
+use Phpactor\Extension\ClassToFileConsole\Rpc\FileInfoHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
