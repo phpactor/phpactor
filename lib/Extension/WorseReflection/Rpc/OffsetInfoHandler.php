@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Rpc\Handler;
+namespace Phpactor\Extension\WorseReflection\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
