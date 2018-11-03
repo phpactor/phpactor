@@ -9,6 +9,7 @@ use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -43,7 +44,7 @@ class Phpactor
         $cwd = getcwd();
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
@@ -59,6 +60,7 @@ class Phpactor
             ClassMoverExtension::class,
             CodeTransformExtension::class,
             CompletionExtraExtension::class,
+            CompletionWorseExtension::class,
             CompletionExtension::class,
             NavigationExtension::class,
             ContextMenuExtension::class,
