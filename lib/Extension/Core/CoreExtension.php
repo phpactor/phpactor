@@ -34,7 +34,6 @@ class CoreExtension implements Extension
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
     const DUMPER = 'console_dumper_default';
-    const CACHE_DIR = 'cache_dir';
     const XDEBUG_DISABLE = 'xdebug_disable';
     const VENDOR_DIRECTORY = 'vendor_dir';
     const COMMAND = 'command';
@@ -43,7 +42,6 @@ class CoreExtension implements Extension
     {
         $schema->setDefaults([
             self::DUMPER => 'indented',
-            self::CACHE_DIR => null,
             self::XDEBUG_DISABLE => true,
             self::VENDOR_DIRECTORY => null,
             self::COMMAND => null,
@@ -116,7 +114,7 @@ class CoreExtension implements Extension
     {
         $container->register('application.cache_clear', function (Container $container) {
             return new CacheClear(
-                $container->getParameter(self::CACHE_DIR)
+                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%cache%')
             );
         });
 
