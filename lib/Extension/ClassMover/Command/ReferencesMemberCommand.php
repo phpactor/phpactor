@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputArgument;
@@ -47,7 +48,7 @@ class ReferencesMemberCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         FormatHandler::configure($this);
-        FilesystemHandler::configure($this, SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output, $bar = null)

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystemExtra\Rpc;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
@@ -29,7 +30,7 @@ class ClassSearchHandler implements Handler
 
     public function __construct(
         ClassSearch $classSearch,
-        string $defaultFilesystem = SourceCodeFilesystemExtraExtension::FILESYSTEM_COMPOSER
+        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
     ) {
         $this->classSearch = $classSearch;
         $this->defaultFilesystem = $defaultFilesystem;

@@ -10,6 +10,7 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
@@ -106,7 +107,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testClassReturnNoneFound()
     {
         $this->classReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
             null
         )->willReturn([
@@ -127,7 +128,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testClassReferences()
     {
         $this->classReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
             null
         )->willReturn($this->exampleClassResponse());
@@ -168,7 +169,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     {
         $source = '<?php new \stdClass();';
         $this->classReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             'stdClass',
             'newClass',
             null
@@ -195,7 +196,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testMemberReturnNoneFound()
     {
         $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
             'testMemberReturnNoneFound',
             ClassMemberQuery::TYPE_METHOD,
@@ -217,7 +218,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testMemberReferences()
     {
         $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
             'testMemberReferences',
             ClassMemberQuery::TYPE_METHOD,
@@ -275,7 +276,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $replacement = 'foobar';
 
         $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
             'testMemberReferences',
             ClassMemberQuery::TYPE_METHOD,
@@ -302,7 +303,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $source = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();';
 
         $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
             'testMemberReferences',
             ClassMemberQuery::TYPE_METHOD,
@@ -340,7 +341,7 @@ class ReferencesHandlerTest extends HandlerTestCase
     public function testMemberReferencesWithRisky()
     {
         $this->classMemberReferences->findOrReplaceReferences(
-            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
             __CLASS__,
             'testMemberReferences',
             ClassMemberQuery::TYPE_METHOD,

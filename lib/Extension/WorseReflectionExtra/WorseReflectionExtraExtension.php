@@ -16,18 +16,11 @@ use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
 
 class WorseReflectionExtraExtension implements Extension
 {
-    const ENABLE_CACHE = 'reflection.enable_cache';
-    const STUB_DIRECTORY = 'reflection.stub_directory';
-
     /**
      * {@inheritDoc}
      */
     public function configure(Resolver $schema)
     {
-        $schema->setDefaults([
-            self::STUB_DIRECTORY => 'jetbrains/phpstorm-stubs',
-            self::ENABLE_CACHE => true,
-        ]);
     }
 
     public function load(ContainerBuilder $container)

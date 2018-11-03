@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
@@ -71,7 +72,7 @@ class ReferencesHandler extends AbstractHandler
         ClassReferences $classReferences,
         ClassMemberReferences $classMemberReferences,
         FilesystemRegistry $registry,
-        string $defaultFilesystem = SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT
+        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
     ) {
         $this->classReferences = $classReferences;
         $this->defaultFilesystem = $defaultFilesystem;

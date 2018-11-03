@@ -12,10 +12,6 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\
 
 class SourceCodeFilesystemExtraExtension implements Extension
 {
-    const FILESYSTEM_GIT = 'git';
-    const FILESYSTEM_COMPOSER = 'composer';
-    const FILESYSTEM_SIMPLE = 'simple';
-
     /**
      * {@inheritDoc}
      */

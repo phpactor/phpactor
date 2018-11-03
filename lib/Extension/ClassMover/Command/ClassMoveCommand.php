@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -47,7 +48,7 @@ class ClassMoveCommand extends Command
             'Type of move: "%s"',
              implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
-        FilesystemHandler::configure($this, SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
