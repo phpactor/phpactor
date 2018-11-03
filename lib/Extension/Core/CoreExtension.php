@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Core;
 
 use Composer\Autoload\ClassLoader;
 use Monolog\Handler\NullHandler;
+use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
@@ -30,14 +31,10 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-    const LOGGING_PATH = 'logging.path';
-    const LOGGING_LEVEL = 'logging.level';
     const AUTOLOAD = 'autoload';
     const WORKING_DIRECTORY = 'cwd';
     const DUMPER = 'console_dumper_default';
     const CACHE_DIR = 'cache_dir';
-    const LOGGING_ENABLED = 'logging.enabled';
-    const LOGGING_FINGERS_CROSSED = 'logging.fingers_crossed';
     const AUTOLOAD_DEREGISTER = 'autoload.deregister';
     const XDEBUG_DISABLE = 'xdebug_disable';
     const VENDOR_DIRECTORY = 'vendor_dir';
@@ -53,10 +50,6 @@ class CoreExtension implements Extension
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => null,
-            self::LOGGING_ENABLED => false,
-            self::LOGGING_FINGERS_CROSSED => true,
-            self::LOGGING_PATH => 'phpactor.log',
-            self::LOGGING_LEVEL => LogLevel::WARNING,
             self::XDEBUG_DISABLE => true,
             self::VENDOR_DIRECTORY => null,
             self::COMMAND => null,
@@ -65,35 +58,9 @@ class CoreExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
-        $this->registerMonolog($container);
         $this->registerConsole($container);
         $this->registerComposer($container);
         $this->registerApplicationServices($container);
-    }
-
-    private function registerMonolog(ContainerBuilder $container)
-    {
-        $container->register('monolog.logger', function (Container $container) {
-            $logger = new Logger('phpactor');
-
-            if (false === $container->getParameter(self::LOGGING_ENABLED)) {
-                $logger->pushHandler(new NullHandler());
-                return $logger;
-            }
-
-            $handler = new StreamHandler(
-                $container->getParameter(self::LOGGING_PATH),
-                $container->getParameter(self::LOGGING_LEVEL)
-            );
-
-            if ($container->getParameter(self::LOGGING_FINGERS_CROSSED)) {
-                $handler = new FingersCrossedHandler($handler);
-            }
-
-            $logger->pushHandler($handler);
-
-            return $logger;
-        });
     }
 
     private function registerConsole(ContainerBuilder $container)
@@ -166,7 +133,7 @@ class CoreExtension implements Extension
 
             foreach ($autoloaderPaths as $autoloaderPath) {
                 if (false === file_exists($autoloaderPath)) {
-                    $container->get('monolog.logger')->warning(sprintf(
+                    $container->get(LoggingExtension::SERVICE_LOGGER)->warning(sprintf(
                         'Could not find autoloader "%s"',
                         $autoloaderPath
                     ));

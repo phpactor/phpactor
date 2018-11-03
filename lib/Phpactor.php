@@ -65,6 +65,7 @@ class Phpactor
             SourceCodeFilesystemExtraExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
+            WorseReflectionExtraExtension::class,
             FilePathResolverExtension::class,
             LoggingExtension::class,
         ];

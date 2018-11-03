@@ -29,6 +29,7 @@ use Phpactor\Config\Paths;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
@@ -109,7 +110,7 @@ class CodeTransformExtension implements Extension
             return new ClassInflect(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('code_transform.from_existing_generators'),
-                $container->get('monolog.logger')
+                $container->get(LoggingExtension::SERVICE_LOGGER)
             );
         });
     }

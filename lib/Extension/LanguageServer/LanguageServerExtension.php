@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
@@ -36,7 +37,7 @@ class LanguageServerExtension implements Extension
     {
         $container->register('language_server.builder', function (Container $container) {
             $builder = LanguageServerBuilder::create(
-                $container->get('monolog.logger'),
+                $container->get(LoggingExtension::SERVICE_LOGGER),
                 $container->get('language_server.session_manager')
             );
             $builder->withCoreExtension();

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra;
 
+use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
@@ -61,7 +62,7 @@ class WorseReflectionExtraExtension implements Extension
                 $builder->addLocator($container->get($locatorId));
             }
         
-            $builder->withLogger(new PsrLogger($container->get('monolog.logger')));
+            $builder->withLogger(new PsrLogger($container->get(LoggingExtension::SERVICE_LOGGER)));
         
             return $builder->build();
         });
