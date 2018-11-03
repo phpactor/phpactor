@@ -15,7 +15,6 @@
         "webmozart/glob": "^4.1",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/yaml": "^3.3",
-        "microsoft/tolerant-php-parser": "dev-master",
         "monolog/monolog": "^1.0",
         "phpactor/completion": "^1.0@dev",
         "composer/xdebug-handler": "^1.1",
