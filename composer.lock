@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "14aad57f441273051622a0fd587b2b50",
+    "content-hash": "2b4f322a34bf01abefd3f5e1e8314a64",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -796,6 +796,56 @@
             "time": "2018-09-09 12:54:13"
         },
         {
+            "name": "phpactor/class-to-file-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/class-to-file-extension.git",
+                "reference": "4644944700608b776f5d61553a82841fc7919b4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/4644944700608b776f5d61553a82841fc7919b4e",
+                "reference": "4644944700608b776f5d61553a82841fc7919b4e",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/class-to-file": "dev-master",
+                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/container": "^1.0",
+                "phpactor/file-path-resolver-extension": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\ClassToFile\\ClassToFileExtension",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\ClassToFile\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Converts classes to files and vice-versa",
+            "time": "2018-11-02 22:10:12"
+        },
+        {
             "name": "phpactor/code-builder",
             "version": "dev-master",
             "source": {
@@ -943,6 +993,193 @@
             "time": "2018-10-26 12:09:45"
         },
         {
+            "name": "phpactor/completion-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-extension.git",
+                "reference": "d213975f3015a993c8cc96c6a03265771101d0e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/d213975f3015a993c8cc96c6a03265771101d0e4",
+                "reference": "d213975f3015a993c8cc96c6a03265771101d0e4",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion": "dev-master",
+                "phpactor/container": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.4",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\Completion\\CompletionExtension",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\Completion\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Phpactor Code Completion Extension",
+            "time": "2018-11-02 18:18:58"
+        },
+        {
+            "name": "phpactor/completion-rpc-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-rpc-extension.git",
+                "reference": "330cc52d9c209b06f3724ebab9a79f706e1f9c7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/330cc52d9c209b06f3724ebab9a79f706e1f9c7a",
+                "reference": "330cc52d9c209b06f3724ebab9a79f706e1f9c7a",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion-extension": "dev-master",
+                "phpactor/rpc-extension": "dev-master",
+                "phpactor/test-utils": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Exension\\CompletionRpc\\CompletionRpcExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\CompletionRpc\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "RPC support for the Completion Extension",
+            "time": "2018-11-03 09:04:03"
+        },
+        {
+            "name": "phpactor/completion-worse-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-worse-extension.git",
+                "reference": "a5937b76ba626e8bb32059486cfeedd1cb0367dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/a5937b76ba626e8bb32059486cfeedd1cb0367dc",
+                "reference": "a5937b76ba626e8bb32059486cfeedd1cb0367dc",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion-extension": "dev-master",
+                "phpactor/source-code-filesystem-extension": "dev-master",
+                "phpactor/worse-reflection-extension": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.4",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\CompletionWorse\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
+            "time": "2018-11-03 08:04:06"
+        },
+        {
+            "name": "phpactor/composer-autoloader-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/composer-autoloader-extension.git",
+                "reference": "db977be202cbe39e5b7e84c7ed195afbb7175fb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/db977be202cbe39e5b7e84c7ed195afbb7175fb3",
+                "reference": "db977be202cbe39e5b7e84c7ed195afbb7175fb3",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/container": "^1.2",
+                "phpactor/file-path-resolver": "~0.3",
+                "phpactor/file-path-resolver-extension": "@dev",
+                "phpactor/logging-extension": "^0.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\ComposerAutoloader\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Composer Autoloader provider",
+            "time": "2018-11-03 09:12:33"
+        },
+        {
             "name": "phpactor/container",
             "version": "1.2.0",
             "source": {
@@ -1024,6 +1261,93 @@
             "time": "2018-10-26 11:35:24"
         },
         {
+            "name": "phpactor/file-path-resolver",
+            "version": "0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/file-path-resolver.git",
+                "reference": "4d0711e33fdd84beb4367e160c67a17a144f5b70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver/zipball/4d0711e33fdd84beb4367e160c67a17a144f5b70",
+                "reference": "4d0711e33fdd84beb4367e160c67a17a144f5b70",
+                "shasum": ""
+            },
+            "require": {
+                "dnoegel/php-xdg-base-dir": "^0.1.0",
+                "webmozart/path-util": "^2.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\FilePathResolver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Resolve files paths for your application (e.g. cache, data, etc)",
+            "time": "2018-10-30T19:16:48+00:00"
+        },
+        {
+            "name": "phpactor/file-path-resolver-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/file-path-resolver-extension.git",
+                "reference": "860e747ebb41e6476c114eb7a863664602018022"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/860e747ebb41e6476c114eb7a863664602018022",
+                "reference": "860e747ebb41e6476c114eb7a863664602018022",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/container": "^1.0",
+                "phpactor/file-path-resolver": "~0.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\FilePathResolverExtension\\FilePathResolverExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\FilePathResolverExtension\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "File Path Resolver Extension",
+            "time": "2018-11-02 17:35:13"
+        },
+        {
             "name": "phpactor/language-server",
             "version": "dev-master",
             "source": {
@@ -1070,6 +1394,54 @@
             ],
             "description": "Phpactor Language Server",
             "time": "2018-10-14 09:32:33"
+        },
+        {
+            "name": "phpactor/logging-extension",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/logging-extension.git",
+                "reference": "205a0e3bdc903777d771a029b0a186fc7b386205"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/205a0e3bdc903777d771a029b0a186fc7b386205",
+                "reference": "205a0e3bdc903777d771a029b0a186fc7b386205",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^1.23",
+                "phpactor/container": "^1.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Exension\\Logger\\LoggingExtension",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Exension\\Logger\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "PSR logging extension",
+            "time": "2018-10-21T14:45:23+00:00"
         },
         {
             "name": "phpactor/map-resolver",
@@ -1153,6 +1525,56 @@
             "time": "2017-11-04 12:57:48"
         },
         {
+            "name": "phpactor/rpc-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/rpc-extension.git",
+                "reference": "bf0c8182151346d6ecc52e093f1a7e6b4c75aace"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/bf0c8182151346d6ecc52e093f1a7e6b4c75aace",
+                "reference": "bf0c8182151346d6ecc52e093f1a7e6b4c75aace",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/container": "^1.1",
+                "phpactor/logging-extension": "@dev",
+                "symfony/console": "^3.0|^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpactor/test-utils": "^1.0",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\Rpc\\RpcExtension",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\Rpc\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "RPC Extension",
+            "time": "2018-11-03 08:57:50"
+        },
+        {
             "name": "phpactor/source-code-filesystem",
             "version": "dev-master",
             "source": {
@@ -1197,6 +1619,94 @@
             ],
             "description": "Filesystem library for working with source code files",
             "time": "2018-08-03 06:31:35"
+        },
+        {
+            "name": "phpactor/source-code-filesystem-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/source-code-filesystem-extension.git",
+                "reference": "04dda24d4bf6b6e66fb4e6c97dcb693cc946da56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/04dda24d4bf6b6e66fb4e6c97dcb693cc946da56",
+                "reference": "04dda24d4bf6b6e66fb4e6c97dcb693cc946da56",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/container": "^1.2",
+                "phpactor/file-path-resolver-extension": "dev-master",
+                "phpactor/source-code-filesystem": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\SourceCodeFilesystem\\SourceCodeFilesystemExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\SourceCodeFilesystem\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Source Code Filesystem Extension",
+            "time": "2018-11-03 07:57:39"
+        },
+        {
+            "name": "phpactor/test-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/test-utils.git",
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/0d3dfe00925f1f541bcbbeeec1749a845c15897b",
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\TestUtils\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Utilities for managing the test environment",
+            "time": "2018-08-02 17:38:22"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -1249,6 +1759,55 @@
             ],
             "description": "Lazy AST reflector that is much worse than better",
             "time": "2018-09-02 09:25:02"
+        },
+        {
+            "name": "phpactor/worse-reflection-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/worse-reflection-extension.git",
+                "reference": "611d87302d9e24eba875cac0fd083d72acdb057b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/611d87302d9e24eba875cac0fd083d72acdb057b",
+                "reference": "611d87302d9e24eba875cac0fd083d72acdb057b",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/class-to-file-extension": "dev-master",
+                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/container": "^1.2",
+                "phpactor/file-path-resolver-extension": "dev-master",
+                "phpactor/logging-extension": "^0.1",
+                "phpactor/worse-reflection": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\WorseReflection\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Worse Reflection",
+            "time": "2018-11-03 09:09:51"
         },
         {
             "name": "phpbench/container",
@@ -2784,47 +3343,6 @@
             "time": "2018-02-15T16:58:55+00:00"
         },
         {
-            "name": "phpactor/test-utils",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/0d3dfe00925f1f541bcbbeeec1749a845c15897b",
-                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\TestUtils\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Utilities for managing the test environment",
-            "time": "2018-08-02 17:38:22"
-        },
-        {
             "name": "phpdocumentor/reflection-common",
             "version": "1.0.1",
             "source": {
@@ -4219,6 +4737,15 @@
         "phpactor/completion": 20,
         "sebastian/diff": 20,
         "phpactor/language-server": 20,
+        "phpactor/class-to-file-extension": 20,
+        "phpactor/completion-extension": 20,
+        "phpactor/completion-rpc-extension": 20,
+        "phpactor/completion-worse-extension": 20,
+        "phpactor/composer-autoloader-extension": 20,
+        "phpactor/file-path-resolver-extension": 20,
+        "phpactor/rpc-extension": 20,
+        "phpactor/source-code-filesystem-extension": 20,
+        "phpactor/worse-reflection-extension": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20

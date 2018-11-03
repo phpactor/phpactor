@@ -22,7 +22,17 @@
         "sebastian/diff": "2.0.x-dev",
         "ocramius/package-versions": "^1.2",
         "phpactor/language-server": "dev-master",
-        "phpactor/container": "^1.0"
+        "phpactor/container": "^1.0",
+        "phpactor/class-to-file-extension": "dev-master",
+        "phpactor/completion-extension": "dev-master",
+        "phpactor/completion-rpc-extension": "dev-master",
+        "phpactor/completion-worse-extension": "dev-master",
+        "phpactor/composer-autoloader-extension": "dev-master",
+        "phpactor/file-path-resolver-extension": "dev-master",
+        "phpactor/logging-extension": "^0.1.0",
+        "phpactor/rpc-extension": "dev-master",
+        "phpactor/source-code-filesystem-extension": "dev-master",
+        "phpactor/worse-reflection-extension": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
