@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application;
+namespace Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application;
 
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;

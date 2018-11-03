@@ -6,7 +6,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
@@ -71,7 +71,7 @@ class ReferencesHandler extends AbstractHandler
         ClassReferences $classReferences,
         ClassMemberReferences $classMemberReferences,
         FilesystemRegistry $registry,
-        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
+        string $defaultFilesystem = SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT
     ) {
         $this->classReferences = $classReferences;
         $this->defaultFilesystem = $defaultFilesystem;

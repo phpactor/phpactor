@@ -11,7 +11,7 @@ use Prophecy\Argument;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\CloseFileResponse;
@@ -37,7 +37,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
     {
         return new ClassMoveHandler(
             $this->classMover->reveal(),
-            SourceCodeFilesystemExtension::FILESYSTEM_GIT
+            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT
         );
     }
 
@@ -109,7 +109,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
 
         $this->classMover->move(
             Argument::type(ClassMoverLogger::class),
-            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
             self::SOURCE_PATH,
             self::DEST_PATH
         )->shouldBeCalled();

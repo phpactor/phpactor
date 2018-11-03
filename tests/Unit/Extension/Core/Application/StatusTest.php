@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Config\Paths;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 
 class StatusTest extends TestCase
 {
@@ -32,9 +32,9 @@ class StatusTest extends TestCase
     public function testStatusComposerOrGit()
     {
         $this->registry->names()->willReturn([
-            SourceCodeFilesystemExtension::FILESYSTEM_SIMPLE,
-            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
-            SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
+            SourceCodeFilesystemExtraExtension::FILESYSTEM_SIMPLE,
+            SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT,
+            SourceCodeFilesystemExtraExtension::FILESYSTEM_COMPOSER,
         ]);
         $diagnostics = $this->status->check();
         $this->assertCount(2, $diagnostics['good']);

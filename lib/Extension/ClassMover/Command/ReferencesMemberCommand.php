@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
@@ -47,7 +47,7 @@ class ReferencesMemberCommand extends Command
         $this->addOption('replace', null, InputOption::VALUE_REQUIRED, 'Replace with this Class FQN (will not replace riskys)');
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not write changes to files');
         FormatHandler::configure($this);
-        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output, $bar = null)

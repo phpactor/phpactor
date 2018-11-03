@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ClassMoveCommand extends Command
@@ -47,7 +47,7 @@ class ClassMoveCommand extends Command
             'Type of move: "%s"',
              implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
-        FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
+        FilesystemHandler::configure($this, SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

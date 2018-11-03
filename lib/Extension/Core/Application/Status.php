@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Core\Application;
 
 use Phpactor\Config\Paths;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -53,13 +53,13 @@ class Status
             'bad' => [],
         ];
 
-        if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER, $filesystems)) {
+        if (in_array(SourceCodeFilesystemExtraExtension::FILESYSTEM_COMPOSER, $filesystems)) {
             $diagnostics['good'][] = 'Composer detected - faster class location and more features!';
         } else {
             $diagnostics['bad'][] = 'Composer not found - some functionality will not be available (e.g. class creation) and class location will fallback to scanning the filesystem - this can be slow. Make sure you\'ve run `composer install` in your project!';
         }
 
-        if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_GIT, $filesystems)) {
+        if (in_array(SourceCodeFilesystemExtraExtension::FILESYSTEM_GIT, $filesystems)) {
             $diagnostics['good'][] = 'Git detected - enables faster refactorings in your repository scope!';
         } else {
             $diagnostics['bad'][] = 'Git not detected. Some operations which would have been better scoped to your project repository will now include vendor paths.';

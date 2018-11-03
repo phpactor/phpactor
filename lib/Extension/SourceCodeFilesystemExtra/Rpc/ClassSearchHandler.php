@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\SourceCodeFilesystem\Rpc;
+namespace Phpactor\Extension\SourceCodeFilesystemExtra\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnOption;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
@@ -29,7 +29,7 @@ class ClassSearchHandler implements Handler
 
     public function __construct(
         ClassSearch $classSearch,
-        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+        string $defaultFilesystem = SourceCodeFilesystemExtraExtension::FILESYSTEM_COMPOSER
     ) {
         $this->classSearch = $classSearch;
         $this->defaultFilesystem = $defaultFilesystem;

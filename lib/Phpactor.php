@@ -10,6 +10,7 @@ use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
@@ -60,6 +61,7 @@ class Phpactor
             NavigationExtension::class,
             ContextMenuExtension::class,
             RpcExtension::class,
+            SourceCodeFilesystemExtraExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
             FilePathResolverExtension::class,

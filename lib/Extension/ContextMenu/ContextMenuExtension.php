@@ -6,7 +6,7 @@ use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Handler\EchoHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\SourceCodeFilesystem\Rpc\ClassSearchHandler;
+use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
@@ -31,7 +31,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 
 class ContextMenuExtension implements Extension
 {
