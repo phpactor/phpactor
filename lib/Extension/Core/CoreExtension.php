@@ -33,7 +33,6 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-    const WORKING_DIRECTORY = 'cwd';
     const DUMPER = 'console_dumper_default';
     const CACHE_DIR = 'cache_dir';
     const XDEBUG_DISABLE = 'xdebug_disable';
@@ -43,7 +42,6 @@ class CoreExtension implements Extension
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => null,
             self::XDEBUG_DISABLE => true,
@@ -57,6 +55,7 @@ class CoreExtension implements Extension
         $container->register('core.phpactor_vendor', function (Container $container) {
             return new ValueExpander('%phpactor_vendor%', $container->getParameter(self::VENDOR_DIRECTORY));
         }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
+
         $this->registerConsole($container);
         $this->registerApplicationServices($container);
     }
@@ -129,7 +128,7 @@ class CoreExtension implements Extension
             return new Status(
                 $container->get('source_code_filesystem.registry'),
                 $container->get('config.paths'),
-                $container->getParameter(self::WORKING_DIRECTORY)
+                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%')
             );
         });
     }
