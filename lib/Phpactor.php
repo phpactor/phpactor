@@ -20,6 +20,7 @@ use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
@@ -68,6 +69,7 @@ class Phpactor
             WorseReflectionExtraExtension::class,
             FilePathResolverExtension::class,
             LoggingExtension::class,
+            ComposerAutoloaderExtension::class,
         ];
 
         $container = new PhpactorContainer();

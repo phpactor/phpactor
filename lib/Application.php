@@ -14,6 +14,7 @@ use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
 use PackageVersions\Versions;
+use Phpactor\Exension\Logger\LoggingExtension;
 
 class Application extends SymfonyApplication
 {
@@ -39,7 +40,7 @@ class Application extends SymfonyApplication
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
-            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDERR));
+            $this->container->get(LoggingExtension::SERVICE_LOGGER)->pushHandler(new StreamHandler(STDERR));
         }
 
         $formatter = $output->getFormatter();

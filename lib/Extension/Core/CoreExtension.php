@@ -6,6 +6,8 @@ use Composer\Autoload\ClassLoader;
 use Monolog\Handler\NullHandler;
 use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
@@ -31,22 +33,16 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-    const AUTOLOAD = 'autoload';
     const WORKING_DIRECTORY = 'cwd';
     const DUMPER = 'console_dumper_default';
     const CACHE_DIR = 'cache_dir';
-    const AUTOLOAD_DEREGISTER = 'autoload.deregister';
     const XDEBUG_DISABLE = 'xdebug_disable';
     const VENDOR_DIRECTORY = 'vendor_dir';
     const COMMAND = 'command';
 
-    public static $autoloader;
-
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::AUTOLOAD => 'vendor/autoload.php',
-            self::AUTOLOAD_DEREGISTER => true,
             self::WORKING_DIRECTORY => getcwd(),
             self::DUMPER => 'indented',
             self::CACHE_DIR => null,
@@ -58,8 +54,10 @@ class CoreExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
+        $container->register('core.phpactor_vendor', function (Container $container) {
+            return new ValueExpander('%phpactor_vendor%', $container->getParameter(self::VENDOR_DIRECTORY));
+        }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
         $this->registerConsole($container);
-        $this->registerComposer($container);
         $this->registerApplicationServices($container);
     }
 
@@ -112,54 +110,6 @@ class CoreExtension implements Extension
             return new ChainPrompt([
                 new BashPrompt()
             ]);
-        });
-    }
-
-    private function registerComposer(ContainerBuilder $container)
-    {
-        $container->register('composer.class_loaders', function (Container $container) {
-            $currentAutoloaders = spl_autoload_functions();
-
-            // prefix relative paths with the configured CWD
-            $autoloaderPaths = array_map(function ($path) use ($container) {
-                if (substr($path, 0, 1) == '/') {
-                    return $path;
-                }
-
-                return $container->getParameter(self::WORKING_DIRECTORY) . '/' . $path;
-            }, (array) $container->getParameter(self::AUTOLOAD));
-
-            $autoloaders = [];
-
-            foreach ($autoloaderPaths as $autoloaderPath) {
-                if (false === file_exists($autoloaderPath)) {
-                    $container->get(LoggingExtension::SERVICE_LOGGER)->warning(sprintf(
-                        'Could not find autoloader "%s"',
-                        $autoloaderPath
-                    ));
-                    continue;
-                }
-
-                $autoloader = require $autoloaderPath;
-
-                if (!$autoloader instanceof ClassLoader) {
-                    throw new \RuntimeException('Autoloader is not an instance of ClassLoader');
-                }
-
-                $autoloaders[] = $autoloader;
-            }
-
-            if ($container->getParameter(self::AUTOLOAD_DEREGISTER)) {
-                foreach (spl_autoload_functions() as $autoloadFunction) {
-                    spl_autoload_unregister($autoloadFunction);
-                }
-
-                foreach ($currentAutoloaders as $autoloader) {
-                    spl_autoload_register($autoloader);
-                }
-            }
-
-            return $autoloaders;
         });
     }
 

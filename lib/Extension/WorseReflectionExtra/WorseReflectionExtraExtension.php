@@ -4,6 +4,7 @@ namespace Phpactor\Extension\WorseReflectionExtra;
 
 use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -40,59 +41,17 @@ class WorseReflectionExtraExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
-        $this->registerReflection($container);
         $this->registerGotoDefinition($container);
         $this->registerLanguageServer($container);
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
     }
 
-    private function registerReflection(ContainerBuilder $container)
-    {
-        $container->register('reflection.reflector', function (Container $container) {
-            $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->get('reflection.tolerant_parser')))
-                ->enableContextualSourceLocation();
-
-            if ($container->getParameter(self::ENABLE_CACHE)) {
-                $builder->enableCache();
-            }
-        
-            foreach (array_keys($container->getServiceIdsForTag('reflection.source_locator')) as $locatorId) {
-                $builder->addLocator($container->get($locatorId));
-            }
-        
-            $builder->withLogger(new PsrLogger($container->get(LoggingExtension::SERVICE_LOGGER)));
-        
-            return $builder->build();
-        });
-
-        $container->register('reflection.tolerant_parser', function (Container $container) {
-            return new CachedParser();
-        });
-        
-        $container->register('reflection.locator.stub', function (Container $container) {
-            return new StubSourceLocator(
-                ReflectorBuilder::create()->build(),
-                $container->getParameter('vendor_dir') . '/' . $container->getParameter(self::STUB_DIRECTORY),
-                $container->getParameter('cache_dir')
-            );
-        }, [ 'reflection.source_locator' => []]);
-        
-        $container->register('reflection.locator.worse', function (Container $container) {
-            return new ClassToFileSourceLocator($container->get('class_to_file.class_to_file'));
-        }, [ 'reflection.source_locator' => []]);
-
-        $container->register('reflection.locator.reflection_function', function (Container $container) {
-            return new NativeReflectionFunctionSourceLocator();
-        }, [ 'reflection.source_locator' => []]);
-    }
-
     private function registerGotoDefinition(ContainerBuilder $container)
     {
         $container->register('rpc.handler.goto_definition', function (Container $container) {
             return new RpcGotoDefinitionHandler(
-                $container->get('reflection.reflector')
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ 'rpc.handler' => [] ]);
     }
@@ -101,14 +60,14 @@ class WorseReflectionExtraExtension implements Extension
     {
         $container->register('application.offset_info', function (Container $container) {
             return new OffsetInfo(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('application.helper.class_file_normalizer')
             );
         });
         $container->register('application.class_reflector', function (Container $container) {
             return new ClassReflector(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('reflection.reflector')
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
     }
@@ -134,7 +93,7 @@ class WorseReflectionExtraExtension implements Extension
         $container->register('reflection.language_server.extension', function (Container $container) {
             return new WorseReflectionLanguageExtension(
                 $container->get('language_server.session_manager'),
-                $container->get('reflection.reflector')
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ 'language_server.extension' => [] ]);
     }
