@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Rpc;
+namespace Phpactor\Extension\ContextMenu;
 
 use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
@@ -14,7 +14,7 @@ use Phpactor\Extension\WorseReflection\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
-use Phpactor\Extension\Rpc\Handler\ContextMenuHandler;
+use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
 use Phpactor\Extension\CodeTransform\Rpc\GenerateMethodHandler;
@@ -33,7 +33,7 @@ use Phpactor\Container\Container;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
-class RpcExtension implements Extension
+class ContextMenuExtension implements Extension
 {
     const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
@@ -50,5 +50,12 @@ class RpcExtension implements Extension
                 $container
             );
         }, [ 'rpc.handler' => [] ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Resolver $schema)
+    {
     }
 }

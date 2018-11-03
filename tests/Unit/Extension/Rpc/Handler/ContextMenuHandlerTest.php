@@ -3,14 +3,14 @@
 namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Rpc\Handler\ContextMenuHandler;
+use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -99,7 +99,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testReplaceTokens()
     {
-        $this->container->get(RpcExtension::SERVICE_REQUEST_HANDLER)->willReturn(
+        $this->container->get(ContextMenuExtension::SERVICE_REQUEST_HANDLER)->willReturn(
             $this->requestHandler->reveal()
         );
 

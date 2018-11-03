@@ -14,6 +14,7 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Exension\Logger\LoggingExtension;
@@ -57,6 +58,7 @@ class Phpactor
             CompletionExtraExtension::class,
             CompletionExtension::class,
             NavigationExtension::class,
+            ContextMenuExtension::class,
             RpcExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
