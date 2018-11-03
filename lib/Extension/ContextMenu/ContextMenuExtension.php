@@ -10,7 +10,7 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
-use Phpactor\Extension\WorseReflection\Rpc\OffsetInfoHandler;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection;
+namespace Phpactor\Extension\WorseReflectionExtra;
 
-use Phpactor\Extension\WorseReflection\LanguageServer\WorseReflectionLanguageExtension;
+use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -12,15 +12,16 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler as RpcGotoDefinitionHandler;
-use Phpactor\Extension\WorseReflection\Command\OffsetInfoCommand;
-use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
-use Phpactor\Extension\WorseReflection\Application\ClassReflector;
-use Phpactor\Extension\WorseReflection\Command\ClassReflectorCommand;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler as RpcGotoDefinitionHandler;
+use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
+use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
+use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
+use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler;
 
-class WorseReflectionExtension implements Extension
+class WorseReflectionExtraExtension implements Extension
 {
     const ENABLE_CACHE = 'reflection.enable_cache';
     const STUB_DIRECTORY = 'reflection.stub_directory';

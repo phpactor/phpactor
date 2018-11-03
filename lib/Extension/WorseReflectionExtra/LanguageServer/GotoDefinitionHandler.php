@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\LanguageServer;
+namespace Phpactor\Extension\WorseReflectionExtra\LanguageServer;
 
 use Generator;
 use LanguageServerProtocol\Location;
@@ -8,7 +8,7 @@ use LanguageServerProtocol\Position;
 use LanguageServerProtocol\Range;
 use LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\Extension\LanguageServer\Helper\OffsetHelper;
-use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
+use Phpactor\Extension\WorseReflectionExtra\GotoDefinition\GotoDefinition;
 use Phpactor\LanguageServer\Core\Handler;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;

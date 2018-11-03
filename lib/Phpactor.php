@@ -12,6 +12,7 @@ use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;

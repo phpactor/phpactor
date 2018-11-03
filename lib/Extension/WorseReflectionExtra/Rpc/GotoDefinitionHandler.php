@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Rpc;
+namespace Phpactor\Extension\WorseReflectionExtra\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
+use Phpactor\Extension\WorseReflectionExtra\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;

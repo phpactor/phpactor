@@ -1,13 +1,13 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Command;
+namespace Phpactor\Extension\WorseReflectionExtra\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Extension\WorseReflection\Application\OffsetInfo;
+use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\LanguageServer;
+namespace Phpactor\Extension\WorseReflectionExtra\LanguageServer;
 
 use LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServer\Core\Extension;
 use Phpactor\LanguageServer\Core\Handlers;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use Phpactor\Extension\WorseReflectionExtra\LanguageServer\GotoDefinitionHandler;
 
 class WorseReflectionLanguageExtension implements Extension
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Command;
+namespace Phpactor\Extension\WorseReflectionExtra\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\WorseReflection\Application\ClassReflector;
+use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;

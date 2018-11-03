@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Application;
+namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\ClassName;

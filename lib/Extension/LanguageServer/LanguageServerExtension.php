@@ -7,7 +7,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\MapResolver\Resolver;
@@ -20,9 +20,9 @@ class LanguageServerExtension implements Extension
     public function configure(Resolver $schema)
     {
         // disable the reflection cache for the language server
-        $schema->setCallback(WorseReflectionExtension::ENABLE_CACHE, function (array $config) {
+        $schema->setCallback(WorseReflectionExtraExtension::ENABLE_CACHE, function (array $config) {
             if ($config['command'] !== StartCommand::NAME) {
-                return $config[WorseReflectionExtension::ENABLE_CACHE];
+                return $config[WorseReflectionExtraExtension::ENABLE_CACHE];
             }
 
             return false;

@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\WorseReflection\Rpc\OffsetInfoHandler;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;

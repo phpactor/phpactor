@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Application;
+namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
