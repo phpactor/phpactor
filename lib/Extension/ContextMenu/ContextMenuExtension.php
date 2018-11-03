@@ -2,37 +2,12 @@
 
 namespace Phpactor\Extension\ContextMenu;
 
-use Phpactor\Extension\Rpc\Command\RpcCommand;
-use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Extension\Rpc\Handler\EchoHandler;
-use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
-use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
-use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
-use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
-use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
-use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
-use Phpactor\Extension\CodeTransform\Rpc\GenerateMethodHandler;
-use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
-use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
-use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
-use Phpactor\Extension\Rpc\RequestHandler\LoggingHandler;
-use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
-use Phpactor\Extension\Core\Rpc\CacheClearHandler;
-use Phpactor\Extension\Core\Rpc\ConfigHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
-use Phpactor\Extension\ClassToFileConsole\Rpc\FileInfoHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 
 class ContextMenuExtension implements Extension
 {

@@ -2,14 +2,8 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra;
 
-use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
-use Phpactor\WorseReflection\Bridge\PsrLog\PsrLogger;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
-use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
@@ -19,9 +13,6 @@ use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
 use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
-use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler;
 
 class WorseReflectionExtraExtension implements Extension
 {

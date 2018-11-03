@@ -2,7 +2,6 @@
 
 namespace Phpactor;
 
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;

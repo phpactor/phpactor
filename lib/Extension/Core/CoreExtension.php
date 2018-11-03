@@ -2,13 +2,9 @@
 
 namespace Phpactor\Extension\Core;
 
-use Composer\Autoload\ClassLoader;
-use Monolog\Handler\NullHandler;
-use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
-use Phpactor\Filesystem\Domain\Cwd;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
@@ -16,10 +12,6 @@ use Phpactor\Extension\Core\Console\Dumper\TableDumper;
 use Phpactor\Extension\Core\Console\Prompt\BashPrompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
 use Phpactor\Extension\Core\Command\ConfigDumpCommand;
-use Monolog\Logger;
-use Psr\Log\LogLevel;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\FingersCrossedHandler;
 use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Core\Command\CacheClearCommand;
 use Phpactor\Extension\Core\Application\Status;

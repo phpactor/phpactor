@@ -6,16 +6,8 @@ use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassToFileConsole\Command\FileInfoCommand;
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
-use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
-use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Container\Container;
 use Phpactor\Extension\ClassToFileConsole\Application\FileInfo;
-use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 
 class ClassToFileConsoleExtension implements Extension
 {

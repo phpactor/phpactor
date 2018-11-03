@@ -10,7 +10,6 @@ use Phpactor\LanguageServer\Core\Extension;
 use Phpactor\LanguageServer\Core\Handlers;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use Phpactor\Extension\CompletionExtra\LanguageServer\CompletionHandler;
 
 class CompletionLanguageExtension implements Extension
 {
