@@ -1203,12 +1203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "bf0c8182151346d6ecc52e093f1a7e6b4c75aace"
+                "reference": "d6d7a103a9959070dc4d56cb58f5a22aa59f90f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/bf0c8182151346d6ecc52e093f1a7e6b4c75aace",
-                "reference": "bf0c8182151346d6ecc52e093f1a7e6b4c75aace",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/d6d7a103a9959070dc4d56cb58f5a22aa59f90f1",
+                "reference": "d6d7a103a9959070dc4d56cb58f5a22aa59f90f1",
                 "shasum": ""
             },
             "require": {
@@ -1245,7 +1245,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-11-03 08:57:50"
+            "time": "2018-11-03 11:23:00"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1434,12 +1434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "611d87302d9e24eba875cac0fd083d72acdb057b"
+                "reference": "b1499d92380b482e2cec3ea234d412a215915620"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/611d87302d9e24eba875cac0fd083d72acdb057b",
-                "reference": "611d87302d9e24eba875cac0fd083d72acdb057b",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/b1499d92380b482e2cec3ea234d412a215915620",
+                "reference": "b1499d92380b482e2cec3ea234d412a215915620",
                 "shasum": ""
             },
             "require": {
@@ -1475,7 +1475,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-11-03 09:09:51"
+            "time": "2018-11-03 11:23:46"
         },
         {
             "name": "phpbench/container",
@@ -2626,7 +2626,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-10-31T16:50:45+00:00"
+            "time": "2018-10-31 16:50:45"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4060,7 +4060,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2018-10-30T05:41:47+00:00"
+            "time": "2018-10-30 05:41:47"
         },
         {
             "name": "sebastian/object-reflector",
@@ -4355,7 +4355,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-30T16:50:50+00:00"
+            "time": "2018-10-30 16:50:50"
         },
         {
             "name": "symfony/finder",
