@@ -6,7 +6,6 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnOption;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;

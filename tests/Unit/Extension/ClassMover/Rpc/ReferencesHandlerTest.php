@@ -7,7 +7,6 @@ use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;

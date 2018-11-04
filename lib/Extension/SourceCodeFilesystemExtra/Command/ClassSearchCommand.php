@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 

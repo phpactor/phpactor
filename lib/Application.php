@@ -2,10 +2,7 @@
 
 namespace Phpactor;
 
-use InvalidArgumentException;
-use Phpactor\Extension\Core\Console\PhpactorCommandLoader;
 use Symfony\Component\Console\Application as SymfonyApplication;
-use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;

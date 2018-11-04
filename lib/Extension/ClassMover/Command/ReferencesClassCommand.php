@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 

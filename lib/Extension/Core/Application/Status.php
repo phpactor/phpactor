@@ -5,7 +5,6 @@ namespace Phpactor\Extension\Core\Application;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
