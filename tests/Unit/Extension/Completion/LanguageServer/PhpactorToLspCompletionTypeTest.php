@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\Completion\LanguageServer;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Extension\Completion\LanguageServer\PhpactorToLspCompletionType;
+use Phpactor\Extension\CompletionExtra\LanguageServer\PhpactorToLspCompletionType;
 use ReflectionClass;
 
 class PhpactorToLspCompletionTypeTest extends TestCase

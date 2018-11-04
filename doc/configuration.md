@@ -29,17 +29,29 @@ Config files:
 
  code_transform.class_new.variants:
 	exception:exception    
-	autoload:vendor/autoload.php
 
  # ... etc
 ```
+
+File Paths
+----------
+
+Configured file paths can make use of some special tokens, for example
+`%cache%/foobar` will expand to `/home/user/.cache/phpactor/foobar`:
+
+- `%cache%`: The absolute path to the phpactor cache dir (e.g.
+  `/home/user/.cache/phpactor`).
+- `%project_root%`: Will expand to the project root (e.g. the current working
+  directory or the value provided by `--working-dir`).
+- `%phpactor_vendor%`: The path to Phpactor's own vendor directory.
+- `%config%`: The path to Phpactor's config dir (e.g. `/home/user/.config/phpactor`).
 
 Reference
 ---------
 
 ### Core
 
-#### autoload
+#### composer.autoloader_path
 
 *Default*: `vendor/autoload.php`
 
@@ -47,7 +59,7 @@ Phpactor will automatically look to see if it can use the
 [composer](https://getcomposer.org) autoloader at this
 path. The autoloader helps Phpactor locate classes.
 
-#### autoload.deregister
+#### composer.autoload_deregister
 
 *Default*: `true`
 
@@ -55,10 +67,6 @@ any potential conflicts. However, some autoloaders may add global dependencies
 By default Phpactor will deregister the included autoloader to prevent
 on the code available through that autoloader (e.g. Drupal). In such cases
 set this to `false` and hope that everything is *fine*.
-
-#### cache_dir
-
-Directory Phpactor uses for the cache (e.g. the index for the [jetbrains stubs](https://github.com/jetbrains/phpstorm-stubs)).
 
 #### logging.enabled
 

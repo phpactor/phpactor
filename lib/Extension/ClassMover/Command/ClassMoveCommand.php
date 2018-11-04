@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ClassMoveCommand extends Command

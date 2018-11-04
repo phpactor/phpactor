@@ -4,9 +4,9 @@ namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Config\Paths;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class StatusTest extends TestCase
 {

@@ -2,23 +2,32 @@
 
 namespace Phpactor;
 
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
@@ -35,7 +44,7 @@ class Phpactor
         $cwd = getcwd();
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
@@ -46,15 +55,24 @@ class Phpactor
 
         $extensionNames = [
             CoreExtension::class,
+            ClassToFileExtraExtension::class,
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
+            CompletionExtraExtension::class,
+            CompletionWorseExtension::class,
             CompletionExtension::class,
             NavigationExtension::class,
+            ContextMenuExtension::class,
             RpcExtension::class,
+            SourceCodeFilesystemExtraExtension::class,
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
-            LanguageServerExtension::class,
+            WorseReflectionExtraExtension::class,
+            FilePathResolverExtension::class,
+            LoggingExtension::class,
+            ComposerAutoloaderExtension::class,
+            ConsoleExtension::class,
         ];
 
         $container = new PhpactorContainer();
@@ -63,10 +81,6 @@ class Phpactor
         $container->register('config.paths', function () use ($paths) {
             return $paths;
         });
-
-        if (false === isset($config[CoreExtension::CACHE_DIR])) {
-            $config[CoreExtension::CACHE_DIR] = $paths->userData('cache');
-        }
 
         // > method resolve config
         $masterSchema = new Resolver();

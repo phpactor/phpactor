@@ -24,7 +24,7 @@ In both cases deregister the autoloader in `.phpactor.yml`:
 # Bootstrapping Drupal creates lots of implicit global
 # dependencies, so we will just keep the Drupal autoloader
 # registered and hope for the best.
-autoload.deregister: false
+composer.autoload_deregister: false
 ```
 
 #### Option 1: Bootstrap Drupal on the fly to generate the autoloader

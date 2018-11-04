@@ -29,6 +29,10 @@ use Phpactor\Config\Paths;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
@@ -108,7 +112,7 @@ class CodeTransformExtension implements Extension
             return new ClassInflect(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('code_transform.from_existing_generators'),
-                $container->get('monolog.logger')
+                $container->get(LoggingExtension::SERVICE_LOGGER)
             );
         });
     }
@@ -119,21 +123,21 @@ class CodeTransformExtension implements Extension
             return new ClassTransformCommand(
                 $container->get('application.transform')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:transform' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:transform' ]]);
 
         $container->register('command.class_new', function (Container $container) {
             return new ClassNewCommand(
                 $container->get('application.class_new'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:new' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:new' ]]);
 
         $container->register('command.class_inflect', function (Container $container) {
             return new ClassInflectCommand(
                 $container->get('application.class_inflect'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:inflect' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:inflect' ]]);
     }
 
     private function registerTransformers(ContainerBuilder $container)
@@ -153,14 +157,14 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
             return new CompleteConstructor(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
 
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.updater'),
                 $container->get('code_transform.builder_factory')
             );
@@ -174,7 +178,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
@@ -196,7 +200,7 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform.from_existing_generators', function (Container $container) {
             $generators = [
                 'interface' => new InterfaceFromExistingGenerator(
-                    $container->get('reflection.reflector'),
+                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                     $container->get('code_transform.renderer')
                 ),
             ];
@@ -237,14 +241,14 @@ class CodeTransformExtension implements Extension
     {
         $container->register('code_transform.refactor.extract_constant', function (Container $container) {
             return new WorseExtractConstant(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.updater')
             );
         });
 
         $container->register('code_transform.refactor.generate_method', function (Container $container) {
             return new WorseGenerateMethod(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
@@ -252,7 +256,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.refactor.generate_accessor', function (Container $container) {
             return new WorseGenerateAccessor(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.updater'),
                 $container->getParameter(self::GENERATE_ACCESSOR_PREFIX),
                 $container->getParameter(self::GENERATE_ACCESSOR_UPPER_CASE_FIRST)
@@ -265,7 +269,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.refactor.override_method', function (Container $container) {
             return new WorseOverrideMethod(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
@@ -273,7 +277,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.refactor.extract_method', function (Container $container) {
             return new WorseExtractMethod(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
@@ -303,7 +307,7 @@ class CodeTransformExtension implements Extension
             );
         });
         $container->register('code_transform.builder_factory', function (Container $container) {
-            return new WorseBuilderFactory($container->get('reflection.reflector'));
+            return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
         });
     }
 
@@ -349,7 +353,7 @@ class CodeTransformExtension implements Extension
             return new ImportClassHandler(
                 $container->get('code_transform.refactor.class_import'),
                 $container->get('application.class_search'),
-                $container->getParameter('rpc.class_search.filesystem')
+                SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
             );
         }, [ 'rpc.handler' => [] ]);
 
@@ -367,7 +371,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('rpc.handler.override_method', function (Container $container) {
             return new OverrideMethodHandler(
-                $container->get('reflection.reflector'),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.refactor.override_method')
             );
         }, [ 'rpc.handler' => [] ]);

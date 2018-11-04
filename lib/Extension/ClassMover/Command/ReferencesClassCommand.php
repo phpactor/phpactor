@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Symfony\Component\Console\Command\Command;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
@@ -12,7 +13,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
 use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 

@@ -5,6 +5,7 @@ namespace Phpactor\Extension\Navigation;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Navigation\Application\Navigator;
@@ -78,7 +79,7 @@ class NavigationExtension implements Extension
         }, [ 'navigation.navigator' => [] ]);
         
         $container->register('navigation.navigator.worse_reflection', function (Container $container) {
-            return new WorseReflectionNavigator($container->get('reflection.reflector'));
+            return new WorseReflectionNavigator($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
         }, [ 'navigation.navigator' => [] ]);
     }
 }

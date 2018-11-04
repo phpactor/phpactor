@@ -5,9 +5,11 @@ namespace Phpactor\Extension\LanguageServer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\MapResolver\Resolver;
@@ -20,9 +22,9 @@ class LanguageServerExtension implements Extension
     public function configure(Resolver $schema)
     {
         // disable the reflection cache for the language server
-        $schema->setCallback(WorseReflectionExtension::ENABLE_CACHE, function (array $config) {
+        $schema->setCallback(WorseReflectionExtraExtension::ENABLE_CACHE, function (array $config) {
             if ($config['command'] !== StartCommand::NAME) {
-                return $config[WorseReflectionExtension::ENABLE_CACHE];
+                return $config[WorseReflectionExtraExtension::ENABLE_CACHE];
             }
 
             return false;
@@ -36,7 +38,7 @@ class LanguageServerExtension implements Extension
     {
         $container->register('language_server.builder', function (Container $container) {
             $builder = LanguageServerBuilder::create(
-                $container->get('monolog.logger'),
+                $container->get(LoggingExtension::SERVICE_LOGGER),
                 $container->get('language_server.session_manager')
             );
             $builder->withCoreExtension();
@@ -51,7 +53,7 @@ class LanguageServerExtension implements Extension
 
         $container->register('language_server.command.lsp_start', function (Container $container) {
             return new StartCommand($container->get('language_server.builder'));
-        }, [ 'ui.console.command' => [ 'name' => StartCommand::NAME ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => StartCommand::NAME ]]);
 
         $container->register('language_server.session_manager', function (Container $container) {
             return new Manager();
