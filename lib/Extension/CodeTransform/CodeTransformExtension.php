@@ -30,6 +30,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
@@ -351,7 +352,7 @@ class CodeTransformExtension implements Extension
             return new ImportClassHandler(
                 $container->get('code_transform.refactor.class_import'),
                 $container->get('application.class_search'),
-                'composer'
+                SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
             );
         }, [ 'rpc.handler' => [] ]);
 
