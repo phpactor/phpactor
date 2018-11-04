@@ -26,7 +26,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\ClassToFileConsole\ClassToFileConsoleExtension;
+use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
@@ -54,7 +54,7 @@ class Phpactor
 
         $extensionNames = [
             CoreExtension::class,
-            ClassToFileConsoleExtension::class,
+            ClassToFileExtraExtension::class,
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,

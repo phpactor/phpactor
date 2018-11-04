@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\ClassToFileConsole\Application;
+namespace Phpactor\Extension\ClassToFileExtra\Application;
 
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;

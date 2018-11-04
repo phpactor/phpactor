@@ -1,15 +1,15 @@
 <?php
 
-namespace Phpactor\Extension\ClassToFileConsole;
+namespace Phpactor\Extension\ClassToFileExtra;
 
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\ClassToFileConsole\Command\FileInfoCommand;
+use Phpactor\Extension\ClassToFileExtra\Command\FileInfoCommand;
 use Phpactor\Container\Container;
-use Phpactor\Extension\ClassToFileConsole\Application\FileInfo;
+use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 
-class ClassToFileConsoleExtension implements Extension
+class ClassToFileExtraExtension implements Extension
 {
     /**
      * {@inheritDoc}
