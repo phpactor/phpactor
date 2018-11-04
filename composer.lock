@@ -1203,12 +1203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "d6d7a103a9959070dc4d56cb58f5a22aa59f90f1"
+                "reference": "86322787461e8b1e386b8f179a0f0c50fe51ec2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/d6d7a103a9959070dc4d56cb58f5a22aa59f90f1",
-                "reference": "d6d7a103a9959070dc4d56cb58f5a22aa59f90f1",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/86322787461e8b1e386b8f179a0f0c50fe51ec2e",
+                "reference": "86322787461e8b1e386b8f179a0f0c50fe51ec2e",
                 "shasum": ""
             },
             "require": {
@@ -1245,7 +1245,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-11-03 11:23:00"
+            "time": "2018-11-04 10:22:51"
         },
         {
             "name": "phpactor/source-code-filesystem",
