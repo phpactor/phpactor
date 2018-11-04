@@ -26,7 +26,6 @@ class FileInfoCommand extends Command
 
     public function configure()
     {
-        $this->setName('file:info');
         $this->setDescription('Return information about given file');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');
         FormatHandler::configure($this);

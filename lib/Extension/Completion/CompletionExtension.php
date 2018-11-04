@@ -155,7 +155,7 @@ class CompletionExtension implements Extension
                 $container->get('application.complete'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'complete' ]]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)

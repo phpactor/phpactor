@@ -29,7 +29,7 @@ class ClassToFileExtension implements Extension
                 $container->get('application.file_info'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'file:info' ]]);
         $container->register('class_to_file.converter', function (Container $container) {
             return new ClassToFileFileToClass(
                 $container->get('class_to_file.class_to_file'),

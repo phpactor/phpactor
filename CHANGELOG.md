@@ -18,6 +18,7 @@ Features:
 
 Improvements:
 
+  - [Application] Do not eagerly load commands (~20% baseline improvement)
   - [Transform] Complete constructor will work work on ! interfaces #597
   - [Transform] Import missing types on generate method
   - [Transform] Adds return types on generate method

@@ -51,7 +51,7 @@ class LanguageServerExtension implements Extension
 
         $container->register('language_server.command.lsp_start', function (Container $container) {
             return new StartCommand($container->get('language_server.builder'));
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => StartCommand::NAME ]]);
 
         $container->register('language_server.session_manager', function (Container $container) {
             return new Manager();

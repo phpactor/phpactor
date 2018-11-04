@@ -91,7 +91,7 @@ class SourceCodeFilesystemExtension implements Extension
                 $container->get('application.class_search'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => []]);
+        }, [ 'ui.console.command' => [ 'name' => 'class:search' ]]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)

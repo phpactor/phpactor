@@ -38,7 +38,6 @@ class ClassCopyCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:copy');
         $this->setDescription('Copy class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addArgument('dest', InputArgument::OPTIONAL, 'Destination path or FQN');

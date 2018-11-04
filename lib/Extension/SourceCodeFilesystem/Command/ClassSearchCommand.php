@@ -35,7 +35,6 @@ class ClassSearchCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:search');
         $this->setDescription('Search for class by (short) name and return informations on candidates');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
         FormatHandler::configure($this);
