@@ -30,6 +30,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
@@ -122,21 +123,21 @@ class CodeTransformExtension implements Extension
             return new ClassTransformCommand(
                 $container->get('application.transform')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:transform' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:transform' ]]);
 
         $container->register('command.class_new', function (Container $container) {
             return new ClassNewCommand(
                 $container->get('application.class_new'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:new' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:new' ]]);
 
         $container->register('command.class_inflect', function (Container $container) {
             return new ClassInflectCommand(
                 $container->get('application.class_inflect'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:inflect' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:inflect' ]]);
     }
 
     private function registerTransformers(ContainerBuilder $container)

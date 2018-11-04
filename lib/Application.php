@@ -15,6 +15,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
 use PackageVersions\Versions;
 use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 
 class Application extends SymfonyApplication
 {
@@ -101,19 +102,6 @@ class Application extends SymfonyApplication
     {
         $this->container = Phpactor::boot($input, $this->vendorDir);
 
-        $map = [];
-        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
-            if (!isset($attrs['name'])) {
-                throw new InvalidArgumentException(sprintf(
-                    'Command with service ID "%s" must have the "name" attribute',
-                    $commandId
-                ));
-            }
-
-            $map[$attrs['name']] = $commandId;
-        }
-
-        $commandLoader = new PhpactorCommandLoader($this->container, $map);
-        $this->setCommandLoader($commandLoader);
+        $this->setCommandLoader($this->container->get(ConsoleExtension::SERVICE_COMMAND_LOADER));
     }
 }

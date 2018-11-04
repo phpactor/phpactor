@@ -14,6 +14,7 @@ use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
 use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
@@ -113,27 +114,27 @@ class ClassMoverExtension implements Extension
                 $container->get('application.class_mover'),
                 $container->get('console.prompter')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:move' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:move' ]]);
         
         $container->register('command.class_copy', function (Container $container) {
             return new ClassCopyCommand(
                 $container->get('application.class_copy'),
                 $container->get('console.prompter')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:copy' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:copy' ]]);
         
         $container->register('command.class_references', function (Container $container) {
             return new ReferencesClassCommand(
                 $container->get('application.class_references'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'references:class' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'references:class' ]]);
         
         $container->register('command.member_references', function (Container $container) {
             return new ReferencesMemberCommand(
                 $container->get('application.method_references'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'references:member' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'references:member' ]]);
     }
 }

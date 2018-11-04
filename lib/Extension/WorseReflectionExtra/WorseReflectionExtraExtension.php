@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra;
 
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
@@ -63,13 +64,13 @@ class WorseReflectionExtraExtension implements Extension
                 $container->get('application.offset_info'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'offset:info' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'offset:info' ]]);
         $container->register('command.class_reflector', function (Container $container) {
             return new ClassReflectorCommand(
                 $container->get('application.class_reflector'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:reflect' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:reflect' ]]);
     }
 
     private function registerLanguageServer(ContainerBuilder $container)

@@ -4,6 +4,7 @@ namespace Phpactor\Extension\CompletionExtra;
 
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
@@ -38,7 +39,7 @@ class CompletionExtraExtension implements Extension
                 $container->get('application.complete'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'complete' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'complete' ]]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)

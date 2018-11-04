@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystemExtra;
 
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
@@ -32,7 +33,7 @@ class SourceCodeFilesystemExtraExtension implements Extension
                 $container->get('application.class_search'),
                 $container->get('console.dumper_registry')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'class:search' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:search' ]]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)

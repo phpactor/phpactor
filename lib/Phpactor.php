@@ -18,6 +18,7 @@ use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Exension\Logger\LoggingExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
@@ -71,6 +72,7 @@ class Phpactor
             FilePathResolverExtension::class,
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
+            ConsoleExtension::class,
         ];
 
         $container = new PhpactorContainer();

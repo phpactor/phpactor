@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core;
 
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
@@ -58,20 +59,20 @@ class CoreExtension implements Extension
                 $container->get('console.dumper_registry'),
                 $container->get('config.paths')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'config:dump']]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
 
 
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
                 $container->get('application.cache_clear')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'cache:clear' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'cache:clear' ]]);
 
         $container->register('command.status', function (Container $container) {
             return new StatusCommand(
                 $container->get('application.status')
             );
-        }, [ 'ui.console.command' => [ 'name' => 'status' ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'status' ]]);
 
 
         $container->register('console.dumper_registry', function (Container $container) {

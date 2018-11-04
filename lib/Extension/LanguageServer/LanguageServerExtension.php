@@ -6,6 +6,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
@@ -52,7 +53,7 @@ class LanguageServerExtension implements Extension
 
         $container->register('language_server.command.lsp_start', function (Container $container) {
             return new StartCommand($container->get('language_server.builder'));
-        }, [ 'ui.console.command' => [ 'name' => StartCommand::NAME ]]);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => StartCommand::NAME ]]);
 
         $container->register('language_server.session_manager', function (Container $container) {
             return new Manager();
