@@ -2683,7 +2683,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-10-31 16:50:45"
+            "time": "2018-10-31T16:50:45+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4117,7 +4117,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2018-10-30 05:41:47"
+            "time": "2018-10-30T05:41:47+00:00"
         },
         {
             "name": "sebastian/object-reflector",
