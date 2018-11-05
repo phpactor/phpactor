@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Smoke;
 
-use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Tests\IntegrationTestCase;
 
 class RpcHandlerTest extends IntegrationTestCase
@@ -45,6 +44,6 @@ class RpcHandlerTest extends IntegrationTestCase
         yield [ 'status' ];
         yield [ 'transform' ];
         yield [ 'hover' ];
-        yield [ 'change_visiblity' ];
+        yield [ 'change_visibility' ];
     }
 }

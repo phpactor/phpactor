@@ -70,7 +70,6 @@ class ClassMoverExtension implements Extension
                 SourceCodeFilesystemExtension::FILESYSTEM_GIT
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
-
     }
 
     private function registerClassMover(ContainerBuilder $container)
