@@ -39,7 +39,7 @@ class CompletionExtraExtension implements Extension
 
     private function registerRpc(ContainerBuilder $container)
     {
-        $container->register('class_mover.handler.move_class', function (Container $container) {
+        $container->register('class_mover.handler.hover', function (Container $container) {
             return new HoverHandler(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(CompletionExtension::SERVICE_FORMATTER)

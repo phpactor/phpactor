@@ -3,6 +3,9 @@
 namespace Phpactor\Extension\SourceCodeFilesystemExtra;
 
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
@@ -24,6 +27,7 @@ class SourceCodeFilesystemExtraExtension implements Extension
     {
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
+        $this->registerRpc($container);
     }
 
     private function registerCommands(ContainerBuilder $container)
@@ -45,5 +49,15 @@ class SourceCodeFilesystemExtraExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('source_code_filesystem.rpc.handler.class_search', function (Container $container) {
+            return new ClassSearchHandler(
+                $container->get('application.class_search'),
+                SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
     }
 }

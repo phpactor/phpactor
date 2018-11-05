@@ -4,6 +4,10 @@ namespace Phpactor\Extension\Core;
 
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Rpc\CacheClearHandler;
+use Phpactor\Extension\Core\Rpc\ConfigHandler;
+use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
@@ -49,6 +53,7 @@ class CoreExtension implements Extension
 
         $this->registerConsole($container);
         $this->registerApplicationServices($container);
+        $this->registerRpc($container);
     }
 
     private function registerConsole(ContainerBuilder $container)
@@ -122,5 +127,20 @@ class CoreExtension implements Extension
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%')
             );
         });
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('core.rpc.handler.cache_clear', function (Container $container) {
+            return new CacheClearHandler($container->get('application.cache_clear'));
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+
+        $container->register('core.rpc.handler.status', function (Container $container) {
+            return new StatusHandler($container->get('application.status'), $container->get('config.paths'));
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+
+        $container->register('core.rpc.handler.config', function (Container $container) {
+            return new ConfigHandler($container->getParameters());
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
     }
 }

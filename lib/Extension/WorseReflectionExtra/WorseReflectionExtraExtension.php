@@ -3,7 +3,9 @@
 namespace Phpactor\Extension\WorseReflectionExtra;
 
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
@@ -30,6 +32,7 @@ class WorseReflectionExtraExtension implements Extension
         $this->registerLanguageServer($container);
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
+        $this->registerRpc($container);
     }
 
     private function registerGotoDefinition(ContainerBuilder $container)
@@ -81,5 +84,12 @@ class WorseReflectionExtraExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ 'language_server.extension' => [] ]);
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('worse_reflection_extra.rpc.handler.offset_info', function (Container $container) {
+            return new OffsetInfoHandler($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
     }
 }
