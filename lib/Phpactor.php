@@ -30,6 +30,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 
 class Phpactor
 {
@@ -75,6 +76,7 @@ class Phpactor
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
+            LanguageServerExtension::class
         ];
 
         $container = new PhpactorContainer();
