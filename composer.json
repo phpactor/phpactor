@@ -27,7 +27,7 @@
         "phpactor/completion-worse-extension": "dev-master",
         "phpactor/composer-autoloader-extension": "dev-master",
         "phpactor/file-path-resolver-extension": "dev-master",
-        "phpactor/logging-extension": "^0.1.0",
+        "phpactor/logging-extension": "~0.2.0",
         "phpactor/rpc-extension": "dev-master",
         "phpactor/source-code-filesystem-extension": "dev-master",
         "phpactor/worse-reflection-extension": "dev-master",

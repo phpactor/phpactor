@@ -21,7 +21,7 @@ use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
@@ -30,6 +30,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 
 class Phpactor
 {
@@ -75,6 +76,7 @@ class Phpactor
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
+            LanguageServerExtension::class
         ];
 
         $container = new PhpactorContainer();

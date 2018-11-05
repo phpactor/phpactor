@@ -11,7 +11,7 @@ use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
 use PackageVersions\Versions;
-use Phpactor\Exension\Logger\LoggingExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 
 class Application extends SymfonyApplication
@@ -49,7 +49,8 @@ class Application extends SymfonyApplication
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $e) {
-            if ($input->hasOption('format') && $input->getOption('format')) {
+            $command = $input->getArgument('command');
+            if ($command !== 'list' && $input->hasOption('format') && $input->getOption('format')) {
                 return $this->handleException($output, $input->getOption('format'), $e);
             }
 
