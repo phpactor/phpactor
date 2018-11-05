@@ -14,7 +14,12 @@ use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
 use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
+use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
+use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
@@ -39,6 +44,33 @@ class ClassMoverExtension implements Extension
         $this->registerClassMover($container);
         $this->registerApplicationServices($container);
         $this->registerConsoleCommands($container);
+        $this->registerRpc($container);
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('class_mover.handler.class_references', function (Container $container) {
+            return new ReferencesHandler(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get('application.class_references'),
+                $container->get('application.method_references'),
+                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+
+        $container->register('class_mover.handler.copy_class', function (Container $container) {
+            return new ClassCopyHandler(
+                $container->get('application.class_copy')
+            );
+        }, [ 'rpc.handler' => [] ]);
+
+        $container->register('class_mover.handler.move_class', function (Container $container) {
+            return new ClassMoveHandler(
+                $container->get('application.class_mover'),
+                SourceCodeFilesystemExtension::FILESYSTEM_GIT
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+
     }
 
     private function registerClassMover(ContainerBuilder $container)

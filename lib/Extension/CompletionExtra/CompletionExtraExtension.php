@@ -4,7 +4,11 @@ namespace Phpactor\Extension\CompletionExtra;
 
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
+use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
@@ -23,6 +27,7 @@ class CompletionExtraExtension implements Extension
         $this->registerCommands($container);
         $this->registerLanguageServer($container);
         $this->registerApplicationServices($container);
+        $this->registerRpc($container);
     }
 
     /**
@@ -30,6 +35,16 @@ class CompletionExtraExtension implements Extension
      */
     public function configure(Resolver $schema)
     {
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('class_mover.handler.move_class', function (Container $container) {
+            return new HoverHandler(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(CompletionExtension::SERVICE_FORMATTER)
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
     }
 
     private function registerCommands(ContainerBuilder $container)
