@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3465c0616a8e99d362b6dce6dc7f2517",
+    "content-hash": "52911fd43097aa04713972824e343b64",
     "packages": [
         {
             "name": "composer/xdebug-handler",
@@ -257,12 +257,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "c465e1144536862e03f519cb3d65e924062cabfb"
+                "reference": "25580ef96197bb3aa55664ca1004c5abbe5a0b0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c465e1144536862e03f519cb3d65e924062cabfb",
-                "reference": "c465e1144536862e03f519cb3d65e924062cabfb",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/25580ef96197bb3aa55664ca1004c5abbe5a0b0c",
+                "reference": "25580ef96197bb3aa55664ca1004c5abbe5a0b0c",
                 "shasum": ""
             },
             "require": {
@@ -327,7 +327,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-06-19 07:22:34"
+            "time": "2018-11-05 12:13:11"
         },
         {
             "name": "ocramius/package-versions",
@@ -811,19 +811,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/composer-autoloader-extension.git",
-                "reference": "db977be202cbe39e5b7e84c7ed195afbb7175fb3"
+                "reference": "2b7d812165217e37fdeec4e210e0c703daa268ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/db977be202cbe39e5b7e84c7ed195afbb7175fb3",
-                "reference": "db977be202cbe39e5b7e84c7ed195afbb7175fb3",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/2b7d812165217e37fdeec4e210e0c703daa268ea",
+                "reference": "2b7d812165217e37fdeec4e210e0c703daa268ea",
                 "shasum": ""
             },
             "require": {
                 "phpactor/container": "^1.2",
                 "phpactor/file-path-resolver": "~0.3",
                 "phpactor/file-path-resolver-extension": "@dev",
-                "phpactor/logging-extension": "^0.1.0"
+                "phpactor/logging-extension": "~0.2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -850,7 +850,7 @@
                 }
             ],
             "description": "Composer Autoloader provider",
-            "time": "2018-11-03 09:12:33"
+            "time": "2018-11-05 21:16:00"
         },
         {
             "name": "phpactor/console-extension",
@@ -1115,16 +1115,16 @@
         },
         {
             "name": "phpactor/logging-extension",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/logging-extension.git",
-                "reference": "205a0e3bdc903777d771a029b0a186fc7b386205"
+                "reference": "d71a55c84f4adf1d591d94285a0836a13d9918f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/205a0e3bdc903777d771a029b0a186fc7b386205",
-                "reference": "205a0e3bdc903777d771a029b0a186fc7b386205",
+                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/d71a55c84f4adf1d591d94285a0836a13d9918f6",
+                "reference": "d71a55c84f4adf1d591d94285a0836a13d9918f6",
                 "shasum": ""
             },
             "require": {
@@ -1145,7 +1145,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phpactor\\Exension\\Logger\\": "lib/"
+                    "Phpactor\\Extension\\Logger\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1159,7 +1159,7 @@
                 }
             ],
             "description": "PSR logging extension",
-            "time": "2018-10-21T14:45:23+00:00"
+            "time": "2018-11-05T21:03:10+00:00"
         },
         {
             "name": "phpactor/map-resolver",
@@ -1248,12 +1248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "9808981206b2286a27f9110a49c4a1395ba74112"
+                "reference": "aed998c8329e4e7ae675f640d293682c454198b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/9808981206b2286a27f9110a49c4a1395ba74112",
-                "reference": "9808981206b2286a27f9110a49c4a1395ba74112",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/aed998c8329e4e7ae675f640d293682c454198b7",
+                "reference": "aed998c8329e4e7ae675f640d293682c454198b7",
                 "shasum": ""
             },
             "require": {
@@ -1290,7 +1290,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-11-04 10:49:56"
+            "time": "2018-11-04 11:08:21"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1479,12 +1479,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "b1499d92380b482e2cec3ea234d412a215915620"
+                "reference": "27eb2f4b7b1bb7d99b2fba4207188f5bbfb5f1a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/b1499d92380b482e2cec3ea234d412a215915620",
-                "reference": "b1499d92380b482e2cec3ea234d412a215915620",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/27eb2f4b7b1bb7d99b2fba4207188f5bbfb5f1a9",
+                "reference": "27eb2f4b7b1bb7d99b2fba4207188f5bbfb5f1a9",
                 "shasum": ""
             },
             "require": {
@@ -1492,7 +1492,7 @@
                 "phpactor/composer-autoloader-extension": "dev-master",
                 "phpactor/container": "^1.2",
                 "phpactor/file-path-resolver-extension": "dev-master",
-                "phpactor/logging-extension": "^0.1",
+                "phpactor/logging-extension": "^0.2",
                 "phpactor/worse-reflection": "dev-master"
             },
             "require-dev": {
@@ -1520,7 +1520,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-11-03 11:23:46"
+            "time": "2018-11-05 21:13:40"
         },
         {
             "name": "phpbench/container",
@@ -2683,7 +2683,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-10-31T16:50:45+00:00"
+            "time": "2018-10-31 16:50:45"
         },
         {
             "name": "lstrojny/functional-php",
@@ -3346,12 +3346,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "4ba436b55987b4bf311cb7c6ba82aa528aac0a06"
+                "reference": "3660b2eed90abdf92ac2e9dae9a238d2701bfa77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/4ba436b55987b4bf311cb7c6ba82aa528aac0a06",
-                "reference": "4ba436b55987b4bf311cb7c6ba82aa528aac0a06",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3660b2eed90abdf92ac2e9dae9a238d2701bfa77",
+                "reference": "3660b2eed90abdf92ac2e9dae9a238d2701bfa77",
                 "shasum": ""
             },
             "require": {
@@ -3401,7 +3401,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-08-05 17:53:17"
+            "time": "2018-11-04 18:50:11"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4117,7 +4117,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2018-10-30T05:41:47+00:00"
+            "time": "2018-10-30 05:41:47"
         },
         {
             "name": "sebastian/object-reflector",
@@ -4405,7 +4405,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-31T09:23:02+00:00"
+            "time": "2018-10-31 09:23:02"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -4469,7 +4469,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-10T13:54:27+00:00"
+            "time": "2018-10-10 13:54:27"
         },
         {
             "name": "symfony/finder",
@@ -4518,7 +4518,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-10T13:30:17+00:00"
+            "time": "2018-10-10 13:30:17"
         },
         {
             "name": "symfony/options-resolver",
@@ -4785,7 +4785,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-02T12:43:31+00:00"
+            "time": "2018-10-02 12:43:31"
         },
         {
             "name": "theseer/tokenizer",
