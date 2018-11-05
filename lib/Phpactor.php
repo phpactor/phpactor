@@ -8,6 +8,7 @@ use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;
 use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
@@ -62,6 +63,7 @@ class Phpactor
             CompletionExtraExtension::class,
             CompletionWorseExtension::class,
             CompletionExtension::class,
+            CompletionRpcExtension::class,
             NavigationExtension::class,
             ContextMenuExtension::class,
             RpcExtension::class,
