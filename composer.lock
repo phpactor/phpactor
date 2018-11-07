@@ -1344,12 +1344,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem-extension.git",
-                "reference": "04dda24d4bf6b6e66fb4e6c97dcb693cc946da56"
+                "reference": "ad09035297f0847d77b7f485a94b9990c0790c3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/04dda24d4bf6b6e66fb4e6c97dcb693cc946da56",
-                "reference": "04dda24d4bf6b6e66fb4e6c97dcb693cc946da56",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/ad09035297f0847d77b7f485a94b9990c0790c3f",
+                "reference": "ad09035297f0847d77b7f485a94b9990c0790c3f",
                 "shasum": ""
             },
             "require": {
@@ -1383,7 +1383,7 @@
                 }
             ],
             "description": "Source Code Filesystem Extension",
-            "time": "2018-11-03 07:57:39"
+            "time": "2018-11-07 11:45:07"
         },
         {
             "name": "phpactor/test-utils",
@@ -3658,12 +3658,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "27f782132fe6af0d0950bc635a6c51c7fc3fa7f4"
+                "reference": "3cf20d2185f3e092510f32019ffc3761d7b3aa0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/27f782132fe6af0d0950bc635a6c51c7fc3fa7f4",
-                "reference": "27f782132fe6af0d0950bc635a6c51c7fc3fa7f4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3cf20d2185f3e092510f32019ffc3761d7b3aa0f",
+                "reference": "3cf20d2185f3e092510f32019ffc3761d7b3aa0f",
                 "shasum": ""
             },
             "require": {
@@ -3734,7 +3734,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-23 05:11:21"
+            "time": "2018-11-06T20:48:53+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4413,12 +4413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "c8bbac387c9b4ba48586e2f839303274274600fe"
+                "reference": "9b9ac80fb31b5a121deb8d50b2ab064c64198605"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/c8bbac387c9b4ba48586e2f839303274274600fe",
-                "reference": "c8bbac387c9b4ba48586e2f839303274274600fe",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9b9ac80fb31b5a121deb8d50b2ab064c64198605",
+                "reference": "9b9ac80fb31b5a121deb8d50b2ab064c64198605",
                 "shasum": ""
             },
             "require": {
@@ -4469,7 +4469,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-10-10 13:54:27"
+            "time": "2018-11-06T17:10:56+00:00"
         },
         {
             "name": "symfony/finder",
