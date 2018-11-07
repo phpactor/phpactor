@@ -49,8 +49,13 @@ class Application extends SymfonyApplication
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $e) {
-            $command = $input->getArgument('command');
-            if ($command !== 'list' && $input->hasOption('format') && $input->getOption('format')) {
+            if (
+                $input->hasArgument('command')
+                && ($command = $input->getArgument('command'))
+                && $command !== 'list'
+                && $input->hasOption('format')
+                && $input->getOption('format')
+            ) {
                 return $this->handleException($output, $input->getOption('format'), $e);
             }
 
