@@ -40,7 +40,6 @@ class Phpactor
 
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
-        $config[CoreExtension::VENDOR_DIRECTORY] = $vendorDir;
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = __DIR__ . '/..';
 

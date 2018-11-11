@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Command;
 
+use Phpactor\FilePathResolver\Expanders;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,6 +10,7 @@ use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
+use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command
 {
@@ -27,42 +29,62 @@ class ConfigDumpCommand extends Command
      */
     private $paths;
 
+    /**
+     * @var Expanders
+     */
+    private $expanders;
+
     public function __construct(
         array $config,
         DumperRegistry $registry,
-        Paths $paths
+        Paths $paths,
+        Expanders $expanders
     ) {
         parent::__construct();
 
         $this->config = $config;
         $this->registry = $registry;
         $this->paths = $paths;
+        $this->expanders = $expanders;
     }
 
     public function configure()
     {
         $this->setDescription('Show loaded config files and dump current configuration.');
         $this->addOption('config-only', null, InputOption::VALUE_NONE, 'Do not output configuration file locations');
-        FormatHandler::configure($this);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $format = $input->getOption('format');
-
         if (false === $input->getOption('config-only')) {
-            $output->writeln('<info>Config files:</>');
-            foreach ($this->paths->configFiles() as $i => $file) {
-                if (!file_exists($file)) {
-                    $output->write(' [<error>𐄂</>]');
-                } else {
-                    $output->write(' [<info>✔</>]');
-                }
-                $output->writeln(' ' .$file);
-            }
-            $output->write(PHP_EOL);
+            $this->dumpMetaInformation($output);
         }
 
-        $this->registry->get($format)->dump($output, $this->config);
+        $output->writeln(json_encode($this->config, JSON_PRETTY_PRINT));
+    }
+
+    private function dumpMetaInformation(OutputInterface $output)
+    {
+        $output->writeln('<info>Config files:</>');
+        $output->write(PHP_EOL);
+        foreach ($this->paths->configFiles() as $i => $file) {
+            if (!file_exists($file)) {
+                $output->write('  [✖]');
+            } else {
+                $output->write('  [<info>✔</>]');
+            }
+            $output->writeln(' ' .$file);
+        }
+        
+        $output->write(PHP_EOL);
+        $output->writeln('<info>File path tokens:</info>');
+        $output->write(PHP_EOL);
+        foreach ($this->expanders->toArray() as $tokenName => $value) {
+            $output->writeln(sprintf('  <comment>%%%s%%</>: %s', $tokenName, $value));
+        }
+        $terminal = new Terminal();
+        $output->write(PHP_EOL);
+        $output->writeln(str_repeat('-', $terminal->getWidth()));
+        $output->write(PHP_EOL);
     }
 }

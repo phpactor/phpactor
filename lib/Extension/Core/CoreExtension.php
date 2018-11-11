@@ -32,7 +32,6 @@ class CoreExtension implements Extension
     const APP_VERSION = '0.2.0';
     const DUMPER = 'console_dumper_default';
     const XDEBUG_DISABLE = 'xdebug_disable';
-    const VENDOR_DIRECTORY = 'vendor_dir';
     const COMMAND = 'command';
 
     public function configure(Resolver $schema)
@@ -40,7 +39,6 @@ class CoreExtension implements Extension
         $schema->setDefaults([
             self::DUMPER => 'indented',
             self::XDEBUG_DISABLE => true,
-            self::VENDOR_DIRECTORY => null,
             self::COMMAND => null,
         ]);
     }
@@ -58,7 +56,8 @@ class CoreExtension implements Extension
             return new ConfigDumpCommand(
                 $container->getParameters(),
                 $container->get('console.dumper_registry'),
-                $container->get('config.paths')
+                $container->get('config.paths'),
+                $container->get(FilePathResolverExtension::SERVICE_EXPANDERS)
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
 
