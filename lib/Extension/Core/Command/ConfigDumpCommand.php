@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command

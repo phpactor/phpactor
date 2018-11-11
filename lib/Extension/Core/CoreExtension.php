@@ -9,7 +9,6 @@ use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
-use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
