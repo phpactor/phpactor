@@ -47,10 +47,6 @@ class CoreExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
-        $container->register('core.phpactor_vendor', function (Container $container) {
-            return new ValueExpander('%phpactor_vendor%', $container->getParameter(self::VENDOR_DIRECTORY));
-        }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
-
         $this->registerConsole($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
