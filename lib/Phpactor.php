@@ -41,7 +41,7 @@ class Phpactor
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
-        $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = __DIR__ . '/..';
+        $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
 
         $cwd = getcwd();
 
