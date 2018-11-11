@@ -69,6 +69,13 @@ Config files
 Phpactor works best with Composer - but much functionality including
 auto-completion can still work (sometimes slowly depending on project size).
 
+### Troubleshooting
+
+**E117: Unknown function: phpactor#Status**:
+
+When using vim-plug, you will need to open a PHP file before Phpactor is registered.
+For best results, `cd` to a project that uses Git and Composer before starting Vim.
+
 Updating
 --------
 
