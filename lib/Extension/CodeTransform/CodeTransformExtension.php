@@ -34,6 +34,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
@@ -213,8 +214,9 @@ class CodeTransformExtension implements Extension
     private function registerRenderer(ContainerBuilder $container)
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
+            $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $loaders = [];
-            $loaders[] = new FilesystemLoader($container->getParameter('vendor_dir') . '/'. 'phpactor/code-builder/templates');
+            $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
 
             foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
                 $loaders[] = new FilesystemLoader($templatePath);

@@ -9,7 +9,6 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\LanguageServer\Extension\CoreLanguageExtension;
-use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Session\Manager;
 use Phpactor\LanguageServer\LanguageServerBuilder;

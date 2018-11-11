@@ -9,7 +9,6 @@ use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
-use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
@@ -32,7 +31,6 @@ class CoreExtension implements Extension
     const APP_VERSION = '0.2.0';
     const DUMPER = 'console_dumper_default';
     const XDEBUG_DISABLE = 'xdebug_disable';
-    const VENDOR_DIRECTORY = 'vendor_dir';
     const COMMAND = 'command';
 
     public function configure(Resolver $schema)
@@ -40,17 +38,12 @@ class CoreExtension implements Extension
         $schema->setDefaults([
             self::DUMPER => 'indented',
             self::XDEBUG_DISABLE => true,
-            self::VENDOR_DIRECTORY => null,
             self::COMMAND => null,
         ]);
     }
 
     public function load(ContainerBuilder $container)
     {
-        $container->register('core.phpactor_vendor', function (Container $container) {
-            return new ValueExpander('%phpactor_vendor%', $container->getParameter(self::VENDOR_DIRECTORY));
-        }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
-
         $this->registerConsole($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
@@ -62,7 +55,8 @@ class CoreExtension implements Extension
             return new ConfigDumpCommand(
                 $container->getParameters(),
                 $container->get('console.dumper_registry'),
-                $container->get('config.paths')
+                $container->get('config.paths'),
+                $container->get(FilePathResolverExtension::SERVICE_EXPANDERS)
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
 

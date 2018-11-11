@@ -56,15 +56,4 @@ class Paths
             return file_exists($path);
         });
     }
-
-    public function userData(string $subPath = null): string
-    {
-        $path = $this->xdg->getHomeDataDir() . '/phpactor';
-
-        if ($subPath) {
-            $path = Path::join($path, $subPath);
-        }
-
-        return $path;
-    }
 }

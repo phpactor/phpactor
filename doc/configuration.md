@@ -43,8 +43,8 @@ Configured file paths can make use of some special tokens, for example
   `/home/user/.cache/phpactor`).
 - `%project_root%`: Will expand to the project root (e.g. the current working
   directory or the value provided by `--working-dir`).
-- `%phpactor_vendor%`: The path to Phpactor's own vendor directory.
 - `%config%`: The path to Phpactor's config dir (e.g. `/home/user/.config/phpactor`).
+- `%application_root%`: The path to Phpactor's own root directory.
 
 Reference
 ---------
