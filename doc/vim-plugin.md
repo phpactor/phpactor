@@ -73,8 +73,15 @@ auto-completion can still work (sometimes slowly depending on project size).
 
 **E117: Unknown function: phpactor#Status**:
 
-When using vim-plug, you will need to open a PHP file before Phpactor is registered.
-For best results, `cd` to a project that uses Git and Composer before starting Vim.
+Vim-plug and most other package managers for Vim will lazy-load Phpactor when it's
+needed, i.e. when opening a PHP file. If you get this error, open a PHP file and
+run the command again.
+
+**Composer not found** or **Git not detected**:
+
+The Git and Composer checks are referring to the current "workspace" (i.e. where you
+started Vim from). If you've already setup Git and Composer for your project, ensure
+you are starting Vim from the project directory to enable detection.
 
 Updating
 --------
