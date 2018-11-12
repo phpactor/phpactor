@@ -31,7 +31,8 @@
         "phpactor/rpc-extension": "dev-master",
         "phpactor/source-code-filesystem-extension": "dev-master",
         "phpactor/worse-reflection-extension": "dev-master",
-        "phpactor/console-extension": "dev-master"
+        "phpactor/console-extension": "dev-master",
+        "symfony/debug": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
