@@ -1,8 +1,9 @@
-
+#!/usr/bin/env bash
 echo "Testing Phpactor dependencies"
 echo "============================="
 echo ""
 
+EXITCODE=0
 for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock language-server class-to-file-extension completion-extension completion-rpc-extension completion-worse-extension composer-autoloader-extension file-path-resolver-extension logging-extension rpc-extension source-code-filesystem-extension worse-reflection-extension; do
     echo ""
     echo "Testing: "$dep
@@ -13,6 +14,10 @@ for dep in class-mover class-to-file code-builder code-transform source-code-fil
         ln -s ../../../vendor
     fi
     composer dumpautoload
-    vendor/bin/phpunit
+    if [ $EXITCODE -eq 0 ] && ! vendor/bin/phpunit; then
+         EXITCODE=1
+    fi
     cd -
 done
+
+exit $EXITCODE
