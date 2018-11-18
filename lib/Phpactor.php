@@ -166,7 +166,7 @@ class Phpactor
 
     private static function configureExtensionManager(array $config, string $vendorDir): array
     {
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../vendor/phpactor/extensions';
+        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../extensions';
         $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionsFile = $extensionDir. '/extensions.php';
         $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = $vendorDir;
         $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
