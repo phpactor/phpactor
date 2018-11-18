@@ -22,6 +22,8 @@ Features:
     definition)
   - [RPC] Adds `hover` handler which shows the synopsis of the symbol
     underneath the cursor.
+  - [Completion] Introduction of a type-specific completion registry, to allow
+    registration of completors for different sources, e.g. cucumber.
 
 Improvements:
 
@@ -32,6 +34,8 @@ Improvements:
   - [CodeBuilder] Do not add additional spaces when importing classes
   - [Completion] Completion qualifiers to allow reusable way to determine
     candidate completors.
+  - [Vim Plugin] The "label" for omni complete suggestions is now truncated to
+    a specified length.
 
 Other:
 
