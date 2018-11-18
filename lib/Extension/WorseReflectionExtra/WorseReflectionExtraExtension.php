@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\WorseReflectionExtra;
 
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
@@ -24,6 +25,14 @@ class WorseReflectionExtraExtension implements Extension
      */
     public function configure(Resolver $schema)
     {
+        // disable the reflection cache for the language server
+        $schema->setCallback(WorseReflectionExtension::PARAM_ENABLE_CACHE, function (array $config) {
+            if (class_exists(StartCommand::class) && $config['command'] === StartCommand::NAME) {
+                return false;
+            }
+
+            return $config[WorseReflectionExtension::PARAM_ENABLE_CACHE];
+        });
     }
 
     public function load(ContainerBuilder $container)
