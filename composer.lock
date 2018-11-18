@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a80d3eb4394649018d5c1975611261ea",
+    "content-hash": "af766736293dcb4328d032152f30d5c2",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1303,16 +1303,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.1.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "deda3eaa91d67c6542725c6d118dcd27fedc1812"
+                "reference": "a34f56e3af0108f9cefeb262cc9600abfad2c9fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/deda3eaa91d67c6542725c6d118dcd27fedc1812",
-                "reference": "deda3eaa91d67c6542725c6d118dcd27fedc1812",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/a34f56e3af0108f9cefeb262cc9600abfad2c9fa",
+                "reference": "a34f56e3af0108f9cefeb262cc9600abfad2c9fa",
                 "shasum": ""
             },
             "require": {
@@ -1347,7 +1347,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-17T22:04:36+00:00"
+            "time": "2018-11-18T10:31:05+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",

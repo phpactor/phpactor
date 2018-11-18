@@ -32,7 +32,7 @@
         "phpactor/source-code-filesystem-extension": "dev-master",
         "phpactor/worse-reflection-extension": "dev-master",
         "phpactor/console-extension": "dev-master",
-        "phpactor/extension-manager-extension": "^0.1.0"
+        "phpactor/extension-manager-extension": "~0.1"
     },
     "require-dev": {
         "symfony/debug": "^4.0",

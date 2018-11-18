@@ -20,7 +20,6 @@ use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -43,10 +42,8 @@ class Phpactor
         $config = $configLoader->loadConfig();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../vendor/phpactor/extensions';
-        $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionDir. '/extensions.php';
-        $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = realpath(__DIR__ . '/../vendor');
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
+
+        $config = self::configureExtensionManager($config, $vendorDir);
 
         $cwd = getcwd();
 
@@ -81,9 +78,12 @@ class Phpactor
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
-            LanguageServerExtension::class,
             ExtensionManagerExtension::class,
         ];
+
+        if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
+            $extensionNames = array_merge($extensionNames, require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]));
+        }
 
         $container = new PhpactorContainer();
 
@@ -96,6 +96,12 @@ class Phpactor
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
             $schema = new Resolver();
+
+            if (!class_exists($extensionClass)) {
+                echo sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL;
+                continue;
+            }
+
             $extension = new $extensionClass();
             if (!$extension instanceof Extension) {
                 throw new RuntimeException(sprintf(
@@ -156,5 +162,21 @@ class Phpactor
         }
 
         return file_exists($string);
+    }
+
+    private static function configureExtensionManager(array $config, string $vendorDir): array
+    {
+        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../extensions';
+        $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionsFile = $extensionDir. '/extensions.php';
+        $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = $vendorDir;
+        $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
+
+        $autoloadFile = $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] . '/autoload.php';
+
+        if (file_exists($autoloadFile)) {
+            require($autoloadFile);
+        }
+
+        return $config;
     }
 }
