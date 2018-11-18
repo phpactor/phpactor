@@ -44,7 +44,6 @@ class Phpactor
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
 
         $config = self::configureExtensionManager($config, $vendorDir);
-
         $cwd = getcwd();
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
