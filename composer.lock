@@ -945,12 +945,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "f95bb585ce996a8eb5b676c2b8176a96d8bcf27c"
+                "reference": "7bbfdea761de107d7fda510b657399e9d2e086c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/f95bb585ce996a8eb5b676c2b8176a96d8bcf27c",
-                "reference": "f95bb585ce996a8eb5b676c2b8176a96d8bcf27c",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/7bbfdea761de107d7fda510b657399e9d2e086c8",
+                "reference": "7bbfdea761de107d7fda510b657399e9d2e086c8",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-11-02 20:48:48"
+            "time": "2018-11-18 15:41:58"
         },
         {
             "name": "phpactor/completion-extension",
@@ -995,12 +995,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "d213975f3015a993c8cc96c6a03265771101d0e4"
+                "reference": "537a772b050767c441a198126d2dfa114ab72e96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/d213975f3015a993c8cc96c6a03265771101d0e4",
-                "reference": "d213975f3015a993c8cc96c6a03265771101d0e4",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/537a772b050767c441a198126d2dfa114ab72e96",
+                "reference": "537a772b050767c441a198126d2dfa114ab72e96",
                 "shasum": ""
             },
             "require": {
@@ -1035,7 +1035,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2018-11-02 18:18:58"
+            "time": "2018-11-18 15:59:55"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -1043,12 +1043,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "94cf387053dced3f33c9335145759db8be78f3e0"
+                "reference": "b7c40d9278c625fc0eea179984743fc83e50dd9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/94cf387053dced3f33c9335145759db8be78f3e0",
-                "reference": "94cf387053dced3f33c9335145759db8be78f3e0",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/b7c40d9278c625fc0eea179984743fc83e50dd9b",
+                "reference": "b7c40d9278c625fc0eea179984743fc83e50dd9b",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2018-11-17 22:52:06"
+            "time": "2018-11-18 16:09:46"
         },
         {
             "name": "phpactor/completion-worse-extension",

@@ -70,7 +70,7 @@ function! phpactor#Complete(findstart, base)
     let offset = offset + strlen(a:base)
     let source = source . a:base . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let result = phpactor#rpc("complete", { "offset": offset, "source": source})
+    let result = phpactor#rpc("complete", { "offset": offset, "source": source, "type": &ft})
     let suggestions = result['suggestions']
     let issues = result['issues']
 

@@ -4,22 +4,25 @@ namespace Phpactor\Extension\CompletionExtra\Application;
 
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 
 class Complete
 {
     /**
-     * @var Completor
+     * @var TypedCompletorRegistry
      */
-    private $competor;
+    private $registry;
 
-    public function __construct(Completor $competor)
+    public function __construct(TypedCompletorRegistry $registry)
     {
-        $this->competor = $competor;
+        $this->registry = $registry;
     }
 
-    public function complete(string $source, int $offset): array
+    public function complete(string $source, int $offset, string $type = 'php'): array
     {
-        $suggestions = iterator_to_array($this->competor->complete($source, $offset));
+        $completor = $this->registry->completorForType($type);
+        $suggestions = $completor->complete($source, $offset);
+        $suggestions = iterator_to_array($suggestions);
         $suggestions = array_map(function (Suggestion $suggestion) {
             return $suggestion->toArray();
         }, $suggestions);
