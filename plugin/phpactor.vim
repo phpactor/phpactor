@@ -212,6 +212,10 @@ function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
+function! phpactor#ExtensionList()
+    call phpactor#rpc("extension_list", {})
+endfunction
+
 function! phpactor#Transform(...)
     let transform = get(a:, 1, '')
 
