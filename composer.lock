@@ -1303,16 +1303,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "27b631d958f61188b67245cfc5b73a8d779313f6"
+                "reference": "97f7f4a28184dca7fbd6538742bb1540f659c471"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/27b631d958f61188b67245cfc5b73a8d779313f6",
-                "reference": "27b631d958f61188b67245cfc5b73a8d779313f6",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/97f7f4a28184dca7fbd6538742bb1540f659c471",
+                "reference": "97f7f4a28184dca7fbd6538742bb1540f659c471",
                 "shasum": ""
             },
             "require": {
@@ -1323,6 +1323,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
+                "phpactor/rpc-extension": "^1.0@dev",
                 "phpactor/test-utils": "^1.0",
                 "phpstan/phpstan": "^0.10.5",
                 "phpunit/phpunit": "^7.4"
@@ -1347,7 +1348,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-21T21:06:47+00:00"
+            "time": "2018-11-21T22:44:06+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
