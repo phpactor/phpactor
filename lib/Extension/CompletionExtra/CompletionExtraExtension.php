@@ -61,7 +61,7 @@ class CompletionExtraExtension implements Extension
     {
         $container->register('application.complete', function (Container $container) {
             return new Complete(
-                $container->get('completion.completor')
+                $container->get(CompletionExtension::SERVICE_REGISTRY)
             );
         });
     }

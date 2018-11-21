@@ -9,6 +9,7 @@
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
+let g:phpactorCompleteLabelTruncateLength=50
 let g:_phpactorCompletionMeta = {}
 
 if !exists('g:phpactorPhpBin')
@@ -70,7 +71,7 @@ function! phpactor#Complete(findstart, base)
     let offset = offset + strlen(a:base)
     let source = source . a:base . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let result = phpactor#rpc("complete", { "offset": offset, "source": source})
+    let result = phpactor#rpc("complete", { "offset": offset, "source": source, "type": &ft})
     let suggestions = result['suggestions']
     let issues = result['issues']
 
@@ -81,6 +82,7 @@ function! phpactor#Complete(findstart, base)
         for suggestion in suggestions
             let completion = { 
                         \ 'word': suggestion['name'], 
+                        \ 'abbr': phpactor#_completeTruncateLabel(suggestion['label'], g:phpactorCompleteLabelTruncateLength),
                         \ 'menu': suggestion['short_description'],
                         \ 'kind': suggestion['type'],
                         \ 'dup': 1
@@ -92,6 +94,14 @@ function! phpactor#Complete(findstart, base)
 
     return completions
 endfunc
+
+function! phpactor#_completeTruncateLabel(label, length)
+    if strlen(a:label) < a:length
+        return a:label
+    endif
+
+    return strpart(a:label, 0, a:length - 3) . '...'
+endfunction
 
 function! phpactor#_completionItemHash(completion)
     return a:completion['word'] . a:completion['menu'] . a:completion['kind']
