@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "af766736293dcb4328d032152f30d5c2",
+    "content-hash": "31f70d9b53de1c864238456fbbeafaf8",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -437,12 +437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "67268eaee848a03d46e7181b7a531e35df17e51d"
+                "reference": "3e02234410b80b935f188eb186e511308ded0d71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/67268eaee848a03d46e7181b7a531e35df17e51d",
-                "reference": "67268eaee848a03d46e7181b7a531e35df17e51d",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3e02234410b80b935f188eb186e511308ded0d71",
+                "reference": "3e02234410b80b935f188eb186e511308ded0d71",
                 "shasum": ""
             },
             "require-dev": {
@@ -467,7 +467,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-11-16 13:40:24"
+            "time": "2018-11-23 14:15:19"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -537,16 +537,16 @@
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "dev-master",
+            "version": "v0.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Microsoft/tolerant-php-parser.git",
-                "reference": "a2662488403412d34f02fa528dbab90564f2d80d"
+                "reference": "54a84f1250dcde5641e86b5e966fec5f0e201f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/a2662488403412d34f02fa528dbab90564f2d80d",
-                "reference": "a2662488403412d34f02fa528dbab90564f2d80d",
+                "url": "https://api.github.com/repos/Microsoft/tolerant-php-parser/zipball/54a84f1250dcde5641e86b5e966fec5f0e201f71",
+                "reference": "54a84f1250dcde5641e86b5e966fec5f0e201f71",
                 "shasum": ""
             },
             "require": {
@@ -574,7 +574,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2018-10-31 16:19:47"
+            "time": "2018-09-26T05:43:26+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -709,12 +709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01"
+                "reference": "edf888991aa5cc0bf85d243746bf914ab9ae514b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01",
-                "reference": "529a0c9f4ae76b69eebd48f03fd8fcf9d54fda01",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/edf888991aa5cc0bf85d243746bf914ab9ae514b",
+                "reference": "edf888991aa5cc0bf85d243746bf914ab9ae514b",
                 "shasum": ""
             },
             "require": {
@@ -731,7 +731,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -750,7 +750,7 @@
                 }
             ],
             "description": "Library for moving classes",
-            "time": "2018-08-04 19:37:16"
+            "time": "2018-11-24 15:37:08"
         },
         {
             "name": "phpactor/class-to-file",
@@ -758,12 +758,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "76c4b3334f48430a40424622068bb298db2afda4"
+                "reference": "246440d81d268e0004e1ca878a6b2c904272d503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/76c4b3334f48430a40424622068bb298db2afda4",
-                "reference": "76c4b3334f48430a40424622068bb298db2afda4",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/246440d81d268e0004e1ca878a6b2c904272d503",
+                "reference": "246440d81d268e0004e1ca878a6b2c904272d503",
                 "shasum": ""
             },
             "require": {
@@ -775,6 +775,11 @@
                 "symfony/filesystem": "^3.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Phpactor\\ClassFileConverter\\": "lib/"
@@ -791,7 +796,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2018-10-26 20:36:10"
+            "time": "2018-11-24 15:37:13"
         },
         {
             "name": "phpactor/class-to-file-extension",
@@ -799,17 +804,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file-extension.git",
-                "reference": "7644028a8ec09ccd2081fc68206e8ed74b37ff7f"
+                "reference": "61007ff91ae8634f618cc37d3f601e37d22aeafa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/7644028a8ec09ccd2081fc68206e8ed74b37ff7f",
-                "reference": "7644028a8ec09ccd2081fc68206e8ed74b37ff7f",
+                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/61007ff91ae8634f618cc37d3f601e37d22aeafa",
+                "reference": "61007ff91ae8634f618cc37d3f601e37d22aeafa",
                 "shasum": ""
             },
             "require": {
                 "phpactor/class-to-file": "dev-master",
-                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.0"
             },
             "require-dev": {
@@ -821,7 +826,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ClassToFile\\ClassToFileExtension",
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -840,7 +845,7 @@
                 }
             ],
             "description": "Converts classes to files and vice-versa",
-            "time": "2018-11-17 22:41:52"
+            "time": "2018-11-24 15:37:18"
         },
         {
             "name": "phpactor/code-builder",
@@ -848,12 +853,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "fe31386b176c96e8c0d83e2c4a302bcb6cf5c007"
+                "reference": "8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/fe31386b176c96e8c0d83e2c4a302bcb6cf5c007",
-                "reference": "fe31386b176c96e8c0d83e2c4a302bcb6cf5c007",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d",
+                "reference": "8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d",
                 "shasum": ""
             },
             "require": {
@@ -868,7 +873,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -887,7 +892,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-10-20 07:24:29"
+            "time": "2018-11-24 15:37:22"
         },
         {
             "name": "phpactor/code-transform",
@@ -895,12 +900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "5ce0d94bca5e4fe2d19e5c7048d9888bbb940410"
+                "reference": "8d9ee7a050742bac0c8454e982d1c5251a89dc83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5ce0d94bca5e4fe2d19e5c7048d9888bbb940410",
-                "reference": "5ce0d94bca5e4fe2d19e5c7048d9888bbb940410",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/8d9ee7a050742bac0c8454e982d1c5251a89dc83",
+                "reference": "8d9ee7a050742bac0c8454e982d1c5251a89dc83",
                 "shasum": ""
             },
             "require": {
@@ -918,7 +923,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -937,7 +942,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-11-03 11:13:37"
+            "time": "2018-11-24 15:37:27"
         },
         {
             "name": "phpactor/completion",
@@ -945,12 +950,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "8dc83e13dfc90ea85e208607d40c010c4705f2e2"
+                "reference": "5aa70605024603ab624110d4063d4773053cbb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/8dc83e13dfc90ea85e208607d40c010c4705f2e2",
-                "reference": "8dc83e13dfc90ea85e208607d40c010c4705f2e2",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/5aa70605024603ab624110d4063d4773053cbb47",
+                "reference": "5aa70605024603ab624110d4063d4773053cbb47",
                 "shasum": ""
             },
             "require": {
@@ -968,7 +973,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -987,7 +992,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-11-18 16:50:03"
+            "time": "2018-11-24 15:37:32"
         },
         {
             "name": "phpactor/completion-extension",
@@ -995,16 +1000,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "537a772b050767c441a198126d2dfa114ab72e96"
+                "reference": "23fc8266656b8ca193f4adb110ef953aa50f6719"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/537a772b050767c441a198126d2dfa114ab72e96",
-                "reference": "537a772b050767c441a198126d2dfa114ab72e96",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/23fc8266656b8ca193f4adb110ef953aa50f6719",
+                "reference": "23fc8266656b8ca193f4adb110ef953aa50f6719",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion": "dev-master",
+                "phpactor/completion": "~0.1",
                 "phpactor/container": "^1.0"
             },
             "require-dev": {
@@ -1016,7 +1021,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\Completion\\CompletionExtension",
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -1035,7 +1040,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2018-11-18 15:59:55"
+            "time": "2018-11-24 15:37:36"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -1043,27 +1048,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "b7c40d9278c625fc0eea179984743fc83e50dd9b"
+                "reference": "fc5cc034e45b5e406b6c05f3b171c963bed4e7f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/b7c40d9278c625fc0eea179984743fc83e50dd9b",
-                "reference": "b7c40d9278c625fc0eea179984743fc83e50dd9b",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/fc5cc034e45b5e406b6c05f3b171c963bed4e7f6",
+                "reference": "fc5cc034e45b5e406b6c05f3b171c963bed4e7f6",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion-extension": "dev-master",
-                "phpactor/rpc-extension": "dev-master",
-                "phpactor/test-utils": "^1.0"
+                "phpactor/completion-extension": "~0.1",
+                "phpactor/rpc-extension": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
+                "phpactor/test-utils": "^1.0",
                 "phpstan/phpstan": "^0.10.5",
                 "phpunit/phpunit": "^7.4"
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\CompletionRpc\\CompletionRpcExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\CompletionRpc\\CompletionRpcExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1081,7 +1089,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2018-11-18 16:09:46"
+            "time": "2018-11-24 15:37:41"
         },
         {
             "name": "phpactor/completion-worse-extension",
@@ -1089,18 +1097,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "2cb46b9488d303516f6e240511b0d7da0c2bc744"
+                "reference": "10f5a4ab3811a56903ecbfd5d272d34d592419c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/2cb46b9488d303516f6e240511b0d7da0c2bc744",
-                "reference": "2cb46b9488d303516f6e240511b0d7da0c2bc744",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/10f5a4ab3811a56903ecbfd5d272d34d592419c2",
+                "reference": "10f5a4ab3811a56903ecbfd5d272d34d592419c2",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion-extension": "dev-master",
-                "phpactor/source-code-filesystem-extension": "dev-master",
-                "phpactor/worse-reflection-extension": "dev-master"
+                "phpactor/completion-extension": "~0.1",
+                "phpactor/source-code-filesystem-extension": "~0.1",
+                "phpactor/worse-reflection-extension": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1109,7 +1117,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1127,7 +1138,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2018-11-21 21:23:56"
+            "time": "2018-11-24 15:37:46"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -1135,17 +1146,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/composer-autoloader-extension.git",
-                "reference": "7041d12614d35cc43f2a6afd6bd84d883da1b00e"
+                "reference": "ec979b73be4d96f3b78b42e4db1a9b36514d3dc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/7041d12614d35cc43f2a6afd6bd84d883da1b00e",
-                "reference": "7041d12614d35cc43f2a6afd6bd84d883da1b00e",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/ec979b73be4d96f3b78b42e4db1a9b36514d3dc3",
+                "reference": "ec979b73be4d96f3b78b42e4db1a9b36514d3dc3",
                 "shasum": ""
             },
             "require": {
                 "phpactor/container": "^1.2",
-                "phpactor/file-path-resolver-extension": "dev-master",
+                "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/logging-extension": "~0.2"
             },
             "require-dev": {
@@ -1155,7 +1166,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1173,7 +1187,7 @@
                 }
             ],
             "description": "Composer Autoloader provider",
-            "time": "2018-11-11 16:32:50"
+            "time": "2018-11-24 15:37:50"
         },
         {
             "name": "phpactor/console-extension",
@@ -1181,12 +1195,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/console-extension.git",
-                "reference": "11544a7ef180ed85089c25cee26122b8d0c0a02e"
+                "reference": "970c78753c872eee6038a127151c1f75c192bd84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/console-extension/zipball/11544a7ef180ed85089c25cee26122b8d0c0a02e",
-                "reference": "11544a7ef180ed85089c25cee26122b8d0c0a02e",
+                "url": "https://api.github.com/repos/phpactor/console-extension/zipball/970c78753c872eee6038a127151c1f75c192bd84",
+                "reference": "970c78753c872eee6038a127151c1f75c192bd84",
                 "shasum": ""
             },
             "require": {
@@ -1200,7 +1214,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\Console\\ConsoleExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\Console\\ConsoleExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1218,7 +1235,7 @@
                 }
             ],
             "description": "Integrate Symfony Console commands",
-            "time": "2018-11-04 10:36:04"
+            "time": "2018-11-24 15:37:55"
         },
         {
             "name": "phpactor/container",
@@ -1303,16 +1320,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.4.0",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "97f7f4a28184dca7fbd6538742bb1540f659c471"
+                "reference": "be8263c4b2b838e39b791a3d6383fb094586b642"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/97f7f4a28184dca7fbd6538742bb1540f659c471",
-                "reference": "97f7f4a28184dca7fbd6538742bb1540f659c471",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/be8263c4b2b838e39b791a3d6383fb094586b642",
+                "reference": "be8263c4b2b838e39b791a3d6383fb094586b642",
                 "shasum": ""
             },
             "require": {
@@ -1348,7 +1365,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-21T22:44:06+00:00"
+            "time": "2018-11-24T10:43:45+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -1395,7 +1412,7 @@
         },
         {
             "name": "phpactor/file-path-resolver-extension",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver-extension.git",
@@ -1436,7 +1453,7 @@
                 }
             ],
             "description": "File Path Resolver Extension",
-            "time": "2018-11-11 10:42:32"
+            "time": "2018-11-11T10:42:32+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -1618,18 +1635,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "e0863c9b7e5413ad8aaa7b9a37bdf59622080671"
+                "reference": "d214b3d719ebbe5f7942d1f60d2066553f086fbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/e0863c9b7e5413ad8aaa7b9a37bdf59622080671",
-                "reference": "e0863c9b7e5413ad8aaa7b9a37bdf59622080671",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/d214b3d719ebbe5f7942d1f60d2066553f086fbe",
+                "reference": "d214b3d719ebbe5f7942d1f60d2066553f086fbe",
                 "shasum": ""
             },
             "require": {
                 "phpactor/console-extension": "dev-master",
                 "phpactor/container": "^1.1",
-                "phpactor/logging-extension": "@dev"
+                "phpactor/file-path-resolver-extension": "~0.1",
+                "phpactor/logging-extension": "~0.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1641,7 +1659,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\Rpc\\RpcExtension",
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -1660,7 +1678,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-11-05 21:40:04"
+            "time": "2018-11-24 15:38:25"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1714,18 +1732,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem-extension.git",
-                "reference": "e8b9d8a85b8e375a3f4d990b04967c236d2abd63"
+                "reference": "96389a9a876efb5c18c1fce131fcfb3d6d2f51d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/e8b9d8a85b8e375a3f4d990b04967c236d2abd63",
-                "reference": "e8b9d8a85b8e375a3f4d990b04967c236d2abd63",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/96389a9a876efb5c18c1fce131fcfb3d6d2f51d7",
+                "reference": "96389a9a876efb5c18c1fce131fcfb3d6d2f51d7",
                 "shasum": ""
             },
             "require": {
-                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.2",
-                "phpactor/file-path-resolver-extension": "dev-master",
+                "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/source-code-filesystem": "dev-master"
             },
             "require-dev": {
@@ -1735,7 +1753,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\SourceCodeFilesystem\\SourceCodeFilesystemExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\SourceCodeFilesystem\\SourceCodeFilesystemExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1753,48 +1774,7 @@
                 }
             ],
             "description": "Source Code Filesystem Extension",
-            "time": "2018-11-10 16:07:46"
-        },
-        {
-            "name": "phpactor/test-utils",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/0d3dfe00925f1f541bcbbeeec1749a845c15897b",
-                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\TestUtils\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Utilities for managing the test environment",
-            "time": "2018-08-02 17:38:22"
+            "time": "2018-11-24 15:38:32"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -1802,22 +1782,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "2e4d4d1926002dbd09af89aaf73e1e0d9d4f39bc"
+                "reference": "05ab4ce27969673c65c32392ea412c10fed36027"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/2e4d4d1926002dbd09af89aaf73e1e0d9d4f39bc",
-                "reference": "2e4d4d1926002dbd09af89aaf73e1e0d9d4f39bc",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/05ab4ce27969673c65c32392ea412c10fed36027",
+                "reference": "05ab4ce27969673c65c32392ea412c10fed36027",
                 "shasum": ""
             },
             "require": {
                 "jetbrains/phpstorm-stubs": "*",
-                "microsoft/tolerant-php-parser": "dev-master",
+                "microsoft/tolerant-php-parser": "~0.0",
                 "phpactor/docblock": "^0.1",
                 "psr/log": "^1.0"
             },
             "require-dev": {
-                "phpactor/class-to-file": "^1.0@dev",
+                "phpactor/class-to-file": "~0.1",
                 "phpactor/test-utils": "@dev",
                 "phpbench/phpbench": "dev-master",
                 "phpstan/phpstan": "^0.8.5",
@@ -1825,6 +1805,11 @@
                 "symfony/filesystem": "^3.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Phpactor\\WorseReflection\\": "lib/"
@@ -1841,7 +1826,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-11-03 11:12:41"
+            "time": "2018-11-24 15:38:41"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -1849,21 +1834,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "e6c10ce60f90cdcea2a9c09efad884a604a05bed"
+                "reference": "5d4df55f6d485674c60b530d3250737433563ad7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/e6c10ce60f90cdcea2a9c09efad884a604a05bed",
-                "reference": "e6c10ce60f90cdcea2a9c09efad884a604a05bed",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/5d4df55f6d485674c60b530d3250737433563ad7",
+                "reference": "5d4df55f6d485674c60b530d3250737433563ad7",
                 "shasum": ""
             },
             "require": {
-                "phpactor/class-to-file-extension": "dev-master",
-                "phpactor/composer-autoloader-extension": "dev-master",
+                "phpactor/class-to-file-extension": "~0.1",
+                "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.2",
-                "phpactor/file-path-resolver-extension": "dev-master",
+                "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/logging-extension": "~0.3",
-                "phpactor/worse-reflection": "dev-master"
+                "phpactor/worse-reflection": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1872,7 +1857,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1890,7 +1878,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-11-17 22:55:04"
+            "time": "2018-11-24 15:38:46"
         },
         {
             "name": "phpbench/container",
@@ -3567,6 +3555,47 @@
             "time": "2018-02-15T16:58:55+00:00"
         },
         {
+            "name": "phpactor/test-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/test-utils.git",
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/0d3dfe00925f1f541bcbbeeec1749a845c15897b",
+                "reference": "0d3dfe00925f1f541bcbbeeec1749a845c15897b",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\TestUtils\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Utilities for managing the test environment",
+            "time": "2018-08-02 17:38:22"
+        },
+        {
             "name": "phpbench/dom",
             "version": "0.2.0",
             "source": {
@@ -5184,24 +5213,12 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "phpactor/class-mover": 20,
-        "phpactor/source-code-filesystem": 20,
-        "phpactor/class-to-file": 20,
         "phpactor/code-transform": 20,
-        "phpactor/worse-reflection": 20,
-        "phpactor/path-finder": 20,
-        "phpactor/completion": 20,
-        "sebastian/diff": 20,
         "phpactor/language-server": 20,
-        "phpactor/class-to-file-extension": 20,
-        "phpactor/completion-extension": 20,
-        "phpactor/completion-rpc-extension": 20,
-        "phpactor/completion-worse-extension": 20,
-        "phpactor/composer-autoloader-extension": 20,
-        "phpactor/file-path-resolver-extension": 20,
-        "phpactor/rpc-extension": 20,
-        "phpactor/source-code-filesystem-extension": 20,
-        "phpactor/worse-reflection-extension": 20,
-        "phpactor/console-extension": 20,
+        "phpactor/path-finder": 20,
+        "phpactor/source-code-filesystem": 20,
+        "phpactor/worse-reflection": 20,
+        "sebastian/diff": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20

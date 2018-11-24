@@ -71,7 +71,7 @@ class CompletionExtraExtension implements Extension
         $container->register('completion.language_server.completion', function (Container $container) {
             return new CompletionLanguageExtension(
                 $container->get('language_server.session_manager'),
-                $container->get(CompletionExtension::SERVICE_COMPLETOR),
+                $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('php'),
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ 'language_server.extension' => [] ]);
