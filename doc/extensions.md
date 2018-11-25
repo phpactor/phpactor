@@ -5,10 +5,11 @@ Extensions
 ==========
 
 Phpactor allows you to add custom extensions, for example to provide new
-completors, new ways to infer types, or anything really.
+completors, or anything you can imagine.
 
-Extensions can add any functionality you can imagine to Phpactor, and can even
-be used without Phpactor and combined to create new applications.
+The aim of extensions is for them to be as independent and decoupled as
+possible, they can easily be used without Phpactor and can be easily combined
+to create new applications.
 
 Currently Phpactor ships with a dozen "hard coded" extensions which cannot be
 removed.
