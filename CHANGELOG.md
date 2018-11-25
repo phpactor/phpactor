@@ -6,20 +6,16 @@ Changelog
 BC Break:
 
   - [php] Bumped minimum PHP version to 7.1
-  - [config] completion.class-limit removed inadvertantly due to refactoring,
-    (should add this back before release)
-  - [config] `reflection.enable_cache` => `worse_reflection.enable_cache`
-  - [config] `reflection.stub_directory` => `worse_reflection.stub_directory`
-  - [config] `autoload` => `composer.autoloader_path`
-  - [config] `autoload.deregister` => `composer.autoload_deregister`
+  - [config] Renamed `reflection.enable_cache` => `worse_reflection.enable_cache`
+  - [config] Renamed `reflection.stub_directory` => `worse_reflection.stub_directory`
+  - [config] Renamed `autoload` => `composer.autoloader_path`
+  - [config] Renamed `autoload.deregister` => `composer.autoload_deregister`
 
 Features:
 
   - [ExtensionManager] Facility to dynamically add extensions to Phpactor
   - [Completion] Class alias completor, #592
   - [CodeTransform] Cycle class member visiblity #521
-  - [LSP] Experimental language server support (completion and goto
-    definition)
   - [RPC] Adds `hover` handler which shows the synopsis of the symbol
     underneath the cursor.
   - [Completion] Introduction of a type-specific completion registry, to allow
