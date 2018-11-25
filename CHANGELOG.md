@@ -14,6 +14,8 @@ BC Break:
 Features:
 
   - [ExtensionManager] Facility to dynamically add extensions to Phpactor
+  - [RPC] `extension_list`, `extension_remove` and `extension_install`
+    handlers.
   - [Completion] Class alias completor, #592
   - [CodeTransform] Cycle class member visiblity #521
   - [RPC] Adds `hover` handler which shows the synopsis of the symbol

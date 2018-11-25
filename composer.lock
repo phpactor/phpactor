@@ -950,12 +950,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "5aa70605024603ab624110d4063d4773053cbb47"
+                "reference": "f5963d8b187a13ef731c7bf92f8bcd28ca993e64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/5aa70605024603ab624110d4063d4773053cbb47",
-                "reference": "5aa70605024603ab624110d4063d4773053cbb47",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/f5963d8b187a13ef731c7bf92f8bcd28ca993e64",
+                "reference": "f5963d8b187a13ef731c7bf92f8bcd28ca993e64",
                 "shasum": ""
             },
             "require": {
@@ -992,7 +992,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-11-24 15:37:32"
+            "time": "2018-11-25 15:33:40"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1320,27 +1320,28 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.5.0",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "be8263c4b2b838e39b791a3d6383fb094586b642"
+                "reference": "2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/be8263c4b2b838e39b791a3d6383fb094586b642",
-                "reference": "be8263c4b2b838e39b791a3d6383fb094586b642",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec",
+                "reference": "2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec",
                 "shasum": ""
             },
             "require": {
                 "composer/composer": "^1.7",
-                "phpactor/console-extension": "dev-master",
+                "phpactor/console-extension": "~0.1",
                 "phpactor/container": "^1.0",
+                "phpactor/file-path-resolver-extension": "~0.1",
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
-                "phpactor/rpc-extension": "^1.0@dev",
+                "phpactor/rpc-extension": "~0.1",
                 "phpactor/test-utils": "^1.0",
                 "phpstan/phpstan": "^0.10.5",
                 "phpunit/phpunit": "^7.4"
@@ -1365,7 +1366,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-24T10:43:45+00:00"
+            "time": "2018-11-25T16:28:58+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
