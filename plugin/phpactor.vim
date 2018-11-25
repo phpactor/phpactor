@@ -216,6 +216,14 @@ function! phpactor#ExtensionList()
     call phpactor#rpc("extension_list", {})
 endfunction
 
+function! phpactor#ExtensionInstall()
+    call phpactor#rpc("extension_install", {})
+endfunction
+
+function! phpactor#ExtensionRemove()
+    call phpactor#rpc("extension_remove", {})
+endfunction
+
 function! phpactor#Transform(...)
     let transform = get(a:, 1, '')
 

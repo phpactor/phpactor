@@ -170,6 +170,21 @@ let g:phpactorOmniAutoClassImport = v:true
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
 
+Extensions
+----------
+
+You can manage your [Phpactor extensions](/extensions.html) from with VIM:
+
+```
+call phpactor#ExtensionList()
+call phpactor#ExtensionInstall()
+call phpactor#ExtensionRemove()
+```
+
+Note that these commands are not very verbose. For increased verbosity
+execute the commands from the command line (as detailed
+[here](/extensions.html).
+
 Completion
 ----------
 
