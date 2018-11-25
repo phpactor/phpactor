@@ -1097,12 +1097,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "1ea03da7f8374e9c37653449885420481088e44e"
+                "reference": "873a1c8af0d831d2d5a43ad1785de3764f37db82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/1ea03da7f8374e9c37653449885420481088e44e",
-                "reference": "1ea03da7f8374e9c37653449885420481088e44e",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/873a1c8af0d831d2d5a43ad1785de3764f37db82",
+                "reference": "873a1c8af0d831d2d5a43ad1785de3764f37db82",
                 "shasum": ""
             },
             "require": {
@@ -1138,7 +1138,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2018-11-25 15:05:31"
+            "time": "2018-11-25 17:18:04"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
