@@ -50,7 +50,7 @@ Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpa
 installation procedure!
 </div>
 
-Now issue the following command `:call phpactor#Status()`:
+Now open a PHP file and issue the following command `:call phpactor#Status()`:
 
 ```
 Support
