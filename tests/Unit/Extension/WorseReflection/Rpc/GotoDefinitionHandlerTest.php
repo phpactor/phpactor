@@ -4,10 +4,9 @@ namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
-use Phpactor\Extension\WorseReflection\Rpc\GotoDefinitionHandler;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler;
 
 class GotoDefinitionHandlerTest extends HandlerTestCase
 {
@@ -36,7 +35,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
     public function testHandler()
     {
         $action = $this->handle('goto_definition', [
-            'offset' => 881,
+            'offset' => 835,
             'path' => __FILE__,
             'source' => file_get_contents(__FILE__),
         ]);

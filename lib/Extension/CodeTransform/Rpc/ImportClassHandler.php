@@ -6,7 +6,7 @@ use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\CodeTransform\Domain\SourceCode;

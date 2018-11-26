@@ -1,0 +1,269 @@
+{
+    "variable": {
+        "rename_variable": {
+            "action": "rename_variable",
+            "parameters": {
+                "path": "%current_path%",
+                "offset": "%offset%",
+                "source": "%source%",
+                "name_suggestion": "%symbol%"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "string": {
+        "extract_constant": {
+            "action": "extract_constant",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "number": {
+        "extract_constant": {
+            "action": "extract_constant",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "constant": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%",
+                "mode": "replace"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "class": {
+        "class_new": {
+            "action": "class_new",
+            "parameters": {
+                "current_path": "%path%"
+            }
+        },
+        "copy": {
+            "action": "copy_class",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
+        "inflect": {
+            "action": "class_inflect",
+            "parameters": {
+                "current_path": "%path%"
+            }
+        },
+        "move": {
+            "action": "move_class",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "navigate": {
+            "action": "navigate",
+            "parameters": {
+                "source_path": "%path%"
+            }
+        },
+        "override_method": {
+            "action": "override_method",
+            "parameters": {
+                "path": "%current_path%",
+                "source": "%source%"
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "mode": "replace",
+                "path": "%current_path%"
+            }
+        },
+        "transform_file": {
+            "action": "transform",
+            "parameters": {
+                "path": "%path%",
+                "source": "%source%"
+            }
+        },
+        "import": {
+            "action": "import_class",
+            "parameters": {
+                "offset": "%offset%",
+                "path": "%current_path%",
+                "source": "%source%",
+                "name": "%symbol%"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "property": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "generate_accessor": {
+            "action": "generate_accessor",
+            "parameters": {
+                "path": "%path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%",
+                "mode": "replace"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    },
+    "method": {
+        "cycle_visiblity": {
+            "action": "change_visibility",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "find_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%"
+            }
+        },
+        "generate_method": {
+            "action": "generate_method",
+            "parameters": {
+                "path": "%current_path%",
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        },
+        "goto_definition": {
+            "action": "goto_definition",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "parameters": {
+                "offset": "%offset%",
+                "path": "%current_path%",
+                "source": "%source%",
+                "mode": "replace"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%"
+            }
+        }
+    }
+}

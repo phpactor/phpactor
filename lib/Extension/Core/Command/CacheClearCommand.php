@@ -19,7 +19,6 @@ class CacheClearCommand extends Command
 
     protected function configure()
     {
-        $this->setName('cache:clear');
         $this->setDescription('Clear the cache');
     }
 

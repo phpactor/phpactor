@@ -54,10 +54,4 @@ class PathsTest extends TestCase
         $this->assertEquals('config/xdg/phpactor/templates', $paths[0]);
         $this->assertEquals('config/user/phpactor/templates', $paths[1]);
     }
-
-    public function testReturnsDataDir()
-    {
-        $path = $this->paths->userData();
-        $this->assertEquals('home/phpactor', $path);
-    }
 }

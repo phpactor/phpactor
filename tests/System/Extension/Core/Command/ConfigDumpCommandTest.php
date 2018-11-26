@@ -18,7 +18,7 @@ class ConfigDumpCommandTest extends SystemTestCase
      */
     public function testConfigDumpOnly()
     {
-        $process = $this->phpactor('config:dump --config-only --format=json');
+        $process = $this->phpactor('config:dump --config-only');
         $this->assertSuccess($process);
         $config = json_decode($process->getOutput(), true);
         $this->assertInternalType('array', $config);

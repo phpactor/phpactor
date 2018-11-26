@@ -9,6 +9,7 @@
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
+let g:phpactorCompleteLabelTruncateLength=50
 let g:_phpactorCompletionMeta = {}
 
 if !exists('g:phpactorPhpBin')
@@ -17,10 +18,6 @@ endif
 
 if !exists('g:phpactorBranch')
     let g:phpactorBranch = 'master'
-endif
-
-if !exists('g:phpactorOmniError')
-    let g:phpactorOmniError = v:false
 endif
 
 if !exists('g:phpactorOmniAutoClassImport')
@@ -74,7 +71,7 @@ function! phpactor#Complete(findstart, base)
     let offset = offset + strlen(a:base)
     let source = source . a:base . "\n" . join(getline(line('.') + 1, '$'), "\n")
 
-    let result = phpactor#rpc("complete", { "offset": offset, "source": source})
+    let result = phpactor#rpc("complete", { "offset": offset, "source": source, "type": &ft})
     let suggestions = result['suggestions']
     let issues = result['issues']
 
@@ -85,6 +82,7 @@ function! phpactor#Complete(findstart, base)
         for suggestion in suggestions
             let completion = { 
                         \ 'word': suggestion['name'], 
+                        \ 'abbr': phpactor#_completeTruncateLabel(suggestion['label'], g:phpactorCompleteLabelTruncateLength),
                         \ 'menu': suggestion['short_description'],
                         \ 'kind': suggestion['type'],
                         \ 'dup': 1
@@ -94,14 +92,16 @@ function! phpactor#Complete(findstart, base)
         endfor
     endif
 
-    if !empty(issues)
-        if g:phpactorOmniError
-            echoe join(issues, ', ')
-        endif
-    endif
-
     return completions
 endfunc
+
+function! phpactor#_completeTruncateLabel(label, length)
+    if strlen(a:label) < a:length
+        return a:label
+    endif
+
+    return strpart(a:label, 0, a:length - 3) . '...'
+endfunction
 
 function! phpactor#_completionItemHash(completion)
     return a:completion['word'] . a:completion['menu'] . a:completion['kind']
@@ -190,6 +190,10 @@ function! phpactor#GotoDefinition()
     call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
+function! phpactor#Hover()
+    call phpactor#rpc("hover", { "offset": phpactor#_offset(), "source": phpactor#_source() })
+endfunction
+
 function! phpactor#ContextMenu()
     call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source(), "current_path": expand('%:p') })
 endfunction
@@ -206,6 +210,18 @@ endfunction
 
 function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
+endfunction
+
+function! phpactor#ExtensionList()
+    call phpactor#rpc("extension_list", {})
+endfunction
+
+function! phpactor#ExtensionInstall()
+    call phpactor#rpc("extension_install", {})
+endfunction
+
+function! phpactor#ExtensionRemove()
+    call phpactor#rpc("extension_remove", {})
 endfunction
 
 function! phpactor#Transform(...)
@@ -266,6 +282,10 @@ function! phpactor#GetClassFullName()
     let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
 
     return fileInfo['class']
+endfunction
+
+function! phpactor#ChangeVisibility()
+    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""

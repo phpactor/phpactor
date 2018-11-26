@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Question\Question;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
@@ -38,7 +37,6 @@ class ClassNewCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:new');
         $this->setDescription('Create new class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addOption('variant', null, InputOption::VALUE_REQUIRED, 'Variant', 'default');

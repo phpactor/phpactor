@@ -11,6 +11,8 @@ use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
 use PackageVersions\Versions;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
 
 class Application extends SymfonyApplication
 {
@@ -36,7 +38,7 @@ class Application extends SymfonyApplication
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
-            $this->container->get('monolog.logger')->pushHandler(new StreamHandler(STDERR));
+            $this->container->get(LoggingExtension::SERVICE_LOGGER)->pushHandler(new StreamHandler(STDERR));
         }
 
         $formatter = $output->getFormatter();
@@ -47,7 +49,13 @@ class Application extends SymfonyApplication
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $e) {
-            if ($input->hasOption('format') && $input->getOption('format')) {
+            if (
+                $input->hasArgument('command')
+                && ($command = $input->getArgument('command'))
+                && $command !== 'list'
+                && $input->hasOption('format')
+                && $input->getOption('format')
+            ) {
                 return $this->handleException($output, $input->getOption('format'), $e);
             }
 
@@ -97,8 +105,6 @@ class Application extends SymfonyApplication
     {
         $this->container = Phpactor::boot($input, $this->vendorDir);
 
-        foreach ($this->container->getServiceIdsForTag('ui.console.command') as $commandId => $attrs) {
-            $this->add($this->container->get($commandId));
-        }
+        $this->setCommandLoader($this->container->get(ConsoleExtension::SERVICE_COMMAND_LOADER));
     }
 }

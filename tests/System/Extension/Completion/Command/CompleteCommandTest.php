@@ -31,6 +31,12 @@ class CompleteCommandTest extends SystemTestCase
 suggestions:
 EOT
             ],
+            'Complete with type' => [
+                'complete lib/Badger.php 181 --type=cucumber',
+                <<<'EOT'
+suggestions:
+EOT
+            ],
         ];
     }
 }

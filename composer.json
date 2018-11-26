@@ -2,27 +2,39 @@
     "name": "phpactor/phpactor",
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.0",
-        "symfony/console": "~2.7|^3.0@stable",
-        "phpbench/container": "^1.0",
-        "phpactor/class-mover": "dev-master",
-        "phpactor/source-code-filesystem": "dev-master",
-        "phpactor/class-to-file": "dev-master",
-        "phpactor/code-transform": "dev-master",
-        "phpactor/worse-reflection": "dev-master",
-        "phpactor/path-finder": "dev-master",
-        "symfony/filesystem": "^3.3",
-        "webmozart/glob": "^4.1",
-        "dnoegel/php-xdg-base-dir": "^0.1.0",
-        "symfony/yaml": "^3.3",
-        "microsoft/tolerant-php-parser": "dev-master",
-        "monolog/monolog": "^1.0",
-        "phpactor/completion": "^1.0@dev",
         "composer/xdebug-handler": "^1.1",
+        "dnoegel/php-xdg-base-dir": "^0.1.0",
+        "monolog/monolog": "^1.0",
+        "ocramius/package-versions": "^1.2",
+        "php": "^7.1",
+        "phpactor/class-mover": "dev-master",
+        "phpactor/class-to-file-extension": "~0.1",
+        "phpactor/code-transform": "dev-master",
+        "phpactor/completion": "~0.1",
+        "phpactor/completion-extension": "~0.1",
+        "phpactor/completion-rpc-extension": "~0.1",
+        "phpactor/completion-worse-extension": "~0.1",
+        "phpactor/composer-autoloader-extension": "~0.1",
+        "phpactor/console-extension": "~0.1",
+        "phpactor/container": "^1.0",
+        "phpactor/extension-manager-extension": "~0.1",
+        "phpactor/file-path-resolver-extension": "~0.1",
+        "phpactor/language-server": "dev-master",
+        "phpactor/logging-extension": "~0.2",
+        "phpactor/path-finder": "dev-master",
+        "phpactor/rpc-extension": "~0.1",
+        "phpactor/source-code-filesystem": "dev-master",
+        "phpactor/source-code-filesystem-extension": "~0.1",
+        "phpactor/worse-reflection": "dev-master",
+        "phpactor/worse-reflection-extension": "~0.1",
+        "phpbench/container": "^1.0",
         "sebastian/diff": "2.0.x-dev",
-        "ocramius/package-versions": "^1.2"
+        "symfony/filesystem": "^3.3",
+        "symfony/yaml": "^3.3",
+        "webmozart/glob": "^4.1"
     },
     "require-dev": {
+        "symfony/debug": "^4.0",
         "phpunit/phpunit": "^6.0",
         "symfony/process": "^2.7|^3.0",
         "symfony/options-resolver": "^2.7|^3.0",
@@ -45,7 +57,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0.0"
+            "php": "7.1.3"
         }
     }
 }

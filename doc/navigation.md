@@ -10,6 +10,7 @@ references etc.
 
 - [Class References](#class-references)
 - [Class Member References](#class-member-references)
+- [Hover](#hover)
 - [Jump to Definition](#jump-to-definition)
 - [Jump to or generate related file](#jump-to-or-generate-related-file)
 
@@ -50,6 +51,16 @@ This functionality is very similar to [Class References](#class-references)
 with the exception that it is possible that not all members will be found as
 PHP is a loosely typed language and it may not be possible to determine all the
 class types of methods matching the query.
+
+Hover
+-----
+
+While not a navigation function as such, this RPC command will show
+brief information about the symbol underneath the cursor.
+
+- **Command**: _RPC Only_
+- **VIM Context Menu**: _Context menu_ > Hover_.
+- **VIM Command**:`:call phpactor#Hover()`
 
 Jump to definition
 ------------------

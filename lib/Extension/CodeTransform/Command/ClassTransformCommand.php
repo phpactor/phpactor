@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CodeTransform\Command;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Phpactor;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Console\Command\Command;
@@ -36,7 +35,6 @@ class ClassTransformCommand extends Command
 
     public function configure()
     {
-        $this->setName('class:transform');
         $this->setDescription('Apply a transformation to an existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
         $this->addOption('transform', 't', InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Tranformations to apply', []);
@@ -78,7 +76,7 @@ class ClassTransformCommand extends Command
             $changed = trim($existing->__toString()) != trim($transformed);
 
             if ($changed) {
-              $affected++;
+                $affected++;
             }
 
             if ($changed && $diff) {

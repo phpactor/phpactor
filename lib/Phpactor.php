@@ -6,18 +6,30 @@ use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;
+use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
+use Phpactor\Extension\ExtensionManager\ExtensionManagerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Config\Paths;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 
 class Phpactor
@@ -28,11 +40,13 @@ class Phpactor
 
         $configLoader = new ConfigLoader();
         $config = $configLoader->loadConfig();
-        $config[CoreExtension::VENDOR_DIRECTORY] = $vendorDir;
-
+        $config[CoreExtension::COMMAND] = $input->getFirstArgument();
+        $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
+        $config = self::configureExtensionManager($config, $vendorDir);
         $cwd = getcwd();
+
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[CoreExtension::WORKING_DIRECTORY] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
         if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
@@ -43,15 +57,31 @@ class Phpactor
 
         $extensionNames = [
             CoreExtension::class,
+            ClassToFileExtraExtension::class,
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
+            CompletionExtraExtension::class,
+            CompletionWorseExtension::class,
             CompletionExtension::class,
+            CompletionRpcExtension::class,
             NavigationExtension::class,
+            ContextMenuExtension::class,
             RpcExtension::class,
+            SourceCodeFilesystemExtraExtension::class,
             SourceCodeFilesystemExtension::class,
-            WorseReflectionExtension::class
+            WorseReflectionExtension::class,
+            WorseReflectionExtraExtension::class,
+            FilePathResolverExtension::class,
+            LoggingExtension::class,
+            ComposerAutoloaderExtension::class,
+            ConsoleExtension::class,
+            ExtensionManagerExtension::class,
         ];
+
+        if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
+            $extensionNames = array_merge($extensionNames, require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]));
+        }
 
         $container = new PhpactorContainer();
 
@@ -60,15 +90,16 @@ class Phpactor
             return $paths;
         });
 
-        if (false === isset($config[CoreExtension::CACHE_DIR])) {
-            $config[CoreExtension::CACHE_DIR] = $paths->userData('cache');
-        }
-
-        // > method resolve config
         $masterSchema = new Resolver();
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
             $schema = new Resolver();
+
+            if (!class_exists($extensionClass)) {
+                echo sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL;
+                continue;
+            }
+
             $extension = new $extensionClass();
             if (!$extension instanceof Extension) {
                 throw new RuntimeException(sprintf(
@@ -129,5 +160,21 @@ class Phpactor
         }
 
         return file_exists($string);
+    }
+
+    private static function configureExtensionManager(array $config, string $vendorDir): array
+    {
+        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../extensions';
+        $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionsFile = $extensionDir. '/extensions.php';
+        $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = $vendorDir;
+        $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
+
+        $autoloadFile = $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] . '/autoload.php';
+
+        if (file_exists($autoloadFile)) {
+            require($autoloadFile);
+        }
+
+        return $config;
     }
 }

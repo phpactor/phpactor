@@ -3,6 +3,48 @@ Changelog
 
 ## 2018-08-04 0.9.0
 
+BC Break:
+
+  - [php] Bumped minimum PHP version to 7.1
+  - [config] Renamed `reflection.enable_cache` => `worse_reflection.enable_cache`
+  - [config] Renamed `reflection.stub_directory` => `worse_reflection.stub_directory`
+  - [config] Renamed `autoload` => `composer.autoloader_path`
+  - [config] Renamed `autoload.deregister` => `composer.autoload_deregister`
+
+Features:
+
+  - [ExtensionManager] Facility to dynamically add extensions to Phpactor
+  - [RPC] `extension_list`, `extension_remove` and `extension_install`
+    handlers.
+  - [Completion] Class alias completor, #592
+  - [CodeTransform] Cycle class member visiblity #521
+  - [RPC] Adds `hover` handler which shows the synopsis of the symbol
+    underneath the cursor.
+  - [Completion] Introduction of a type-specific completion registry, to allow
+    registration of completors for different sources, e.g. cucumber.
+
+Improvements:
+
+  - [Application] Do not eagerly load commands (~20% baseline improvement)
+  - [Transform] Complete constructor will work work on ! interfaces #597
+  - [Transform] Import missing types on generate method
+  - [Transform] Adds return types on generate method
+  - [CodeBuilder] Do not add additional spaces when importing classes
+  - [Completion] Completion qualifiers to allow reusable way to determine
+    candidate completors.
+  - [Vim Plugin] The "label" for omni complete suggestions is now truncated to
+    a specified length.
+
+Other:
+
+  - [Console] Config dump now only shows JSON format
+  - [Completion] Completors now `yield` suggestions and problems are no longer
+    returned. The `issues` key returned from suggestions is now deprecated.
+  - [Vim Plugin] The "omni error" feature has been removed (as completion no
+    longer returns them).
+
+## 2018-08-04 0.9.0
+
 BC Breaks:
 
   - [RPC Plugins] a new `update_file_source` method is now returned by most

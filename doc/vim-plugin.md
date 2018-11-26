@@ -22,7 +22,7 @@ Installation
   [Neovim](https://github.com/neovim/neovim)
 
 It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the [vim-plug](https://github.com/neovim/neovim)
+this document we will use the [vim-plug](https://github.com/junegunn/vim-plug)
 plugin manager, but other plugin managers are quite similar.
 
 Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
@@ -50,7 +50,7 @@ Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpa
 installation procedure!
 </div>
 
-Now issue the following command `:call phpactor#Status()`:
+Now open a PHP file and issue the following command `:call phpactor#Status()`:
 
 ```
 Support
@@ -68,6 +68,20 @@ Config files
 
 Phpactor works best with Composer - but much functionality including
 auto-completion can still work (sometimes slowly depending on project size).
+
+### Troubleshooting
+
+**E117: Unknown function: phpactor#Status**:
+
+Vim-plug and most other package managers for Vim will lazy-load Phpactor when it's
+needed, i.e. when opening a PHP file. If you get this error, open a PHP file and
+run the command again.
+
+**Composer not found** or **Git not detected**:
+
+The Git and Composer checks are referring to the current "workspace" (i.e. where you
+started Vim from). If you've already setup Git and Composer for your project, ensure
+you are starting Vim from the project directory to enable detection.
 
 Updating
 --------
@@ -109,6 +123,9 @@ nmap <Leader>nn :call phpactor#Navigate()<CR>
 " Goto definition of class or class member under the cursor
 nmap <Leader>o :call phpactor#GotoDefinition()<CR>
 
+" Show brief information about the symbol under the cursor
+nmap <Leader>K :call phpactor#Hover()<CR>
+
 " Transform the classes in the current file
 nmap <Leader>tt :call phpactor#Transform()<CR>
 
@@ -144,17 +161,29 @@ The plugin has some configuration options:
 ```
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
-let g:phpactorOmniError = v:false
 let g:phpactorOmniAutoClassImport = v:true
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
 - `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
   bleeding edge).
-- `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
-  completion is invoked.
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
+
+Extensions
+----------
+
+You can manage your [Phpactor extensions](/extensions.html) from with VIM:
+
+```
+call phpactor#ExtensionList()
+call phpactor#ExtensionInstall()
+call phpactor#ExtensionRemove()
+```
+
+Note that these commands are not very verbose. For increased verbosity
+execute the commands from the command line (as detailed
+[here](/extensions.html).
 
 Completion
 ----------

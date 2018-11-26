@@ -6,9 +6,7 @@ use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Visibility;
 use RuntimeException;
 use SplFileInfo;
@@ -30,7 +28,8 @@ class FileFinder
         if ($members->byName($memberName)->count() === 0) {
             throw new RuntimeException(sprintf(
                 'Class has no member named "%s", has the following member names: "%s"',
-                $memberName, implode('", "', $members->keys())
+                $memberName,
+                implode('", "', $members->keys())
             ));
         }
 

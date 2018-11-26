@@ -4,9 +4,9 @@ namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Config\Paths;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 
 class StatusTest extends TestCase
 {
@@ -26,7 +26,9 @@ class StatusTest extends TestCase
     {
         $this->registry->names()->willReturn(['simple']);
         $diagnostics = $this->status->check();
-        $this->assertCount(3, $diagnostics['bad']);
+
+        // should be git and composer error +/- xdebug warning
+        $this->assertGreaterThanOrEqual(2, $diagnostics['bad']);
     }
 
     public function testStatusComposerOrGit()
@@ -37,6 +39,8 @@ class StatusTest extends TestCase
             SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER,
         ]);
         $diagnostics = $this->status->check();
-        $this->assertCount(2, $diagnostics['good']);
+
+        // should be git and composer error +/- xdebug warning
+        $this->assertGreaterThanOrEqual(2, $diagnostics['good']);
     }
 }
