@@ -56,6 +56,11 @@
                                             Configuration
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/extensions.html">
+                                            Extensions
+                                        </a>
+                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
                                 Reference
@@ -83,6 +88,11 @@
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/lsp.html">
+                                            Language Server (experimental)
+                                        </a>
+                                    </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/integrations.html">
                                             Integrations
@@ -128,6 +138,7 @@
 </ul>
 <p>Refactoring:</p>
 <ul>
+<li><a href="#change-visibility">Change Visibility</a></li>
 <li><a href="#class-move">Class Move</a></li>
 <li><a href="#extract-constant">Extract Constant</a></li>
 <li><a href="#extract-expression">Extract Expression</a></li>
@@ -212,6 +223,51 @@ class Article
         return 'Hello';
     }
 }</code></pre>
+<h2 id="change-visibility">Change Visibility</h2>
+<p>Change the visibility of a class member</p>
+<ul>
+<li><strong>Command</strong>: <strong>RPC only</strong></li>
+<li><strong>VIM context menu</strong>: <em>Class member context menu &gt; Change Visiblity</em></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ChangeVisibility()</code></li>
+</ul>
+<p>Currently this will cycle through the 3 visibilities: <code>public</code>, <code>protected</code> and
+<code>private</code>.</p>
+<h3 id="motivation-2">Motivation</h3>
+<p>Sometimes you may want to extract a class from an existing class in order to
+isolate some of it's responsibility. When doing this you may:</p>
+<ol>
+<li>Create a new class using <a href="#class-new">Class New</a>.</li>
+<li>Copy the method(s) which you want to extract to the new class.</li>
+<li>Change the visibility of the main method from <code>private</code> to <code>public</code>.</li>
+</ol>
+<h3 id="before-and-after-2">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php"># src/Blog/Post.php
+&lt;?php
+
+namespace Acme\Blog;
+
+class FoobarResolver
+{
+    private function resolveFoobar()
+    {
+        &lt;&gt;
+    }
+}</code></pre>
+<p>After invoking &quot;change visibility&quot; on or within the method.</p>
+<pre><code class="language-php"># src/Blog/Post.php
+&lt;?php
+
+namespace Acme\Blog;
+
+class FoobarResolver
+{
+    public function resolveFoobar();
+    {
+    }
+}</code></pre>
+<p><em>Note</em>: This also works on constants and properties. It will NOT change
+the visibility of any related parent or child class members.</p>
 <h2 id="class-move">Class Move</h2>
 <p>Move a class (or folder containing classes) from one location to another.</p>
 <ul>
@@ -219,7 +275,7 @@ class Article
 <li><strong>VIM context menu</strong>: <em>Class context menu &gt; Move Class</em></li>
 <li><strong>VIM function</strong>:<code>:call phpactor#MoveFile()</code></li>
 </ul>
-<h3 id="motivation-2">Motivation</h3>
+<h3 id="motivation-3">Motivation</h3>
 <p>When authoring classes, it is often difficult to determine really appropriate
 names and namespaces, this is unfortunate as a class name can quickly propagate
 through your code, making the class name harder to change as time goes on.</p>
@@ -235,7 +291,7 @@ in non-PHP files or docblocks are not currently updated).
 
 This refactoring works best when you have a well tested code base.
 </div>
-<h3 id="before-and-after-2">Before and After</h3>
+<h3 id="before-and-after-3">Before and After</h3>
 <pre><code class="language-php"># src/Blog/Post.php
 &lt;?php
 
@@ -260,7 +316,7 @@ class Writer
 <li><strong>VIM context menu</strong>: <em>Class context menu &gt; New Class</em></li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ClassNew()</code></li>
 </ul>
-<h3 id="motivation-3">Motivation</h3>
+<h3 id="motivation-4">Motivation</h3>
 <p>Creating classes is one of the most general actions we perform:</p>
 <ol>
 <li>Create a new file.</li>
@@ -275,7 +331,7 @@ class Writer
 </ul>
 <p>It is also possible to choose a class template, see <a href="templates.html">templates</a>
 for more information.</p>
-<h3 id="before-and-after-3">Before and After</h3>
+<h3 id="before-and-after-4">Before and After</h3>
 <div class="alert alert-success">
 This example is from an existing, empty, file. Note that you can also use
 the context menu to generate classes from non-existing class names in the current
@@ -298,7 +354,7 @@ class Post
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Complete Constructor</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
-<h3 id="motivation-4">Motivation</h3>
+<h3 id="motivation-5">Motivation</h3>
 <p>When authoring a new class, it is often required to:</p>
 <ol>
 <li>Create a constructor method with typed arguments.</li>
@@ -306,7 +362,7 @@ class Post
 <li>Create the class properties with docblocks.</li>
 </ol>
 <p>This refactoring will automatically take care of 2 and 3.</p>
-<h3 id="before-and-after-4">Before and After</h3>
+<h3 id="before-and-after-5">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 class Post
@@ -347,7 +403,7 @@ configuration.</p>
 <div class="alert alert-warning">
 This refactoring will currently only work fully on Composer based projects.
 </div>
-<h3 id="motivation-5">Motivation</h3>
+<h3 id="motivation-6">Motivation</h3>
 <p>Phpactor already has the possibility of generating new classes, and moving
 classes. But sometimes your project may get into a state where
 class-containing files have an incorrect namespace or class name.</p>
@@ -357,7 +413,7 @@ class-containing files have an incorrect namespace or class name.</p>
 <li>Update the class name.</li>
 <li>When given an empty file, it will generate a PHP tag and the namespace.</li>
 </ul>
-<h3 id="before-and-after-5">Before and After</h3>
+<h3 id="before-and-after-6">Before and After</h3>
 <pre><code class="language-php">// lib/Barfoo/Hello.php
 &lt;?php
 
@@ -388,14 +444,14 @@ class Hello
 <li><strong>VIM plugin</strong>: <em>Symbol context menu &gt; Extract Constant</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-6">Motivation</h3>
+<h3 id="motivation-7">Motivation</h3>
 <p>Each time a value is duplicated in a class a fairy dies. Duplicated values
 increase the fragility of your code. Replacing them with a constant helps to
 ensure runtime integrity.</p>
 <p>This refactoring includes <a href="https://refactoring.com/catalog/replaceMagicNumberWithSymbolicConstant.html">Replace Magic Number with Symbolic
 Constant</a>
 (Fowler, Refactoring).</p>
-<h3 id="before-and-after-6">Before and After</h3>
+<h3 id="before-and-after-7">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -444,10 +500,10 @@ class DecisionMaker
 <li><strong>VIM function</strong>:<code>:call phpactor#ExtractExpression()</code> (call with
 <code>v:true</code> to invoke on a selection)</li>
 </ul>
-<h3 id="motivation-7">Motivation</h3>
+<h3 id="motivation-8">Motivation</h3>
 <p>Sometimes you find yourself using inline expressions, and later you realise
 that you want to re-use that value.</p>
-<h3 id="before-and-after-7">Before and After</h3>
+<h3 id="before-and-after-8">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -480,12 +536,12 @@ if ($winningCombination == 6) {
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Function only</em></li>
-<li><strong>VIM function</strong>:<code>:call phpactor#mxtractMethod()</code></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ExtractMethod()</code></li>
 </ul>
 <p>This refactoring is NOT currently available through the context menu. You
 will need to <a href="vim-plugin.html#keyboard-mappings">map it to a keyboard shortcut</a>
 or invoke it manually.</p>
-<h3 id="motivation-8">Motivation</h3>
+<h3 id="motivation-9">Motivation</h3>
 <p>This is one of the most common refactorings. Decomposing code into discrete
 methods helps to make code understandable and maintainable.</p>
 <p>Extracting a method manually involes:</p>
@@ -504,7 +560,7 @@ scope, it will be returned.</li>
 <li>In both cases the variable(s) will be assigned at the point of extraction.</li>
 <li>Any class parameters which are not already imported, will be imported.</li>
 </ul>
-<h3 id="before-and-after-8">Before and After</h3>
+<h3 id="before-and-after-9">Before and After</h3>
 <p>Selection shown between the two <code>&lt;&gt;</code> markers:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -553,12 +609,12 @@ class extractMethod
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Inflect &gt; Extract interface</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ClassInflect()</code></li>
 </ul>
-<h3 id="motivation-9">Motivation</h3>
+<h3 id="motivation-10">Motivation</h3>
 <p>It is sometimes unwise to preemptively create interfaces for all your classes,
 as doing so adds maintainance overhead, and the interfaces may never be needed.</p>
 <p>This refactoring allows you to generate an interface from an existing class. All public methods
 will be added to generated interface.</p>
-<h3 id="before-and-after-9">Before and After</h3>
+<h3 id="before-and-after-10">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 class Foobar
@@ -581,10 +637,10 @@ interface FoobarInterface
 <li><strong>VIM plugin</strong>: <em>Property context menu &gt; Generate accessor</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-10">Motivation</h3>
+<h3 id="motivation-11">Motivation</h3>
 <p>When creating entities and value objects it is frequently necessary to add accessors.</p>
 <p>This refactoring automates the generation of accessors.</p>
-<h3 id="before-and-after-10">Before and After</h3>
+<h3 id="before-and-after-11">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -618,12 +674,12 @@ class Foobar
 <li><strong>VIM plugin</strong>: <em>Method context menu &gt; Generate method</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-11">Motivation</h3>
+<h3 id="motivation-12">Motivation</h3>
 <p>When initially authoring a package you will often write a method call which
 doesn't exist and then add the method to the corresponding class.</p>
 <p>This refactoring will automatically generate the method inferring any type
 information that it can.</p>
-<h3 id="before-and-after-11">Before and After</h3>
+<h3 id="before-and-after-12">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -676,13 +732,13 @@ class Barfoo
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Transform &gt; Implement contracts</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
-<h3 id="motivation-12">Motivation</h3>
+<h3 id="motivation-13">Motivation</h3>
 <p>It can be very tiresome to manually implement contracts for interfaces and abstract classes,
 especially interfaces with many methods (e.g. <code>ArrayAccess</code>).</p>
 <p>This refactoring will automatically add the required methods to your class. If
 the interface uses any foreign classes, the necessary <code>use</code> statements will
 also be added.</p>
-<h3 id="before-and-after-12">Before and After</h3>
+<h3 id="before-and-after-13">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 class Foobar implements Countable
@@ -704,7 +760,7 @@ class Foobar implements Countable
 <li><strong>VIM plugin</strong>: <em>VIM function only</em></li>
 <li><strong>VIM function</strong>:<code>:call phpactor#UseAdd()</code></li>
 </ul>
-<h3 id="motivation-13">Motivation</h3>
+<h3 id="motivation-14">Motivation</h3>
 <p>It is easy to remember the name of a class, but more difficult to remember its
 namespace, and certainly it is time consuming to manually code class imports:</p>
 <p>Manually one would:</p>
@@ -716,7 +772,7 @@ namespace, and certainly it is time consuming to manually code class imports:</p
 <li>Add the class name to the new <code>use</code> statement.</li>
 </ol>
 <p>This refactoring covers steps 1, 3, 4 and 5.</p>
-<h3 id="before-and-after-13">Before and After</h3>
+<h3 id="before-and-after-14">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -745,12 +801,12 @@ class Hello
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Override method</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-14">Motivation</h3>
+<h3 id="motivation-15">Motivation</h3>
 <p>Sometimes it is expected or necessary that you override a parent classes method
 (for example when authoring a Symfony Command class).</p>
 <p>This refactoring will allow you to select a method to override and generate that method
 in your class.</p>
-<h3 id="before-and-after-14">Before and After</h3>
+<h3 id="before-and-after-15">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 use Symfony\Component\Console\Command\Command;
@@ -778,14 +834,14 @@ class MyCommand extends Command
 <li><strong>VIM plugin</strong>: <em>Variable context menu &gt; Rename</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-15">Motivation</h3>
+<h3 id="motivation-16">Motivation</h3>
 <p>Having meaningful and descriptive variable names makes the intention of
 code clearer and therefore easier to maintain. Renaming variables is a frequent
 refactoring, but doing this with a simple search and replace can often have unintended
 consequences (e.g. renaming the variable <code>$class</code> also changes the <code>class</code> keyword).</p>
 <p>This refactoring will rename a variable, and only variables, in either the method scope
 or the class scope.</p>
-<h3 id="before-and-after-15">Before and After</h3>
+<h3 id="before-and-after-16">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -823,11 +879,11 @@ class Hello
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Replace references</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-16">Motivation</h3>
+<h3 id="motivation-17">Motivation</h3>
 <p>This refactoring is <em>similar</em> to <a href="#class-move">Move Class</a>, but without
 renaming the file. This is a useful refactoring when a dependant library has
 changed a class name and you need to update that class name in your project.</p>
-<h3 id="before-and-after-16">Before and After</h3>
+<h3 id="before-and-after-17">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -866,7 +922,7 @@ When renaming classes in your project use <a href="#class-move">Class Move</a>.
 <li><strong>VIM plugin</strong>: <em>Member context menu &gt; Replace references</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-17">Motivation</h3>
+<h3 id="motivation-18">Motivation</h3>
 <p>Having an API which is expressive of the intent of the class is important, and
 contributes to making your code more consistent and maintainable.</p>
 <p>When renaming members global search and replace can be used, but is a shotgun approach and
@@ -888,7 +944,7 @@ applying this refactoring.</p>
 the query but whose containing classes could not be resolved.
 </div>
 <p><img src="images/risky.png" alt="Risky references" /></p>
-<h3 id="before-and-after-17">Before and After</h3>
+<h3 id="before-and-after-18">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 

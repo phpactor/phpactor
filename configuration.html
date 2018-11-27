@@ -56,6 +56,11 @@
                                             Configuration
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/extensions.html">
+                                            Extensions
+                                        </a>
+                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
                                 Reference
@@ -83,6 +88,11 @@
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/lsp.html">
+                                            Language Server (experimental)
+                                        </a>
+                                    </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/integrations.html">
                                             Integrations
@@ -129,24 +139,32 @@ Config files:
 
  code_transform.class_new.variants:
     exception:exception    
-    autoload:vendor/autoload.php
 
  # ... etc</code></pre>
+<h2 id="file-paths">File Paths</h2>
+<p>Configured file paths can make use of some special tokens, for example
+<code>%cache%/foobar</code> will expand to <code>/home/user/.cache/phpactor/foobar</code>:</p>
+<ul>
+<li><code>%cache%</code>: The absolute path to the phpactor cache dir (e.g.
+<code>/home/user/.cache/phpactor</code>).</li>
+<li><code>%project_root%</code>: Will expand to the project root (e.g. the current working
+directory or the value provided by <code>--working-dir</code>).</li>
+<li><code>%config%</code>: The path to Phpactor's config dir (e.g. <code>/home/user/.config/phpactor</code>).</li>
+<li><code>%application_root%</code>: The path to Phpactor's own root directory.</li>
+</ul>
 <h2 id="reference">Reference</h2>
 <h3 id="core">Core</h3>
-<h4 id="autoload">autoload</h4>
+<h4 id="composerautoloader_path">composer.autoloader_path</h4>
 <p><em>Default</em>: <code>vendor/autoload.php</code></p>
 <p>Phpactor will automatically look to see if it can use the
 <a href="https://getcomposer.org">composer</a> autoloader at this
 path. The autoloader helps Phpactor locate classes.</p>
-<h4 id="autoloadderegister">autoload.deregister</h4>
+<h4 id="composerautoload_deregister">composer.autoload_deregister</h4>
 <p><em>Default</em>: <code>true</code></p>
 <p>any potential conflicts. However, some autoloaders may add global dependencies
 By default Phpactor will deregister the included autoloader to prevent
 on the code available through that autoloader (e.g. Drupal). In such cases
 set this to <code>false</code> and hope that everything is <em>fine</em>.</p>
-<h4 id="cache_dir">cache_dir</h4>
-<p>Directory Phpactor uses for the cache (e.g. the index for the <a href="https://github.com/jetbrains/phpstorm-stubs">jetbrains stubs</a>).</p>
 <h4 id="loggingenabled">logging.enabled</h4>
 <p><em>Default</em>: <code>false</code></p>
 <p>Phpactor can log information, notably RPC requests and responses in addition

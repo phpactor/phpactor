@@ -56,7 +56,7 @@
                                             Configuration
                                         </a>
                                     </li>
-                                                                    <li class="">
+                                                                    <li class="active">
                                         <a href="https://phpactor.github.io/phpactor/extensions.html">
                                             Extensions
                                         </a>
@@ -118,40 +118,38 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="debugging-rpc-and-phpactor">Debugging RPC and Phpactor</h1>
-<h2 id="debugging-rpc">Debugging RPC</h2>
-<p>When executing commands in an editor, it can be tricky to consistently
-reproduce errors, or to isolate and debug them in Phpactor.</p>
-<p>Thankfully there is a feature called RPC replay which allows you to replay
-the last RPC command received by Phpactor.</p>
-<p>Enable it in a Phpactor configuration file, for example
-<code>$HOME/.config/phpactor/phpactor.yml</code>:</p>
-<pre><code class="language-yaml">rpc.store_replay: true</code></pre>
-<p>Now, after you execute an RPC command via. your editor, you can execute
-Phpactor from the shell and replay your last command:</p>
-<pre><code class="language-bash">$ phpactor rpc --replay 
-{"action":"open_file","parameters":{"path":"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/Rpc\/Handler\/AbstractHandler.php","offset":447}}</code></pre>
-<p>To see more information, including the initial request add the <code>--verbose</code>
-option:</p>
-<pre><code class="language-bash">$ phpactor rpc --replay --verbose
-[2018-05-23T22:14:11.486488+02:00] phpactor.DEBUG: REQUEST {"action":"goto_definition","parameters":{"source":"[removed]","offset":1913,"path":"/home/daniel/somepath/SomeClass.php"}}
-[2018-05-23T22:14:11.494201+02:00] phpactor.DEBUG: Resolving: Microsoft\PhpParser\Node\Statement\ClassDeclaration [] []
-[2018-05-23T22:14:11.494545+02:00] phpactor.DEBUG: Resolving: Microsoft\PhpParser\Node\Parameter [] []
-...[truncated]...
-[2018-05-23T22:14:11.508019+02:00] phpactor.DEBUG: RESPONSE {"action":"open_file","parameters":{"path":"/home/daniel/www/phpactor/phpactor/lib/Extension/Rpc/Handler/AbstractHandler.php","offset":447}} []
-{"action":"open_file","parameters":{"path":"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/Rpc\/Handler\/AbstractHandler.php","offset":447}}</code></pre>
-<p>The next time you run a command, you will lose your replay, in order to
-consistently reproduce an action, you can copy the replay file and execute it
-consistently as many times as required:</p>
-<pre><code class="language-bash">$ cp ~/.local/share/phpactor/replay.json .
-$ cat replay.json | phpactor rpc --verbose</code></pre>
-<h2 id="logging">Logging</h2>
-<p>Logging is disabled by default, but can provide some useful information (such
-as errors encountered when parsing files etc).</p>
-<p>Enable it as follows:</p>
-<pre><code>logging.enabled: true
-logging.level: DEBUG
-logging.path: phpactor.log</code></pre>
+                    <h1 id="extensions">Extensions</h1>
+<p>Phpactor allows you to add custom extensions, for example to provide new
+completors, or anything you can imagine.</p>
+<p>The aim of extensions is for them to be as independent and decoupled as
+possible, they can easily be used without Phpactor and can be easily combined
+to create new applications.</p>
+<p>Currently Phpactor ships with a dozen &quot;hard coded&quot; extensions which cannot be
+removed.</p>
+<h2 id="usage">Usage</h2>
+<p>To list all available extensions, run the following:</p>
+<pre><code>$ phpactor extension:list
++-------------------------------------------+--------------------+-------------------------------------+
+| Name                                      | Version            | Description                         |
++-------------------------------------------+--------------------+-------------------------------------+
+| phpactor/class-to-file-extension          | 0.1.x-dev 61007ff* | Converts classes to files and vice- |
+| phpactor/completion-extension             | 0.1.x-dev 23fc826* | Phpactor Code Completion Extension  |
+| phpactor/completion-rpc-extension         | 0.1.x-dev fc5cc03* | RPC support for the Completion Exte |
+| phpactor/completion-worse-extension       |                    | Collection of completors based on W |
+| phpactor/composer-autoloader-extension    | 0.1.x-dev ec979b7* | Composer Autoloader provider        |
+| phpactor/console-extension                | 0.1.x-dev 970c787* | Integrate Symfony Console commands  |
++-------------------------------------------+--------------------+-------------------------------------+</code></pre>
+<p>Note that extensions without a version are not installed.</p>
+<p>Pretending that <code>phpactor/completion-worse-extension</code> isn't installed, you can install it with:</p>
+<pre><code>$ phpactor extension:install phpactor/completion-worse-extension
+Using version "^0.2.0"
+Loading composer repositories with package information
+Updating dependencies
+Package operations: 1 install, 0 updates, 0 removals
+  - Installing phpactor/language-server-extension (0.2.0): Loading from cache
+Writing lock file
+Generating autoload files</code></pre>
+<p>Removing is done via. <code>extension:remove</code>.</p>
                 </section>
 
             </div>

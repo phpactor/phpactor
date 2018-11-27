@@ -56,6 +56,11 @@
                                             Configuration
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/extensions.html">
+                                            Extensions
+                                        </a>
+                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
                                 Reference
@@ -83,6 +88,11 @@
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/lsp.html">
+                                            Language Server (experimental)
+                                        </a>
+                                    </li>
                                                                     <li class="active">
                                         <a href="https://phpactor.github.io/phpactor/integrations.html">
                                             Integrations
@@ -121,7 +131,7 @@ useful autoloader <em>or</em> 2) to use a different mechanism to add the modules
 <pre><code class="language-yaml"># Bootstrapping Drupal creates lots of implicit global
 # dependencies, so we will just keep the Drupal autoloader
 # registered and hope for the best.
-autoload.deregister: false</code></pre>
+composer.autoload_deregister: false</code></pre>
 <h4 id="option-1-bootstrap-drupal-on-the-fly-to-generate-the-autoloader">Option 1: Bootstrap Drupal on the fly to generate the autoloader</h4>
 <p>Create the following bootstrap file <code>autoload_phpactor.php</code>, in (for example)
 <code>web/</code>:</p>

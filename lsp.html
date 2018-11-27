@@ -118,40 +118,41 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="debugging-rpc-and-phpactor">Debugging RPC and Phpactor</h1>
-<h2 id="debugging-rpc">Debugging RPC</h2>
-<p>When executing commands in an editor, it can be tricky to consistently
-reproduce errors, or to isolate and debug them in Phpactor.</p>
-<p>Thankfully there is a feature called RPC replay which allows you to replay
-the last RPC command received by Phpactor.</p>
-<p>Enable it in a Phpactor configuration file, for example
-<code>$HOME/.config/phpactor/phpactor.yml</code>:</p>
-<pre><code class="language-yaml">rpc.store_replay: true</code></pre>
-<p>Now, after you execute an RPC command via. your editor, you can execute
-Phpactor from the shell and replay your last command:</p>
-<pre><code class="language-bash">$ phpactor rpc --replay 
-{"action":"open_file","parameters":{"path":"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/Rpc\/Handler\/AbstractHandler.php","offset":447}}</code></pre>
-<p>To see more information, including the initial request add the <code>--verbose</code>
-option:</p>
-<pre><code class="language-bash">$ phpactor rpc --replay --verbose
-[2018-05-23T22:14:11.486488+02:00] phpactor.DEBUG: REQUEST {"action":"goto_definition","parameters":{"source":"[removed]","offset":1913,"path":"/home/daniel/somepath/SomeClass.php"}}
-[2018-05-23T22:14:11.494201+02:00] phpactor.DEBUG: Resolving: Microsoft\PhpParser\Node\Statement\ClassDeclaration [] []
-[2018-05-23T22:14:11.494545+02:00] phpactor.DEBUG: Resolving: Microsoft\PhpParser\Node\Parameter [] []
-...[truncated]...
-[2018-05-23T22:14:11.508019+02:00] phpactor.DEBUG: RESPONSE {"action":"open_file","parameters":{"path":"/home/daniel/www/phpactor/phpactor/lib/Extension/Rpc/Handler/AbstractHandler.php","offset":447}} []
-{"action":"open_file","parameters":{"path":"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/Rpc\/Handler\/AbstractHandler.php","offset":447}}</code></pre>
-<p>The next time you run a command, you will lose your replay, in order to
-consistently reproduce an action, you can copy the replay file and execute it
-consistently as many times as required:</p>
-<pre><code class="language-bash">$ cp ~/.local/share/phpactor/replay.json .
-$ cat replay.json | phpactor rpc --verbose</code></pre>
-<h2 id="logging">Logging</h2>
-<p>Logging is disabled by default, but can provide some useful information (such
-as errors encountered when parsing files etc).</p>
-<p>Enable it as follows:</p>
-<pre><code>logging.enabled: true
-logging.level: DEBUG
-logging.path: phpactor.log</code></pre>
+                    <h1 id="language-server">Language Server</h1>
+<div class="alert alert-danger">
+The Language Server is currently experimental and currently supports only a
+small amount of the functionality covered by Phpactor's own RPC protocol.
+</div>
+<p>Phpactor has some initial support for running as a server supporting the
+<a href="https://microsoft.github.io/language-server-protocol/specification">Language Server
+Protocol</a>.</p>
+<p>There are many clients which can be used both for VIM and other editors.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Try it out as follows:</p>
+<pre><code class="language-bash">$ phpactor server:start -vvv</code></pre>
+<p>You should see something like:</p>
+<pre><code>Starting TCP server, use -vvv for verbose output
+Phpactor handlers:: textDocument/completion, textDocument/definition
+[2018-09-30 17:15:25] phpactor.INFO: listening on address 127.0.0.1:8888 [] []
+[2018-09-30 17:15:25] phpactor.INFO: starting language server with pid: 9286 [] []</code></pre>
+<p>This is the language server running in TCP mode, which is great for debugging,
+but when configuring your client you may want to invoke the server in STDIO
+mode. <em>your client</em> should invoke Phpactor as:</p>
+<pre><code class="language-bash">$ phpactor server:start --stdio</code></pre>
+<h2 id="clients">Clients</h2>
+<p>There are lots of clients for different editors.</p>
+<h3 id="autozimu-language-client-for-neovim">Autozimu Language Client for Neovim</h3>
+<p>Include the language client:</p>
+<pre><code>Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }</code></pre>
+<p>And let it know about Phpactor:</p>
+<pre><code>let g:LanguageClient_serverCommands = {
+    \ 'php': [ '/path/to/bin/phpactor', 'server:start', '--stdio']
+    \}</code></pre>
+<p>See the <a href="https://github.com/autozimu/LanguageClient-neovim">github repository</a>
+for more details.</p>
                 </section>
 
             </div>

@@ -56,6 +56,11 @@
                                             Configuration
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/extensions.html">
+                                            Extensions
+                                        </a>
+                                    </li>
                                                             </ul>
                                                     <p class="text-muted">
                                 Reference
@@ -83,6 +88,11 @@
                             </p>
 
                             <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/lsp.html">
+                                            Language Server (experimental)
+                                        </a>
+                                    </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/integrations.html">
                                             Integrations
@@ -126,7 +136,7 @@
 <a href="https://github.com/neovim/neovim">Neovim</a></li>
 </ul>
 <p>It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the <a href="https://github.com/neovim/neovim">vim-plug</a>
+this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
 plugin manager, but other plugin managers are quite similar.</p>
 <p>Require Phpactor in your VIM configuration file (e.g. <code>~/.vimrc</code> or
 <code>~/.config/nvim/init.vim</code> when using Neovim):</p>
@@ -140,7 +150,7 @@ $ composer install</code></pre>
 Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
 installation procedure!
 </div>
-<p>Now issue the following command <code>:call phpactor#Status()</code>:</p>
+<p>Now open a PHP file and issue the following command <code>:call phpactor#Status()</code>:</p>
 <pre><code>Support
 -------
 [✔] Composer detected - faster class location and more features!
@@ -154,6 +164,15 @@ Config files
 [✘] /etc/xdg/phpactor/phpactor.yml</code></pre>
 <p>Phpactor works best with Composer - but much functionality including
 auto-completion can still work (sometimes slowly depending on project size).</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p><strong>E117: Unknown function: phpactor#Status</strong>:</p>
+<p>Vim-plug and most other package managers for Vim will lazy-load Phpactor when it's
+needed, i.e. when opening a PHP file. If you get this error, open a PHP file and
+run the command again.</p>
+<p><strong>Composer not found</strong> or <strong>Git not detected</strong>:</p>
+<p>The Git and Composer checks are referring to the current &quot;workspace&quot; (i.e. where you
+started Vim from). If you've already setup Git and Composer for your project, ensure
+you are starting Vim from the project directory to enable detection.</p>
 <h2 id="updating">Updating</h2>
 <p>Updating Phpactor from VIM is easy:</p>
 <pre><code class="language-vim">:call phpactor#Update()</code></pre>
@@ -179,6 +198,9 @@ nmap &lt;Leader&gt;nn :call phpactor#Navigate()&lt;CR&gt;
 " Goto definition of class or class member under the cursor
 nmap &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
 
+" Show brief information about the symbol under the cursor
+nmap &lt;Leader&gt;K :call phpactor#Hover()&lt;CR&gt;
+
 " Transform the classes in the current file
 nmap &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
 
@@ -203,14 +225,22 @@ your <code>.vimrc</code> to change the PHP binary:</p>
 <p>The plugin has some configuration options:</p>
 <pre><code>let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
-let g:phpactorOmniError = v:false</code></pre>
+let g:phpactorOmniAutoClassImport = v:true</code></pre>
 <ul>
 <li><code>g:phpactorPhpBin</code>: PHP executable to use.</li>
 <li><code>g:phpactorBranch</code>: Phpactor branch (default is <code>master</code>, use <code>develop</code> for
 bleeding edge).</li>
-<li><code>g:phpactorOmniError</code>: Set to <code>v:true</code> to enable useful error messages when
-completion is invoked.</li>
+<li><code>g:phpactorOmniAutoClassImport</code>: Automatically import classes when
+completing class names with OmniComplete.</li>
 </ul>
+<h2 id="extensions">Extensions</h2>
+<p>You can manage your <a href="/extensions.html">Phpactor extensions</a> from with VIM:</p>
+<pre><code>call phpactor#ExtensionList()
+call phpactor#ExtensionInstall()
+call phpactor#ExtensionRemove()</code></pre>
+<p>Note that these commands are not very verbose. For increased verbosity
+execute the commands from the command line (as detailed
+<a href="/extensions.html">here</a>.</p>
 <h2 id="completion">Completion</h2>
 <h3 id="omni-completion">Omni-completion</h3>
 <p>Omni-completion
