@@ -216,11 +216,19 @@ function! phpactor#ExtensionList()
     call phpactor#rpc("extension_list", {})
 endfunction
 
-function! phpactor#ExtensionInstall()
+function! phpactor#ExtensionInstall(...)
+    if v:false != get(a:,1, v:false)
+        call phpactor#rpc("extension_install", {"extension_name":get(a:,1)})
+        return
+    endif
     call phpactor#rpc("extension_install", {})
 endfunction
 
-function! phpactor#ExtensionRemove()
+function! phpactor#ExtensionRemove(...)
+    if v:false != get(a:,1, v:false)
+        call phpactor#rpc("extension_remove", {"extension_name":get(a:,1)})
+        return
+    endif
     call phpactor#rpc("extension_remove", {})
 endfunction
 
