@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "17fd933fd59fc5c8dad6fffb77f795739293b9ec"
+                "reference": "1970e97b4792855abaf43d8041abf59db878c3a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/17fd933fd59fc5c8dad6fffb77f795739293b9ec",
-                "reference": "17fd933fd59fc5c8dad6fffb77f795739293b9ec",
+                "url": "https://api.github.com/repos/composer/composer/zipball/1970e97b4792855abaf43d8041abf59db878c3a1",
+                "reference": "1970e97b4792855abaf43d8041abf59db878c3a1",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-11-27 11:22:32"
+            "time": "2018-11-27 15:52:09"
         },
         {
             "name": "composer/semver",
@@ -437,12 +437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "11e3c04d896bb0108644f57be1fce82ac1fa3ed9"
+                "reference": "693fe4c8963ebe5d4da60ee5491b0f17abc250bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/11e3c04d896bb0108644f57be1fce82ac1fa3ed9",
-                "reference": "11e3c04d896bb0108644f57be1fce82ac1fa3ed9",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/693fe4c8963ebe5d4da60ee5491b0f17abc250bc",
+                "reference": "693fe4c8963ebe5d4da60ee5491b0f17abc250bc",
                 "shasum": ""
             },
             "require-dev": {
@@ -467,7 +467,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-11-26 16:50:45"
+            "time": "2018-11-27 15:18:31"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1320,16 +1320,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.6.0",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec"
+                "reference": "ba62fe603ae77e536beda285ae5c3663d57c53d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec",
-                "reference": "2a5aa08a0db71bd66ecac2d1fd71fcd8bf51baec",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/ba62fe603ae77e536beda285ae5c3663d57c53d5",
+                "reference": "ba62fe603ae77e536beda285ae5c3663d57c53d5",
                 "shasum": ""
             },
             "require": {
@@ -1366,7 +1366,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-25T16:28:58+00:00"
+            "time": "2018-11-27T19:42:14+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -3083,12 +3083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "d227172fbcc1ebb98c8877ba932c16272f304581"
+                "reference": "cf604f0ab9fc8fd657c9ec7d36a1a366a527bad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/d227172fbcc1ebb98c8877ba932c16272f304581",
-                "reference": "d227172fbcc1ebb98c8877ba932c16272f304581",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/cf604f0ab9fc8fd657c9ec7d36a1a366a527bad6",
+                "reference": "cf604f0ab9fc8fd657c9ec7d36a1a366a527bad6",
                 "shasum": ""
             },
             "require": {
@@ -3171,7 +3171,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-11-27T11:19:25+00:00"
+            "time": "2018-11-27T13:05:26+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4885,7 +4885,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-26T16:19:01+00:00"
+            "time": "2018-11-26 16:19:01"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -4949,7 +4949,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-26T16:19:01+00:00"
+            "time": "2018-11-26 16:19:01"
         },
         {
             "name": "symfony/options-resolver",
@@ -5167,7 +5167,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-26T16:19:01+00:00"
+            "time": "2018-11-26 16:19:01"
         },
         {
             "name": "theseer/tokenizer",
