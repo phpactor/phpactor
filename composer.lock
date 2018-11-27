@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "86f59348f5fa308d3b9a911a8d03c30272c71e64"
+                "reference": "17fd933fd59fc5c8dad6fffb77f795739293b9ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/86f59348f5fa308d3b9a911a8d03c30272c71e64",
-                "reference": "86f59348f5fa308d3b9a911a8d03c30272c71e64",
+                "url": "https://api.github.com/repos/composer/composer/zipball/17fd933fd59fc5c8dad6fffb77f795739293b9ec",
+                "reference": "17fd933fd59fc5c8dad6fffb77f795739293b9ec",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-11-12 14:24:28"
+            "time": "2018-11-27 11:22:32"
         },
         {
             "name": "composer/semver",
@@ -437,12 +437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "3e02234410b80b935f188eb186e511308ded0d71"
+                "reference": "11e3c04d896bb0108644f57be1fce82ac1fa3ed9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/3e02234410b80b935f188eb186e511308ded0d71",
-                "reference": "3e02234410b80b935f188eb186e511308ded0d71",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/11e3c04d896bb0108644f57be1fce82ac1fa3ed9",
+                "reference": "11e3c04d896bb0108644f57be1fce82ac1fa3ed9",
                 "shasum": ""
             },
             "require-dev": {
@@ -467,7 +467,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-11-23 14:15:19"
+            "time": "2018-11-26 16:50:45"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -900,12 +900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "8d9ee7a050742bac0c8454e982d1c5251a89dc83"
+                "reference": "8b3e155241e7af93a45cbf946a0e61c23929f12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/8d9ee7a050742bac0c8454e982d1c5251a89dc83",
-                "reference": "8d9ee7a050742bac0c8454e982d1c5251a89dc83",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/8b3e155241e7af93a45cbf946a0e61c23929f12d",
+                "reference": "8b3e155241e7af93a45cbf946a0e61c23929f12d",
                 "shasum": ""
             },
             "require": {
@@ -916,7 +916,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/test-utils": "^1.0@dev",
-                "phpactor/worse-reflection": "^1.0@dev",
+                "phpactor/worse-reflection": "~0.1",
                 "phpstan/phpstan": "^0.10.3",
                 "phpunit/phpunit": "^7.3"
             },
@@ -942,7 +942,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-11-24 15:37:27"
+            "time": "2018-11-27 08:10:19"
         },
         {
             "name": "phpactor/completion",
@@ -2172,12 +2172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "10997603fb252831e6647dfdb3170e48c1d62499"
+                "reference": "f0ccd811fe34dd4d01502614e7361b93594994c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/10997603fb252831e6647dfdb3170e48c1d62499",
-                "reference": "10997603fb252831e6647dfdb3170e48c1d62499",
+                "url": "https://api.github.com/repos/symfony/console/zipball/f0ccd811fe34dd4d01502614e7361b93594994c3",
+                "reference": "f0ccd811fe34dd4d01502614e7361b93594994c3",
                 "shasum": ""
             },
             "require": {
@@ -2206,7 +2206,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -2233,7 +2233,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-20 16:22:05"
+            "time": "2018-11-27 07:40:59"
         },
         {
             "name": "symfony/contracts",
@@ -2359,12 +2359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "e53d477d7b5c4982d0e1bfd2298dbee63d01441d"
+                "reference": "047be7e3450e5460f14c4a42a02c9811e2eda2cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/e53d477d7b5c4982d0e1bfd2298dbee63d01441d",
-                "reference": "e53d477d7b5c4982d0e1bfd2298dbee63d01441d",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/047be7e3450e5460f14c4a42a02c9811e2eda2cd",
+                "reference": "047be7e3450e5460f14c4a42a02c9811e2eda2cd",
                 "shasum": ""
             },
             "require": {
@@ -2373,7 +2373,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -2400,7 +2400,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11 19:52:12"
+            "time": "2018-11-26 16:19:01"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -3083,12 +3083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "abb5e2fa70aeee52dc1e141b41a6ee510b3bea6e"
+                "reference": "d227172fbcc1ebb98c8877ba932c16272f304581"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/abb5e2fa70aeee52dc1e141b41a6ee510b3bea6e",
-                "reference": "abb5e2fa70aeee52dc1e141b41a6ee510b3bea6e",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/d227172fbcc1ebb98c8877ba932c16272f304581",
+                "reference": "d227172fbcc1ebb98c8877ba932c16272f304581",
                 "shasum": ""
             },
             "require": {
@@ -3171,7 +3171,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-11-12 23:36:02"
+            "time": "2018-11-27T11:19:25+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4837,12 +4837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "7a8a60421b828aa8e1ee10bd14c9256cc50c2a46"
+                "reference": "fbd644bb3054957d52da2c3c1bdba89f82671e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/7a8a60421b828aa8e1ee10bd14c9256cc50c2a46",
-                "reference": "7a8a60421b828aa8e1ee10bd14c9256cc50c2a46",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/fbd644bb3054957d52da2c3c1bdba89f82671e0c",
+                "reference": "fbd644bb3054957d52da2c3c1bdba89f82671e0c",
                 "shasum": ""
             },
             "require": {
@@ -4858,7 +4858,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -4885,7 +4885,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-13 19:31:34"
+            "time": "2018-11-26T16:19:01+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -4893,12 +4893,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "c180d89600a620dbdcaab50ca2fbe299ff1958b6"
+                "reference": "79dc44ea05adab232d26b9a0bb2e81015982d306"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/c180d89600a620dbdcaab50ca2fbe299ff1958b6",
-                "reference": "c180d89600a620dbdcaab50ca2fbe299ff1958b6",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/79dc44ea05adab232d26b9a0bb2e81015982d306",
+                "reference": "79dc44ea05adab232d26b9a0bb2e81015982d306",
                 "shasum": ""
             },
             "require": {
@@ -4922,7 +4922,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -4949,7 +4949,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-20 16:22:05"
+            "time": "2018-11-26T16:19:01+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -5125,12 +5125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "ec076716412274e51f8a7ea675d9515e5c311123"
+                "reference": "e7a0abd89138ac26fc03b56aab1fa4c00a33c883"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/ec076716412274e51f8a7ea675d9515e5c311123",
-                "reference": "ec076716412274e51f8a7ea675d9515e5c311123",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/e7a0abd89138ac26fc03b56aab1fa4c00a33c883",
+                "reference": "e7a0abd89138ac26fc03b56aab1fa4c00a33c883",
                 "shasum": ""
             },
             "require": {
@@ -5140,7 +5140,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -5167,7 +5167,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11 19:52:12"
+            "time": "2018-11-26T16:19:01+00:00"
         },
         {
             "name": "theseer/tokenizer",
