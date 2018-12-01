@@ -1370,16 +1370,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.6.1",
+            "version": "0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "ba62fe603ae77e536beda285ae5c3663d57c53d5"
+                "reference": "68c9fe4050edbd3f6332fe9840f2e5c8daab34b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/ba62fe603ae77e536beda285ae5c3663d57c53d5",
-                "reference": "ba62fe603ae77e536beda285ae5c3663d57c53d5",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/68c9fe4050edbd3f6332fe9840f2e5c8daab34b6",
+                "reference": "68c9fe4050edbd3f6332fe9840f2e5c8daab34b6",
                 "shasum": ""
             },
             "require": {
@@ -1416,7 +1416,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-11-27T19:42:14+00:00"
+            "time": "2018-12-01T16:35:29+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -1686,12 +1686,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "2dbce492333b828e1e4f68a628569ce9243851cb"
+                "reference": "25ec38c2bdacb99384267174e3fa92c375191573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/2dbce492333b828e1e4f68a628569ce9243851cb",
-                "reference": "2dbce492333b828e1e4f68a628569ce9243851cb",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/25ec38c2bdacb99384267174e3fa92c375191573",
+                "reference": "25ec38c2bdacb99384267174e3fa92c375191573",
                 "shasum": ""
             },
             "require": {
@@ -1729,7 +1729,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-12-01 16:14:30"
+            "time": "2018-12-01 16:38:04"
         },
         {
             "name": "phpactor/source-code-filesystem",
