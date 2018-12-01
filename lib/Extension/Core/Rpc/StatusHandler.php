@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
+use Phpactor\ConfigLoader\Core\PathCandidate;
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\Status;
@@ -22,7 +24,7 @@ class StatusHandler implements Handler
      */
     private $paths;
 
-    public function __construct(Status $status, Paths $paths)
+    public function __construct(Status $status, PathCandidates $paths)
     {
         $this->status = $status;
         $this->paths = $paths;
@@ -71,11 +73,11 @@ class StatusHandler implements Handler
 
     private function buildConfigFileMessage()
     {
-        return implode(PHP_EOL, array_map(function ($file) {
-            if (file_exists($file)) {
-                return '[✔] ' . $file;
+        return implode(PHP_EOL, array_map(function (PathCandidate $file) {
+            if (file_exists($file->path())) {
+                return '[✔] ' . $file->path();
             }
-            return '[✘] ' . $file;
-        }, $this->paths->configFiles()));
+            return '[✘] ' . $file->path();
+        }, iterator_to_array($this->paths)));
     }
 }

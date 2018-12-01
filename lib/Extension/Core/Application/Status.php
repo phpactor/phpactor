@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Application;
 
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
@@ -21,7 +22,7 @@ class Status
     private $executableFinder;
 
     /**
-     * @var Paths
+     * @var PathCandidates
      */
     private $paths;
 
@@ -32,7 +33,7 @@ class Status
 
     public function __construct(
         FilesystemRegistry $registry,
-        Paths $paths,
+        PathCandidates $paths,
         string $workingDirectory,
         ExecutableFinder $executableFinder = null
     ) {
@@ -71,8 +72,8 @@ class Status
             $diagnostics['good'][] = 'XDebug is disabled. XDebug has a negative effect on performance.';
         }
 
-        foreach ($this->paths->configFiles() as $configFile) {
-            $diagnostics['config_files'][$configFile] = file_exists($configFile);
+        foreach ($this->paths as $configFile) {
+            $diagnostics['config_files'][$configFile->path()] = file_exists($configFile->path());
         }
 
         if ($path = $this->executableFinder->find('git')) {

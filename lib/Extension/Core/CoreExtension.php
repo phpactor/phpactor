@@ -22,6 +22,7 @@ use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Core\Command\StatusCommand;
 use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
+use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 
@@ -47,6 +48,7 @@ class CoreExtension implements Extension
         $this->registerConsole($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
+        $this->registerFilePathExpanders($container);
     }
 
     private function registerConsole(ContainerBuilder $container)
@@ -55,7 +57,7 @@ class CoreExtension implements Extension
             return new ConfigDumpCommand(
                 $container->getParameters(),
                 $container->get('console.dumper_registry'),
-                $container->get('config.paths'),
+                $container->get('config_loader.candidates'),
                 $container->get(FilePathResolverExtension::SERVICE_EXPANDERS)
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
@@ -117,7 +119,7 @@ class CoreExtension implements Extension
         $container->register('application.status', function (Container $container) {
             return new Status(
                 $container->get('source_code_filesystem.registry'),
-                $container->get('config.paths'),
+                $container->get('config_loader.candidates'),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%')
             );
         });
@@ -130,11 +132,19 @@ class CoreExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
 
         $container->register('core.rpc.handler.status', function (Container $container) {
-            return new StatusHandler($container->get('application.status'), $container->get('config.paths'));
+            return new StatusHandler($container->get('application.status'), $container->get('config_loader.candidates'));
         }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
 
         $container->register('core.rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
         }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+    }
+
+    private function registerFilePathExpanders(ContainerBuilder $container)
+    {
+        $container->register('core.file_path_resolver.project_config_expander', function (Container $container) {
+            $path = $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor';
+            return new ValueExpander('project_config', $path);
+        }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\Config\Paths;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
@@ -18,7 +19,7 @@ class StatusTest extends TestCase
     public function setUp()
     {
         $this->registry = $this->prophesize(FilesystemRegistry::class);
-        $this->paths = new Paths();
+        $this->paths = new PathCandidates([]);
         $this->status = new Status($this->registry->reveal(), $this->paths, '/path/to/here');
     }
 
