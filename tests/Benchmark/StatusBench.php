@@ -2,8 +2,6 @@
 
 namespace Phpactor\Tests\Benchmark;
 
-use PHPUnit\Framework\Assert;
-
 /**
  * @BeforeMethods({"setUp"})
  * @Iterations(10)
@@ -21,4 +19,3 @@ class StatusBench extends BaseBenchCase
         $this->runCommand('status');
     }
 }
-

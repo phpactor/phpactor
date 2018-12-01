@@ -24,13 +24,12 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\Config\ConfigLoader;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
-use Phpactor\Config\Paths;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
+use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 
 class Phpactor
 {
@@ -38,12 +37,19 @@ class Phpactor
     {
         $config = [];
 
-        $configLoader = new ConfigLoader();
-        $config = $configLoader->loadConfig();
+        $cwd = getcwd();
+        $loader = ConfigLoaderBuilder::create()
+            ->enableJsonDeserializer('json')
+            ->enableYamlDeserializer('yaml')
+            ->addCandidate($cwd . '/.phpactor.json', 'json')
+            ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
+            ->addXdgCandidate('phpactor', 'phpactor.json', 'json')
+            ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml')
+            ->loader();
+        $config = $loader->load();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
         $config = self::configureExtensionManager($config, $vendorDir);
-        $cwd = getcwd();
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
@@ -85,9 +91,8 @@ class Phpactor
 
         $container = new PhpactorContainer();
 
-        $paths = new Paths(null, $cwd);
-        $container->register('config.paths', function () use ($paths) {
-            return $paths;
+        $container->register('config_loader.candidates', function () use ($loader) {
+            return $loader->candidates();
         });
 
         $masterSchema = new Resolver();

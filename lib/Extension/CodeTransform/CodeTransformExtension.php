@@ -25,7 +25,6 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Transformers;
-use Phpactor\Config\Paths;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -71,12 +70,12 @@ class CodeTransformExtension implements Extension
      */
     public function configure(Resolver $schema)
     {
-        $paths = new Paths();
-        $templatePaths = $paths->existingConfigPaths('templates');
-
         $schema->setDefaults([
             self::CLASS_NEW_VARIANTS => [],
-            self::TEMPLATE_PATHS => $templatePaths,
+            self::TEMPLATE_PATHS => [
+                '%project_config%/templates',
+                '%config%/templates',
+            ],
             self::INDENTATION => '    ',
             self::GENERATE_ACCESSOR_PREFIX => '',
             self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
@@ -219,7 +218,9 @@ class CodeTransformExtension implements Extension
             $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
 
             foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
-                $loaders[] = new FilesystemLoader($templatePath);
+                if (file_exists($templatePath)) {
+                    $loaders[] = new FilesystemLoader($resolver->resolve($templatePath));
+                }
             }
 
             return new ChainLoader($loaders);

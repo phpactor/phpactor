@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\CompletionExtra\Application;
 
-use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
 
