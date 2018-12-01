@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Features:
+
+  - [config] Support loading config from JSON files
+
 ## 2018-11-26 0.10.0
 
 BC Break:
