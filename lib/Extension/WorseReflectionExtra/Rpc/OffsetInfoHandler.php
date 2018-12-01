@@ -13,6 +13,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 class OffsetInfoHandler implements Handler
 {
+    const NAME = 'offset_info';
+
     /**
      * @var Reflector
      */
@@ -25,7 +27,7 @@ class OffsetInfoHandler implements Handler
 
     public function name(): string
     {
-        return 'offset_info';
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)

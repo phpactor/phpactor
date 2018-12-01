@@ -12,7 +12,7 @@ use Phpactor\Config\Paths;
 
 class StatusHandler implements Handler
 {
-    const STATUS = 'status';
+    const NAME = 'status';
 
     /**
      * @var Status
@@ -32,7 +32,7 @@ class StatusHandler implements Handler
 
     public function name(): string
     {
-        return self::STATUS;
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)

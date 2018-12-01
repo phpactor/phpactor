@@ -6,6 +6,7 @@ use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
@@ -25,7 +26,7 @@ class ContextMenuExtension implements Extension
                 json_decode(file_get_contents(__DIR__ . '/menu.json'), true),
                 $container
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ContextMenuHandler::NAME] ]);
     }
 
     /**

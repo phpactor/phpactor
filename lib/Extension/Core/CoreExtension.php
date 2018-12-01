@@ -129,15 +129,15 @@ class CoreExtension implements Extension
     {
         $container->register('core.rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler($container->get('application.cache_clear'));
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => CacheClearHandler::NAME] ]);
 
         $container->register('core.rpc.handler.status', function (Container $container) {
             return new StatusHandler($container->get('application.status'), $container->get('config_loader.candidates'));
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => StatusHandler::NAME] ]);
 
         $container->register('core.rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ConfigHandler::CONFIG] ]);
     }
 
     private function registerFilePathExpanders(ContainerBuilder $container)

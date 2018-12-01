@@ -24,6 +24,7 @@ class ImportClassHandler extends AbstractHandler
     const PARAM_PATH = 'path';
     const PARAM_ALIAS = 'alias';
     const PARAM_QUALIFIED_NAME = 'qualified_name';
+    const NAME = 'import_class';
 
     /**
 
@@ -53,7 +54,7 @@ class ImportClassHandler extends AbstractHandler
 
     public function name(): string
     {
-        return 'import_class';
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)

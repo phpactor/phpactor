@@ -61,7 +61,7 @@ class NavigationExtension implements Extension
             return new NavigateHandler(
                 $container->get('application.navigator')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ 'rpc.handler' => ['name' => NavigateHandler::NAME] ]);
     }
 
     private function registerNavigators(ContainerBuilder $container)

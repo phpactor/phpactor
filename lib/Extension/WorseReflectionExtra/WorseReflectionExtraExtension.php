@@ -50,7 +50,7 @@ class WorseReflectionExtraExtension implements Extension
             return new RpcGotoDefinitionHandler(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => RpcGotoDefinitionHandler::NAME] ]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)
@@ -99,6 +99,7 @@ class WorseReflectionExtraExtension implements Extension
     {
         $container->register('worse_reflection_extra.rpc.handler.offset_info', function (Container $container) {
             return new OffsetInfoHandler($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => OffsetInfoHandler::NAME] ]);
+
     }
 }

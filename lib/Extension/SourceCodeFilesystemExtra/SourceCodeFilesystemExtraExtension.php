@@ -58,6 +58,6 @@ class SourceCodeFilesystemExtraExtension implements Extension
                 $container->get('application.class_search'),
                 SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
             );
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ClassSearchHandler::NAME] ]);
     }
 }

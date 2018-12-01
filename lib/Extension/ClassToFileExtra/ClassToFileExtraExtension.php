@@ -35,7 +35,7 @@ class ClassToFileExtraExtension implements Extension
 
         $container->register('class_to_file_extra.rpc.handler.file_info', function (Container $container) {
             return new FileInfoHandler($container->get('application.file_info'));
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => FileInfoHandler::NAME] ]);
     }
 
     /**
