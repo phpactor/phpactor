@@ -1833,12 +1833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "f2b5084ae5d471eba043b4c89725cf9e02c97111"
+                "reference": "f1efd01a7a44fdd571e2d792f1418b5a6297a310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f2b5084ae5d471eba043b4c89725cf9e02c97111",
-                "reference": "f2b5084ae5d471eba043b4c89725cf9e02c97111",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f1efd01a7a44fdd571e2d792f1418b5a6297a310",
+                "reference": "f1efd01a7a44fdd571e2d792f1418b5a6297a310",
                 "shasum": ""
             },
             "require": {
@@ -1877,7 +1877,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-11-24 16:13:38"
+            "time": "2018-12-01 19:44:52"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -1885,12 +1885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "5d4df55f6d485674c60b530d3250737433563ad7"
+                "reference": "b37b103c759a671d68b2ba260a22660576d52d58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/5d4df55f6d485674c60b530d3250737433563ad7",
-                "reference": "5d4df55f6d485674c60b530d3250737433563ad7",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/b37b103c759a671d68b2ba260a22660576d52d58",
+                "reference": "b37b103c759a671d68b2ba260a22660576d52d58",
                 "shasum": ""
             },
             "require": {
@@ -1904,7 +1904,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpstan/phpstan": "^0.10.5",
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^7.3"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -1929,7 +1929,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-11-24 15:38:46"
+            "time": "2018-12-01 20:51:25"
         },
         {
             "name": "phpbench/container",
