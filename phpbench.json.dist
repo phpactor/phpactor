@@ -4,6 +4,7 @@
     "storage": "reports",
     "storage.reports.url": "https://reports.phpbench.org",
     "extensions": [
-        "PhpBench\\Extensions\\Reports\\ReportsExtension"
+        "PhpBench\\Extensions\\Reports\\ReportsExtension",
+        "PhpBench\\Extensions\\XDebug\\XDebugExtension"
     ]
 }

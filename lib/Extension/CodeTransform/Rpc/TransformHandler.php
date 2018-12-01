@@ -13,6 +13,8 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 
 class TransformHandler implements Handler
 {
+    const NAME = 'transform';
+
     /**
      * @var CodeTransform
      */
@@ -25,13 +27,13 @@ class TransformHandler implements Handler
 
     public function name(): string
     {
-        return 'transform';
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
-            'transform' => null,
+            self::NAME => null,
         ]);
         $resolver->setRequired([
             'path',
@@ -41,14 +43,14 @@ class TransformHandler implements Handler
 
     public function handle(array $arguments)
     {
-        if (null === $arguments['transform']) {
+        if (null === $arguments[self::NAME]) {
             return $this->transformerChoiceAction($arguments['path'], $arguments['source']);
         }
 
         $code = SourceCode::fromStringAndPath($arguments['source'], $arguments['path']);
 
         $transformedCode = $this->codeTransform->transform($code, [
-            $arguments['transform']
+            $arguments[self::NAME]
         ]);
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
@@ -67,14 +69,14 @@ class TransformHandler implements Handler
             Request::fromNameAndParameters(
                 $this->name(),
                 [
-                    'transform' => null,
+                    self::NAME => null,
                     'path' => $path,
                     'source' => $source,
                 ]
             ),
             [
                 ChoiceInput::fromNameLabelChoicesAndDefault(
-                    'transform',
+                    self::NAME,
                     'Transform: ',
                     array_combine($transformers, $transformers)
                 )
