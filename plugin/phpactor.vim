@@ -36,7 +36,7 @@ function! phpactor#Update()
     execute 'cd ' . g:phpactorpath
     echo system('git checkout ' . g:phpactorBranch)
     echo system('git pull origin ' . g:phpactorBranch)
-    echo system('composer install')
+    echo system('composer install --optimize-autoloader --classmap-authoritative')
     execute 'cd ' .  current
 endfunction
 
