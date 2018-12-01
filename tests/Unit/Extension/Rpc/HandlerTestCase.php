@@ -3,6 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\Rpc;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\Extension\Rpc\Registry\ActiveHandlerRegistry;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
@@ -15,7 +16,7 @@ abstract class HandlerTestCase extends TestCase
 
     protected function handle(string $actionName, array $parameters): Response
     {
-        $registry = new HandlerRegistry([
+        $registry = new ActiveHandlerRegistry([
             $this->createHandler()
         ]);
         $requestHandler = new RequestHandler($registry);
