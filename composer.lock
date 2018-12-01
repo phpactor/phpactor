@@ -1885,12 +1885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "b37b103c759a671d68b2ba260a22660576d52d58"
+                "reference": "cbe60d77b641f4e042abd763d33d503c07225d2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/b37b103c759a671d68b2ba260a22660576d52d58",
-                "reference": "b37b103c759a671d68b2ba260a22660576d52d58",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/cbe60d77b641f4e042abd763d33d503c07225d2f",
+                "reference": "cbe60d77b641f4e042abd763d33d503c07225d2f",
                 "shasum": ""
             },
             "require": {
@@ -1910,7 +1910,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1929,7 +1929,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-12-01 20:51:25"
+            "time": "2018-12-01 21:28:48"
         },
         {
             "name": "phpbench/container",
