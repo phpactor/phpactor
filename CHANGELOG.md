@@ -3,9 +3,17 @@ Changelog
 
 ## develop
 
+BC Break:
+
+  - [rpc] All handlers must now be registered with the "name" attribute.
+
 Features:
 
   - [config] Support loading config from JSON files
+
+Improvements:
+
+  - [rpc] Handlers are lazy loaded, improving the RPC baseline latency
 
 ## 2018-11-26 0.10.0
 
