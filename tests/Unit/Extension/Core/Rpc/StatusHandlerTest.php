@@ -10,7 +10,6 @@ use Phpactor\Extension\Core\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Config\Paths;
 
 class StatusHandlerTest extends HandlerTestCase
 {
@@ -47,8 +46,8 @@ class StatusHandlerTest extends HandlerTestCase
             'bad' => [ 'i am bad' ],
         ]);
         $this->paths->getIterator()->will(function () {
-            yield new AbsolutePathCandidate('/config/file1.yml','yml');
-            yield new AbsolutePathCandidate('/config/file2.yml','yml');
+            yield new AbsolutePathCandidate('/config/file1.yml', 'yml');
+            yield new AbsolutePathCandidate('/config/file2.yml', 'yml');
         });
 
         $response = $this->handle('status', []);

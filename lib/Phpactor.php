@@ -27,7 +27,6 @@ use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
 use Symfony\Component\Console\Input\InputInterface;
-use Phpactor\Config\Paths;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;

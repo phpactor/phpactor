@@ -4,7 +4,6 @@ namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Core\PathCandidates;
-use Phpactor\Config\Paths;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;

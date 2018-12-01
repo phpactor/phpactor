@@ -25,7 +25,6 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Transformers;
-use Phpactor\Config\Paths;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;

@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Core\Application;
 
 use Phpactor\ConfigLoader\Core\PathCandidates;
-use Phpactor\Config\Paths;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Symfony\Component\Process\ExecutableFinder;
