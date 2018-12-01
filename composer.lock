@@ -1048,12 +1048,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "fc5cc034e45b5e406b6c05f3b171c963bed4e7f6"
+                "reference": "b4d62fc175ff2b9bc612759d70531c1a7d4bd42e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/fc5cc034e45b5e406b6c05f3b171c963bed4e7f6",
-                "reference": "fc5cc034e45b5e406b6c05f3b171c963bed4e7f6",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/b4d62fc175ff2b9bc612759d70531c1a7d4bd42e",
+                "reference": "b4d62fc175ff2b9bc612759d70531c1a7d4bd42e",
                 "shasum": ""
             },
             "require": {
@@ -1089,7 +1089,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2018-11-24 15:37:41"
+            "time": "2018-12-01 16:34:39"
         },
         {
             "name": "phpactor/completion-worse-extension",
@@ -1686,12 +1686,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "d214b3d719ebbe5f7942d1f60d2066553f086fbe"
+                "reference": "2dbce492333b828e1e4f68a628569ce9243851cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/d214b3d719ebbe5f7942d1f60d2066553f086fbe",
-                "reference": "d214b3d719ebbe5f7942d1f60d2066553f086fbe",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/2dbce492333b828e1e4f68a628569ce9243851cb",
+                "reference": "2dbce492333b828e1e4f68a628569ce9243851cb",
                 "shasum": ""
             },
             "require": {
@@ -1729,7 +1729,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-11-24 15:38:25"
+            "time": "2018-12-01 16:14:30"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -3221,7 +3221,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-11-28T17:19:15+00:00"
+            "time": "2018-11-28 17:19:15"
         },
         {
             "name": "lstrojny/functional-php",

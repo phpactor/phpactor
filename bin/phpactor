@@ -34,10 +34,6 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 
 require_once $autoloadFile;
 
-if (class_exists(Debug::class)) {
-    Debug::enable();
-}
-
 $application = new Application(realpath(dirname($autoloadFile)));
 $output = new ConsoleOutput();
 
