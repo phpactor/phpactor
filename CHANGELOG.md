@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2018-12-02 0.11.0
 
 BC Break:
 
@@ -9,6 +9,8 @@ BC Break:
 
 Features:
 
+  - [worse-reflection-extension] Allows new framewalkers to be registered
+    (i.e. new ways to infer types).
   - [config] Support loading config from JSON files
 
 Improvements:
