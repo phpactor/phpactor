@@ -9,7 +9,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 
 class CacheClearHandler implements Handler
 {
-    const CACHE_CLEAR = 'cache_clear';
+    const NAME = 'cache_clear';
 
     /**
      * @var CacheClear
@@ -23,7 +23,7 @@ class CacheClearHandler implements Handler
 
     public function name(): string
     {
-        return self::CACHE_CLEAR;
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)

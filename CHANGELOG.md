@@ -1,6 +1,22 @@
 Changelog
 =========
 
+## 2018-12-02 0.11.0
+
+BC Break:
+
+  - [rpc] All handlers must now be registered with the "name" attribute.
+
+Features:
+
+  - [worse-reflection-extension] Allows new framewalkers to be registered
+    (i.e. new ways to infer types).
+  - [config] Support loading config from JSON files
+
+Improvements:
+
+  - [rpc] Handlers are lazy loaded, improving the RPC baseline latency
+
 ## 2018-11-26 0.10.0
 
 BC Break:

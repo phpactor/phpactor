@@ -18,6 +18,7 @@ class ClassMoveHandler extends AbstractHandler
     const PARAM_SOURCE_PATH = 'source_path';
     const PARAM_DEST_PATH = 'dest_path';
     const PARAM_CONFIRMED = 'confirmed';
+    const NAME = 'move_class';
 
     /**
      * @var ClassMover
@@ -37,7 +38,7 @@ class ClassMoveHandler extends AbstractHandler
 
     public function name(): string
     {
-        return 'move_class';
+        return self::NAME;
     }
 
     public function configure(Resolver $resolver)

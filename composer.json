@@ -3,7 +3,6 @@
     "minimum-stability": "dev",
     "require": {
         "composer/xdebug-handler": "^1.1",
-        "dnoegel/php-xdg-base-dir": "^0.1.0",
         "monolog/monolog": "^1.0",
         "ocramius/package-versions": "^1.2",
         "php": "^7.1",
@@ -31,7 +30,8 @@
         "sebastian/diff": "2.0.x-dev",
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",
-        "webmozart/glob": "^4.1"
+        "webmozart/glob": "^4.1",
+        "phpactor/config-loader": "^1.0"
     },
     "require-dev": {
         "symfony/debug": "^4.0",

@@ -2,13 +2,14 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
+use Phpactor\ConfigLoader\Adapter\PathCandidate\AbsolutePathCandidate;
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Config\Paths;
 
 class StatusHandlerTest extends HandlerTestCase
 {
@@ -25,7 +26,7 @@ class StatusHandlerTest extends HandlerTestCase
     public function setUp()
     {
         $this->status = $this->prophesize(Status::class);
-        $this->paths = $this->prophesize(Paths::class);
+        $this->paths = $this->prophesize(PathCandidates::class);
     }
 
     public function createHandler(): Handler
@@ -44,10 +45,10 @@ class StatusHandlerTest extends HandlerTestCase
             'good' => [ 'i am good' ],
             'bad' => [ 'i am bad' ],
         ]);
-        $this->paths->configFiles()->willReturn([
-            'config/file1.yml',
-            'config/file2.yml',
-        ]);
+        $this->paths->getIterator()->will(function () {
+            yield new AbsolutePathCandidate('/config/file1.yml', 'yml');
+            yield new AbsolutePathCandidate('/config/file2.yml', 'yml');
+        });
 
         $response = $this->handle('status', []);
         $this->assertInstanceOf(EchoResponse::class, $response);

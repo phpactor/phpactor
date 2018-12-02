@@ -56,20 +56,20 @@ class ClassMoverExtension implements Extension
                 $container->get('application.method_references'),
                 $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
             );
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ReferencesHandler::NAME] ]);
 
         $container->register('class_mover.handler.copy_class', function (Container $container) {
             return new ClassCopyHandler(
                 $container->get('application.class_copy')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ 'rpc.handler' => ['name' => ClassCopyHandler::NAME] ]);
 
         $container->register('class_mover.handler.move_class', function (Container $container) {
             return new ClassMoveHandler(
                 $container->get('application.class_mover'),
                 SourceCodeFilesystemExtension::FILESYSTEM_GIT
             );
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => [ 'name' => ClassMoveHandler::NAME ] ]);
     }
 
     private function registerClassMover(ContainerBuilder $container)

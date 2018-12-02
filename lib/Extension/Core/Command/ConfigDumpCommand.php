@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Command;
 
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\FilePathResolver\Expanders;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,7 +37,7 @@ class ConfigDumpCommand extends Command
     public function __construct(
         array $config,
         DumperRegistry $registry,
-        Paths $paths,
+        PathCandidates $paths,
         Expanders $expanders
     ) {
         parent::__construct();
@@ -66,13 +67,13 @@ class ConfigDumpCommand extends Command
     {
         $output->writeln('<info>Config files:</>');
         $output->write(PHP_EOL);
-        foreach ($this->paths->configFiles() as $i => $file) {
-            if (!file_exists($file)) {
+        foreach ($this->paths as $candidate) {
+            if (!file_exists($candidate->path())) {
                 $output->write('  [✖]');
             } else {
                 $output->write('  [<info>✔</>]');
             }
-            $output->writeln(' ' .$file);
+            $output->writeln(' ' .$candidate->path());
         }
         
         $output->write(PHP_EOL);

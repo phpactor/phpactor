@@ -44,7 +44,7 @@ class CompletionExtraExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(CompletionExtension::SERVICE_FORMATTER)
             );
-        }, [ RpcExtension::TAG_RPC_HANDLER => [] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => HoverHandler::NAME] ]);
     }
 
     private function registerCommands(ContainerBuilder $container)
