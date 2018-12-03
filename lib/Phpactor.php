@@ -41,10 +41,10 @@ class Phpactor
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
             ->enableYamlDeserializer('yaml')
-            ->addCandidate($cwd . '/.phpactor.json', 'json')
-            ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
             ->addXdgCandidate('phpactor', 'phpactor.json', 'json')
             ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml')
+            ->addCandidate($cwd . '/.phpactor.json', 'json')
+            ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
             ->loader();
         $config = $loader->load();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
