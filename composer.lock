@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "6ed7215fedf4e1a63315ffd342fc37b61770e816"
+                "reference": "4301c19ce3b2468ad841ca9f5f35ca5558fb005f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/6ed7215fedf4e1a63315ffd342fc37b61770e816",
-                "reference": "6ed7215fedf4e1a63315ffd342fc37b61770e816",
+                "url": "https://api.github.com/repos/composer/composer/zipball/4301c19ce3b2468ad841ca9f5f35ca5558fb005f",
+                "reference": "4301c19ce3b2468ad841ca9f5f35ca5558fb005f",
                 "shasum": ""
             },
             "require": {
@@ -109,7 +109,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-11-30 07:53:44"
+            "time": "2018-12-03 09:39:36"
         },
         {
             "name": "composer/semver",
@@ -950,12 +950,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "f5963d8b187a13ef731c7bf92f8bcd28ca993e64"
+                "reference": "89fa8c625876184b63a1755b110dce6c52758c10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/f5963d8b187a13ef731c7bf92f8bcd28ca993e64",
-                "reference": "f5963d8b187a13ef731c7bf92f8bcd28ca993e64",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/89fa8c625876184b63a1755b110dce6c52758c10",
+                "reference": "89fa8c625876184b63a1755b110dce6c52758c10",
                 "shasum": ""
             },
             "require": {
@@ -992,7 +992,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-11-25 15:33:40"
+            "time": "2018-12-03 22:37:34"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2291,12 +2291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/contracts.git",
-                "reference": "4a33574d5771f4b04334cd4f7d43de96a92efb62"
+                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/contracts/zipball/4a33574d5771f4b04334cd4f7d43de96a92efb62",
-                "reference": "4a33574d5771f4b04334cd4f7d43de96a92efb62",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/3edf0ab943d1985a356721952cba36ff31bd6e5f",
+                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f",
                 "shasum": ""
             },
             "require": {
@@ -2351,7 +2351,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-10-31 08:00:32"
+            "time": "2018-11-24 09:35:08"
         },
         {
             "name": "symfony/filesystem",
@@ -3133,12 +3133,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "15dfc0eb6e04351dbe6d233df366715180a8dc99"
+                "reference": "b352faf6870c1cdf773e518a42881c1bdfc10e86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/15dfc0eb6e04351dbe6d233df366715180a8dc99",
-                "reference": "15dfc0eb6e04351dbe6d233df366715180a8dc99",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b352faf6870c1cdf773e518a42881c1bdfc10e86",
+                "reference": "b352faf6870c1cdf773e518a42881c1bdfc10e86",
                 "shasum": ""
             },
             "require": {
@@ -3221,7 +3221,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-11-28 17:19:15"
+            "time": "2018-12-03 16:34:14"
         },
         {
             "name": "lstrojny/functional-php",
@@ -3697,12 +3697,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "dcbe193e1696326b2f026f6d44a16637a61f8e1a"
+                "reference": "f72b3446c351d8f7ac82a41b30892739890b4d72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/dcbe193e1696326b2f026f6d44a16637a61f8e1a",
-                "reference": "dcbe193e1696326b2f026f6d44a16637a61f8e1a",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/f72b3446c351d8f7ac82a41b30892739890b4d72",
+                "reference": "f72b3446c351d8f7ac82a41b30892739890b4d72",
                 "shasum": ""
             },
             "require": {
@@ -3714,10 +3714,10 @@
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "lstrojny/functional-php": "1.0|^1.2.3",
-                "php": "^7.0",
+                "php": "^7.1",
                 "phpbench/container": "~1.2",
                 "phpbench/dom": "~0.2.0",
-                "seld/jsonlint": "^1.0",
+                "seld/jsonlint": "^1.1",
                 "symfony/console": "^3.2|^4.0",
                 "symfony/debug": "^2.4|^3.0|^4.0",
                 "symfony/filesystem": "^2.4|^3.0|^4.0",
@@ -3765,7 +3765,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-10-06 15:25:58"
+            "time": "2018-12-02 17:29:27"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4237,12 +4237,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ef10fcb8c62460661761145e7742708c2862f016"
+                "reference": "0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ef10fcb8c62460661761145e7742708c2862f016",
-                "reference": "ef10fcb8c62460661761145e7742708c2862f016",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474",
+                "reference": "0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474",
                 "shasum": ""
             },
             "require": {
@@ -4313,7 +4313,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-11-12 10:55:12"
+            "time": "2018-12-03 09:59:14"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
