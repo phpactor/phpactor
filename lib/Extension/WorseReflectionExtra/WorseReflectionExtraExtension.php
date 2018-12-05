@@ -100,6 +100,5 @@ class WorseReflectionExtraExtension implements Extension
         $container->register('worse_reflection_extra.rpc.handler.offset_info', function (Container $container) {
             return new OffsetInfoHandler($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => OffsetInfoHandler::NAME] ]);
-
     }
 }
