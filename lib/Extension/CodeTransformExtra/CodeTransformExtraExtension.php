@@ -57,7 +57,7 @@ use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
 
-class CodeTransformExtension implements Extension
+class CodeTransformExtraExtension implements Extension
 {
     const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';
     const TEMPLATE_PATHS = 'code_transform.template_paths';
