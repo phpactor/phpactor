@@ -7,7 +7,7 @@ About Phpactor
 Phpactor is an intelligent code-completion and refactoring tool for PHP.
 
 - **Code Completion**: Provides broad and accurate context aware code completion.
-- **No indexing**: Phpactor works in real-time and is optimied with
+- **No indexing**: Phpactor works in real-time and is optimized with
   [composer](https://getcomposer.org). It is fast.
 - **Introspection**: Jump to class and method definitions, find references.
 - **Refactoring**: Move classes, complete constructors, implement contracts,
