@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Rpc;
+namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\MapResolver\Resolver;
@@ -8,10 +8,10 @@ use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Extension\CodeTransform\Application\AbstractClassGenerator;
+use Phpactor\Extension\CodeTransformExtra\Application\AbstractClassGenerator;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 

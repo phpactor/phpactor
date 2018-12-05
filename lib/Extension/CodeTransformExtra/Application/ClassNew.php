@@ -1,9 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Application;
+namespace Phpactor\Extension\CodeTransformExtra\Application;
 
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\CodeTransformExtra\Application\AbstractClassGenerator;
 
 class ClassNew extends AbstractClassGenerator
 {

@@ -1,9 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Rpc;
+namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Webmozart\Glob\Glob;
+use Phpactor\Extension\CodeTransformExtra\Rpc\AbstractClassGenerateHandler;
 
 class ClassInflectHandler extends AbstractClassGenerateHandler
 {

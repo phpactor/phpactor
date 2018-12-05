@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Rpc;
+namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\CodeTransformExtra\Rpc\AbstractClassGenerateHandler;
 
 class ClassNewHandler extends AbstractClassGenerateHandler
 {

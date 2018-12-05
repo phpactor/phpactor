@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Rpc;
+namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Reflector;

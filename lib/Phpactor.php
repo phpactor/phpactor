@@ -5,7 +5,7 @@ namespace Phpactor;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
-use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\CodeTransformExtra\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;

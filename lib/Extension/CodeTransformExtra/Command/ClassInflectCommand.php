@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Command;
+namespace Phpactor\Extension\CodeTransformExtra\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -8,13 +8,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
-use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Phpactor\Extension\CodeTransformExtra\Application\ClassInflect;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
-class ClassNewCommand extends Command
+class ClassInflectCommand extends Command
 {
     /**
      * @var DumperRegistry
@@ -22,24 +22,25 @@ class ClassNewCommand extends Command
     private $dumperRegistry;
 
     /**
-     * @var ClassNew
+     * @var ClassInflect
      */
-    private $classNew;
+    private $classInflect;
 
     public function __construct(
-        ClassNew $classNew,
+        ClassInflect $classInflect,
         DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
         $this->dumperRegistry = $dumperRegistry;
-        $this->classNew = $classNew;
+        $this->classInflect = $classInflect;
     }
 
     public function configure()
     {
-        $this->setDescription('Create new class (path or FQN)');
+        $this->setDescription('Inflect new class from existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
-        $this->addOption('variant', null, InputOption::VALUE_REQUIRED, 'Variant', 'default');
+        $this->addArgument('dest', InputArgument::REQUIRED, 'Destination path or FQN');
+        $this->addArgument('variant', InputOption::VALUE_REQUIRED, 'Type of inflection', 'default');
         $this->addOption('list', null, InputOption::VALUE_NONE, 'List variants');
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Force overwriting');
         FormatHandler::configure($this);
@@ -58,15 +59,17 @@ class ClassNewCommand extends Command
     private function process(InputInterface $input, OutputInterface $output)
     {
         $src = $input->getArgument('src');
-        $variant = $input->getOption('variant');
+        $dest = $input->getArgument('dest');
+        $variant = $input->getArgument('variant');
         $response = [
             'src' => $src,
+            'dest' => $dest,
             'path' => null,
             'exists' => false,
         ];
 
         try {
-            $response['path'] = $this->classNew->generate($src, $variant, $input->getOption('force'));
+            $response['path'] = $this->classInflect->generateFromExisting($src, $dest, $variant, $input->getOption('force'));
         } catch (FileAlreadyExists $exception) {
             $questionHelper = new QuestionHelper();
             $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
@@ -76,7 +79,7 @@ class ClassNewCommand extends Command
                 return $response;
             }
 
-            $filePath = $this->classNew->generate($src, $variant, true);
+            $filePath = $this->classInflect->generateFromExisting($src, $dest, $variant, true);
             $response['path'] = $filePath;
         }
 
@@ -86,6 +89,6 @@ class ClassNewCommand extends Command
     private function listGenerators(InputInterface $input, OutputInterface $output)
     {
         $dumper = $this->dumperRegistry->get($input->getOption('format'));
-        $dumper->dump($output, $this->classNew->availableGenerators());
+        $dumper->dump($output, $this->classInflect->availableGenerators());
     }
 }

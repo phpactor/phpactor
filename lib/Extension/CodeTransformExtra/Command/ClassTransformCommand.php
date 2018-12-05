@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Command;
+namespace Phpactor\Extension\CodeTransformExtra\Command;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Phpactor;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Extension\CodeTransform\Application\Transformer;
+use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
 use Webmozart\Glob\Glob;
 
 class ClassTransformCommand extends Command

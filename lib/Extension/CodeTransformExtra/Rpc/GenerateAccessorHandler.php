@@ -1,28 +1,29 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Rpc;
+namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
-class GenerateMethodHandler extends AbstractHandler
+class GenerateAccessorHandler extends AbstractHandler
 {
-    const NAME = 'generate_method';
+    const NAME = 'generate_accessor';
     const PARAM_OFFSET = 'offset';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
 
     /**
-     * @var GenerateMethod
+     * @var GenerateAccessor
      */
-    private $generateMethod;
+    private $generateAccessor;
 
-    public function __construct(GenerateMethod $generateMethod)
-    {
-        $this->generateMethod = $generateMethod;
+    public function __construct(
+        GenerateAccessor $generateAccessor
+    ) {
+        $this->generateAccessor = $generateAccessor;
     }
 
     public function name(): string
@@ -41,7 +42,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $sourceCode = $this->generateMethod->generateMethod(
+        $sourceCode = $this->generateAccessor->generateAccessor(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
@@ -49,21 +50,10 @@ class GenerateMethodHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        $originalSource = $this->determineOriginalSource($sourceCode, $arguments);
-
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $sourceCode->path(),
-            $originalSource,
+            $arguments[self::PARAM_SOURCE],
             (string) $sourceCode
         );
-    }
-
-    private function determineOriginalSource(SourceCode $sourceCode, array $arguments)
-    {
-        $originalSource = $sourceCode->path() === $arguments[self::PARAM_PATH] ?
-            $arguments[self::PARAM_SOURCE] :
-            file_get_contents($sourceCode->path());
-
-        return $originalSource;
     }
 }

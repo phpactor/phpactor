@@ -4,12 +4,12 @@ namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ClassNewHandler;
+use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\CodeTransform\Application\Exception\FileAlreadyExists;
+use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;

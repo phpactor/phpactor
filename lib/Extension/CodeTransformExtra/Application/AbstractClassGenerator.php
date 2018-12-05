@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Application;
+namespace Phpactor\Extension\CodeTransformExtra\Application;
 
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\CodeTransform\Domain\Generators;
