@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform;
+namespace Phpactor\Extension\CodeTransformExtra;
 
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
@@ -22,12 +22,10 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Generators;
-use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
@@ -35,29 +33,26 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\CodeTransform\Application\ClassInflect;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
-use Phpactor\Extension\CodeTransform\Application\Transformer;
-use Phpactor\Extension\CodeTransform\Command\ClassInflectCommand;
-use Phpactor\Extension\CodeTransform\Command\ClassNewCommand;
-use Phpactor\Extension\CodeTransform\Command\ClassTransformCommand;
-use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ChangeVisiblityHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ExtractConstantHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ExtractExpressionHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ExtractMethodHandler;
-use Phpactor\Extension\CodeTransform\Rpc\GenerateAccessorHandler;
-use Phpactor\Extension\CodeTransform\Rpc\GenerateMethodHandler;
-use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
-use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
-use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
-use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
+use Phpactor\Extension\CodeTransformExtra\Application\ClassInflect;
+use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
+use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
+use Phpactor\Extension\CodeTransformExtra\Command\ClassInflectCommand;
+use Phpactor\Extension\CodeTransformExtra\Command\ClassNewCommand;
+use Phpactor\Extension\CodeTransformExtra\Command\ClassTransformCommand;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ChangeVisiblityHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractConstantHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractExpressionHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractMethodHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
 
-class CodeTransformExtension implements Extension
+class CodeTransformExtraExtension implements Extension
 {
     const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';
     const TEMPLATE_PATHS = 'code_transform.template_paths';
@@ -86,11 +81,11 @@ class CodeTransformExtension implements Extension
     {
         $this->registerConsole($container);
         $this->registerTransformers($container);
-        $this->registerGenerators($container);
         $this->registerApplication($container);
         $this->registerRenderer($container);
         $this->registerUpdater($container);
         $this->registerRefactorings($container);
+        $this->registerGenerators($container);
         $this->registerRpc($container);
     }
 
@@ -143,19 +138,6 @@ class CodeTransformExtension implements Extension
 
     private function registerTransformers(ContainerBuilder $container)
     {
-        $container->register('code_transform.transformers', function (Container $container) {
-            $transformers = [];
-            foreach ($container->getServiceIdsForTag('code_transform.transformer') as $serviceId => $attrs) {
-                $transformers[$attrs['name']] = $container->get($serviceId);
-            }
-
-            return Transformers::fromArray($transformers);
-        });
-
-        $container->register('code_transform.transform', function (Container $container) {
-            return CodeTransform::fromTransformers($container->get('code_transform.transformers'));
-        });
-
         $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
             return new CompleteConstructor(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
@@ -183,31 +165,6 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.updater')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
-    }
-
-    private function registerGenerators(ContainerBuilder $container)
-    {
-        $container->register('code_transform.new_class_generators', function (Container $container) {
-            $generators = [
-                'default' => new ClassGenerator($container->get('code_transform.renderer')),
-            ];
-            foreach ($container->getParameter(self::CLASS_NEW_VARIANTS) as $variantName => $variant) {
-                $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);
-            }
-
-            return Generators::fromArray($generators);
-        });
-
-        $container->register('code_transform.from_existing_generators', function (Container $container) {
-            $generators = [
-                'interface' => new InterfaceFromExistingGenerator(
-                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                    $container->get('code_transform.renderer')
-                ),
-            ];
-
-            return Generators::fromArray($generators);
-        });
     }
 
     private function registerRenderer(ContainerBuilder $container)
@@ -317,18 +274,6 @@ class CodeTransformExtension implements Extension
 
     private function registerRpc(ContainerBuilder $container)
     {
-        $container->register('code_transform.rpc.handler.class_inflect', function (Container $container) {
-            return new ClassInflectHandler(
-                $container->get('application.class_inflect')
-            );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ClassInflectHandler::NAME] ]);
-
-        $container->register('code_transform.rpc.handler.class_new', function (Container $container) {
-            return new ClassNewHandler(
-                $container->get('application.class_new')
-            );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ClassNewHandler::NAME] ]);
-
         $container->register('code_transform.rpc.handler.extract_constant', function (Container $container) {
             return new ExtractConstantHandler(
                 $container->get('code_transform.refactor.extract_constant')
@@ -380,16 +325,35 @@ class CodeTransformExtension implements Extension
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => OverrideMethodHandler::NAME] ]);
 
-        $container->register('code_transform.rpc.handler.transform', function (Container $container) {
-            return new TransformHandler(
-                $container->get('code_transform.transform')
-            );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => TransformHandler::NAME] ]);
-
         $container->register('code_transform.rpc.handler.extract_expression', function (Container $container) {
             return new ExtractExpressionHandler(
                 $container->get('code_transform.refactor.extract_expression')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ExtractExpressionHandler::NAME] ]);
+    }
+
+    private function registerGenerators(ContainerBuilder $container)
+    {
+        $container->register('code_transform_extra.class_generator.variants', function (Container $container) {
+            $generators = [
+                'default' => new ClassGenerator($container->get('code_transform.renderer')),
+            ];
+            foreach ($container->getParameter(self::CLASS_NEW_VARIANTS) as $variantName => $variant) {
+                $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);
+            }
+
+            return $generators;
+        }, [ CodeTransformExtension::TAG_NEW_CLASS_GENERATOR => [] ]);
+
+        $container->register('code_transform_extra.from_existing_generators', function (Container $container) {
+            return new InterfaceFromExistingGenerator(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get('code_transform.renderer')
+            );
+
+            return $generators;
+        }, [ CodeTransformExtension::TAG_FROM_EXISTING_GENERATOR => [
+            'name' => 'interface'
+        ] ]);
     }
 }

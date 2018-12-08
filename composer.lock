@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f3ff984f68bd169b10ff00a47eae4f6",
+    "content-hash": "7f523137d7940b6936008dd76da5ae04",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -437,12 +437,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "693fe4c8963ebe5d4da60ee5491b0f17abc250bc"
+                "reference": "88e48ed150aaf796a48b5742c0aeeee21e323a76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/693fe4c8963ebe5d4da60ee5491b0f17abc250bc",
-                "reference": "693fe4c8963ebe5d4da60ee5491b0f17abc250bc",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/88e48ed150aaf796a48b5742c0aeeee21e323a76",
+                "reference": "88e48ed150aaf796a48b5742c0aeeee21e323a76",
                 "shasum": ""
             },
             "require-dev": {
@@ -467,7 +467,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-11-27 15:18:31"
+            "time": "2018-12-07 14:44:26"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -943,6 +943,56 @@
             ],
             "description": "Applies introspective transformations on source code",
             "time": "2018-11-27 08:10:19"
+        },
+        {
+            "name": "phpactor/code-transform-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/code-transform-extension.git",
+                "reference": "9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96",
+                "reference": "9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/class-to-file-extension": "~0.1",
+                "phpactor/code-transform": "~0.1",
+                "phpactor/container": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpactor/rpc-extension": "^0.1.0@dev",
+                "phpstan/phpstan": "^0.10.5",
+                "phpunit/phpunit": "^7.4"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\CodeTransform\\CodeTransformExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\CodeTransform\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Code transform base package",
+            "time": "2018-12-08 11:05:21"
         },
         {
             "name": "phpactor/completion",
@@ -2291,12 +2341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/contracts.git",
-                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f"
+                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/contracts/zipball/3edf0ab943d1985a356721952cba36ff31bd6e5f",
-                "reference": "3edf0ab943d1985a356721952cba36ff31bd6e5f",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
                 "shasum": ""
             },
             "require": {
@@ -2351,7 +2401,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-11-24 09:35:08"
+            "time": "2018-12-05 08:06:11"
         },
         {
             "name": "symfony/filesystem",
@@ -4237,12 +4287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474"
+                "reference": "99a564e53c9e673bd5b11b5fd5bdb9b54d646c29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474",
-                "reference": "0cef4fe8dbc45c2f9f4d068940cedf4c4f52b474",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/99a564e53c9e673bd5b11b5fd5bdb9b54d646c29",
+                "reference": "99a564e53c9e673bd5b11b5fd5bdb9b54d646c29",
                 "shasum": ""
             },
             "require": {
@@ -4313,7 +4363,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-03 09:59:14"
+            "time": "2018-12-07 13:10:19"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

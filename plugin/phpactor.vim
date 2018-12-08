@@ -139,9 +139,8 @@ endfunction
 function! phpactor#ExtractMethod()
     let selectionStart = phpactor#_selectionStart()
     let selectionEnd = phpactor#_selectionEnd()
-    let currentPath = expand('%')
 
-    call phpactor#rpc("extract_method", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
+    call phpactor#rpc("extract_method", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
 function! phpactor#ExtractExpression(isSelection)
@@ -154,9 +153,7 @@ function! phpactor#ExtractExpression(isSelection)
         let selectionEnd = v:null
     endif
 
-    let currentPath = expand('%')
-
-    call phpactor#rpc("extract_expression", { "path": currentPath, "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
+    call phpactor#rpc("extract_expression", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
 function! phpactor#ClassExpand()
@@ -199,13 +196,11 @@ function! phpactor#ContextMenu()
 endfunction
 
 function! phpactor#CopyFile()
-    let currentPath = expand('%')
-    call phpactor#rpc("copy_class", { "source_path": currentPath })
+    call phpactor#rpc("copy_class", { "source_path": phpactor#_path() })
 endfunction
 
 function! phpactor#MoveFile()
-    let currentPath = expand('%')
-    call phpactor#rpc("move_class", { "source_path": currentPath })
+    call phpactor#rpc("move_class", { "source_path": phpactor#_path() })
 endfunction
 
 function! phpactor#OffsetTypeInfo()
@@ -235,8 +230,7 @@ endfunction
 function! phpactor#Transform(...)
     let transform = get(a:, 1, '')
 
-    let currentPath = expand('%:p')
-    let args = { "path": currentPath, "source": phpactor#_source() }
+    let args = { "path": phpactor#_path(), "source": phpactor#_source() }
 
     if transform != ''
         let args.transform = transform
@@ -246,12 +240,11 @@ function! phpactor#Transform(...)
 endfunction
 
 function! phpactor#ClassNew()
-    let currentPath = expand('%')
-    call phpactor#rpc("class_new", { "current_path": currentPath })
+    call phpactor#rpc("class_new", { "current_path": phpactor#_path() })
 endfunction
 
 function! phpactor#ClassInflect()
-    call phpactor#rpc("class_inflect", { "current_path": currentPath })
+    call phpactor#rpc("class_inflect", { "current_path": phpactor#_path() })
 endfunction
 
 " Deprecated!! Use FindReferences
@@ -264,8 +257,7 @@ function! phpactor#FindReferences()
 endfunction
 
 function! phpactor#Navigate()
-    let currentPath = expand('%')
-    call phpactor#rpc("navigate", { "source_path": currentPath })
+    call phpactor#rpc("navigate", { "source_path": phpactor#_path() })
 endfunction
 
 function! phpactor#CacheClear()
@@ -324,7 +316,7 @@ function! phpactor#_source()
 endfunction
 
 function! phpactor#_path()
-    return expand('%')
+    return expand('%:p')
 endfunction
 
 function! phpactor#_selectionStart()

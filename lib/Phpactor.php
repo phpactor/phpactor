@@ -5,6 +5,7 @@ namespace Phpactor;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
+use Phpactor\Extension\CodeTransformExtra\CodeTransformExtraExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
@@ -69,6 +70,7 @@ class Phpactor
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
+            CodeTransformExtraExtension::class,
             CompletionExtraExtension::class,
             CompletionWorseExtension::class,
             CompletionExtension::class,

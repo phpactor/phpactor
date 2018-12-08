@@ -4,7 +4,7 @@ echo "============================="
 echo ""
 
 EXITCODE=0
-for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock language-server class-to-file-extension completion-extension completion-rpc-extension completion-worse-extension composer-autoloader-extension file-path-resolver-extension logging-extension rpc-extension source-code-filesystem-extension worse-reflection-extension; do
+for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock language-server class-to-file-extension completion-extension completion-rpc-extension completion-worse-extension composer-autoloader-extension file-path-resolver-extension logging-extension rpc-extension source-code-filesystem-extension worse-reflection-extension code-transform-extension; do
     echo ""
     echo "Testing: "$dep
     echo ""

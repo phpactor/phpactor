@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\CodeTransform\Application;
+namespace Phpactor\Extension\CodeTransformExtra\Application;
 
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
