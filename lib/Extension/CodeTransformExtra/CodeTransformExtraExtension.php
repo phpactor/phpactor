@@ -346,14 +346,14 @@ class CodeTransformExtraExtension implements Extension
         }, [ CodeTransformExtension::TAG_NEW_CLASS_GENERATOR => [] ]);
 
         $container->register('code_transform_extra.from_existing_generators', function (Container $container) {
-            $generators = [
-                'interface' => new InterfaceFromExistingGenerator(
-                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                    $container->get('code_transform.renderer')
-                ),
-            ];
+            return new InterfaceFromExistingGenerator(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get('code_transform.renderer')
+            );
 
             return $generators;
-        }, [ CodeTransformExtension::TAG_FROM_EXISTING_GENERATOR => [] ]);
+        }, [ CodeTransformExtension::TAG_FROM_EXISTING_GENERATOR => [
+            'name' => 'interface'
+        ] ]);
     }
 }

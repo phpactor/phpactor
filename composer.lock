@@ -950,12 +950,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
-                "reference": "2e6af494e75f951065faffbc2d0fd0a59751af25"
+                "reference": "9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/2e6af494e75f951065faffbc2d0fd0a59751af25",
-                "reference": "2e6af494e75f951065faffbc2d0fd0a59751af25",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96",
+                "reference": "9888a0de36d9f26e2ccf16c7dcdb81c6249b7d96",
                 "shasum": ""
             },
             "require": {
@@ -992,7 +992,7 @@
                 }
             ],
             "description": "Code transform base package",
-            "time": "2018-12-02 14:15:21"
+            "time": "2018-12-08 11:05:21"
         },
         {
             "name": "phpactor/completion",
@@ -3271,7 +3271,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-12-03T16:34:14+00:00"
+            "time": "2018-12-03 16:34:14"
         },
         {
             "name": "lstrojny/functional-php",
@@ -3815,7 +3815,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-12-02T17:29:27+00:00"
+            "time": "2018-12-02 17:29:27"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4363,7 +4363,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-07T13:10:19+00:00"
+            "time": "2018-12-07 13:10:19"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
