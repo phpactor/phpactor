@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3bc156cb000f5a58840761ea2c0fb443",
+    "content-hash": "7f523137d7940b6936008dd76da5ae04",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -350,52 +350,6 @@
             ],
             "description": "Resolve method arguments from an associative array",
             "time": "2018-09-30 09:50:30"
-        },
-        {
-            "name": "dantleech/what-changed",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "/home/daniel/www/dantleech/what-changed",
-                "reference": "7a7b1c72d00e08f981ad40697d7f66e5a7735033",
-                "shasum": null
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^7.1"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phpstan/phpstan": "^0.10.6",
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "DTL\\WhatChanged\\WhatChangedPlugin",
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DTL\\WhatChanged\\": "lib/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "DTL\\WhatChanged\\Tests\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Report changes in your dependencies"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -5368,7 +5322,6 @@
         "phpactor/source-code-filesystem": 20,
         "phpactor/worse-reflection": 20,
         "sebastian/diff": 20,
-        "dantleech/what-changed": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
