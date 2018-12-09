@@ -1,6 +1,12 @@
 {
     "name": "phpactor/phpactor",
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/home/daniel/www/dantleech/what-changed"
+        }
+    ],
     "require": {
         "composer/xdebug-handler": "^1.1",
         "monolog/monolog": "^1.0",
@@ -32,7 +38,8 @@
         "symfony/yaml": "^3.3",
         "webmozart/glob": "^4.1",
         "phpactor/config-loader": "^1.0",
-        "phpactor/code-transform-extension": "^0.1"
+        "phpactor/code-transform-extension": "^0.1",
+        "dantleech/what-changed": "dev-master"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
