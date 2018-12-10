@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ded1a94665c13eb23bac942741ec554a",
+    "content-hash": "c2614611d5d6bd040c1d16b1885de479",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -5385,8 +5385,7 @@
         "sebastian/diff": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
-        "friendsofphp/php-cs-fixer": 20,
-        "dantleech/what-changed": 20
+        "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
