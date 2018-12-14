@@ -218,8 +218,9 @@ class CodeTransformExtension implements Extension
             $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
 
             foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
+                $templatePath = $resolver->resolve($templatePath);
                 if (file_exists($templatePath)) {
-                    $loaders[] = new FilesystemLoader($resolver->resolve($templatePath));
+                    $loaders[] = new FilesystemLoader($templatePath);
                 }
             }
 
