@@ -48,7 +48,7 @@ class Phpactor
             ->loader();
         $config = $loader->load();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
-        $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = realpath(__DIR__ . '/..');
+        $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = self::configureExtensionManager($config, $vendorDir);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
@@ -181,5 +181,18 @@ class Phpactor
         }
 
         return $config;
+    }
+
+    private static function resolveApplicationRoot(): string
+    {
+        $paths = [ __DIR__ . '/..', __DIR__ .'/../../../..' ];
+
+        foreach ($paths as $path) {
+            if (is_dir(realpath($path.'/vendor'))) {
+                return realpath($path);
+            }
+        }
+
+        throw new RuntimeException(sprintf('Could not resolve application root, tried "%s"', implode('", "', $paths)));
     }
 }
