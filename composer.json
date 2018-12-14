@@ -41,7 +41,8 @@
         "symfony/options-resolver": "^2.7|^3.0",
         "phpbench/phpbench": "^1.0@dev",
         "phpactor/test-utils": "dev-master",
-        "friendsofphp/php-cs-fixer": "^2.12@dev"
+        "friendsofphp/php-cs-fixer": "^2.12@dev",
+        "dantleech/what-changed": "~0.1"
     },
     "bin": [
         "bin/phpactor"
