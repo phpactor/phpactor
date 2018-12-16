@@ -1,8 +1,10 @@
 ---
 currentMenu: links
 ---
+Links and Resources
+===================
 
-This page collects blog posts featuring Phpactor.
+This page collects links to resources about, or featuring, Phpactor.
 
 General
 -------
