@@ -6,6 +6,9 @@ Changelog
   - [completion] Do not suggest static members on non-static calls and
     vice-versa.
 
+  - [application] Log errors in command error handler (for logging async
+    completion errors using the complete command)
+
 ## 2018-12-02 0.11.0
 
 BC Break:
