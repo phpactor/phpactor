@@ -83,6 +83,8 @@ class Application extends SymfonyApplication
             ],
         ];
 
+        $this->container->get('logging.logger')->error($e->getMessage());
+
         while ($e = $e->getPrevious()) {
             $errors['previous'][] = $this->serializeException($e);
         }
