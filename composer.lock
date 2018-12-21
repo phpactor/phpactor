@@ -2392,12 +2392,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
-                "reference": "457a5f35e5145da36869da3ecd93eeac0bc84582"
+                "reference": "b6a89c8a7bac342ad8f73220977290e742300910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/457a5f35e5145da36869da3ecd93eeac0bc84582",
-                "reference": "457a5f35e5145da36869da3ecd93eeac0bc84582",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/b6a89c8a7bac342ad8f73220977290e742300910",
+                "reference": "b6a89c8a7bac342ad8f73220977290e742300910",
                 "shasum": ""
             },
             "require": {
@@ -2434,7 +2434,7 @@
                 }
             ],
             "description": "Worse reflection implementations for reference finding",
-            "time": "2018-12-21 10:43:10"
+            "time": "2018-12-21 12:22:58"
         },
         {
             "name": "phpactor/worse-reference-finders",
