@@ -184,7 +184,7 @@ endfunction
 " RPC Proxy methods
 """""""""""""""""""""""""""
 function! phpactor#GotoDefinition()
-    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p'), 'language': &ft})
 endfunction
 
 function! phpactor#Hover()
