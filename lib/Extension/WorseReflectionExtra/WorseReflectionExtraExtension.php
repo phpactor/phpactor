@@ -12,7 +12,6 @@ use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\Extension\WorseReflectionExtra\Rpc\GotoDefinitionHandler as RpcGotoDefinitionHandler;
 use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
@@ -37,20 +36,10 @@ class WorseReflectionExtraExtension implements Extension
 
     public function load(ContainerBuilder $container)
     {
-        $this->registerGotoDefinition($container);
         $this->registerLanguageServer($container);
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
-    }
-
-    private function registerGotoDefinition(ContainerBuilder $container)
-    {
-        $container->register('rpc.handler.goto_definition', function (Container $container) {
-            return new RpcGotoDefinitionHandler(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-            );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => RpcGotoDefinitionHandler::NAME] ]);
     }
 
     private function registerApplicationServices(ContainerBuilder $container)

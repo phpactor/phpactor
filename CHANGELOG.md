@@ -3,6 +3,11 @@ Changelog
 
 ## develop
 
+  - [goto-definition] Goto definition extracted from core into separate
+    packages including [extension
+    point](https://github.com/phpactor/reference-finder-extension).
+  - [goto-definition] Support for "plain text" goto class definition, works
+    for docblocks, and non-PHP files.
   - [completion] Do not suggest static members on non-static calls and
     vice-versa.
 
