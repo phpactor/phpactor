@@ -15,6 +15,7 @@ use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
+use Phpactor\Extension\WorseReferenceFinder\WorseReferenceFinderExtension;
 use Phpactor\Extension\ExtensionManager\ExtensionManagerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
@@ -31,6 +32,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
+use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 
 class Phpactor
 {
@@ -87,6 +90,9 @@ class Phpactor
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
             ExtensionManagerExtension::class,
+            WorseReferenceFinderExtension::class,
+            ReferenceFinderRpcExtension::class,
+            ReferenceFinderExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
