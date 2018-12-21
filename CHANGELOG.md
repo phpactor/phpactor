@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2018-12-02 0.11.1
+
+  - [application] Resolve the vendor directory correctly when Phpactor
+    included as a dependency, thanks @kermorgant
+
 ## 2018-12-02 0.11.0
 
 BC Break:
