@@ -2053,12 +2053,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder.git",
-                "reference": "bb920a918e9d39246e29f91b34199fc52183ac5a"
+                "reference": "ac8a99cf8b44dbc169004f6741891a3029e28ec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/bb920a918e9d39246e29f91b34199fc52183ac5a",
-                "reference": "bb920a918e9d39246e29f91b34199fc52183ac5a",
+                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/ac8a99cf8b44dbc169004f6741891a3029e28ec0",
+                "reference": "ac8a99cf8b44dbc169004f6741891a3029e28ec0",
                 "shasum": ""
             },
             "require": {
@@ -2093,7 +2093,7 @@
                 }
             ],
             "description": "Base library for finding definitions",
-            "time": "2018-12-21 11:38:05"
+            "time": "2018-12-21 13:16:39"
         },
         {
             "name": "phpactor/reference-finder-extension",
@@ -2150,12 +2150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-rpc-extension.git",
-                "reference": "88991b306c8330e8f906b0b99cff60f86856b2c4"
+                "reference": "a32f18c83756bc755ad3f0584c6b8ea1906adccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/88991b306c8330e8f906b0b99cff60f86856b2c4",
-                "reference": "88991b306c8330e8f906b0b99cff60f86856b2c4",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/a32f18c83756bc755ad3f0584c6b8ea1906adccb",
+                "reference": "a32f18c83756bc755ad3f0584c6b8ea1906adccb",
                 "shasum": ""
             },
             "require": {
@@ -2191,7 +2191,7 @@
                 }
             ],
             "description": "Description about my project",
-            "time": "2018-12-21 11:03:14"
+            "time": "2018-12-21 13:19:19"
         },
         {
             "name": "phpactor/rpc-extension",
@@ -2442,12 +2442,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "5e1d860f239b97fbce90ca207c3a6b7a6ddfbe3a"
+                "reference": "4a365f52afb0aaa867e48ca003ee943a44528232"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/5e1d860f239b97fbce90ca207c3a6b7a6ddfbe3a",
-                "reference": "5e1d860f239b97fbce90ca207c3a6b7a6ddfbe3a",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/4a365f52afb0aaa867e48ca003ee943a44528232",
+                "reference": "4a365f52afb0aaa867e48ca003ee943a44528232",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2482,7 @@
                 }
             ],
             "description": "Worse Reflection reference finder implementations",
-            "time": "2018-12-21 12:16:17"
+            "time": "2018-12-21 13:17:12"
         },
         {
             "name": "phpactor/worse-reflection",
