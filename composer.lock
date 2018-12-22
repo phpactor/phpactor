@@ -661,16 +661,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "cbea95d2968b2b4ab3404757120792954d033541"
+                "reference": "0a22f47219d7cf27f2ad743edd21c83f34b81ae3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/cbea95d2968b2b4ab3404757120792954d033541",
-                "reference": "cbea95d2968b2b4ab3404757120792954d033541",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/0a22f47219d7cf27f2ad743edd21c83f34b81ae3",
+                "reference": "0a22f47219d7cf27f2ad743edd21c83f34b81ae3",
                 "shasum": ""
             },
             "require-dev": {
                 "nikic/php-parser": "v4.0.1",
+                "php": "^7.1",
                 "phpdocumentor/reflection-docblock": "^4.3",
                 "phpunit/phpunit": "7.1.4"
             },
@@ -691,7 +692,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-12-14 14:11:36"
+            "time": "2018-12-21 13:31:10"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1317,12 +1318,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "89fa8c625876184b63a1755b110dce6c52758c10"
+                "reference": "d876f32fdddf697a1ae5267d9ba244d81b1dfbaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/89fa8c625876184b63a1755b110dce6c52758c10",
-                "reference": "89fa8c625876184b63a1755b110dce6c52758c10",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/d876f32fdddf697a1ae5267d9ba244d81b1dfbaf",
+                "reference": "d876f32fdddf697a1ae5267d9ba244d81b1dfbaf",
                 "shasum": ""
             },
             "require": {
@@ -1359,7 +1360,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2018-12-03 22:37:34"
+            "time": "2018-12-22 05:06:37"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1737,16 +1738,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.6.2",
+            "version": "0.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "68c9fe4050edbd3f6332fe9840f2e5c8daab34b6"
+                "reference": "41bf29a53476b89782873d64d89832525a2dd089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/68c9fe4050edbd3f6332fe9840f2e5c8daab34b6",
-                "reference": "68c9fe4050edbd3f6332fe9840f2e5c8daab34b6",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/41bf29a53476b89782873d64d89832525a2dd089",
+                "reference": "41bf29a53476b89782873d64d89832525a2dd089",
                 "shasum": ""
             },
             "require": {
@@ -1783,7 +1784,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-12-01T16:35:29+00:00"
+            "time": "2018-12-21T21:49:54+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -2346,12 +2347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "baea2c179c88ca0416536438d16a913d9f0521f2"
+                "reference": "d9eda1b759b889f31894e8a57a2f4088483940f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/baea2c179c88ca0416536438d16a913d9f0521f2",
-                "reference": "baea2c179c88ca0416536438d16a913d9f0521f2",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/d9eda1b759b889f31894e8a57a2f4088483940f0",
+                "reference": "d9eda1b759b889f31894e8a57a2f4088483940f0",
                 "shasum": ""
             },
             "require": {
@@ -2359,6 +2360,7 @@
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
                 "infection/infection": "^0.11.4",
                 "phpunit/phpunit": "^7.5"
             },
@@ -2384,7 +2386,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2018-12-16 16:17:11"
+            "time": "2018-12-21 17:09:47"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",

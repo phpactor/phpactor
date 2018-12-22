@@ -3,16 +3,21 @@ Changelog
 
 ## develop
 
+Features:
+
   - [goto-definition] Goto definition extracted from core into separate
     packages including [extension
     point](https://github.com/phpactor/reference-finder-extension).
   - [goto-definition] Support for "plain text" goto class definition, works
     for docblocks, and non-PHP files.
-  - [completion] Do not suggest static members on non-static calls and
-    vice-versa.
-
+  - [completion] Do not suggest non-static method on static calls.
+  - [completion] Suggest ::class constant, fixes #673
   - [application] Log errors in command error handler (for logging async
     completion errors using the complete command)
+
+Bug fixes:
+
+  - [extension-manager] Do not install dev dependencies for extensions #674
 
 ## 2018-12-02 0.11.0
 
