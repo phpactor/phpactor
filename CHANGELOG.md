@@ -17,6 +17,7 @@ Features:
 
 Bug fixes:
 
+  - [completion] Include `$` on static properties #677
   - [extension-manager] Do not install dev dependencies for extensions #674
 
 ## 2018-12-02 0.11.0
