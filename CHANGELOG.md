@@ -15,6 +15,7 @@ Features:
   - [completion] Docblock type injection allow name to be omitted #618
   - [application] Log errors in command error handler (for logging async
     completion errors using the complete command)
+  - [worse-reflection] Support variadic arguments #621
 
 Improvements:
 
