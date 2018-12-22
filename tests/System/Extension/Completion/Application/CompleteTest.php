@@ -174,15 +174,15 @@ $foobar::<>
 EOT
                 , [
                     [
+                        'type' => 'property',
+                        'name' => '$foo',
+                        'short_description' => 'pub static $foo',
+                    ],
+                    [
                         'type' => 'constant',
                         'name' => 'class',
                         'short_description' => 'Foobar',
                     ],
-                    [
-                        'type' => 'property',
-                        'name' => 'foo',
-                        'short_description' => 'pub static $foo',
-                    ]
                 ]
             ],
             'Static property with previous arrow accessor' => [
@@ -205,20 +205,15 @@ $foobar->me::<>
 EOT
                 , [
                     [
+                        'type' => 'property',
+                        'name' => '$foo',
+                        'short_description' => 'pub static $foo',
+                    ],
+                    [
                         'type' => 'constant',
                         'name' => 'class',
                         'short_description' => 'Foobar',
                     ],
-                    [
-                        'type' => 'property',
-                        'name' => 'foo',
-                        'short_description' => 'pub static $foo',
-                    ],
-                    [
-                        'type' => 'property',
-                        'name' => 'me',
-                        'short_description' => 'pub $me: Foobar',
-                    ]
                 ]
             ],
             'Partially completed' => [
