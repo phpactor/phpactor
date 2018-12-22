@@ -174,6 +174,11 @@ $foobar::<>
 EOT
                 , [
                     [
+                        'type' => 'constant',
+                        'name' => 'class',
+                        'short_description' => 'Foobar',
+                    ],
+                    [
                         'type' => 'property',
                         'name' => 'foo',
                         'short_description' => 'pub static $foo',
@@ -199,6 +204,11 @@ $foobar->me::<>
 
 EOT
                 , [
+                    [
+                        'type' => 'constant',
+                        'name' => 'class',
+                        'short_description' => 'Foobar',
+                    ],
                     [
                         'type' => 'property',
                         'name' => 'foo',
