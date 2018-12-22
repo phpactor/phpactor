@@ -12,11 +12,16 @@ Features:
     for docblocks, and non-PHP files.
   - [completion] Do not suggest non-static method on static calls.
   - [completion] Suggest ::class constant, fixes #673
+  - [completion] Docblock type injection allow name to be omitted #618
   - [application] Log errors in command error handler (for logging async
     completion errors using the complete command)
 
+Improvements:
+
+
 Bug fixes:
 
+  - [completion] Fix type resolution immediately following docblock #678
   - [completion] Include `$` on static properties #677
   - [extension-manager] Do not install dev dependencies for extensions #674
 
