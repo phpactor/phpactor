@@ -14,6 +14,8 @@ to create new applications.
 Currently Phpactor ships with a dozen "hard coded" extensions which cannot be
 removed.
 
+For some extension examples see the [integrations](/integrations.html) page.
+
 Usage
 -----
 
@@ -47,4 +49,5 @@ Package operations: 1 install, 0 updates, 0 removals
 Writing lock file
 Generating autoload files
 ```
+
 Removing is done via. `extension:remove`.
