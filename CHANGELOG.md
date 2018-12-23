@@ -19,6 +19,7 @@ Features:
 
 Improvements:
 
+  - [code-transform] Support extracting expressions to methods #666
 
 Bug fixes:
 
