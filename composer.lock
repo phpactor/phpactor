@@ -1218,12 +1218,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "0e2ea14e9b20d6753088236e6495b20f0f40237b"
+                "reference": "1875734f0dcc91e073f0d1672df2ce7da69e7c5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/0e2ea14e9b20d6753088236e6495b20f0f40237b",
-                "reference": "0e2ea14e9b20d6753088236e6495b20f0f40237b",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1875734f0dcc91e073f0d1672df2ce7da69e7c5a",
+                "reference": "1875734f0dcc91e073f0d1672df2ce7da69e7c5a",
                 "shasum": ""
             },
             "require": {
@@ -1260,7 +1260,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-12-23 14:13:44"
+            "time": "2018-12-23 14:33:32"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -1697,16 +1697,16 @@
         },
         {
             "name": "phpactor/docblock",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "976ddf308b51a33a64f822d499c4d61f21f7470e"
+                "reference": "bbfff70e52390f86480af853f872118518b9da55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/976ddf308b51a33a64f822d499c4d61f21f7470e",
-                "reference": "976ddf308b51a33a64f822d499c4d61f21f7470e",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/bbfff70e52390f86480af853f872118518b9da55",
+                "reference": "bbfff70e52390f86480af853f872118518b9da55",
                 "shasum": ""
             },
             "require-dev": {
@@ -1715,7 +1715,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1734,7 +1734,7 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-10-26T11:35:24+00:00"
+            "time": "2018-12-23 22:06:37"
         },
         {
             "name": "phpactor/extension-manager-extension",
@@ -2492,12 +2492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "2085e0246185551d4f19892a02f55c4afc1eba3d"
+                "reference": "8a19f810aa4eeed655beea9aaa2bda41e285551d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/2085e0246185551d4f19892a02f55c4afc1eba3d",
-                "reference": "2085e0246185551d4f19892a02f55c4afc1eba3d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8a19f810aa4eeed655beea9aaa2bda41e285551d",
+                "reference": "8a19f810aa4eeed655beea9aaa2bda41e285551d",
                 "shasum": ""
             },
             "require": {
@@ -2505,7 +2505,7 @@
                 "jetbrains/phpstorm-stubs": "*",
                 "microsoft/tolerant-php-parser": "~0.0",
                 "php": "^7.1",
-                "phpactor/docblock": "^0.1",
+                "phpactor/docblock": "~0.2",
                 "psr/log": "^1.0"
             },
             "require-dev": {
@@ -2538,7 +2538,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-12-22 22:42:13"
+            "time": "2018-12-23 22:52:15"
         },
         {
             "name": "phpactor/worse-reflection-extension",
