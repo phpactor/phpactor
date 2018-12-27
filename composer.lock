@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "ebde0bab7e14aa838f36f51bff7a04719fe9bc39"
+                "reference": "2b9fee4cd0c73f023560618ea59a350c0c4e68b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/ebde0bab7e14aa838f36f51bff7a04719fe9bc39",
-                "reference": "ebde0bab7e14aa838f36f51bff7a04719fe9bc39",
+                "url": "https://api.github.com/repos/composer/composer/zipball/2b9fee4cd0c73f023560618ea59a350c0c4e68b7",
+                "reference": "2b9fee4cd0c73f023560618ea59a350c0c4e68b7",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2018-12-21 10:58:52"
+            "time": "2018-12-26 12:10:27"
         },
         {
             "name": "composer/semver",
@@ -210,12 +210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/spdx-licenses.git",
-                "reference": "a9860f92852935add41fc125f21295c7d8284843"
+                "reference": "5781a46078ca46330d05f46f90c42eaacba85749"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/a9860f92852935add41fc125f21295c7d8284843",
-                "reference": "a9860f92852935add41fc125f21295c7d8284843",
+                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/5781a46078ca46330d05f46f90c42eaacba85749",
+                "reference": "5781a46078ca46330d05f46f90c42eaacba85749",
                 "shasum": ""
             },
             "require": {
@@ -263,7 +263,7 @@
                 "spdx",
                 "validator"
             ],
-            "time": "2018-12-21 12:08:54"
+            "time": "2018-12-26 21:53:59"
         },
         {
             "name": "composer/xdebug-handler",
@@ -565,12 +565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "b352faf6870c1cdf773e518a42881c1bdfc10e86"
+                "reference": "8e146bcca71112075ea9bc96791bf975b4873373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b352faf6870c1cdf773e518a42881c1bdfc10e86",
-                "reference": "b352faf6870c1cdf773e518a42881c1bdfc10e86",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/8e146bcca71112075ea9bc96791bf975b4873373",
+                "reference": "8e146bcca71112075ea9bc96791bf975b4873373",
                 "shasum": ""
             },
             "require": {
@@ -597,7 +597,7 @@
             "require-dev": {
                 "johnkary/phpunit-speedtrap": "^1.1 || ^2.0 || ^3.0",
                 "justinrainbow/json-schema": "^5.0",
-                "keradus/cli-executor": "^1.1",
+                "keradus/cli-executor": "^1.2",
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.1",
                 "php-cs-fixer/accessible-object": "^1.0",
@@ -653,7 +653,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-12-03 16:34:14"
+            "time": "2018-12-26 12:12:54"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -661,12 +661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "0a22f47219d7cf27f2ad743edd21c83f34b81ae3"
+                "reference": "9bf10f78b2a43a492d55d1286b263a9039bbc768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/0a22f47219d7cf27f2ad743edd21c83f34b81ae3",
-                "reference": "0a22f47219d7cf27f2ad743edd21c83f34b81ae3",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/9bf10f78b2a43a492d55d1286b263a9039bbc768",
+                "reference": "9bf10f78b2a43a492d55d1286b263a9039bbc768",
                 "shasum": ""
             },
             "require-dev": {
@@ -692,7 +692,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2018-12-21 13:31:10"
+            "time": "2018-12-24 14:35:19"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -807,12 +807,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "68f536105f1e4fe439ccabac105bb1c90dee8b92"
+                "reference": "4d5b7e6ba1127789c7ff59d6f762298eaa29787f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/68f536105f1e4fe439ccabac105bb1c90dee8b92",
-                "reference": "68f536105f1e4fe439ccabac105bb1c90dee8b92",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/4d5b7e6ba1127789c7ff59d6f762298eaa29787f",
+                "reference": "4d5b7e6ba1127789c7ff59d6f762298eaa29787f",
                 "shasum": ""
             },
             "require": {
@@ -877,7 +877,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-12-11 10:11:11"
+            "time": "2018-12-26 14:24:03"
         },
         {
             "name": "ocramius/package-versions",
@@ -2492,12 +2492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8a19f810aa4eeed655beea9aaa2bda41e285551d"
+                "reference": "8bbee823b8223fe2df6976b0e06648f2d14609b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8a19f810aa4eeed655beea9aaa2bda41e285551d",
-                "reference": "8a19f810aa4eeed655beea9aaa2bda41e285551d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8bbee823b8223fe2df6976b0e06648f2d14609b2",
+                "reference": "8bbee823b8223fe2df6976b0e06648f2d14609b2",
                 "shasum": ""
             },
             "require": {
@@ -2538,7 +2538,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-12-23 22:52:15"
+            "time": "2018-12-27 11:14:22"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -2883,12 +2883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "3f8a62ad1763ab3a43b1e30d90a6f443bab15fa5"
+                "reference": "79a050b2acd61a655000208873ed9ff33320fc19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/3f8a62ad1763ab3a43b1e30d90a6f443bab15fa5",
-                "reference": "3f8a62ad1763ab3a43b1e30d90a6f443bab15fa5",
+                "url": "https://api.github.com/repos/symfony/console/zipball/79a050b2acd61a655000208873ed9ff33320fc19",
+                "reference": "79a050b2acd61a655000208873ed9ff33320fc19",
                 "shasum": ""
             },
             "require": {
@@ -2944,7 +2944,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-12-17 13:51:43"
+            "time": "2018-12-24 10:03:37"
         },
         {
             "name": "symfony/contracts",
@@ -3134,12 +3134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "d2bae4531a8d48ee610ec664d10336c9500e3a64"
+                "reference": "413fc800a335876085d358d3a3cd9e2d59093ed1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/d2bae4531a8d48ee610ec664d10336c9500e3a64",
-                "reference": "d2bae4531a8d48ee610ec664d10336c9500e3a64",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/413fc800a335876085d358d3a3cd9e2d59093ed1",
+                "reference": "413fc800a335876085d358d3a3cd9e2d59093ed1",
                 "shasum": ""
             },
             "require": {
@@ -3175,7 +3175,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2018-12-13 12:43:21"
+            "time": "2018-12-24 10:03:37"
         },
         {
             "name": "symfony/options-resolver",
@@ -3689,20 +3689,21 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "dev-master",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "53927dddf3afa2088b355188e143bba42159bf5d"
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/53927dddf3afa2088b355188e143bba42159bf5d",
-                "reference": "53927dddf3afa2088b355188e143bba42159bf5d",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^5.3.3 || ^7.0",
+                "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6",
@@ -3735,7 +3736,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-05-29 14:25:02"
+            "time": "2018-12-25T11:19:39+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -3834,16 +3835,16 @@
     "packages-dev": [
         {
             "name": "beberlei/assert",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/assert.git",
-                "reference": "e4f4a40a8739e1151d40fd1ed754a3ed37e1f522"
+                "reference": "fd82f4c8592c8128dd74481034c31da71ebafc56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/e4f4a40a8739e1151d40fd1ed754a3ed37e1f522",
-                "reference": "e4f4a40a8739e1151d40fd1ed754a3ed37e1f522",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/fd82f4c8592c8128dd74481034c31da71ebafc56",
+                "reference": "fd82f4c8592c8128dd74481034c31da71ebafc56",
                 "shasum": ""
             },
             "require": {
@@ -3885,7 +3886,7 @@
                 "assertion",
                 "validation"
             ],
-            "time": "2018-10-29T11:13:48+00:00"
+            "time": "2018-12-24T15:25:25+00:00"
         },
         {
             "name": "dantleech/what-changed",
@@ -4377,12 +4378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "f72b3446c351d8f7ac82a41b30892739890b4d72"
+                "reference": "47a1708941582b133f154bc9828046afcebc4000"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/f72b3446c351d8f7ac82a41b30892739890b4d72",
-                "reference": "f72b3446c351d8f7ac82a41b30892739890b4d72",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/47a1708941582b133f154bc9828046afcebc4000",
+                "reference": "47a1708941582b133f154bc9828046afcebc4000",
                 "shasum": ""
             },
             "require": {
@@ -4408,7 +4409,7 @@
             },
             "require-dev": {
                 "doctrine/dbal": "^2.4",
-                "friendsofphp/php-cs-fixer": "^2.11",
+                "friendsofphp/php-cs-fixer": "^2.13.1",
                 "padraic/phar-updater": "^1.0",
                 "phpstan/phpstan": "^0.8.5",
                 "phpunit/phpunit": "^6.5 | ^7.0"
@@ -4445,7 +4446,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2018-12-02 17:29:27"
+            "time": "2018-12-26 19:16:56"
         },
         {
             "name": "phpdocumentor/reflection-common",
