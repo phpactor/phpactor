@@ -2492,12 +2492,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8bbee823b8223fe2df6976b0e06648f2d14609b2"
+                "reference": "fd12c60bd9effdf91fd53c2cee867e4b5d5e8f01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8bbee823b8223fe2df6976b0e06648f2d14609b2",
-                "reference": "8bbee823b8223fe2df6976b0e06648f2d14609b2",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/fd12c60bd9effdf91fd53c2cee867e4b5d5e8f01",
+                "reference": "fd12c60bd9effdf91fd53c2cee867e4b5d5e8f01",
                 "shasum": ""
             },
             "require": {
@@ -2538,7 +2538,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-12-27 11:14:22"
+            "time": "2018-12-27 11:44:50"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -2546,12 +2546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "cbe60d77b641f4e042abd763d33d503c07225d2f"
+                "reference": "479aabe43c7edcc9b6ababb93a9d1a95f17b3cd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/cbe60d77b641f4e042abd763d33d503c07225d2f",
-                "reference": "cbe60d77b641f4e042abd763d33d503c07225d2f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/479aabe43c7edcc9b6ababb93a9d1a95f17b3cd0",
+                "reference": "479aabe43c7edcc9b6ababb93a9d1a95f17b3cd0",
                 "shasum": ""
             },
             "require": {
@@ -2590,7 +2590,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-12-01 21:28:48"
+            "time": "2018-12-27 11:45:22"
         },
         {
             "name": "phpbench/container",

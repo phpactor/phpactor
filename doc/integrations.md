@@ -17,6 +17,12 @@ Tools
 The [behat extension](https://github.com/phpactor/behat-extension) provides
 completion and goto definition support.
 
+### PHPSpec
+
+The [PHPSpec extension](https://github.com/phpactor/phpspec-extension)
+provides subject-under-test member completion.
+
+
 ### PHPUnit
 
 The [PHPUnit extension](https://github.com/phpactor/phpunit-extension)

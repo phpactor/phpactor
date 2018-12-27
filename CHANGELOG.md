@@ -18,6 +18,8 @@ Features:
   - [worse-reflection] Support variadic arguments #621
   - [worse-reflection] Support for virtual methods #682
   - [worse-reflection] Support for evaluating `clone()`
+  - [worse-reflection] Support for registering custom virtual class member
+    providers.
 
 Improvements:
 
