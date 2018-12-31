@@ -3,9 +3,7 @@
 namespace Phpactor\Extension\WorseReflectionExtra;
 
 use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\WorseReflectionExtra\LanguageServer\WorseReflectionLanguageExtension;
 use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
@@ -19,24 +17,8 @@ use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
 
 class WorseReflectionExtraExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function configure(Resolver $schema)
-    {
-        // disable the reflection cache for the language server
-        $schema->setCallback(WorseReflectionExtension::PARAM_ENABLE_CACHE, function (array $config) {
-            if (class_exists(StartCommand::class) && $config['command'] === StartCommand::NAME) {
-                return false;
-            }
-
-            return $config[WorseReflectionExtension::PARAM_ENABLE_CACHE];
-        });
-    }
-
     public function load(ContainerBuilder $container)
     {
-        $this->registerLanguageServer($container);
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
@@ -72,16 +54,6 @@ class WorseReflectionExtraExtension implements Extension
                 $container->get('console.dumper_registry')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:reflect' ]]);
-    }
-
-    private function registerLanguageServer(ContainerBuilder $container)
-    {
-        $container->register('reflection.language_server.extension', function (Container $container) {
-            return new WorseReflectionLanguageExtension(
-                $container->get('language_server.session_manager'),
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-            );
-        }, [ 'language_server.extension' => [] ]);
     }
 
     private function registerRpc(ContainerBuilder $container)

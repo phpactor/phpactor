@@ -13,7 +13,6 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
 use Phpactor\Extension\CompletionExtra\Application\Complete;
-use Phpactor\Extension\CompletionExtra\LanguageServer\CompletionLanguageExtension;
 
 class CompletionExtraExtension implements Extension
 {
@@ -25,7 +24,6 @@ class CompletionExtraExtension implements Extension
     public function load(ContainerBuilder $container)
     {
         $this->registerCommands($container);
-        $this->registerLanguageServer($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
     }
@@ -64,16 +62,5 @@ class CompletionExtraExtension implements Extension
                 $container->get(CompletionExtension::SERVICE_REGISTRY)
             );
         });
-    }
-
-    private function registerLanguageServer(ContainerBuilder $container)
-    {
-        $container->register('completion.language_server.completion', function (Container $container) {
-            return new CompletionLanguageExtension(
-                $container->get('language_server.session_manager'),
-                $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('php'),
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-            );
-        }, [ 'language_server.extension' => [] ]);
     }
 }
