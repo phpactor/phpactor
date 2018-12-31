@@ -13,9 +13,17 @@ use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
 use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
 use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
+use Phpactor\MapResolver\Resolver;
 
 class WorseReflectionExtraExtension implements Extension
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function configure(Resolver $schema)
+    {
+    }
+
     public function load(ContainerBuilder $container)
     {
         $this->registerCommands($container);
