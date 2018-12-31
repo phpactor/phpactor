@@ -7,7 +7,6 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Container\Extension;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
