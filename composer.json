@@ -18,7 +18,6 @@
         "phpactor/container": "^1.0",
         "phpactor/extension-manager-extension": "~0.1",
         "phpactor/file-path-resolver-extension": "~0.1",
-        "phpactor/language-server": "dev-master",
         "phpactor/logging-extension": "~0.2",
         "phpactor/path-finder": "dev-master",
         "phpactor/rpc-extension": "~0.1",

@@ -3,6 +3,11 @@ Changelog
 
 ## develop
 
+BC Break:
+
+  - [completion] Comletion API changed to accept the new
+    [TextDocument](https://github.com/phpactor/text-document).
+
 Features:
 
   - [goto-definition] Goto definition extracted from core into separate
