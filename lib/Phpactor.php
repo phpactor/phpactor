@@ -128,6 +128,9 @@ class Phpactor
             $extensions[] = $extension;
             $masterSchema = $masterSchema->merge($schema);
         }
+        $masterSchema->setDefaults([
+            PhpactorContainer::PARAM_EXTENSION_CLASSES => $extensionNames,
+        ]);
         $config = $masterSchema->resolve($config);
 
         // > method configure container
