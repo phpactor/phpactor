@@ -32,8 +32,8 @@
         "webmozart/glob": "^4.1",
         "phpactor/config-loader": "^1.0",
         "phpactor/code-transform-extension": "^0.1",
-        "phpactor/worse-reference-finder-extension": "^0.1.0@dev",
-        "phpactor/reference-finder-rpc-extension": "^0.1.0@dev"
+        "phpactor/worse-reference-finder-extension": "~0.1",
+        "phpactor/reference-finder-rpc-extension": "~0.1"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
