@@ -766,21 +766,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d"
+                "reference": "f3364cbc4d5ddfa10ff5058b23d9a96647bd006b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d",
-                "reference": "8ccf55ed6c09d0e72d455bfa483ac5b53d2e1a3d",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/f3364cbc4d5ddfa10ff5058b23d9a96647bd006b",
+                "reference": "f3364cbc4d5ddfa10ff5058b23d9a96647bd006b",
                 "shasum": ""
             },
             "require": {
-                "microsoft/tolerant-php-parser": "@dev",
+                "microsoft/tolerant-php-parser": "~0.0.1",
+                "phpactor/text-document": "^1.0",
+                "phpactor/worse-reflection": "~0.2",
                 "twig/twig": "^2.4"
             },
             "require-dev": {
-                "phpactor/test-utils": "^1.0@dev",
-                "phpactor/worse-reflection": "^1.0@dev",
+                "phpactor/test-utils": "^1.0",
                 "phpunit/phpunit": "^6.2"
             },
             "type": "library",
@@ -805,7 +806,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-11-24T15:37:22+00:00"
+            "time": "2019-01-06T17:46:32+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -813,18 +814,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "1875734f0dcc91e073f0d1672df2ce7da69e7c5a"
+                "reference": "d0cc5529b1329aa4866088d6f0756fc882118820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1875734f0dcc91e073f0d1672df2ce7da69e7c5a",
-                "reference": "1875734f0dcc91e073f0d1672df2ce7da69e7c5a",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d0cc5529b1329aa4866088d6f0756fc882118820",
+                "reference": "d0cc5529b1329aa4866088d6f0756fc882118820",
                 "shasum": ""
             },
             "require": {
-                "phpactor/class-to-file": "dev-master",
-                "phpactor/code-builder": "dev-master",
-                "webmozart/path-util": "^2.3@dev"
+                "phpactor/class-to-file": "~0.3",
+                "phpactor/code-builder": "~0.2",
+                "webmozart/path-util": "~2.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -855,7 +856,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-12-23T14:33:32+00:00"
+            "time": "2019-01-06T17:56:10+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2903,12 +2904,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "139c7529bf4658e4e332770dd88a19850878cecf"
+                "reference": "735f266d72f253d59269f4cab38094070f3db22f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/139c7529bf4658e4e332770dd88a19850878cecf",
-                "reference": "139c7529bf4658e4e332770dd88a19850878cecf",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/735f266d72f253d59269f4cab38094070f3db22f",
+                "reference": "735f266d72f253d59269f4cab38094070f3db22f",
                 "shasum": ""
             },
             "require": {
@@ -2962,7 +2963,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-01T17:44:03+00:00"
+            "time": "2019-01-06T16:39:37+00:00"
         },
         {
             "name": "webmozart/assert",
