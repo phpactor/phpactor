@@ -17,7 +17,6 @@ while read -r dep; do
     if [ $EXITCODE -eq 0 ] && ! vendor/bin/phpunit; then
          EXITCODE=1
     fi
-    EXITCODE=5
     cd - || continue
 done < <(php .travis/list-deps.php)
 
