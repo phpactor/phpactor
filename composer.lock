@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c51217a170a496cafe9c1845ba77fd93",
+    "content-hash": "f686e1f514d57a95c2ff668e0b18a2ad",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -60,7 +60,7 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2018-10-31 14:14:03"
+            "time": "2018-10-31T14:14:03+00:00"
         },
         {
             "name": "composer/composer",
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2019-01-03 09:53:00"
+            "time": "2019-01-03T09:53:00+00:00"
         },
         {
             "name": "composer/semver",
@@ -202,7 +202,7 @@
                 "validation",
                 "versioning"
             ],
-            "time": "2017-11-06 09:05:54"
+            "time": "2017-11-06T09:05:54+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -263,7 +263,7 @@
                 "spdx",
                 "validator"
             ],
-            "time": "2018-12-26 21:53:59"
+            "time": "2018-12-26T21:53:59+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -379,7 +379,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2019-01-02 11:31:41"
+            "time": "2019-01-02T11:31:41+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -445,7 +445,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2018-02-14 22:26:30"
+            "time": "2018-02-14T22:26:30+00:00"
         },
         {
             "name": "microsoft/tolerant-php-parser",
@@ -564,7 +564,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-12-26 14:24:03"
+            "time": "2018-12-26T14:24:03+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -621,21 +621,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "edf888991aa5cc0bf85d243746bf914ab9ae514b"
+                "reference": "8c87bd29d2b4ddbf3239dbabe6d42883d1e61fff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/edf888991aa5cc0bf85d243746bf914ab9ae514b",
-                "reference": "edf888991aa5cc0bf85d243746bf914ab9ae514b",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/8c87bd29d2b4ddbf3239dbabe6d42883d1e61fff",
+                "reference": "8c87bd29d2b4ddbf3239dbabe6d42883d1e61fff",
                 "shasum": ""
             },
             "require": {
                 "microsoft/tolerant-php-parser": "@dev",
+                "php": "^7.1",
                 "psr/log": "^1.0@dev",
                 "symfony/filesystem": "^2.7|^3.0"
             },
             "require-dev": {
-                "phpactor/worse-reflection": "^1.0@dev",
+                "phpactor/worse-reflection": "~0.1",
                 "phpstan/phpstan": "^0.8.1",
                 "phpunit/phpunit": "^6.2",
                 "symfony/console": "^3.0"
@@ -662,7 +663,7 @@
                 }
             ],
             "description": "Library for moving classes",
-            "time": "2018-11-24 15:37:08"
+            "time": "2019-01-06T11:48:33+00:00"
         },
         {
             "name": "phpactor/class-to-file",
@@ -670,12 +671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "66b5d3897b7a44690de428117965223d0a2fad6e"
+                "reference": "685fa0a08dbfa1af5bd4d9f13d9f8ecfaadde052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/66b5d3897b7a44690de428117965223d0a2fad6e",
-                "reference": "66b5d3897b7a44690de428117965223d0a2fad6e",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/685fa0a08dbfa1af5bd4d9f13d9f8ecfaadde052",
+                "reference": "685fa0a08dbfa1af5bd4d9f13d9f8ecfaadde052",
                 "shasum": ""
             },
             "require": {
@@ -689,7 +690,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -708,7 +709,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2018-12-19 13:35:39"
+            "time": "2019-01-06T11:46:29+00:00"
         },
         {
             "name": "phpactor/class-to-file-extension",
@@ -716,16 +717,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file-extension.git",
-                "reference": "61007ff91ae8634f618cc37d3f601e37d22aeafa"
+                "reference": "80bca41fae6bbeb803dff511274b89e675adac22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/61007ff91ae8634f618cc37d3f601e37d22aeafa",
-                "reference": "61007ff91ae8634f618cc37d3f601e37d22aeafa",
+                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/80bca41fae6bbeb803dff511274b89e675adac22",
+                "reference": "80bca41fae6bbeb803dff511274b89e675adac22",
                 "shasum": ""
             },
             "require": {
-                "phpactor/class-to-file": "dev-master",
+                "phpactor/class-to-file": "~0.1",
                 "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.0"
             },
@@ -757,7 +758,7 @@
                 }
             ],
             "description": "Converts classes to files and vice-versa",
-            "time": "2018-11-24 15:37:18"
+            "time": "2019-01-06T11:47:35+00:00"
         },
         {
             "name": "phpactor/code-builder",
@@ -804,7 +805,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2018-11-24 15:37:22"
+            "time": "2018-11-24T15:37:22+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -854,7 +855,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2018-12-23 14:33:32"
+            "time": "2018-12-23T14:33:32+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -862,12 +863,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
-                "reference": "a1f740f26212b974a5f89f417227745347fcf7e8"
+                "reference": "7b0fd421d326a730c3960cf60417189c9f9af823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/a1f740f26212b974a5f89f417227745347fcf7e8",
-                "reference": "a1f740f26212b974a5f89f417227745347fcf7e8",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/7b0fd421d326a730c3960cf60417189c9f9af823",
+                "reference": "7b0fd421d326a730c3960cf60417189c9f9af823",
                 "shasum": ""
             },
             "require": {
@@ -904,7 +905,7 @@
                 }
             ],
             "description": "Code transform base package",
-            "time": "2018-12-08 23:59:14"
+            "time": "2019-01-06T11:30:32+00:00"
         },
         {
             "name": "phpactor/completion",
@@ -956,7 +957,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2019-01-01 12:03:04"
+            "time": "2019-01-01T12:03:04+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1004,7 +1005,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2018-12-31 18:31:17"
+            "time": "2018-12-31T18:31:17+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -1012,12 +1013,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "ebaa640fa77a4783f73f31edf6c9e958f755592f"
+                "reference": "0968cd63d4408905e4a4df646986de5a6822343e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/ebaa640fa77a4783f73f31edf6c9e958f755592f",
-                "reference": "ebaa640fa77a4783f73f31edf6c9e958f755592f",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/0968cd63d4408905e4a4df646986de5a6822343e",
+                "reference": "0968cd63d4408905e4a4df646986de5a6822343e",
                 "shasum": ""
             },
             "require": {
@@ -1053,7 +1054,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2018-12-31 18:34:07"
+            "time": "2019-01-06T11:32:15+00:00"
         },
         {
             "name": "phpactor/completion-worse-extension",
@@ -1061,12 +1062,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "2849bb77df46d5a09d8102feea3972314ce62906"
+                "reference": "dcedbd57c6d5386c0f8c70104d5c6145ae5095ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/2849bb77df46d5a09d8102feea3972314ce62906",
-                "reference": "2849bb77df46d5a09d8102feea3972314ce62906",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/dcedbd57c6d5386c0f8c70104d5c6145ae5095ba",
+                "reference": "dcedbd57c6d5386c0f8c70104d5c6145ae5095ba",
                 "shasum": ""
             },
             "require": {
@@ -1102,7 +1103,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2019-01-01 11:23:57"
+            "time": "2019-01-06T12:02:25+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -1151,7 +1152,7 @@
                 }
             ],
             "description": "Composer Autoloader provider",
-            "time": "2018-11-24 15:37:50"
+            "time": "2018-11-24T15:37:50+00:00"
         },
         {
             "name": "phpactor/config-loader",
@@ -1159,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/config-loader.git",
-                "reference": "51b389660897cbeadae9da7102044103871759ae"
+                "reference": "e673bb76a1854b6af8a764297ca16bcf59b98304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/config-loader/zipball/51b389660897cbeadae9da7102044103871759ae",
-                "reference": "51b389660897cbeadae9da7102044103871759ae",
+                "url": "https://api.github.com/repos/phpactor/config-loader/zipball/e673bb76a1854b6af8a764297ca16bcf59b98304",
+                "reference": "e673bb76a1854b6af8a764297ca16bcf59b98304",
                 "shasum": ""
             },
             "require": {
@@ -1201,7 +1202,7 @@
                 }
             ],
             "description": "Library to load (user) configuration",
-            "time": "2018-12-01 11:08:58"
+            "time": "2019-01-06T11:52:56+00:00"
         },
         {
             "name": "phpactor/console-extension",
@@ -1209,12 +1210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/console-extension.git",
-                "reference": "970c78753c872eee6038a127151c1f75c192bd84"
+                "reference": "4f7b24005629307ebeb2adae1ae69124560a3b41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/console-extension/zipball/970c78753c872eee6038a127151c1f75c192bd84",
-                "reference": "970c78753c872eee6038a127151c1f75c192bd84",
+                "url": "https://api.github.com/repos/phpactor/console-extension/zipball/4f7b24005629307ebeb2adae1ae69124560a3b41",
+                "reference": "4f7b24005629307ebeb2adae1ae69124560a3b41",
                 "shasum": ""
             },
             "require": {
@@ -1249,7 +1250,7 @@
                 }
             ],
             "description": "Integrate Symfony Console commands",
-            "time": "2018-11-24 15:37:55"
+            "time": "2019-01-06T11:53:30+00:00"
         },
         {
             "name": "phpactor/container",
@@ -1330,20 +1331,20 @@
                 }
             ],
             "description": "Simple Docblock Parser",
-            "time": "2018-12-23 22:06:37"
+            "time": "2018-12-23T22:06:37+00:00"
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.6.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "41bf29a53476b89782873d64d89832525a2dd089"
+                "reference": "aff897d40526e1dbeb80fde208051b06516b8994"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/41bf29a53476b89782873d64d89832525a2dd089",
-                "reference": "41bf29a53476b89782873d64d89832525a2dd089",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/aff897d40526e1dbeb80fde208051b06516b8994",
+                "reference": "aff897d40526e1dbeb80fde208051b06516b8994",
                 "shasum": ""
             },
             "require": {
@@ -1362,7 +1363,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\ExtensionManager\\ExtensionManagerExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\ExtensionManager\\ExtensionManagerExtension",
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1380,7 +1384,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-12-21T21:49:54+00:00"
+            "time": "2019-01-06T11:25:09+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -1473,7 +1477,7 @@
                 }
             ],
             "description": "File Path Resolver Extension",
-            "time": "2019-01-01 15:55:12"
+            "time": "2019-01-01T15:55:12+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -1599,7 +1603,7 @@
                 }
             ],
             "description": "Utility for navigating to related source files",
-            "time": "2017-11-04 12:57:48"
+            "time": "2017-11-04T12:57:48+00:00"
         },
         {
             "name": "phpactor/reference-finder",
@@ -1647,7 +1651,7 @@
                 }
             ],
             "description": "Base library for finding definitions",
-            "time": "2018-12-21 13:16:39"
+            "time": "2018-12-21T13:16:39+00:00"
         },
         {
             "name": "phpactor/reference-finder-extension",
@@ -1696,7 +1700,7 @@
                 }
             ],
             "description": "Goto definition functionality",
-            "time": "2018-12-21 11:21:46"
+            "time": "2018-12-21T11:21:46+00:00"
         },
         {
             "name": "phpactor/reference-finder-rpc-extension",
@@ -1704,12 +1708,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-rpc-extension.git",
-                "reference": "a32f18c83756bc755ad3f0584c6b8ea1906adccb"
+                "reference": "0958459b72794b45d20d79bf0d78c4c82b6f6ade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/a32f18c83756bc755ad3f0584c6b8ea1906adccb",
-                "reference": "a32f18c83756bc755ad3f0584c6b8ea1906adccb",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/0958459b72794b45d20d79bf0d78c4c82b6f6ade",
+                "reference": "0958459b72794b45d20d79bf0d78c4c82b6f6ade",
                 "shasum": ""
             },
             "require": {
@@ -1745,7 +1749,7 @@
                 }
             ],
             "description": "Description about my project",
-            "time": "2018-12-21 13:19:19"
+            "time": "2019-01-06T12:13:56+00:00"
         },
         {
             "name": "phpactor/rpc-extension",
@@ -1796,7 +1800,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-12-01 16:38:04"
+            "time": "2018-12-01T16:38:04+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -1804,12 +1808,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "a0b641b9ed4be27810895fdffc31a2cb1c69b31c"
+                "reference": "9f223092c35b65c86536ccc762741b32ea215549"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/a0b641b9ed4be27810895fdffc31a2cb1c69b31c",
-                "reference": "a0b641b9ed4be27810895fdffc31a2cb1c69b31c",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/9f223092c35b65c86536ccc762741b32ea215549",
+                "reference": "9f223092c35b65c86536ccc762741b32ea215549",
                 "shasum": ""
             },
             "require": {
@@ -1823,7 +1827,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -1842,7 +1846,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2018-08-03 06:31:35"
+            "time": "2019-01-06T11:59:25+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
@@ -1850,19 +1854,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem-extension.git",
-                "reference": "96389a9a876efb5c18c1fce131fcfb3d6d2f51d7"
+                "reference": "8074e1f5d75b6252233e747c7d61fcf6e3b24b86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/96389a9a876efb5c18c1fce131fcfb3d6d2f51d7",
-                "reference": "96389a9a876efb5c18c1fce131fcfb3d6d2f51d7",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/8074e1f5d75b6252233e747c7d61fcf6e3b24b86",
+                "reference": "8074e1f5d75b6252233e747c7d61fcf6e3b24b86",
                 "shasum": ""
             },
             "require": {
                 "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.2",
                 "phpactor/file-path-resolver-extension": "~0.1",
-                "phpactor/source-code-filesystem": "dev-master"
+                "phpactor/source-code-filesystem": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1892,7 +1896,7 @@
                 }
             ],
             "description": "Source Code Filesystem Extension",
-            "time": "2018-11-24 15:38:32"
+            "time": "2019-01-06T12:04:57+00:00"
         },
         {
             "name": "phpactor/text-document",
@@ -1940,7 +1944,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2019-01-02 18:56:26"
+            "time": "2019-01-02T18:56:26+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
@@ -1948,12 +1952,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
-                "reference": "b6a89c8a7bac342ad8f73220977290e742300910"
+                "reference": "a88cf1edea57d53e588f81b6489e7ee94d700924"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/b6a89c8a7bac342ad8f73220977290e742300910",
-                "reference": "b6a89c8a7bac342ad8f73220977290e742300910",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/a88cf1edea57d53e588f81b6489e7ee94d700924",
+                "reference": "a88cf1edea57d53e588f81b6489e7ee94d700924",
                 "shasum": ""
             },
             "require": {
@@ -1990,7 +1994,7 @@
                 }
             ],
             "description": "Worse reflection implementations for reference finding",
-            "time": "2018-12-21 12:22:58"
+            "time": "2019-01-06T12:11:46+00:00"
         },
         {
             "name": "phpactor/worse-reference-finders",
@@ -2038,7 +2042,7 @@
                 }
             ],
             "description": "Worse Reflection reference finder implementations",
-            "time": "2018-12-21 13:17:12"
+            "time": "2018-12-21T13:17:12+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -2046,12 +2050,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "5397ee2d12917cf131be44d07d7af5877d362ca2"
+                "reference": "82dce004c8494e5e3cc23c5e1c3a768af1ffc11b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/5397ee2d12917cf131be44d07d7af5877d362ca2",
-                "reference": "5397ee2d12917cf131be44d07d7af5877d362ca2",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/82dce004c8494e5e3cc23c5e1c3a768af1ffc11b",
+                "reference": "82dce004c8494e5e3cc23c5e1c3a768af1ffc11b",
                 "shasum": ""
             },
             "require": {
@@ -2093,7 +2097,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2018-12-31 18:00:47"
+            "time": "2019-01-06T10:53:56+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -2145,7 +2149,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-12-27 11:51:34"
+            "time": "2018-12-27T11:51:34+00:00"
         },
         {
             "name": "phpbench/container",
@@ -2238,7 +2242,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2018-12-29 15:36:03"
+            "time": "2018-12-29T15:36:03+00:00"
         },
         {
             "name": "psr/log",
@@ -2285,7 +2289,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-21 13:42:00"
+            "time": "2018-11-21T13:42:00+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -2337,7 +2341,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-12-14 11:32:19"
+            "time": "2017-12-14T11:32:19+00:00"
         },
         {
             "name": "seld/jsonlint",
@@ -2430,7 +2434,7 @@
             "keywords": [
                 "phra"
             ],
-            "time": "2015-10-13 18:44:15"
+            "time": "2015-10-13T18:44:15+00:00"
         },
         {
             "name": "symfony/console",
@@ -2499,7 +2503,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-04 15:14:53"
+            "time": "2019-01-04T15:14:53+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -2567,7 +2571,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-12-05 08:06:11"
+            "time": "2018-12-05T08:06:11+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -2617,7 +2621,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-01 13:45:19"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "symfony/finder",
@@ -2666,7 +2670,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-03 09:16:58"
+            "time": "2019-01-03T09:16:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2832,7 +2836,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-02 21:24:08"
+            "time": "2019-01-02T21:24:08+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -2891,7 +2895,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-01 13:45:19"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "twig/twig",
@@ -2958,7 +2962,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-01 17:44:03"
+            "time": "2019-01-01T17:44:03+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3056,7 +3060,7 @@
                 }
             ],
             "description": "A PHP implementation of Ant's glob.",
-            "time": "2016-08-15 15:31:26"
+            "time": "2016-08-15T15:31:26+00:00"
         },
         {
             "name": "webmozart/path-util",
@@ -3102,7 +3106,7 @@
                 }
             ],
             "description": "A robust cross-platform utility for normalizing, comparing and modifying file paths.",
-            "time": "2016-08-15 15:31:42"
+            "time": "2016-08-15T15:31:42+00:00"
         }
     ],
     "packages-dev": [
@@ -3281,7 +3285,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2018-05-06 10:14:50"
+            "time": "2018-05-06T10:14:50+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -3336,7 +3340,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2018-10-15 11:30:00"
+            "time": "2018-10-15T11:30:00+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -3396,7 +3400,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-10-21 19:22:05"
+            "time": "2018-10-21T19:22:05+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -3492,7 +3496,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2019-01-04 18:30:07"
+            "time": "2019-01-04T18:30:07+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -3679,7 +3683,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-06-11 23:09:50"
+            "time": "2018-06-11T23:09:50+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3721,7 +3725,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-08-07 13:07:48"
+            "time": "2018-08-07T13:07:48+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3915,7 +3919,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2018-08-02 17:38:22"
+            "time": "2018-08-02T17:38:22+00:00"
         },
         {
             "name": "phpbench/dom",
@@ -4036,7 +4040,7 @@
                 }
             ],
             "description": "PHP Benchmarking Framework",
-            "time": "2019-01-01 21:17:11"
+            "time": "2019-01-01T21:17:11+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4251,7 +4255,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2018-12-18 15:40:51"
+            "time": "2018-12-18T15:40:51+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4314,7 +4318,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-07 12:06:18"
+            "time": "2018-04-07T12:06:18+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4361,7 +4365,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -4451,7 +4455,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07 15:42:04"
+            "time": "2017-03-07T15:42:04+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -4500,7 +4504,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-11-16 09:53:19"
+            "time": "2017-11-16T09:53:19+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -4584,7 +4588,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-05 05:51:07"
+            "time": "2019-01-05T05:51:07+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4643,7 +4647,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2018-09-09 05:48:43"
+            "time": "2018-09-09T05:48:43+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4688,7 +4692,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2018-05-15 05:52:48"
+            "time": "2018-05-15T05:52:48+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -4802,7 +4806,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-05-15 05:48:40"
+            "time": "2018-05-15T05:48:40+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -4869,7 +4873,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2018-06-28 14:22:04"
+            "time": "2018-06-28T14:22:04+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -4967,7 +4971,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2018-10-30 05:41:47"
+            "time": "2018-10-30T05:41:47+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -5012,7 +5016,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2018-05-15 05:50:44"
+            "time": "2018-05-15T05:50:44+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -5065,7 +5069,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2018-05-15 05:52:05"
+            "time": "2018-05-15T05:52:05+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -5107,7 +5111,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2018-05-15 05:53:02"
+            "time": "2018-05-15T05:53:02+00:00"
         },
         {
             "name": "sebastian/version",
@@ -5206,7 +5210,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-05 08:11:12"
+            "time": "2019-01-05T08:11:12+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5270,7 +5274,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-05 16:38:08"
+            "time": "2019-01-05T16:38:08+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -5324,7 +5328,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2019-01-01 13:45:19"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -5488,7 +5492,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-03 09:16:58"
+            "time": "2019-01-03T09:16:58+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5534,14 +5538,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/class-mover": 20,
-        "phpactor/code-transform": 20,
         "phpactor/path-finder": 20,
-        "phpactor/source-code-filesystem": 20,
-        "phpactor/worse-reflection": 20,
         "sebastian/diff": 20,
-        "phpactor/worse-reference-finder-extension": 20,
-        "phpactor/reference-finder-rpc-extension": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
