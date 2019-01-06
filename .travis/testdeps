@@ -24,4 +24,6 @@ while read -r dep; do
     cd - || continue
 done < <(php .travis/list-deps.php)
 
+composer dumpautoload
+
 exit $EXITCODE
