@@ -4,20 +4,26 @@ echo "============================="
 echo ""
 
 EXITCODE=0
-php .travis/list-deps.php | while read -r dep; do
+while read -r dep; do
     echo ""
     echo "Testing: $dep"
     echo ""
-    cd vendor/$dep
+    cd "vendor/$dep" || continue
 
     if [ ! -e vendor ]; then
-        ln -s ../../../vendor
+        ln -s ../../../vendor .
     fi
     composer dumpautoload
-    if [ $EXITCODE -eq 0 ] && ! vendor/bin/phpunit; then
+    CMD=vendor/bin/phpunit
+    if [ "$dep" = "phpactor/extension-manager-extension" ]; then
+        CMD=$CMD" --process-isolation"
+    fi
+    if [ $EXITCODE -eq 0 ] && ! $CMD; then
          EXITCODE=1
     fi
-    cd -
-done
+    cd - || continue
+done < <(php .travis/list-deps.php)
+
+composer dumpautoload
 
 exit $EXITCODE

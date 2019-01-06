@@ -1,6 +1,8 @@
 Travis Dashboard
 ================
 
+Dependencies
+------------
 | Package | Version | Badge |
 | ------- | ------- | ----- |
 | <a href="https://github.com/phpactor/class-mover">phpactor/class-mover</a> | ~0.1 | [![master](https://travis-ci.org/phpactor/class-mover.svg?branch=master)](https://travis-ci.org/phpactor/class-mover)
@@ -26,3 +28,15 @@ Travis Dashboard
 | <a href="https://github.com/phpactor/worse-reference-finder-extension">phpactor/worse-reference-finder-extension</a> | ~0.1 | [![master](https://travis-ci.org/phpactor/worse-reference-finder-extension.svg?branch=master)](https://travis-ci.org/phpactor/worse-reference-finder-extension)
 | <a href="https://github.com/phpactor/worse-reflection">phpactor/worse-reflection</a> | ~0.1 | [![master](https://travis-ci.org/phpactor/worse-reflection.svg?branch=master)](https://travis-ci.org/phpactor/worse-reflection)
 | <a href="https://github.com/phpactor/worse-reflection-extension">phpactor/worse-reflection-extension</a> | ~0.1 | [![master](https://travis-ci.org/phpactor/worse-reflection-extension.svg?branch=master)](https://travis-ci.org/phpactor/worse-reflection-extension)
+
+Extensions
+----------
+| Package |  | Badge |
+| ------- | ------- | ----- |
+| <a href="https://github.com/phpactor/behat-extension">phpactor/behat-extension</a> |  | [![master](https://travis-ci.org/phpactor/behat-extension.svg?branch=master)](https://travis-ci.org/phpactor/behat-extension)
+| <a href="https://github.com/phpactor/phpspec-extension">phpactor/phpspec-extension</a> |  | [![master](https://travis-ci.org/phpactor/phpspec-extension.svg?branch=master)](https://travis-ci.org/phpactor/phpspec-extension)
+| <a href="https://github.com/phpactor/language-server-extension">phpactor/language-server-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-extension)
+| <a href="https://github.com/phpactor/language-server-completion-extension">phpactor/language-server-completion-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-completion-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-completion-extension)
+| <a href="https://github.com/phpactor/language-server-reference-finder-extension">phpactor/language-server-reference-finder-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-reference-finder-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-reference-finder-extension)
+| <a href="https://github.com/phpactor/language-server-hover-extension">phpactor/language-server-hover-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-hover-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-hover-extension)
+| <a href="https://github.com/phpactor/phpunit-extension">phpactor/phpunit-extension</a> |  | [![master](https://travis-ci.org/phpactor/phpunit-extension.svg?branch=master)](https://travis-ci.org/phpactor/phpunit-extension)
