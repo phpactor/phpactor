@@ -34,7 +34,7 @@ foreach ($packages as $package) {
     );
 }
 
-$extensions = explode(PHP_EOL, file_get_contents(__DIR__ . '/extensions-to-test'));
+$extensions = array_filter(explode(PHP_EOL, file_get_contents(__DIR__ . '/extensions-to-test')));
 $output[] = '';
 $output[] = 'Extensions';
 $output[] = '----------';

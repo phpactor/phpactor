@@ -48,4 +48,3 @@ Extensions
 | <a href="https://github.com/phpactor/language-server-reference-finder-extension">phpactor/language-server-reference-finder-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-reference-finder-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-reference-finder-extension)
 | <a href="https://github.com/phpactor/language-server-hover-extension">phpactor/language-server-hover-extension</a> |  | [![master](https://travis-ci.org/phpactor/language-server-hover-extension.svg?branch=master)](https://travis-ci.org/phpactor/language-server-hover-extension)
 | <a href="https://github.com/phpactor/phpunit-extension">phpactor/phpunit-extension</a> |  | [![master](https://travis-ci.org/phpactor/phpunit-extension.svg?branch=master)](https://travis-ci.org/phpactor/phpunit-extension)
-| <a href="https://github.com/"></a> |  | [![master](https://travis-ci.org/.svg?branch=master)](https://travis-ci.org/)
