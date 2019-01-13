@@ -814,12 +814,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "d0cc5529b1329aa4866088d6f0756fc882118820"
+                "reference": "d1981454cac55dfcc3500a0eb298bf92f2557525"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d0cc5529b1329aa4866088d6f0756fc882118820",
-                "reference": "d0cc5529b1329aa4866088d6f0756fc882118820",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d1981454cac55dfcc3500a0eb298bf92f2557525",
+                "reference": "d1981454cac55dfcc3500a0eb298bf92f2557525",
                 "shasum": ""
             },
             "require": {
@@ -856,7 +856,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-01-06T17:56:10+00:00"
+            "time": "2019-01-13T09:03:32+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -1759,12 +1759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "25ec38c2bdacb99384267174e3fa92c375191573"
+                "reference": "561659cdae99878f8c421cee7583aa51a58aa202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/25ec38c2bdacb99384267174e3fa92c375191573",
-                "reference": "25ec38c2bdacb99384267174e3fa92c375191573",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/561659cdae99878f8c421cee7583aa51a58aa202",
+                "reference": "561659cdae99878f8c421cee7583aa51a58aa202",
                 "shasum": ""
             },
             "require": {
@@ -1783,7 +1783,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\Rpc\\RpcExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1802,7 +1802,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2018-12-01T16:38:04+00:00"
+            "time": "2019-01-13T09:47:57+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -2052,12 +2052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "82dce004c8494e5e3cc23c5e1c3a768af1ffc11b"
+                "reference": "07ea6dd7231fee10f62b5c986b72f30dde857c1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/82dce004c8494e5e3cc23c5e1c3a768af1ffc11b",
-                "reference": "82dce004c8494e5e3cc23c5e1c3a768af1ffc11b",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/07ea6dd7231fee10f62b5c986b72f30dde857c1e",
+                "reference": "07ea6dd7231fee10f62b5c986b72f30dde857c1e",
                 "shasum": ""
             },
             "require": {
@@ -2099,7 +2099,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2019-01-06T10:53:56+00:00"
+            "time": "2019-01-13T08:52:14+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
