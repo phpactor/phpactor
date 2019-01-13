@@ -25,10 +25,13 @@ Features:
   - [worse-reflection] Support for evaluating `clone()`
   - [worse-reflection] Support for registering custom virtual class member
     providers.
+  - [vim-plugin] Find references shows context line #706
 
 Improvements:
 
   - [code-transform] Support extracting expressions to methods #666
+  - [code-transform] Extract method adds return statement to calling code if
+    extracted code contained a return #704
 
 Bug fixes:
 
