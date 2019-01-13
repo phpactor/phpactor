@@ -562,7 +562,12 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
         for fileReferences in a:parameters['file_references']
             for reference in fileReferences['references']
-                call add(list, { 'filename': fileReferences['file'], 'lnum': reference['line_no'], 'col': reference['col_no'] + 1})
+                call add(list, {
+                    \ 'filename': fileReferences['file'],
+                    \ 'lnum': reference['line_no'],
+                    \ 'col': reference['col_no'] + 1,
+                    \ 'text': reference['line']
+                \ })
             endfor
         endfor
 
