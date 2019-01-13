@@ -914,12 +914,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "e2c3f6d704f8db90b30a8cd09c05aa38f0ac1374"
+                "reference": "24231f92deae02f83a0f163d08cb78885f02e82b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/e2c3f6d704f8db90b30a8cd09c05aa38f0ac1374",
-                "reference": "e2c3f6d704f8db90b30a8cd09c05aa38f0ac1374",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/24231f92deae02f83a0f163d08cb78885f02e82b",
+                "reference": "24231f92deae02f83a0f163d08cb78885f02e82b",
                 "shasum": ""
             },
             "require": {
@@ -958,7 +958,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2019-01-01T12:03:04+00:00"
+            "time": "2019-01-12T21:27:14+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -966,17 +966,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "13d8a051cee9c29913e1350507ce66328526921d"
+                "reference": "bdd9ef76813acf4ae6a81bc2f1d55b4e04c33020"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/13d8a051cee9c29913e1350507ce66328526921d",
-                "reference": "13d8a051cee9c29913e1350507ce66328526921d",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/bdd9ef76813acf4ae6a81bc2f1d55b4e04c33020",
+                "reference": "bdd9ef76813acf4ae6a81bc2f1d55b4e04c33020",
                 "shasum": ""
             },
             "require": {
                 "phpactor/completion": "~0.2",
-                "phpactor/container": "^1.0"
+                "phpactor/container": "^1.0",
+                "phpactor/logging-extension": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1006,7 +1007,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2018-12-31T18:31:17+00:00"
+            "time": "2019-01-12T16:49:41+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -1063,12 +1064,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "dcedbd57c6d5386c0f8c70104d5c6145ae5095ba"
+                "reference": "3d1b510b7af4573b453d13d912236b3fdefcc7f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/dcedbd57c6d5386c0f8c70104d5c6145ae5095ba",
-                "reference": "dcedbd57c6d5386c0f8c70104d5c6145ae5095ba",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3d1b510b7af4573b453d13d912236b3fdefcc7f5",
+                "reference": "3d1b510b7af4573b453d13d912236b3fdefcc7f5",
                 "shasum": ""
             },
             "require": {
@@ -1104,7 +1105,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2019-01-06T12:02:25+00:00"
+            "time": "2019-01-12T17:07:59+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -1340,12 +1341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "aff897d40526e1dbeb80fde208051b06516b8994"
+                "reference": "026486af40d0963749d9b87e994c3ed1c8e19d7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/aff897d40526e1dbeb80fde208051b06516b8994",
-                "reference": "aff897d40526e1dbeb80fde208051b06516b8994",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/026486af40d0963749d9b87e994c3ed1c8e19d7c",
+                "reference": "026486af40d0963749d9b87e994c3ed1c8e19d7c",
                 "shasum": ""
             },
             "require": {
@@ -1385,7 +1386,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2019-01-06T11:25:09+00:00"
+            "time": "2019-01-06T21:39:47+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -2443,12 +2444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d4967c85500c52b01b3fa42ae81ab2ab00b9c10d"
+                "reference": "4a5d48d2ca2422c5c02ed37e4146fb65591369d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d4967c85500c52b01b3fa42ae81ab2ab00b9c10d",
-                "reference": "d4967c85500c52b01b3fa42ae81ab2ab00b9c10d",
+                "url": "https://api.github.com/repos/symfony/console/zipball/4a5d48d2ca2422c5c02ed37e4146fb65591369d5",
+                "reference": "4a5d48d2ca2422c5c02ed37e4146fb65591369d5",
                 "shasum": ""
             },
             "require": {
@@ -2504,7 +2505,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-04T15:14:53+00:00"
+            "time": "2019-01-10T07:43:17+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -2904,12 +2905,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "735f266d72f253d59269f4cab38094070f3db22f"
+                "reference": "7801532cd6b5c15af119cdca78a4739ac4dc0d02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/735f266d72f253d59269f4cab38094070f3db22f",
-                "reference": "735f266d72f253d59269f4cab38094070f3db22f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7801532cd6b5c15af119cdca78a4739ac4dc0d02",
+                "reference": "7801532cd6b5c15af119cdca78a4739ac4dc0d02",
                 "shasum": ""
             },
             "require": {
@@ -2963,7 +2964,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-06T16:39:37+00:00"
+            "time": "2019-01-12T10:36:33+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3409,12 +3410,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "9984afe9f5dc4c4e6779d2c5bec6d69ffaaba188"
+                "reference": "e3f340458cc47934d77c02c73b93f064d56d4fe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/9984afe9f5dc4c4e6779d2c5bec6d69ffaaba188",
-                "reference": "9984afe9f5dc4c4e6779d2c5bec6d69ffaaba188",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/e3f340458cc47934d77c02c73b93f064d56d4fe8",
+                "reference": "e3f340458cc47934d77c02c73b93f064d56d4fe8",
                 "shasum": ""
             },
             "require": {
@@ -3463,7 +3464,7 @@
             "type": "application",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14-dev"
+                    "dev-master": "2.15-dev"
                 }
             },
             "autoload": {
@@ -3497,7 +3498,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2019-01-04T18:30:07+00:00"
+            "time": "2019-01-11T16:23:22+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4513,12 +4514,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6d8b2440f746ae47ad0df25a8e6d4b976352da2a"
+                "reference": "6050504ca5fb73f3c737ff566526c4e03573de6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6d8b2440f746ae47ad0df25a8e6d4b976352da2a",
-                "reference": "6d8b2440f746ae47ad0df25a8e6d4b976352da2a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6050504ca5fb73f3c737ff566526c4e03573de6e",
+                "reference": "6050504ca5fb73f3c737ff566526c4e03573de6e",
                 "shasum": ""
             },
             "require": {
@@ -4589,7 +4590,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-05T05:51:07+00:00"
+            "time": "2019-01-11T06:11:03+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
