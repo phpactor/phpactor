@@ -38,6 +38,7 @@ Bug fixes:
   - [completion] Fix type resolution immediately following docblock #678
   - [completion] Include `$` on static properties #677
   - [extension-manager] Do not install dev dependencies for extensions #674
+  - [class-to-file] sort candidates by path length #712 thanks @greg0ire
 
 ## 2018-12-02 0.11.0
 
