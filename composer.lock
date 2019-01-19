@@ -766,12 +766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "f3364cbc4d5ddfa10ff5058b23d9a96647bd006b"
+                "reference": "4269d94e76413a98359e9e9ec792f91134871268"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/f3364cbc4d5ddfa10ff5058b23d9a96647bd006b",
-                "reference": "f3364cbc4d5ddfa10ff5058b23d9a96647bd006b",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/4269d94e76413a98359e9e9ec792f91134871268",
+                "reference": "4269d94e76413a98359e9e9ec792f91134871268",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2019-01-06T17:46:32+00:00"
+            "time": "2019-01-19T12:28:05+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -814,12 +814,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "d1981454cac55dfcc3500a0eb298bf92f2557525"
+                "reference": "cba700d93f485042d212a3a8325b423f20dccfb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d1981454cac55dfcc3500a0eb298bf92f2557525",
-                "reference": "d1981454cac55dfcc3500a0eb298bf92f2557525",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/cba700d93f485042d212a3a8325b423f20dccfb4",
+                "reference": "cba700d93f485042d212a3a8325b423f20dccfb4",
                 "shasum": ""
             },
             "require": {
@@ -856,7 +856,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-01-13T09:03:32+00:00"
+            "time": "2019-01-19T12:32:52+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2052,12 +2052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "07ea6dd7231fee10f62b5c986b72f30dde857c1e"
+                "reference": "4892ffd1d575ecb106c5ee69fc40d9673d1b293f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/07ea6dd7231fee10f62b5c986b72f30dde857c1e",
-                "reference": "07ea6dd7231fee10f62b5c986b72f30dde857c1e",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4892ffd1d575ecb106c5ee69fc40d9673d1b293f",
+                "reference": "4892ffd1d575ecb106c5ee69fc40d9673d1b293f",
                 "shasum": ""
             },
             "require": {
@@ -2099,7 +2099,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2019-01-13T08:52:14+00:00"
+            "time": "2019-01-19T12:15:46+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",

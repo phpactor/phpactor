@@ -32,6 +32,7 @@ Improvements:
   - [code-transform] Support extracting expressions to methods #666
   - [code-transform] Extract method adds return statement to calling code if
     extracted code contained a return #704
+  - [worse-reflection] Support union catch #711
 
 Bug fixes:
 
@@ -39,6 +40,8 @@ Bug fixes:
   - [completion] Include `$` on static properties #677
   - [extension-manager] Do not install dev dependencies for extensions #674
   - [class-to-file] sort candidates by path length #712 thanks @greg0ire
+  - [code-transform] Rename variable includes anonumous function use #713
+  - [worse-reflection] Do not downcast union types in named docblocks #711
 
 ## 2018-12-02 0.11.0
 
