@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "154ae6fae28c210cd6cf5d76aace04aefef1ca65"
+                "reference": "0fca816d8f0a12775cfa567ffea793ff72eb1311"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/154ae6fae28c210cd6cf5d76aace04aefef1ca65",
-                "reference": "154ae6fae28c210cd6cf5d76aace04aefef1ca65",
+                "url": "https://api.github.com/repos/composer/composer/zipball/0fca816d8f0a12775cfa567ffea793ff72eb1311",
+                "reference": "0fca816d8f0a12775cfa567ffea793ff72eb1311",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2019-01-03T09:53:00+00:00"
+            "time": "2019-01-19T18:04:28+00:00"
         },
         {
             "name": "composer/semver",
@@ -348,12 +348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "89d0093366c600069fad9714ef2ee266a61b933b"
+                "reference": "f66ca5ffdb24ec96db5927546042fcd7c654cf8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/89d0093366c600069fad9714ef2ee266a61b933b",
-                "reference": "89d0093366c600069fad9714ef2ee266a61b933b",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/f66ca5ffdb24ec96db5927546042fcd7c654cf8f",
+                "reference": "f66ca5ffdb24ec96db5927546042fcd7c654cf8f",
                 "shasum": ""
             },
             "require-dev": {
@@ -379,7 +379,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2019-01-02T11:31:41+00:00"
+            "time": "2019-01-25T12:15:01+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -864,12 +864,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
-                "reference": "7b0fd421d326a730c3960cf60417189c9f9af823"
+                "reference": "22396c1067ce22e7eb6be92e868df27df820140a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/7b0fd421d326a730c3960cf60417189c9f9af823",
-                "reference": "7b0fd421d326a730c3960cf60417189c9f9af823",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/22396c1067ce22e7eb6be92e868df27df820140a",
+                "reference": "22396c1067ce22e7eb6be92e868df27df820140a",
                 "shasum": ""
             },
             "require": {
@@ -880,6 +880,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/rpc-extension": "^0.1.0@dev",
+                "phpactor/test-utils": "^1.0@dev",
                 "phpstan/phpstan": "^0.10.5",
                 "phpunit/phpunit": "^7.4"
             },
@@ -906,7 +907,7 @@
                 }
             ],
             "description": "Code transform base package",
-            "time": "2019-01-06T11:30:32+00:00"
+            "time": "2019-01-27T10:33:16+00:00"
         },
         {
             "name": "phpactor/completion",
@@ -2052,12 +2053,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "4892ffd1d575ecb106c5ee69fc40d9673d1b293f"
+                "reference": "896592f7c0bdfac18238b67368416c6724f36f84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4892ffd1d575ecb106c5ee69fc40d9673d1b293f",
-                "reference": "4892ffd1d575ecb106c5ee69fc40d9673d1b293f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/896592f7c0bdfac18238b67368416c6724f36f84",
+                "reference": "896592f7c0bdfac18238b67368416c6724f36f84",
                 "shasum": ""
             },
             "require": {
@@ -2099,7 +2100,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2019-01-19T12:15:46+00:00"
+            "time": "2019-01-27T09:22:57+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -2444,12 +2445,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "d78ff9239213a6349455d08325ae2ca9b57f25c9"
+                "reference": "c195108dddab91f51b9c57f63e8b184d0a257a54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/d78ff9239213a6349455d08325ae2ca9b57f25c9",
-                "reference": "d78ff9239213a6349455d08325ae2ca9b57f25c9",
+                "url": "https://api.github.com/repos/symfony/console/zipball/c195108dddab91f51b9c57f63e8b184d0a257a54",
+                "reference": "c195108dddab91f51b9c57f63e8b184d0a257a54",
                 "shasum": ""
             },
             "require": {
@@ -2508,7 +2509,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T21:53:45+00:00"
+            "time": "2019-01-25T14:35:46+00:00"
         },
         {
             "name": "symfony/contracts",
@@ -3413,12 +3414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "e3f340458cc47934d77c02c73b93f064d56d4fe8"
+                "reference": "99894e46668d01fb224b2ddd86f269514fb85c00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/e3f340458cc47934d77c02c73b93f064d56d4fe8",
-                "reference": "e3f340458cc47934d77c02c73b93f064d56d4fe8",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/99894e46668d01fb224b2ddd86f269514fb85c00",
+                "reference": "99894e46668d01fb224b2ddd86f269514fb85c00",
                 "shasum": ""
             },
             "require": {
@@ -3501,7 +3502,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2019-01-11T16:23:22+00:00"
+            "time": "2019-01-26T18:40:28+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4517,12 +4518,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "706c004625b4b3e69f5e9718fac8157f6f5a8bed"
+                "reference": "27ecf674504849983d92e561b84db33ebf00c6cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/706c004625b4b3e69f5e9718fac8157f6f5a8bed",
-                "reference": "706c004625b4b3e69f5e9718fac8157f6f5a8bed",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/27ecf674504849983d92e561b84db33ebf00c6cf",
+                "reference": "27ecf674504849983d92e561b84db33ebf00c6cf",
                 "shasum": ""
             },
             "require": {
@@ -4593,7 +4594,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-17T11:26:01+00:00"
+            "time": "2019-01-24T13:04:03+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5167,12 +5168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "7cdd4f6f1236daed2fbd6f910bbc1503eb037442"
+                "reference": "4b3f51842075f6145faabce0e9a3869c33b24124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/7cdd4f6f1236daed2fbd6f910bbc1503eb037442",
-                "reference": "7cdd4f6f1236daed2fbd6f910bbc1503eb037442",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/4b3f51842075f6145faabce0e9a3869c33b24124",
+                "reference": "4b3f51842075f6145faabce0e9a3869c33b24124",
                 "shasum": ""
             },
             "require": {
@@ -5215,7 +5216,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T22:37:52+00:00"
+            "time": "2019-01-25T14:35:46+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
