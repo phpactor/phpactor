@@ -25,7 +25,7 @@ if !exists('g:phpactorOmniAutoClassImport')
 endif
 
 if !exists('g:phpactorCompletionIgnoreCase')
-    let g:phpactorCompletionIgnoreCase = 0
+    let g:phpactorCompletionIgnoreCase = 1
 endif
 
 if g:phpactorOmniAutoClassImport == v:true
