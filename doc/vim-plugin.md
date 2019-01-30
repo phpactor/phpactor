@@ -162,7 +162,6 @@ The plugin has some configuration options:
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorCompletionIgnoreCase = 0
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -170,8 +169,6 @@ let g:phpactorCompletionIgnoreCase = 0
   bleeding edge).
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
-- `g:phpactorCompletionIgnoreCase`: Ignore case when searching completion
-  candidates.
 
 
 Extensions
@@ -207,12 +204,18 @@ autocmd FileType php setlocal omnifunc=phpactor#Complete
 To invoke omni complete in insert mode `<C-x><C-o>` (`ctrl-x` then `ctrl-o`).
 See `:help compl-omni`.
 
+For case sensitive searching, set
+```vimscript
+let g:phpactorCompletionIgnoreCase = 0
+```
+
 Omni complete can also provide feedback when something fails to complete, this
 can be useful, enable it with:
 
 ```
 let g:phpactorOmniError = v:true
 ```
+
 
 Completion plugins
 ------------------
