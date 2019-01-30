@@ -162,6 +162,7 @@ The plugin has some configuration options:
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
+let g:phpactorCompletionIgnoreCase = 0
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -169,6 +170,9 @@ let g:phpactorOmniAutoClassImport = v:true
   bleeding edge).
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
+- `g:phpactorCompletionIgnoreCase`: Ignore case when searching completion
+  candidates.
+
 
 Extensions
 ----------
