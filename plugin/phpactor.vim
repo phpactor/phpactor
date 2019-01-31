@@ -24,6 +24,10 @@ if !exists('g:phpactorOmniAutoClassImport')
     let g:phpactorOmniAutoClassImport = v:true
 endif
 
+if !exists('g:phpactorCompletionIgnoreCase')
+    let g:phpactorCompletionIgnoreCase = 1
+endif
+
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
@@ -85,7 +89,8 @@ function! phpactor#Complete(findstart, base)
                         \ 'abbr': phpactor#_completeTruncateLabel(suggestion['label'], g:phpactorCompleteLabelTruncateLength),
                         \ 'menu': suggestion['short_description'],
                         \ 'kind': suggestion['type'],
-                        \ 'dup': 1
+                        \ 'dup': 1,
+                        \ 'icase': g:phpactorCompletionIgnoreCase
                         \ }
             call add(completions, completion)
             let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
