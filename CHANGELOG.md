@@ -26,6 +26,7 @@ Features:
   - [worse-reflection] Support for registering custom virtual class member
     providers.
   - [vim-plugin] Find references shows context line #706
+  - [code-builder] Trait support, thanks @dshoreman
 
 Improvements:
 
@@ -42,6 +43,8 @@ Bug fixes:
   - [class-to-file] sort candidates by path length #712 thanks @greg0ire
   - [code-transform] Rename variable includes anonumous function use #713
   - [worse-reflection] Do not downcast union types in named docblocks #711
+  - [code-transform] Extract method sometimes creates method in new class in
+    same file #730
 
 ## 2018-12-02 0.11.0
 
