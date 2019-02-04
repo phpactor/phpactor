@@ -45,6 +45,7 @@ Bug fixes:
   - [worse-reflection] Do not downcast union types in named docblocks #711
   - [code-transform] Extract method sometimes creates method in new class in
     same file #730
+  - [code-transform] Add Missing Properties added trait props in new class #726
 
 ## 2018-12-02 0.11.0
 
