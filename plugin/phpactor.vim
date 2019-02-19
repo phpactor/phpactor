@@ -6,6 +6,11 @@
 " | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
 "                                                                                         
 
+if exists('g:phpactorLoaded')
+  finish
+endif
+
+let g:phpactorLoaded = 1
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
