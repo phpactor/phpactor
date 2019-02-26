@@ -23,7 +23,7 @@ composer.autoload_deregister: false
 
 #### Option 1: Bootstrap Drupal on the fly to generate the autoloader
 
-Create the following bootstrap file `autoload_phpactor.php`, in (for example)
+Create the following bootstrap file `phpactor_autoload.php`, in (for example)
 `web/`:
 
 ```php
@@ -62,7 +62,8 @@ Then edit `.phpactor.yml` to use that:
 
 ```yaml
 # Use the special autoloader above
-autoload: web/phpactor_autoload.php
+composer.autoloader_path: web/phpactor_autoload.php
+
 ```
 
 The downside to this option is that it requires access to the DB from your current environment which may be tricky if you are running Drupal inside a VM.
