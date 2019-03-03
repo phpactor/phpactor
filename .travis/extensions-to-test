@@ -1,0 +1,7 @@
+phpactor/behat-extension
+phpactor/phpspec-extension
+phpactor/language-server-extension
+phpactor/language-server-completion-extension
+phpactor/language-server-reference-finder-extension
+phpactor/language-server-hover-extension
+phpactor/phpunit-extension

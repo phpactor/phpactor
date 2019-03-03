@@ -1,6 +1,52 @@
 Changelog
 =========
 
+## 2019-03-03 0.12.0
+
+BC Break:
+
+  - [completion] Comletion API changed to accept the new
+    [TextDocument](https://github.com/phpactor/text-document).
+
+Features:
+
+  - [goto-definition] Goto definition extracted from core into separate
+    packages including [extension
+    point](https://github.com/phpactor/reference-finder-extension).
+  - [goto-definition] Support for "plain text" goto class definition, works
+    for docblocks, and non-PHP files.
+  - [completion] Do not suggest non-static method on static calls.
+  - [completion] Suggest ::class constant, fixes #673
+  - [completion] Docblock type injection allow name to be omitted #618
+  - [application] Log errors in command error handler (for logging async
+    completion errors using the complete command)
+  - [worse-reflection] Support variadic arguments #621
+  - [worse-reflection] Support for virtual methods #682
+  - [worse-reflection] Support for evaluating `clone()`
+  - [worse-reflection] Support for registering custom virtual class member
+    providers.
+  - [vim-plugin] Find references shows context line #706
+  - [code-builder] Trait support, thanks @dshoreman
+
+Improvements:
+
+  - [code-transform] Support extracting expressions to methods #666
+  - [code-transform] Extract method adds return statement to calling code if
+    extracted code contained a return #704
+  - [worse-reflection] Support union catch #711
+
+Bug fixes:
+
+  - [completion] Fix type resolution immediately following docblock #678
+  - [completion] Include `$` on static properties #677
+  - [extension-manager] Do not install dev dependencies for extensions #674
+  - [class-to-file] sort candidates by path length #712 thanks @greg0ire
+  - [code-transform] Rename variable includes anonumous function use #713
+  - [worse-reflection] Do not downcast union types in named docblocks #711
+  - [code-transform] Extract method sometimes creates method in new class in
+    same file #730
+  - [code-transform] Add Missing Properties added trait props in new class #726
+
 ## 2018-12-21 0.11.1
 
   - [application] Resolve the vendor directory correctly when Phpactor

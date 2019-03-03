@@ -5,6 +5,7 @@ namespace Phpactor;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
+use Phpactor\Extension\CodeTransformExtra\CodeTransformExtraExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
@@ -14,6 +15,7 @@ use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
+use Phpactor\Extension\WorseReferenceFinder\WorseReferenceFinderExtension;
 use Phpactor\Extension\ExtensionManager\ExtensionManagerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
@@ -30,6 +32,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
+use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 
 class Phpactor
 {
@@ -38,6 +42,7 @@ class Phpactor
         $config = [];
 
         $cwd = getcwd();
+
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
             ->enableYamlDeserializer('yaml')
@@ -46,6 +51,7 @@ class Phpactor
             ->addCandidate($cwd . '/.phpactor.json', 'json')
             ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
             ->loader();
+
         $config = $loader->load();
         $config[CoreExtension::COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
@@ -67,6 +73,7 @@ class Phpactor
             ClassToFileExtension::class,
             ClassMoverExtension::class,
             CodeTransformExtension::class,
+            CodeTransformExtraExtension::class,
             CompletionExtraExtension::class,
             CompletionWorseExtension::class,
             CompletionExtension::class,
@@ -83,6 +90,9 @@ class Phpactor
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
             ExtensionManagerExtension::class,
+            WorseReferenceFinderExtension::class,
+            ReferenceFinderRpcExtension::class,
+            ReferenceFinderExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
@@ -118,6 +128,9 @@ class Phpactor
             $extensions[] = $extension;
             $masterSchema = $masterSchema->merge($schema);
         }
+        $masterSchema->setDefaults([
+            PhpactorContainer::PARAM_EXTENSION_CLASSES => $extensionNames,
+        ]);
         $config = $masterSchema->resolve($config);
 
         // > method configure container

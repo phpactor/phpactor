@@ -155,6 +155,7 @@ class ReferencesHandlerTest extends HandlerTestCase
                         [
                             'start' => 10,
                             'end' => 20,
+                            'line' => '',
                             'line_no' => 10,
                             'col_no' => 12,
                         ]
@@ -231,6 +232,7 @@ class ReferencesHandlerTest extends HandlerTestCase
                             'start' => 10,
                             'line_no' => 10,
                             'end' => 20,
+                            'line' => '',
                             'col_no' => 12,
                         ],
                     ],
@@ -261,6 +263,7 @@ class ReferencesHandlerTest extends HandlerTestCase
                         [
                             'start' => 10,
                             'end' => 20,
+                            'line' => '',
                             'line_no' => 10,
                             'col_no' => 12,
                         ]

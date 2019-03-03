@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Navigation\Application;
 
 use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
 use RuntimeException;
-use Phpactor\Extension\CodeTransform\Application\ClassNew;
+use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 
 class Navigator
 {

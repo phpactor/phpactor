@@ -32,7 +32,7 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 7.0+
+- PHP 7.1+
 - Composer
 
 Project Recommendations
@@ -50,6 +50,4 @@ Community
 ---------
 
 - Follow [@phpactor](https://twitter.com/phpactor) for the latest news.
-- Join the `#phpactor` channel on the Slack [Symfony
-  Devs](https://symfony-devs.slack.com/join/shared_invite/enQtMzM3NDA1NzEyMzg0LTgyNGYwYjFjMjY5YjllYWZkYTY2OWM4MDQzZTgzMmNjNGI3ZDJhYzE2Yjc4NmFmM2JiOTZjODg2MGJlM2RjMDU)
-  channel.
+- Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.

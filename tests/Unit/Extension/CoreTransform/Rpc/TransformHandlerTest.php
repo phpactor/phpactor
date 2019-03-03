@@ -7,7 +7,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\TransformHandler;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
