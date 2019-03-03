@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58b9e2b8eca913b959710ab8e39ee2f7",
+    "content-hash": "b8d06848fc9b9556bc58d5eeb117c06d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1853,16 +1853,16 @@
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
-            "version": "0.1.0",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem-extension.git",
-                "reference": "b416871d239317738ced8293d7acbe35dc161d33"
+                "reference": "9650971e3017f908e04db88157d3927915170f28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/b416871d239317738ced8293d7acbe35dc161d33",
-                "reference": "b416871d239317738ced8293d7acbe35dc161d33",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem-extension/zipball/9650971e3017f908e04db88157d3927915170f28",
+                "reference": "9650971e3017f908e04db88157d3927915170f28",
                 "shasum": ""
             },
             "require": {
@@ -1880,7 +1880,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\SourceCodeFilesystem\\SourceCodeFilesystemExtension",
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -1899,7 +1899,7 @@
                 }
             ],
             "description": "Source Code Filesystem Extension",
-            "time": "2019-03-03T11:35:47+00:00"
+            "time": "2019-03-03T13:37:45+00:00"
         },
         {
             "name": "phpactor/text-document",
