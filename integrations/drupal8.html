@@ -56,7 +56,7 @@
                                             Configuration
                                         </a>
                                     </li>
-                                                                    <li class="active">
+                                                                    <li class="">
                                         <a href="https://phpactor.github.io/phpactor/extensions.html">
                                             Extensions
                                         </a>
@@ -93,7 +93,7 @@
                                             Links and Resources
                                         </a>
                                     </li>
-                                                                    <li class="">
+                                                                    <li class="active">
                                         <a href="https://phpactor.github.io/phpactor/integrations.html">
                                             Integrations
                                         </a>
@@ -113,44 +113,83 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="extensions">Extensions</h1>
-<p>Phpactor allows you to add custom extensions, for example to provide new
-completors, or anything you can imagine.</p>
-<p>The aim of extensions is for them to be as independent and decoupled as
-possible, they can easily be used without Phpactor and can be easily combined
-to create new applications.</p>
-<p>Currently Phpactor ships with a dozen &quot;hard coded&quot; extensions which cannot be
-removed.</p>
-<p>For some extension examples see the <a href="/integrations.html">integrations</a> page.</p>
-<h2 id="usage">Usage</h2>
-<p>To list all available extensions, run the following:</p>
-<pre><code>$ phpactor extension:list
-+-------------------------------------------+--------------------+-------------------------------------+
-| Name                                      | Version            | Description                         |
-+-------------------------------------------+--------------------+-------------------------------------+
-| phpactor/class-to-file-extension          | 0.1.x-dev 61007ff* | Converts classes to files and vice- |
-| phpactor/completion-extension             | 0.1.x-dev 23fc826* | Phpactor Code Completion Extension  |
-| phpactor/completion-rpc-extension         | 0.1.x-dev fc5cc03* | RPC support for the Completion Exte |
-| phpactor/completion-worse-extension       |                    | Collection of completors based on W |
-| phpactor/composer-autoloader-extension    | 0.1.x-dev ec979b7* | Composer Autoloader provider        |
-| phpactor/console-extension                | 0.1.x-dev 970c787* | Integrate Symfony Console commands  |
-+-------------------------------------------+--------------------+-------------------------------------+</code></pre>
-<p>Note that extensions without a version are not installed.</p>
-<p>Pretending that <code>phpactor/completion-worse-extension</code> isn't installed, you can install it with:</p>
-<pre><code>$ phpactor extension:install phpactor/completion-worse-extension
-Using version "^0.2.0"
-Loading composer repositories with package information
-Updating dependencies
-Package operations: 1 install, 0 updates, 0 removals
-  - Installing phpactor/language-server-extension (0.2.0): Loading from cache
-Writing lock file
-Generating autoload files</code></pre>
-<p>Removing is done via. <code>extension:remove</code>.</p>
-<h2 id="extensions-1">Extensions</h2>
-<ul>
-<li><a href="https://github.com/phpactor/phpunit-extension">PHPUnit Extension</a>: Provides
-some integerations with PHPUnit.</li>
-</ul>
+                    <h2 id="drupal-8">Drupal 8</h2>
+<h3 id="bootstrapping">Bootstrapping</h3>
+<p>Drupal automatically adds its modules to the autoloader during the kernel
+boot process. It is therefore necessary to either 1) boot the kernel to have a fully
+useful autoloader <em>or</em> 2) to use a different mechanism to add the modules to the Composer autoloader.</p>
+<p>Depending on your setup option 1 or 2 will be preferable.</p>
+<p>In both cases deregister the autoloader in <code>.phpactor.yml</code>:</p>
+<pre><code class="language-yaml"># Bootstrapping Drupal creates lots of implicit global
+# dependencies, so we will just keep the Drupal autoloader
+# registered and hope for the best.
+composer.autoload_deregister: false</code></pre>
+<h4 id="option-1-bootstrap-drupal-on-the-fly-to-generate-the-autoloader">Option 1: Bootstrap Drupal on the fly to generate the autoloader</h4>
+<p>Create the following bootstrap file <code>phpactor_autoload.php</code>, in (for example)
+<code>web/</code>:</p>
+<pre><code class="language-php">// web/phpactor_autoload.php
+&lt;?php
+
+use Drupal\Console\Core\Utils\DrupalFinder;
+use Drupal\Console\Bootstrap\DrupalKernel;
+use Symfony\Component\HttpFoundation\Request;
+
+$autoload = require_once __DIR__ . '/autoload.php';
+
+$root = getcwd();
+
+$drupalFinder = new DrupalFinder();
+if (!$drupalFinder-&gt;locateRoot($root)) {
+    die('DrupalConsole must be executed within a Drupal Site.');
+}
+
+chdir($drupalFinder-&gt;getDrupalRoot());
+
+$drupalKernel = DrupalKernel::createFromRequest(
+  Request::createFromGlobals(),
+  $autoload,
+  'dev',
+  true,
+  $drupalFinder-&gt;getDrupalRoot()
+);
+$drupalKernel-&gt;boot();
+chdir($root);
+
+return $autoload;</code></pre>
+<p>Then edit <code>.phpactor.yml</code> to use that:</p>
+<pre><code class="language-yaml"># Use the special autoloader above
+composer.autoloader_path: web/phpactor_autoload.php
+</code></pre>
+<p>The downside to this option is that it requires access to the DB from your current environment which may be tricky if you are running Drupal inside a VM.</p>
+<h4 id="option-2-add-the-modules-into-the-composer-autoloader">Option 2: Add the modules into the Composer autoloader</h4>
+<p>This option requires merging in any modules (Drupal, contrib, custom) into the Composer autoloader via a discovery mechanism offered by the <a href="https://github.com/fenetikm/autoload-drupal">Drupal Autoloader</a> composer plugin.</p>
+<p>Full details are available in the README for this plugin, however, the short version is that you will need to put the following into your <code>composer.json</code> file:</p>
+<pre><code class="language-json">{
+    "require": {
+        "fenetikm/autoload-drupal": "0.1"
+    },
+    "extra": {
+        "autoload-drupal": {
+            "modules": [
+              "app/modules/contrib/",
+              "app/modules/custom/",
+              "app/core/modules/"
+            ]
+        }
+    }
+}</code></pre>
+<p>and then rebuild your Composer autoloader e.g.</p>
+<pre><code class="language-sh">composer autoload-dump</code></pre>
+<p>The upside to this option is that it won't require the relatively slow Drupal bootstrap (which will hit the DB) but the downside is that you will have to regenerate the autoloader every time you add / remove a module.</p>
+<h4 id="coding-standards">Coding Standards</h4>
+<p>Change your local <code>.phpactor.yml</code> to use 2 spaces for indentation:</p>
+<pre><code># Drupal CS is 2 spaces
+code_transform.indentation: "  "</code></pre>
+<div class="alert alert-info">
+Code will still be generated using the PSR-2 standard. It would be necessary
+to override twig templates in `.phpactor/templates` to rectify this (or just
+use a CS fixer).
+</div>
                 </section>
 
             </div>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Phpactor</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://phpactor.github.io/phpactor/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://phpactor.github.io/phpactor/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="https://phpactor.github.io/phpactor/css/main.css">
+    </head>
+    <body>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+                        <div class="logo">
+<center>
+							<a href="https://phpactor.github.io/phpactor"><img src="https://phpactor.github.io/phpactor/images/logo-small.png" /></a>
+							<br/>
+							<b>Phpactor</b><br/> <i>Intelligent completion and refactoring tool for PHP</i>
+</center>
+						</div>
+
+                                                    <p class="text-muted">
+                                Home
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/index.html">
+                                            About
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Usage
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/standalone.html">
+                                            Standalone
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/vim-plugin.html">
+                                            VIM plugin
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/configuration.html">
+                                            Configuration
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/extensions.html">
+                                            Extensions
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Reference
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/completion.html">
+                                            Completion
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/navigation.html">
+                                            Navigation
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/refactorings.html">
+                                            Refactorings
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Other topics
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/links.html">
+                                            Links and Resources
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/integrations.html">
+                                            Integrations
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/developing.html">
+                                            Debugging Phpactor
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/rpc.html">
+                                            RPC Protocol
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="travis-dashboard">Travis Dashboard</h1>
+<h2 id="dependencies">Dependencies</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Version</th>
+<th>Badge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/phpactor/class-mover">phpactor/class-mover</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/class-mover"><img src="https://travis-ci.org/phpactor/class-mover.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/class-to-file-extension">phpactor/class-to-file-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/class-to-file-extension"><img src="https://travis-ci.org/phpactor/class-to-file-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/code-transform">phpactor/code-transform</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/code-transform"><img src="https://travis-ci.org/phpactor/code-transform.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/code-transform-extension">phpactor/code-transform-extension</a></td>
+<td>^0.1</td>
+<td><a href="https://travis-ci.org/phpactor/code-transform-extension"><img src="https://travis-ci.org/phpactor/code-transform-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/completion">phpactor/completion</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/completion"><img src="https://travis-ci.org/phpactor/completion.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/completion-extension">phpactor/completion-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/completion-extension"><img src="https://travis-ci.org/phpactor/completion-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/completion-rpc-extension">phpactor/completion-rpc-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/completion-rpc-extension"><img src="https://travis-ci.org/phpactor/completion-rpc-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/completion-worse-extension">phpactor/completion-worse-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/completion-worse-extension"><img src="https://travis-ci.org/phpactor/completion-worse-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/composer-autoloader-extension">phpactor/composer-autoloader-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/composer-autoloader-extension"><img src="https://travis-ci.org/phpactor/composer-autoloader-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/config-loader">phpactor/config-loader</a></td>
+<td>^1.0</td>
+<td><a href="https://travis-ci.org/phpactor/config-loader"><img src="https://travis-ci.org/phpactor/config-loader.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/console-extension">phpactor/console-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/console-extension"><img src="https://travis-ci.org/phpactor/console-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/container">phpactor/container</a></td>
+<td>^1.0</td>
+<td><a href="https://travis-ci.org/phpactor/container"><img src="https://travis-ci.org/phpactor/container.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/extension-manager-extension">phpactor/extension-manager-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/extension-manager-extension"><img src="https://travis-ci.org/phpactor/extension-manager-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/file-path-resolver-extension">phpactor/file-path-resolver-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/file-path-resolver-extension"><img src="https://travis-ci.org/phpactor/file-path-resolver-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/logging-extension">phpactor/logging-extension</a></td>
+<td>~0.2</td>
+<td><a href="https://travis-ci.org/phpactor/logging-extension"><img src="https://travis-ci.org/phpactor/logging-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/path-finder">phpactor/path-finder</a></td>
+<td>dev-master</td>
+<td><a href="https://travis-ci.org/phpactor/path-finder"><img src="https://travis-ci.org/phpactor/path-finder.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/reference-finder-rpc-extension">phpactor/reference-finder-rpc-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/reference-finder-rpc-extension"><img src="https://travis-ci.org/phpactor/reference-finder-rpc-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/rpc-extension">phpactor/rpc-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/rpc-extension"><img src="https://travis-ci.org/phpactor/rpc-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/source-code-filesystem">phpactor/source-code-filesystem</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/source-code-filesystem"><img src="https://travis-ci.org/phpactor/source-code-filesystem.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/source-code-filesystem-extension">phpactor/source-code-filesystem-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/source-code-filesystem-extension"><img src="https://travis-ci.org/phpactor/source-code-filesystem-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/worse-reference-finder-extension">phpactor/worse-reference-finder-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/worse-reference-finder-extension"><img src="https://travis-ci.org/phpactor/worse-reference-finder-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/worse-reflection">phpactor/worse-reflection</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/worse-reflection"><img src="https://travis-ci.org/phpactor/worse-reflection.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/worse-reflection-extension">phpactor/worse-reflection-extension</a></td>
+<td>~0.1</td>
+<td><a href="https://travis-ci.org/phpactor/worse-reflection-extension"><img src="https://travis-ci.org/phpactor/worse-reflection-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="extensions">Extensions</h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th></th>
+<th>Badge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/phpactor/behat-extension">phpactor/behat-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/behat-extension"><img src="https://travis-ci.org/phpactor/behat-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/phpspec-extension">phpactor/phpspec-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/phpspec-extension"><img src="https://travis-ci.org/phpactor/phpspec-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/language-server-extension">phpactor/language-server-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/language-server-extension"><img src="https://travis-ci.org/phpactor/language-server-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/language-server-completion-extension">phpactor/language-server-completion-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/language-server-completion-extension"><img src="https://travis-ci.org/phpactor/language-server-completion-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/language-server-reference-finder-extension">phpactor/language-server-reference-finder-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/language-server-reference-finder-extension"><img src="https://travis-ci.org/phpactor/language-server-reference-finder-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/language-server-hover-extension">phpactor/language-server-hover-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/language-server-hover-extension"><img src="https://travis-ci.org/phpactor/language-server-hover-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpactor/phpunit-extension">phpactor/phpunit-extension</a></td>
+<td></td>
+<td><a href="https://travis-ci.org/phpactor/phpunit-extension"><img src="https://travis-ci.org/phpactor/phpunit-extension.svg?branch=master" alt="master" /></a></td>
+</tr>
+</tbody>
+</table>
+                </section>
+
+            </div>
+
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                $("section>h2").each(function (index, value) {
+                    $(value).append('&nbsp;<a href="#' + $(value).attr('id') + '"><i class="fa small fa-link"></i></a>');
+                });
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+		<footer>
+<hr />
+<center>
+			<a href="https://github.com/phpactor/phpactor">
+				<i class="fa fa-github"></i>
+Fork me on Github!
+			</a> | 
+
+			<a href="/dashboard.html">
+                Build Dashboard
+			</a>
+</center>
+		</footer>
+
+	</body>
+</html>

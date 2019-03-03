@@ -126,7 +126,9 @@ This section is incomplete
 <p>In order to create the above variant we need to create a template locally in
 <code>.phpactor/templates</code> (note you can also create them globally in the XDG
 directories, in a <code>templates</code> folder):</p>
-<pre><code class="language-twig">{# /path/to/project/.phpactor/templates/phpunit_test/SourceCode.php.twig #}
+<pre><code class="language-twig">&lt;?php
+
+{# /path/to/project/.phpactor/templates/phpunit_test/SourceCode.php.twig #}
 namespace {{ prototype.namespace }};
 
 use PHPUnit\Framework\TestCase;
@@ -163,6 +165,10 @@ class {{ class.name }} extends TestCase
 			<a href="https://github.com/phpactor/phpactor">
 				<i class="fa fa-github"></i>
 Fork me on Github!
+			</a> | 
+
+			<a href="/dashboard.html">
+                Build Dashboard
 			</a>
 </center>
 		</footer>

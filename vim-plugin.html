@@ -245,6 +245,8 @@ VIM's built-in auto-completion mechanism.</p>
 <pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
 <p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
 See <code>:help compl-omni</code>.</p>
+<p>For case sensitive searching, set</p>
+<pre><code class="language-vimscript">let g:phpactorCompletionIgnoreCase = 0</code></pre>
 <p>Omni complete can also provide feedback when something fails to complete, this
 can be useful, enable it with:</p>
 <pre><code>let g:phpactorOmniError = v:true</code></pre>
@@ -303,6 +305,10 @@ should see something like the following:</p>
 			<a href="https://github.com/phpactor/phpactor">
 				<i class="fa fa-github"></i>
 Fork me on Github!
+			</a> | 
+
+			<a href="/dashboard.html">
+                Build Dashboard
 			</a>
 </center>
 		</footer>
