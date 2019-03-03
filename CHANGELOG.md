@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2019-03-03 0.12.0
 
 BC Break:
 
