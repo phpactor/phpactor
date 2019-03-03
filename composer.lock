@@ -810,16 +810,16 @@
         },
         {
             "name": "phpactor/code-transform",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "4db5ceb7c165f41ac74467f665d77209c65ee738"
+                "reference": "c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/4db5ceb7c165f41ac74467f665d77209c65ee738",
-                "reference": "4db5ceb7c165f41ac74467f665d77209c65ee738",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad",
+                "reference": "c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad",
                 "shasum": ""
             },
             "require": {
@@ -837,7 +837,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -856,7 +856,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-03-03T11:32:07+00:00"
+            "time": "2019-02-03T19:02:29+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -1338,16 +1338,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.6.3",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "41bf29a53476b89782873d64d89832525a2dd089"
+                "reference": "026486af40d0963749d9b87e994c3ed1c8e19d7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/41bf29a53476b89782873d64d89832525a2dd089",
-                "reference": "41bf29a53476b89782873d64d89832525a2dd089",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/026486af40d0963749d9b87e994c3ed1c8e19d7c",
+                "reference": "026486af40d0963749d9b87e994c3ed1c8e19d7c",
                 "shasum": ""
             },
             "require": {
@@ -1366,7 +1366,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\ExtensionManager\\ExtensionManagerExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\ExtensionManager\\ExtensionManagerExtension",
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1384,20 +1387,20 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2018-12-21T21:49:54+00:00"
+            "time": "2019-01-06T21:39:47+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
-            "version": "0.6.0",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver.git",
-                "reference": "10d1e06f40945188c8c76f25431f4ba0b95fb2b5"
+                "reference": "01ab55ab723adb72859bdfd57db02013a739e370"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/file-path-resolver/zipball/10d1e06f40945188c8c76f25431f4ba0b95fb2b5",
-                "reference": "10d1e06f40945188c8c76f25431f4ba0b95fb2b5",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver/zipball/01ab55ab723adb72859bdfd57db02013a739e370",
+                "reference": "01ab55ab723adb72859bdfd57db02013a739e370",
                 "shasum": ""
             },
             "require": {
@@ -1408,7 +1411,8 @@
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpbench/phpbench": "^0.14.0",
                 "phpstan/phpstan": "^0.10.5",
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^7.4",
+                "psr/log": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -1427,25 +1431,26 @@
                 }
             ],
             "description": "Resolve files paths for your application (e.g. cache, data, etc)",
-            "time": "2018-11-11T10:35:42+00:00"
+            "time": "2019-01-01T15:50:20+00:00"
         },
         {
             "name": "phpactor/file-path-resolver-extension",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver-extension.git",
-                "reference": "2f68b1123d075fa2429d8e89367999a3efecb14b"
+                "reference": "8a3230a56d14bbe1cf6e0348c5ab4d7a7cc1d0ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/2f68b1123d075fa2429d8e89367999a3efecb14b",
-                "reference": "2f68b1123d075fa2429d8e89367999a3efecb14b",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/8a3230a56d14bbe1cf6e0348c5ab4d7a7cc1d0ca",
+                "reference": "8a3230a56d14bbe1cf6e0348c5ab4d7a7cc1d0ca",
                 "shasum": ""
             },
             "require": {
                 "phpactor/container": "^1.0",
-                "phpactor/file-path-resolver": "~0.6.0"
+                "phpactor/file-path-resolver": "~0.7",
+                "phpactor/logging-extension": "~0.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1454,7 +1459,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\FilePathResolverExtension\\FilePathResolverExtension"
+                "phpactor.extension_class": "Phpactor\\FilePathResolverExtension\\FilePathResolverExtension",
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -1472,7 +1480,7 @@
                 }
             ],
             "description": "File Path Resolver Extension",
-            "time": "2018-11-11T10:42:32+00:00"
+            "time": "2019-01-01T15:55:12+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -1699,16 +1707,16 @@
         },
         {
             "name": "phpactor/reference-finder-rpc-extension",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-rpc-extension.git",
-                "reference": "ff49f7196c3f157675eb5ee2d1059d06264422c2"
+                "reference": "0958459b72794b45d20d79bf0d78c4c82b6f6ade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/ff49f7196c3f157675eb5ee2d1059d06264422c2",
-                "reference": "ff49f7196c3f157675eb5ee2d1059d06264422c2",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/0958459b72794b45d20d79bf0d78c4c82b6f6ade",
+                "reference": "0958459b72794b45d20d79bf0d78c4c82b6f6ade",
                 "shasum": ""
             },
             "require": {
@@ -1725,7 +1733,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ReferenceFinderRpc\\ReferenceFinderRpcExtension",
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -1744,7 +1752,7 @@
                 }
             ],
             "description": "Description about my project",
-            "time": "2019-03-03T11:39:20+00:00"
+            "time": "2019-01-06T12:13:56+00:00"
         },
         {
             "name": "phpactor/rpc-extension",
@@ -2096,16 +2104,16 @@
         },
         {
             "name": "phpactor/worse-reflection-extension",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "5d4df55f6d485674c60b530d3250737433563ad7"
+                "reference": "465ac2fa786451fea6d7294cc29e629ebce5c2e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/5d4df55f6d485674c60b530d3250737433563ad7",
-                "reference": "5d4df55f6d485674c60b530d3250737433563ad7",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/465ac2fa786451fea6d7294cc29e629ebce5c2e9",
+                "reference": "465ac2fa786451fea6d7294cc29e629ebce5c2e9",
                 "shasum": ""
             },
             "require": {
@@ -2119,13 +2127,13 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpstan/phpstan": "^0.10.5",
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^7.3"
             },
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\WorseReflection\\WorseReflectionExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2144,7 +2152,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2018-11-24T15:38:46+00:00"
+            "time": "2018-12-27T11:51:34+00:00"
         },
         {
             "name": "phpbench/container",
