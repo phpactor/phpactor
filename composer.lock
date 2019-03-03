@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b13d0ad05153d49ddfc99aa7fcba0e99",
+    "content-hash": "58b9e2b8eca913b959710ab8e39ee2f7",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1061,22 +1061,22 @@
         },
         {
             "name": "phpactor/completion-worse-extension",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "873a1c8af0d831d2d5a43ad1785de3764f37db82"
+                "reference": "3d1b510b7af4573b453d13d912236b3fdefcc7f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/873a1c8af0d831d2d5a43ad1785de3764f37db82",
-                "reference": "873a1c8af0d831d2d5a43ad1785de3764f37db82",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3d1b510b7af4573b453d13d912236b3fdefcc7f5",
+                "reference": "3d1b510b7af4573b453d13d912236b3fdefcc7f5",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion-extension": "~0.1",
+                "phpactor/completion-extension": "~0.2",
                 "phpactor/source-code-filesystem-extension": "~0.1",
-                "phpactor/worse-reflection-extension": "~0.1"
+                "phpactor/worse-reflection-extension": "~0.2"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
@@ -1087,7 +1087,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1106,7 +1106,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2018-11-25T17:18:04+00:00"
+            "time": "2019-01-12T17:07:59+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -2104,7 +2104,7 @@
         },
         {
             "name": "phpactor/worse-reflection-extension",
-            "version": "0.1.1",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
