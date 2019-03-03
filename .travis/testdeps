@@ -4,20 +4,26 @@ echo "============================="
 echo ""
 
 EXITCODE=0
-for dep in class-mover class-to-file code-builder code-transform source-code-filesystem worse-reflection completion docblock language-server class-to-file-extension completion-extension completion-rpc-extension completion-worse-extension composer-autoloader-extension file-path-resolver-extension logging-extension rpc-extension source-code-filesystem-extension worse-reflection-extension; do
+while read -r dep; do
     echo ""
-    echo "Testing: "$dep
+    echo "Testing: $dep"
     echo ""
-    cd vendor/phpactor/$dep
+    cd "vendor/$dep" || continue
 
     if [ ! -e vendor ]; then
-        ln -s ../../../vendor
+        ln -s ../../../vendor .
     fi
     composer dumpautoload
-    if [ $EXITCODE -eq 0 ] && ! vendor/bin/phpunit; then
+    CMD=vendor/bin/phpunit
+    if [ "$dep" = "phpactor/extension-manager-extension" ]; then
+        CMD=$CMD" --process-isolation"
+    fi
+    if [ $EXITCODE -eq 0 ] && ! $CMD; then
          EXITCODE=1
     fi
-    cd -
-done
+    cd - || continue
+done < <(php .travis/list-deps.php)
+
+composer dumpautoload
 
 exit $EXITCODE

@@ -24,6 +24,7 @@ script:
   - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
   # Run the test suites for all the Phpactor packages
   - .travis/testdeps
+  - .travis/testexts
 
 jobs:
   include:
