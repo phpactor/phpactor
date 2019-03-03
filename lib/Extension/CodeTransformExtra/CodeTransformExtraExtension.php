@@ -328,23 +328,12 @@ class CodeTransformExtraExtension implements Extension
                 $container->get('code_transform.refactor.override_method')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => OverrideMethodHandler::NAME] ]);
-<<<<<<< HEAD:lib/Extension/CodeTransform/CodeTransformExtension.php
-
-        $container->register('code_transform.rpc.handler.transform', function (Container $container) {
-            return new TransformHandler(
-                $container->get('code_transform.transform')
-            );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => TransformHandler::NAME] ]);
-=======
->>>>>>> origin/develop:lib/Extension/CodeTransformExtra/CodeTransformExtraExtension.php
 
         $container->register('code_transform.rpc.handler.extract_expression', function (Container $container) {
             return new ExtractExpressionHandler(
                 $container->get('code_transform.refactor.extract_expression')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ExtractExpressionHandler::NAME] ]);
-<<<<<<< HEAD:lib/Extension/CodeTransform/CodeTransformExtension.php
-=======
     }
 
     private function registerGenerators(ContainerBuilder $container)
@@ -370,6 +359,5 @@ class CodeTransformExtraExtension implements Extension
         }, [ CodeTransformExtension::TAG_FROM_EXISTING_GENERATOR => [
             'name' => 'interface'
         ] ]);
->>>>>>> origin/develop:lib/Extension/CodeTransformExtra/CodeTransformExtraExtension.php
     }
 }
