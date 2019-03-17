@@ -5,3 +5,4 @@ phpactor/language-server-completion-extension
 phpactor/language-server-reference-finder-extension
 phpactor/language-server-hover-extension
 phpactor/phpunit-extension
+phpactor/swoole-extension
