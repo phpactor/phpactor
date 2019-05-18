@@ -45,7 +45,7 @@ class ClassMoveCommand extends Command
         $this->addArgument('dest', InputArgument::OPTIONAL, 'Destination path or FQN');
         $this->addOption('type', null, InputOption::VALUE_REQUIRED, sprintf(
             'Type of move: "%s"',
-             implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
+            implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
         FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }

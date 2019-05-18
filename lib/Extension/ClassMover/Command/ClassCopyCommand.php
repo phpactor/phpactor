@@ -43,7 +43,7 @@ class ClassCopyCommand extends Command
         $this->addArgument('dest', InputArgument::OPTIONAL, 'Destination path or FQN');
         $this->addOption('type', null, InputOption::VALUE_REQUIRED, sprintf(
             'Type of copy: "%s"',
-             implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
+            implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
     }
 
