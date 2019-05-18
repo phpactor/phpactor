@@ -6,6 +6,12 @@ Changelog
 Features:
 
   - [vim-plugin] Add new `GotoDefinition[Vsplit|Hsplit|Tab]` functions.
+  - [code-builder] Initial support for nullable types. Thanks @einenlum!
+
+Bug fixes:
+
+  - [completion] Signature helper does not work on interfaces (#752). Thanks
+    @taluu!
 
 ## 2019-03-03 0.12.0
 
