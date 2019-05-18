@@ -51,3 +51,9 @@ Generating autoload files
 ```
 
 Removing is done via. `extension:remove`.
+
+Extensions
+----------
+
+- [PHPUnit Extension](https://github.com/phpactor/phpunit-extension): Provides
+  some integerations with PHPUnit.

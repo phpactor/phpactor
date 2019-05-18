@@ -51,15 +51,12 @@ menu:
         other:
             name: Other topics
             items:
-                lsp:
-                    text: Language Server (experimental)
-                    relativeUrl: lsp.html
+                links:
+                    text: Links and Resources
+                    relativeUrl: links.html
                 integrations:
                     text: Integrations
                     relativeUrl: integrations.html
-                history:
-                    text: History
-                    relativeUrl: history.html
                 development:
                     text: Debugging Phpactor
                     relativeUrl: developing.html
