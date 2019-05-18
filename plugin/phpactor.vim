@@ -193,8 +193,25 @@ endfunction
 """""""""""""""""""""""""""
 " RPC Proxy methods
 """""""""""""""""""""""""""
+function! phpactor#_GotoDefinitionTarget(target)
+    call phpactor#rpc("goto_definition", { 
+                \"offset": phpactor#_offset(), 
+                \"source": phpactor#_source(), 
+                \"path": expand('%:p'), 
+                \"target": a:target,
+                \'language': &ft})
+endfunction
 function! phpactor#GotoDefinition()
-    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p'), 'language': &ft})
+    call phpactor#_GotoDefinitionTarget('focused_window')
+endfunction
+function! phpactor#GotoDefinitionVsplit()
+    call phpactor#_GotoDefinitionTarget('vsplit')
+endfunction
+function! phpactor#GotoDefinitionHsplit()
+    call phpactor#_GotoDefinitionTarget('hsplit')
+endfunction
+function! phpactor#GotoDefinitionTab()
+    call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
 function! phpactor#Hover()
@@ -541,11 +558,29 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> open_file
     if a:actionName == "open_file"
-        call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
-        if a:parameters['force_reload'] == v:true
-            exec ":e!"
+        let cmd = 'edit'
+
+        if a:parameters['target'] == 'focused_window'
+            call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+
+            if a:parameters['force_reload'] == v:true
+                exec "e!"
+            endif
         endif
+
+        if a:parameters['target'] == 'vsplit'
+            exec ":vsplit " . a:parameters['path']
+        endif
+
+        if a:parameters['target'] == 'hsplit'
+            exec ":split " . a:parameters['path']
+        endif
+
+        if a:parameters['target'] == 'new_tab'
+            exec ":tabnew " . a:parameters['path']
+        endif
+
 
         if (a:parameters['offset'])
             exec ":goto " .  (a:parameters['offset'] + 1)
