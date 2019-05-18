@@ -1,7 +1,8 @@
 {
     "name": "phpactor/phpactor",
     "description": "PHP refactoring and intellisense tool for text editors",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "composer/xdebug-handler": "^1.1",
         "monolog/monolog": "^1.0",
