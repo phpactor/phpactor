@@ -28,6 +28,7 @@
         "phpactor/worse-reflection": "~0.1",
         "phpactor/worse-reflection-extension": "~0.1",
         "phpbench/container": "^1.0",
+        "phpactor/code-builder": "^0.3",
         "sebastian/diff": "^3.0",
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",

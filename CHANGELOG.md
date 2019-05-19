@@ -12,6 +12,8 @@ Bug fixes:
 
   - [completion] Signature helper does not work on interfaces (#752). Thanks
     @taluu!
+  - [code-builder] Class import doesn't work with single element namespace
+    #760
 
 ## 2019-03-03 0.12.0
 
