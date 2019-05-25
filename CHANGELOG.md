@@ -14,6 +14,7 @@ Bug fixes:
     @taluu!
   - [code-builder] Class import doesn't work with single element namespace
     #760
+  - [code-builder] Variant is not passed to class generator (#766)
 
 ## 2019-03-03 0.12.0
 
