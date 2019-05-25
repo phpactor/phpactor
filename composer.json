@@ -10,7 +10,7 @@
         "php": "^7.1",
         "phpactor/class-mover": "~0.1",
         "phpactor/class-to-file-extension": "~0.2",
-        "phpactor/code-transform": "~0.1",
+        "phpactor/code-transform": "~0.2",
         "phpactor/completion": "~0.2",
         "phpactor/completion-extension": "~0.2",
         "phpactor/completion-rpc-extension": "~0.2",

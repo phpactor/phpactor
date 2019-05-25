@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e4c954bb2ad6fb40ae59e5bf4728ca4",
+    "content-hash": "2f0881f4360e733aade6f295142e0eea",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -766,12 +766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "baeb8e5a977ccfb18c640ba1eef72a057b6f639c"
+                "reference": "61f1ed45ad8f1b8534b437593d9d0e7fb0d008ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/baeb8e5a977ccfb18c640ba1eef72a057b6f639c",
-                "reference": "baeb8e5a977ccfb18c640ba1eef72a057b6f639c",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/61f1ed45ad8f1b8534b437593d9d0e7fb0d008ff",
+                "reference": "61f1ed45ad8f1b8534b437593d9d0e7fb0d008ff",
                 "shasum": ""
             },
             "require": {
@@ -806,25 +806,25 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2019-05-19T10:56:55+00:00"
+            "time": "2019-05-25T15:26:58+00:00"
         },
         {
             "name": "phpactor/code-transform",
-            "version": "0.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad"
+                "reference": "2899a472284f3de6918a7cf2a426d3f838ba1457"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad",
-                "reference": "c75b56e12cbc56a9d0cd0b8c172a8dd6020e78ad",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/2899a472284f3de6918a7cf2a426d3f838ba1457",
+                "reference": "2899a472284f3de6918a7cf2a426d3f838ba1457",
                 "shasum": ""
             },
             "require": {
                 "phpactor/class-to-file": "~0.3",
-                "phpactor/code-builder": "~0.2",
+                "phpactor/code-builder": "~0.3",
                 "webmozart/path-util": "~2.3"
             },
             "require-dev": {
@@ -837,7 +837,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -856,7 +856,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-02-03T19:02:29+00:00"
+            "time": "2019-05-25T15:30:25+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
