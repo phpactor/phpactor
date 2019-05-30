@@ -574,7 +574,13 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
         let action = a:parameters['callback']['action']
         let parameters = a:parameters['callback']['parameters']
 
-        return phpactor#_rpc_dispatch_input(inputs, action, parameters)
+        try
+          return phpactor#_rpc_dispatch_input(inputs, action, parameters)
+        catch /cancelled/
+          redraw
+          echo 'Cancelled'
+          return
+        endtry
     endif
 
     " >> information
