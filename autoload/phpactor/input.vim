@@ -8,8 +8,8 @@ function! phpactor#input#text(label, default, completionType, ResultHandler)
     call a:ResultHandler(text)
 endfunction
 
-function! phpactor#input#confirm(label, default, completionType, ResultHandler)
-    let choice = confirm(inputParameters["label"], "&Yes\n&No\n")
+function! phpactor#input#confirm(label, ResultHandler)
+    let choice = confirm(a:label, "&Yes\n&No\n")
 
     if choice == 1
         let response = v:true

@@ -682,8 +682,7 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
         \ ])
     elseif 'confirm' == input['type']
         let TypeHandler = function('phpactor#input#confirm', [
-            \ inputParameters['label'],
-            \ '&Yes\n&No\n'
+            \ inputParameters['label']
         \ ])
     else
         throw "Do not know how to handle input '" . input['type'] . "'"
