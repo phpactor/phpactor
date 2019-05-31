@@ -1,5 +1,11 @@
 function! phpactor#input#list#strategy()
-    if !has_key(g:, 'phpactorInputListStrategy')
+    if has_key(g:, 'phpactorInputListStrategy')
+        return g:phpactorInputListStrategy
+    endif
+
+    if has_key(g:, 'phpactorCustomInputListStrategy')
+        let g:phpactorInputListStrategy = g:phpactorCustomInputListStrategy
+    else
         let g:phpactorInputListStrategy = s:auto_detect_strategy()
     endif
 
@@ -28,11 +34,13 @@ function! phpactor#input#list#fzf(label, choices, ResultHandler)
 endfunction
 
 function! s:auto_detect_strategy()
+    let strategy = 'inputlist'
+
     if get(g:, 'loaded_fzf', 0)
-        return 'fzf'
+        let strategy = 'fzf'
     endif
 
-    return 'inputlist'
+    return 'phpactor#input#list#'. strategy
 endfunction
 
 function! s:add_number_to_choices(choices)
