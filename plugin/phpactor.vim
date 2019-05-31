@@ -441,69 +441,6 @@ function! phpactor#rpc(action, arguments)
     endif
 endfunction
 
-function! phpactor#_input_choice(label, choices)
-    let list = []
-    let choices = []
-    let usedShortcuts = []
-
-    if empty(a:choices)
-        call confirm("No choices available")
-        throw "cancelled"
-    endif
-
-    for choiceLabel in keys(a:choices)
-        let buffer = []
-        let foundShortcut = v:false
-
-        for char in split(choiceLabel, '\zs')
-            if v:false == foundShortcut && -1 == index(usedShortcuts, tolower(char))
-                call add(buffer, '&')
-                let foundShortcut = v:true
-                call add(usedShortcuts, tolower(char))
-            endif
-
-            call add(buffer, char)
-        endfor
-
-        let confirmLabel = join(buffer, "")
-
-        call add(list, confirmLabel)
-        call add(choices, choiceLabel)
-    endfor
-
-    let choice = confirm(a:label, join(list, "\n"))
-
-    if (choice == 0)
-        " this is an exception, not a message!
-        throw "cancelled"
-    endif
-
-    let choice = choice - 1
-    return a:choices[get(choices, choice)]
-endfunction
-
-function! phpactor#_input_list(label, choices)
-    let list = []
-    let choices = []
-
-    let c = 1
-    for choiceLabel in keys(a:choices)
-        call add(list, c . ") " . choiceLabel)
-        call add(choices, choiceLabel)
-        let c = c + 1
-    endfor
-
-    echo a:label
-    let choice = inputlist(list)
-
-    if (choice == 0)
-        throw "cancelled"
-    endif
-
-    let choice = choice - 1
-    return a:choices[choices[choice]]
-endfunction
-
 function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> return_choice
@@ -633,21 +570,17 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> input_callback
     if a:actionName == "input_callback"
+        let inputs = a:parameters['inputs']
+        let action = a:parameters['callback']['action']
         let parameters = a:parameters['callback']['parameters']
-        for input in a:parameters['inputs']
 
-            try 
-                let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
-            catch /cancelled/
-                execute ':redraw'
-                echo "Cancelled"
-                return
-            endtry
-
-            let parameters[input['name']] = value
-        endfor
-        call phpactor#rpc(a:parameters['callback']['action'], parameters)
-        return
+        try
+          return phpactor#_rpc_dispatch_input(inputs, action, parameters)
+        catch /cancelled/
+          redraw
+          echo 'Cancelled'
+          return
+        endtry
     endif
 
     " >> information
@@ -708,38 +641,52 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
-function! phpactor#_rpc_dispatch_input(type, parameters)
+function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)
+    let a:parameters[a:parameterName] = a:result
+
+    call a:Next(a:parameters)
+endfunction
+
+function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
+    let input = remove(a:inputs, 0)
+    let inputParameters = input['parameters']
+
+    let Next = empty(a:inputs)
+        \ ? function('phpactor#rpc', [a:action])
+        \ : function('phpactor#_rpc_dispatch_input', [a:inputs, a:action])
+
+    let ResultHandler = function('phpactor#_rpc_dispatch_input_handler', [
+        \ Next,
+        \ a:parameters,
+        \ input['name'],
+    \ ])
+
     " Remove any existing output in the message window
     execute ':redraw'
 
-    " >> text
-    if a:type == 'text'
-        if v:null != a:parameters['type']
-            return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
-        endif
-        return input(a:parameters['label'], a:parameters['default'])
+    if 'text' == input['type']
+        let TypeHandler = function('phpactor#input#text', [
+            \ inputParameters['label'],
+            \ inputParameters['default'],
+            \ inputParameters['type']
+        \ ])
+    elseif 'choice' == input['type']
+        let TypeHandler = function('phpactor#input#choice', [
+            \ inputParameters['label'],
+            \ inputParameters['choices']
+        \ ])
+    elseif 'list' == input['type']
+        let TypeHandler = function('phpactor#input#list', [
+            \ inputParameters['label'],
+            \ inputParameters['choices']
+        \ ])
+    elseif 'confirm' == input['type']
+        let TypeHandler = function('phpactor#input#confirm', [
+            \ inputParameters['label']
+        \ ])
+    else
+        throw "Do not know how to handle input '" . input['type'] . "'"
     endif
 
-    " >> choice
-    if a:type == 'choice'
-        return phpactor#_input_choice(a:parameters['label'], a:parameters['choices'])
-    endif
-
-    if a:type == 'list'
-        return phpactor#_input_list(a:parameters['label'], a:parameters['choices'])
-    endif
-
-    " >> confirm
-    if a:type == 'confirm'
-        let choice = confirm(a:parameters["label"], "&Yes\n&No\n")
-
-        if choice == 1
-            return v:true
-        endif
-
-        return v:false
-    endif
-
-
-    throw "Do not know how to handle input '" . a:type . "'"
+    call TypeHandler(ResultHandler)
 endfunction

@@ -161,10 +161,25 @@ Configuration
 
 The plugin has some configuration options:
 
-```
+```vim
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
+let g:phpactorInputListStrategy = 'inputlist|fzf'
+
+" Example of implementation with vim's inputlist() function
+function! InputListCustomStrategy(label, choices, ResultHandler)
+    echo a:label
+    let choice = inputlist(s:add_number_to_choices(a:choices))
+
+    if (choice == 0)
+        throw "cancelled"
+    endif
+
+    call a:ResultHandler(a:choices[choice - 1])
+endfunction
+
+let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -172,7 +187,9 @@ let g:phpactorOmniAutoClassImport = v:true
   bleeding edge).
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
-
+- `g:phpactorInputListStrategy`: Select a strategy for the [Input
+  List](#input-list).
+- `g:phpactorCustomInputListStrategy`: Specify your own strategy.
 
 Extensions
 ----------
@@ -272,3 +289,23 @@ should see something like the following:
 Method "execute":
 [r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:
 ```
+
+Input List
+----------
+
+The input list is the window shown to let you choose an item among a list.
+
+### Strategies
+
+This plugin provides two strategy to handle input lists:
+- `inputlist`: Vim's internal `inputlist()` function.
+- `fzf`: Fuzzy finder using [Fzf](https://github.com/junegunn/fzf) plugin.
+
+You can choose between those strategies by specifying the option
+[g:phpactorInputListStrategy](#configuration).
+
+### Input list strategies auto-detection
+
+When no strategy is defined the plugin will default to the `fzf` strategy if
+the [Fzf](https://github.com/junegunn/fzf) plugin is loaded or to `inputlist`
+if it's not.
