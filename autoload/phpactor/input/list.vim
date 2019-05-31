@@ -1,9 +1,9 @@
 function! phpactor#input#list#strategy()
-    if !has_key(g:, 'phpactor#input#list#strategy')
-        let g:phpactor#input#list#strategy = s:auto_detect_strategy()
+    if !has_key(g:, 'phpactorInputListStrategy')
+        let g:phpactorInputListStrategy = s:auto_detect_strategy()
     endif
 
-    return g:phpactor#input#list#strategy
+    return g:phpactorInputListStrategy
 endfunction
 
 function! phpactor#input#list#inputlist(label, choices, ResultHandler)
