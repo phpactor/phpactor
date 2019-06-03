@@ -103,7 +103,7 @@ function! phpactor#Complete(findstart, base)
     endif
 
     return completions
-endfunc
+endfunction
 
 function! phpactor#_completeTruncateLabel(label, length)
     if strlen(a:label) < a:length
@@ -356,20 +356,40 @@ function! phpactor#_path()
     return expand('%:p')
 endfunction
 
+function! s:getStartOffsetFromMark(mark, linewise)
+    let [line, column] = getpos(a:mark)[1:2]
+    let offset = line2byte(line)
+
+    if v:true == a:linewise
+        return offset - 1
+    endif
+
+    return offset + column - 2
+endfunction
+
+function! s:getEndOffsetFromMark(mark, linewise)
+    let [line, column] = getpos(a:mark)[1:2]
+    let offset = line2byte(line)
+    let lineLenght = strlen(getline(line))
+
+    if v:true == a:linewise
+        return offset + lineLenght - 1
+    endif
+
+    " Note VIM returns 2,147,483,647 on this system when in block select mode
+    if (column > 1000000)
+        let column = lineLenght
+    endif
+
+    return offset + column - 1
+endfunction
+
 function! phpactor#_selectionStart()
-    let [lineStart, columnStart] = getpos("'<")[1:2]
-    return line2byte(lineStart) + columnStart -2
+    return s:getStartOffsetFromMark("'<", v:false)
 endfunction
 
 function! phpactor#_selectionEnd()
-    let [lineEnd, columnEnd] = getpos("'>")[1:2]
-
-    " Note VIM returns 2,147,483,647 on this system when in block select mode
-    if (columnEnd > 1000000)
-        let columnEnd = strlen(getline(lineEnd))
-    endif
-
-    return line2byte(lineEnd) + columnEnd -1
+    return s:getEndOffsetFromMark("'>", v:false)
 endfunction
 
 function! phpactor#_applyTextEdits(path, edits)
