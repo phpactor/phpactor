@@ -165,6 +165,10 @@ function! phpactor#ExtractExpression(isSelection)
     call phpactor#rpc("extract_expression", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
+function! phpactor#ExtractConstant()
+    call phpactor#rpc("extract_constant", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": phpactor#_path()})
+endfunction
+
 function! phpactor#ClassExpand()
     let word = expand("<cword>")
     let classInfo = phpactor#rpc("class_search", { "short_name": word })
