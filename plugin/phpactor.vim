@@ -145,11 +145,24 @@ endfunction
 """"""""""""""""""""""""
 " Extract method
 """"""""""""""""""""""""
-function! phpactor#ExtractMethod()
-    let selectionStart = phpactor#_selectionStart()
-    let selectionEnd = phpactor#_selectionEnd()
 
-    call phpactor#rpc("extract_method", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
+function! phpactor#ExtractMethod(...)
+    let positions = {}
+
+    if 0 == a:0 " Visual mode - backward compatibility
+        let positions.start = phpactor#_selectionStart()
+        let positions.end = phpactor#_selectionEnd()
+    elseif a:1 ==? 'v' " Visual mode
+        let positions.start = phpactor#_selectionStart()
+        let positions.end = phpactor#_selectionEnd()
+    else " Linewise or characterwise motion
+        let linewise = 'line' == a:1
+
+        let positions.start = s:getStartOffsetFromMark("'[", linewise)
+        let positions.end = s:getEndOffsetFromMark("']", linewise)
+    endif
+
+    call phpactor#rpc("extract_method", { "path": phpactor#_path(), "offset_start": positions.start, "offset_end": positions.end, "source": phpactor#_source()})
 endfunction
 
 function! phpactor#ExtractExpression(type)
