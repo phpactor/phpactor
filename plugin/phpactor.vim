@@ -152,17 +152,26 @@ function! phpactor#ExtractMethod()
     call phpactor#rpc("extract_method", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
 endfunction
 
-function! phpactor#ExtractExpression(isSelection)
+function! phpactor#ExtractExpression(type)
+    let positions = {}
 
-    if a:isSelection 
-        let selectionStart = phpactor#_selectionStart()
-        let selectionEnd = phpactor#_selectionEnd()
-    else
-        let selectionStart = phpactor#_offset()
-        let selectionEnd = v:null
+    if v:true == a:type  " Invoked from Visual mode - backward compatibility
+        let positions.start = phpactor#_selectionStart()
+        let positions.end = phpactor#_selectionEnd()
+    elseif v:false == a:type " Invoked from an offset - backward compatibility
+        let positions.start = phpactor#_offset()
+        let positions.end = v:null
+    elseif a:type ==? 'v' " Visual mode
+        let positions.start = phpactor#_selectionStart()
+        let positions.end = phpactor#_selectionEnd()
+    else " Linewise or characterwise motion
+        let linewise = 'line' == a:type
+
+        let positions.start = s:getStartOffsetFromMark("'[", linewise)
+        let positions.end = s:getEndOffsetFromMark("']", linewise)
     endif
 
-    call phpactor#rpc("extract_expression", { "path": phpactor#_path(), "offset_start": selectionStart, "offset_end": selectionEnd, "source": phpactor#_source()})
+    call phpactor#rpc("extract_expression", { "path": phpactor#_path(), "offset_start": positions.start, "offset_end": positions.end, "source": phpactor#_source()})
 endfunction
 
 function! phpactor#ExtractConstant()
