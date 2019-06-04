@@ -495,9 +495,6 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> open_file
     if a:actionName == "open_file"
-
-        let cmd = 'edit'
-
         if a:parameters['target'] == 'focused_window'
             call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
