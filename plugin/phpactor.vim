@@ -690,3 +690,5 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
 
     call TypeHandler(ResultHandler)
 endfunction
+
+" vim: et ts=4 sw=4 fdm=marker

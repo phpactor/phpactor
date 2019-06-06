@@ -46,3 +46,5 @@ endfunction
 function! s:add_number_to_choices(choices)
     return map(copy(a:choices), {key, value -> key + 1 .') '. value})
 endfunction
+
+" vim: et ts=4 sw=4 fdm=marker

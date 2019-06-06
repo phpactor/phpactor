@@ -71,3 +71,5 @@ function! phpactor#input#list(label, choices, ResultHandler)
       echo 'The strategy "'. strategy .'" is unknown, check the value of "g:phpactorInputListStrategy".'
     endtry
 endfunction
+
+" vim: et ts=4 sw=4 fdm=marker
