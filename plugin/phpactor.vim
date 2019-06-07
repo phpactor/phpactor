@@ -675,7 +675,8 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
     elseif 'list' == input['type']
         let TypeHandler = function('phpactor#input#list', [
             \ inputParameters['label'],
-            \ inputParameters['choices']
+            \ inputParameters['choices'],
+            \ inputParameters['multi']
         \ ])
     elseif 'confirm' == input['type']
         let TypeHandler = function('phpactor#input#confirm', [

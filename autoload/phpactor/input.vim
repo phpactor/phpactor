@@ -60,12 +60,12 @@ function! phpactor#input#choice(label, choices, ResultHandler)
     call a:ResultHandler(choices[choice - 1])
 endfunction
 
-function! phpactor#input#list(label, choices, ResultHandler)
+function! phpactor#input#list(label, choices, multi, ResultHandler)
     let choices = sort(keys(a:choices))
 
     try
       let strategy = phpactor#input#list#strategy()
-      call call(strategy, [a:label, choices, a:ResultHandler])
+      call call(strategy, [a:label, choices, a:multi, a:ResultHandler])
     catch /E117/
       redraw!
       echo 'The strategy "'. strategy .'" is unknown, check the value of "g:phpactorInputListStrategy".'

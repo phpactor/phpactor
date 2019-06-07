@@ -12,7 +12,7 @@ function! phpactor#input#list#strategy()
     return g:phpactorInputListStrategy
 endfunction
 
-function! phpactor#input#list#inputlist(label, choices, ResultHandler)
+function! phpactor#input#list#inputlist(label, choices, multi, ResultHandler)
     echo a:label
     let choice = inputlist(s:add_number_to_choices(a:choices))
 
@@ -23,13 +23,25 @@ function! phpactor#input#list#inputlist(label, choices, ResultHandler)
     call a:ResultHandler(a:choices[choice - 1])
 endfunction
 
-function! phpactor#input#list#fzf(label, choices, ResultHandler)
+function! phpactor#input#list#fzf(label, choices, multi, ResultHandler)
+    let options = [
+        \ '--tiebreak=index',
+        \ '--layout=reverse-list',
+    \ ]
+
+    if a:multi
+        call extend(options, [
+            \ '--multi',
+            \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+        \ ])
+    endif
+
     " sink works because "key" is converted to integer, so only the number is kept
     call fzf#run({
         \ 'source': s:add_number_to_choices(a:choices),
         \ 'sink': {key -> a:ResultHandler(a:choices[key - 1])},
         \ 'down': '30%',
-        \ 'options': ['--tiebreak=index', '--layout=reverse-list']
+        \ 'options': options
     \ })
 endfunction
 

@@ -66,7 +66,7 @@ class OverrideMethodHandler extends AbstractHandler
             self::PARAM_METHOD_NAME,
             sprintf('Methods from "%s"', $parentClass->name()),
             $this->methodChoices($parentClass)
-        ));
+        )->setAllowMultipleResults(true));
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
@@ -121,6 +121,7 @@ class OverrideMethodHandler extends AbstractHandler
 
     private function methodChoices(ReflectionClass $parentClass)
     {
+        /** @todo filter methods already implemented in the current class */
         $methodNames = array_map(function (ReflectionMethod $method) {
             return $method->name();
         }, iterator_to_array(
