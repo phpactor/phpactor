@@ -28,21 +28,30 @@ function! phpactor#input#list#fzf(label, choices, multi, ResultHandler)
         \ '--tiebreak=index',
         \ '--layout=reverse-list',
     \ ]
+    let sink = {
+        \ 'sink': {key -> a:ResultHandler(a:choices[key - 1])},
+    \ }
 
     if a:multi
         call extend(options, [
             \ '--multi',
             \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
         \ ])
+
+        let sink = {
+            \ 'sink*': {results -> a:ResultHandler(map(
+                \ results,
+                \ {key, value -> a:choices[value - 1]}
+            \ ))}
+        \ }
     endif
 
     " sink works because "key" is converted to integer, so only the number is kept
-    call fzf#run({
+    call fzf#run(extend({
         \ 'source': s:add_number_to_choices(a:choices),
-        \ 'sink': {key -> a:ResultHandler(a:choices[key - 1])},
         \ 'down': '30%',
         \ 'options': options
-    \ })
+    \ }, sink))
 endfunction
 
 function! s:auto_detect_strategy()
