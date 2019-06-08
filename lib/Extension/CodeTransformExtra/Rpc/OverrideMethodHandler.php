@@ -72,16 +72,19 @@ class OverrideMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $transformedCode = $this->overrideMethod->overrideMethod(
-            SourceCode::fromString($arguments[self::PARAM_SOURCE]),
-            (string) $class->name(),
-            $arguments[self::PARAM_METHOD_NAME]
-        );
+        $newCode = $arguments[self::PARAM_SOURCE];
+        foreach ($this->methods($arguments) as $methodName) {
+            $newCode = $this->overrideMethod->overrideMethod(
+                SourceCode::fromString((string) $newCode),
+                (string) $class->name(),
+                $methodName
+            );
+        }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $arguments[self::PARAM_PATH],
             $arguments[self::PARAM_SOURCE],
-            (string) $transformedCode
+            (string) $newCode
         );
     }
 
@@ -131,5 +134,16 @@ class OverrideMethodHandler extends AbstractHandler
         sort($methodNames);
 
         return array_combine($methodNames, $methodNames);
+    }
+
+    private function methods(array $arguments): array
+    {
+        $methods = $arguments[self::PARAM_METHOD_NAME];
+
+        if (is_string($methods)) {
+            return [$methods];
+        }
+
+        return $methods;
     }
 }
