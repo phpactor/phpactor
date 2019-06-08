@@ -379,20 +379,17 @@ function! phpactor#_applyTextEdits(path, edits)
         " end = { line: 1234, character: 0 }
         let end = edit['end']
 
-        " move the cursor into the start position
-        call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
-
         if start['character'] != 0 || end['character'] != 0
             throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
         endif
 
         " to delete
-        let linesToDelete = end['line'] - start['line']
-        if linesToDelete > 0
-            call execute('normal ' . linesToDelete . 'dd')
+        let numberOfDeletedLines = end['line'] - start['line']
+        if numberOfDeletedLines > 0
+            silent execute printf('keepjumps %d,%dd _', start['line'] + 1, end['line'])
 
             if end['line'] < curLine " Delete above the cursor
-                let curLine -= linesToDelete " Move the cursor up
+                let curLine -= numberOfDeletedLines " Move the cursor up
             elseif start['line'] < curLine " Delte the cursor line
                 let curLineBeforeDeletion = curLine " Memorize it
             endif
@@ -400,12 +397,12 @@ function! phpactor#_applyTextEdits(path, edits)
 
         if edit['text'] == "\n"
             " if this is just a new line, add a new line
-            call append(start['line'], '')
+            keepjumps call append(start['line'], '')
             let newLines = 1
         else
             " insert characters after the current line
             let appendLines = split(edit['text'], "\n")
-            call append(start['line'], appendLines)
+            keepjumps call append(start['line'], appendLines)
             let newLines = len(appendLines)
         endif
 
