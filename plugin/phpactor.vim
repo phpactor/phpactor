@@ -366,6 +366,8 @@ function! phpactor#_applyTextEdits(path, edits)
     call phpactor#_switchToBufferOrEdit(a:path)
 
     let postCursorPosition = getpos('.')
+    let curLine = postCursorPosition[1]
+    let curLineBeforeDeletion = v:null
 
     for edit in a:edits
 
@@ -388,6 +390,12 @@ function! phpactor#_applyTextEdits(path, edits)
         let linesToDelete = end['line'] - start['line']
         if linesToDelete > 0
             call execute('normal ' . linesToDelete . 'dd')
+
+            if end['line'] < curLine " Delete above the cursor
+                let curLine -= linesToDelete " Move the cursor up
+            elseif start['line'] < curLine " Delte the cursor line
+                let curLineBeforeDeletion = curLine " Memorize it
+            endif
         endif
 
         if edit['text'] == "\n"
@@ -398,15 +406,24 @@ function! phpactor#_applyTextEdits(path, edits)
             " insert characters after the current line
             let appendLines = split(edit['text'], "\n")
             call append(start['line'], appendLines)
-            let newLines = newLines + len(appendLines)
+            let newLines = len(appendLines)
         endif
 
-        if postCursorPosition[1] > start['line']
-            let postCursorPosition[1] = postCursorPosition[1] + newLines
+        " If lines have been inserted where the cursor was before its line got deleted
+        if 0 < newLines && v:null != curLineBeforeDeletion
+            \ && start['line'] < curLineBeforeDeletion
+            \ && curLineBeforeDeletion <= end['line'] + 1
+            " Reposition the cursor to this line and reset the position before deletion
+            let curLine = curLineBeforeDeletion
+            let curLineBeforeDeletion = v:null
+        elseif curLine > start['line']
+            " Otherwise simply move the cursor down
+            let curLine += newLines
         endif
 
     endfor
 
+    let postCursorPosition[1] = curLine
     call setpos('.', postCursorPosition)
 endfunction
 
