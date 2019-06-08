@@ -395,19 +395,12 @@ function! phpactor#_applyTextEdits(path, edits)
             endif
         endif
 
-        if edit['text'] == "\n"
-            " if this is just a new line, add a new line
-            keepjumps call append(start['line'], '')
-            let newLines = 1
-        else
-            " insert characters after the current line
-            let appendLines = split(edit['text'], "\n")
-            keepjumps call append(start['line'], appendLines)
-            let newLines = len(appendLines)
-        endif
+        let newLines = edit['text'] == "\n" ? [''] : split(edit['text'], "\n")
+        keepjumps call append(start['line'], newLines)
+        let numberOfNewLines = len(newLines)
 
         " If lines have been inserted where the cursor was before its line got deleted
-        if 0 < newLines && v:null != curLineBeforeDeletion
+        if 0 < numberOfNewLines && v:null != curLineBeforeDeletion
             \ && start['line'] < curLineBeforeDeletion
             \ && curLineBeforeDeletion <= end['line'] + 1
             " Reposition the cursor to this line and reset the position before deletion
@@ -415,7 +408,7 @@ function! phpactor#_applyTextEdits(path, edits)
             let curLineBeforeDeletion = v:null
         elseif curLine > start['line']
             " Otherwise simply move the cursor down
-            let curLine += newLines
+            let curLine += numberOfNewLines
         endif
 
     endfor
