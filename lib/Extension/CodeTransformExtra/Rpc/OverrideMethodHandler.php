@@ -73,7 +73,7 @@ class OverrideMethodHandler extends AbstractHandler
         }
 
         $newCode = $arguments[self::PARAM_SOURCE];
-        foreach ($this->methods($arguments) as $methodName) {
+        foreach ((array) $arguments[self::PARAM_METHOD_NAME] as $methodName) {
             $newCode = $this->overrideMethod->overrideMethod(
                 SourceCode::fromString((string) $newCode),
                 (string) $class->name(),
@@ -134,16 +134,5 @@ class OverrideMethodHandler extends AbstractHandler
         sort($methodNames);
 
         return array_combine($methodNames, $methodNames);
-    }
-
-    private function methods(array $arguments): array
-    {
-        $methods = $arguments[self::PARAM_METHOD_NAME];
-
-        if (is_string($methods)) {
-            return [$methods];
-        }
-
-        return $methods;
     }
 }
