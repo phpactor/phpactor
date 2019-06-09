@@ -18,6 +18,10 @@ class CompleteTest extends SystemTestCase
             return $one['name'] <=> $two['name'];
         });
 
+        if (!$expected) {
+            $this->assertEmpty($suggestions);
+        }
+
         foreach ($expected as $index => $expectedSuggestion) {
             $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }
