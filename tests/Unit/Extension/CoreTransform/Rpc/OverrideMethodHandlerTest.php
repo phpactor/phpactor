@@ -25,7 +25,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
 
     public function setUp()
     {
-        $this->reflector = ReflectorBuilder::create()->addSource('<?php class ParentClass { public function foobar() {} }')->build();
+        $this->reflector = ReflectorBuilder::create()->addSource('<?php class ParentClass { public function foobar() {}  public function barfoor() {} }')->build();
         $this->overrideMethod = $this->prophesize(OverrideMethod::class);
     }
 
@@ -43,7 +43,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
             'class_name' => 'ChildClass',
             'path' => __FILE__,
             'source' => <<<'EOT'
-<?php 
+<?php
 
 class ChildClass extends ParentClass
 {
@@ -55,13 +55,13 @@ EOT
         $input = reset($input);
         $this->assertInstanceOf(ListInput::class, $input);
         $choices = $input->choices();
-        $this->assertCount(1, $choices);
+        $this->assertCount(2, $choices);
     }
 
-    public function testOverrideMethod()
+    public function testOverrideAMethodGivenAsAString()
     {
         $source = <<<'EOT'
-<?php 
+<?php
 
 class ChildClass extends ParentClass
 {
@@ -80,5 +80,38 @@ EOT
 
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
         $this->assertEquals('hello', $action->newSource());
+    }
+
+    public function testOverrideMethodsGivenAsArray()
+    {
+        $source = <<<'EOT'
+<?php
+
+class ChildClass extends ParentClass
+{
+}
+EOT
+        ;
+
+        $foobarTransformedCode = TransformSourceCode::fromString('foobar was added');
+        $barfooTransformedCode = TransformSourceCode::fromString('barfoo was also added');
+
+        $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')
+            ->willReturn($foobarTransformedCode)
+            ->shouldBeCalledTimes(1);
+        $this->overrideMethod->overrideMethod($foobarTransformedCode, 'ChildClass', 'barfoo')
+            ->willReturn($barfooTransformedCode)
+            ->shouldBeCalledTimes(1);
+
+        $action = $this->handle('override_method', [
+            'class_name' => 'ChildClass',
+            'method_name' => ['foobar', 'barfoo'],
+            'path' => __FILE__,
+            'source' => $source
+        ]);
+
+        /** @var UpdateFileSourceResponse $action */
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
+        $this->assertEquals((string) $barfooTransformedCode, $action->newSource());
     }
 }
