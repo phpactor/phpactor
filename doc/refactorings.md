@@ -897,6 +897,7 @@ Overide a method from a parent class.
 - **Command**: _RPC only_
 - **VIM plugin**: _Class context menu > Override method_.
 - **VIM function**:`:call phpactor#ContextMenu()`
+- **Multiple selection**: Supports selecting multiple methods.
 
 ### Motivation
 
