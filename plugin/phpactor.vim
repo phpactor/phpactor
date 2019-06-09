@@ -367,53 +367,36 @@ function! phpactor#_applyTextEdits(path, edits)
 
     let postCursorPosition = getpos('.')
     let curLine = postCursorPosition[1]
-    let curLineBeforeDeletion = v:null
+    let numberOfLinesToPreviousPosition = 0
 
     for edit in a:edits
+        let startLine = edit.start.line
+        let endLine = edit.end.line
 
-        let newLines = 0
-
-        " start = { line: 1234, character: 0 }
-        let start = edit['start']
-
-        " end = { line: 1234, character: 0 }
-        let end = edit['end']
-
-        if start['character'] != 0 || end['character'] != 0
+        if edit.start.character != 0 || edit.end.character != 0
             throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
         endif
 
-        " to delete
-        let numberOfDeletedLines = end['line'] - start['line']
+        let numberOfDeletedLines = endLine - startLine
         if numberOfDeletedLines > 0
-            silent execute printf('keepjumps %d,%dd _', start['line'] + 1, end['line'])
+            silent execute printf('keepjumps %d,%dd _', startLine + 1, endLine)
 
-            if end['line'] < curLine " Delete above the cursor
-                let curLine -= numberOfDeletedLines " Move the cursor up
-            elseif start['line'] < curLine " Delte the cursor line
-                let curLineBeforeDeletion = curLine " Memorize it
+            if startLine < curLine && curLine <= endLine
+                let numberOfLinesToPreviousPosition += endLine - curLine + 1
+            elseif endLine < curLine
+                let curLine -= numberOfDeletedLines
             endif
         endif
 
-        let newLines = edit['text'] == "\n" ? [''] : split(edit['text'], "\n")
-        keepjumps call append(start['line'], newLines)
-        let numberOfNewLines = len(newLines)
+        let newLines = edit.text == "\n" ? [''] : split(edit.text, "\n")
+        keepjumps call append(startLine, newLines)
 
-        " If lines have been inserted where the cursor was before its line got deleted
-        if 0 < numberOfNewLines && v:null != curLineBeforeDeletion
-            \ && start['line'] < curLineBeforeDeletion
-            \ && curLineBeforeDeletion <= end['line'] + 1
-            " Reposition the cursor to this line and reset the position before deletion
-            let curLine = curLineBeforeDeletion
-            let curLineBeforeDeletion = v:null
-        elseif curLine > start['line']
-            " Otherwise simply move the cursor down
-            let curLine += numberOfNewLines
+        if startLine < curLine
+            let curLine += len(newLines)
         endif
-
     endfor
 
-    let postCursorPosition[1] = curLine
+    let postCursorPosition[1] = curLine - numberOfLinesToPreviousPosition
     call setpos('.', postCursorPosition)
 endfunction
 
