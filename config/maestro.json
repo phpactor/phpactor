@@ -1,0 +1,199 @@
+{
+    "artifacts": {
+        "php_versions": [ 7.1, 7.2, 7.3 ],
+        "phpstan_level": 7,
+        "travis_checks": [
+            "./vendor/bin/php-cs-fixer fix --dry-run",
+            "./vendor/bin/phpstan analyse --level=7 lib",
+            "./vendor/bin/phpunit --process-isolation"
+        ]
+    },
+    "prototypes": {
+        "default": {
+            "tasks": {
+                "init": {
+                    "type": "null",
+                    "depends": ["git clone"]
+                },
+                "git clone": {
+                    "type": "git",
+                    "parameters": {
+                        "url": "git@github.com:$PACKAGE_NAME"
+                    }
+                },
+                "travis": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/travis.yml",
+                        "targetPath": ".travis.yml"
+                    },
+                    "depends": ["init"]
+                },
+                "readme": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/php_cs.dist",
+                        "targetPath": "php_cs.dist"
+                    },
+                    "depends": ["init"]
+                },
+                "templates": {
+                    "type": "null",
+                    "depends": ["travis","readme"]
+                },
+                "composer require": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "composer require friendsofphp/php-cs-fixer --no-update"
+                    },
+                    "depends": ["templates"]
+                },
+                "composer": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "composer install"
+                    },
+                    "depends": ["composer require"]
+                },
+                "phpunit": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/phpunit"
+                    },
+                    "depends": ["composer"]
+                },
+                "php-cs-fixer": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/php-cs-fixer"
+                    },
+                    "depends": ["composer"]
+                },
+                "php-cs-fixer": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/php-cs-fixer fix --dry-run"
+                    },
+                    "depends": ["composer"]
+                },
+                "phpstan": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/phpstan analyse --level=7 lib"
+                    },
+                    "depends": ["composer"]
+                }
+            }
+        }
+    },
+    "packages": {
+        "phpactor/class-mover": {
+            "prototype": "default"
+        },
+        "phpactor/class-to-file": {
+            "prototype": "default"
+        },
+        "phpactor/class-to-file-extension": {
+            "prototype": "default"
+        },
+        "phpactor/code-builder": {
+            "prototype": "default"
+        },
+        "phpactor/code-transform": {
+            "prototype": "default"
+        },
+        "phpactor/code-transform-extension": {
+            "prototype": "default"
+        },
+        "phpactor/completion": {
+            "prototype": "default"
+        },
+        "phpactor/completion-extension": {
+            "prototype": "default"
+        },
+        "phpactor/completion-rpc-extension": {
+            "prototype": "default"
+        },
+        "phpactor/completion-worse-extension": {
+            "prototype": "default"
+        },
+        "phpactor/composer-autoloader-extension": {
+            "prototype": "default"
+        },
+        "phpactor/config-loader": {
+            "prototype": "default"
+        },
+        "phpactor/console-extension": {
+            "prototype": "default"
+        },
+        "phpactor/container": {
+            "prototype": "default"
+        },
+        "phpactor/docblock": {
+            "prototype": "default"
+        },
+        "phpactor/extension-manager-extension": {
+            "prototype": "default"
+        },
+        "phpactor/file-path-resolver": {
+            "prototype": "default"
+        },
+        "phpactor/file-path-resolver-extension": {
+            "prototype": "default"
+        },
+        "phpactor/logging-extension": {
+            "prototype": "default"
+        },
+        "phpactor/map-resolver": {
+            "prototype": "default"
+        },
+        "phpactor/path-finder": {
+            "prototype": "default"
+        },
+        "phpactor/reference-finder": {
+            "prototype": "default"
+        },
+        "phpactor/reference-finder-extension": {
+            "prototype": "default"
+        },
+        "phpactor/reference-finder-rpc-extension": {
+            "prototype": "default"
+        },
+        "phpactor/rpc-extension": {
+            "prototype": "default"
+        },
+        "phpactor/source-code-filesystem": {
+            "prototype": "default"
+        },
+        "phpactor/source-code-filesystem-extension": {
+            "prototype": "default"
+        },
+        "phpactor/test-utils": {
+            "prototype": "default"
+        },
+        "phpactor/text-document": {
+            "prototype": "default"
+        },
+        "phpactor/worse-reference-finder-extension": {
+            "prototype": "default"
+        },
+        "phpactor/worse-reference-finders": {
+            "prototype": "default"
+        },
+        "phpactor/worse-reflection": {
+            "artifacts": {
+                "travis_checks": [
+                    "vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff",
+                    "vendor/bin/phpstan analyze lib/ --level=2",
+                    "vendor/bin/phpunit",
+                    "vendor/bin/phpbench run --report=aggregate --progress=travis --store --iterations=1",
+                    "tests/Smoke/smoke_test.php --limit=100"
+                ]
+            },
+            "prototype": "default"
+        },
+        "phpactor/worse-reflection-extension": {
+            "prototype": "default"
+        }
+    }
+}
