@@ -164,6 +164,13 @@
                 "offset": "%offset%",
                 "source": "%source%"
             }
+        },
+        "generate_accessor": {
+            "action": "generate_accessor",
+            "parameters": {
+                "path": "%path%",
+                "source": "%source%"
+            }
         }
     },
     "property": {
