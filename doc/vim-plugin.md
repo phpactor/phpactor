@@ -298,6 +298,7 @@ The input list is the window shown to let you choose an item among a list.
 ### Strategies
 
 This plugin provides two strategy to handle input lists:
+
 - `inputlist`: Vim's internal `inputlist()` function.
 - `fzf`: Fuzzy finder using [Fzf](https://github.com/junegunn/fzf) plugin.
 
@@ -309,3 +310,14 @@ You can choose between those strategies by specifying the option
 When no strategy is defined the plugin will default to the `fzf` strategy if
 the [Fzf](https://github.com/junegunn/fzf) plugin is loaded or to `inputlist`
 if it's not.
+
+### FZF Multi-selection
+
+Some refactorings will allow you to select multiple entires (for example
+[override
+method](https://phpactor.github.io/phpactor/refactorings.html#override-method).
+Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none. 
+
+See the
+[Fzf](https://github.com/junegunn/fzf) documentation for more details.
+
