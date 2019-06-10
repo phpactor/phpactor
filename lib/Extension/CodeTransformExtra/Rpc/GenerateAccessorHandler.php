@@ -16,7 +16,6 @@ use Phpactor\WorseReflection\Reflector;
 class GenerateAccessorHandler extends AbstractHandler
 {
     const NAME = 'generate_accessor';
-    const PARAM_OFFSET = 'offset';
     const PARAM_NAMES = 'names';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
@@ -47,7 +46,6 @@ class GenerateAccessorHandler extends AbstractHandler
     public function configure(Resolver $resolver)
     {
         $resolver->setDefaults([
-            self::PARAM_OFFSET => null,
             self::PARAM_NAMES => null,
         ]);
         $resolver->setRequired([
@@ -60,13 +58,11 @@ class GenerateAccessorHandler extends AbstractHandler
     {
         $class = $this->class($arguments[self::PARAM_SOURCE]);
 
-        if (null === $arguments[self::PARAM_OFFSET]) {
-            $this->requireInput(ListInput::fromNameLabelChoices(
-                self::PARAM_NAMES,
-                sprintf('Properties from "%s"', $class->name()),
-                $this->propertiesChoices($class)
-            )->withMultiple(true));
-        }
+        $this->requireInput(ListInput::fromNameLabelChoices(
+            self::PARAM_NAMES,
+            sprintf('Properties from "%s"', $class->name()),
+            $this->propertiesChoices($class)
+        )->withMultiple(true));
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
@@ -75,12 +71,8 @@ class GenerateAccessorHandler extends AbstractHandler
         $originalSource = $arguments[self::PARAM_SOURCE];
         $newSource = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
 
-        if ($offset = $arguments[self::PARAM_OFFSET]) {
-            $newSource = $this->generateAccessor->generateFromOffset($newSource, $offset);
-        } else {
-            foreach ($arguments[self::PARAM_NAMES] as $propertyName) {
-                $newSource = $this->generateAccessor->generateFromPropertyName($newSource, $propertyName);
-            }
+        foreach ((array) $arguments[self::PARAM_NAMES] as $propertyName) {
+            $newSource = $this->generateAccessor->generate($newSource, $propertyName);
         }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(

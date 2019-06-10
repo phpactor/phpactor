@@ -25,7 +25,6 @@ class Dummy
 PHP;
     const PATH = '/path/to';
     const FOO_NAME = 'foo';
-    const FOO_OFFSET = 33;
     const BAR_NAME = 'bar';
     const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
     const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
@@ -54,21 +53,6 @@ PHP;
         );
     }
 
-    public function testGenerateAccessorFromOffset()
-    {
-        $this->generateAccessor->generateFromOffset(self::SOURCE, self::FOO_OFFSET)
-             ->willReturn(SourceCode::fromStringAndPath('asd', '/path'))
-             ->shouldBeCalledTimes(1);
-
-        $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
-            'source' => self::SOURCE,
-            'path' => self::PATH,
-            'offset' => self::FOO_OFFSET
-        ]);
-
-        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
-    }
-
     public function testSuggestsPossibleProperties()
     {
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
@@ -93,14 +77,14 @@ PHP;
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
 
-        $this->generateAccessor->generateFromPropertyName($oldSource, self::FOO_NAME)
+        $this->generateAccessor->generate($oldSource, self::FOO_NAME)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,
             'path' => self::PATH,
-            'names' => [self::FOO_NAME],
+            'names' => self::FOO_NAME,
         ]);
 
         /** @var UpdateFileSourceResponse $action */
@@ -115,12 +99,12 @@ PHP;
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
         $temporarySource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generateFromPropertyName($oldSource, self::FOO_NAME)
+        $this->generateAccessor->generate($oldSource, self::FOO_NAME)
              ->willReturn($temporarySource)
              ->shouldBeCalledTimes(1);
 
         $newSource = SourceCode::fromStringAndPath((string) $temporarySource, self::PATH);
-        $this->generateAccessor->generateFromPropertyName($temporarySource, self::BAR_NAME)
+        $this->generateAccessor->generate($temporarySource, self::BAR_NAME)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
