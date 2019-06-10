@@ -3,6 +3,11 @@
 $finder = PhpCsFixer\Finder::create()
     ->in('lib')
     ->in('tests')
+    ->exclude([
+        'Assets/Cache',
+        'Assets/Projects',
+        'Assets/Workspace',
+    ])
 ;
 
 return PhpCsFixer\Config::create()
