@@ -194,7 +194,7 @@
             "action": "generate_accessor",
             "parameters": {
                 "path": "%path%",
-                "offset": "%offset%",
+                "names": "%symbol%",
                 "source": "%source%"
             }
         },
