@@ -17,7 +17,7 @@ class GenerateAccessorHandler extends AbstractHandler
 {
     const NAME = 'generate_accessor';
     const PARAM_OFFSET = 'offset';
-    const PARAM_NAME = 'name';
+    const PARAM_NAMES = 'names';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
 
@@ -48,7 +48,7 @@ class GenerateAccessorHandler extends AbstractHandler
     {
         $resolver->setDefaults([
             self::PARAM_OFFSET => null,
-            self::PARAM_NAME => null,
+            self::PARAM_NAMES => null,
         ]);
         $resolver->setRequired([
             self::PARAM_PATH,
@@ -60,9 +60,9 @@ class GenerateAccessorHandler extends AbstractHandler
     {
         $class = $this->class($arguments[self::PARAM_SOURCE]);
 
-        if (!$arguments[self::PARAM_OFFSET]) {
+        if (null === $arguments[self::PARAM_OFFSET]) {
             $this->requireInput(ListInput::fromNameLabelChoices(
-                self::PARAM_NAME,
+                self::PARAM_NAMES,
                 sprintf('Properties from "%s"', $class->name()),
                 $this->propertiesChoices($class)
             )->withMultiple(true));
@@ -73,16 +73,20 @@ class GenerateAccessorHandler extends AbstractHandler
         }
 
         $originalSource = $arguments[self::PARAM_SOURCE];
-        $sourceCode = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
+        $newSource = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
 
-        foreach ($this->propertiesOffsets($arguments, $class) as $offset) {
-            $sourceCode = $this->generateAccessor->generateAccessor($sourceCode, $offset);
+        if ($offset = $arguments[self::PARAM_OFFSET]) {
+            $newSource = $this->generateAccessor->generateFromOffset($newSource, $offset);
+        } else {
+            foreach ($arguments[self::PARAM_NAMES] as $propertyName) {
+                $newSource = $this->generateAccessor->generateFromPropertyName($newSource, $propertyName);
+            }
         }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $sourceCode->path(),
+            $newSource->path(),
             $originalSource,
-            (string) $sourceCode
+            (string) $newSource
         );
     }
 
@@ -110,36 +114,6 @@ class GenerateAccessorHandler extends AbstractHandler
         return $classes->first();
     }
 
-    private function propertiesOffsets(array $arguments, ReflectionClass $class): array
-    {
-        $offset = $arguments[self::PARAM_OFFSET];
-
-        if (is_int($offset) || ctype_digit($offset)) {
-            return [$offset];
-        }
-
-        $offsets = [];
-        foreach ((array) $arguments[self::PARAM_NAME] as $propertyName) {
-            $offsets[] = $this->propertyOffset($class, $propertyName);
-        }
-
-        return $offsets;
-    }
-
-    private function propertyOffset(ReflectionClass $class, string $propertyName): int
-    {
-        $property = $class->properties()->get($propertyName);
-
-        $start = $property->position()->start();
-        $visibility = $property->visibility();
-
-        // start is right before the visibility
-        // and the offset start at the first space after the visibility
-        $offset = $start + strlen($visibility) + 1;
-
-        return $offset;
-    }
-
     private function propertiesChoices(ReflectionClass $class): array
     {
         // Select only those from the current class because the accessor generator
@@ -150,7 +124,7 @@ class GenerateAccessorHandler extends AbstractHandler
             return $property->name();
         }, iterator_to_array($properties));
 
-        sort($propertiesNames);
+        natsort($propertiesNames);
 
         return array_combine($propertiesNames, $propertiesNames);
     }

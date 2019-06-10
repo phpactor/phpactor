@@ -27,7 +27,6 @@ PHP;
     const FOO_NAME = 'foo';
     const FOO_OFFSET = 33;
     const BAR_NAME = 'bar';
-    const BAR_OFFSET = 50;
     const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
     const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
 
@@ -57,7 +56,7 @@ PHP;
 
     public function testGenerateAccessorFromOffset()
     {
-        $this->generateAccessor->generateAccessor(self::SOURCE, self::FOO_OFFSET)
+        $this->generateAccessor->generateFromOffset(self::SOURCE, self::FOO_OFFSET)
              ->willReturn(SourceCode::fromStringAndPath('asd', '/path'))
              ->shouldBeCalledTimes(1);
 
@@ -91,45 +90,50 @@ PHP;
 
     public function testGenerateAccessorFromAPropertyName()
     {
-        $source = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
+        $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generateAccessor($source, self::FOO_OFFSET)
+
+        $this->generateAccessor->generateFromPropertyName($oldSource, self::FOO_NAME)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,
             'path' => self::PATH,
-            'name' => self::FOO_NAME,
+            'names' => [self::FOO_NAME],
         ]);
 
         /** @var UpdateFileSourceResponse $action */
         $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
+        $this->assertSame((string) $oldSource, $action->oldSource());
         $this->assertSame((string) $newSource, $action->newSource());
+        $this->assertSame(self::PATH, $action->path());
     }
 
     public function testGenerateAccessorsFromMultiplePropertyName()
     {
-        $originalSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
+        $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
-        $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generateAccessor($originalSource, self::FOO_OFFSET)
-             ->willReturn($newSource)
+        $temporarySource = SourceCode::fromStringAndPath('asd', self::PATH);
+        $this->generateAccessor->generateFromPropertyName($oldSource, self::FOO_NAME)
+             ->willReturn($temporarySource)
              ->shouldBeCalledTimes(1);
 
-        $lastSource = SourceCode::fromStringAndPath((string) $newSource, self::PATH);
-        $this->generateAccessor->generateAccessor($newSource, self::BAR_OFFSET)
-             ->willReturn($lastSource)
+        $newSource = SourceCode::fromStringAndPath((string) $temporarySource, self::PATH);
+        $this->generateAccessor->generateFromPropertyName($temporarySource, self::BAR_NAME)
+             ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,
             'path' => self::PATH,
-            'name' => array_values(self::PROPERTIES_CHOICES),
+            'names' => [self::FOO_NAME, self::BAR_NAME],
         ]);
 
         /** @var UpdateFileSourceResponse $action */
         $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
-        $this->assertSame((string) $lastSource, $action->newSource());
+        $this->assertSame((string) $oldSource, $action->oldSource());
+        $this->assertSame((string) $temporarySource, $action->newSource());
+        $this->assertSame(self::PATH, $action->path());
     }
 }
