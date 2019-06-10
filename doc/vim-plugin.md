@@ -316,6 +316,8 @@ if it's not.
 Some refactorings will allow you to select multiple entires (for example
 [override
 method](https://phpactor.github.io/phpactor/refactorings.html#override-method).
-Use `<tab>` to toggle selection, see the
+Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none. 
+
+See the
 [Fzf](https://github.com/junegunn/fzf) documentation for more details.
 
