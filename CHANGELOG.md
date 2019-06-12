@@ -9,6 +9,7 @@ Features:
   - [code-builder] Initial support for nullable types. Thanks @einenlum!
   - [vim-plugin] FZF integration for list inputs (#769). Thanks @elythyr!
   - [vim-plugin] FZF multiple selection (#773). Thanks @elythyr!
+  - [vim-plugin] Maintain correct cursor position after certain text diffs (#770), Thanks @elythyr!
 
 Bug fixes:
 
