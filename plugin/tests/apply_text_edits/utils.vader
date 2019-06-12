@@ -31,5 +31,9 @@ Before:
     AssertEqual g:applyTextEditsPosBefore, getpos('.')
   endfunction
 
+  function! AssertCursorOnLine(line)
+    AssertEqual a:line, line('.')
+  endfunction
+
 After:
   Restore
