@@ -366,47 +366,37 @@ function! phpactor#_applyTextEdits(path, edits)
     call phpactor#_switchToBufferOrEdit(a:path)
 
     let postCursorPosition = getpos('.')
+    let curLine = postCursorPosition[1]
+    let numberOfLinesToPreviousPosition = 0
 
     for edit in a:edits
+        let startLine = edit.start.line
+        let endLine = edit.end.line
 
-        let newLines = 0
-
-        " start = { line: 1234, character: 0 }
-        let start = edit['start']
-
-        " end = { line: 1234, character: 0 }
-        let end = edit['end']
-
-        " move the cursor into the start position
-        call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
-
-        if start['character'] != 0 || end['character'] != 0
+        if edit.start.character != 0 || edit.end.character != 0
             throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
         endif
 
-        " to delete
-        let linesToDelete = end['line'] - start['line']
-        if linesToDelete > 0
-            call execute('normal ' . linesToDelete . 'dd')
+        let numberOfDeletedLines = endLine - startLine
+        if numberOfDeletedLines > 0
+            silent execute printf('keepjumps %d,%dd _', startLine + 1, endLine)
+
+            if startLine < curLine && curLine <= endLine
+                let numberOfLinesToPreviousPosition += endLine - curLine + 1
+            elseif endLine < curLine
+                let curLine -= numberOfDeletedLines
+            endif
         endif
 
-        if edit['text'] == "\n"
-            " if this is just a new line, add a new line
-            call append(start['line'], '')
-            let newLines = 1
-        else
-            " insert characters after the current line
-            let appendLines = split(edit['text'], "\n")
-            call append(start['line'], appendLines)
-            let newLines = newLines + len(appendLines)
-        endif
+        let newLines = edit.text == "\n" ? [''] : split(edit.text, "\n")
+        keepjumps call append(startLine, newLines)
 
-        if postCursorPosition[1] > start['line']
-            let postCursorPosition[1] = postCursorPosition[1] + newLines
+        if startLine < curLine
+            let curLine += len(newLines)
         endif
-
     endfor
 
+    let postCursorPosition[1] = curLine - numberOfLinesToPreviousPosition
     call setpos('.', postCursorPosition)
 endfunction
 

@@ -1,0 +1,39 @@
+Before:
+  Save g:applyTextEditsPosBefore
+
+  set nofoldenable
+
+  function! Apply(...)
+    let g:applyTextEditsPosBefore = getpos('.')
+    let ApplyTextEdits = function('phpactor#_applyTextEdits', [expand('%:p')])
+
+    call ApplyTextEdits(a:000)
+  endfunction
+
+  function! Position(line)
+    return { 'line': a:line, 'character': 0 }
+  endfunction
+
+  function! Delete(startLine, ...)
+    let startLine = a:startLine - 1
+    let endLine = 0 < a:0 ? a:1 : a:startLine
+
+    return { 'start': Position(startLine), 'end': Position(endLine), 'text': '' }
+  endfunction
+
+  function! Insert(line, text)
+    let line = a:line - 1
+
+    return { 'start': Position(line), 'end': Position(line), 'text': a:text }
+  endfunction
+
+  function! AssertCursorDidntMove()
+    AssertEqual g:applyTextEditsPosBefore, getpos('.')
+  endfunction
+
+  function! AssertCursorOnLine(line)
+    AssertEqual a:line, line('.')
+  endfunction
+
+After:
+  Restore
