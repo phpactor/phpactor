@@ -19,6 +19,7 @@ class GenerateAccessorHandler extends AbstractHandler
     const PARAM_NAMES = 'names';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
+    const PARAM_OFFSET = 'offset';
 
     /**
      * @var Reflector
@@ -51,6 +52,7 @@ class GenerateAccessorHandler extends AbstractHandler
         $resolver->setRequired([
             self::PARAM_PATH,
             self::PARAM_SOURCE,
+            self::PARAM_OFFSET,
         ]);
     }
 
@@ -72,7 +74,11 @@ class GenerateAccessorHandler extends AbstractHandler
         $newSource = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
 
         foreach ((array) $arguments[self::PARAM_NAMES] as $propertyName) {
-            $newSource = $this->generateAccessor->generate($newSource, $propertyName);
+            $newSource = $this->generateAccessor->generate(
+                $newSource,
+                $propertyName,
+                $arguments[self::PARAM_OFFSET]
+            );
         }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(

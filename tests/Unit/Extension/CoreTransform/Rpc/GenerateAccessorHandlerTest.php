@@ -28,6 +28,7 @@ PHP;
     const BAR_NAME = 'bar';
     const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
     const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
+    const CURSOR_OFFSET = 57;
 
     /**
      * @var GenerateAccessor
@@ -58,6 +59,7 @@ PHP;
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,
             'path' => self::PATH,
+            'offset' => self::CURSOR_OFFSET,
         ]);
 
         /** @var InputCallbackResponse $action */
@@ -77,7 +79,7 @@ PHP;
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
 
-        $this->generateAccessor->generate($oldSource, self::FOO_NAME)
+        $this->generateAccessor->generate($oldSource, self::FOO_NAME, self::CURSOR_OFFSET)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
@@ -85,6 +87,7 @@ PHP;
             'source' => self::SOURCE,
             'path' => self::PATH,
             'names' => self::FOO_NAME,
+            'offset' => self::CURSOR_OFFSET,
         ]);
 
         /** @var UpdateFileSourceResponse $action */
@@ -99,12 +102,12 @@ PHP;
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
         $temporarySource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generate($oldSource, self::FOO_NAME)
+        $this->generateAccessor->generate($oldSource, self::FOO_NAME, self::CURSOR_OFFSET)
              ->willReturn($temporarySource)
              ->shouldBeCalledTimes(1);
 
         $newSource = SourceCode::fromStringAndPath((string) $temporarySource, self::PATH);
-        $this->generateAccessor->generate($temporarySource, self::BAR_NAME)
+        $this->generateAccessor->generate($temporarySource, self::BAR_NAME, self::CURSOR_OFFSET)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
@@ -112,6 +115,7 @@ PHP;
             'source' => self::SOURCE,
             'path' => self::PATH,
             'names' => [self::FOO_NAME, self::BAR_NAME],
+            'offset' => self::CURSOR_OFFSET,
         ]);
 
         /** @var UpdateFileSourceResponse $action */
