@@ -169,7 +169,8 @@
             "action": "generate_accessor",
             "parameters": {
                 "path": "%path%",
-                "source": "%source%"
+                "source": "%source%",
+                "offset": "%offset%"
             }
         }
     },
@@ -195,7 +196,8 @@
             "parameters": {
                 "path": "%path%",
                 "names": "%symbol%",
-                "source": "%source%"
+                "source": "%source%",
+                "offset": "%offset%"
             }
         },
         "goto_definition": {
