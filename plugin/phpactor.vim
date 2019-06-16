@@ -130,7 +130,7 @@ function! phpactor#_completeImportClass(completedItem)
 
     let suggestion = g:_phpactorCompletionMeta[hash]
 
-    if has_key(suggestion, "class_import")
+    if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
                     \ "qualified_name": suggestion['class_import'], 
                     \ "name": suggestion['name'], 
