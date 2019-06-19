@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class GenerateAccessorHandlerTest extends HandlerTestCase
 {
-    const SOURCE = <<<'PHP'
+    const SOURCE = <<<'EOT'
 <?php
 
 class Dummy
@@ -22,7 +22,7 @@ class Dummy
     private $foo;
     public $bar;
 }
-PHP;
+EOT;
     const PATH = '/path/to';
     const FOO_NAME = 'foo';
     const BAR_NAME = 'bar';
@@ -62,13 +62,11 @@ PHP;
             'offset' => self::CURSOR_OFFSET,
         ]);
 
-        /** @var InputCallbackResponse $action */
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
 
         $inputs = $action->inputs();
         $input = reset($inputs);
 
-        /** @var ListInput $input */
         $this->assertInstanceOf(ListInput::class, $input);
 
         $this->assertEquals(self::PROPERTIES_CHOICES, $input->choices());
@@ -90,7 +88,6 @@ PHP;
             'offset' => self::CURSOR_OFFSET,
         ]);
 
-        /** @var UpdateFileSourceResponse $action */
         $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
         $this->assertSame((string) $oldSource, $action->oldSource());
         $this->assertSame((string) $newSource, $action->newSource());
@@ -118,7 +115,6 @@ PHP;
             'offset' => self::CURSOR_OFFSET,
         ]);
 
-        /** @var UpdateFileSourceResponse $action */
         $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
         $this->assertSame((string) $oldSource, $action->oldSource());
         $this->assertSame((string) $temporarySource, $action->newSource());

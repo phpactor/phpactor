@@ -58,7 +58,10 @@ class GenerateAccessorHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $class = $this->class($arguments[self::PARAM_SOURCE]);
+        $class = $this->class(
+            $arguments[self::PARAM_SOURCE],
+            $arguments[self::PARAM_OFFSET]
+        );
 
         $this->requireInput(ListInput::fromNameLabelChoices(
             self::PARAM_NAMES,
@@ -88,28 +91,25 @@ class GenerateAccessorHandler extends AbstractHandler
         );
     }
 
-    /**
-     * @param string $source
-     *
-     * @return ReflectionClass
-     */
-    private function class($source)
+    private function class(string $source, int $offset): ReflectionClass
     {
         $classes = $this->reflector->reflectClassesIn($source);
 
-        if ($classes->count() === 0) {
-            throw new InvalidArgumentException(
-                'No classes in source file'
-            );
+        if ($classes->count() === 1) {
+            return $classes->first();
         }
 
-        if ($classes->count() > 1) {
-            throw new InvalidArgumentException(
-                'Currently will only generates accessor by name in files with one class'
-            );
+        foreach ($classes as $class) {
+            $position = $class->position();
+
+            if ($position->start() <= $offset && $offset <= $position->end()) {
+                return $class;
+            }
         }
 
-        return $classes->first();
+        throw new InvalidArgumentException(
+            'No classes in source file'
+        );
     }
 
     private function propertiesChoices(ReflectionClass $class): array
