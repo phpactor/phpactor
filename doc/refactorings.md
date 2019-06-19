@@ -9,7 +9,7 @@ Fixes:
 - [Add Missing Assignments](#add-missing-assignments)
 - [Complete Constructor](#complete-constructor)
 - [Fix namespace and/or class name](#fix-namespace-or-class-name)
-- [Generate Accessor](#generate-accessor)
+- [Generate Accessors](#generate-accessors)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
@@ -669,14 +669,14 @@ interface FoobarInterface
 }
 ```
 
-Generate Accessor
------------------
+Generate Accessors
+------------------
 
-Generate an accessor for a class property.
+Generate accessors for a class.
 
 - **Command**: _RPC only_
-- **VIM plugin**: _Property context menu > Generate accessor_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM plugin**: _Class context menu > Generate accessor_.
+- **VIM function**:`:call phpactor#GenerateAccessor()`
 
 ### Motivation
 
@@ -691,16 +691,16 @@ Cursor position shown as `<>`:
 ```php
 <?php
 
-class Foobar
+class Foo<>bar
 {
     /**
      * @var Barfoo
      */
-    private $bar<>foo;
+    private $barfoo;
 }
 ```
 
-After:
+After selecting [one or more accessors](/vim-plugin.html#fzf-multi-selection)
 
 ```php
 <?php
