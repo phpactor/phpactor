@@ -312,7 +312,11 @@ function! phpactor#GetClassFullName()
 endfunction
 
 function! phpactor#ChangeVisibility()
-    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p') })
+endfunction
+
+function! phpactor#GenerateAccessors()
+    call phpactor#rpc("generate_accessor", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
 endfunction
 
 """""""""""""""""""""""

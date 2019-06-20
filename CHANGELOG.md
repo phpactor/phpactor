@@ -6,20 +6,24 @@ Changelog
 Features:
 
   - [vim-plugin] Add new `GotoDefinition[Vsplit|Hsplit|Tab]` functions.
-  - [code-builder] Initial support for nullable types. Thanks @einenlum!
-  - [vim-plugin] FZF integration for list inputs (#769). Thanks @elythyr!
-  - [vim-plugin] FZF multiple selection (#773). Thanks @elythyr!
-  - [vim-plugin] Maintain correct cursor position after certain text diffs (#770), Thanks @elythyr!
-  - [code-tranform] Generate static methods if the call was static (#25).
-    @einenlum
+  - [code-builder] Initial support for nullable types - @einenlum
+  - [vim-plugin] FZF integration for list inputs (#769) - @elythyr
+  - [vim-plugin] FZF multiple selection (#773). @elythyr
+  - [vim-plugin] Maintain correct cursor position after certain text diffs (#770) - @elythyr
+  - [code-transform|rpc] Generate multiple accessors for a class - @elythyr
+  - [code-tranform] Generate static methods if the call was static (#25) - @einenlum
 
 Bug fixes:
 
-  - [completion] Signature helper does not work on interfaces (#752). Thanks
-    @taluu!
+  - [completion] Signature helper does not work on interfaces (#752) - @taluu
   - [code-builder] Class import doesn't work with single element namespace
     #760
   - [code-builder] Variant is not passed to class generator (#766)
+
+BC Break:
+
+  - [code-transform] Generate accessors is now a class action and allows
+    generation of multiple accessors.
 
 ## 2019-03-03 0.12.0
 

@@ -289,6 +289,7 @@ class CodeTransformExtraExtension implements Extension
 
         $container->register('code_transform.rpc.handler.generate_accessor', function (Container $container) {
             return new GenerateAccessorHandler(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get('code_transform.refactor.generate_accessor')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => GenerateAccessorHandler::NAME] ]);
