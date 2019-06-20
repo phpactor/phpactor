@@ -10,6 +10,8 @@ Features:
   - [vim-plugin] FZF integration for list inputs (#769). Thanks @elythyr!
   - [vim-plugin] FZF multiple selection (#773). Thanks @elythyr!
   - [vim-plugin] Maintain correct cursor position after certain text diffs (#770), Thanks @elythyr!
+  - [code-tranform] Generate static methods if the call was static (#25).
+    @einenlum
 
 Bug fixes:
 
