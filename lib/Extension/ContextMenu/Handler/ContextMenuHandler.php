@@ -138,10 +138,9 @@ class ContextMenuHandler implements Handler
 
     private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
-        return $this->reflector->reflectOffset(
+        return $this->reflector->reflectOffsetToClosestParent(
             SourceCode::fromPathAndString($currentPath, $source),
-            Offset::fromInt($offset),
-            true
+            Offset::fromInt($offset)
         );
     }
 
