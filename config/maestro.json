@@ -1,94 +1,24 @@
 {
     "artifacts": {
+        "source_dir": "lib",
         "php_versions": [ 7.1, 7.2, 7.3 ],
         "phpstan_level": 7,
+        "phpstan_ignore": [],
         "travis_checks": [
             "./vendor/bin/php-cs-fixer fix --dry-run",
-            "./vendor/bin/phpstan analyse --level=7 lib",
-            "./vendor/bin/phpunit --process-isolation"
+            "./vendor/bin/phpstan analyse lib -c phpstan.neon",
+            "./vendor/bin/phpunit"
         ]
-    },
-    "prototypes": {
-        "default": {
-            "tasks": {
-                "init": {
-                    "type": "null",
-                    "depends": ["git clone"]
-                },
-                "git clone": {
-                    "type": "git",
-                    "parameters": {
-                        "url": "git@github.com:$PACKAGE_NAME"
-                    }
-                },
-                "travis": {
-                    "type": "template",
-                    "parameters": {
-                        "path": "maestro/travis.yml",
-                        "targetPath": ".travis.yml"
-                    },
-                    "depends": ["init"]
-                },
-                "readme": {
-                    "type": "template",
-                    "parameters": {
-                        "path": "maestro/php_cs.dist",
-                        "targetPath": "php_cs.dist"
-                    },
-                    "depends": ["init"]
-                },
-                "templates": {
-                    "type": "null",
-                    "depends": ["travis","readme"]
-                },
-                "composer require": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "composer require friendsofphp/php-cs-fixer --no-update"
-                    },
-                    "depends": ["templates"]
-                },
-                "composer": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "composer install"
-                    },
-                    "depends": ["composer require"]
-                },
-                "phpunit": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "./vendor/bin/phpunit"
-                    },
-                    "depends": ["composer"]
-                },
-                "php-cs-fixer": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "./vendor/bin/php-cs-fixer"
-                    },
-                    "depends": ["composer"]
-                },
-                "php-cs-fixer": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "./vendor/bin/php-cs-fixer fix --dry-run"
-                    },
-                    "depends": ["composer"]
-                },
-                "phpstan": {
-                    "type": "script",
-                    "parameters": {
-                        "script": "./vendor/bin/phpstan analyse --level=7 lib"
-                    },
-                    "depends": ["composer"]
-                }
-            }
-        }
     },
     "packages": {
         "phpactor/class-mover": {
-            "prototype": "default"
+            "prototype": "default",
+            "artifacts": {
+                "phpstan_level": 4,
+                "phpstan_ignore": [
+                    "'#Microsoft.PhpParser.Node::getText.* invoked with 1 parameter, 0 required#'"
+                ]
+            }
         },
         "phpactor/class-to-file": {
             "prototype": "default"
@@ -174,12 +104,6 @@
         "phpactor/text-document": {
             "prototype": "default"
         },
-        "phpactor/worse-reference-finder-extension": {
-            "prototype": "default"
-        },
-        "phpactor/worse-reference-finders": {
-            "prototype": "default"
-        },
         "phpactor/worse-reflection": {
             "artifacts": {
                 "travis_checks": [
@@ -194,6 +118,93 @@
         },
         "phpactor/worse-reflection-extension": {
             "prototype": "default"
+        }
+    },
+    "prototypes": {
+        "default": {
+            "tasks": {
+                "init": {
+                    "type": "null",
+                    "depends": ["git clone"]
+                },
+                "git clone": {
+                    "type": "git",
+                    "parameters": {
+                        "url": "git@github.com:$PACKAGE_NAME"
+                    }
+                },
+                "travis": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/travis.yml",
+                        "targetPath": ".travis.yml"
+                    },
+                    "depends": ["init"]
+                },
+                "gitignore": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/gitignore",
+                        "targetPath": ".gitignore"
+                    },
+                    "depends": ["init"]
+                },
+                "php_cs": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/php_cs.dist",
+                        "targetPath": ".php_cs.dist"
+                    },
+                    "depends": ["init"]
+                },
+                "phpstan_config": {
+                    "type": "template",
+                    "parameters": {
+                        "path": "maestro/phpstan.neon",
+                        "targetPath": "phpstan.neon"
+                    },
+                    "depends": ["init"]
+                },
+                "templates": {
+                    "type": "null",
+                    "depends": ["travis","php_cs","gitignore","phpstan_config"]
+                },
+                "composer require": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "composer require friendsofphp/php-cs-fixer:~2.15.0 phpstan/phpstan:~0.11.0 --no-update --dev --prefer-stable"
+                    },
+                    "depends": ["init"]
+                },
+                "composer": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "composer install"
+                    },
+                    "depends": ["composer require"]
+                },
+                "phpunit": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/phpunit"
+                    },
+                    "depends": ["composer"]
+                },
+                "php-cs-fixer": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/php-cs-fixer fix"
+                    },
+                    "depends": ["composer", "templates"]
+                },
+                "phpstan": {
+                    "type": "script",
+                    "parameters": {
+                        "script": "./vendor/bin/phpstan analyse -c phpstan.neon"
+                    },
+                    "depends": ["composer","templates"]
+                }
+            }
         }
     }
 }

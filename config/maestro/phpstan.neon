@@ -1,0 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan/conf/config.level{{ phpstan_level }}.neon
+
+parameters:
+    ignoreErrors:
+        {% for ignore in phpstan_ignore -%}
+        - {{ ignore|raw }}
+        {%- endfor %}
+
+    paths:
+        - {{ source_dir }}
+

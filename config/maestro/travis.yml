@@ -1,11 +1,11 @@
 language: php
 
-sudo: false
-
 php:
-    {% for php_version in php_versions %}
+    {% for php_version in php_versions -%}
     - {{ php_version }}
     {% endfor %}
+
+sudo: false
 
 cache:
     directories:
@@ -15,6 +15,7 @@ before_script:
     - composer install
 
 script:
-    {% for check in travis_checks %}
+    {% for check in travis_checks -%}
     - {{ check }}
     {% endfor %}
+
