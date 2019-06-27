@@ -4,6 +4,7 @@
         "php_versions": [ 7.1, 7.2, 7.3 ],
         "phpstan_level": 7,
         "phpstan_ignore": [],
+        "php_cs_fixer_ignore_dirs": [],
         "travis_checks": [
             "./vendor/bin/php-cs-fixer fix --dry-run",
             "./vendor/bin/phpstan analyse lib -c phpstan.neon",
@@ -21,7 +22,12 @@
             }
         },
         "phpactor/class-to-file": {
-            "prototype": "default"
+            "prototype": "default",
+            "artifacts": {
+                "php_cs_fixer_ignore_dirs": [
+                    "Integration/Composer/project"
+                ]
+            }
         },
         "phpactor/class-to-file-extension": {
             "prototype": "default"
@@ -172,7 +178,7 @@
                 "composer require": {
                     "type": "script",
                     "parameters": {
-                        "script": "composer require friendsofphp/php-cs-fixer:~2.15.0 phpstan/phpstan:~0.11.0 --no-update --dev --prefer-stable"
+                        "script": "composer require phpunit/phpunit:~7.0 friendsofphp/php-cs-fixer:~2.15.0 phpstan/phpstan:~0.11.0 --no-update --dev --prefer-stable"
                     },
                     "depends": ["init"]
                 },

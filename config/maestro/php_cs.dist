@@ -1,8 +1,14 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->in('lib')
+    ->in('{{ source_dir }}')
     ->in('tests')
+    ->exclude([
+        {% for dir in php_cs_fixer_ignore_dirs -%}
+        '{{ dir }}'
+        {%- endfor %}
+
+    ])
 ;
 
 return PhpCsFixer\Config::create()
