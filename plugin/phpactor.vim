@@ -186,8 +186,7 @@ endfunction
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
-    let word = expand("<cword>")
-    call phpactor#rpc("import_class", {"name": word, "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+    call phpactor#rpc("import_class", {"offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""""""

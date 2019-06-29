@@ -36,6 +36,7 @@ class ClassSearch
     public function classSearch(string $filesystemName, string $name)
     {
         $filesystem = $this->filesystemRegistry->get($filesystemName);
+        $name = str_replace('\\', '/', $name);
 
         /** @var FileList<SplFileInfo> $files */
         $files = $filesystem->fileList('{' . $name . '}')->named($name . '.php');

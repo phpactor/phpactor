@@ -15,6 +15,7 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\TextDocument\Util\WordAtOffset;
 
 class ImportClassHandler extends AbstractHandler
 {
@@ -64,7 +65,6 @@ class ImportClassHandler extends AbstractHandler
             self::PARAM_ALIAS => null,
         ]);
         $resolver->setRequired([
-            self::PARAM_NAME,
             self::PARAM_OFFSET,
             self::PARAM_SOURCE,
             self::PARAM_PATH,
@@ -74,12 +74,13 @@ class ImportClassHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         if (null === $arguments[self::PARAM_QUALIFIED_NAME]) {
-            $suggestions = $this->suggestions($arguments[self::PARAM_NAME]);
+            $name = (new WordAtOffset('\s|%|\(|\)|\[|\]|:|;|\r|\r\n|\n'))($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
+            $suggestions = $this->suggestions($name);
 
             if (count($suggestions) === 0) {
                 return EchoResponse::fromMessage(sprintf(
-                    'No classes found with short name "%s"',
-                    $arguments[self::PARAM_NAME]
+                    'No classes found with name "%s"',
+                    $name
                 ));
             }
 
@@ -141,7 +142,7 @@ class ImportClassHandler extends AbstractHandler
             ),
             EchoResponse::fromMessage(sprintf(
                 'Imported class "%s"',
-                $arguments[self::PARAM_NAME]
+                $arguments[self::PARAM_QUALIFIED_NAME]
             ))
         ]);
     }
