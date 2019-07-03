@@ -74,7 +74,7 @@ class ImportClassHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         if (null === $arguments[self::PARAM_QUALIFIED_NAME]) {
-            $name = (new WordAtOffset('\s|%|\(|\)|\[|\]|:|;|\r|\r\n|\n'))($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
+            $name = (new WordAtOffset(WordAtOffset::SPLIT_QUALIFIED_PHP_NAME))($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
             $suggestions = $this->suggestions($name);
 
             if (count($suggestions) === 0) {
