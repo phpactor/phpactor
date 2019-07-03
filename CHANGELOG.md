@@ -12,6 +12,9 @@ Features:
   - [vim-plugin] Maintain correct cursor position after certain text diffs (#770) - @elythyr
   - [code-transform|rpc] Generate multiple accessors for a class - @elythyr
   - [code-tranform] Generate static methods if the call was static (#25) - @einenlum
+  - [completion] Use declared classes as completion source
+  - [import-class] Import declared classes (as long as they can be statically
+    resolved).
 
 Bug fixes:
 

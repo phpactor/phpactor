@@ -41,10 +41,7 @@ class ClassSearch
         $files = $filesystem->fileList('{' . $name . '}')->named($name . '.php');
 
         $results = [];
-
-        if ($reflectionResult = $this->tryAndReflect($name)) {
-            $results[] = $reflectionResult;
-        }
+        $results = $this->builtInResults($results, $name);
 
         foreach ($files as $file) {
             if (isset($results[(string) $file->path()])) {
@@ -86,5 +83,43 @@ class ClassSearch
             'class_name' => $reflectionClass->name()->short(),
             'class_namespace' => (string) $reflectionClass->name()->namespace(),
         ];
+    }
+
+    private function builtInResults(array $results, string $name)
+    {
+        $declared = array_merge(
+            get_declared_classes(),
+            get_declared_traits(),
+            get_declared_interfaces()
+        );
+
+        foreach ($declared as $declaredClass) {
+            $short = $this->resolveShortName($declaredClass);
+
+            $namespace = substr($declaredClass, 0, strrpos($declaredClass, '\\'));
+
+            if ($name !== $short) {
+                continue;
+            }
+
+            if (!$this->tryAndReflect($name)) {
+                continue;
+            }
+
+            $results[] = $this->tryAndReflect($name);
+        }
+
+        return $results;
+    }
+
+    private function resolveShortName($declaredClass): string
+    {
+        $offset = strrpos($declaredClass, '\\');
+
+        if (false === $offset) {
+            return $declaredClass;
+        }
+
+        return substr($declaredClass, $offset + 1);
     }
 }
