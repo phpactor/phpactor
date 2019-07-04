@@ -153,6 +153,7 @@ class ImportClassHandler extends AbstractHandler
             $this->filesystem,
             $name
         );
+
         return array_map(function (array $suggestion) {
             return $suggestion['class'];
         }, $suggestions);
