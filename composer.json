@@ -33,6 +33,7 @@
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",
         "webmozart/glob": "^4.1",
+        "phpactor/text-document": "~1.1",
         "phpactor/config-loader": "~0.1",
         "phpactor/code-transform-extension": "^0.1",
         "phpactor/worse-reference-finder-extension": "~0.1",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f0881f4360e733aade6f295142e0eea",
+    "content-hash": "0cb687d65581898c8965df507487fbe7",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1903,16 +1903,16 @@
         },
         {
             "name": "phpactor/text-document",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "b525a96a536cbd37fa44e05f388c6e8b7e32db5d"
+                "reference": "1a174bc1879e958210dcc9f47db113f1803d0375"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/b525a96a536cbd37fa44e05f388c6e8b7e32db5d",
-                "reference": "b525a96a536cbd37fa44e05f388c6e8b7e32db5d",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/1a174bc1879e958210dcc9f47db113f1803d0375",
+                "reference": "1a174bc1879e958210dcc9f47db113f1803d0375",
                 "shasum": ""
             },
             "require": {
@@ -1920,10 +1920,11 @@
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
+                "friendsofphp/php-cs-fixer": "~2.15.0",
                 "infection/infection": "^0.11.4",
-                "phpstan/phpstan": "^0.10.7",
-                "phpunit/phpunit": "^7.5"
+                "phpactor/test-utils": "^1.0",
+                "phpstan/phpstan": "~0.11.0",
+                "phpunit/phpunit": "~7.0"
             },
             "type": "library",
             "extra": {
@@ -1947,7 +1948,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2019-03-03T11:51:38+00:00"
+            "time": "2019-06-29T07:38:03+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",

@@ -19,9 +19,9 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedExcep
 class ImportClassHandlerTest extends HandlerTestCase
 {
     const TEST_NAME = 'Foo';
-    const TEST_OFFSET = 1234;
+    const TEST_OFFSET = 7;
     const TEST_PATH = '/path/to';
-    const TEST_SOURCE = '<?php foo';
+    const TEST_SOURCE = '<?php Foo';
     const TEST_ALIAS = 'Alias';
 
     /**
@@ -62,7 +62,6 @@ class ImportClassHandlerTest extends HandlerTestCase
 
         /** @var InputCallbackResponse $response */
         $response = $this->handle('import_class', [
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
@@ -81,7 +80,6 @@ class ImportClassHandlerTest extends HandlerTestCase
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
@@ -106,7 +104,6 @@ class ImportClassHandlerTest extends HandlerTestCase
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
@@ -127,7 +124,6 @@ class ImportClassHandlerTest extends HandlerTestCase
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
             ImportClassHandler::PARAM_QUALIFIED_NAME => self::TEST_NAME,
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
@@ -155,7 +151,6 @@ class ImportClassHandlerTest extends HandlerTestCase
         $response = $this->handle('import_class', [
             ImportClassHandler::PARAM_ALIAS => self::TEST_ALIAS,
             ImportClassHandler::PARAM_QUALIFIED_NAME => self::TEST_NAME,
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE
@@ -176,7 +171,6 @@ class ImportClassHandlerTest extends HandlerTestCase
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
             ImportClassHandler::PARAM_QUALIFIED_NAME => self::TEST_NAME,
-            ImportClassHandler::PARAM_NAME => self::TEST_NAME,
             ImportClassHandler::PARAM_OFFSET => self::TEST_OFFSET,
             ImportClassHandler::PARAM_PATH => self::TEST_PATH,
             ImportClassHandler::PARAM_SOURCE => self::TEST_SOURCE

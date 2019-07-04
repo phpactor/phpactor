@@ -35,6 +35,7 @@ class ClassSearch
 
     public function classSearch(string $filesystemName, string $name)
     {
+        $name = $this->convertFqnToRelativePath($name);
         $filesystem = $this->filesystemRegistry->get($filesystemName);
 
         /** @var FileList<SplFileInfo> $files */
@@ -121,5 +122,10 @@ class ClassSearch
         }
 
         return substr($declaredClass, $offset + 1);
+    }
+
+    private function convertFqnToRelativePath(string $name)
+    {
+        return str_replace('\\', '/', $name);
     }
 }

@@ -32,6 +32,13 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertContains('Badger.php"', $process->getOutput());
     }
 
+    public function testSearchByQualifiedName()
+    {
+        $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
+        $this->assertSuccess($process);
+        $this->assertContains('Carnivorous.php"', $process->getOutput());
+    }
+
     /**
      * @testdox It should return information baesd on a class "short" name.
      */

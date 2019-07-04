@@ -15,6 +15,7 @@ Features:
   - [completion] Use declared classes as completion source
   - [import-class] Import declared classes (as long as they can be statically
     resolved).
+  - [rpc] Class import uses offset to determine type to import
 
 Bug fixes:
 
@@ -25,6 +26,8 @@ Bug fixes:
 
 BC Break:
 
+  - [rpc] Import class no longer requires name parameter. RPC version changed
+    to version 2.
   - [code-transform] Generate accessors is now a class action and allows
     generation of multiple accessors.
 
