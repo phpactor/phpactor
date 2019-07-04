@@ -133,7 +133,6 @@ function! phpactor#_completeImportClass(completedItem)
     if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
                     \ "qualified_name": suggestion['class_import'], 
-                    \ "name": suggestion['name'], 
                     \ "offset": phpactor#_offset(), 
                     \ "source": phpactor#_source(), 
                     \ "path": expand('%:p')})
