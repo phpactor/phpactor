@@ -29,6 +29,8 @@ Bug fix:
   - [text-document] Word splitting includes commas, and other non-word chars
     (#851) - @einenlum
   - [worse-reflection] Functions wrongly memonized as classes - @dantleech
+  - [class-new-cli] response shows source code instead of path (#792)
+  - [class-new] Wrong file path when destination shares the same namespace as source (#795).
 
 ## 2019-10-23 0.13.5
 
