@@ -33,7 +33,10 @@
             "prototype": "default"
         },
         "phpactor/code-builder": {
-            "prototype": "default"
+            "prototype": "default",
+            "artifacts": {
+                "phpstan_level": 1
+            }
         },
         "phpactor/code-transform": {
             "prototype": "default"
@@ -66,7 +69,13 @@
             "prototype": "default"
         },
         "phpactor/docblock": {
-            "prototype": "default"
+            "prototype": "default",
+            "artifacts": {
+                "phpstan_ignore": [
+                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                ]
+            }
+                        
         },
         "phpactor/extension-manager-extension": {
             "prototype": "default"
@@ -99,7 +108,12 @@
             "prototype": "default"
         },
         "phpactor/source-code-filesystem": {
-            "prototype": "default"
+            "prototype": "default",
+            "artifacts": {
+                "phpstan_ignore": [
+                    "'#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'"
+                ]
+            }
         },
         "phpactor/source-code-filesystem-extension": {
             "prototype": "default"
@@ -112,9 +126,15 @@
         },
         "phpactor/worse-reflection": {
             "artifacts": {
+                "phpstan_ignore": [
+                    "'#Method .*getText.. invoked with 1 parameter, 0 required#'",
+                    "'#methods.. invoked with 1 parameter, 0 required#'",
+                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                ],
+                "phpstan_level": 2,
                 "travis_checks": [
-                    "vendor/bin/php-cs-fixer fix --dry-run --diff --diff-format=udiff",
-                    "vendor/bin/phpstan analyze lib/ --level=2",
+                    "vendor/bin/php-cs-fixer fix --dry-run",
+                    "vendor/bin/phpstan analyse lib -c phpstan.neon",
                     "vendor/bin/phpunit",
                     "vendor/bin/phpbench run --report=aggregate --progress=travis --store --iterations=1",
                     "tests/Smoke/smoke_test.php --limit=100"
@@ -176,9 +196,16 @@
                     "depends": ["travis","php_cs","gitignore","phpstan_config"]
                 },
                 "composer require": {
-                    "type": "script",
+                    "type": "json_file",
                     "parameters": {
-                        "script": "composer require phpunit/phpunit:~7.0 friendsofphp/php-cs-fixer:~2.15.0 phpstan/phpstan:~0.11.0 --no-update --dev --prefer-stable"
+                        "merge": {
+                            "require-dev": {
+                                "phpunit/phpunit": "~7.0",
+                                "friendsofphp/php-cs-fixer": "~2.15.0",
+                                "phpstan/phpstan": "~0.11.0"
+                            }
+                        },
+                        "targetPath": "composer.json"
                     },
                     "depends": ["init"]
                 },
