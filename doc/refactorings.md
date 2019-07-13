@@ -38,7 +38,7 @@ Add Missing Assignments
 Automatically add any missing properties to a class.
 
 - **Command**: `$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments`
-- **VIM Context Menu**: _Class context menu > Implement Contracts_.
+- **VIM Context Menu**: _Class context menu > Transform > Add missing properties_.
 - **VIM Command**:`:call phpactor#Transform()`
 
 ### Motivation
@@ -305,7 +305,7 @@ Complete Constructor
 Complete the assignments and add properties for an incomplete constructor.
 
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
-- **VIM plugin**: _Class context menu > Complete Constructor_.
+- **VIM plugin**: _Class context menu > Transform > Complete Constructor_.
 - **VIM function**:`:call phpactor#Transform()`
 
 ### Motivation
