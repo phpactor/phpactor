@@ -29,7 +29,7 @@ Refactoring:
 - [Extract Expression](#extract-expression)
 - [Extract Method](#extract-method)
 - [Rename Class](#rename-class)
-- [Rename Class Member](#rename-member)
+- [Rename Class Member](#rename-class-member)
 - [Rename Variable](#rename-variable)
 
 Add Missing Assignments
