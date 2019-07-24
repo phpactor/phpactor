@@ -18,6 +18,7 @@ class NavigationExtension implements Extension
 {
     const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
     const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
+    const SERVICE_PATH_FINDER = 'navigation.path_finder';
 
     /**
      * {@inheritDoc}
@@ -42,7 +43,7 @@ class NavigationExtension implements Extension
 
     private function registerPathFinder(ContainerBuilder $container)
     {
-        $container->register('navigation.path_finder', function (Container $container) {
+        $container->register(self::SERVICE_PATH_FINDER, function (Container $container) {
             return PathFinder::fromDestinations($container->getParameter(self::PATH_FINDER_DESTINATIONS));
         });
         
@@ -75,7 +76,7 @@ class NavigationExtension implements Extension
             return new ChainNavigator($navigators);
         });
         $container->register('navigation.navigator.path_finder', function (Container $container) {
-            return new PathFinderNavigator($container->get('navigation.path_finder'));
+            return new PathFinderNavigator($container->get(self::SERVICE_PATH_FINDER));
         }, [ 'navigation.navigator' => [] ]);
         
         $container->register('navigation.navigator.worse_reflection', function (Container $container) {

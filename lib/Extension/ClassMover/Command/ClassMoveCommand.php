@@ -47,6 +47,7 @@ class ClassMoveCommand extends Command
             'Type of move: "%s"',
             implode('", "', [self::TYPE_AUTO, self::TYPE_CLASS, self::TYPE_FILE])
         ), self::TYPE_AUTO);
+        $this->addOption('related', null, InputOption::VALUE_NONE, 'Move related files (as defined by the patterns in navigator.destinations');
         FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_GIT);
     }
 
@@ -57,6 +58,7 @@ class ClassMoveCommand extends Command
         $src = $input->getArgument('src');
         $dest = $input->getArgument('dest');
         $filesystem = $input->getOption('filesystem');
+        $related = (bool) $input->getOption('related');
 
         if (null === $dest) {
             $dest = $this->prompt->prompt('Move to: ', $src);
@@ -64,11 +66,11 @@ class ClassMoveCommand extends Command
 
         switch ($type) {
             case 'auto':
-                return $this->mover->move($logger, $filesystem, $src, $dest);
+                return $this->mover->move($logger, $filesystem, $src, $dest, $related);
             case 'file':
-                return $this->mover->moveFile($logger, $filesystem, $src, $dest);
+                return $this->mover->moveFile($logger, $filesystem, $src, $dest, $related);
             case 'class':
-                return $this->mover->moveClass($logger, $filesystem, $src, $dest);
+                return $this->mover->moveClass($logger, $filesystem, $src, $dest, $related);
         }
 
         throw new \InvalidArgumentException(sprintf(

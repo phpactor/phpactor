@@ -213,6 +213,9 @@ new location, updating the classes namespace and all references to that class
 where possible in a given _scope_ (i.e. files known by GIT: `git`, files known by Composer: `composer`, or all PHP files under
 the current CWD: `simple`).
 
+If you have defined file relationships with
+[navigator.destinations](https://phpactor.github.io/phpactor/navigation.html#jump-to-or-generate-related-file), then you have the option to move the related files in addition to the specified file. If using the command then specify `--related`, or if using the RPC interface (f.e. VIM) you will be prompted.
+
 <div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before
 executing it and be aware that success is not guaranteed (e.g. class references

@@ -16,6 +16,8 @@ Features:
   - [import-class] Import declared classes (as long as they can be statically
     resolved).
   - [rpc] Class import uses offset to determine type to import
+  - [class-mover] Possiblity to move related any files whose relations are
+    defined in `navigator.destinations` (for both command and rpc)
 
 Bug fixes:
 
