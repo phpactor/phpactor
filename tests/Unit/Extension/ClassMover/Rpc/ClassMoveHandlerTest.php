@@ -31,6 +31,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
     public function setUp()
     {
         $this->classMover = $this->prophesize(ClassMover::class);
+        $this->classMover->getRelatedFiles(self::SOURCE_PATH)->willReturn([]);
     }
 
     public function createHandler(): Handler
@@ -92,27 +93,26 @@ class ClassMoveHandlerTest extends HandlerTestCase
             'source_path' => self::SOURCE_PATH,
             'dest_path' => null,
             'confirmed' => null,
+            'move_related' => null
         ], $action->callbackAction()->parameters());
     }
 
-    /**
-     * @testdox It should ask for confirmation
-     */
-    public function testMoveClass()
+    public function testItShouldAskForConfirmation()
     {
+        $this->classMover->move(
+            Argument::type(ClassMoverLogger::class),
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            self::SOURCE_PATH,
+            self::DEST_PATH,
+            false
+        )->shouldBeCalled();
+
         /** @var $action StackAction */
         $action = $this->handle('move_class', [
             'source_path' => self::SOURCE_PATH,
             'dest_path' => self::DEST_PATH,
             'confirmed' => true,
         ]);
-
-        $this->classMover->move(
-            Argument::type(ClassMoverLogger::class),
-            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
-            self::SOURCE_PATH,
-            self::DEST_PATH
-        )->shouldBeCalled();
 
         $this->assertInstanceOf(CollectionResponse::class, $action);
         $actions = $action->actions();
@@ -124,5 +124,49 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $secondAction = array_shift($actions);
         $this->assertInstanceOf(OpenFileResponse::class, $secondAction);
         $this->assertEquals(self::DEST_PATH, $secondAction->path());
+    }
+
+    public function testItAskIfRelatedFilesShouldBeMoved()
+    {
+        $this->classMover->getRelatedFiles(self::SOURCE_PATH)->willReturn([
+            'foobar.php',
+        ]);
+
+        /** @var $action StackAction */
+        $action = $this->handle('move_class', [
+            'source_path' => self::SOURCE_PATH,
+            'dest_path' => self::DEST_PATH,
+            'confirmed' => true,
+        ]);
+
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        $inputs = $action->inputs();
+        $input = reset($inputs);
+        $this->assertInstanceOf(ConfirmInput::class, $input);
+        $this->assertEquals('move_related', $input->name());
+    }
+
+    public function testMovesRelatedFiles()
+    {
+        $this->classMover->move(
+            Argument::type(ClassMoverLogger::class),
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            self::SOURCE_PATH,
+            self::DEST_PATH,
+            true
+        )->shouldBeCalled();
+
+        $this->classMover->getRelatedFiles(self::SOURCE_PATH)->willReturn([
+            'foobar.php',
+        ]);
+
+        /** @var $action StackAction */
+        $action = $this->handle('move_class', [
+            'source_path' => self::SOURCE_PATH,
+            'dest_path' => self::DEST_PATH,
+            'confirmed' => true,
+            'move_related' => true,
+        ]);
+
     }
 }
