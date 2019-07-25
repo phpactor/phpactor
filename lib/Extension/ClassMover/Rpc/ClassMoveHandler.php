@@ -107,8 +107,8 @@ class ClassMoveHandler extends AbstractHandler
         );
 
         return CollectionResponse::fromActions([
-            CloseFileResponse::fromPath($arguments[self::PARAM_SOURCE_PATH]),
-            OpenFileResponse::fromPath($arguments[self::PARAM_DEST_PATH])
+            OpenFileResponse::fromPath($arguments[self::PARAM_DEST_PATH]),
+            CloseFileResponse::fromPath($arguments[self::PARAM_SOURCE_PATH])
         ]);
     }
 }
