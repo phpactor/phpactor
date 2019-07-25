@@ -25,7 +25,8 @@ Bug fixes:
   - [code-builder] Class import doesn't work with single element namespace
     #760
   - [code-builder] Variant is not passed to class generator (#766)
-  - [phpactor CLI] response shows source code instead of path (#792)
+  - [phpactor|cli] response shows source code instead of path (#792)
+  - [class-mover|rpc] Fix order of open/close operations, prevent VIM crashing
 
 BC Break:
 

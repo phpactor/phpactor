@@ -117,13 +117,14 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(CollectionResponse::class, $action);
         $actions = $action->actions();
 
-        $firstAction = array_shift($actions);
-        $this->assertInstanceOf(CloseFileResponse::class, $firstAction);
-        $this->assertEquals(self::SOURCE_PATH, $firstAction->path());
+        $action = array_shift($actions);
+        $this->assertInstanceOf(OpenFileResponse::class, $action);
+        $this->assertEquals(self::DEST_PATH, $action->path());
 
-        $secondAction = array_shift($actions);
-        $this->assertInstanceOf(OpenFileResponse::class, $secondAction);
-        $this->assertEquals(self::DEST_PATH, $secondAction->path());
+        $action = array_shift($actions);
+        $this->assertInstanceOf(CloseFileResponse::class, $action);
+        $this->assertEquals(self::SOURCE_PATH, $action->path());
+
     }
 
     public function testItAskIfRelatedFilesShouldBeMoved()
