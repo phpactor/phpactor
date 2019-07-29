@@ -25,7 +25,7 @@
         "phpactor/rpc-extension": "~0.2",
         "phpactor/source-code-filesystem": "~0.1",
         "phpactor/source-code-filesystem-extension": "~0.1.2",
-        "phpactor/worse-reflection": "~0.1",
+        "phpactor/worse-reflection": "~0.4",
         "phpactor/worse-reflection-extension": "~0.1",
         "phpbench/container": "^1.0",
         "phpactor/code-builder": "^0.3",

@@ -15,7 +15,7 @@ sed 's/^/  /' < config/travis/extensions-to-test
 echo ""
 echo "Instatlling:"
 echo ""
-./bin/phpactor extension:install $LIST
+php -d memory_limit=-1 ./bin/phpactor extension:install $LIST
 echo ""
 echo "Done"
 ./bin/phpactor extension:list

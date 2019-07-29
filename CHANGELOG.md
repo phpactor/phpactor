@@ -18,6 +18,8 @@ Features:
   - [rpc] Class import uses offset to determine type to import
   - [class-mover] Possiblity to move related any files whose relations are
     defined in `navigator.destinations` (for both command and rpc)
+  - [worse-reflection] Support virtual class properties (in addition to
+    methods).
 
 Bug fixes:
 
