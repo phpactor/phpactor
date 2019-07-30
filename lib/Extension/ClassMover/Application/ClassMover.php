@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
+use Exception;
+use Phpactor\ClassFileConverter\Exception\NoMatchingSourceException;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
@@ -49,9 +51,14 @@ class ClassMover
 
     public function getRelatedFiles(string $src): array
     {
+        try {
         return array_filter($this->pathFinder->destinationsFor($src), function (string $filePath) {
             return (bool) file_exists($filePath);
         });
+        } catch (NoMatchingSourceException $e) {
+            // TODO: Make pathfinder return it's own exception here, this is the class-to-file exception
+            return [];
+        }
     }
 
     /**
