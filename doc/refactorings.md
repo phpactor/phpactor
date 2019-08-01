@@ -365,7 +365,7 @@ Fix Namespace or Class Name
 Update a file's namespace (and/or class name) based on the composer
 configuration.
 
-- **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
+- **Command**: `$ phpactor class:transform path/to/class.php --transform=fix_namespace_class_name`
 - **VIM plugin**: _Class context menu > Transform > Fix namespace or classname_.
 - **VIM function**: `:call phpactor#Transform()`
 
