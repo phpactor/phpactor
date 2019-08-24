@@ -12,6 +12,10 @@
         ]
     },
     "packages": {
+        "phpactor/phpactor": {
+            "version": "0.13.0",
+            "url": "git@github.com:phpactor/phpactor"
+        },
         "phpactor/class-mover": {
             "version": "0.1.0",
             "prototype": "default",
@@ -104,6 +108,14 @@
             "prototype": "default",
             "version": "0.3.0"
         },
+        "phpactor/language-server": {
+            "prototype": "default",
+            "version": "0.1.0"
+        },
+        "phpactor/language-server-extension": {
+            "prototype": "default",
+            "version": "0.1.0"
+        },
         "phpactor/logging-extension": {
             "prototype": "default",
             "version": "0.3.1"
@@ -182,8 +194,7 @@
             "url": "git@github.com:$PACKAGE_NAME",
             "tasks": {
                 "init": {
-                    "type": "null",
-                    "depends": []
+                    "type": "null"
                 },
                 "travis": {
                     "type": "template",
