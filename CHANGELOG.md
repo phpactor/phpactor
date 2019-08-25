@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2019-08-25 0.13.0
 
 Features:
 
