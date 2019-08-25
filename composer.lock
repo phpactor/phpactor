@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9b4ea532c9ddeabfed348894b4edd88",
+    "content-hash": "d1d9f529926241dee9c771f7360dde5a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1581,16 +1581,16 @@
         },
         {
             "name": "phpactor/path-finder",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/path-finder.git",
-                "reference": "2268a591bf7afe6f39e4de9f45aa2449b96c2ddf"
+                "reference": "14f4c7a658ea501e7679d27bbf5d2abec1a9ad07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/path-finder/zipball/2268a591bf7afe6f39e4de9f45aa2449b96c2ddf",
-                "reference": "2268a591bf7afe6f39e4de9f45aa2449b96c2ddf",
+                "url": "https://api.github.com/repos/phpactor/path-finder/zipball/14f4c7a658ea501e7679d27bbf5d2abec1a9ad07",
+                "reference": "14f4c7a658ea501e7679d27bbf5d2abec1a9ad07",
                 "shasum": ""
             },
             "require": {
@@ -1623,7 +1623,7 @@
                 }
             ],
             "description": "Utility for navigating to related source files",
-            "time": "2019-08-24T14:04:06+00:00"
+            "time": "2019-08-24T11:33:25+00:00"
         },
         {
             "name": "phpactor/reference-finder",
@@ -1724,16 +1724,16 @@
         },
         {
             "name": "phpactor/reference-finder-rpc-extension",
-            "version": "dev-master",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-rpc-extension.git",
-                "reference": "61521d2a9291719e53f2caab735d51524a9b4a37"
+                "reference": "986d69af7669c6c26416f260373dc7db5168c9fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/61521d2a9291719e53f2caab735d51524a9b4a37",
-                "reference": "61521d2a9291719e53f2caab735d51524a9b4a37",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/986d69af7669c6c26416f260373dc7db5168c9fd",
+                "reference": "986d69af7669c6c26416f260373dc7db5168c9fd",
                 "shasum": ""
             },
             "require": {
@@ -1769,7 +1769,7 @@
                 }
             ],
             "description": "Description about my project",
-            "time": "2019-08-24T14:04:06+00:00"
+            "time": "2019-08-24T11:33:25+00:00"
         },
         {
             "name": "phpactor/rpc-extension",
@@ -5629,9 +5629,8 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
-        "phpactor/path-finder": 20,
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
