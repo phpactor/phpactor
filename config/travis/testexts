@@ -4,14 +4,14 @@ echo "Testing Installability of Phpactor Extensions"
 echo "============================================="
 echo ""
 
-if [ ! -e '.phpactor.json' ]; then
-    echo '{"extension_manager.minimum_stability":"dev"}' >> .phpactor.json
-fi
+#"if [ ! -e '.phpactor.json' ]; then
+#"    echo '{"extension_manager.minimum_stability":"dev"}' >> .phpactor.json
+#"fi
 
-LIST=$(tr '\n' ' ' < ".travis/extensions-to-test")
+LIST=$(tr '\n' ' ' < "config/travis/extensions-to-test")
 echo "Extensions:"
 echo ""
-sed 's/^/  /' < .travis/extensions-to-test
+sed 's/^/  /' < config/travis/extensions-to-test
 echo ""
 echo "Instatlling:"
 echo ""

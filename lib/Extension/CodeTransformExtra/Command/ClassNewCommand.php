@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Command;
 
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,33 +60,43 @@ class ClassNewCommand extends Command
     {
         $src = $input->getArgument('src');
         $variant = $input->getOption('variant');
-        $response = [
-            'src' => $src,
-            'path' => null,
-            'exists' => false,
-        ];
 
         try {
-            $response['path'] = $this->classNew->generate($src, $variant, $input->getOption('force'));
+            $sourceCode = $this->generateSourceCode($src, $variant, $input, $output);
         } catch (FileAlreadyExists $exception) {
-            $questionHelper = new QuestionHelper();
-            $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
-
-            if (false === $questionHelper->ask($input, $output, $question)) {
-                $response['exists'] = true;
-                return $response;
-            }
-
-            $filePath = $this->classNew->generate($src, $variant, true);
-            $response['path'] = $filePath;
+            return [
+                'src' => $src,
+                'path' => null,
+                'exists' => true,
+            ];
         }
 
-        return $response;
+        return [
+            'src' => $src,
+            'path' => $sourceCode->path(),
+            'exists' => false,
+        ];
     }
 
     private function listGenerators(InputInterface $input, OutputInterface $output)
     {
         $dumper = $this->dumperRegistry->get($input->getOption('format'));
         $dumper->dump($output, $this->classNew->availableGenerators());
+    }
+
+    private function generateSourceCode(string $src, string $variant, InputInterface $input, OutputInterface $output): SourceCode
+    {
+        try {
+            return $this->classNew->generate($src, $variant, $input->getOption('force'));
+        } catch (FileAlreadyExists $exception) {
+            $questionHelper = new QuestionHelper();
+            $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
+        
+            if (false === $questionHelper->ask($input, $output, $question)) {
+                throw $exception;
+            }
+        
+            return $this->classNew->generate($src, $variant, true);
+        }
     }
 }

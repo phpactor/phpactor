@@ -1,0 +1,49 @@
+Include: utils.vader
+
+Given php (Original source):
+  <?php
+
+  class Foo
+  {
+      /**
+       * @var string
+       */
+      private $foo:
+
+      private function foo()
+      {
+          return $this->foo();
+      }
+  }
+
+Execute (Goes to the method line and changes the visibility):
+  10
+  call Apply(
+    \ Delete(10),
+    \ Insert(10, '    /**'),
+    \ Insert(11, '     * @var int $i'),
+    \ Insert(12, '     */'),
+    \ Insert(13, '    private function foo(int $i)')
+  \ )
+
+Then (Then cursor should still be on the method signature):
+  call AssertCursorOnLine(13)
+
+Expect php (The docblock should be added and the signature changed):
+  <?php
+
+  class Foo
+  {
+      /**
+       * @var string
+       */
+      private $foo:
+
+      /**
+       * @var int $i
+       */
+      private function foo(int $i)
+      {
+          return $this->foo();
+      }
+  }

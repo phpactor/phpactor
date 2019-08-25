@@ -22,7 +22,7 @@ while read -r dep; do
          EXITCODE=1
     fi
     cd - || continue
-done < <(php .travis/list-deps.php)
+done < <(php config/travis/list-deps.php)
 
 composer dumpautoload
 

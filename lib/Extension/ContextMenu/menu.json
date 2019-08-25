@@ -164,6 +164,14 @@
                 "offset": "%offset%",
                 "source": "%source%"
             }
+        },
+        "generate_accessor": {
+            "action": "generate_accessor",
+            "parameters": {
+                "path": "%path%",
+                "source": "%source%",
+                "offset": "%offset%"
+            }
         }
     },
     "property": {
@@ -187,8 +195,9 @@
             "action": "generate_accessor",
             "parameters": {
                 "path": "%path%",
-                "offset": "%offset%",
-                "source": "%source%"
+                "names": "%symbol%",
+                "source": "%source%",
+                "offset": "%offset%"
             }
         },
         "goto_definition": {

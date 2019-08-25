@@ -23,8 +23,8 @@ script:
   # (only if the secure key is present)
   - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
   # Run the test suites for all the Phpactor packages
-  - .travis/testdeps
-  - .travis/testexts
+  - config/travis/testdeps
+  - config/travis/testexts
 
 jobs:
   include:
@@ -41,7 +41,7 @@ jobs:
         - git clone https://github.com/junegunn/vader.vim.git
       script:
         # Run the VIM Plugin tests
-        - .travis/vim-plugin-test.sh
+        - config/travis/vim-plugin-test.sh
     - php: 7.1
     - php: 7.2
     - stage: docs

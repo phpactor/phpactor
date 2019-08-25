@@ -130,10 +130,9 @@ function! phpactor#_completeImportClass(completedItem)
 
     let suggestion = g:_phpactorCompletionMeta[hash]
 
-    if has_key(suggestion, "class_import")
+    if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
                     \ "qualified_name": suggestion['class_import'], 
-                    \ "name": suggestion['name'], 
                     \ "offset": phpactor#_offset(), 
                     \ "source": phpactor#_source(), 
                     \ "path": expand('%:p')})
@@ -186,15 +185,31 @@ endfunction
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
-    let word = expand("<cword>")
-    call phpactor#rpc("import_class", {"name": word, "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+    call phpactor#rpc("import_class", {"offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""""""
 " RPC Proxy methods
 """""""""""""""""""""""""""
+function! phpactor#_GotoDefinitionTarget(target)
+    call phpactor#rpc("goto_definition", { 
+                \"offset": phpactor#_offset(), 
+                \"source": phpactor#_source(), 
+                \"path": expand('%:p'), 
+                \"target": a:target,
+                \'language': &ft})
+endfunction
 function! phpactor#GotoDefinition()
-    call phpactor#rpc("goto_definition", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p'), 'language': &ft})
+    call phpactor#_GotoDefinitionTarget('focused_window')
+endfunction
+function! phpactor#GotoDefinitionVsplit()
+    call phpactor#_GotoDefinitionTarget('vsplit')
+endfunction
+function! phpactor#GotoDefinitionHsplit()
+    call phpactor#_GotoDefinitionTarget('hsplit')
+endfunction
+function! phpactor#GotoDefinitionTab()
+    call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
 function! phpactor#Hover()
@@ -295,7 +310,11 @@ function! phpactor#GetClassFullName()
 endfunction
 
 function! phpactor#ChangeVisibility()
-    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+    call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p') })
+endfunction
+
+function! phpactor#GenerateAccessors()
+    call phpactor#rpc("generate_accessor", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
 endfunction
 
 """""""""""""""""""""""
@@ -349,47 +368,37 @@ function! phpactor#_applyTextEdits(path, edits)
     call phpactor#_switchToBufferOrEdit(a:path)
 
     let postCursorPosition = getpos('.')
+    let curLine = postCursorPosition[1]
+    let numberOfLinesToPreviousPosition = 0
 
     for edit in a:edits
+        let startLine = edit.start.line
+        let endLine = edit.end.line
 
-        let newLines = 0
-
-        " start = { line: 1234, character: 0 }
-        let start = edit['start']
-
-        " end = { line: 1234, character: 0 }
-        let end = edit['end']
-
-        " move the cursor into the start position
-        call setpos('.', [ 0, start['line'] + 1, start['character'] + 1 ])
-
-        if start['character'] != 0 || end['character'] != 0
+        if edit.start.character != 0 || edit.end.character != 0
             throw "Non-zero character offsets not supported in text edits, got " . json_encode(edit)
         endif
 
-        " to delete
-        let linesToDelete = end['line'] - start['line']
-        if linesToDelete > 0
-            call execute('normal ' . linesToDelete . 'dd')
+        let numberOfDeletedLines = endLine - startLine
+        if numberOfDeletedLines > 0
+            silent execute printf('keepjumps %d,%dd _', startLine + 1, endLine)
+
+            if startLine < curLine && curLine <= endLine
+                let numberOfLinesToPreviousPosition += endLine - curLine + 1
+            elseif endLine < curLine
+                let curLine -= numberOfDeletedLines
+            endif
         endif
 
-        if edit['text'] == "\n"
-            " if this is just a new line, add a new line
-            call append(start['line'], '')
-            let newLines = 1
-        else
-            " insert characters after the current line
-            let appendLines = split(edit['text'], "\n")
-            call append(start['line'], appendLines)
-            let newLines = newLines + len(appendLines)
-        endif
+        let newLines = edit.text == "\n" ? [''] : split(edit.text, "\n")
+        keepjumps call append(startLine, newLines)
 
-        if postCursorPosition[1] > start['line']
-            let postCursorPosition[1] = postCursorPosition[1] + newLines
+        if startLine < curLine
+            let curLine += len(newLines)
         endif
-
     endfor
 
+    let postCursorPosition[1] = curLine - numberOfLinesToPreviousPosition
     call setpos('.', postCursorPosition)
 endfunction
 
@@ -422,69 +431,6 @@ function! phpactor#rpc(action, arguments)
         echo "Phpactor returned an error: " . result
         return
     endif
-endfunction
-
-function! phpactor#_input_choice(label, choices)
-    let list = []
-    let choices = []
-    let usedShortcuts = []
-
-    if empty(a:choices)
-        call confirm("No choices available")
-        throw "cancelled"
-    endif
-
-    for choiceLabel in keys(a:choices)
-        let buffer = []
-        let foundShortcut = v:false
-
-        for char in split(choiceLabel, '\zs')
-            if v:false == foundShortcut && -1 == index(usedShortcuts, tolower(char))
-                call add(buffer, '&')
-                let foundShortcut = v:true
-                call add(usedShortcuts, tolower(char))
-            endif
-
-            call add(buffer, char)
-        endfor
-
-        let confirmLabel = join(buffer, "")
-
-        call add(list, confirmLabel)
-        call add(choices, choiceLabel)
-    endfor
-
-    let choice = confirm(a:label, join(list, "\n"))
-
-    if (choice == 0)
-        " this is an exception, not a message!
-        throw "cancelled"
-    endif
-
-    let choice = choice - 1
-    return a:choices[get(choices, choice)]
-endfunction
-
-function! phpactor#_input_list(label, choices)
-    let list = []
-    let choices = []
-
-    let c = 1
-    for choiceLabel in keys(a:choices)
-        call add(list, c . ") " . choiceLabel)
-        call add(choices, choiceLabel)
-        let c = c + 1
-    endfor
-
-    echo a:label
-    let choice = inputlist(list)
-
-    if (choice == 0)
-        throw "cancelled"
-    endif
-
-    let choice = choice - 1
-    return a:choices[choices[choice]]
 endfunction
 
 function! phpactor#_rpc_dispatch(actionName, parameters)
@@ -541,11 +487,26 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> open_file
     if a:actionName == "open_file"
-        call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+        if a:parameters['target'] == 'focused_window'
+            call phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
-        if a:parameters['force_reload'] == v:true
-            exec ":e!"
+            if a:parameters['force_reload'] == v:true
+                exec "e!"
+            endif
         endif
+
+        if a:parameters['target'] == 'vsplit'
+            exec ":vsplit " . a:parameters['path']
+        endif
+
+        if a:parameters['target'] == 'hsplit'
+            exec ":split " . a:parameters['path']
+        endif
+
+        if a:parameters['target'] == 'new_tab'
+            exec ":tabnew " . a:parameters['path']
+        endif
+
 
         if (a:parameters['offset'])
             exec ":goto " .  (a:parameters['offset'] + 1)
@@ -598,21 +559,17 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> input_callback
     if a:actionName == "input_callback"
+        let inputs = a:parameters['inputs']
+        let action = a:parameters['callback']['action']
         let parameters = a:parameters['callback']['parameters']
-        for input in a:parameters['inputs']
 
-            try 
-                let value = phpactor#_rpc_dispatch_input(input['type'], input['parameters'])
-            catch /cancelled/
-                execute ':redraw'
-                echo "Cancelled"
-                return
-            endtry
-
-            let parameters[input['name']] = value
-        endfor
-        call phpactor#rpc(a:parameters['callback']['action'], parameters)
-        return
+        try
+          return phpactor#_rpc_dispatch_input(inputs, action, parameters)
+        catch /cancelled/
+          redraw
+          echo 'Cancelled'
+          return
+        endtry
     endif
 
     " >> information
@@ -673,38 +630,55 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
-function! phpactor#_rpc_dispatch_input(type, parameters)
+function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)
+    let a:parameters[a:parameterName] = a:result
+
+    call a:Next(a:parameters)
+endfunction
+
+function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
+    let input = remove(a:inputs, 0)
+    let inputParameters = input['parameters']
+
+    let Next = empty(a:inputs)
+        \ ? function('phpactor#rpc', [a:action])
+        \ : function('phpactor#_rpc_dispatch_input', [a:inputs, a:action])
+
+    let ResultHandler = function('phpactor#_rpc_dispatch_input_handler', [
+        \ Next,
+        \ a:parameters,
+        \ input['name'],
+    \ ])
+
     " Remove any existing output in the message window
     execute ':redraw'
 
-    " >> text
-    if a:type == 'text'
-        if v:null != a:parameters['type']
-            return input(a:parameters['label'], a:parameters['default'], a:parameters['type'])
-        endif
-        return input(a:parameters['label'], a:parameters['default'])
+    if 'text' == input['type']
+        let TypeHandler = function('phpactor#input#text', [
+            \ inputParameters['label'],
+            \ inputParameters['default'],
+            \ inputParameters['type']
+        \ ])
+    elseif 'choice' == input['type']
+        let TypeHandler = function('phpactor#input#choice', [
+            \ inputParameters['label'],
+            \ inputParameters['choices']
+        \ ])
+    elseif 'list' == input['type']
+        let TypeHandler = function('phpactor#input#list', [
+            \ inputParameters['label'],
+            \ inputParameters['choices'],
+            \ inputParameters['multi']
+        \ ])
+    elseif 'confirm' == input['type']
+        let TypeHandler = function('phpactor#input#confirm', [
+            \ inputParameters['label']
+        \ ])
+    else
+        throw "Do not know how to handle input '" . input['type'] . "'"
     endif
 
-    " >> choice
-    if a:type == 'choice'
-        return phpactor#_input_choice(a:parameters['label'], a:parameters['choices'])
-    endif
-
-    if a:type == 'list'
-        return phpactor#_input_list(a:parameters['label'], a:parameters['choices'])
-    endif
-
-    " >> confirm
-    if a:type == 'confirm'
-        let choice = confirm(a:parameters["label"], "&Yes\n&No\n")
-
-        if choice == 1
-            return v:true
-        endif
-
-        return v:false
-    endif
-
-
-    throw "Do not know how to handle input '" . a:type . "'"
+    call TypeHandler(ResultHandler)
 endfunction
+
+" vim: et ts=4 sw=4 fdm=marker

@@ -1,6 +1,42 @@
 Changelog
 =========
 
+## 2019-08-25 0.13.0
+
+Features:
+
+  - [vim-plugin] Add new `GotoDefinition[Vsplit|Hsplit|Tab]` functions.
+  - [code-builder] Initial support for nullable types - @einenlum
+  - [vim-plugin] FZF integration for list inputs (#769) - @elythyr
+  - [vim-plugin] FZF multiple selection (#773). @elythyr
+  - [vim-plugin] Maintain correct cursor position after certain text diffs (#770) - @elythyr
+  - [code-transform|rpc] Generate multiple accessors for a class - @elythyr
+  - [code-tranform] Generate static methods if the call was static (#25) - @einenlum
+  - [completion] Use declared classes as completion source
+  - [import-class] Import declared classes (as long as they can be statically
+    resolved).
+  - [rpc] Class import uses offset to determine type to import
+  - [class-mover] Possiblity to move related any files whose relations are
+    defined in `navigator.destinations` (for both command and rpc)
+  - [worse-reflection] Support virtual class properties (in addition to
+    methods).
+
+Bug fixes:
+
+  - [completion] Signature helper does not work on interfaces (#752) - @taluu
+  - [code-builder] Class import doesn't work with single element namespace
+    #760
+  - [code-builder] Variant is not passed to class generator (#766)
+  - [phpactor|cli] response shows source code instead of path (#792)
+  - [class-mover|rpc] Fix order of open/close operations, prevent VIM crashing
+
+BC Break:
+
+  - [rpc] Import class no longer requires name parameter. RPC version changed
+    to version 2.
+  - [code-transform] Generate accessors is now a class action and allows
+    generation of multiple accessors.
+
 ## 2019-03-03 0.12.0
 
 BC Break:

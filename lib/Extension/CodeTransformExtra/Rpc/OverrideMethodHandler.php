@@ -66,22 +66,25 @@ class OverrideMethodHandler extends AbstractHandler
             self::PARAM_METHOD_NAME,
             sprintf('Methods from "%s"', $parentClass->name()),
             $this->methodChoices($parentClass)
-        ));
+        )->withMultiple(true));
 
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
         }
 
-        $transformedCode = $this->overrideMethod->overrideMethod(
-            SourceCode::fromString($arguments[self::PARAM_SOURCE]),
-            (string) $class->name(),
-            $arguments[self::PARAM_METHOD_NAME]
-        );
+        $newCode = $arguments[self::PARAM_SOURCE];
+        foreach ((array) $arguments[self::PARAM_METHOD_NAME] as $methodName) {
+            $newCode = $this->overrideMethod->overrideMethod(
+                SourceCode::fromString((string) $newCode),
+                (string) $class->name(),
+                $methodName
+            );
+        }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $arguments[self::PARAM_PATH],
             $arguments[self::PARAM_SOURCE],
-            (string) $transformedCode
+            (string) $newCode
         );
     }
 
@@ -121,6 +124,7 @@ class OverrideMethodHandler extends AbstractHandler
 
     private function methodChoices(ReflectionClass $parentClass)
     {
+        // TODO filter methods already implemented in the current class
         $methodNames = array_map(function (ReflectionMethod $method) {
             return $method->name();
         }, iterator_to_array(

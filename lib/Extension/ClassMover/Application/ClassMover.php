@@ -2,6 +2,9 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
+use Exception;
+use Phpactor\ClassFileConverter\Exception\NoMatchingSourceException;
+use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\FilePath;
@@ -29,45 +32,74 @@ class ClassMover
      */
     private $filesystemRegistry;
 
+    /**
+     * @var PathFinder
+     */
+    private $pathFinder;
+
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,
         ClassMoverFacade $classMover,
-        FilesystemRegistry $filesystemRegistry
+        FilesystemRegistry $filesystemRegistry,
+        PathFinder $pathFinder
     ) {
         $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystemRegistry = $filesystemRegistry;
         $this->classMover = $classMover;
+        $this->pathFinder = $pathFinder;
+    }
+
+    public function getRelatedFiles(string $src): array
+    {
+        try {
+        return array_filter($this->pathFinder->destinationsFor($src), function (string $filePath) {
+            return (bool) file_exists($filePath);
+        });
+        } catch (NoMatchingSourceException $e) {
+            // TODO: Make pathfinder return it's own exception here, this is the class-to-file exception
+            return [];
+        }
     }
 
     /**
      * Move - guess if moving by class name or file.
      */
-    public function move(ClassMoverLogger $logger, string $filesystemName, string $src, string $dest)
+    public function move(
+        ClassMoverLogger $logger,
+        string $filesystemName,
+        string $src,
+        string $dest,
+        bool $moveRelatedFiles
+    ): void
     {
         $srcPath = $this->classFileNormalizer->normalizeToFile($src);
         $destPath = $this->classFileNormalizer->normalizeToFile($dest);
 
-        return $this->moveFile($logger, $filesystemName, $srcPath, $destPath);
+        $this->moveFile($logger, $filesystemName, $srcPath, $destPath, $moveRelatedFiles);
     }
 
-    public function moveClass(ClassMoverLogger $logger, string $filesystemName, string $srcName, string $destName)
+    public function moveClass(ClassMoverLogger $logger, string $filesystemName, string $srcName, string $destName, bool $moveRelatedFiles)
     {
         return $this->moveFile(
             $logger,
             $filesystemName,
             $this->classFileNormalizer->classToFile($srcName),
-            $this->classFileNormalizer->classToFile($destName)
+            $this->classFileNormalizer->classToFile($destName),
+            $moveRelatedFiles
         );
     }
 
-    public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath)
+    public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath, bool $moveRelatedFiles)
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (FilesystemHelper::globSourceDestination($srcPath, $destPath) as $globSrc => $globDest) {
-            try {
-                $this->doMoveFile($logger, $filesystemName, $globSrc, $globDest);
-            } catch (\Exception $e) {
-                throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+
+            foreach ($this->expandRelatedPaths($globSrc, $globDest, $moveRelatedFiles) as $oldPath => $newPath) {
+                try {
+                    $this->doMoveFile($logger, $filesystemName, $oldPath, $newPath);
+                } catch (\Exception $e) {
+                    throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+                }
             }
         }
     }
@@ -139,5 +171,28 @@ class ClassMover
 
             $filesystem->writeContents($filePath, (string) $source);
         }
+    }
+
+    private function expandRelatedPaths($src, $dest, bool $moveRelatedFiles): array
+    {
+        $paths = [
+            $src => $dest
+        ];
+        
+        if ($moveRelatedFiles) {
+            $oldPaths = $this->getRelatedFiles($src);
+            $newPaths = $this->pathFinder->destinationsFor($dest);
+        
+            foreach ($oldPaths as $oldType => $oldPath) {
+                if (!isset($newPaths[$oldType])) {
+                    continue;
+                }
+        
+                $newPath = $newPaths[$oldType];
+                $paths[$oldPath] = $newPath;
+            }
+        }
+
+        return $paths;
     }
 }

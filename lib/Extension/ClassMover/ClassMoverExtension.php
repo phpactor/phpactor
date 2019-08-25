@@ -18,6 +18,7 @@ use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -106,7 +107,8 @@ class ClassMoverExtension implements Extension
             return new ClassMoverApp(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('class_mover.class_mover'),
-                $container->get('source_code_filesystem.registry')
+                $container->get('source_code_filesystem.registry'),
+                $container->get(NavigationExtension::SERVICE_PATH_FINDER)
             );
         });
 

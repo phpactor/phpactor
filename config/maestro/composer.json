@@ -1,0 +1,24 @@
+{
+    "name": "{{ package.name }}",
+    "minimum-stability": "{{ parameters.stability }}",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Phpactor\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phpactor\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.1.3"
+        }
+    }
+}
+

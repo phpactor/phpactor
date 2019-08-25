@@ -87,6 +87,20 @@ class ClassMoveCommandTest extends SystemTestCase
         $this->assertSuccess($process);
     }
 
+    public function testMovesRelatedFiles()
+    {
+        $this->workspace()->put('.phpactor.json', json_encode([
+            'navigator.destinations' => [ 
+                "source" => "lib/<kernel>.php", 
+                "test" => "lib/<kernel>Test.php"
+            ]
+        ]));
+        $this->workspace()->put('lib/BadgerTest.php', '<?php namespace Animals; class BadgerTest {}');
+        $process = $this->phpactor('class:move lib/Badger.php lib/Fox.php --related');
+        $this->assertSuccess($process);
+        $this->assertFileExists($this->workspace()->path('/lib/FoxTest.php'));
+    }
+
     /**
      * Application level failures
      *
