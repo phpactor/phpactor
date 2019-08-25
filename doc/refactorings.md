@@ -9,7 +9,7 @@ Fixes:
 - [Add Missing Assignments](#add-missing-assignments)
 - [Complete Constructor](#complete-constructor)
 - [Fix namespace and/or class name](#fix-namespace-or-class-name)
-- [Generate Accessor](#generate-accessor)
+- [Generate Accessors](#generate-accessors)
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
@@ -29,7 +29,7 @@ Refactoring:
 - [Extract Expression](#extract-expression)
 - [Extract Method](#extract-method)
 - [Rename Class](#rename-class)
-- [Rename Class Member](#rename-member)
+- [Rename Class Member](#rename-class-member)
 - [Rename Variable](#rename-variable)
 
 Add Missing Assignments
@@ -38,7 +38,7 @@ Add Missing Assignments
 Automatically add any missing properties to a class.
 
 - **Command**: `$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments`
-- **VIM Context Menu**: _Class context menu > Implement Contracts_.
+- **VIM Context Menu**: _Class context menu > Transform > Add missing properties_.
 - **VIM Command**:`:call phpactor#Transform()`
 
 ### Motivation
@@ -213,6 +213,9 @@ new location, updating the classes namespace and all references to that class
 where possible in a given _scope_ (i.e. files known by GIT: `git`, files known by Composer: `composer`, or all PHP files under
 the current CWD: `simple`).
 
+If you have defined file relationships with
+[navigator.destinations](https://phpactor.github.io/phpactor/navigation.html#jump-to-or-generate-related-file), then you have the option to move the related files in addition to the specified file. If using the command then specify `--related`, or if using the RPC interface (f.e. VIM) you will be prompted.
+
 <div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before
 executing it and be aware that success is not guaranteed (e.g. class references
@@ -305,7 +308,7 @@ Complete Constructor
 Complete the assignments and add properties for an incomplete constructor.
 
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
-- **VIM plugin**: _Class context menu > Complete Constructor_.
+- **VIM plugin**: _Class context menu > Transform > Complete Constructor_.
 - **VIM function**:`:call phpactor#Transform()`
 
 ### Motivation
@@ -362,7 +365,7 @@ Fix Namespace or Class Name
 Update a file's namespace (and/or class name) based on the composer
 configuration.
 
-- **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
+- **Command**: `$ phpactor class:transform path/to/class.php --transform=fix_namespace_class_name`
 - **VIM plugin**: _Class context menu > Transform > Fix namespace or classname_.
 - **VIM function**: `:call phpactor#Transform()`
 
@@ -669,14 +672,14 @@ interface FoobarInterface
 }
 ```
 
-Generate Accessor
------------------
+Generate Accessors
+------------------
 
-Generate an accessor for a class property.
+Generate accessors for a class.
 
 - **Command**: _RPC only_
-- **VIM plugin**: _Property context menu > Generate accessor_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM plugin**: _Class context menu > Generate accessor_.
+- **VIM function**:`:call phpactor#GenerateAccessor()`
 
 ### Motivation
 
@@ -691,16 +694,16 @@ Cursor position shown as `<>`:
 ```php
 <?php
 
-class Foobar
+class Foo<>bar
 {
     /**
      * @var Barfoo
      */
-    private $bar<>foo;
+    private $barfoo;
 }
 ```
 
-After:
+After selecting [one or more accessors](/vim-plugin.html#fzf-multi-selection)
 
 ```php
 <?php
@@ -897,6 +900,7 @@ Overide a method from a parent class.
 - **Command**: _RPC only_
 - **VIM plugin**: _Class context menu > Override method_.
 - **VIM function**:`:call phpactor#ContextMenu()`
+- **Multiple selection**: Supports selecting multiple methods.
 
 ### Motivation
 

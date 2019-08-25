@@ -10,6 +10,17 @@ class ClassNewCommandTest extends SystemTestCase
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
+        $this->workspace()->put('.phpactor/templates/foobar/SourceCode.php.twig', 'Foobar');
+        $this->workspace()->put(
+            '.phpactor.json',
+            <<<EOF
+{
+    "code_transform.class_new.variants": {
+        "foobar": "foobar"
+    }
+}
+EOF
+        );
     }
 
     /**
@@ -17,24 +28,39 @@ class ClassNewCommandTest extends SystemTestCase
      *
      * @dataProvider provideNewClass
      */
-    public function testNewClass($command, $expected)
+    public function testNewClass($command, $expected, $expectedFile)
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
 
         $this->assertContains($expected, trim($process->getOutput()));
-        $this->assertFileExists($this->workspaceDir() . '/lib/Badger/Teeth.php');
+        $this->assertFileExists($this->workspaceDir() . $expectedFile);
     }
 
     public function provideNewClass()
     {
-        return [
-            'New class' => [
-                'class:new lib/Badger/Teeth.php --no-interaction --force',
-                <<<'EOT'
+        yield 'New class' => [
+            'class:new lib/Badger/Teeth.php --no-interaction --force',
+            <<<'EOT'
 src:lib/Badger/Teeth.php
 EOT
-            ],
+            , '/lib/Badger/Teeth.php'
+        ];
+
+        yield 'New class with variant' => [
+            'class:new lib/Badger/Teeth.php --variant=foobar --no-interaction --force',
+            <<<'EOT'
+src:lib/Badger/Teeth.php
+EOT
+            , '/lib/Badger/Teeth.php'
+        ];
+
+        yield 'New class from FQN' => [
+            'class:new "Animals\\Pigeon" --no-interaction',
+            <<<'EOT'
+lib/Pigeon.php
+EOT
+            , '/lib/Pigeon.php'
         ];
     }
 }

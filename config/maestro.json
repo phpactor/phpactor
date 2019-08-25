@@ -1,0 +1,290 @@
+{
+    "vars": {
+        "source_dir": "lib",
+        "php_versions": [ 7.1, 7.2, 7.3 ],
+        "phpstan_level": 7,
+        "phpstan_ignore": [],
+        "php_cs_fixer_ignore_dirs": [
+            "tests/Workspace"
+        ],
+        "travis_checks": [
+            "./vendor/bin/php-cs-fixer fix --dry-run",
+            "./vendor/bin/phpstan analyse lib -c phpstan.neon",
+            "./vendor/bin/phpunit"
+        ]
+    },
+    "packages": {
+        "phpactor/phpactor": {
+            "version": "0.12.0",
+            "url": "git@github.com:phpactor/phpactor"
+        },
+        "phpactor/class-mover": {
+            "version": "0.1.1",
+            "prototype": "default",
+            "vars": {
+                "phpstan_level": 4,
+                "phpstan_ignore": [
+                    "'#Microsoft.PhpParser.Node::getText.* invoked with 1 parameter, 0 required#'"
+                ]
+            }
+        },
+        "phpactor/class-to-file": {
+            "prototype": "default",
+            "version": "0.3.1",
+            "vars": {
+                "php_cs_fixer_ignore_dirs": [
+                    "Integration/Composer/project"
+                ]
+            }
+        },
+        "phpactor/class-to-file-extension": {
+            "prototype": "default",
+            "version": "0.2.1"
+        },
+        "phpactor/code-builder": {
+            "version": "0.3.0",
+            "prototype": "default",
+            "vars": {
+                "phpstan_level": 1
+            }
+        },
+        "phpactor/code-transform": {
+            "prototype": "default",
+            "version": "0.2.0"
+        },
+        "phpactor/code-transform-extension": {
+            "prototype": "default",
+            "version": "0.1.1"
+        },
+        "phpactor/completion": {
+            "prototype": "default",
+            "version": "0.3.0"
+        },
+        "phpactor/completion-extension": {
+            "prototype": "default",
+            "version": "0.2.1"
+        },
+        "phpactor/completion-rpc-extension": {
+            "prototype": "default",
+            "version": "0.2.1"
+        },
+        "phpactor/completion-worse-extension": {
+            "prototype": "default",
+            "version": "0.1.2"
+        },
+        "phpactor/composer-autoloader-extension": {
+            "prototype": "default",
+            "version": "0.2.1"
+        },
+        "phpactor/config-loader": {
+            "prototype": "default",
+            "version": "0.1.1"
+        },
+        "phpactor/console-extension": {
+            "prototype": "default",
+            "version": "0.1.2"
+        },
+        "phpactor/container": {
+            "prototype": "default",
+            "version": "1.3.1"
+        },
+        "phpactor/docblock": {
+            "prototype": "default",
+            "version": "0.3.1",
+            "vars": {
+                "phpstan_ignore": [
+                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                ]
+            }
+                        
+        },
+        "phpactor/extension-manager-extension": {
+            "prototype": "default",
+            "version": "0.8.1"
+        },
+        "phpactor/file-path-resolver": {
+            "prototype": "default",
+            "version": "0.8.1"
+        },
+        "phpactor/file-path-resolver-extension": {
+            "prototype": "default",
+            "version": "0.3.1"
+        },
+        "phpactor/language-server": {
+            "prototype": "default",
+            "version": "0.2.0"
+        },
+        "phpactor/language-server-extension": {
+            "prototype": "default",
+            "version": "0.2.0"
+        },
+        "phpactor/logging-extension": {
+            "prototype": "default",
+            "version": "0.3.2"
+        },
+        "phpactor/map-resolver": {
+            "prototype": "default",
+            "version": "1.2.1"
+        },
+        "phpactor/path-finder": {
+            "prototype": "default",
+            "version": "0.1.0"
+        },
+        "phpactor/reference-finder": {
+            "prototype": "default",
+            "version": "0.1.1"
+        },
+        "phpactor/reference-finder-extension": {
+            "prototype": "default",
+            "version": "0.1.2"
+        },
+        "phpactor/reference-finder-rpc-extension": {
+            "prototype": "default",
+            "version": "0.1.2"
+        },
+        "phpactor/rpc-extension": {
+            "prototype": "default",
+            "version": "0.2.0"
+        },
+        "phpactor/source-code-filesystem": {
+            "prototype": "default",
+            "version": "0.1.1",
+            "vars": {
+                "phpstan_ignore": [
+                    "'#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'"
+                ]
+            }
+        },
+        "phpactor/source-code-filesystem-extension": {
+            "prototype": "default",
+            "version": "0.1.3"
+        },
+        "phpactor/test-utils": {
+            "prototype": "default",
+            "version": "1.0.1"
+        },
+        "phpactor/text-document": {
+            "prototype": "default",
+            "version": "1.1.0"
+        },
+        "phpactor/worse-reflection": {
+            "vars": {
+                "phpstan_ignore": [
+                    "'#Method .*getText.. invoked with 1 parameter, 0 required#'",
+                    "'#methods.. invoked with 1 parameter, 0 required#'",
+                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                ],
+                "phpstan_level": 2,
+                "travis_checks": [
+                    "vendor/bin/php-cs-fixer fix --dry-run",
+                    "vendor/bin/phpstan analyse lib -c phpstan.neon",
+                    "vendor/bin/phpunit",
+                    "vendor/bin/phpbench run --report=aggregate --progress=travis --store --iterations=1",
+                    "tests/Smoke/smoke_test.php --limit=100"
+                ]
+            },
+            "prototype": "default",
+            "version": "0.3.1"
+        },
+        "phpactor/worse-reflection-extension": {
+            "prototype": "default",
+            "version": "0.2.2"
+        }
+    },
+    "prototypes": {
+        "default": {
+            "url": "git@github.com:$PACKAGE_NAME",
+            "tasks": {
+                "init": {
+                    "type": "null"
+                },
+                "travis": {
+                    "type": "template",
+                    "args": {
+                        "path": "maestro/travis.yml",
+                        "targetPath": ".travis.yml"
+                    },
+                    "depends": ["init"]
+                },
+                "gitignore": {
+                    "type": "template",
+                    "args": {
+                        "path": "maestro/gitignore",
+                        "targetPath": ".gitignore"
+                    },
+                    "depends": ["init"]
+                },
+                "php_cs": {
+                    "type": "template",
+                    "args": {
+                        "path": "maestro/php_cs.dist",
+                        "targetPath": ".php_cs.dist"
+                    },
+                    "depends": ["init"]
+                },
+                "phpstan_config": {
+                    "type": "template",
+                    "args": {
+                        "path": "maestro/phpstan.neon",
+                        "targetPath": "phpstan.neon"
+                    },
+                    "depends": ["init"]
+                },
+                "license": {
+                    "type": "template",
+                    "args": {
+                        "path": "maestro/LICENSE",
+                        "targetPath": "LICENSE"
+                    },
+                    "depends": ["init"]
+                },
+                "templates": {
+                    "type": "null",
+                    "depends": ["travis","php_cs","gitignore","phpstan_config","license"]
+                },
+                "composer require": {
+                    "type": "json_file",
+                    "args": {
+                        "merge": {
+                            "require-dev": {
+                                "phpunit/phpunit": "~7.0",
+                                "friendsofphp/php-cs-fixer": "~2.15.0",
+                                "phpstan/phpstan": "~0.11.0"
+                            }
+                        },
+                        "targetPath": "composer.json"
+                    },
+                    "depends": ["init"]
+                },
+                "composer": {
+                    "type": "script",
+                    "args": {
+                        "script": "composer install"
+                    },
+                    "depends": ["composer require"]
+                },
+                "phpunit": {
+                    "type": "script",
+                    "args": {
+                        "script": "./vendor/bin/phpunit"
+                    },
+                    "depends": ["composer"]
+                },
+                "php-cs-fixer": {
+                    "type": "script",
+                    "args": {
+                        "script": "./vendor/bin/php-cs-fixer fix"
+                    },
+                    "depends": ["composer", "templates"]
+                },
+                "phpstan": {
+                    "type": "script",
+                    "args": {
+                        "script": "./vendor/bin/phpstan analyse -c phpstan.neon"
+                    },
+                    "depends": ["composer","templates"]
+                }
+            }
+        }
+    }
+}

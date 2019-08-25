@@ -1,0 +1,43 @@
+Include: utils.vader
+
+Given php (Original source):
+  <?php
+
+  class Foo
+  {
+      /**
+       * @var string
+       */
+      private $foo:
+
+      private function foo()
+      {
+          return $this->foo();
+      }
+  }
+
+Execute (Goes to the method line and changes the visibility):
+  10
+  call Apply(
+    \ Delete(10),
+    \ Insert(10, '    public function foo()')
+  \ )
+
+Then (The cursor should not have moved):
+  call AssertCursorDidntMove()
+
+Expect php (The visibility shoud have changed):
+  <?php
+
+  class Foo
+  {
+      /**
+       * @var string
+       */
+      private $foo:
+
+      public function foo()
+      {
+          return $this->foo();
+      }
+  }

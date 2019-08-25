@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+echo "Testing Phpactor dependencies"
+echo "============================="
+echo ""
+
+EXITCODE=0
+while read -r dep; do
+    echo ""
+    echo "Testing: $dep"
+    echo ""
+    cd "vendor/$dep" || continue
+
+    if [ ! -e vendor ]; then
+        ln -s ../../../vendor .
+    fi
+    composer dumpautoload
+    CMD=vendor/bin/phpunit
+    if [ "$dep" = "phpactor/extension-manager-extension" ]; then
+        CMD=$CMD" --process-isolation"
+    fi
+    if [ $EXITCODE -eq 0 ] && ! $CMD; then
+         EXITCODE=1
+    fi
+    cd - || continue
+done < <(php config/travis/list-deps.php)
+
+composer dumpautoload
+
+exit $EXITCODE
