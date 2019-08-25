@@ -18,6 +18,34 @@
             "version": "0.12.0",
             "url": "git@github.com:phpactor/phpactor"
         },
+        "phpactor/behat-extension": {
+            "version": "0.2.1",
+            "url": "git@github.com:phpactor/behat-extension"
+        },
+        "phpactor/phpspec-extension": {
+            "version": "0.1.0",
+            "url": "git@github.com:phpactor/phpspec-extension"
+        },
+        "phpactor/language-server-extension": {
+            "version": "0.2.0",
+            "url": "git@github.com:phpactor/language-server-extension"
+        },
+        "phpactor/language-server-completion-extension": {
+            "version": "0.1.0",
+            "url": "git@github.com:phpactor/language-server-completion-extension"
+        },
+        "phpactor/language-server-reference-finder-extension": {
+            "version": "0.1.0",
+            "url": "git@github.com:phpactor/language-server-reference-finder-extension"
+        },
+        "phpactor/language-server-hover-extension": {
+            "version": "0.1.0",
+            "url": "git@github.com:phpactor/language-server-hover-extension"
+        },
+        "phpactor/phpunit-extension": {
+            "version": "0.1.0",
+            "url": "git@github.com:phpactor/phpunit-extension"
+        },
         "phpactor/class-mover": {
             "version": "0.1.1",
             "prototype": "default",
