@@ -3,6 +3,7 @@
     "description": "PHP refactoring and intellisense tool for text editors",
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "license": "MIT",
     "require": {
         "composer/xdebug-handler": "^1.1",
         "monolog/monolog": "^1.0",
