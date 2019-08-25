@@ -32,6 +32,7 @@ jobs:
       env: VIM
       php: 7.2
       before_script:
+        - composer validate --strict
         # Install the PHP dependencies
         - composer install --optimize-autoloader --classmap-authoritative
         - bin/phpactor --version

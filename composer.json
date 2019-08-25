@@ -40,11 +40,7 @@
         "sebastian/diff": "^3.0",
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",
-        "webmozart/glob": "^4.1",
-        "phpactor/config-loader": "~0.1",
-        "phpactor/code-transform-extension": "^0.1",
-        "phpactor/worse-reference-finder-extension": "~0.1",
-        "phpactor/reference-finder-rpc-extension": "~0.1"
+        "webmozart/glob": "^4.1"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
