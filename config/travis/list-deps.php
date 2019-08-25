@@ -1,6 +1,6 @@
 <?php
 
-$composer = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+$composer = json_decode(file_get_contents(__DIR__ . '/../../composer.json'), true);
 
 $packages = array_filter($composer['require'], function ($key) {
     return 0 === strpos($key, 'phpactor');
