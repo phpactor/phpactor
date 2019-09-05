@@ -155,7 +155,7 @@
                 "offset": "%offset%",
                 "path": "%current_path%",
                 "source": "%source%",
-                "name": "%symbol%"
+                "qualified_name": "%symbol%"
             }
         },
         "hover": {

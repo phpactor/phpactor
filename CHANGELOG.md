@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2019-08-25 0.13.1
+
+Bug fixes:
+
+  - [context-menu] Import class from context menu not working #816
+
+
 ## 2019-08-25 0.13.0
 
 Features:
