@@ -7,6 +7,11 @@ Features:
 
   - [class-mover] Jump to interface implementation
 
+Bug fix:
+
+  - [worse-reflection] instanceof returns negative if class implements
+    interface but extends another class.
+
 ## 2019-08-25 0.13.0
 
 Features:
