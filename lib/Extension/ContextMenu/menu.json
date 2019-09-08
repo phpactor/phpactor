@@ -172,6 +172,14 @@
                 "source": "%source%",
                 "offset": "%offset%"
             }
+        },
+        "goto_implementation": {
+            "action": "goto_implementation",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
         }
     },
     "property": {
