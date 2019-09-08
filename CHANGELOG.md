@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## Develop
+
+Features:
+
+  - [class-mover] Jump to interface implementation
+
 ## 2019-08-25 0.13.0
 
 Features:

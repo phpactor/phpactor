@@ -202,6 +202,14 @@ endfunction
 function! phpactor#GotoDefinition()
     call phpactor#_GotoDefinitionTarget('focused_window')
 endfunction
+function! phpactor#GotoImplementations()
+    call phpactor#rpc("goto_implementation", { 
+                \"offset": phpactor#_offset(), 
+                \"source": phpactor#_source(), 
+                \"path": expand('%:p'), 
+                \"target": 'focused_window',
+                \'language': &ft})
+endfunction
 function! phpactor#GotoDefinitionVsplit()
     call phpactor#_GotoDefinitionTarget('vsplit')
 endfunction

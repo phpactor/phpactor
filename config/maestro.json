@@ -217,6 +217,10 @@
         "phpactor/worse-reflection-extension": {
             "prototype": "default",
             "version": "0.2.2"
+        },
+        "phpactor/worse-reference-finders": {
+            "prototype": "default",
+            "version": "0.1.0"
         }
     },
     "prototypes": {
