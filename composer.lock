@@ -1579,6 +1579,48 @@
             "time": "2019-08-24T11:33:25+00:00"
         },
         {
+            "name": "phpactor/name-specification",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/name.git",
+                "reference": "f3fb06bc965702d7e481de62e79f8ea7ba998af7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/name/zipball/f3fb06bc965702d7e481de62e79f8ea7ba998af7",
+                "reference": "f3fb06bc965702d7e481de62e79f8ea7ba998af7",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.11.4",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Name\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Value objects for specifying (class/function) names",
+            "time": "2019-07-29T17:35:19+00:00"
+        },
+        {
             "name": "phpactor/path-finder",
             "version": "0.1.0",
             "source": {
@@ -1973,17 +2015,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
-                "reference": "655c87df461b82b8c82457679f1ad78c1614937f"
+                "reference": "38fc634035e882241c87473ed114a78b2e5fc895"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/655c87df461b82b8c82457679f1ad78c1614937f",
-                "reference": "655c87df461b82b8c82457679f1ad78c1614937f",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/38fc634035e882241c87473ed114a78b2e5fc895",
+                "reference": "38fc634035e882241c87473ed114a78b2e5fc895",
                 "shasum": ""
             },
             "require": {
                 "phpactor/container": "^1.0",
                 "phpactor/reference-finder-extension": "~0.1.3",
+                "phpactor/source-code-filesystem-extension": "~0.1.3",
                 "phpactor/worse-reference-finders": "~0.1.1",
                 "phpactor/worse-reflection-extension": "~0.1"
             },
@@ -2015,7 +2058,7 @@
                 }
             ],
             "description": "Worse reflection implementations for reference finding",
-            "time": "2019-09-08T11:12:05+00:00"
+            "time": "2019-09-08T15:42:57+00:00"
         },
         {
             "name": "phpactor/worse-reference-finders",
@@ -2023,15 +2066,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "a4ad14264fb7a032417197e7086e31e6a76232cd"
+                "reference": "8255f3ed24a6f523ddc682f38da83eff7e6aee45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/a4ad14264fb7a032417197e7086e31e6a76232cd",
-                "reference": "a4ad14264fb7a032417197e7086e31e6a76232cd",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/8255f3ed24a6f523ddc682f38da83eff7e6aee45",
+                "reference": "8255f3ed24a6f523ddc682f38da83eff7e6aee45",
                 "shasum": ""
             },
             "require": {
+                "phpactor/name-specification": "~0.1",
                 "phpactor/reference-finder": "~0.2",
                 "phpactor/source-code-filesystem": "~0.1",
                 "phpactor/worse-reflection": "~0.1"
@@ -2064,7 +2108,7 @@
                 }
             ],
             "description": "Worse Reflection reference finder implementations",
-            "time": "2019-09-08T11:17:02+00:00"
+            "time": "2019-09-08T16:15:32+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -4847,12 +4891,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "aa936a3d22fe083bce330098a83b00daf467a380"
+                "reference": "ab186b26f4073f731812dda5ca310e7e71613d80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/aa936a3d22fe083bce330098a83b00daf467a380",
-                "reference": "aa936a3d22fe083bce330098a83b00daf467a380",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/ab186b26f4073f731812dda5ca310e7e71613d80",
+                "reference": "ab186b26f4073f731812dda5ca310e7e71613d80",
                 "shasum": ""
             },
             "require": {
@@ -4906,7 +4950,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2019-09-07T09:15:01+00:00"
+            "time": "2019-09-08T12:59:02+00:00"
         },
         {
             "name": "sebastian/global-state",
