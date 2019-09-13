@@ -2,7 +2,6 @@
     "name": "phpactor/phpactor",
     "description": "PHP refactoring and intellisense tool for text editors",
     "minimum-stability": "dev",
-    "prefer-stable": false,
     "license": "MIT",
     "require": {
         "composer/xdebug-handler": "^1.1",
@@ -33,8 +32,8 @@
         "phpactor/source-code-filesystem": "~0.1",
         "phpactor/source-code-filesystem-extension": "~0.1",
         "phpactor/text-document": "~1.1",
-        "phpactor/worse-reference-finder-extension": "~0.1.1",
-        "phpactor/worse-reflection": "~0.3.2",
+        "phpactor/worse-reference-finder-extension": "~0.1",
+        "phpactor/worse-reflection": "~0.3",
         "phpactor/worse-reflection-extension": "~0.2",
         "phpbench/container": "^1.0",
         "sebastian/diff": "^3.0",

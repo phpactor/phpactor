@@ -12,6 +12,12 @@ Bug fix:
   - [worse-reflection] instanceof returns negative if class implements
     interface but extends another class.
 
+## 2019-08-25 0.13.4
+
+Bug fixes:
+
+  - [context-menu] Import class from context menu not working #816
+
 ## 2019-08-25 0.13.0
 
 Features:
