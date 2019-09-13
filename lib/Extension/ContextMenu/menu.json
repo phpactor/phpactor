@@ -154,8 +154,7 @@
             "parameters": {
                 "offset": "%offset%",
                 "path": "%current_path%",
-                "source": "%source%",
-                "name": "%symbol%"
+                "source": "%source%"
             }
         },
         "hover": {
