@@ -2,8 +2,10 @@
 
 namespace Phpactor\Tests\Unit\Extension\ContextMenu\Handler;
 
+use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -47,9 +49,15 @@ class ContextMenuHandlerTest extends HandlerTestCase
      */
     private $classFileNormalizer;
 
+    /**
+     * @var InterestingOffsetFinder
+     */
+    private $offsetFinder;
+
     public function setUp()
     {
         $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
+        $this->offsetFinder = $this->prophesize(InterestingOffsetFinder::class);
         $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);
         $this->requestHandler = $this->prophesize(RequestHandler::class);
@@ -59,6 +67,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
     {
         return new ContextMenuHandler(
             $this->reflector,
+            $this->offsetFinder->reveal(),
             $this->classFileNormalizer->reveal(),
             $this->menu,
             $this->container->reveal()
@@ -67,10 +76,19 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testNoActionsAvailable()
     {
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(4);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $action = $this->handle(ContextMenuHandler::NAME, [
-            'source' => '<?php $hello = "world"; echo $hello;',
-            'offset' => 4,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
@@ -87,10 +105,20 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ],
             ]
         ];
+
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(8);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $action = $this->handle(ContextMenuHandler::NAME, [
-            'source' => '<?php $hello = "world"; echo $hello;',
-            'offset' => 8,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
@@ -106,12 +134,18 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
+        $source = SourceCode::fromPathAndString('/hello.php', self::SOURCE);
+        $offset = ByteOffset::fromInt(8);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $this->requestHandler->handle(
             Request::fromNameAndParameters(
                 self::VARIABLE_ACTION,
                 [
-                    'some_source' => self::SOURCE,
-                    'some_offset' => 8,
+                    'some_source' => (string) $source,
+                    'some_offset' => $offset->toInt(),
                     'some_path' => __FILE__
                 ]
             )
@@ -134,9 +168,9 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $action = $this->handle(ContextMenuHandler::NAME, [
             'action' => self::VARIABLE_ACTION,
-            'source' => self::SOURCE,
-            'offset' => 8,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $parameters = $action->parameters();
