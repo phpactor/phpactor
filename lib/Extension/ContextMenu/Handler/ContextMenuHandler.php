@@ -2,8 +2,10 @@
 
 namespace Phpactor\Extension\ContextMenu\Handler;
 
+use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -11,7 +13,6 @@ use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\ContextMenu\ContextMenuExtension;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -32,6 +33,11 @@ class ContextMenuHandler implements Handler
     private $reflector;
 
     /**
+     * @var InterestingOffsetFinder
+     */
+    private $offsetFinder;
+
+    /**
      * @var array
      */
     private $menu;
@@ -48,11 +54,13 @@ class ContextMenuHandler implements Handler
 
     public function __construct(
         Reflector $reflector,
+        InterestingOffsetFinder $offsetFinder,
         ClassFileNormalizer $classFileNormalizer,
         array $menu,
         Container $container
     ) {
         $this->reflector = $reflector;
+        $this->offsetFinder = $offsetFinder;
         $this->menu = $menu;
         $this->container = $container;
         $this->classFileNormalizer = $classFileNormalizer;
@@ -78,7 +86,11 @@ class ContextMenuHandler implements Handler
 
     public function handle(array $arguments)
     {
-        $offset = $this->offsetFromSourceAndOffset($arguments[self::PARAMETER_SOURCE], $arguments[self::PARAMETER_OFFSET], $arguments[self::PARAMETER_CURRENT_PATH]);
+        $offset = $this->offsetFromSourceAndOffset(
+            $arguments[self::PARAMETER_SOURCE],
+            $arguments[self::PARAMETER_OFFSET],
+            $arguments[self::PARAMETER_CURRENT_PATH]
+        );
         $symbol = $offset->symbolContext()->symbol();
 
         return $this->resolveAction($offset, $symbol, $arguments);
@@ -138,9 +150,16 @@ class ContextMenuHandler implements Handler
 
     private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
-        return $this->reflector->reflectOffsetToClosestParent(
-            SourceCode::fromPathAndString($currentPath, $source),
-            Offset::fromInt($offset)
+        $sourceCode = SourceCode::fromPathAndString($currentPath, $source);
+
+        $interestingOffset = $this->offsetFinder->find(
+            $sourceCode,
+            ByteOffset::fromInt($offset)
+        );
+
+        return $this->reflector->reflectOffset(
+            $sourceCode,
+            $interestingOffset->toInt()
         );
     }
 

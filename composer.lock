@@ -823,12 +823,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "62e48d83b17c8150af59996299652f300a958490"
+                "reference": "0cf4f200d3b2f843ddc0530c93bae1bc28855dfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/62e48d83b17c8150af59996299652f300a958490",
-                "reference": "62e48d83b17c8150af59996299652f300a958490",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/0cf4f200d3b2f843ddc0530c93bae1bc28855dfe",
+                "reference": "0cf4f200d3b2f843ddc0530c93bae1bc28855dfe",
                 "shasum": ""
             },
             "require": {
@@ -839,7 +839,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
                 "phpactor/test-utils": "^1.0@dev",
-                "phpactor/worse-reflection": "~0.1",
+                "phpactor/worse-reflection": "~0.4",
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
@@ -865,7 +865,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-08-24T14:03:40+00:00"
+            "time": "2019-10-13T14:50:45+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -873,25 +873,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
-                "reference": "469d63b974b200449cc9bebb61e35eb473d2959a"
+                "reference": "fdcf5bb84d858294d51aa125a4293dda3d8d7b05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/469d63b974b200449cc9bebb61e35eb473d2959a",
-                "reference": "469d63b974b200449cc9bebb61e35eb473d2959a",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/fdcf5bb84d858294d51aa125a4293dda3d8d7b05",
+                "reference": "fdcf5bb84d858294d51aa125a4293dda3d8d7b05",
                 "shasum": ""
             },
             "require": {
                 "phpactor/class-to-file-extension": "~0.1",
-                "phpactor/code-transform": "~0.1",
-                "phpactor/container": "^1.0"
+                "phpactor/code-transform": "~0.2",
+                "phpactor/container": "^1.0",
+                "phpactor/worse-reflection-extension": "^0.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/rpc-extension": "^0.1.0@dev",
                 "phpactor/test-utils": "^1.0@dev",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpstan/phpstan": "^0.10",
+                "phpunit/phpunit": "^7.3"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -916,7 +917,7 @@
                 }
             ],
             "description": "Code transform base package",
-            "time": "2019-08-24T14:03:40+00:00"
+            "time": "2019-10-13T15:11:52+00:00"
         },
         {
             "name": "phpactor/completion",
@@ -2116,12 +2117,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "53d2f296a2c95505e93b40b106a7323f9019dc29"
+                "reference": "96c324e65ef9fa690cd4894cfcbc6ebbd354a876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/53d2f296a2c95505e93b40b106a7323f9019dc29",
-                "reference": "53d2f296a2c95505e93b40b106a7323f9019dc29",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/96c324e65ef9fa690cd4894cfcbc6ebbd354a876",
+                "reference": "96c324e65ef9fa690cd4894cfcbc6ebbd354a876",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2164,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2019-09-08T19:05:57+00:00"
+            "time": "2019-10-12T08:55:19+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
