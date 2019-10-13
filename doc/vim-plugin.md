@@ -153,7 +153,7 @@ locally, you may need to target a new version of PHP - add the following to
 your `.vimrc` to change the PHP binary:
 
 ```
-let g:phpactorPhpBin = "/usr/bin/local/php6.0"
+let g:phpactorPhpBin = "/usr/bin/local/php7.0"
 ```
 
 Configuration
