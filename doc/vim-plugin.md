@@ -156,6 +156,12 @@ your `.vimrc` to change the PHP binary:
 let g:phpactorPhpBin = "/usr/bin/local/php6.0"
 ```
 
+<div class="alert alert-info">
+If you want VIM-like default mappings use the <a
+href="https://github.com/elythyr/phpactor-mappings">Phpactor Mappings</a>
+plugin.
+</div>
+
 Configuration
 -------------
 
