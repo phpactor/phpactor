@@ -148,6 +148,12 @@ vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 See the [Refactorings](refactorings.md) chapter for more functions you can map
 shortcuts to.
 
+<div class="alert alert-info">
+If you prefer not to define the mappings yourself then the <a
+href="https://github.com/elythyr/phpactor-mappings">Phpactor Mappings</a>
+plugin provides you with sensible defaults.
+</div>
+
 Phpactor requires at least PHP 7.0. If you use a different version of PHP
 locally, you may need to target a new version of PHP - add the following to
 your `.vimrc` to change the PHP binary:
@@ -156,11 +162,6 @@ your `.vimrc` to change the PHP binary:
 let g:phpactorPhpBin = "/usr/bin/local/php6.0"
 ```
 
-<div class="alert alert-info">
-If you prefer not to define the mappings yourself the <a
-href="https://github.com/elythyr/phpactor-mappings">Phpactor Mappings</a>
-plugin provides good, VIM-like, defaults.
-</div>
 
 Configuration
 -------------
