@@ -122,7 +122,7 @@ class ContextMenuHandler implements Handler
                 self::NAME,
                 [
                     self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],
-                    self::PARAMETER_OFFSET => (int) $arguments[self::PARAMETER_OFFSET],
+                    self::PARAMETER_OFFSET => $symbol->position()->start(),
                     self::PARAMETER_CURRENT_PATH => $arguments[self::PARAMETER_CURRENT_PATH],
                 ]
             ),
@@ -140,7 +140,8 @@ class ContextMenuHandler implements Handler
     {
         return $this->reflector->reflectOffset(
             SourceCode::fromPathAndString($currentPath, $source),
-            Offset::fromInt($offset)
+            Offset::fromInt($offset),
+            true
         );
     }
 

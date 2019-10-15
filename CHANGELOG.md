@@ -5,6 +5,8 @@ Changelog
 
 Features:
 
+  - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
+    invoke the context menu on whitespace now) - @elythyr
   - [class-mover] Jump to interface implementation
 
 Bug fix:
