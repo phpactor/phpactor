@@ -134,7 +134,7 @@ class ContextMenuHandler implements Handler
                 self::NAME,
                 [
                     self::PARAMETER_SOURCE => $arguments[self::PARAMETER_SOURCE],
-                    self::PARAMETER_OFFSET => $symbol->position()->start(),
+                    self::PARAMETER_OFFSET => $arguments[self::PARAMETER_OFFSET],
                     self::PARAMETER_CURRENT_PATH => $arguments[self::PARAMETER_CURRENT_PATH],
                 ]
             ),
