@@ -23,6 +23,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
 {
     const VARIABLE_ACTION = 'do_something';
     const SOURCE = '<?php $hello = "world"; echo $hello;';
+    const FOUND_OFFSET = 10;
+    const ORIGINAL_OFFSET = 8;
 
     /**
      * @var Reflector
@@ -110,7 +112,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             '/hello.php',
             '<?php $hello = "world"; echo $hello;'
         );
-        $offset = ByteOffset::fromInt(8);
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)
             ->willReturn($offset);
@@ -126,6 +128,36 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
     }
 
+    public function testReturnMenuWithOriginalOffset()
+    {
+        $this->menu = [
+            Symbol::VARIABLE => [
+                'action' => self::VARIABLE_ACTION,
+                'parameters' => [
+                    'one' => 1,
+                ],
+            ]
+        ];
+
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn(ByteOffset::fromInt(self::FOUND_OFFSET));
+
+        $action = $this->handle(ContextMenuHandler::NAME, [
+            'source' => (string) $source,
+            'offset' => self::ORIGINAL_OFFSET,
+            'current_path' => $source->path(),
+        ]);
+
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        $this->assertEquals(self::ORIGINAL_OFFSET, $action->callbackAction()->parameters()['offset']);
+    }
+
     public function testReplaceTokens()
     {
         $this->container->get(ContextMenuExtension::SERVICE_REQUEST_HANDLER)->willReturn(
@@ -135,7 +167,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
         $source = SourceCode::fromPathAndString('/hello.php', self::SOURCE);
-        $offset = ByteOffset::fromInt(8);
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)
             ->willReturn($offset);
