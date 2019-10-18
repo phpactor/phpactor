@@ -8,6 +8,8 @@ Features:
   - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
     invoke the context menu on whitespace now) - @elythyr
   - [class-mover] Jump to interface implementation
+  - [vim-plugin] Extract functions handles motions @elythyr
+  - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
 
 Bug fix:
 

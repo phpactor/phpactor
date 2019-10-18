@@ -563,7 +563,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
 
         if (a:parameters['offset'])
-            exec ":goto " .  (a:parameters['offset'] + 1)
+            exec ":keepjumps goto " .  (a:parameters['offset'] + 1)
             normal! zz
         endif
         return
