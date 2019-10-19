@@ -735,4 +735,10 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
     call TypeHandler(ResultHandler)
 endfunction
 
+function! s:relative_path(absolute_path)
+    let l:cwd = getcwd()
+
+    return substitute(a:absolute_path, l:cwd .'/', '', '')
+endfunction
+
 " vim: et ts=4 sw=4 fdm=marker
