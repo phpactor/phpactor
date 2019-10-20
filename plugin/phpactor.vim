@@ -583,13 +583,23 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> file references
     if a:actionName == "file_references"
-        let results = {}
+        " if there is only one file, and it is the open file, don't
+        " bother opening the quick fix window
+        if len(a:parameters['file_references']) == 1
+            let fileRefs = a:parameters['file_references'][0]
+            if -1 != match(fileRefs['file'], bufname('%') . '$')
+                return 
+            endif
+        endif
 
+        let results = {}
         for fileReferences in a:parameters['file_references']
             for reference in fileReferences['references']
                 let key = s:relative_path(fileReferences['file'])
                     \ .':'. reference['line_no']
                     \ .':'. (reference['col_no'] + 1)
+                    \ .':'. reference['line']
+
                 let results[key] = {
                     \ 'filename': fileReferences['file'],
                     \ 'lnum': reference['line_no'],
@@ -599,14 +609,20 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             endfor
         endfor
 
-        " if there is only one file, and it is the open file, don't
-        " bother opening the quick fix window
-        if len(a:parameters['file_references']) == 1
-            let fileRefs = a:parameters['file_references'][0]
-            if -1 != match(fileRefs['file'], bufname('%') . '$')
-                return 
-            endif
+        if !exists("*fzf#complete") " If fzf.vim is installed, required for with_preview !
+            call <SID>build_quickfix_list(values(results))
+
+            return
         endif
+
+        let formated = s:align_pairs(keys(results), '^\(.\{-}:\d\+:\d\+:\)\s*\(.*\)\s*$', 100)
+        let tmp = copy(results)
+        let results = {}
+        for key in keys(tmp)
+            let newKey = formated[key]
+            let results[newKey] = tmp[key]
+        endfor
+        unlet tmp
 
         function! s:open(results, actions, lines) abort
             if 2 > len(a:lines)
@@ -663,21 +679,17 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             \ 'ctrl-q': function('<SID>build_quickfix_list')
         \ }
 
-        if exists("*fzf#complete") " If fzf.vim is installed, required for with_preview !
-            call fzf#run(fzf#wrap(fzf#vim#with_preview({
-                \ 'source': keys(results),
-                \ 'down': '60%',
-                \ '_action': actions,
-                \ 'sink*': function('<SID>open', [results, actions]),
-                \ 'options': [
-                    \ '--expect='. join(keys(actions), ','),
-                    \ '--multi',
-                    \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
-                    \ '--delimiter=:', '--nth=1'
-            \ ]}, 'right', '?')))
-        else
-            call <SID>build_quickfix_list(values(results))
-        endif
+        call fzf#run(fzf#wrap('find_references', fzf#vim#with_preview({
+            \ 'source': keys(results),
+            \ 'down': '60%',
+            \ '_action': actions,
+            \ 'sink*': function('<SID>open', [results, actions]),
+            \ 'options': [
+                \ '--expect='. join(keys(actions), ','),
+                \ '--multi',
+                \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+                \ '--delimiter=:', '--nth=1,4'
+        \ ]}, 'up', '?'), 1))
 
         return
     endif
@@ -815,6 +827,27 @@ endfunction
 function! s:build_quickfix_list(entries) abort
     call setqflist(a:entries)
     cw " Open only if there is recognized errors only
+endfunction
+
+function! s:align_pairs(list, regexp, ...) abort
+    let maxlen = 0
+    let pairs = {}
+    for elem in a:list
+        let match = matchlist(elem, a:regexp)
+        let [filename, text] = match[1:2]
+        let maxlen = max([maxlen, len(filename)])
+        let pairs[elem] = [filename, text]
+    endfor
+
+    let args = copy(a:000)
+    let max = 60
+    if 0 < len(args) && type(v:t_number) == type(args[0])
+        let max = remove(args, 0)
+    endif
+
+    let maxlen = min([maxlen, max])
+
+    return map(pairs, "printf('%-'.maxlen.'s', v:val[0]).' '.v:val[1]")
 endfunction
 
 " vim: et ts=4 sw=4 fdm=marker
