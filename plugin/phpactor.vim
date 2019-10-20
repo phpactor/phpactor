@@ -654,7 +654,9 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
                     let filename = fnameescape(item.filename)
                     let Action = empty ? 'e' : Action " Use the current buffer if empty
 
-                    execute Action filename
+                    execute Action '+'.item.lnum filename
+                    execute 'normal!' item.col .'|'
+                    normal! zz
 
                     if empty
                         let empty = v:false
