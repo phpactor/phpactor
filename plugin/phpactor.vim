@@ -583,20 +583,21 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> file references
     if a:actionName == "file_references"
-        let list = []
+        let results = {}
 
         for fileReferences in a:parameters['file_references']
             for reference in fileReferences['references']
-                call add(list, {
+                let key = s:relative_path(fileReferences['file'])
+                    \ .':'. reference['line_no']
+                    \ .':'. (reference['col_no'] + 1)
+                let results[key] = {
                     \ 'filename': fileReferences['file'],
                     \ 'lnum': reference['line_no'],
                     \ 'col': reference['col_no'] + 1,
                     \ 'text': reference['line']
-                \ })
+                \ }
             endfor
         endfor
-
-        call setqflist(list)
 
         " if there is only one file, and it is the open file, don't
         " bother opening the quick fix window
@@ -607,7 +608,76 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             endif
         endif
 
-        execute ':cwindow'
+        function! s:open(results, actions, lines) abort
+            if 2 > len(a:lines)
+                return " Don't know how to handle this, should not append
+            endif
+
+            let actionKey = remove(a:lines, 0)
+            let Action = get(a:actions, actionKey, 'e')
+            let items = map(copy(a:lines), {key, value -> a:results[value]})
+
+            if type(function('call')) == type(Action)
+                return Action(items)
+            endif
+
+            if len(a:lines) > 1
+                augroup fzf_swap
+                    autocmd SwapExists * let v:swapchoice='o' | echohl WarningMsg
+                        \| echom 'fzf: E325: swap file exists: '. expand('<afile>')
+                        \| echohl None
+                augroup END
+            endif
+
+            try
+                let empty = empty(expand('%')) && 1 == line('$') && empty(getline(1)) && !&modified
+                let autochdir = &autochdir
+                set noautochdir
+
+                for item in items
+                    let filename = fnameescape(item.filename)
+                    let Action = empty ? 'e' : Action " Use the current buffer if empty
+
+                    execute Action filename
+
+                    if empty
+                        let empty = v:false
+                    endif
+
+                    if !has('patch-8.0.0177') && !has('nvim-0.2') && exists('#BufEnter')
+                        \ && isdirectory(item)
+                        doautocmd BufEnter
+                    endif
+                endfor
+            catch /^Vim:Interrupt$/
+            finally
+                let &autochdir = autochdir
+                silent! autocmd! fzf_swap
+            endtry
+        endfunction
+
+        let actions = {
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-x': 'split',
+            \ 'ctrl-v': 'vsplit',
+            \ 'ctrl-q': function('<SID>build_quickfix_list')
+        \ }
+
+        if exists("*fzf#complete") " If fzf.vim is installed, required for with_preview !
+            call fzf#run(fzf#wrap(fzf#vim#with_preview({
+                \ 'source': keys(results),
+                \ 'down': '60%',
+                \ '_action': actions,
+                \ 'sink*': function('<SID>open', [results, actions]),
+                \ 'options': [
+                    \ '--expect='. join(keys(actions), ','),
+                    \ '--multi',
+                    \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all'
+            \ ]}, 'right', '?')))
+        else
+            call <SID>build_quickfix_list(values(results))
+        endif
+
         return
     endif
 
@@ -739,6 +809,11 @@ function! s:relative_path(absolute_path)
     let l:cwd = getcwd()
 
     return substitute(a:absolute_path, l:cwd .'/', '', '')
+endfunction
+
+function! s:build_quickfix_list(entries) abort
+    call setqflist(a:entries)
+    cw " Open only if there is recognized errors only
 endfunction
 
 " vim: et ts=4 sw=4 fdm=marker
