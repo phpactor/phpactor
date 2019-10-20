@@ -672,7 +672,8 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
                 \ 'options': [
                     \ '--expect='. join(keys(actions), ','),
                     \ '--multi',
-                    \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all'
+                    \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+                    \ '--delimiter=:', '--nth=1'
             \ ]}, 'right', '?')))
         else
             call <SID>build_quickfix_list(values(results))
