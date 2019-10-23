@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2019-10-23 0.13.5
+
+Bug fix:
+
+  - [text-document] `?` included with word-at-offset #833
+
 ## 2019-09-13 0.13.4
 
 Bug fixes:
