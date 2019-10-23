@@ -10,6 +10,7 @@ Phpactor VIM Plugin
 - [Completion](#completion)
 - [Completion plugins](#completion-plugins)
 - [Context Menu](#context-menu)
+- [Extras](#extras)
 
 Installation
 ------------
@@ -328,3 +329,41 @@ Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none.
 See the
 [Fzf](https://github.com/junegunn/fzf) documentation for more details.
 
+
+Extras
+------
+
+In order to get the best possible experience we suggests you a few extra tools
+that will make using this plugin a lot more appreciable.
+
+fzf & fzf.vim
+-------------
+
+### [fzf](https://github.com/junegunn/fzf)
+
+This is actually not a vim plugin but a tool for the command-line.
+It's shipped with a vim plugin that allows to use it inside Vim.
+
+If you have it installed and properly configured for Vim then Phpactor will
+make use of it to provide enhance functionalities, for instance:
+
+- [inputlist](#input-list) will take advantage of fzf
+
+### [fzf.vim](https://github.com/junegunn/fzf.vim)
+
+This is the actual [fzf](https://github.com/junegunn/fzf) plugin for vim. It
+requires you to have [fzf](https://github.com/junegunn/fzf) installed and
+configured.
+
+This plugin will allow us to use improved functionalities inside Vim. If you
+want to enjoy the full possibilities of both fzf and phpactor we strongly
+recommand you to install it!
+
+[bat](https://github.com/sharkdp/bat)
+---
+
+This is also a tool for the command-line and not a Vim plugin.
+It's ment to be used instead of the command `cat` and bring a lot to the table.
+
+It's used by default, among other possible tools, by fzf to print the preview
+window. Allowing you to have a preview of your files with syntaxic coloration!
