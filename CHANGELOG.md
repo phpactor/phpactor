@@ -16,6 +16,12 @@ Bug fix:
   - [worse-reflection] instanceof returns negative if class implements
     interface but extends another class.
 
+## 2019-10-23 0.13.5
+
+Bug fix:
+
+  - [text-document] `?` included with word-at-offset #833
+
 ## 2019-08-25 0.13.4
 
 Bug fixes:
