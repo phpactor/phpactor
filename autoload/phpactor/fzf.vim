@@ -29,6 +29,8 @@ function! phpactor#fzf#quickfix(results) abort
         \ '--expect='. join(keys(actions), ','),
         \ '--multi',
         \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
+        \ '--inline-info',
+        \ '--header', ":: Press \x1b[35mCTRL-Q\x1b[m to open the quickfix with your selection",
         \ '--delimiter=:', '--nth=1,4'
         \ ]}, 'up', '?'), 1))
 endfunction
