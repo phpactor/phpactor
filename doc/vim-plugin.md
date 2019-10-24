@@ -10,6 +10,7 @@ Phpactor VIM Plugin
 - [Completion](#completion)
 - [Completion plugins](#completion-plugins)
 - [Context Menu](#context-menu)
+- [Quickfix List](#quickfix-list)
 - [Extras](#extras)
 
 Installation
@@ -198,6 +199,7 @@ let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
 - `g:phpactorInputListStrategy`: Select a strategy for the [Input
   List](#input-list).
 - `g:phpactorCustomInputListStrategy`: Specify your own strategy.
+- `g:phpactorUseFzfForQuickfix`: Defines if fzf shoudl be used to build the quickfix, default: `v:true`.
 
 Extensions
 ----------
@@ -329,6 +331,21 @@ Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none.
 See the
 [Fzf](https://github.com/junegunn/fzf) documentation for more details.
 
+Quickfix List
+-------------
+
+Phpactor will provide you with an alternative to the quickfix list. For each
+actions which will populate the quickfix, like `find references`, Phpactor will
+make use of [fzf](#fzf) to allow you to filter/open the results before hand.
+
+You will still be able to get the result inside the quickfix by selecting the
+elements you are interested in and pressing `ctrl-q` to populate the quickfix
+with your selection and open it.
+
+If you don't want this feature you can disable it like so:
+```vim
+let g:phpactorUseFzfForQuickfix = v:false
+```
 
 Extras
 ------

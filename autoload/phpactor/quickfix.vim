@@ -1,5 +1,8 @@
 function! phpactor#quickfix#build(entries) abort
-    if exists("*fzf#complete") " If fzf.vim is installed, required for with_preview !
+    let shouldUseFzf = v:true == get(g:, 'phpactorUseFzfForQuickfix', v:true)
+
+    " fzf.vim is required for fzf#vim#with_preview()
+    if shouldUseFzf && exists("*fzf#complete")
         call phpactor#fzf#quickfix(a:entries)
     else
         call setqflist(values(a:entries))
