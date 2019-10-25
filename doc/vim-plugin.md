@@ -353,10 +353,8 @@ Extras
 In order to get the best possible experience we suggests you a few extra tools
 that will make using this plugin a lot more appreciable.
 
-fzf & fzf.vim
--------------
-
-### [fzf](https://github.com/junegunn/fzf)
+[fzf](https://github.com/junegunn/fzf)
+--------------------------------------
 
 This is actually not a vim plugin but a tool for the command-line.
 It's shipped with a vim plugin that allows to use it inside Vim.
@@ -366,7 +364,8 @@ make use of it to provide enhance functionalities, for instance:
 
 - [inputlist](#input-list) will take advantage of fzf
 
-### [fzf.vim](https://github.com/junegunn/fzf.vim)
+[fzf.vim](https://github.com/junegunn/fzf.vim)
+----------------------------------------------
 
 This is the actual [fzf](https://github.com/junegunn/fzf) plugin for vim. It
 requires you to have [fzf](https://github.com/junegunn/fzf) installed and
