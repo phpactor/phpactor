@@ -1,0 +1,8 @@
+{
+    "name": "phpactor/phpunit-extension",
+    "type": "package",
+    "args": {
+        "version": "0.1.0",
+        "url": "git@github.com:phpactor/phpunit-extension"
+    }
+}

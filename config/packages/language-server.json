@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/language-server",
+    "prototype": "default",
+    "args": {
+        "version": "0.2.0"
+    }
+}

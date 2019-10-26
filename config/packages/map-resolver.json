@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/map-resolver",
+    "prototype": "default",
+    "args": {
+        "version": "1.2.1"
+    }
+}

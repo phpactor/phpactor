@@ -1,0 +1,8 @@
+{
+    "name": "phpactor/language-server-extension",
+    "type": "package",
+    "args": {
+        "version": "0.2.0",
+        "url": "git@github.com:phpactor/language-server-extension"
+    }
+}

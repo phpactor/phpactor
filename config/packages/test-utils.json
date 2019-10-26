@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/test-utils",
+    "prototype": "default",
+    "args": {
+        "version": "1.0.1"
+    }
+}

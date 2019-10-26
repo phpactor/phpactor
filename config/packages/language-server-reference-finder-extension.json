@@ -1,0 +1,8 @@
+{
+    "name": "phpactor/language-server-reference-finder-extension",
+    "type": "package",
+    "args": {
+        "version": "0.1.0",
+        "url": "git@github.com:phpactor/language-server-reference-finder-extension"
+    }
+}

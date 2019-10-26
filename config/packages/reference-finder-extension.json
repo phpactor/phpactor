@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/reference-finder-extension",
+    "prototype": "default",
+    "args": {
+        "version": "0.1.2"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/logging-extension",
+    "prototype": "default",
+    "args": {
+        "version": "0.3.2"
+    }
+}

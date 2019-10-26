@@ -1,0 +1,13 @@
+{
+    "name": "phpactor/class-mover",
+    "prototype": "default",
+    "args": {
+        "version": "0.1.1",
+        "vars": {
+            "phpstan_level": 4,
+            "phpstan_ignore": [
+                "'#Microsoft.PhpParser.Node::getText.* invoked with 1 parameter, 0 required#'"
+            ]
+        }
+    }
+}

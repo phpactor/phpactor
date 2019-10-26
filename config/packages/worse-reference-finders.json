@@ -1,0 +1,7 @@
+{
+    "name": "phpactor/worse-reference-finders",
+    "prototype": "default",
+    "args": {
+        "version": "0.1.0"
+    }
+}

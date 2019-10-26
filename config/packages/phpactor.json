@@ -1,0 +1,8 @@
+{
+    "name": "phpactor/phpactor",
+    "type": "package",
+    "args": {
+        "version": "0.13.0",
+        "url": "git@github.com:phpactor/phpactor"
+    }
+}
