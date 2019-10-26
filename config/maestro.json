@@ -1,232 +1,329 @@
 {
-    "vars": {
-        "source_dir": "lib",
-        "php_versions": [ 7.1, 7.2, 7.3 ],
-        "phpstan_level": 7,
-        "phpstan_ignore": [],
-        "php_cs_fixer_ignore_dirs": [
-            "tests/Workspace"
-        ],
-        "travis_checks": [
-            "./vendor/bin/php-cs-fixer fix --dry-run",
-            "./vendor/bin/phpstan analyse lib -c phpstan.neon",
-            "./vendor/bin/phpunit"
-        ]
+    "args": {
+        "vars": {
+            "source_dir": "lib",
+            "php_versions": [ 7.1, 7.2, 7.3 ],
+            "phpstan_level": 7,
+            "phpstan_ignore": [],
+            "php_cs_fixer_ignore_dirs": [
+                "tests/Workspace"
+            ],
+            "travis_checks": [
+                "./vendor/bin/php-cs-fixer fix --dry-run",
+                "./vendor/bin/phpstan analyse lib -c phpstan.neon",
+                "./vendor/bin/phpunit"
+            ]
+        }
     },
-    "packages": {
+    "nodes": {
         "phpactor/phpactor": {
-            "version": "0.13.0",
-            "url": "git@github.com:phpactor/phpactor"
+            "type": "package",
+            "args": {
+                "version": "0.13.0",
+                "url": "git@github.com:phpactor/phpactor"
+            }
         },
         "phpactor/behat-extension": {
-            "version": "0.2.1",
-            "url": "git@github.com:phpactor/behat-extension"
+            "type": "package",
+            "args": {
+                "version": "0.2.1",
+                "url": "git@github.com:phpactor/behat-extension"
+            }
         },
         "phpactor/phpspec-extension": {
-            "version": "0.1.0",
-            "url": "git@github.com:phpactor/phpspec-extension"
+            "type": "package",
+            "args": {
+                "version": "0.1.0",
+                "url": "git@github.com:phpactor/phpspec-extension"
+            }
         },
         "phpactor/language-server-extension": {
-            "version": "0.2.0",
-            "url": "git@github.com:phpactor/language-server-extension"
+            "type": "package",
+            "args": {
+                "version": "0.2.0",
+                "url": "git@github.com:phpactor/language-server-extension"
+            }
         },
         "phpactor/language-server-completion-extension": {
-            "version": "0.1.0",
-            "url": "git@github.com:phpactor/language-server-completion-extension"
+            "type": "package",
+            "args": {
+                "version": "0.1.0",
+                "url": "git@github.com:phpactor/language-server-completion-extension"
+            }
         },
         "phpactor/language-server-reference-finder-extension": {
-            "version": "0.1.0",
-            "url": "git@github.com:phpactor/language-server-reference-finder-extension"
+            "type": "package",
+            "args": {
+                "version": "0.1.0",
+                "url": "git@github.com:phpactor/language-server-reference-finder-extension"
+            }
         },
         "phpactor/language-server-hover-extension": {
-            "version": "0.1.0",
-            "url": "git@github.com:phpactor/language-server-hover-extension"
+            "type": "package",
+            "args": {
+                "version": "0.1.0",
+                "url": "git@github.com:phpactor/language-server-hover-extension"
+            }
         },
         "phpactor/phpunit-extension": {
-            "version": "0.1.0",
-            "url": "git@github.com:phpactor/phpunit-extension"
+            "type": "package",
+            "args": {
+                "version": "0.1.0",
+                "url": "git@github.com:phpactor/phpunit-extension"
+            }
         },
         "phpactor/class-mover": {
-            "version": "0.1.1",
             "prototype": "default",
-            "vars": {
-                "phpstan_level": 4,
-                "phpstan_ignore": [
-                    "'#Microsoft.PhpParser.Node::getText.* invoked with 1 parameter, 0 required#'"
-                ]
+            "args": {
+                "version": "0.1.1",
+                "vars": {
+                    "phpstan_level": 4,
+                    "phpstan_ignore": [
+                        "'#Microsoft.PhpParser.Node::getText.* invoked with 1 parameter, 0 required#'"
+                    ]
+                }
             }
         },
         "phpactor/class-to-file": {
             "prototype": "default",
-            "version": "0.3.1",
-            "vars": {
-                "php_cs_fixer_ignore_dirs": [
-                    "Integration/Composer/project"
-                ]
+            "args": {
+                "version": "0.3.1",
+                "vars": {
+                    "php_cs_fixer_ignore_dirs": [
+                        "Integration/Composer/project"
+                    ]
+                }
             }
         },
         "phpactor/class-to-file-extension": {
             "prototype": "default",
-            "version": "0.2.1"
+            "args": {
+                "version": "0.2.1"
+            }
         },
         "phpactor/code-builder": {
-            "version": "0.3.0",
             "prototype": "default",
-            "vars": {
-                "phpstan_level": 1
+            "args": {
+                "version": "0.3.0",
+                "vars": {
+                    "phpstan_level": 1
+                }
             }
         },
         "phpactor/code-transform": {
             "prototype": "default",
-            "version": "0.2.0"
+            "args": {
+                "version": "0.2.0"
+            }
         },
         "phpactor/code-transform-extension": {
             "prototype": "default",
-            "version": "0.1.1"
+            "args": {
+                "version": "0.1.1"
+            }
         },
         "phpactor/completion": {
             "prototype": "default",
-            "version": "0.3.0"
+            "args": {
+                "version": "0.3.0"
+            }
         },
         "phpactor/completion-extension": {
             "prototype": "default",
-            "version": "0.2.1"
+            "args": {
+                "version": "0.2.1"
+            }
         },
         "phpactor/completion-rpc-extension": {
             "prototype": "default",
-            "version": "0.2.1"
+            "args": {
+                "version": "0.2.1"
+            }
         },
         "phpactor/completion-worse-extension": {
             "prototype": "default",
-            "version": "0.1.2"
+            "args": {
+                "version": "0.1.2"
+            }
         },
         "phpactor/composer-autoloader-extension": {
             "prototype": "default",
-            "version": "0.2.1"
+            "args": {
+                "version": "0.2.1"
+            }
         },
         "phpactor/config-loader": {
             "prototype": "default",
-            "version": "0.1.1"
+            "args": {
+                "version": "0.1.1"
+            }
         },
         "phpactor/console-extension": {
             "prototype": "default",
-            "version": "0.1.2"
+            "args": {
+                "version": "0.1.2"
+            }
         },
         "phpactor/container": {
             "prototype": "default",
-            "version": "1.3.1"
+            "args": {
+                "version": "1.3.1"
+            }
         },
         "phpactor/docblock": {
             "prototype": "default",
-            "version": "0.3.1",
-            "vars": {
-                "phpstan_ignore": [
-                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
-                ]
+            "args": {
+                "version": "0.3.1",
+                "vars": {
+                    "phpstan_ignore": [
+                        "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                    ]
+                }
+
             }
-                        
         },
         "phpactor/extension-manager-extension": {
             "prototype": "default",
-            "version": "0.8.1"
+            "args": {
+                "version": "0.8.1"
+            }
         },
         "phpactor/file-path-resolver": {
             "prototype": "default",
-            "version": "0.8.1"
+            "args": {
+                "version": "0.8.1"
+            }
         },
         "phpactor/file-path-resolver-extension": {
             "prototype": "default",
-            "version": "0.3.1"
+            "args": {
+                "version": "0.3.1"
+            }
         },
         "phpactor/language-server": {
             "prototype": "default",
-            "version": "0.2.0"
+            "args": {
+                "version": "0.2.0"
+            }
         },
         "phpactor/language-server-extension": {
             "prototype": "default",
-            "version": "0.2.0"
+            "args": {
+                "version": "0.2.0"
+            }
         },
         "phpactor/logging-extension": {
             "prototype": "default",
-            "version": "0.3.2"
+            "args": {
+                "version": "0.3.2"
+            }
         },
         "phpactor/map-resolver": {
             "prototype": "default",
-            "version": "1.2.1"
+            "args": {
+                "version": "1.2.1"
+            }
         },
         "phpactor/path-finder": {
             "prototype": "default",
-            "version": "0.1.0"
+            "args": {
+                "version": "0.1.0"
+            }
         },
         "phpactor/reference-finder": {
             "prototype": "default",
-            "version": "0.1.1"
+            "args": {
+                "version": "0.1.1"
+            }
         },
         "phpactor/reference-finder-extension": {
             "prototype": "default",
-            "version": "0.1.2"
+            "args": {
+                "version": "0.1.2"
+            }
         },
         "phpactor/reference-finder-rpc-extension": {
             "prototype": "default",
-            "version": "0.1.2"
+            "args": {
+                "version": "0.1.2"
+            }
         },
         "phpactor/rpc-extension": {
             "prototype": "default",
-            "version": "0.2.0"
+            "args": {
+                "version": "0.2.0"
+            }
         },
         "phpactor/source-code-filesystem": {
             "prototype": "default",
-            "version": "0.1.1",
-            "vars": {
-                "phpstan_ignore": [
-                    "'#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'"
-                ]
+            "args": {
+                "version": "0.1.1",
+                "vars": {
+                    "phpstan_ignore": [
+                        "'#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'"
+                    ]
+                }
             }
         },
         "phpactor/source-code-filesystem-extension": {
             "prototype": "default",
-            "version": "0.1.3"
+            "args": {
+                "version": "0.1.3"
+            }
         },
         "phpactor/test-utils": {
             "prototype": "default",
-            "version": "1.0.1"
+            "args": {
+                "version": "1.0.1"
+            }
         },
         "phpactor/text-document": {
             "prototype": "default",
-            "version": "1.1.0"
+            "args": {
+                "version": "1.1.0"
+            }
         },
         "phpactor/worse-reflection": {
-            "vars": {
-                "phpstan_ignore": [
-                    "'#Method .*getText.. invoked with 1 parameter, 0 required#'",
-                    "'#methods.. invoked with 1 parameter, 0 required#'",
-                    "'#Binary operation \"\\+\" between string and 0 results in an error#'"
-                ],
-                "phpstan_level": 2,
-                "travis_checks": [
-                    "vendor/bin/php-cs-fixer fix --dry-run",
-                    "vendor/bin/phpstan analyse lib -c phpstan.neon",
-                    "vendor/bin/phpunit",
-                    "vendor/bin/phpbench run --report=aggregate --progress=travis --store --iterations=1",
-                    "tests/Smoke/smoke_test.php --limit=100"
-                ]
-            },
             "prototype": "default",
-            "version": "0.3.1"
+            "args": {
+                "vars": {
+                    "phpstan_ignore": [
+                        "'#Method .*getText.. invoked with 1 parameter, 0 required#'",
+                        "'#methods.. invoked with 1 parameter, 0 required#'",
+                        "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+                    ],
+                    "phpstan_level": 2,
+                    "travis_checks": [
+                        "vendor/bin/php-cs-fixer fix --dry-run",
+                        "vendor/bin/phpstan analyse lib -c phpstan.neon",
+                        "vendor/bin/phpunit",
+                        "vendor/bin/phpbench run --report=aggregate --progress=travis --store --iterations=1",
+                        "tests/Smoke/smoke_test.php --limit=100"
+                    ]
+                },
+                "version": "0.3.1"
+            }
         },
         "phpactor/worse-reflection-extension": {
             "prototype": "default",
-            "version": "0.2.2"
+            "args": {
+                "version": "0.2.2"
+            }
         },
         "phpactor/worse-reference-finders": {
             "prototype": "default",
-            "version": "0.1.0"
+            "args": {
+                "version": "0.1.0"
+            }
         }
     },
     "prototypes": {
         "default": {
-            "url": "git@github.com:$PACKAGE_NAME",
-            "tasks": {
+            "type": "package",
+            "args": {
+                "url": "git@github.com:$PACKAGE_NAME"
+            },
+            "nodes": {
                 "init": {
                     "type": "null"
                 },
@@ -277,7 +374,7 @@
                 "composer require": {
                     "type": "json_file",
                     "args": {
-                        "merge": {
+                        "data": {
                             "require-dev": {
                                 "phpunit/phpunit": "~7.0",
                                 "friendsofphp/php-cs-fixer": "~2.15.0",
