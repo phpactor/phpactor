@@ -175,6 +175,7 @@ let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
 let g:phpactorInputListStrategy = 'inputlist|fzf'
+let g:phpactorQuickfixStrategy = 'vim|fzf|Funcref'
 
 " Example of implementation with vim's inputlist() function
 function! InputListCustomStrategy(label, choices, ResultHandler)
@@ -199,7 +200,6 @@ let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
 - `g:phpactorInputListStrategy`: Select a strategy for the [Input
   List](#input-list).
 - `g:phpactorCustomInputListStrategy`: Specify your own strategy.
-- `g:phpactorUseFzfForQuickfix`: Defines if fzf shoudl be used to build the quickfix, default: `v:true`.
 
 Extensions
 ----------
@@ -334,18 +334,26 @@ See the
 Quickfix List
 -------------
 
-Phpactor will provide you with an alternative to the quickfix list. For each
-actions which will populate the quickfix, like `find references`, Phpactor will
-make use of [fzf](#fzf) to allow you to filter/open the results before hand.
+The quickfix list is used to show a list of positions in files and access them
+quickly. Phpactor use it for example to show the result of `find references`.
 
-You will still be able to get the result inside the quickfix by selecting the
-elements you are interested in and pressing `ctrl-q` to populate the quickfix
-with your selection and open it.
+### Strategies
 
-If you don't want this feature you can disable it like so:
-```vim
-let g:phpactorUseFzfForQuickfix = v:false
-```
+This plugin provides two strategy to handle input lists:
+
+- `vim`: Vim's basic quickfix.
+- `fzf`: Use [fzf](#fzf) to show allow you to filter the results.
+
+With the [fzf](#fzf) strategy you will still be able to get the result inside
+the quickfix by selecting the elements you are interested in and pressing
+`ctrl-q` to populate the quickfix with your selection and open it.
+
+You can use your own strategy by providing a `Funcref` to the
+`g:phpactorQuickfixStrategy` variable. When calling a strategy the list of
+positions is given as a list that is directly usable by the function
+`setqflist()`. Not all informations are provided, depending on the context, so
+you should always check if the information you want is really defined before
+using it.
 
 Extras
 ------

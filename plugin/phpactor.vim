@@ -592,20 +592,15 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             endif
         endif
 
-        let results = {}
+        let results = []
         for fileReferences in a:parameters['file_references']
             for reference in fileReferences['references']
-                let key = s:relative_path(fileReferences['file'])
-                            \ .':'. reference['line_no']
-                            \ .':'. (reference['col_no'] + 1)
-                            \ .':'. reference['line']
-
-                let results[key] = {
-                            \ 'filename': fileReferences['file'],
-                            \ 'lnum': reference['line_no'],
-                            \ 'col': reference['col_no'] + 1,
-                            \ 'text': reference['line']
-                            \ }
+                call add(results, {
+                    \ 'filename': fileReferences['file'],
+                    \ 'lnum': reference['line_no'],
+                    \ 'col': reference['col_no'] + 1,
+                    \ 'text': reference['line']
+                \ })
             endfor
         endfor
 
@@ -736,12 +731,6 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
     endif
 
     call TypeHandler(ResultHandler)
-endfunction
-
-function! s:relative_path(absolute_path)
-    let l:cwd = getcwd()
-
-    return substitute(a:absolute_path, l:cwd .'/', '', '')
 endfunction
 
 " vim: et ts=4 sw=4 fdm=marker
