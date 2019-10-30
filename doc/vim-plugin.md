@@ -351,15 +351,14 @@ the quickfix by selecting the elements you are interested in and pressing
 You can use your own strategy by providing a `Funcref` to the
 `g:phpactorQuickfixStrategy` variable. When calling a strategy the list of
 positions is given as a list that is directly usable by the function
-`setqflist()`. Not all informations are provided, depending on the context, so
+`setqflist()`. Not all the keys are provided, depending on the context, so
 you should always check if the information you want is really defined before
 using it.
 
 Extras
 ------
 
-In order to get the best possible experience we suggests you a few extra tools
-that will make using this plugin a lot more appreciable.
+In order to get the best experience we suggest you install a few extra tools.
 
 [fzf](https://github.com/junegunn/fzf)
 --------------------------------------
@@ -367,10 +366,11 @@ that will make using this plugin a lot more appreciable.
 This is actually not a vim plugin but a tool for the command-line.
 It's shipped with a vim plugin that allows to use it inside Vim.
 
-If you have it installed and properly configured for Vim then Phpactor will
-make use of it to provide enhance functionalities, for instance:
+If you have it installed and properly configured for Vim then `Phpactor` will
+use of it to provide enhance functionalities, for instance:
 
-- [inputlist](#input-list) will take advantage of fzf
+- [inputlist](#input-list)
+- [quickfix](#quickfix-list)
 
 [fzf.vim](https://github.com/junegunn/fzf.vim)
 ----------------------------------------------
@@ -380,14 +380,16 @@ requires you to have [fzf](https://github.com/junegunn/fzf) installed and
 configured.
 
 This plugin will allow us to use improved functionalities inside Vim. If you
-want to enjoy the full possibilities of both fzf and phpactor we strongly
+want to enjoy the full possibilities of both `fzf` and `Phpactor` we strongly
 recommand you to install it!
 
 [bat](https://github.com/sharkdp/bat)
 ---
 
-This is also a tool for the command-line and not a Vim plugin.
-It's ment to be used instead of the command `cat` and bring a lot to the table.
+This is also a tool for the command-line and not a Vim plugin. It's meant to be
+used instead of the command `cat` and bring a lot to the table. It can be use
+as a powerful substitute for `cat` providing syntax highlighting and git
+integration, among other things.
 
-It's used by default, among other possible tools, by fzf to print the preview
+It's used by default, among other possible tools, by `fzf` to print the preview
 window. Allowing you to have a preview of your files with syntaxic coloration!
