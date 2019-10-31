@@ -354,20 +354,23 @@ endfunction
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
+" Return v:true if we changed file, v:false otherwise
 function! phpactor#_switchToBufferOrEdit(filePath)
     if expand('%:p') == a:filePath
         " filePath is currently open
-        return
+        return v:false
     endif
 
     let bufferNumber = bufnr(a:filePath . '$')
 
     if (bufferNumber == -1)
         exec ":edit " . a:filePath
-        return
+        return v:true
     endif
 
     exec ":buffer " . bufferNumber
+
+    return v:true
 endfunction
 
 function! phpactor#_offset()
@@ -541,8 +544,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> open_file
     if a:actionName == "open_file"
+        let changedFileOrWindow = v:true
+
         if a:parameters['target'] == 'focused_window'
-            call phpactor#_switchToBufferOrEdit(a:parameters['path'])
+            let changedFileOrWindow =  phpactor#_switchToBufferOrEdit(a:parameters['path'])
 
             if a:parameters['force_reload'] == v:true
                 exec "e!"
@@ -563,7 +568,9 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
 
         if (a:parameters['offset'])
-            exec ":keepjumps goto " .  (a:parameters['offset'] + 1)
+            let keepjumps = changedFileOrWindow ? 'keepjumps' : ''
+
+            exec keepjumps . ":goto " .  (a:parameters['offset'] + 1)
             normal! zz
         endif
         return
