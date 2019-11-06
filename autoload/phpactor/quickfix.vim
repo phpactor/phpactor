@@ -1,5 +1,5 @@
 function! phpactor#quickfix#strategy() abort
-    if !has_key(g:, 'PhpactorQuickfixStrategy')
+    if (g:PhpactorQuickfixStrategy == v:null)
         return s:auto_detect_strategy()
     endif
 
