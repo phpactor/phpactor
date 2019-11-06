@@ -33,6 +33,10 @@ if !exists('g:phpactorCompletionIgnoreCase')
     let g:phpactorCompletionIgnoreCase = 1
 endif
 
+if !exists('g:PhpactorQuickfixStrategy')
+    let g:PhpactorQuickfixStrategy = v:null
+endif
+
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
