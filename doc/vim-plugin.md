@@ -10,6 +10,8 @@ Phpactor VIM Plugin
 - [Completion](#completion)
 - [Completion plugins](#completion-plugins)
 - [Context Menu](#context-menu)
+- [Quickfix List](#quickfix-list)
+- [Extras](#extras)
 
 Installation
 ------------
@@ -173,6 +175,7 @@ let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
 let g:phpactorInputListStrategy = 'inputlist|fzf'
+let g:phpactorQuickfixStrategy = 'vim|fzf|Funcref'
 
 " Example of implementation with vim's inputlist() function
 function! InputListCustomStrategy(label, choices, ResultHandler)
@@ -328,3 +331,65 @@ Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none.
 See the
 [Fzf](https://github.com/junegunn/fzf) documentation for more details.
 
+Quickfix List
+-------------
+
+The quickfix list is used to show a list of positions in files and access them
+quickly. Phpactor use it for example to show the result of `find references`.
+
+### Strategies
+
+This plugin provides two strategy to handle input lists:
+
+- `vim`: Vim's basic quickfix.
+- `fzf`: Use [fzf](#fzf) to show allow you to filter the results.
+
+With the [fzf](#fzf) strategy you will still be able to get the result inside
+the quickfix by selecting the elements you are interested in and pressing
+`ctrl-q` to populate the quickfix with your selection and open it.
+
+You can use your own strategy by providing a `Funcref` to the
+`g:phpactorQuickfixStrategy` variable. When calling a strategy the list of
+positions is given as a list that is directly usable by the function
+`setqflist()`. Not all the keys are provided, depending on the context, so
+you should always check if the information you want is really defined before
+using it.
+
+Extras
+------
+
+In order to get the best experience we suggest you install a few extra tools.
+
+[fzf](https://github.com/junegunn/fzf)
+--------------------------------------
+
+This is actually not a vim plugin but a tool for the command-line.
+It's shipped with a vim plugin that allows to use it inside Vim.
+
+If you have it installed and properly configured for Vim then `Phpactor` will
+use of it to provide enhance functionalities, for instance:
+
+- [inputlist](#input-list)
+- [quickfix](#quickfix-list)
+
+[fzf.vim](https://github.com/junegunn/fzf.vim)
+----------------------------------------------
+
+This is the actual [fzf](https://github.com/junegunn/fzf) plugin for vim. It
+requires you to have [fzf](https://github.com/junegunn/fzf) installed and
+configured.
+
+This plugin will allow us to use improved functionalities inside Vim. If you
+want to enjoy the full possibilities of both `fzf` and `Phpactor` we strongly
+recommand you to install it!
+
+[bat](https://github.com/sharkdp/bat)
+---
+
+This is also a tool for the command-line and not a Vim plugin. It's meant to be
+used instead of the command `cat` and bring a lot to the table. It can be use
+as a powerful substitute for `cat` providing syntax highlighting and git
+integration, among other things.
+
+It's used by default, among other possible tools, by `fzf` to print the preview
+window. Allowing you to have a preview of your files with syntaxic coloration!

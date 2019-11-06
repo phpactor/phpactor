@@ -1,10 +1,10 @@
-"  ______    __    __  .______      ___       ______ .___________.  ______   .______      
-" |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __  \  |   _  \     
-" |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|  |  |  | |  |_)  |    
-" |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |     |  |  |  | |      /     
+"  ______    __    __  .______      ___       ______ .___________.  ______   .______
+" |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __  \  |   _  \
+" |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|  |  |  | |  |_)  |
+" |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |     |  |  |  | |      /
 " |  |      |  |  |  | |  |     /  _____  \ |  `----.    |  |     |  `--'  | |  |\  \----.
 " | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
-"                                                                                         
+"
 
 if exists('g:phpactorLoaded')
   finish
@@ -19,7 +19,7 @@ let g:_phpactorCompletionMeta = {}
 
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
-endif 
+endif
 
 if !exists('g:phpactorBranch')
     let g:phpactorBranch = 'master'
@@ -89,8 +89,8 @@ function! phpactor#Complete(findstart, base)
 
     if !empty(suggestions)
         for suggestion in suggestions
-            let completion = { 
-                        \ 'word': suggestion['name'], 
+            let completion = {
+                        \ 'word': suggestion['name'],
                         \ 'abbr': phpactor#_completeTruncateLabel(suggestion['label'], g:phpactorCompleteLabelTruncateLength),
                         \ 'menu': suggestion['short_description'],
                         \ 'kind': suggestion['type'],
@@ -132,9 +132,9 @@ function! phpactor#_completeImportClass(completedItem)
 
     if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
-                    \ "qualified_name": suggestion['class_import'], 
-                    \ "offset": phpactor#_offset(), 
-                    \ "source": phpactor#_source(), 
+                    \ "qualified_name": suggestion['class_import'],
+                    \ "offset": phpactor#_offset(),
+                    \ "source": phpactor#_source(),
                     \ "path": expand('%:p')})
     endif
 
@@ -218,10 +218,10 @@ endfunction
 " RPC Proxy methods
 """""""""""""""""""""""""""
 function! phpactor#_GotoDefinitionTarget(target)
-    call phpactor#rpc("goto_definition", { 
-                \"offset": phpactor#_offset(), 
-                \"source": phpactor#_source(), 
-                \"path": expand('%:p'), 
+    call phpactor#rpc("goto_definition", {
+                \"offset": phpactor#_offset(),
+                \"source": phpactor#_source(),
+                \"path": expand('%:p'),
                 \"target": a:target,
                 \'language': &ft})
 endfunction
@@ -229,10 +229,10 @@ function! phpactor#GotoDefinition()
     call phpactor#_GotoDefinitionTarget('focused_window')
 endfunction
 function! phpactor#GotoImplementations()
-    call phpactor#rpc("goto_implementation", { 
-                \"offset": phpactor#_offset(), 
-                \"source": phpactor#_source(), 
-                \"path": expand('%:p'), 
+    call phpactor#rpc("goto_implementation", {
+                \"offset": phpactor#_offset(),
+                \"source": phpactor#_source(),
+                \"path": expand('%:p'),
                 \"target": 'focused_window',
                 \'language': &ft})
 endfunction
@@ -590,11 +590,19 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> file references
     if a:actionName == "file_references"
-        let list = []
+        " if there is only one file, and it is the open file, don't
+        " bother opening the quick fix window
+        if len(a:parameters['file_references']) == 1
+            let fileRefs = a:parameters['file_references'][0]
+            if -1 != match(fileRefs['file'], bufname('%') . '$')
+                return
+            endif
+        endif
 
+        let results = []
         for fileReferences in a:parameters['file_references']
             for reference in fileReferences['references']
-                call add(list, {
+                call add(results, {
                     \ 'filename': fileReferences['file'],
                     \ 'lnum': reference['line_no'],
                     \ 'col': reference['col_no'] + 1,
@@ -603,18 +611,8 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
             endfor
         endfor
 
-        call setqflist(list)
+        call phpactor#quickfix#build(results)
 
-        " if there is only one file, and it is the open file, don't
-        " bother opening the quick fix window
-        if len(a:parameters['file_references']) == 1
-            let fileRefs = a:parameters['file_references'][0]
-            if -1 != match(fileRefs['file'], bufname('%') . '$')
-                return 
-            endif
-        endif
-
-        execute ':cwindow'
         return
     endif
 
