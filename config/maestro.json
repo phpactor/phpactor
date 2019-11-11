@@ -1,19 +1,17 @@
 {
-    "args": {
-        "vars": {
-            "source_dir": "lib",
-            "php_versions": [ 7.1, 7.2, 7.3 ],
-            "phpstan_level": 7,
-            "phpstan_ignore": [],
-            "php_cs_fixer_ignore_dirs": [
-                "tests/Workspace"
-            ],
-            "travis_checks": [
-                "./vendor/bin/php-cs-fixer fix --dry-run",
-                "./vendor/bin/phpstan analyse lib -c phpstan.neon",
-                "./vendor/bin/phpunit"
-            ]
-        }
+    "vars": {
+        "source_dir": "lib",
+        "php_versions": [ 7.1, 7.2, 7.3 ],
+        "phpstan_level": 7,
+        "phpstan_ignore": [],
+        "php_cs_fixer_ignore_dirs": [
+            "tests/Workspace"
+        ],
+        "travis_checks": [
+            "./vendor/bin/php-cs-fixer fix --dry-run",
+            "./vendor/bin/phpstan analyse lib -c phpstan.neon",
+            "./vendor/bin/phpunit"
+        ]
     },
     "nodes": {
         "include": "packages/*.json"

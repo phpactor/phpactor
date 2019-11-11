@@ -1,13 +1,12 @@
 {
     "name": "phpactor/docblock",
+    "vars": {
+        "phpstan_ignore": [
+            "'#Binary operation \"\\+\" between string and 0 results in an error#'"
+        ]
+    },
     "prototype": "default",
     "args": {
-        "version": "0.3.1",
-        "vars": {
-            "phpstan_ignore": [
-                "'#Binary operation \"\\+\" between string and 0 results in an error#'"
-            ]
-        }
-
+        "version": "0.3.1"
     }
 }
