@@ -1,7 +1,8 @@
 {
-    "name": "phpactor/config-loader",
-    "prototype": "default",
-    "args": {
-        "version": "0.1.1"
-    }
+  "name": "phpactor/config-loader",
+  "prototype": "default",
+  "args": {},
+  "vars": {
+    "version": "0.1.1"
+  }
 }

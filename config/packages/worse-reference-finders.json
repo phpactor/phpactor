@@ -1,7 +1,8 @@
 {
-    "name": "phpactor/worse-reference-finders",
-    "prototype": "default",
-    "args": {
-        "version": "0.1.0"
-    }
+  "name": "phpactor/worse-reference-finders",
+  "prototype": "default",
+  "args": {},
+  "vars": {
+    "version": "0.1.0"
+  }
 }
