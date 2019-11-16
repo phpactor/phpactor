@@ -15,6 +15,7 @@ Bug fix:
 
   - [worse-reflection] instanceof returns negative if class implements
     interface but extends another class.
+  - [worse-reflection] foreach key variable resolves as symbol type "unknown"
 
 ## 2019-10-23 0.13.5
 
