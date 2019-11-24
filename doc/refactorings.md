@@ -13,7 +13,7 @@ Fixes:
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
-- [Import Classes](#import-classes)
+- [Import Missing Classes](#import-missing-classes)
 - [Override Method](#override-method)
 
 Generation:
@@ -899,7 +899,7 @@ Import Missing Classes
 Import all missing classes in the current file.
 
 - **Command**: **RPC Only**
-- **VIM plugin**: _Class context menu > Import Missing
+- **VIM plugin**: _Class context menu > Import Missing_
 - **VIM function**:`:call phpactor#ImportMissingClasses()`
 
 ### Motivation
