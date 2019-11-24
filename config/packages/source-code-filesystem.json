@@ -1,12 +1,8 @@
 {
-    "name": "phpactor/source-code-filesystem",
-    "vars": {
-        "phpstan_ignore": [
-            "'#Call to an undefined method RecursiveIteratorIterator..getSubPathName#'"
-        ]
-    },
-    "prototype": "default",
-    "args": {
-        "version": "0.1.1"
-    }
+  "name": "phpactor/source-code-filesystem",
+  "vars": {
+    "version": "0.1.1"
+  },
+  "prototype": "default",
+  "args": {}
 }
