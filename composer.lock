@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a1b0ec62547a5a3d6687dc4e9e3b54d",
+    "content-hash": "3d5b1c5754e1b04c57d4ad64efeb69f1",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -823,17 +823,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "f50f1563e5c9b32d8e197bea76646855bc632e62"
+                "reference": "c7f3422e48ff1d03f2ff1be1eff4394d9cbf0a0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/f50f1563e5c9b32d8e197bea76646855bc632e62",
-                "reference": "f50f1563e5c9b32d8e197bea76646855bc632e62",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/c7f3422e48ff1d03f2ff1be1eff4394d9cbf0a0b",
+                "reference": "c7f3422e48ff1d03f2ff1be1eff4394d9cbf0a0b",
                 "shasum": ""
             },
             "require": {
                 "phpactor/class-to-file": "~0.3",
                 "phpactor/code-builder": "~0.3",
+                "phpactor/name-specification": "^0.1",
                 "webmozart/path-util": "~2.3"
             },
             "require-dev": {
@@ -865,7 +866,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2019-10-14T22:06:53+00:00"
+            "time": "2019-11-24T13:50:32+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -1585,12 +1586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/name.git",
-                "reference": "f3fb06bc965702d7e481de62e79f8ea7ba998af7"
+                "reference": "336e7c7ccf85e7c438ec8397c9e924259f9a135e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/name/zipball/f3fb06bc965702d7e481de62e79f8ea7ba998af7",
-                "reference": "f3fb06bc965702d7e481de62e79f8ea7ba998af7",
+                "url": "https://api.github.com/repos/phpactor/name/zipball/336e7c7ccf85e7c438ec8397c9e924259f9a135e",
+                "reference": "336e7c7ccf85e7c438ec8397c9e924259f9a135e",
                 "shasum": ""
             },
             "require-dev": {
@@ -1619,7 +1620,7 @@
                 }
             ],
             "description": "Value objects for specifying (class/function) names",
-            "time": "2019-07-29T17:35:19+00:00"
+            "time": "2019-11-22T10:04:44+00:00"
         },
         {
             "name": "phpactor/path-finder",
@@ -5678,7 +5679,8 @@
     "stability-flags": {
         "phpbench/phpbench": 20,
         "phpactor/test-utils": 20,
-        "friendsofphp/php-cs-fixer": 20
+        "friendsofphp/php-cs-fixer": 20,
+        "phpactor/name-specification": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
