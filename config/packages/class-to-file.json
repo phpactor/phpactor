@@ -1,8 +1,12 @@
 {
-  "name": "phpactor/class-to-file",
-  "vars": {
-    "version": "0.3.1"
-  },
-  "prototype": "default",
-  "args": {}
+    "name": "phpactor/class-to-file",
+    "vars": {
+        "php_cs_fixer_ignore_dirs": [
+            "Integration/Composer/project"
+        ]
+    },
+    "prototype": "default",
+    "args": {
+        "version": "0.3.1"
+    }
 }

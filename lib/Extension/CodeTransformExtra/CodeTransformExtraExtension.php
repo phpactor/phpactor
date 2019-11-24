@@ -26,7 +26,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CodeTransformExtra\Rpc\ImportUnresolvableClassesHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
@@ -342,11 +342,11 @@ class CodeTransformExtraExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ExtractExpressionHandler::NAME] ]);
 
         $container->register('code_transform.rpc.handler.import_unresolvable_classes', function (Container $container) {
-            return new ImportUnresolvableClassesHandler(
+            return new ImportMissingClassesHandler(
                 $container->get(RpcExtension::SERVICE_REQUEST_HANDLER),
                 $container->get('code_transform.helper.unresolvable_class_name_finder')
             );
-        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ImportUnresolvableClassesHandler::NAME] ]);
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ImportMissingClassesHandler::NAME] ]);
     }
 
     private function registerGenerators(ContainerBuilder $container)

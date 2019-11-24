@@ -1,10 +1,8 @@
 {
-  "name": "phpactor/phpactor",
-  "type": "package",
-  "args": {
-    "url": "git@github.com:phpactor/phpactor"
-  },
-  "vars": {
-    "version": "0.13.0"
-  }
+    "name": "phpactor/phpactor",
+    "type": "package",
+    "args": {
+        "version": "0.13.0",
+        "url": "git@github.com:phpactor/phpactor"
+    }
 }

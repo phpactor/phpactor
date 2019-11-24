@@ -1,8 +1,7 @@
 {
-  "name": "phpactor/file-path-resolver",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.8.1"
-  }
+    "name": "phpactor/file-path-resolver",
+    "prototype": "default",
+    "args": {
+        "version": "0.8.1"
+    }
 }

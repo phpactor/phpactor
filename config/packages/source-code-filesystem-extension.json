@@ -1,8 +1,7 @@
 {
-  "name": "phpactor/source-code-filesystem-extension",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.1.3"
-  }
+    "name": "phpactor/source-code-filesystem-extension",
+    "prototype": "default",
+    "args": {
+        "version": "0.1.3"
+    }
 }

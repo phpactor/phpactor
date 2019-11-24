@@ -215,7 +215,13 @@ endfunction
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
+    call phpactor#ImportClass()
+endfunction
+function! phpactor#ImportClass()
     call phpactor#rpc("import_class", {"offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
+endfunction
+function! phpactor#ImportMissingClasses()
+    call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""""""

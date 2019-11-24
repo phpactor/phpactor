@@ -157,8 +157,8 @@
                 "source": "%source%"
             }
         },
-        "import_missing": {
-            "action": "import_unresolvable_classes",
+        "import_missing_classes": {
+            "action": "import_missing_classes",
             "parameters": {
                 "path": "%current_path%",
                 "source": "%source%"

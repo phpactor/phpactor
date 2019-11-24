@@ -1,8 +1,7 @@
 {
-  "name": "phpactor/console-extension",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.1.2"
-  }
+    "name": "phpactor/console-extension",
+    "prototype": "default",
+    "args": {
+        "version": "0.1.2"
+    }
 }

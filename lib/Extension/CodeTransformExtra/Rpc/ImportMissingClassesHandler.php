@@ -13,9 +13,9 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Name\Name;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
-class ImportUnresolvableClassesHandler implements Handler
+class ImportMissingClassesHandler implements Handler
 {
-    public const NAME = 'import_unresolvable_classes';
+    public const NAME = 'import_missing_classes';
     public const PARAM_SOURCE = 'source';
     public const PARAM_PATH = 'path';
 

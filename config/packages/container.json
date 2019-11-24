@@ -1,8 +1,7 @@
 {
-  "name": "phpactor/container",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "1.3.1"
-  }
+    "name": "phpactor/container",
+    "prototype": "default",
+    "args": {
+        "version": "1.3.1"
+    }
 }
