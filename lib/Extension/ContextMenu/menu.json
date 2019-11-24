@@ -157,6 +157,13 @@
                 "source": "%source%"
             }
         },
+        "import_missing": {
+            "action": "import_unresolvable_classes",
+            "parameters": {
+                "path": "%current_path%",
+                "source": "%source%"
+            }
+        },
         "hover": {
             "action": "hover",
             "parameters": {

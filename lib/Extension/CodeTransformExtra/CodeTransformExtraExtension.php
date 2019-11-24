@@ -14,6 +14,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpres
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseUnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
@@ -22,12 +23,10 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Generators;
-use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportUnresolvableClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
@@ -261,6 +260,12 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.refactor.change_visiblity', function (Container $container) {
             return new TolerantChangeVisiblity();
         });
+
+        $container->register('code_transform.helper.unresolvable_class_name_finder', function (Container $container) {
+            return new WorseUnresolvableClassNameFinder(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+            );
+        });
     }
 
     private function registerUpdater(ContainerBuilder $container)
@@ -335,6 +340,13 @@ class CodeTransformExtraExtension implements Extension
                 $container->get('code_transform.refactor.extract_expression')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ExtractExpressionHandler::NAME] ]);
+
+        $container->register('code_transform.rpc.handler.import_unresolvable_classes', function (Container $container) {
+            return new ImportUnresolvableClassesHandler(
+                $container->get(RpcExtension::SERVICE_REQUEST_HANDLER),
+                $container->get('code_transform.helper.unresolvable_class_name_finder')
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ImportUnresolvableClassesHandler::NAME] ]);
     }
 
     private function registerGenerators(ContainerBuilder $container)
