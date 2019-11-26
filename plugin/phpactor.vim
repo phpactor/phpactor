@@ -19,7 +19,7 @@ let g:_phpactorCompletionMeta = {}
 
 " hack to avoid calling fzf strategy when using a collection
 " see: https://github.com/phpactor/phpactor/pull/843
-let g:_rpcActionIsCollection = v:false
+let g:_phpactorRpcActionIsCollection = v:false
 
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
@@ -545,16 +545,15 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
     " >> collection
     if a:actionName == "collection"
-        let g:_rpcActionIsCollection = v:true
         for action in a:parameters["actions"]
-            let action["parameters"]["_is_collection"] = v:true
+            let g:_phpactorRpcActionIsCollection = v:true
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
+            let g:_phpactorRpcActionIsCollection = v:false
 
             if !empty(result)
                 return result
             endif
         endfor
-        let g:_rpcActionIsCollection = v:false
 
         return
     endif
