@@ -17,10 +17,6 @@ let g:phpactorInitialCwd = getcwd()
 let g:phpactorCompleteLabelTruncateLength=50
 let g:_phpactorCompletionMeta = {}
 
-" hack to avoid calling fzf strategy when using a collection
-" see: https://github.com/phpactor/phpactor/pull/843
-let g:_phpactorRpcActionIsCollection = v:false
-
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
 endif
@@ -219,13 +215,7 @@ endfunction
 " Insert a use statement
 """"""""""""""""""""""""
 function! phpactor#UseAdd()
-    call phpactor#ImportClass()
-endfunction
-function! phpactor#ImportClass()
     call phpactor#rpc("import_class", {"offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
-endfunction
-function! phpactor#ImportMissingClasses()
-    call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
 """""""""""""""""""""""""""
@@ -546,9 +536,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> collection
     if a:actionName == "collection"
         for action in a:parameters["actions"]
-            let g:_phpactorRpcActionIsCollection = v:true
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
-            let g:_phpactorRpcActionIsCollection = v:false
 
             if !empty(result)
                 return result

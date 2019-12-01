@@ -1,10 +1,4 @@
 function! phpactor#input#list#strategy()
-    " Hack to not use FZF in collections
-    " see https://github.com/phpactor/phpactor/pull/843
-    if g:_phpactorRpcActionIsCollection == v:true
-        return "phpactor#input#list#inputlist"
-    endif
-
     if has_key(g:, 'phpactorInputListStrategy')
         return g:phpactorInputListStrategy
     endif

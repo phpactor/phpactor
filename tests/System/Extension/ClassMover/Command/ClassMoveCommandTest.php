@@ -90,8 +90,8 @@ class ClassMoveCommandTest extends SystemTestCase
     public function testMovesRelatedFiles()
     {
         $this->workspace()->put('.phpactor.json', json_encode([
-            'navigator.destinations' => [
-                "source" => "lib/<kernel>.php",
+            'navigator.destinations' => [ 
+                "source" => "lib/<kernel>.php", 
                 "test" => "lib/<kernel>Test.php"
             ]
         ]));

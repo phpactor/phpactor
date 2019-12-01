@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
@@ -69,7 +71,7 @@ class ClassMoveHandler extends AbstractHandler
         ));
 
         if (
-            null !== $arguments[self::PARAM_DEST_PATH] &&
+            null !== $arguments[self::PARAM_DEST_PATH] && 
             null === $arguments[self::PARAM_CONFIRMED]
         ) {
             $this->requireInput(ConfirmInput::fromNameAndLabel(
@@ -81,17 +83,15 @@ class ClassMoveHandler extends AbstractHandler
         }
 
         if (
-            null === $arguments[self::PARAM_ADDITIONAL_MOVE_CONFIRM] &&
-            $arguments[self::PARAM_DEST_PATH] &&
+            null === $arguments[self::PARAM_ADDITIONAL_MOVE_CONFIRM] && 
+            $arguments[self::PARAM_DEST_PATH] && 
             $related = $this->classMove->getRelatedFiles($arguments[self::PARAM_SOURCE_PATH])
         ) {
             $this->requireInput(ConfirmInput::fromNameAndLabel(
                 self::PARAM_ADDITIONAL_MOVE_CONFIRM,
-                sprintf(
-                    "This class has the following related files:\n\n - %s\n\nMove these too? ",
-                    implode("\n - ", $related)
-                )
-            ));
+                sprintf("This class has the following related files:\n\n - %s\n\nMove these too? ",
+                implode("\n - ", $related)
+            )));
         }
 
         if ($this->hasMissingArguments($arguments)) {

@@ -157,13 +157,6 @@
                 "source": "%source%"
             }
         },
-        "import_missing_classes": {
-            "action": "import_missing_classes",
-            "parameters": {
-                "path": "%current_path%",
-                "source": "%source%"
-            }
-        },
         "hover": {
             "action": "hover",
             "parameters": {
