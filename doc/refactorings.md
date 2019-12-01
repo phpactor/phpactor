@@ -13,6 +13,7 @@ Fixes:
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
+- [Import Missing Classes](#import-missing-classes)
 - [Override Method](#override-method)
 
 Generation:
@@ -891,6 +892,21 @@ class Hello
 	}
 }
 ```
+
+Import Missing Classes
+----------------------
+
+Import all missing classes in the current file.
+
+- **Command**: **RPC Only**
+- **VIM plugin**: _Class context menu > Import Missing_
+- **VIM function**:`:call phpactor#ImportMissingClasses()`
+
+### Motivation
+
+You may copy and paste some code from one file to another and subsequently
+need to import all the foreign classes into the current namespace. This
+refactoring will identify all unresolvable classes and import them.
 
 Override Method
 ---------------
