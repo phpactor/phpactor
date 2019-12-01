@@ -52,9 +52,9 @@ class ClassMover
     public function getRelatedFiles(string $src): array
     {
         try {
-        return array_filter($this->pathFinder->destinationsFor($src), function (string $filePath) {
-            return (bool) file_exists($filePath);
-        });
+            return array_filter($this->pathFinder->destinationsFor($src), function (string $filePath) {
+                return (bool) file_exists($filePath);
+            });
         } catch (NoMatchingSourceException $e) {
             // TODO: Make pathfinder return it's own exception here, this is the class-to-file exception
             return [];
@@ -70,8 +70,7 @@ class ClassMover
         string $src,
         string $dest,
         bool $moveRelatedFiles
-    ): void
-    {
+    ): void {
         $srcPath = $this->classFileNormalizer->normalizeToFile($src);
         $destPath = $this->classFileNormalizer->normalizeToFile($dest);
 
@@ -93,7 +92,6 @@ class ClassMover
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (FilesystemHelper::globSourceDestination($srcPath, $destPath) as $globSrc => $globDest) {
-
             foreach ($this->expandRelatedPaths($globSrc, $globDest, $moveRelatedFiles) as $oldPath => $newPath) {
                 try {
                     $this->doMoveFile($logger, $filesystemName, $oldPath, $newPath);
