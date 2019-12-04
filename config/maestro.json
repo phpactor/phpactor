@@ -1,7 +1,7 @@
 {
     "vars": {
         "source_dir": "lib",
-        "php_versions": [ 7.1, 7.2, 7.3 ],
+        "php_versions": [ 7.1, 7.2, 7.3, 7.4 ],
         "phpstan_level": 7,
         "phpstan_ignore": [],
         "php_cs_fixer_ignore_dirs": [
