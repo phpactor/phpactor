@@ -8,15 +8,17 @@ Features:
   - [code-transform|rpc] Import missing classes - @dantleech
   - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
     invoke the context menu on whitespace now) - @elythyr
-  - [class-mover] Jump to interface implementation
+  - [class-mover] Jump to implementation - @dantleech
   - [vim-plugin] Extract functions handles motions @elythyr
   - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
 
 Bug fix:
 
   - [worse-reflection] instanceof returns negative if class implements
-    interface but extends another class.
+    interface but extends another class - @dantleech
   - [worse-reflection] foreach key variable resolves as symbol type "unknown"
+    - @dantleech
+  - [text-document] Word splitting includes commas (#851) - @einenlum
 
 ## 2019-10-23 0.13.5
 
