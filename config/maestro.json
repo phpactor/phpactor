@@ -20,7 +20,8 @@
         "default": {
             "type": "package",
             "args": {
-                "url": "git@github.com:$PACKAGE_NAME"
+                "url": "git@github.com:$PACKAGE_NAME",
+                "version": "%version%"
             },
             "nodes": {
                 "init": {

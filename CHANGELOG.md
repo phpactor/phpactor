@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [worse-reflection] Support for PHP 7.4 property types - @dantleech / @elythyr
   - [code-transform|rpc] Import missing classes - @dantleech
   - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
     invoke the context menu on whitespace now) - @elythyr
