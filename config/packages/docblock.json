@@ -6,7 +6,7 @@
         ]
     },
     "prototype": "default",
-    "args": {
+    "vars": {
         "version": "0.3.1"
     }
 }
