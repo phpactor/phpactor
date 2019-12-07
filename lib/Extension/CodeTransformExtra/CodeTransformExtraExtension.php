@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransformExtra;
 
+use FileSystemIterator;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
@@ -26,8 +27,10 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\CodeTransformExtra\Helpers\FilterPhpVersionDirectoryIterator;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
@@ -182,6 +185,17 @@ class CodeTransformExtraExtension implements Extension
                 $templatePath = $resolver->resolve($templatePath);
 
                 if (file_exists($templatePath)) {
+                    $phpDirectoriesIterator = new FilterPhpVersionDirectoryIterator(
+                        new FileSystemIterator($templatePath),
+                        (int) $container->getParameter(CoreExtension::PHP_ID_VERSION)
+                    );
+                    $phpDirectories = array_keys(iterator_to_array($phpDirectoriesIterator));
+                    rsort($phpDirectories);
+
+                    foreach ($phpDirectories as $path) {
+                        $loader->addLoader(new FilesystemLoader($path));
+                    }
+
                     $loader->addLoader(new FilesystemLoader($templatePath));
                 }
             }
