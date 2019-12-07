@@ -51,6 +51,13 @@ Reference
 
 ### Core
 
+#### php.version_id
+
+*Default*: `PHP_VERSION_ID`
+
+You can override it if your local PHP installation does not match the one used
+by your project.
+
 #### composer.autoloader_path
 
 *Default*: `vendor/autoload.php`
