@@ -33,6 +33,7 @@ class CoreExtension implements Extension
     const DUMPER = 'console_dumper_default';
     const XDEBUG_DISABLE = 'xdebug_disable';
     const COMMAND = 'command';
+    const PHP_ID_VERSION = 'php.version_id';
 
     public function configure(Resolver $schema)
     {
@@ -40,6 +41,7 @@ class CoreExtension implements Extension
             self::DUMPER => 'indented',
             self::XDEBUG_DISABLE => true,
             self::COMMAND => null,
+            self::PHP_ID_VERSION => PHP_VERSION_ID,
         ]);
     }
 
