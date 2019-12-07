@@ -127,6 +127,8 @@ or any of the XDG directories (e.g. `$HOME/.config/phpactor/templates`).
 *Default*: `<xdg paths>/templates` and local project `.phpactor/templates`
 
 Directories where class templates can be located.
+The order matter since the system will look for a template in each directory
+and stop on the first match.
 
 ### Navigator Extension
 

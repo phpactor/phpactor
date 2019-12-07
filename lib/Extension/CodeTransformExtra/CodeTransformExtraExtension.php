@@ -61,6 +61,7 @@ class CodeTransformExtraExtension implements Extension
     const INDENTATION = 'code_transform.indentation';
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
 
     /**
      * {@inheritDoc}
@@ -69,7 +70,7 @@ class CodeTransformExtraExtension implements Extension
     {
         $schema->setDefaults([
             self::CLASS_NEW_VARIANTS => [],
-            self::TEMPLATE_PATHS => [
+            self::TEMPLATE_PATHS => [ // Ordered by priority
                 '%project_config%/templates',
                 '%config%/templates',
             ],
@@ -173,17 +174,19 @@ class CodeTransformExtraExtension implements Extension
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
-            $loaders = [];
-            $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
+            $loader = new ChainLoader();
+            $templatePaths = $container->getParameter(self::TEMPLATE_PATHS);
+            $templatePaths[] = self::APP_TEMPLATE_PATH;
 
-            foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
+            foreach ($templatePaths as $templatePath) {
                 $templatePath = $resolver->resolve($templatePath);
+
                 if (file_exists($templatePath)) {
-                    $loaders[] = new FilesystemLoader($templatePath);
+                    $loader->addLoader(new FilesystemLoader($templatePath));
                 }
             }
 
-            return new ChainLoader($loaders);
+            return $loader;
         });
 
         $container->register('code_transform.renderer', function (Container $container) {
