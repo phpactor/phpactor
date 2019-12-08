@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\CodeTransformExtra;
 
-use FileSystemIterator;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
@@ -24,10 +23,10 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
+use Phpactor\CodeTransform\Domain\Helper\TemplatePathsResolver;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CodeTransformExtra\Helpers\FilterPhpVersionDirectoryIterator;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Core\CoreExtension;
@@ -181,23 +180,15 @@ class CodeTransformExtraExtension implements Extension
             $templatePaths = $container->getParameter(self::TEMPLATE_PATHS);
             $templatePaths[] = self::APP_TEMPLATE_PATH;
 
-            foreach ($templatePaths as $templatePath) {
-                $templatePath = $resolver->resolve($templatePath);
+            $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
+                return $resolver->resolve($path);
+            }, $templatePaths);
 
-                if (file_exists($templatePath)) {
-                    $phpDirectoriesIterator = new FilterPhpVersionDirectoryIterator(
-                        new FileSystemIterator($templatePath),
-                        (int) $container->getParameter(CoreExtension::PHP_ID_VERSION)
-                    );
-                    $phpDirectories = array_keys(iterator_to_array($phpDirectoriesIterator));
-                    rsort($phpDirectories);
+            $phpVersion = $container->getParameter(CoreExtension::PHP_ID_VERSION);
+            $paths = (new TemplatePathsResolver($phpVersion))->resolve($resolvedTemplatePaths);
 
-                    foreach ($phpDirectories as $path) {
-                        $loader->addLoader(new FilesystemLoader($path));
-                    }
-
-                    $loader->addLoader(new FilesystemLoader($templatePath));
-                }
+            foreach ($paths as $path) {
+                $loader->addLoader(new FilesystemLoader($path));
             }
 
             return $loader;
