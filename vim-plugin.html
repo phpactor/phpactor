@@ -191,7 +191,10 @@ nmap &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
 nmap &lt;Leader&gt;nn :call phpactor#Navigate()&lt;CR&gt;
 
 " Goto definition of class or class member under the cursor
-nmap &lt;Leader&gt;o :call phpactor#GotoDefinition()&lt;CR&gt;
+nmap &lt;Leader&gt;oo :call phpactor#GotoDefinition()&lt;CR&gt;
+nmap &lt;Leader&gt;oh :call phpactor#GotoDefinitionHsplit()&lt;CR&gt;
+nmap &lt;Leader&gt;ov :call phpactor#GotoDefinitionVsplit()&lt;CR&gt;
+nmap &lt;Leader&gt;ot :call phpactor#GotoDefinitionTab()&lt;CR&gt;
 
 " Show brief information about the symbol under the cursor
 nmap &lt;Leader&gt;K :call phpactor#Hover()&lt;CR&gt;
@@ -218,15 +221,33 @@ your <code>.vimrc</code> to change the PHP binary:</p>
 <pre><code>let g:phpactorPhpBin = "/usr/bin/local/php6.0"</code></pre>
 <h2 id="configuration">Configuration</h2>
 <p>The plugin has some configuration options:</p>
-<pre><code>let g:phpactorPhpBin = 'php'
+<pre><code class="language-vim">let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
-let g:phpactorOmniAutoClassImport = v:true</code></pre>
+let g:phpactorOmniAutoClassImport = v:true
+let g:phpactorInputListStrategy = 'inputlist|fzf'
+
+" Example of implementation with vim's inputlist() function
+function! InputListCustomStrategy(label, choices, ResultHandler)
+    echo a:label
+    let choice = inputlist(s:add_number_to_choices(a:choices))
+
+    if (choice == 0)
+        throw "cancelled"
+    endif
+
+    call a:ResultHandler(a:choices[choice - 1])
+endfunction
+
+let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'</code></pre>
 <ul>
 <li><code>g:phpactorPhpBin</code>: PHP executable to use.</li>
 <li><code>g:phpactorBranch</code>: Phpactor branch (default is <code>master</code>, use <code>develop</code> for
 bleeding edge).</li>
 <li><code>g:phpactorOmniAutoClassImport</code>: Automatically import classes when
 completing class names with OmniComplete.</li>
+<li><code>g:phpactorInputListStrategy</code>: Select a strategy for the <a href="#input-list">Input
+List</a>.</li>
+<li><code>g:phpactorCustomInputListStrategy</code>: Specify your own strategy.</li>
 </ul>
 <h2 id="extensions">Extensions</h2>
 <p>You can manage your <a href="/extensions.html">Phpactor extensions</a> from with VIM:</p>
@@ -278,6 +299,27 @@ class, member, variable, method call, or anything really.</p>
 should see something like the following:</p>
 <pre><code>Method "execute":
 [r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:</code></pre>
+<h2 id="input-list">Input List</h2>
+<p>The input list is the window shown to let you choose an item among a list.</p>
+<h3 id="strategies">Strategies</h3>
+<p>This plugin provides two strategy to handle input lists:</p>
+<ul>
+<li><code>inputlist</code>: Vim's internal <code>inputlist()</code> function.</li>
+<li><code>fzf</code>: Fuzzy finder using <a href="https://github.com/junegunn/fzf">Fzf</a> plugin.</li>
+</ul>
+<p>You can choose between those strategies by specifying the option
+<a href="#configuration">g:phpactorInputListStrategy</a>.</p>
+<h3 id="input-list-strategies-auto-detection">Input list strategies auto-detection</h3>
+<p>When no strategy is defined the plugin will default to the <code>fzf</code> strategy if
+the <a href="https://github.com/junegunn/fzf">Fzf</a> plugin is loaded or to <code>inputlist</code>
+if it's not.</p>
+<h3 id="fzf-multi-selection">FZF Multi-selection</h3>
+<p>Some refactorings will allow you to select multiple entires (for example
+<a href="https://phpactor.github.io/phpactor/refactorings.html#override-method">override
+method</a>.
+Use <code>&lt;tab&gt;</code> to toggle selection and CTRL-A/CTRL-D to select all/select none. </p>
+<p>See the
+<a href="https://github.com/junegunn/fzf">Fzf</a> documentation for more details.</p>
                 </section>
 
             </div>

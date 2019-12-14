@@ -119,7 +119,7 @@
 <li><a href="#add-missing-assignments">Add Missing Assignments</a></li>
 <li><a href="#complete-constructor">Complete Constructor</a></li>
 <li><a href="#fix-namespace-or-class-name">Fix namespace and/or class name</a></li>
-<li><a href="#generate-accessor">Generate Accessor</a></li>
+<li><a href="#generate-accessors">Generate Accessors</a></li>
 <li><a href="#generate-method">Generate Method</a></li>
 <li><a href="#implement-contracts">Implement Contracts</a></li>
 <li><a href="#import-class">Import Class</a></li>
@@ -139,14 +139,14 @@
 <li><a href="#extract-expression">Extract Expression</a></li>
 <li><a href="#extract-method">Extract Method</a></li>
 <li><a href="#rename-class">Rename Class</a></li>
-<li><a href="#rename-member">Rename Class Member</a></li>
+<li><a href="#rename-class-member">Rename Class Member</a></li>
 <li><a href="#rename-variable">Rename Variable</a></li>
 </ul>
 <h2 id="add-missing-assignments">Add Missing Assignments</h2>
 <p>Automatically add any missing properties to a class.</p>
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments</code></li>
-<li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Implement Contracts</em>.</li>
+<li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Transform &gt; Add missing properties</em>.</li>
 <li><strong>VIM Command</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
 <h3 id="motivation">Motivation</h3>
@@ -279,6 +279,8 @@ through your code, making the class name harder to change as time goes on.</p>
 new location, updating the classes namespace and all references to that class
 where possible in a given <em>scope</em> (i.e. files known by GIT: <code>git</code>, files known by Composer: <code>composer</code>, or all PHP files under
 the current CWD: <code>simple</code>).</p>
+<p>If you have defined file relationships with
+<a href="https://phpactor.github.io/phpactor/navigation.html#jump-to-or-generate-related-file">navigator.destinations</a>, then you have the option to move the related files in addition to the specified file. If using the command then specify <code>--related</code>, or if using the RPC interface (f.e. VIM) you will be prompted.</p>
 <div class="alert alert-danger">
 This is a dangerous refactoring! Ensure that you commit your work before
 executing it and be aware that success is not guaranteed (e.g. class references
@@ -346,7 +348,7 @@ class Post
 <p>Complete the assignments and add properties for an incomplete constructor.</p>
 <ul>
 <li><strong>Command</strong>: <code>$ phpactor class:transform path/to/class.php --transform=complete_constructor</code></li>
-<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Complete Constructor</em>.</li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Transform &gt; Complete Constructor</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#Transform()</code></li>
 </ul>
 <h3 id="motivation-5">Motivation</h3>
@@ -391,7 +393,7 @@ class Post
 <p>Update a file's namespace (and/or class name) based on the composer
 configuration.</p>
 <ul>
-<li><strong>Command</strong>: <code>$ phpactor class:transform path/to/class.php --transform=complete_constructor</code></li>
+<li><strong>Command</strong>: <code>$ phpactor class:transform path/to/class.php --transform=fix_namespace_class_name</code></li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Transform &gt; Fix namespace or classname</em>.</li>
 <li><strong>VIM function</strong>: <code>:call phpactor#Transform()</code></li>
 </ul>
@@ -625,12 +627,12 @@ interface FoobarInterface
 {
     public function foobar(string $bar): Barfoo;
 }</code></pre>
-<h2 id="generate-accessor">Generate Accessor</h2>
-<p>Generate an accessor for a class property.</p>
+<h2 id="generate-accessors">Generate Accessors</h2>
+<p>Generate accessors for a class.</p>
 <ul>
 <li><strong>Command</strong>: <em>RPC only</em></li>
-<li><strong>VIM plugin</strong>: <em>Property context menu &gt; Generate accessor</em>.</li>
-<li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Generate accessor</em>.</li>
+<li><strong>VIM function</strong>:<code>:call phpactor#GenerateAccessor()</code></li>
 </ul>
 <h3 id="motivation-11">Motivation</h3>
 <p>When creating entities and value objects it is frequently necessary to add accessors.</p>
@@ -639,14 +641,14 @@ interface FoobarInterface
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
-class Foobar
+class Foo&lt;&gt;bar
 {
     /**
      * @var Barfoo
      */
-    private $bar&lt;&gt;foo;
+    private $barfoo;
 }</code></pre>
-<p>After:</p>
+<p>After selecting <a href="/vim-plugin.html#fzf-multi-selection">one or more accessors</a></p>
 <pre><code class="language-php">&lt;?php
 
 class Foobar
@@ -795,6 +797,7 @@ class Hello
 <li><strong>Command</strong>: <em>RPC only</em></li>
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Override method</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
+<li><strong>Multiple selection</strong>: Supports selecting multiple methods.</li>
 </ul>
 <h3 id="motivation-15">Motivation</h3>
 <p>Sometimes it is expected or necessary that you override a parent classes method
