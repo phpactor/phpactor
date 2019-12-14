@@ -2,11 +2,15 @@
 
 namespace Phpactor\Extension\CodeTransformExtra;
 
+use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Fixer\IndentationFixer;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Fixer\MemberEmptyLineFixer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
+use Phpactor\CodeBuilder\Domain\Fixer\ChainFixer;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -65,6 +69,12 @@ class CodeTransformExtraExtension implements Extension
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
     const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
 
+    const SERVICE_STYLE_FIXER = 'code_transform.style_fixer';
+
+    const PARAM_FIXER_INDENTATION = 'code_transform.fixer.indentation';
+    const PARAM_FIXER_MEMBER_NEWLINES = 'code_transform.fixer.member_newlines';
+    const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
+
     /**
      * {@inheritDoc}
      */
@@ -79,6 +89,8 @@ class CodeTransformExtraExtension implements Extension
             self::INDENTATION => '    ',
             self::GENERATE_ACCESSOR_PREFIX => '',
             self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
+            self::PARAM_FIXER_INDENTATION => true,
+            self::PARAM_FIXER_MEMBER_NEWLINES => true,
         ]);
     }
 
@@ -281,11 +293,28 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.updater', function (Container $container) {
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
-                $container->get('code_transform.text_format')
+                $container->get('code_transform.text_format'),
+                $container->get(self::SERVICE_TOLERANT_PARSER),
+                $container->get(self::SERVICE_STYLE_FIXER)
             );
         });
         $container->register('code_transform.builder_factory', function (Container $container) {
             return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
+        });
+
+        $container->register(self::SERVICE_TOLERANT_PARSER, function (Container $container) {
+            return new Parser();
+        });
+        $container->register(self::SERVICE_STYLE_FIXER, function (Container $container) {
+            $fixers = [];
+            if ($container->getParameter(self::PARAM_FIXER_MEMBER_NEWLINES)) {
+                $fixers[] = new MemberEmptyLineFixer($container->get(self::SERVICE_TOLERANT_PARSER));
+            }
+            if ($container->getParameter(self::PARAM_FIXER_INDENTATION)) {
+                $fixers[] = new IndentationFixer($container->get(self::SERVICE_TOLERANT_PARSER));
+            }
+
+            return new ChainFixer(...$fixers);
         });
     }
 
