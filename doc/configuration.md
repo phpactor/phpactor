@@ -51,9 +51,9 @@ Reference
 
 ### Core
 
-#### php.version_id
+#### php.version
 
-*Default*: `PHP_VERSION_ID`
+*Default*: `PHP_VERSION`
 
 You can override it if your local PHP installation does not match the one used
 by your project.

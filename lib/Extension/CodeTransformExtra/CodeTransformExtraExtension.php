@@ -184,7 +184,7 @@ class CodeTransformExtraExtension implements Extension
                 return $resolver->resolve($path);
             }, $templatePaths);
 
-            $phpVersion = $container->getParameter(CoreExtension::PHP_ID_VERSION);
+            $phpVersion = $container->getParameter(CoreExtension::CONFIG_PHP_VERSION);
             $paths = (new TemplatePathsResolver($phpVersion))->resolve($resolvedTemplatePaths);
 
             foreach ($paths as $path) {
