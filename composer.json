@@ -11,7 +11,7 @@
         "phpactor/class-mover": "~0.1",
         "phpactor/class-to-file": "~0.3",
         "phpactor/class-to-file-extension": "~0.2",
-        "phpactor/code-builder": "~0.3",
+        "phpactor/code-builder": "^0.3.1",
         "phpactor/code-transform": "~0.2",
         "phpactor/code-transform-extension": "~0.1",
         "phpactor/completion": "~0.3",

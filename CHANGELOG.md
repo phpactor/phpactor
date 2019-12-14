@@ -15,11 +15,13 @@ Features:
 
 Bug fix:
 
+  - [code-builder] New aliased class imports alias not added (#860) - @dantleech
   - [worse-reflection] instanceof returns negative if class implements
     interface but extends another class - @dantleech
   - [worse-reflection] foreach key variable resolves as symbol type "unknown"
     - @dantleech
-  - [text-document] Word splitting includes commas (#851) - @einenlum
+  - [text-document] Word splitting includes commas, and other non-word chars
+    (#851) - @einenlum
 
 ## 2019-10-23 0.13.5
 
