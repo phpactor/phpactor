@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a1b0ec62547a5a3d6687dc4e9e3b54d",
+    "content-hash": "acabc01d29bcd2472249f28ec81b5c27",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -773,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "bfb57c6d0283dba20b7b6fb872e702d11a4b331e"
+                "reference": "be0bc6f94baa919c078c297e1c4fd0f3a4a424fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/bfb57c6d0283dba20b7b6fb872e702d11a4b331e",
-                "reference": "bfb57c6d0283dba20b7b6fb872e702d11a4b331e",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/be0bc6f94baa919c078c297e1c4fd0f3a4a424fa",
+                "reference": "be0bc6f94baa919c078c297e1c4fd0f3a4a424fa",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2019-12-04T19:19:02+00:00"
+            "time": "2019-12-14T11:11:15+00:00"
         },
         {
             "name": "phpactor/code-transform",
