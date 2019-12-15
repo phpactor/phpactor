@@ -6,7 +6,7 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
-use Phpactor\CodeBuilder\Domain\Helper\TemplatePathsResolver;
+use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -185,7 +185,7 @@ class CodeTransformExtraExtension implements Extension
             }, $templatePaths);
 
             $phpVersion = $container->getParameter(CoreExtension::CONFIG_PHP_VERSION);
-            $paths = (new TemplatePathsResolver($phpVersion))->resolve($resolvedTemplatePaths);
+            $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
 
             foreach ($paths as $path) {
                 $loader->addLoader(new FilesystemLoader($path));
