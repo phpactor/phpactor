@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransformExtra;
 
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Fixer\DocblockIndentationFixer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Fixer\IndentationFixer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Fixer\MemberEmptyLineFixer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
@@ -11,6 +12,7 @@ use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Domain\Fixer\ChainFixer;
+use Phpactor\CodeBuilder\Domain\StyleFixer;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -31,6 +33,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\CodeTransformExtra\Command\FixCodeStyleCommand;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Core\CoreExtension;
@@ -151,6 +154,12 @@ class CodeTransformExtraExtension implements Extension
                 $container->get('console.dumper_registry')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:inflect' ]]);
+
+        $container->register(FixCodeStyleCommand::class, function (Container $container) {
+            return new FixCodeStyleCommand(
+                $container->get(self::SERVICE_STYLE_FIXER)
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'style:fix' ]]);
     }
 
     private function registerTransformers(ContainerBuilder $container)
@@ -312,9 +321,10 @@ class CodeTransformExtraExtension implements Extension
             }
             if ($container->getParameter(self::PARAM_FIXER_INDENTATION)) {
                 $fixers[] = new IndentationFixer($container->get(self::SERVICE_TOLERANT_PARSER));
+                $fixers[] = new DocblockIndentationFixer($container->get(self::SERVICE_TOLERANT_PARSER));
             }
 
-            return new ChainFixer(...$fixers);
+            return new StyleFixer(...$fixers);
         });
     }
 
