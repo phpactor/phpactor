@@ -14,6 +14,7 @@ Features:
   - [class-mover] Jump to implementation - @dantleech
   - [vim-plugin] Extract functions handles motions @elythyr
   - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
+  - [code-builder] Apply basic CS fixes to updated code @dantleech
 
 Bug fix:
 

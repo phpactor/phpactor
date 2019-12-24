@@ -26,7 +26,8 @@ class FixCodeStyleCommand extends Command
     protected function configure()
     {
         $this->setDescription('Apply Phpactor\'s CS fixer to a single file (experimental)');
-        $this->setHelp(<<<'EOT'
+        $this->setHelp(
+            <<<'EOT'
 Applies the Phpactor CS fixer to a file and dump the result to stdout.
 
 This fixer is not intended to be used instead of tools such as php-cs-fixer or
@@ -38,7 +39,6 @@ EOT
         );
 
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED, 'Path to source file');
-
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
