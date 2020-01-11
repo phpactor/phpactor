@@ -6,6 +6,7 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -28,6 +29,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
@@ -61,6 +63,7 @@ class CodeTransformExtraExtension implements Extension
     const INDENTATION = 'code_transform.indentation';
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
 
     /**
      * {@inheritDoc}
@@ -69,7 +72,7 @@ class CodeTransformExtraExtension implements Extension
     {
         $schema->setDefaults([
             self::CLASS_NEW_VARIANTS => [],
-            self::TEMPLATE_PATHS => [
+            self::TEMPLATE_PATHS => [ // Ordered by priority
                 '%project_config%/templates',
                 '%config%/templates',
             ],
@@ -173,17 +176,22 @@ class CodeTransformExtraExtension implements Extension
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
-            $loaders = [];
-            $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
+            $loader = new ChainLoader();
+            $templatePaths = $container->getParameter(self::TEMPLATE_PATHS);
+            $templatePaths[] = self::APP_TEMPLATE_PATH;
 
-            foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
-                $templatePath = $resolver->resolve($templatePath);
-                if (file_exists($templatePath)) {
-                    $loaders[] = new FilesystemLoader($templatePath);
-                }
+            $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
+                return $resolver->resolve($path);
+            }, $templatePaths);
+
+            $phpVersion = $container->getParameter(CoreExtension::PARAM_PHP_VERSION);
+            $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
+
+            foreach ($paths as $path) {
+                $loader->addLoader(new FilesystemLoader($path));
             }
 
-            return new ChainLoader($loaders);
+            return $loader;
         });
 
         $container->register('code_transform.renderer', function (Container $container) {
