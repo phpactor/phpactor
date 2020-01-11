@@ -53,7 +53,7 @@ Reference
 
 #### php.version
 
-*Default*: `PHP_VERSION`
+*Default*: Your current version of PHP (e.g.  `7.3.0`)
 
 You can override it if your local PHP installation does not match the one used
 by your project.
