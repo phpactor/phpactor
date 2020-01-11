@@ -4,6 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
+use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -45,7 +46,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
 
     public function testZeroUnresolvedClasses()
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn([]);
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[]));
 
         $response = $this->tester->handle(ImportMissingClassesHandler::NAME, [
             ImportMissingClassesHandler::PARAM_PATH => self::EXAMPLE_PATH,
@@ -57,12 +58,12 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
 
     public function testImportsUnresolvedClasses()
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn([
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[
             new NameWithByteOffset(
                 QualifiedName::fromString('Foobar'),
                 ByteOffset::fromInt(12)
             )
-        ]);
+        ]));
 
         $response = $this->tester->handle(ImportMissingClassesHandler::NAME, [
             ImportMissingClassesHandler::PARAM_PATH => self::EXAMPLE_PATH,

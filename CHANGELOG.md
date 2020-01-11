@@ -24,6 +24,7 @@ Bug fix:
     - @dantleech
   - [text-document] Word splitting includes commas, and other non-word chars
     (#851) - @einenlum
+  - [worse-reflection] Functions wrongly memonized as classes - @dantleech
 
 ## 2019-10-23 0.13.5
 
