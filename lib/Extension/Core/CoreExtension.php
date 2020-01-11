@@ -41,7 +41,7 @@ class CoreExtension implements Extension
             self::DUMPER => 'indented',
             self::XDEBUG_DISABLE => true,
             self::COMMAND => null,
-            self::CONFIG_PHP_VERSION => PHP_VERSION_ID,
+            self::CONFIG_PHP_VERSION => phpversion(),
         ]);
     }
 
