@@ -773,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "be0bc6f94baa919c078c297e1c4fd0f3a4a424fa"
+                "reference": "e35648f7701be131d932a4264b8081f0de7e6a56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/be0bc6f94baa919c078c297e1c4fd0f3a4a424fa",
-                "reference": "be0bc6f94baa919c078c297e1c4fd0f3a4a424fa",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/e35648f7701be131d932a4264b8081f0de7e6a56",
+                "reference": "e35648f7701be131d932a4264b8081f0de7e6a56",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2019-12-14T11:11:15+00:00"
+            "time": "2019-12-27T18:18:02+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -3424,12 +3424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "ae466f726242e637cebdd526a7d991b9433bacf1"
+                "reference": "00070db30c6a27f8e4d0a0455c9e8c871123c988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/ae466f726242e637cebdd526a7d991b9433bacf1",
-                "reference": "ae466f726242e637cebdd526a7d991b9433bacf1",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/00070db30c6a27f8e4d0a0455c9e8c871123c988",
+                "reference": "00070db30c6a27f8e4d0a0455c9e8c871123c988",
                 "shasum": ""
             },
             "require": {
@@ -3472,7 +3472,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-10-21T16:45:58+00:00"
+            "time": "2019-12-30T11:17:19+00:00"
         },
         {
             "name": "doctrine/lexer",
