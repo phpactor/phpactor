@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
