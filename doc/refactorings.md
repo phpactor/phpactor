@@ -13,6 +13,7 @@ Fixes:
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
+- [Expand Class](#expand-class)
 - [Import Missing Classes](#import-missing-classes)
 - [Override Method](#override-method)
 
@@ -890,6 +891,55 @@ class Hello
     public function index(Request $request)
     {
 	}
+}
+```
+
+Expand Class
+------------
+
+Instead of include `use` statement for a class under cursor,
+expand the class name from unqualified name to fully qualified name.
+
+- **Command**: _VIM function only_
+- **VIM plugin**: _VIM function only_
+- **VIM function**:`:call phpactor#ClassExpand()`
+
+### Motivation
+
+Although `use` statement make code cleaner, but sometime the code would be more
+readable if we specify the full qualified name right in the place. For example,
+we might register a list of listener in a centralized file. We would be more
+pleasant to know the exact class right in the place.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        AssignDefaultRole<>ToNewUser::class
+    ];
+}
+```
+
+After selecting `App\Listeners\AssignDefaultRoleToNewUser` from the list of candidates:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        \App\Listeners\AssignDefaultRoleToNewUser::class
+    ];
 }
 ```
 
