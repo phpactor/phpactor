@@ -51,7 +51,7 @@ Reference
 
 ### Core
 
-#### php.version
+#### core.php_version
 
 *Default*: Your current version of PHP (e.g.  `7.3.0`)
 

@@ -30,18 +30,19 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-    const DUMPER = 'console_dumper_default';
-    const XDEBUG_DISABLE = 'xdebug_disable';
-    const COMMAND = 'command';
-    const CONFIG_PHP_VERSION = 'php.version';
+
+    const PARAM_DUMPER = 'console_dumper_default';
+    const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
+    const PARAM_COMMAND = 'command';
+    const PARAM_PHP_VERSION = 'core.php_version';
 
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::DUMPER => 'indented',
-            self::XDEBUG_DISABLE => true,
-            self::COMMAND => null,
-            self::CONFIG_PHP_VERSION => phpversion(),
+            self::PARAM_DUMPER => 'indented',
+            self::PARAM_XDEBUG_DISABLE => true,
+            self::PARAM_COMMAND => null,
+            self::PARAM_PHP_VERSION => phpversion(),
         ]);
     }
 
@@ -84,7 +85,7 @@ class CoreExtension implements Extension
                 $dumpers[$attrs['name']] = $container->get($dumperId);
             }
 
-            return new DumperRegistry($dumpers, $container->getParameter(self::DUMPER));
+            return new DumperRegistry($dumpers, $container->getParameter(self::PARAM_DUMPER));
         });
 
         $container->register('console.dumper.indented', function (Container $container) {
