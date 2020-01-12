@@ -13,6 +13,7 @@ Fixes:
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
+- [Expand Class](#expand-class)
 - [Import Missing Classes](#import-missing-classes)
 - [Override Method](#override-method)
 
@@ -890,6 +891,53 @@ class Hello
     public function index(Request $request)
     {
 	}
+}
+```
+
+Expand Class
+------------
+
+Expand the class name from unqualified name to fully qualified name.
+
+- **Command**: _VIM function only_
+- **VIM plugin**: _VIM function only_
+- **VIM function**:`:call phpactor#ClassExpand()`
+
+### Motivation
+
+Although importing classes can make code cleaner, sometimes the code can be more
+readable if the fully qualified name is specified. For example, we might register
+a list of listeners in a file.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        AssignDefaultRole<>ToNewUser::class
+    ];
+}
+```
+
+After selecting `App\Listeners\AssignDefaultRoleToNewUser` from the list of candidates:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        \App\Listeners\AssignDefaultRoleToNewUser::class
+    ];
 }
 ```
 
