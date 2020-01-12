@@ -897,8 +897,7 @@ class Hello
 Expand Class
 ------------
 
-Instead of include `use` statement for a class under cursor,
-expand the class name from unqualified name to fully qualified name.
+Expand the class name from unqualified name to fully qualified name.
 
 - **Command**: _VIM function only_
 - **VIM plugin**: _VIM function only_
@@ -906,10 +905,9 @@ expand the class name from unqualified name to fully qualified name.
 
 ### Motivation
 
-Although `use` statement make code cleaner, but sometime the code would be more
-readable if we specify the full qualified name right in the place. For example,
-we might register a list of listener in a centralized file. We would be more
-pleasant to know the exact class right in the place.
+Although `use` statement make code cleaner, but sometimes the code would be more
+readable if we specify the full qualified name. For example, we might register
+a list of listeners in a file.
 
 ### Before and After
 
