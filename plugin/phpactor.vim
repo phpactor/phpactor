@@ -209,7 +209,7 @@ function! phpactor#ClassExpand()
 
     let line = getline('.')
     let char = line[col('.') - 2]
-    let namespace_prefix = "\\" . classInfo['class_namespace'] . "\\"
+    let namespace_prefix = classInfo['class_namespace'] . "\\"
 
     " otherwise goto start of word
     execute "normal! ciw" . namespace_prefix.word
