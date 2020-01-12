@@ -905,8 +905,8 @@ Expand the class name from unqualified name to fully qualified name.
 
 ### Motivation
 
-Although `use` statement make code cleaner, but sometimes the code would be more
-readable if we specify the full qualified name. For example, we might register
+Although importing classes can make code cleaner, sometimes the code can be more
+readable if the fully qualified name is specified. For example, we might register
 a list of listeners in a file.
 
 ### Before and After
