@@ -25,6 +25,7 @@ Expect php (assignments to be added):
        * @var Phpactor
        */
       private $phpactor;
+
       /**
        * @var string
        */

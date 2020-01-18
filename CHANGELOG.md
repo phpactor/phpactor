@@ -5,6 +5,8 @@ Changelog
 
 Features:
 
+  - [code-builder|code-transform] Basic CS fixes applied to generated code -
+    @dantleech / @elythyr
   - [code-builder] Generates typed property for PHP 7.4 - @elythyr
   - [phpactor|code-builder] Allow to override the templates by PHP version - @elythyr
   - [worse-reflection] Support for PHP 7.4 property types - @dantleech / @elythyr
@@ -14,6 +16,7 @@ Features:
   - [class-mover] Jump to implementation - @dantleech
   - [vim-plugin] Extract functions handles motions @elythyr
   - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
+  - [code-builder] Apply basic CS fixes to updated code @dantleech
 
 Bug fix:
 
