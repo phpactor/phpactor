@@ -773,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "b05c6b9efb60f838ae95fe41a5810d045a2f2ebb"
+                "reference": "19437b13cd899763a394e67cf739ecf823d577ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/b05c6b9efb60f838ae95fe41a5810d045a2f2ebb",
-                "reference": "b05c6b9efb60f838ae95fe41a5810d045a2f2ebb",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/19437b13cd899763a394e67cf739ecf823d577ea",
+                "reference": "19437b13cd899763a394e67cf739ecf823d577ea",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-01-18T14:12:07+00:00"
+            "time": "2020-01-19T16:32:50+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -823,12 +823,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "1314023e90f5c21625acef6b70c1579d7b5729c6"
+                "reference": "1ce420656940eba7887316b735f4bae5c7dda54c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1314023e90f5c21625acef6b70c1579d7b5729c6",
-                "reference": "1314023e90f5c21625acef6b70c1579d7b5729c6",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/1ce420656940eba7887316b735f4bae5c7dda54c",
+                "reference": "1ce420656940eba7887316b735f4bae5c7dda54c",
                 "shasum": ""
             },
             "require": {
@@ -866,7 +866,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-01-18T15:05:02+00:00"
+            "time": "2020-01-19T16:24:37+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
