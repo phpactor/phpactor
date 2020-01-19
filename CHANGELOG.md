@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [code-builder] Support for nullable types - @elythyr / @dantleech
   - [code-builder|code-transform] Basic CS fixes applied to generated code -
     @dantleech / @elythyr
   - [code-builder] Generates typed property for PHP 7.4 - @elythyr
