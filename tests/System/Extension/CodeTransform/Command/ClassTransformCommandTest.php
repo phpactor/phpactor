@@ -54,7 +54,7 @@ EOT
 
         yield 'Glob' => [
             'class:transform "lib/*.php" --transform=implement_contracts',
-            '1 files affected',
+            '2 files affected',
         ];
 
         yield 'Dry run' => [

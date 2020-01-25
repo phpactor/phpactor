@@ -320,19 +320,19 @@ class CodeTransformExtraExtension implements Extension
         });
 
         $container->register(self::SERVICE_STYLE_FIXER, function (Container $container) {
-            $fixers = [];
+            $proposers = [];
 
             if ($container->getParameter(self::PARAM_FIXER_MEMBER_NEWLINES)) {
-                $fixers[] = new MemberBlankLineProposer($container->get(self::SERVICE_TEXT_FORMAT));
+                $proposers[] = new MemberBlankLineProposer($container->get(self::SERVICE_TEXT_FORMAT));
             }
 
             if ($container->getParameter(self::PARAM_FIXER_INDENTATION)) {
-                $fixers[] = new IndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
-                $fixers[] = new DocblockIndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
+                $proposers[] = new IndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
+                $proposers[] = new DocblockIndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
             }
 
             return new TolerantStyleFixer(
-                $fixers,
+                $proposers,
                 $container->get(self::SERVICE_TOLERANT_PARSER),
                 $container->getParameter(self::PARAM_FIXER_TOLERANCE)
             );
