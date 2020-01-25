@@ -773,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "19437b13cd899763a394e67cf739ecf823d577ea"
+                "reference": "37d1f1231eee15b6a67bb3964b2a87d9097b096a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/19437b13cd899763a394e67cf739ecf823d577ea",
-                "reference": "19437b13cd899763a394e67cf739ecf823d577ea",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/37d1f1231eee15b6a67bb3964b2a87d9097b096a",
+                "reference": "37d1f1231eee15b6a67bb3964b2a87d9097b096a",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-01-19T16:32:50+00:00"
+            "time": "2020-01-25T21:13:26+00:00"
         },
         {
             "name": "phpactor/code-transform",
