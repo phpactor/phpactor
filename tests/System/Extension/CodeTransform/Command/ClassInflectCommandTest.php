@@ -61,7 +61,7 @@ EOT
     public function testInflectClassExistingAndForce()
     {
         $filePath =  'lib/Badger/Carnivorous.php';
-        $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface');
+        $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --no-interaction');
         $this->assertSuccess($process);
         $this->assertContains('exists:true', $process->getOutput());
         $this->assertNotContains('interface', file_get_contents($filePath));

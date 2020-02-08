@@ -3,17 +3,11 @@
 namespace Phpactor\Extension\CodeTransformExtra;
 
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\StyleProposer\DocblockIndentationProposer;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\StyleProposer\IndentationProposer;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\StyleProposer\MemberBlankLineProposer;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantStyleFixer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
-use Phpactor\CodeBuilder\Domain\Fixer\ChainFixer;
-use Phpactor\CodeBuilder\Domain\StyleFixer;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -34,7 +28,6 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CodeTransformExtra\Command\FixCodeStyleCommand;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Core\CoreExtension;
@@ -72,8 +65,6 @@ class CodeTransformExtraExtension implements Extension
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
     const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
-
-    const SERVICE_STYLE_FIXER = 'code_transform.style_fixer';
 
     const PARAM_FIXER_INDENTATION = 'code_transform.fixer.indentation';
     const PARAM_FIXER_MEMBER_NEWLINES = 'code_transform.fixer.member_newlines';
@@ -158,12 +149,6 @@ class CodeTransformExtraExtension implements Extension
                 $container->get('console.dumper_registry')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:inflect' ]]);
-
-        $container->register(FixCodeStyleCommand::class, function (Container $container) {
-            return new FixCodeStyleCommand(
-                $container->get(self::SERVICE_STYLE_FIXER)
-            );
-        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'style:fix' ]]);
     }
 
     private function registerTransformers(ContainerBuilder $container)
@@ -307,8 +292,7 @@ class CodeTransformExtraExtension implements Extension
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
                 $container->get(self::SERVICE_TEXT_FORMAT),
-                $container->get(self::SERVICE_TOLERANT_PARSER),
-                $container->get(self::SERVICE_STYLE_FIXER)
+                $container->get(self::SERVICE_TOLERANT_PARSER)
             );
         });
         $container->register('code_transform.builder_factory', function (Container $container) {
@@ -317,25 +301,6 @@ class CodeTransformExtraExtension implements Extension
 
         $container->register(self::SERVICE_TOLERANT_PARSER, function (Container $container) {
             return new Parser();
-        });
-
-        $container->register(self::SERVICE_STYLE_FIXER, function (Container $container) {
-            $proposers = [];
-
-            if ($container->getParameter(self::PARAM_FIXER_MEMBER_NEWLINES)) {
-                $proposers[] = new MemberBlankLineProposer($container->get(self::SERVICE_TEXT_FORMAT));
-            }
-
-            if ($container->getParameter(self::PARAM_FIXER_INDENTATION)) {
-                $proposers[] = new IndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
-                $proposers[] = new DocblockIndentationProposer($container->get(self::SERVICE_TEXT_FORMAT));
-            }
-
-            return new TolerantStyleFixer(
-                $proposers,
-                $container->get(self::SERVICE_TOLERANT_PARSER),
-                $container->getParameter(self::PARAM_FIXER_TOLERANCE)
-            );
         });
     }
 
