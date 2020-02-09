@@ -35,12 +35,14 @@ let g:phpactorInputListStrategy = 'phpactor#input#list#fzf'
 
 ### FZF Qucikfix with BAT preview
 
-The quickfix list is used to show a list of positions in files and access them
-quickly. Phpactor use it for example to show the result of `find references`.
+The VIM quickfix list is used to navigate through a set of references (where a
+reference is a file / character position).
 
-With the [fzf](#fzf) strategy you will still be able to get the result inside
-the quickfix by selecting the elements you are interested in and pressing
-`ctrl-q` to populate the quickfix with your selection and open it.
+The FZF strategy provides a layer on top this to allow you to efficiently
+filter, preview and select only those entries you want to navigate to to the
+quickfix list.
+
+Enable it as follows:
 
 ```
 let g:phpactorQuickfixStrategy = 'phpactor#quickfix#fzf'
