@@ -773,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "d9bc8ec0b541818fe240920abf1194bc0a3e5295"
+                "reference": "0e1e6936cfc289416c601ed3e4d03c71a33b31eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/d9bc8ec0b541818fe240920abf1194bc0a3e5295",
-                "reference": "d9bc8ec0b541818fe240920abf1194bc0a3e5295",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/0e1e6936cfc289416c601ed3e4d03c71a33b31eb",
+                "reference": "0e1e6936cfc289416c601ed3e4d03c71a33b31eb",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +815,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-02-08T14:30:19+00:00"
+            "time": "2020-02-08T15:11:19+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -1455,12 +1455,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver-extension.git",
-                "reference": "b0d6fa3f49f4d5a4977b1db301b6565c0c44fb45"
+                "reference": "b6ba9a84ffd6bd718111aa3586a4c8d9d2d96e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/b0d6fa3f49f4d5a4977b1db301b6565c0c44fb45",
-                "reference": "b0d6fa3f49f4d5a4977b1db301b6565c0c44fb45",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/b6ba9a84ffd6bd718111aa3586a4c8d9d2d96e10",
+                "reference": "b6ba9a84ffd6bd718111aa3586a4c8d9d2d96e10",
                 "shasum": ""
             },
             "require": {
@@ -1496,7 +1496,7 @@
                 }
             ],
             "description": "File Path Resolver Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-02-09T10:36:47+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -4019,13 +4019,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "55c589662e280b7d263c64bdf66bd52edab1ac11"
+                "reference": "665550773539abad5da3193260344705fe23ba8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/55c589662e280b7d263c64bdf66bd52edab1ac11",
-                "reference": "55c589662e280b7d263c64bdf66bd52edab1ac11",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/665550773539abad5da3193260344705fe23ba8c",
+                "reference": "665550773539abad5da3193260344705fe23ba8c",
                 "shasum": ""
+            },
+            "require": {
+                "webmozart/path-util": "^2.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
@@ -4035,7 +4038,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -4054,7 +4057,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-02-09T10:59:35+00:00"
         },
         {
             "name": "phpbench/dom",
