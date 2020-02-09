@@ -164,7 +164,6 @@ your `.vimrc` to change the PHP binary:
 let g:phpactorPhpBin = "/usr/bin/local/php7.0"
 ```
 
-
 Configuration
 -------------
 
@@ -174,22 +173,8 @@ The plugin has some configuration options:
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorInputListStrategy = 'inputlist|fzf'
-let g:phpactorQuickfixStrategy = 'vim|fzf|Funcref'
-
-" Example of implementation with vim's inputlist() function
-function! InputListCustomStrategy(label, choices, ResultHandler)
-    echo a:label
-    let choice = inputlist(s:add_number_to_choices(a:choices))
-
-    if (choice == 0)
-        throw "cancelled"
-    endif
-
-    call a:ResultHandler(a:choices[choice - 1])
-endfunction
-
-let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
+let g:phpactorInputListStrategy = 'phpactor#quickfix#vim'
+let g:phpactorQuickfixStrategy = 'phpactor#input#list#inputlist'
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -197,9 +182,9 @@ let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
   bleeding edge).
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
-- `g:phpactorInputListStrategy`: Select a strategy for the [Input
-  List](#input-list).
-- `g:phpactorCustomInputListStrategy`: Specify your own strategy.
+- `g:phpactorInputListStrategy`: Specify a callback to provide a custom input list (see [experimental](/vim-plugin/experimental.html').
+- `g:phpactorQuickfixStrategy`: Specify a callback to provide a custom
+  quickfix implementation (see [experimental](/vim-plugin/experimental.html')
 
 Extensions
 ----------
