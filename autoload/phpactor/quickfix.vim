@@ -1,33 +1,3 @@
-function! phpactor#quickfix#strategy() abort
-    if (g:PhpactorQuickfixStrategy == v:null)
-        return s:auto_detect_strategy()
-    endif
-
-    let Strategy = g:PhpactorQuickfixStrategy
-
-    if type(function('tr')) == type(Strategy)
-        return Strategy
-    endif
-
-    if type('') != type(Strategy) || 0 == count(['fzf', 'vim'], Strategy)
-        echoerr 'Invalid strategy provided, check the value of "g:PhpactorQuickfixStrategy"'
-
-        return s:auto_detect_strategy()
-    endif
-
-    return function('phpactor#quickfix#'. Strategy)
-endfunction
-
-function! s:auto_detect_strategy()
-    let strategy = 'vim'
-
-    if exists("*fzf#complete")
-        let strategy = 'fzf'
-    endif
-
-    return function('phpactor#quickfix#'. strategy)
-endfunction
-
 function! phpactor#quickfix#vim(entries) abort
     call setqflist(a:entries)
     cw
@@ -35,11 +5,11 @@ endfunction
 
 function! phpactor#quickfix#build(entries) abort
     try
-      let Strategy = phpactor#quickfix#strategy()
-      call call(Strategy, [a:entries])
+      let strategy = g:phpactorQuickfixStrategy
+      call call(strategy, [a:entries])
     catch /E117/
       redraw!
-      echo 'The strategy "'. string(Strategy) .'" is unknown, check the value of "g:PhpactorQuickfixStrategy".'
+      echo 'The strategy "'. string(strategy) .'" is unknown, check the value of "g:phpactorQuickfixStrategy".'
     endtry
 endfunction
 

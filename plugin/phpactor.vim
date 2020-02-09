@@ -34,7 +34,7 @@ if !exists('g:phpactorCompletionIgnoreCase')
 endif
 
 if !exists('g:phpactorQuickfixStrategy')
-    let g:PhpactorQuickfixStrategy = v:null
+    let g:phpactorQuickfixStrategy = 'phpactor#quickfix#vim'
 endif
 
 if !exists('g:phpactorInputListStrategy')
