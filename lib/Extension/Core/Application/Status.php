@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Core\Application;
 
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Symfony\Component\Process\ExecutableFinder;
@@ -30,16 +31,23 @@ class Status
      */
     private $workingDirectory;
 
+    /**
+     * @var PhpVersionResolver
+     */
+    private $phpVersionResolver;
+
     public function __construct(
         FilesystemRegistry $registry,
         PathCandidates $paths,
         string $workingDirectory,
+        PhpVersionResolver $phpVersionResolver,
         ExecutableFinder $executableFinder = null
     ) {
         $this->registry = $registry;
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
         $this->paths = $paths;
         $this->workingDirectory = $workingDirectory;
+        $this->phpVersionResolver = $phpVersionResolver;
     }
 
     public function check(): array
@@ -48,6 +56,7 @@ class Status
         $diagnostics = [
             'filesystems' => $filesystems,
             'cwd' => $this->workingDirectory,
+            'php_version' => $this->phpVersionResolver->resolve(),
             'config_files' => [],
             'good' => [],
             'bad' => [],

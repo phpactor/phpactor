@@ -26,6 +26,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
@@ -94,6 +95,7 @@ class Phpactor
             WorseReferenceFinderExtension::class,
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
+            PhpExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
