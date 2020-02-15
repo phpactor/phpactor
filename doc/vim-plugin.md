@@ -31,7 +31,7 @@ Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
 `~/.config/nvim/init.vim` when using Neovim):
 
 ```
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
 ```
 
 Then update your plugins:
