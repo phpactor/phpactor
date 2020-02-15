@@ -6,18 +6,16 @@ Changelog
 Features:
 
   - [code-builder] Support for nullable types - @elythyr / @dantleech
-  - [code-builder|code-transform] Basic CS fixes applied to generated code -
-    @dantleech / @elythyr
   - [code-builder] Generates typed property for PHP 7.4 - @elythyr
-  - [phpactor|code-builder] Allow to override the templates by PHP version - @elythyr
   - [worse-reflection] Support for PHP 7.4 property types - @dantleech / @elythyr
+  - [phpactor|code-builder] Allow to override the templates by PHP version - @elythyr
+  - [phpactor] Auto-detection of project PHP version - @dantleech
   - [code-transform|rpc] Import missing classes - @dantleech
   - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
     invoke the context menu on whitespace now) - @elythyr
-  - [class-mover] Jump to implementation - @dantleech
   - [vim-plugin] Extract functions handles motions @elythyr
   - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
-  - [code-builder] Apply basic CS fixes to updated code @dantleech
+  - [class-mover] Jump to implementation - @dantleech
 
 Bug fix:
 
@@ -29,6 +27,10 @@ Bug fix:
   - [text-document] Word splitting includes commas, and other non-word chars
     (#851) - @einenlum
   - [worse-reflection] Functions wrongly memonized as classes - @dantleech
+
+Improvements:
+
+  - [vim-plugin] Better handling of `json_decode` errors
 
 ## 2019-10-23 0.13.5
 
