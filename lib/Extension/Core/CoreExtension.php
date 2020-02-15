@@ -7,6 +7,7 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
@@ -34,7 +35,6 @@ class CoreExtension implements Extension
     const PARAM_DUMPER = 'console_dumper_default';
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';
-    const PARAM_PHP_VERSION = 'core.php_version';
 
     public function configure(Resolver $schema)
     {
@@ -42,7 +42,6 @@ class CoreExtension implements Extension
             self::PARAM_DUMPER => 'indented',
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
-            self::PARAM_PHP_VERSION => phpversion(),
         ]);
     }
 
@@ -123,7 +122,8 @@ class CoreExtension implements Extension
             return new Status(
                 $container->get('source_code_filesystem.registry'),
                 $container->get('config_loader.candidates'),
-                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%')
+                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
+                $container->get(PhpVersionResolver::class)
             );
         });
     }

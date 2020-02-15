@@ -32,6 +32,7 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -194,7 +195,7 @@ class CodeTransformExtraExtension implements Extension
                 return $resolver->resolve($path);
             }, $templatePaths);
 
-            $phpVersion = $container->getParameter(CoreExtension::PARAM_PHP_VERSION);
+            $phpVersion = $container->get(PhpVersionResolver::class)->resolve();
             $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
 
             foreach ($paths as $path) {

@@ -48,6 +48,8 @@ class StatusHandler implements Handler
                 'Info',
                 '----',
                 'Version: ' . $diagnostics['phpactor_version'],
+                'PHP: ' . sprintf('%s (supporting %s)', phpversion(), $diagnostics['php_version']),
+                'Phpactor dir: ' . realpath(__DIR__ . '/../../../../'),
                 'Work dir: ' . $diagnostics['cwd'] . PHP_EOL,
                 'Diagnostics',
                 '-----------',
