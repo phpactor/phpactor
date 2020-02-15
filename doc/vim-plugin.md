@@ -164,7 +164,6 @@ your `.vimrc` to change the PHP binary:
 let g:phpactorPhpBin = "/usr/bin/local/php7.0"
 ```
 
-
 Configuration
 -------------
 
@@ -174,22 +173,8 @@ The plugin has some configuration options:
 let g:phpactorPhpBin = 'php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorInputListStrategy = 'inputlist|fzf'
-let g:phpactorQuickfixStrategy = 'vim|fzf|Funcref'
-
-" Example of implementation with vim's inputlist() function
-function! InputListCustomStrategy(label, choices, ResultHandler)
-    echo a:label
-    let choice = inputlist(s:add_number_to_choices(a:choices))
-
-    if (choice == 0)
-        throw "cancelled"
-    endif
-
-    call a:ResultHandler(a:choices[choice - 1])
-endfunction
-
-let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
+let g:phpactorInputListStrategy = 'phpactor#quickfix#vim'
+let g:phpactorQuickfixStrategy = 'phpactor#input#list#inputlist'
 ```
 
 - `g:phpactorPhpBin`: PHP executable to use.
@@ -197,9 +182,9 @@ let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'
   bleeding edge).
 - `g:phpactorOmniAutoClassImport`: Automatically import classes when
   completing class names with OmniComplete.
-- `g:phpactorInputListStrategy`: Select a strategy for the [Input
-  List](#input-list).
-- `g:phpactorCustomInputListStrategy`: Specify your own strategy.
+- `g:phpactorInputListStrategy`: Specify a callback to provide a custom input list (see [experimental](/vim-plugin/experimental.html').
+- `g:phpactorQuickfixStrategy`: Specify a callback to provide a custom
+  quickfix implementation (see [experimental](/vim-plugin/experimental.html')
 
 Extensions
 ----------
@@ -299,97 +284,3 @@ should see something like the following:
 Method "execute":
 [r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:
 ```
-
-Input List
-----------
-
-The input list is the window shown to let you choose an item among a list.
-
-### Strategies
-
-This plugin provides two strategy to handle input lists:
-
-- `inputlist`: Vim's internal `inputlist()` function.
-- `fzf`: Fuzzy finder using [Fzf](https://github.com/junegunn/fzf) plugin.
-
-You can choose between those strategies by specifying the option
-[g:phpactorInputListStrategy](#configuration).
-
-### Input list strategies auto-detection
-
-When no strategy is defined the plugin will default to the `fzf` strategy if
-the [Fzf](https://github.com/junegunn/fzf) plugin is loaded or to `inputlist`
-if it's not.
-
-### FZF Multi-selection
-
-Some refactorings will allow you to select multiple entires (for example
-[override
-method](https://phpactor.github.io/phpactor/refactorings.html#override-method).
-Use `<tab>` to toggle selection and CTRL-A/CTRL-D to select all/select none. 
-
-See the
-[Fzf](https://github.com/junegunn/fzf) documentation for more details.
-
-Quickfix List
--------------
-
-The quickfix list is used to show a list of positions in files and access them
-quickly. Phpactor use it for example to show the result of `find references`.
-
-### Strategies
-
-This plugin provides two strategy to handle input lists:
-
-- `vim`: Vim's basic quickfix.
-- `fzf`: Use [fzf](#fzf) to show allow you to filter the results.
-
-With the [fzf](#fzf) strategy you will still be able to get the result inside
-the quickfix by selecting the elements you are interested in and pressing
-`ctrl-q` to populate the quickfix with your selection and open it.
-
-You can use your own strategy by providing a `Funcref` to the
-`g:phpactorQuickfixStrategy` variable. When calling a strategy the list of
-positions is given as a list that is directly usable by the function
-`setqflist()`. Not all the keys are provided, depending on the context, so
-you should always check if the information you want is really defined before
-using it.
-
-Extras
-------
-
-In order to get the best experience we suggest you install a few extra tools.
-
-[fzf](https://github.com/junegunn/fzf)
---------------------------------------
-
-This is actually not a vim plugin but a tool for the command-line.
-It's shipped with a vim plugin that allows to use it inside Vim.
-
-If you have it installed and properly configured for Vim then `Phpactor` will
-use of it to provide enhance functionalities, for instance:
-
-- [inputlist](#input-list)
-- [quickfix](#quickfix-list)
-
-[fzf.vim](https://github.com/junegunn/fzf.vim)
-----------------------------------------------
-
-This is the actual [fzf](https://github.com/junegunn/fzf) plugin for vim. It
-requires you to have [fzf](https://github.com/junegunn/fzf) installed and
-configured.
-
-This plugin will allow us to use improved functionalities inside Vim. If you
-want to enjoy the full possibilities of both `fzf` and `Phpactor` we strongly
-recommand you to install it!
-
-[bat](https://github.com/sharkdp/bat)
----
-
-This is also a tool for the command-line and not a Vim plugin. It's meant to be
-used instead of the command `cat` and bring a lot to the table. It can be use
-as a powerful substitute for `cat` providing syntax highlighting and git
-integration, among other things.
-
-It's used by default, among other possible tools, by `fzf` to print the preview
-window. Allowing you to have a preview of your files with syntaxic coloration!

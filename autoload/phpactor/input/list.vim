@@ -1,23 +1,3 @@
-function! phpactor#input#list#strategy()
-    " Hack to not use FZF in collections
-    " see https://github.com/phpactor/phpactor/pull/843
-    if g:_phpactorRpcActionIsCollection == v:true
-        return "phpactor#input#list#inputlist"
-    endif
-
-    if has_key(g:, 'phpactorInputListStrategy')
-        return g:phpactorInputListStrategy
-    endif
-
-    if has_key(g:, 'phpactorCustomInputListStrategy')
-        let g:phpactorInputListStrategy = g:phpactorCustomInputListStrategy
-    else
-        let g:phpactorInputListStrategy = s:auto_detect_strategy()
-    endif
-
-    return g:phpactorInputListStrategy
-endfunction
-
 function! phpactor#input#list#inputlist(label, choices, multi, ResultHandler)
     echo a:label
     let choice = inputlist(s:add_number_to_choices(a:choices))
@@ -29,6 +9,8 @@ function! phpactor#input#list#inputlist(label, choices, multi, ResultHandler)
     call a:ResultHandler(a:choices[choice - 1])
 endfunction
 
+" expreimental: this stategy currently does not work when used in a 
+" non-terminal RPC step - https://github.com/phpactor/phpactor/issues/845
 function! phpactor#input#list#fzf(label, choices, multi, ResultHandler)
     let options = [
         \ '--tiebreak=index',

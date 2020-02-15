@@ -63,3 +63,6 @@ menu:
                 rpc:
                     text: RPC Protocol
                     relativeUrl: rpc.html
+                experimental-vim-plugin:
+                    text: VIM plugin experimental
+                    relativeUrl: vim-plugin/experimental.html

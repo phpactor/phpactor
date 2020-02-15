@@ -17,10 +17,6 @@ let g:phpactorInitialCwd = getcwd()
 let g:phpactorCompleteLabelTruncateLength=50
 let g:_phpactorCompletionMeta = {}
 
-" hack to avoid calling fzf strategy when using a collection
-" see: https://github.com/phpactor/phpactor/pull/843
-let g:_phpactorRpcActionIsCollection = v:false
-
 if !exists('g:phpactorPhpBin')
     let g:phpactorPhpBin = 'php'
 endif
@@ -37,8 +33,12 @@ if !exists('g:phpactorCompletionIgnoreCase')
     let g:phpactorCompletionIgnoreCase = 1
 endif
 
-if !exists('g:PhpactorQuickfixStrategy')
-    let g:PhpactorQuickfixStrategy = v:null
+if !exists('g:phpactorQuickfixStrategy')
+    let g:phpactorQuickfixStrategy = 'phpactor#quickfix#vim'
+endif
+
+if !exists('g:phpactorInputListStrategy')
+    let g:phpactorInputListStrategy = 'phpactor#input#list#inputlist'
 endif
 
 if g:phpactorOmniAutoClassImport == v:true
@@ -546,9 +546,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     " >> collection
     if a:actionName == "collection"
         for action in a:parameters["actions"]
-            let g:_phpactorRpcActionIsCollection = v:true
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
-            let g:_phpactorRpcActionIsCollection = v:false
 
             if !empty(result)
                 return result
