@@ -19,6 +19,8 @@ Features:
 
 Bug fix:
 
+  - [code-transform] Cannot rename variable from anonymous function variable
+    (#829) - @dantleech
   - [code-transform] Complete constructor does not take into account aliased
     imports (#886) - @dantleech
   - [code-builder] New aliased class imports alias not added (#860) - @dantleech
