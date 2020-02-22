@@ -19,6 +19,8 @@ Features:
 
 Bug fix:
 
+  - [code-transform] Complete constructor does not take into account aliased
+    imports (#886) - @dantleech
   - [code-builder] New aliased class imports alias not added (#860) - @dantleech
   - [worse-reflection] instanceof returns negative if class implements
     interface but extends another class - @dantleech
