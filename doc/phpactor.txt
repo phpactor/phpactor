@@ -12,9 +12,13 @@ CONTENTS                                                   *phpactor-contents*
 INTRODUCTION                                                  *phpactor-intro*
 
 
-Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
-This is the help file for the VIM client. For more information see the
-official website: https://phpactor.github.io/phpactor/
+:>  ______    __    __  .______      ___       ______ .___________.  ______
+.______ |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __
+\  |   _  \ |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|
+|  |  | |  |_)  | |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |
+|  |  |  | |      / |  |      |  |  |  | |  |     /  _____  \ |  `----.    |
+|     |  `--'  | |  |\  \----. | _|      |__|  |__| | _|    /__/     \__\
+\______|    |__|      \______/  | _| `._____| <
 
 ==============================================================================
 CONFIGURATION                                                *phpactor-config*
