@@ -58,7 +58,7 @@ menu:
                     text: Integrations
                     relativeUrl: integrations.html
                 development:
-                    text: Debugging Phpactor
+                    text: Developing
                     relativeUrl: developing.html
                 rpc:
                     text: RPC Protocol
