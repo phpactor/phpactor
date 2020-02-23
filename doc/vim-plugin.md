@@ -1,8 +1,8 @@
 ---
 currentMenu: vim-plugin
 ---
-Phpactor VIM Plugin
-===================
+Phpactor VIM Plugin Guide
+=========================
 
 - [Installation](#installation)
 - [Updating](#updating)
@@ -10,8 +10,6 @@ Phpactor VIM Plugin
 - [Completion](#completion)
 - [Completion plugins](#completion-plugins)
 - [Context Menu](#context-menu)
-- [Quickfix List](#quickfix-list)
-- [Extras](#extras)
 
 Installation
 ------------
@@ -23,18 +21,15 @@ Installation
 - [VIM 8](https://github.com/vim/vim) or
   [Neovim](https://github.com/neovim/neovim)
 
-It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the [vim-plug](https://github.com/junegunn/vim-plug)
-plugin manager, but other plugin managers are quite similar.
-
-Require Phpactor in your VIM configuration file (e.g. `~/.vimrc` or
+Using the [vim-plug](https://github.com/junegunn/vim-plug)
+plugin manager add the following in your VIM configuration (e.g. `~/.vimrc` or
 `~/.config/nvim/init.vim` when using Neovim):
 
 ```
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
 ```
 
-Then update your plugins:
+Reload VIM (or `:source ~/.vimrc`) then update your plugins:
 
 ```
 :PlugInstall
@@ -46,11 +41,6 @@ If you need to install the dependencies manually, then:
 $ cd ~/.vim/plugged/phpactor
 $ composer install
 ```
-
-<div class="alert alert-info">
-Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
-installation procedure!
-</div>
 
 Now open a PHP file and issue the following command `:call phpactor#Status()`:
 
@@ -68,8 +58,7 @@ Config files
 [✘] /etc/xdg/phpactor/phpactor.yml
 ```
 
-Phpactor works best with Composer - but much functionality including
-auto-completion can still work (sometimes slowly depending on project size).
+To find out more about the plugin type `:help phpactor`
 
 ### Troubleshooting
 
@@ -84,27 +73,6 @@ run the command again.
 The Git and Composer checks are referring to the current "workspace" (i.e. where you
 started Vim from). If you've already setup Git and Composer for your project, ensure
 you are starting Vim from the project directory to enable detection.
-
-Updating
---------
-
-Updating Phpactor from VIM is easy:
-
-```vim
-:call phpactor#Update()
-```
-
-<div class="alert alert-warning">
-Note that if the update included changes to the VIM plugin you will currently
-need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
-</div>
-
-If you are feeling dangerous, you may choose to track the `develop` branch,
-by specifying a branch name in your VIM configuration file:
-
-```
-let g:phpactorBranch = "develop"
-```
 
 Keyboard Mappings
 -----------------
@@ -163,28 +131,6 @@ your `.vimrc` to change the PHP binary:
 ```
 let g:phpactorPhpBin = "/usr/bin/local/php7.0"
 ```
-
-Configuration
--------------
-
-The plugin has some configuration options:
-
-```vim
-let g:phpactorPhpBin = 'php'
-let g:phpactorBranch = 'master'
-let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorInputListStrategy = 'phpactor#quickfix#vim'
-let g:phpactorQuickfixStrategy = 'phpactor#input#list#inputlist'
-```
-
-- `g:phpactorPhpBin`: PHP executable to use.
-- `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
-  bleeding edge).
-- `g:phpactorOmniAutoClassImport`: Automatically import classes when
-  completing class names with OmniComplete.
-- `g:phpactorInputListStrategy`: Specify a callback to provide a custom input list (see [experimental](/vim-plugin/experimental.html').
-- `g:phpactorQuickfixStrategy`: Specify a callback to provide a custom
-  quickfix implementation (see [experimental](/vim-plugin/experimental.html')
 
 Extensions
 ----------
