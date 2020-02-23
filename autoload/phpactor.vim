@@ -1,6 +1,10 @@
-"""""""""""""""""
-" Update Phpactor
-"""""""""""""""""
+""
+" @section Introduction, intro
+" @stylized Phpactor
+" @library
+"
+" Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
+
 function! phpactor#Update()
     let current = getcwd()
     execute 'cd ' . g:phpactorpath

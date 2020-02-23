@@ -1,163 +1,156 @@
-*phpactor* *phpactor.txt* PHP completion and refactoring tool
+*phpactor.txt*
+                                                         *Phpactor* *phpactor*
 
-                          PHPACTOR REFERENCE MANUAL~
+==============================================================================
+CONTENTS                                                   *phpactor-contents*
+  1. Introduction.............................................|phpactor-intro|
+  2. Configuration...........................................|phpactor-config|
+  3. Commands..............................................|phpactor-commands|
+  4. Functions............................................|phpactor-functions|
+
+==============================================================================
+INTRODUCTION                                                  *phpactor-intro*
 
 
-1. Introduction                 |phpactor-introduction|
-2. Installation                 |phpactor-installation|
-3. Updating                     |phpactor-updating|
-4. Mappings                     |phpactor-mappings|
-5. Configuration                |phpactor-configuration|
-6. Requirements                 |phpactor-requirements|
-7. Completion                   |phpactor-completion|
-8. Completion plugins           |phpactor-completion-plugins|
-9. Context Menu                 |phpactor-context-menu|
+Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
 
-================================================================================
-                                                            *phpactor-introduction*
-Phpactor is a completion and refactoring tool for PHP. This help file
-documents the VIM plugin. To see _all_ of the documentation, visit the
-website:
+==============================================================================
+CONFIGURATION                                                *phpactor-config*
 
-    https://phpactor.github.io/phpactor/
+                                                            *g:phpactorPhpBin*
+Path to the PHP binary used by Phpactor
 
-================================================================================
-                                                            *phpactor-installation*
-Install Phpactor using your favorite VIM package manager.
-If you don't use any, I recommend vim-plug.
-Add the plugin to your .vimrc:
+                                                            *g:phpactorBranch*
+The Phpactor branch to use when calling |:PhpactorUpdate|
 
-`Plug 'phpactor/phpactor', {'for': 'php', 'do': composer install'}`
+                                               *g:phpactorOmniAutoClassImport*
+Automatically import classes when using VIM native omni-completion
 
-Then in VIM:
-`:PlugInstall`
+                                              *g:phpactorCompletionIgnoreCase*
+Ignore case when suggestion completion results
 
-If you do not use vim-plug, you will need to install the Phpactor dependencies with composer manually:
-`$ cd ~/.vim/bundle/phpactor`
-`$ composer install`
+                                                  *g:phpactorQuickfixStrategy*
+Function to use when populating a list of code references. The default is to
+use the VIM quick-fix list.
 
-Now issue the following command
-`:call phpactor#Status():`
+                                                 *g:phpactorInputListStrategy*
+Function to use when presenting a user with a choice of options. The default
+is to use the VIM inputlist.
 
-Support
--------
-[✔] Composer detected - faster class location and more features!
-[✔] Git detected - enables faster refactorings in your repository scope!
+==============================================================================
+COMMANDS                                                   *phpactor-commands*
 
-Config files
-------------
-[✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
-[✔] /home/daniel/.config/phpactor/phpactor.yml
-[✘] /etc/xdg/phpactor/phpactor.yml
+:PhpactorUpdate                                              *:PhpactorUpdate*
+  Update Phpactor to the latest version using the branch defined with
+  g:phpactorBranch
 
-Phpactor works best with Composer - but much functionality
-including auto-completion can still work (sometimes slowly depending on project size).
+:PhpactorCacheClear                                      *:PhpactorCacheClear*
+  Clear the entire cache - this will take effect for all projects.
 
-================================================================================
-UPDATING                                                      *phpactor-updating*
+:PhpactorStatus                                              *:PhpactorStatus*
+  Show some information about Phpactor's status
 
-Updating Phpactor from VIM is easy:
+:PhpactorConfig                                              *:PhpactorConfig*
+  Dump Phpactor's configuration
 
-`:call phpactor#Update()`
+:[range]PhpactorExtractMethod                         *:PhpactorExtractMethod*
+  Extract a new method from the current selection
 
-Note that if the update included changes to the VIM plugin you will currently need
-to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin
-or reload VIM.
+:[range]PhpactorExtractExpression                 *:PhpactorExtractExpression*
+  Extract the selected expression and assign it to a variable before (placing
+  it before the current statement)
 
-================================================================================
-MAPPINGS                                                  *phpactor-mappings*
+:PhpactorExtractConstant                            *:PhpactorExtractConstant*
+  Extract a constant from a literal
 
-The Phpactor plugin will not automatically assume any shortcuts,
-copy the following configuration into your .vimrc:
+:PhpactorClassExpand                                    *:PhpactorClassExpand*
+  Expand the class name under the cursor to it's fully-qualified-name
 
-" Include use statement
-`nmap <Leader>u :call phpactor#UseAdd()<CR>`
+:PhpactorImportClass                                    *:PhpactorImportClass*
+  Import the name under the cusor. If multiple options are available, you are
+  able to choose one.
 
-" Invoke the context menu
-`nmap <Leader>mm :call phpactor#ContextMenu()<CR>`
+:PhpactorImportMissingClasses                  *:PhpactorImportMissingClasses*
+  Attempt to import all non-resolvable classes in the current class (based on
+  offset position)
 
-" Goto definition of class or class member under the cursor
-`nmap <Leader>o :call phpactor#GotoDefinition()<CR>`
+:PhpactorGotoDefinition                              *:PhpactorGotoDefinition*
+  Goto the definition of the class, method or function under the cursor. Open
+  the definition in the current window.
 
-" Transform the classes in the current file
-`nmap <Leader>tt :call phpactor#Transform()<CR>`
+:PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
+  As with |:PhpactorGotoDefinition| but open in a vertical split.
 
-" Generate a new class (replacing the current file)
-`nmap <Leader>cc :call phpactor#ClassNew()<CR>`
+:PhpactorGotoDefinitionHsplit                  *:PhpactorGotoDefinitionHsplit*
+  As with |:PhpactorGotoDefinition| but open in a horizontal split.
 
-" Extract method from selection
-`vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>`
+:PhpactorGotoDefinitionTab                        *:PhpactorGotoDefinitionTab*
+  As with |:PhpactorGotoDefinition| but open in a new tab
 
-See the Refactorings chapter for more functions you can map shortcuts to.
+:PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
+  Load all implementations of the class under the cursor into the quick-fix
+  list.
 
-================================================================================
-CONFIGURATION                                            *phpactor-configuration*
+:PhpactorHover                                                *:PhpactorHover*
+  Show information about the symbol under the cursor.
 
-The plugin has some configuration options:
+:PhpactorContextMenu                                    *:PhpactorContextMenu*
+  Show the context menu for the current cursor position.
 
-- `g:phpactorPhpBin`: PHP executable to use.
-- `g:phpactorBranch`: Phpactor branch (default is `master`, use `develop` for
-  bleeding edge).
-- `g:phpactorOmniError`: Set to `v:true` to enable useful error messages when
-  completion is invoked.
+:PhpactorCopyFile                                          *:PhpactorCopyFile*
+  Copy the current file - updating the namespace and class name according to
+  the new file location and name
 
-================================================================================
-REQUIREMENTS                                               *phpactor-requirements*
-Phpactor requires at least PHP 7.0. If you use a different version of PHP locally,
-you may need to target a new version of PHP - add the following to your .vimrc to change the PHP binary:
+:PhpactorMoveFile                                          *:PhpactorMoveFile*
+  Move the current file - updating the namespace and class name according to
+  the new file location and name
 
-`let g:phpactorPhpBin = "/usr/bin/local/php6.0"`
+:PhpactorExtensionList                                *:PhpactorExtensionList*
+  List all installed extensions
 
-================================================================================
-COMPLETION                                                   *phpactor-completion*
+:PhpactorExtensionInstall                          *:PhpactorExtensionInstall*
+  Install an extension
 
-Omni-completion is VIM's built-in auto-completion mechanism.
+:PhpactorExtensionRemove                            *:PhpactorExtensionRemove*
+  Remove an extension
 
-Add the following to your .vimrc in order to use Phpactor for omni-completion (for PHP files):
-`autocmd FileType php setlocal omnifunc=phpactor#Complete`
+:PhpactorClassNew                                          *:PhpactorClassNew*
+  Create a new class. You will be offered a choice of templates.
 
-To invoke omni complete in insert mode <C-x><C-o> (ctrl-x then ctrl-o). See :help compl-omni.
+:PhpactorClassInflect                                  *:PhpactorClassInflect*
+  Inflect a new class from the current class (e.g. generate an interface for
+  the current class)
 
-The Omni-Complete method provides feedback messages when it cannot complete something.
-This information is useful. Other completion mehanisms may not provide this information.
+:PhpactorFindReferences                              *:PhpactorFindReferences*
+  Attempt to find all references to the class name or method under the cursor.
+  The results will be loaded into the quik-fix list
 
-Always enable omni-completion. If another mechanism is failing to complete,
-invoke omni-complete to find out why.
+:PhpactorNavigate                                          *:PhpactorNavigate*
+  Navigate - jump to the parent class, interface, or any of the relationships
+  defined in `navigation.destinations`
+  https://phpactor.github.io/phpactor/configuration.html#reference
 
-================================================================================
-COMPLETION PLUGINS                                *phpactor-completion-plugins*
+:PhpactorChangeVisibility                          *:PhpactorChangeVisibility*
+  Rotate the visiblity of the method under the cursor
 
-Several asynchronous completion frameworks support Phpactor
+:PhpactorGenerateAccessors                        *:PhpactorGenerateAccessors*
+  Generate accessors for the current class
 
-                                                              *phpactor-deoplete*
-To use Phpactor with deoplete.nvim add this to your vimrc/init.vim:
-`Plug 'Shougo/deoplete.nvim'`
-`Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }`
-`Plug 'kristijanhusak/deoplete-phpactor'`
+==============================================================================
+FUNCTIONS                                                 *phpactor-functions*
 
-Run `PlugInstall` and you're good to go!
+phpactor#Complete({findstart}, {base})                   *phpactor#Complete()*
+  """""""""""""""""""""" Autocomplete """""""""""""""""""""""
 
-                                                *phpactor-neovim-completion-manager*
-To use Phpactor with Neovim Completion manager add this to your vimrc/init.vim:
-`Plug 'roxma/nvim-completion-manager'`
-`Plug 'phpactor/phpactor', { 'do': 'composer install', 'for': ['php'] }`
-`Plug 'roxma/ncm-phpactor'`
+phpactor#UseAdd()                                          *phpactor#UseAdd()*
+  """""""""""""""""""""" Insert a use statement """""""""""""""""""""""
 
-Run `PlugInstall` and you're good to go!
+phpactor#_GotoDefinitionTarget({target})    *phpactor#_GotoDefinitionTarget()*
+  """"""""""""""""""""""""" RPC Proxy methods """"""""""""""""""""""""""
 
-================================================================================
-CONTEXT MENU                                               *phpactor-context-menu*
+phpactor#_switchToBufferOrEdit({filePath})  *phpactor#_switchToBufferOrEdit()*
+  """"""""""""""""""""" Utility functions """""""""""""""""""""" Return v:true
+  if we changed file, v:false otherwise
 
-The context menu is the main point of contact with Phpactor.
-Invoke it on any class, member, variable, method call, or anything really.
 
-If you move over a method and invoke the context menu with
-`:call phpactor#ContextMenu()`
-
-You should see something like the following:
-
-`Method "execute":`
-`[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:`
-
---------------------------------------------------------------------------------
-vim:tw=78:fo=tcq2:isk=!-~,^*,^\|,^\":ts=8:ft=help:norl:
+vim:tw=78:ts=8:ft=help:norl:

@@ -1,129 +1,122 @@
+""
+" Update Phpactor to the latest version using the branch
+" defined with g:phpactorBranch
 command! -nargs=0 PhpactorUpdate call phpactor#Update()
-"" -- gorename
-"command! -nargs=? -complete=customlist,go#rename#Complete GoRename call go#rename#Rename(<bang>0, <f-args>)
-"
-"" -- guru
-"command! -nargs=* -complete=customlist,go#package#Complete GoGuruScope call go#guru#Scope(<f-args>)
-"command! -range=% GoImplements call go#guru#Implements(<count>)
-"command! -range=% GoPointsTo call go#guru#PointsTo(<count>)
-"command! -range=% GoWhicherrs call go#guru#Whicherrs(<count>)
-"command! -range=% GoCallees call go#guru#Callees(<count>)
-"command! -range=% GoDescribe call go#guru#Describe(<count>)
-"command! -range=% GoCallers call go#guru#Callers(<count>)
-"command! -range=% GoCallstack call go#guru#Callstack(<count>)
-"command! -range=% GoFreevars call go#guru#Freevars(<count>)
-"command! -range=% GoChannelPeers call go#guru#ChannelPeers(<count>)
-"command! -range=% GoReferrers call go#referrers#Referrers(<count>)
-"
-"command! -range=0 GoSameIds call go#guru#SameIds(1)
-"command! -range=0 GoSameIdsClear call go#guru#ClearSameIds()
-"command! -range=0 GoSameIdsToggle call go#guru#ToggleSameIds()
-"command! -range=0 GoSameIdsAutoToggle call go#guru#AutoToggleSameIds()
-"
-"" -- tags
-"command! -nargs=* -range GoAddTags call go#tags#Add(<line1>, <line2>, <count>, <f-args>)
-"command! -nargs=* -range GoRemoveTags call go#tags#Remove(<line1>, <line2>, <count>, <f-args>)
-"
-"" -- mod
-"command! -nargs=0 -range GoModFmt call go#mod#Format()
-"
-"" -- tool
-"command! -nargs=* -complete=customlist,go#tool#ValidFiles GoFiles echo go#tool#Files(<f-args>)
-"command! -nargs=0 GoDeps echo go#tool#Deps()
-"command! -nargs=0 GoInfo call go#tool#Info(1)
-"command! -nargs=0 GoAutoTypeInfoToggle call go#complete#ToggleAutoTypeInfo()
-"
-"" -- cmd
-"command! -nargs=* -bang GoBuild call go#cmd#Build(<bang>0,<f-args>)
-"command! -nargs=? -bang GoBuildTags call go#cmd#BuildTags(<bang>0, <f-args>)
-"command! -nargs=* -bang GoGenerate call go#cmd#Generate(<bang>0,<f-args>)
-"command! -nargs=* -bang -complete=file GoRun call go#cmd#Run(<bang>0,<f-args>)
-"command! -nargs=* -bang GoInstall call go#cmd#Install(<bang>0, <f-args>)
-"
-"" -- test
-"command! -nargs=* -bang GoTest call go#test#Test(<bang>0, 0, <f-args>)
-"command! -nargs=* -bang GoTestFunc call go#test#Func(<bang>0, <f-args>)
-"command! -nargs=* -bang GoTestCompile call go#test#Test(<bang>0, 1, <f-args>)
-"
-"" -- cover
-"command! -nargs=* -bang GoCoverage call go#coverage#Buffer(<bang>0, <f-args>)
-"command! -nargs=* -bang GoCoverageClear call go#coverage#Clear()
-"command! -nargs=* -bang GoCoverageToggle call go#coverage#BufferToggle(<bang>0, <f-args>)
-"command! -nargs=* -bang GoCoverageBrowser call go#coverage#Browser(<bang>0, <f-args>)
-"
-"" -- play
-"command! -nargs=0 -range=% GoPlay call go#play#Share(<count>, <line1>, <line2>)
-"
-"" -- def
-"command! -nargs=* -range GoDef :call go#def#Jump('', 0)
-"command! -nargs=* -range GoDefType :call go#def#Jump('', 1)
-"command! -nargs=? GoDefPop :call go#def#StackPop(<f-args>)
-"command! -nargs=? GoDefStack :call go#def#Stack(<f-args>)
-"command! -nargs=? GoDefStackClear :call go#def#StackClear(<f-args>)
-"
-"" -- doc
-"command! -nargs=* -range -complete=customlist,go#package#Complete GoDoc call go#doc#Open('new', 'split', <f-args>)
-"command! -nargs=* -range -complete=customlist,go#package#Complete GoDocBrowser call go#doc#OpenBrowser(<f-args>)
-"
-"" -- fmt
-"command! -nargs=0 GoFmt call go#fmt#Format(-1)
-"command! -nargs=0 GoFmtAutoSaveToggle call go#fmt#ToggleFmtAutoSave()
-"command! -nargs=0 GoImports call go#fmt#Format(1)
-"
-"" -- asmfmt
-"command! -nargs=0 GoAsmFmtAutoSaveToggle call go#asmfmt#ToggleAsmFmtAutoSave()
-"
-"" -- import
-"command! -nargs=? -complete=customlist,go#package#Complete GoDrop call go#import#SwitchImport(0, '', <f-args>, '')
-"command! -nargs=1 -bang -complete=customlist,go#package#Complete GoImport call go#import#SwitchImport(1, '', <f-args>, '<bang>')
-"command! -nargs=* -bang -complete=customlist,go#package#Complete GoImportAs call go#import#SwitchImport(1, <f-args>, '<bang>')
-"
-"" -- linters
-"command! -nargs=* -bang GoMetaLinter call go#lint#Gometa(<bang>0, 0, <f-args>)
-"command! -nargs=0 GoMetaLinterAutoSaveToggle call go#lint#ToggleMetaLinterAutoSave()
-"command! -nargs=* -bang GoLint call go#lint#Golint(<bang>0, <f-args>)
-"command! -nargs=* -bang GoVet call go#lint#Vet(<bang>0, <f-args>)
-"command! -nargs=* -bang -complete=customlist,go#package#Complete GoErrCheck call go#lint#Errcheck(<bang>0, <f-args>)
-"
-"" -- alternate
-"command! -bang GoAlternate call go#alternate#Switch(<bang>0, '')
-"
-"" -- decls
-"command! -nargs=? -complete=file GoDecls call go#decls#Decls(0, <q-args>)
-"command! -nargs=? -complete=dir GoDeclsDir call go#decls#Decls(1, <q-args>)
-"
-"" -- impl
-"command! -nargs=* -complete=customlist,go#impl#Complete GoImpl call go#impl#Impl(<f-args>)
-"
-"" -- template
-"command! -nargs=0 GoTemplateAutoCreateToggle call go#template#ToggleAutoCreate()
-"
-"" -- keyify
-"command! -nargs=0 GoKeyify call go#keyify#Keyify()
-"
-"" -- fillstruct
-"command! -nargs=0 GoFillStruct call go#fillstruct#FillStruct()
-"
-"" -- debug
-"if !exists(':GoDebugStart')
-"  command! -nargs=* -complete=customlist,go#package#Complete GoDebugStart call go#debug#Start(0, <f-args>)
-"  command! -nargs=* -complete=customlist,go#package#Complete GoDebugTest  call go#debug#Start(1, <f-args>)
-"  command! -nargs=? GoDebugBreakpoint call go#debug#Breakpoint(<f-args>)
-"endif
-"
-"" -- issue
-"command! -nargs=0 GoReportGitHubIssue call go#issue#New()
-"
-"" -- iferr
-"command! -nargs=0 GoIfErr call go#iferr#Generate()
-"
-"" -- lsp
-"command! -nargs=+ -complete=dir GoAddWorkspace call go#lsp#AddWorkspaceDirectory(<f-args>)
-"command! -nargs=0 GoLSPDebugBrowser call go#lsp#DebugBrowser()
-"command! -nargs=* -bang GoDiagnostics call go#lint#Diagnostics(<bang>0, <f-args>)
-"
-"" -- term
-"command! GoToggleTermCloseOnExit call go#term#ToggleCloseOnExit()
-"
-"" vim: sw=2 ts=2 et
-"
+
+""
+" Clear the entire cache - this will take effect for all projects.
+command! -nargs=0 PhpactorCacheClear call phpactor#CacheClear()
+
+""
+" Show some information about Phpactor's status
+command! -nargs=0 PhpactorStatus call phpactor#Status()
+
+""
+" Dump Phpactor's configuration
+command! -nargs=0 PhpactorConfig call phpactor#Config()
+
+""
+" Extract a new method from the current selection
+command! -range=% PhpactorExtractMethod call phpactor#ExtractMethod()
+
+""
+" Extract the selected expression and assign it to a variable before (placing
+" it before the current statement)
+command! -range=% PhpactorExtractExpression call phpactor#ExtractExpression('v')
+
+""
+" Extract a constant from a literal
+command! -nargs=0 PhpactorExtractConstant call phpactor#ExtractConstant()
+
+""
+" Expand the class name under the cursor to it's fully-qualified-name
+command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
+
+""
+" Import the name under the cusor. If multiple options are available, you
+" are able to choose one.
+command! -nargs=0 PhpactorImportClass call phpactor#ImportClass()
+
+""
+" Attempt to import all non-resolvable classes in the current class (based
+" on offset position)
+command! -nargs=0 PhpactorImportMissingClasses call phpactor#ImportMissingClasses()
+
+""
+" Goto the definition of the class, method or function under the cursor. Open
+" the definition in the current window.
+command! -nargs=0 PhpactorGotoDefinition call phpactor#GotoDefinition()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a vertical split.
+command! -nargs=0 PhpactorGotoDefinitionVsplit call phpactor#GotoDefinitionVsplit()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a horizontal split.
+command! -nargs=0 PhpactorGotoDefinitionHsplit call phpactor#GotoDefinitionHsplit()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a new tab
+command! -nargs=0 PhpactorGotoDefinitionTab call phpactor#GotoDefinitionTab()
+
+""
+" Load all implementations of the class under the cursor into the quick-fix
+" list.
+command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations()
+
+""
+" Show information about the symbol under the cursor.
+command! -nargs=0 PhpactorHover call phpactor#Hover()
+
+""
+" Show the context menu for the current cursor position.
+command! -nargs=0 PhpactorContextMenu call phpactor#ContextMenu()
+
+""
+" Copy the current file - updating the namespace and class name according to
+" the new file location and name
+command! -nargs=0 PhpactorCopyFile call phpactor#CopyFile()
+
+""
+" Move the current file - updating the namespace and class name according to
+" the new file location and name
+command! -nargs=0 PhpactorMoveFile call phpactor#MoveFile()
+
+""
+" List all installed extensions
+command! -nargs=0 PhpactorExtensionList call phpactor#ExtensionList()
+
+""
+" Install an extension
+command! -nargs=1 PhpactorExtensionInstall call phpactor#ExtensionInstall()
+
+""
+" Remove an extension
+command! -nargs=1 PhpactorExtensionRemove call phpactor#ExtensionRemove()
+
+""
+" Create a new class. You will be offered a choice of templates.
+command! -nargs=0 PhpactorClassNew call phpactor#ClassNew()
+
+""
+" Inflect a new class from the current class (e.g. generate an interface for
+" the current class)
+command! -nargs=0 PhpactorClassInflect call phpactor#ClassInflect()
+
+""
+" Attempt to find all references to the class name or method under the cursor.
+" The results will be loaded into the quik-fix list
+command! -nargs=0 PhpactorFindReferences call phpactor#FindReferences()
+
+""
+" Navigate - jump to the parent class, interface, or any of the relationships
+" defined in `navigation.destinations` https://phpactor.github.io/phpactor/configuration.html#reference
+command! -nargs=0 PhpactorNavigate call phpactor#Naviagate()
+
+""
+" Rotate the visiblity of the method under the cursor
+command! -nargs=0 PhpactorChangeVisibility call phpactor#ChangeVisibility()
+
+""
+" Generate accessors for the current class
+command! -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
