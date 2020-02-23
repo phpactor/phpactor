@@ -5,6 +5,9 @@ Changelog
 
 Features:
 
+  - [vim-plugin] Introduces Commands for user actions (instead of having to
+    call the functions)
+  - [vim-plugin] Generate the VIM help from the plugin's code documentation
   - [code-builder] Support for nullable types - @elythyr / @dantleech
   - [code-builder] Generates typed property for PHP 7.4 - @elythyr
   - [worse-reflection] Support for PHP 7.4 property types - @dantleech / @elythyr

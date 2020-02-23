@@ -1,8 +1,8 @@
 ---
 currentMenu: vim-plugin
 ---
-Phpactor VIM Plugin Guide
-=========================
+Phpactor VIM Plugin
+===================
 
 Installation
 ------------
