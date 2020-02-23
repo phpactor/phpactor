@@ -1,6 +1,6 @@
 ""
 " Update Phpactor to the latest version using the branch
-" defined with g:phpactorBranch
+" defined with @setting(g:phpactorBranch)
 command! -nargs=0 PhpactorUpdate call phpactor#Update()
 
 ""
