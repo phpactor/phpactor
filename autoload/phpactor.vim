@@ -1,53 +1,12 @@
-"  ______    __    __  .______      ___       ______ .___________.  ______   .______
-" |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __  \  |   _  \
-" |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|  |  |  | |  |_)  |
-" |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |     |  |  |  | |      /
-" |  |      |  |  |  | |  |     /  _____  \ |  `----.    |  |     |  `--'  | |  |\  \----.
-" | _|      |__|  |__| | _|    /__/     \__\ \______|    |__|      \______/  | _| `._____|
+""
+" @section Introduction, intro
+" @library
+" @order intro config completion commands mappings
 "
+" Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
+" This is the help file for the VIM client. For more information see the
+" official website: https://phpactor.github.io/phpactor/
 
-if exists('g:phpactorLoaded')
-  finish
-endif
-
-let g:phpactorLoaded = 1
-let g:phpactorpath = expand('<sfile>:p:h') . '/..'
-let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
-let g:phpactorInitialCwd = getcwd()
-let g:phpactorCompleteLabelTruncateLength=50
-let g:_phpactorCompletionMeta = {}
-
-if !exists('g:phpactorPhpBin')
-    let g:phpactorPhpBin = 'php'
-endif
-
-if !exists('g:phpactorBranch')
-    let g:phpactorBranch = 'master'
-endif
-
-if !exists('g:phpactorOmniAutoClassImport')
-    let g:phpactorOmniAutoClassImport = v:true
-endif
-
-if !exists('g:phpactorCompletionIgnoreCase')
-    let g:phpactorCompletionIgnoreCase = 1
-endif
-
-if !exists('g:phpactorQuickfixStrategy')
-    let g:phpactorQuickfixStrategy = 'phpactor#quickfix#vim'
-endif
-
-if !exists('g:phpactorInputListStrategy')
-    let g:phpactorInputListStrategy = 'phpactor#input#list#inputlist'
-endif
-
-if g:phpactorOmniAutoClassImport == v:true
-    autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
-endif
-
-"""""""""""""""""
-" Update Phpactor
-"""""""""""""""""
 function! phpactor#Update()
     let current = getcwd()
     execute 'cd ' . g:phpactorpath
@@ -57,9 +16,6 @@ function! phpactor#Update()
     execute 'cd ' .  current
 endfunction
 
-""""""""""""""""""""""""
-" Autocomplete
-""""""""""""""""""""""""
 function! phpactor#Complete(findstart, base)
 
     let lineOffset = line2byte(line("."))
@@ -150,10 +106,6 @@ function! phpactor#_completeImportClass(completedItem)
 
 endfunction
 
-""""""""""""""""""""""""
-" Extract method
-""""""""""""""""""""""""
-
 function! phpactor#ExtractMethod(...)
     let positions = {}
 
@@ -215,9 +167,6 @@ function! phpactor#ClassExpand()
     execute "normal! ciw" . namespace_prefix.word
 endfunction
 
-""""""""""""""""""""""""
-" Insert a use statement
-""""""""""""""""""""""""
 function! phpactor#UseAdd()
     call phpactor#ImportClass()
 endfunction
@@ -228,9 +177,6 @@ function! phpactor#ImportMissingClasses()
     call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
-"""""""""""""""""""""""""""
-" RPC Proxy methods
-"""""""""""""""""""""""""""
 function! phpactor#_GotoDefinitionTarget(target)
     call phpactor#rpc("goto_definition", {
                 \"offset": phpactor#_offset(),
@@ -368,7 +314,7 @@ endfunction
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
-" Return v:true if we changed file, v:false otherwise
+
 function! phpactor#_switchToBufferOrEdit(filePath)
     if expand('%:p') == a:filePath
         " filePath is currently open
@@ -757,5 +703,3 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
 
     call TypeHandler(ResultHandler)
 endfunction
-
-" vim: et ts=4 sw=4 fdm=marker
