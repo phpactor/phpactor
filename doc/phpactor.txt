@@ -5,20 +5,17 @@
 CONTENTS                                                   *phpactor-contents*
   1. Introduction.............................................|phpactor-intro|
   2. Configuration...........................................|phpactor-config|
-  3. Commands..............................................|phpactor-commands|
-  4. Mappings..............................................|phpactor-mappings|
+  3. Completion..........................................|phpactor-completion|
+  4. Commands..............................................|phpactor-commands|
+  5. Mappings..............................................|phpactor-mappings|
 
 ==============================================================================
 INTRODUCTION                                                  *phpactor-intro*
 
 
-:>  ______    __    __  .______      ___       ______ .___________.  ______
-.______ |   _  \  |  |  |  | |   _  \    /   \     /      ||           | /  __
-\  |   _  \ |  |_)  | |  |__|  | |  |_)  |  /  ^  \   |  ,----'`---|  |----`|
-|  |  | |  |_)  | |   ___/  |   __   | |   ___/  /  /_\  \  |  |         |  |
-|  |  |  | |      / |  |      |  |  |  | |  |     /  _____  \ |  `----.    |
-|     |  `--'  | |  |\  \----. | _|      |__|  |__| | _|    /__/     \__\
-\______|    |__|      \______/  | _| `._____| <
+Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
+This is the help file for the VIM client. For more information see the
+official website: https://phpactor.github.io/phpactor/
 
 ==============================================================================
 CONFIGURATION                                                *phpactor-config*
@@ -42,6 +39,39 @@ use the VIM quick-fix list.
                                                  *g:phpactorInputListStrategy*
 Function to use when presenting a user with a choice of options. The default
 is to use the VIM inputlist.
+
+==============================================================================
+COMPLETION                                               *phpactor-completion*
+
+
+You will need to explcitly configure Phpactor to provide completion
+capabilities.
+
+OMNI-COMPLETION
+
+Use VIMs native omni-completion (|compl-omni|)
+
+Enbale omni-completion for PHP files:
+>
+
+  autocmd FileType php setlocal omnifunc=phpactor#Complete
+
+<
+For case sensitive searching see |g:phpactorCompletionIgnoreCase|
+
+NCM2
+
+Nvim Completion Manager is a completion manager for Neovim.
+
+Install the integration plugin to get started:
+https://github.com/phpactor/ncm2-phpactor
+
+DEOPLETE
+
+Deoplete is another completion plugin.
+
+Install the Deoplete Phpactor integration to get started:
+https://github.com/kristijanhusak/deoplete-phpactor
 
 ==============================================================================
 COMMANDS                                                   *phpactor-commands*

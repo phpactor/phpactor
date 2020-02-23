@@ -74,63 +74,10 @@ The Git and Composer checks are referring to the current "workspace" (i.e. where
 started Vim from). If you've already setup Git and Composer for your project, ensure
 you are starting Vim from the project directory to enable detection.
 
-Keyboard Mappings
------------------
+Plugin Usage
+------------
 
-The Phpactor plugin will **not** automatically assume any shortcuts, copy
-the following configuration into your `.vimrc`:
-
-```vimscript
-" Include use statement
-nmap <Leader>u :call phpactor#UseAdd()<CR>
-
-" Invoke the context menu
-nmap <Leader>mm :call phpactor#ContextMenu()<CR>
-
-" Invoke the navigation menu
-nmap <Leader>nn :call phpactor#Navigate()<CR>
-
-" Goto definition of class or class member under the cursor
-nmap <Leader>oo :call phpactor#GotoDefinition()<CR>
-nmap <Leader>oh :call phpactor#GotoDefinitionHsplit()<CR>
-nmap <Leader>ov :call phpactor#GotoDefinitionVsplit()<CR>
-nmap <Leader>ot :call phpactor#GotoDefinitionTab()<CR>
-
-" Show brief information about the symbol under the cursor
-nmap <Leader>K :call phpactor#Hover()<CR>
-
-" Transform the classes in the current file
-nmap <Leader>tt :call phpactor#Transform()<CR>
-
-" Generate a new class (replacing the current file)
-nmap <Leader>cc :call phpactor#ClassNew()<CR>
-
-" Extract expression (normal mode)
-nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-
-" Extract expression from selection
-vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-
-" Extract method from selection
-vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-```
-
-See the [Refactorings](refactorings.md) chapter for more functions you can map
-shortcuts to.
-
-<div class="alert alert-info">
-If you prefer not to define the mappings yourself then the <a
-href="https://github.com/elythyr/phpactor-mappings">Phpactor Mappings</a>
-plugin provides you with sensible defaults.
-</div>
-
-Phpactor requires at least PHP 7.0. If you use a different version of PHP
-locally, you may need to target a new version of PHP - add the following to
-your `.vimrc` to change the PHP binary:
-
-```
-let g:phpactorPhpBin = "/usr/bin/local/php7.0"
-```
+To find out how to use the plugin type `:help phpactor` or view the plugin documentation  [here](https://raw.githubusercontent.com/phpactor/phpactor/develop/doc/phpactor.txt).
 
 Extensions
 ----------
@@ -177,25 +124,25 @@ can be useful, enable it with:
 let g:phpactorOmniError = v:true
 ```
 
+Context Menu
+------------
 
-Completion plugins
-------------------
+The context menu is the main point of contact with Phpactor. Invoke it on any
+class, member, variable, method call, or anything really.
 
-Completion plugins provide a significantly better completion experience.
+If you move over a method and invoke the context menu with `:call
+phpactor#ContextMenu()` (or with `<Leader>mm` as per the configuration above) you
+should see something like the following:
 
-### Neovim Completion Manager (NCM)
-
-*deprecated, use NCM2 below*
-
-The [Neovim Completion
-Manager](https://github.com/roxma/nvim-completion-manager) add this to your
-(e.g. `~/.config/nvim/init.vim`) (NCM) is a very fast completion manager for
-[Neovim](https://neovim.io/), install using the Plug plugin manager:
-
-```vim
-Plug 'roxma/nvim-completion-manager'
-Plug 'phpactor/ncm-phpactor'
 ```
+Method "execute":
+[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:
+```
+
+Complementary Plugins
+---------------------
+
+The following plugins add more functionality to Phpactor
 
 ### NCM2
 
@@ -216,17 +163,8 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'kristijanhusak/deoplete-phpactor'
 ```
 
-Context Menu
-------------
+### Phpactor Mappings
 
-The context menu is the main point of contact with Phpactor. Invoke it on any
-class, member, variable, method call, or anything really.
+[phpactor-mappings](https://github.com/elythyr/phpactor-mappings) provides
+sensible mapping defaults for Phpactor.
 
-If you move over a method and invoke the context menu with `:call
-phpactor#ContextMenu()` (or with `<Leader>mm` as per the configuration above) you
-should see something like the following:
-
-```
-Method "execute":
-[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:
-```
