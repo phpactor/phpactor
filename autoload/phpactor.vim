@@ -434,16 +434,8 @@ function! phpactor#rpc(action, arguments)
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)
-        try 
-            let response = json_decode(result)
-        catch 
-            throw "Could not parse response from Phpactor: " . v:exception
-        endtry
 
-        let actionName = response['action']
-        let parameters = response['parameters']
-
-        let response = phpactor#_rpc_dispatch(actionName, parameters)
+        let response = phpactor#rpc#handleRawResponse(result)
 
         if !empty(response)
             return response
