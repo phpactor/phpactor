@@ -1,4 +1,8 @@
 func! phpactor#rpc#handleRawResponse(response)
+    if "" == a:response
+        return v:null
+    endif
+
     try 
         let response = json_decode(a:response)
     catch 

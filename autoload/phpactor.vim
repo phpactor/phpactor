@@ -311,6 +311,25 @@ function! phpactor#GenerateAccessors()
     call phpactor#rpc("generate_accessor", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
 endfunction
 
+let s:indexerJobId = v:null
+function! phpactor#IndexStart()
+    let s:indexerJobId = phpactor#nvim#asyncCall("index", {"watch": v:true})
+    if s:indexerJobId == v:null
+        return
+    endif
+
+    echo "Indexer starated with job ID " . s:indexerJobId
+endfunction
+
+function! phpactor#IndexStop()
+    if s:indexerJobId == v:null
+        echo "Indexer not running"
+        return
+    endif
+
+    call jobstop(s:indexerJobId)
+    echo "Indexer stopped"
+endfunction
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""

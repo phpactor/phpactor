@@ -50,7 +50,3 @@ endif
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
-
-
-" vim: et ts=4 sw=4 fdm=marker
-

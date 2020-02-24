@@ -120,3 +120,8 @@ command! -nargs=0 PhpactorChangeVisibility call phpactor#ChangeVisibility()
 ""
 " Generate accessors for the current class
 command! -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
+
+""
+" Generate accessors for the current class
+command! -nargs=0 PhpactorIndexStart call phpactor#IndexStart()
+command! -nargs=0 PhpactorIndexStop call phpactor#IndexStop()

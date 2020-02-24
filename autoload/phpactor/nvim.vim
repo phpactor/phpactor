@@ -1,4 +1,14 @@
+let s:lock = v:null
+
 func! phpactor#nvim#asyncCall(action, arguments)
+    " TODO: Include either the original "action" in the response or a request
+    " ID (probably better to include both)
+    if s:lock != v:null
+        echo "An asynchronous RPC '" . s:lock . "' action is already running"
+        return
+    endif
+
+    let s:lock = a:action
     let callbacks = {
     \   'on_stdout': function('phpactor#nvim#asyncHandle'),
     \   'on_stderr': function('phpactor#nvim#asyncHandle'),
@@ -10,6 +20,8 @@ func! phpactor#nvim#asyncCall(action, arguments)
 
     call chansend(job, json_encode(request))
     call chanclose(job, 'stdin')
+
+    return job
 endfunc
 
 let s:stdout = []
@@ -29,6 +41,7 @@ func! phpactor#nvim#asyncHandle(jobId, data, event)
         return
     endif
 
+    let s:lock = v:null
     call phpactor#rpc#handleRawResponse(join(s:stdout))
 
     let s:stdout = []
