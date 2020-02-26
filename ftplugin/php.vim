@@ -47,6 +47,8 @@ if !exists('g:phpactorInputListStrategy')
     let g:phpactorInputListStrategy = 'phpactor#input#list#inputlist'
 endif
 
+let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
+
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif

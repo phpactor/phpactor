@@ -314,23 +314,22 @@ endfunction
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
+function! s:isOpenInCurrentWindow(filePath)
+  return expand('%:p') == a:filePath
+endfunction
 
 function! phpactor#_switchToBufferOrEdit(filePath)
-    if expand('%:p') == a:filePath
-        " filePath is currently open
+    if <SID>isOpenInCurrentWindow(a:filePath)
         return v:false
     endif
 
     let bufferNumber = bufnr(a:filePath . '$')
 
-    if (bufferNumber == -1)
-        exec ":edit " . a:filePath
-        return v:true
-    endif
+    let command = (bufferNumber == -1)
+          \ ? ":edit " . a:filePath
+          \ : ":buffer " . bufferNumber
 
-    exec ":buffer " . bufferNumber
-
-    return v:true
+    exec command
 endfunction
 
 function! phpactor#_offset()
@@ -434,9 +433,9 @@ function! phpactor#rpc(action, arguments)
     let result = system(cmd, json_encode(request))
 
     if (v:shell_error == 0)
-        try 
+        try
             let response = json_decode(result)
-        catch 
+        catch
             throw "Could not parse response from Phpactor: " . v:exception
         endtry
 
@@ -510,26 +509,16 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "open_file"
         let changedFileOrWindow = v:true
 
-        if a:parameters['target'] == 'focused_window'
-            let changedFileOrWindow =  phpactor#_switchToBufferOrEdit(a:parameters['path'])
+        call <SID>openFileInSelectedTarget(
+              \ a:parameters["path"],
+              \ a:parameters["target"],
+              \ get(a:parameters, "use_open_window", g:phpactorUseOpenWindows),
+              \ a:parameters["force_reload"]
+              \ )
 
-            if a:parameters['force_reload'] == v:true
-                exec "e!"
-            endif
+        if a:parameters["target"] == 'focused_window'
+            let changedFileOrWindow = !<SID>isOpenInCurrentWindow(a:parameters["path"])
         endif
-
-        if a:parameters['target'] == 'vsplit'
-            exec ":vsplit " . a:parameters['path']
-        endif
-
-        if a:parameters['target'] == 'hsplit'
-            exec ":split " . a:parameters['path']
-        endif
-
-        if a:parameters['target'] == 'new_tab'
-            exec ":tabnew " . a:parameters['path']
-        endif
-
 
         if (a:parameters['offset'])
             let keepjumps = changedFileOrWindow ? 'keepjumps' : ''
@@ -651,6 +640,41 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     endif
 
     throw "Do not know how to handle action '" . a:actionName . "'"
+endfunction
+
+function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload)
+    let bufferNumber = bufnr(a:filePath . "$")
+    if v:true == a:useOpenWindow && -1 != bufferNumber
+        let firstWindowId = get(win_findbuf(bufferNumber), 0, v:null)
+
+        if v:null != firstWindowId
+            call win_gotoid(firstWindowId)
+            return
+        endif
+    endif
+
+    if a:target == 'focused_window'
+        call phpactor#_switchToBufferOrEdit(a:filePath)
+        if v:true == a:forceReload
+          exec "e!"
+        endif
+        return
+    endif
+
+    if a:target == 'vsplit'
+        exec ":vsplit " . a:filePath
+        return
+    endif
+
+    if a:target == 'hsplit'
+        exec ":split " . a:filePath
+        return
+    endif
+
+    if a:target == 'new_tab'
+        exec ":tabnew " . a:filePath
+        return
+    endif
 endfunction
 
 function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)
