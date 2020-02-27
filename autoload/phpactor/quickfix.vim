@@ -47,6 +47,7 @@ function! phpactor#quickfix#fzf(entries) abort
         \ '_action': actions,
         \ 'sink*': function('<SID>quickfix_sink', [results, actions]),
         \ 'options': [
+        \ '--exit-0',
         \ '--expect='. join(keys(actions), ','),
         \ '--multi',
         \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
@@ -58,7 +59,8 @@ endfunction
 
 function! s:quickfix_sink(results, actions, lines) abort
   if 2 > len(a:lines)
-    return " Don't know how to handle this, should not append
+    " Don't know how to handle this, should not append
+    return
   endif
 
   let actionKey = remove(a:lines, 0)
