@@ -10,6 +10,9 @@
 " NOTE: This help is auto-generated from the VimScript using
 "     https://github.com/google/vimdoc. See
 "     https://phpactor.github.io/phpactor/developing.html#vim-help
+" vint: -ProhibitUnnecessaryDoubleQuote
+" vint: -ProhibitImplicitScopeVariable
+" vint: -ProhibitAbbreviationOption
 
 function! phpactor#Update() abort
     let current = getcwd()
