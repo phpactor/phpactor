@@ -33,6 +33,8 @@ function! phpactor#input#choice(label, choices, keyMap, ResultHandler)
     for choiceLabel in keys(a:choices)
         let buffer = []
 
+        " note that a:keyMap can be an empty list because PHP's json_decode
+        " can't tell the difference between an empty list and an empty dict
         if !empty(a:keyMap) && has_key(a:keyMap, choiceLabel) && !empty(a:keyMap[choiceLabel])
             let confirmLabel = s:determineConfirmLabelFromPreference(choiceLabel, a:keyMap[choiceLabel])
         else
