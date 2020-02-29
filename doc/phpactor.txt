@@ -17,10 +17,6 @@ Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
 This is the help file for the VIM client. For more information see the
 official website: https://phpactor.github.io/phpactor/
 
-NOTE: This help is auto-generated from the VimScript using
-https://github.com/google/vimdoc. See
-https://phpactor.github.io/phpactor/developing.html#vim-help
-
 ==============================================================================
 CONFIGURATION                                                *phpactor-config*
 
@@ -45,9 +41,8 @@ Function to use when presenting a user with a choice of options. The default
 is to use the VIM inputlist.
 
                                                     *g:phpactorUseOpenWindows*
-When jump to the line of a file displayed in any existing window reuse this
-window to avoid have more than one view of the same file. The default is
-false.
+When jumping to a file location: if the target file open in a window, switch
+to that window instead of switching buffers.  The default is false.
 
 ==============================================================================
 COMPLETION                                               *phpactor-completion*

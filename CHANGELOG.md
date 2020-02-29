@@ -40,6 +40,8 @@ Bug fix:
 Improvements:
 
   - [vim-plugin] Better handling of `json_decode` errors
+  - [vim-plugin] Add option to switch to open windows
+    `g:phpactorUseOpenWindows` - @przepompownia
 
 ## 2019-10-23 0.13.5
 
