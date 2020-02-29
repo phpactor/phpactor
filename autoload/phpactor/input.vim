@@ -71,7 +71,8 @@ function! s:determineConfirmLabelFromPreference(choiceLabel, preference)
     endfor
 
     if foundShortcut == v:false
-        "call add(buffer, a:preference . '&')
+        " Could not find char in the label - add the shortcut at the end
+        call add(buffer, '&' . a:preference)
     endif
 
     return join(buffer, "")
