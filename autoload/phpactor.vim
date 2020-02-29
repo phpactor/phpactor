@@ -116,14 +116,14 @@ endfunction
 function! phpactor#ExtractMethod(...) abort
     let positions = {}
 
-    if 0 == a:0 " Visual mode - backward compatibility
+    if 0 ==# a:0 " Visual mode - backward compatibility
         let positions.start = phpactor#_selectionStart()
         let positions.end = phpactor#_selectionEnd()
     elseif a:1 ==? 'v' " Visual mode
         let positions.start = phpactor#_selectionStart()
         let positions.end = phpactor#_selectionEnd()
     else " Linewise or characterwise motion
-        let linewise = 'line' == a:1
+        let linewise = 'line' ==# a:1
 
         let positions.start = s:getStartOffsetFromMark("'[", linewise)
         let positions.end = s:getEndOffsetFromMark("']", linewise)
@@ -135,17 +135,17 @@ endfunction
 function! phpactor#ExtractExpression(type) abort
     let positions = {}
 
-    if v:true == a:type  " Invoked from Visual mode - backward compatibility
+    if v:true ==# a:type  " Invoked from Visual mode - backward compatibility
         let positions.start = phpactor#_selectionStart()
         let positions.end = phpactor#_selectionEnd()
-    elseif v:false == a:type " Invoked from an offset - backward compatibility
+    elseif v:false ==# a:type " Invoked from an offset - backward compatibility
         let positions.start = phpactor#_offset()
         let positions.end = v:null
     elseif a:type ==? 'v' " Visual mode
         let positions.start = phpactor#_selectionStart()
         let positions.end = phpactor#_selectionEnd()
     else " Linewise or characterwise motion
-        let linewise = 'line' == a:type
+        let linewise = 'line' ==# a:type
 
         let positions.start = s:getStartOffsetFromMark("'[", linewise)
         let positions.end = s:getEndOffsetFromMark("']", linewise)
@@ -258,7 +258,7 @@ function! phpactor#Transform(...) abort
 
     let args = { "path": phpactor#_path(), "source": phpactor#_source() }
 
-    if transform != ''
+    if transform !=# ''
         let args.transform = transform
     endif
 
@@ -322,7 +322,7 @@ endfunction
 " Utility functions
 """""""""""""""""""""""
 function! s:isOpenInCurrentWindow(filePath) abort
-  return expand('%:p') == a:filePath
+  return expand('%:p') ==# a:filePath
 endfunction
 
 function! phpactor#_switchToBufferOrEdit(filePath) abort
@@ -332,7 +332,7 @@ function! phpactor#_switchToBufferOrEdit(filePath) abort
 
     let bufferNumber = bufnr(a:filePath . '$')
 
-    let command = (bufferNumber == -1)
+    let command = (bufferNumber ==# -1)
           \ ? ":edit " . a:filePath
           \ : ":buffer " . bufferNumber
 
@@ -355,7 +355,7 @@ function! s:getStartOffsetFromMark(mark, linewise) abort
     let [line, column] = getpos(a:mark)[1:2]
     let offset = line2byte(line)
 
-    if v:true == a:linewise
+    if v:true ==# a:linewise
         return offset - 1
     endif
 
@@ -367,7 +367,7 @@ function! s:getEndOffsetFromMark(mark, linewise) abort
     let offset = line2byte(line)
     let lineLenght = strlen(getline(line))
 
-    if v:true == a:linewise
+    if v:true ==# a:linewise
         return offset + lineLenght - 1
     endif
 
@@ -413,7 +413,7 @@ function! phpactor#_applyTextEdits(path, edits) abort
             endif
         endif
 
-        let newLines = edit.text == "\n" ? [''] : split(edit.text, "\n")
+        let newLines = edit.text ==# "\n" ? [''] : split(edit.text, "\n")
         keepjumps call append(startLine, newLines)
 
         if startLine < curLine
@@ -439,7 +439,7 @@ function! phpactor#rpc(action, arguments) abort
     let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
     let result = system(cmd, json_encode(request))
 
-    if (v:shell_error == 0)
+    if (v:shell_error ==# 0)
         try
             let response = json_decode(result)
         catch
@@ -463,12 +463,12 @@ endfunction
 function! phpactor#_rpc_dispatch(actionName, parameters) abort
 
     " >> return_choice
-    if a:actionName == "return"
+    if a:actionName ==# "return"
         return a:parameters["value"]
     endif
 
     " >> return_choice
-    if a:actionName == "return_choice"
+    if a:actionName ==# "return_choice"
         let list = []
         let c = 1
         for choice in a:parameters["choices"]
@@ -478,7 +478,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
 
         let choice = inputlist(list)
 
-        if (choice == 0)
+        if (choice ==# 0)
             return
         endif
 
@@ -488,19 +488,19 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> echo
-    if a:actionName == "echo"
+    if a:actionName ==# "echo"
         echo a:parameters["message"]
         return
     endif
 
     " >> error
-    if a:actionName == "error"
+    if a:actionName ==# "error"
         echo "Error from Phpactor: " . a:parameters["message"]
         return
     endif
 
     " >> collection
-    if a:actionName == "collection"
+    if a:actionName ==# "collection"
         for action in a:parameters["actions"]
             let result = phpactor#_rpc_dispatch(action["name"], action["parameters"])
 
@@ -513,7 +513,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> open_file
-    if a:actionName == "open_file"
+    if a:actionName ==# "open_file"
         let changedFileOrWindow = v:true
 
         call s:openFileInSelectedTarget(
@@ -523,7 +523,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
               \ a:parameters["force_reload"]
               \ )
 
-        if a:parameters["target"] == 'focused_window'
+        if a:parameters["target"] ==# 'focused_window'
             let changedFileOrWindow = !s:isOpenInCurrentWindow(a:parameters["path"])
         endif
 
@@ -537,10 +537,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> close_file
-    if a:actionName == "close_file"
+    if a:actionName ==# "close_file"
         let bufferNumber = bufnr(a:parameters['path']. '$')
 
-        if (bufferNumber == -1)
+        if (bufferNumber ==# -1)
             return
         endif
 
@@ -549,10 +549,10 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> file references
-    if a:actionName == "file_references"
+    if a:actionName ==# "file_references"
         " if there is only one file, and it is the open file, don't
         " bother opening the quick fix window
-        if len(a:parameters['file_references']) == 1
+        if len(a:parameters['file_references']) ==# 1
             let fileRefs = a:parameters['file_references'][0]
             if -1 != match(fileRefs['file'], bufname('%') . '$')
                 return
@@ -577,7 +577,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> input_callback
-    if a:actionName == "input_callback"
+    if a:actionName ==# "input_callback"
         let inputs = a:parameters['inputs']
         let action = a:parameters['callback']['action']
         let parameters = a:parameters['callback']['parameters']
@@ -592,7 +592,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     endif
 
     " >> information
-    if a:actionName == "information"
+    if a:actionName ==# "information"
         " We write to a temporary file and then "edit" it in the preview
         " window. Not sure if there is a better way to do this.
         let temp = resolve(tempname())
@@ -613,13 +613,13 @@ function! phpactor#_rpc_dispatch(actionName, parameters) abort
     "       offset is not taken into account, so same-line edits will cause an
     "       incorrect post-edit cursor character offset.
     "
-    if a:actionName == "update_file_source"
+    if a:actionName ==# "update_file_source"
         call phpactor#_applyTextEdits(a:parameters['path'], a:parameters['edits'])
         return
     endif
 
     " >> replace_file_source
-    if a:actionName == "replace_file_source"
+    if a:actionName ==# "replace_file_source"
 
         " if the file is open in a buffer, reload it before replacing it's
         " source (avoid file-modified-on-disk errors)
@@ -651,7 +651,7 @@ endfunction
 
 function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload) abort
     let bufferNumber = bufnr(a:filePath . "$")
-    if v:true == a:useOpenWindow && -1 != bufferNumber
+    if v:true ==# a:useOpenWindow && -1 != bufferNumber
         let firstWindowId = get(win_findbuf(bufferNumber), 0, v:null)
 
         if v:null != firstWindowId
@@ -660,25 +660,25 @@ function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReloa
         endif
     endif
 
-    if a:target == 'focused_window'
+    if a:target ==# 'focused_window'
         call phpactor#_switchToBufferOrEdit(a:filePath)
-        if v:true == a:forceReload
+        if v:true ==# a:forceReload
           exec "e!"
         endif
         return
     endif
 
-    if a:target == 'vsplit'
+    if a:target ==# 'vsplit'
         exec ":vsplit " . a:filePath
         return
     endif
 
-    if a:target == 'hsplit'
+    if a:target ==# 'hsplit'
         exec ":split " . a:filePath
         return
     endif
 
-    if a:target == 'new_tab'
+    if a:target ==# 'new_tab'
         exec ":tabnew " . a:filePath
         return
     endif
@@ -707,25 +707,25 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters) abort
     " Remove any existing output in the message window
     execute ':redraw'
 
-    if 'text' == input['type']
+    if 'text' ==# input['type']
         let TypeHandler = function('phpactor#input#text', [
             \ inputParameters['label'],
             \ inputParameters['default'],
             \ inputParameters['type']
         \ ])
-    elseif 'choice' == input['type']
+    elseif 'choice' ==# input['type']
         let TypeHandler = function('phpactor#input#choice', [
             \ inputParameters['label'],
             \ inputParameters['choices'],
             \ inputParameters['keyMap']
         \ ])
-    elseif 'list' == input['type']
+    elseif 'list' ==# input['type']
         let TypeHandler = function('phpactor#input#list', [
             \ inputParameters['label'],
             \ inputParameters['choices'],
             \ inputParameters['multi']
         \ ])
-    elseif 'confirm' == input['type']
+    elseif 'confirm' ==# input['type']
         let TypeHandler = function('phpactor#input#confirm', [
             \ inputParameters['label']
         \ ])
