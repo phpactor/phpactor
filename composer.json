@@ -28,7 +28,7 @@
         "phpactor/logging-extension": "~0.2",
         "phpactor/path-finder": "~0.1",
         "phpactor/reference-finder-rpc-extension": "~0.1",
-        "phpactor/rpc-extension": "~0.2",
+        "phpactor/rpc-extension": "^0.2.1",
         "phpactor/source-code-filesystem": "~0.1",
         "phpactor/source-code-filesystem-extension": "~0.1",
         "phpactor/text-document": "~1.1.2",
@@ -39,7 +39,8 @@
         "sebastian/diff": "^3.0",
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",
-        "webmozart/glob": "^4.1"
+        "webmozart/glob": "^4.1",
+        "dantleech/invoke": "^1.0.1"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
@@ -66,7 +67,13 @@
     },
     "config": {
         "platform": {
-            "php": "7.1.3"
+            "php": "7.2.0"
         }
+    },
+    "scripts": {
+        "integrate": [
+            "vendor/bin/phpunit",
+            "vendor/bin/php-cs-fixer fix"
+        ]
     }
 }

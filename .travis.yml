@@ -43,7 +43,6 @@ jobs:
       script:
         # Run the VIM Plugin tests
         - config/travis/vim-plugin-test.sh
-    - php: 7.1
     - php: 7.2
     - stage: docs
       php: 7.2

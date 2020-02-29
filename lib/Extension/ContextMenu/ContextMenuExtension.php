@@ -7,6 +7,7 @@ use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
@@ -25,7 +26,7 @@ class ContextMenuExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(CodeTransformExtension::SERVICE_CLASS_INTERESTING_OFFSET_FINDER),
                 $container->get('application.helper.class_file_normalizer'),
-                json_decode(file_get_contents(__DIR__ . '/menu.json'), true),
+                ContextMenu::fromArray(json_decode(file_get_contents(__DIR__ . '/menu.json'), true)),
                 $container
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ContextMenuHandler::NAME] ]);

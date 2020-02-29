@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\Php\Model;
 
-use Phpactor\Extension\Php\Model\PhpVersionResolver;
-
 class RuntimePhpVersionResolver implements PhpVersionResolver
 {
     /**
