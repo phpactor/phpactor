@@ -28,7 +28,7 @@
         "phpactor/logging-extension": "~0.2",
         "phpactor/path-finder": "~0.1",
         "phpactor/reference-finder-rpc-extension": "~0.1",
-        "phpactor/rpc-extension": "~0.2",
+        "phpactor/rpc-extension": "^0.2.1",
         "phpactor/source-code-filesystem": "~0.1",
         "phpactor/source-code-filesystem-extension": "~0.1",
         "phpactor/text-document": "~1.1.2",
