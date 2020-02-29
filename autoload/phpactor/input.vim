@@ -24,7 +24,6 @@ let s:usedShortcuts = []
 function! phpactor#input#choice(label, choices, keyMap, ResultHandler)
     let s:usedShortcuts = []
     let list = []
-    let choices = []
 
     if empty(a:choices)
         call confirm("No choices available")
@@ -41,7 +40,6 @@ function! phpactor#input#choice(label, choices, keyMap, ResultHandler)
         endif
 
         call add(list, confirmLabel)
-        call add(choices, choiceLabel)
     endfor
 
     let choice = confirm(a:label, join(list, "\n"))
@@ -51,7 +49,7 @@ function! phpactor#input#choice(label, choices, keyMap, ResultHandler)
         throw "cancelled"
     endif
 
-    call a:ResultHandler(choices[choice - 1])
+    call a:ResultHandler(keys(a:choices)[choice - 1])
 endfunction
 
 function! s:determineConfirmLabelFromPreference(choiceLabel, preference)
