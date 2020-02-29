@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0ad39e3462ddefbeeb96079dc77c1e5",
+    "content-hash": "77cafd9d809485bb153f836182dd0750",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -309,7 +309,7 @@
         },
         {
             "name": "dantleech/invoke",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/invoke.git",
@@ -5721,11 +5721,10 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dantleech/invoke": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
     },
-    "prefer-stable": true,
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1"
