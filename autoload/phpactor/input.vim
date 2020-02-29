@@ -9,7 +9,7 @@ function! phpactor#input#text(label, default, completionType, ResultHandler) abo
 endfunction
 
 function! phpactor#input#confirm(label, ResultHandler) abort
-    let l:hoice = confirm(a:label, "&Yes\n&No\n")
+    let l:choice = confirm(a:label, "&Yes\n&No\n")
 
     if l:choice == 1
         let l:response = v:true
