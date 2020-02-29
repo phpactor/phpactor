@@ -319,7 +319,7 @@ function! s:isOpenInCurrentWindow(filePath)
 endfunction
 
 function! phpactor#_switchToBufferOrEdit(filePath)
-    if <SID>isOpenInCurrentWindow(a:filePath)
+    if s:isOpenInCurrentWindow(a:filePath)
         return v:false
     endif
 
@@ -509,7 +509,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "open_file"
         let changedFileOrWindow = v:true
 
-        call <SID>openFileInSelectedTarget(
+        call s:openFileInSelectedTarget(
               \ a:parameters["path"],
               \ a:parameters["target"],
               \ get(a:parameters, "use_open_window", g:phpactorUseOpenWindows),
@@ -517,7 +517,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
               \ )
 
         if a:parameters["target"] == 'focused_window'
-            let changedFileOrWindow = !<SID>isOpenInCurrentWindow(a:parameters["path"])
+            let changedFileOrWindow = !s:isOpenInCurrentWindow(a:parameters["path"])
         endif
 
         if (a:parameters['offset'])
