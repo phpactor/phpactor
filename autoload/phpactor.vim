@@ -713,7 +713,8 @@ function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
     elseif 'choice' == input['type']
         let TypeHandler = function('phpactor#input#choice', [
             \ inputParameters['label'],
-            \ inputParameters['choices']
+            \ inputParameters['choices'],
+            \ inputParameters['keyMap']
         \ ])
     elseif 'list' == input['type']
         let TypeHandler = function('phpactor#input#list', [

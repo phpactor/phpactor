@@ -27,7 +27,7 @@
                 "source": "%source%"
             }
         },
-        "cycle_visiblity": {
+        "cycle_visibility": {
             "action": "change_visibility",
             "key": "v",
             "parameters": {
@@ -38,7 +38,7 @@
         },
         "find_references": {
             "action": "references",
-            "key": "r",
+            "key": "f",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -56,7 +56,7 @@
         },
         "replace_references": {
             "action": "references",
-            "key": "R",
+            "key": "r",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -74,14 +74,14 @@
         },
         "class_new": {
             "action": "class_new",
-            "key": "c",
+            "key": "l",
             "parameters": {
                 "current_path": "%path%"
             }
         },
         "copy": {
             "action": "copy_class",
-            "key": "C",
+            "key": "c",
             "parameters": {
                 "source_path": "%path%"
             }
@@ -125,7 +125,7 @@
         },
         "import": {
             "action": "import_class",
-            "key": "u",
+            "key": "p",
             "parameters": {
                 "offset": "%offset%",
                 "path": "%current_path%",
@@ -134,7 +134,7 @@
         },
         "import_missing_classes": {
             "action": "import_missing_classes",
-            "key": "U",
+            "key": "o",
             "parameters": {
                 "path": "%current_path%",
                 "source": "%source%"
@@ -151,7 +151,7 @@
         },
         "goto_implementation": {
             "action": "goto_implementation",
-            "key": "l",
+            "key": "_",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -205,7 +205,7 @@
             "goto_implementation"
         ],
         "property": [
-            "cycle_visiblity",
+            "cycle_visibility",
             "find_references",
             "generate_accessor",
             "goto_definition",
@@ -213,7 +213,7 @@
             "hover"
         ],
         "method": [
-            "cycle_visiblity",
+            "cycle_visibility",
             "find_references",
             "generate_method",
             "goto_definition",

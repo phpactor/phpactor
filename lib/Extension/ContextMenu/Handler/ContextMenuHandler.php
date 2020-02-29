@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\ContextMenu\Handler;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
+use Phpactor\Extension\ContextMenu\Model\Action;
 use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
@@ -144,7 +145,9 @@ class ContextMenuHandler implements Handler
                     self::PARAMETER_ACTION,
                     sprintf('%s "%s":', ucfirst($symbol->symbolType()), $symbol->name()),
                     array_combine(array_keys($symbolMenu), array_keys($symbolMenu))
-                )
+                )->withKeys(array_combine(array_keys($symbolMenu), array_map(function (Action $action) {
+                    return $action->key();
+                }, $symbolMenu)))
             ]
         );
     }

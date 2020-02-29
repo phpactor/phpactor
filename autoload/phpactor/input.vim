@@ -20,10 +20,11 @@ function! phpactor#input#confirm(label, ResultHandler)
     call a:ResultHandler(response)
 endfunction
 
-function! phpactor#input#choice(label, choices, ResultHandler)
+let s:usedShortcuts = []
+function! phpactor#input#choice(label, choices, keyMap, ResultHandler)
+    let s:usedShortcuts = []
     let list = []
     let choices = []
-    let usedShortcuts = []
 
     if empty(a:choices)
         call confirm("No choices available")
@@ -32,19 +33,12 @@ function! phpactor#input#choice(label, choices, ResultHandler)
 
     for choiceLabel in keys(a:choices)
         let buffer = []
-        let foundShortcut = v:false
 
-        for char in split(choiceLabel, '\zs')
-            if v:false == foundShortcut && -1 == index(usedShortcuts, tolower(char))
-                call add(buffer, '&')
-                let foundShortcut = v:true
-                call add(usedShortcuts, tolower(char))
-            endif
-
-            call add(buffer, char)
-        endfor
-
-        let confirmLabel = join(buffer, "")
+        if !empty(a:keyMap) && has_key(a:keyMap, choiceLabel) && !empty(a:keyMap[choiceLabel])
+            let confirmLabel = s:determineConfirmLabelFromPreference(choiceLabel, a:keyMap[choiceLabel])
+        else
+            let confirmLabel = s:determineConfirmLabel(choiceLabel)
+        endif
 
         call add(list, confirmLabel)
         call add(choices, choiceLabel)
@@ -60,15 +54,55 @@ function! phpactor#input#choice(label, choices, ResultHandler)
     call a:ResultHandler(choices[choice - 1])
 endfunction
 
+function! s:determineConfirmLabelFromPreference(choiceLabel, preference)
+    let buffer = []
+    let foundShortcut = v:false
+
+    for char in split(a:choiceLabel, '\zs')
+        if foundShortcut == v:false && tolower(char) == tolower(a:preference)
+            let foundShortcut = v:true
+
+            call add(buffer, '&' . a:preference)
+            call add(s:usedShortcuts, a:preference)
+            continue
+        endif
+
+        call add(buffer, char)
+    endfor
+
+    if foundShortcut == v:false
+        "call add(buffer, a:preference . '&')
+    endif
+
+    return join(buffer, "")
+endfunction
+
+function! s:determineConfirmLabel(choiceLabel)
+    let foundShortcut = v:false
+    let buffer = []
+    for char in split(a:choiceLabel, '\zs')
+        if v:false == foundShortcut && -1 == index(s:usedShortcuts, tolower(char))
+            let foundShortcut = v:true
+
+            call add(buffer, '&')
+            call add(s:usedShortcuts, tolower(char))
+        endif
+
+        call add(buffer, char)
+    endfor
+
+    return join(buffer, "")
+endfunction
+
 function! phpactor#input#list(label, choices, multi, ResultHandler)
     let choices = sort(keys(a:choices))
 
     try
-      let strategy = g:phpactorInputListStrategy
-      call call(strategy, [a:label, choices, a:multi, a:ResultHandler])
+        let strategy = g:phpactorInputListStrategy
+        call call(strategy, [a:label, choices, a:multi, a:ResultHandler])
     catch /E117/
-      redraw!
-      echo 'The strategy "'. strategy .'" is unknown, check the value of "g:phpactorInputListStrategy".'
+        redraw!
+        echo 'The strategy "'. strategy .'" is unknown, check the value of "g:phpactorInputListStrategy".'
     endtry
 endfunction
 

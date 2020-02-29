@@ -34,7 +34,7 @@ class Action
         return $this->parameters;
     }
 
-    public function key(): string
+    public function key(): ?string
     {
         return $this->key;
     }

@@ -24,9 +24,10 @@ class ContextMenu
         }
 
         $this->contexts = $contexts;
+        $this->validate();
     }
 
-    public function fromArray(array $array)
+    public function fromArray(array $array): self
     {
         return Invoke::new(self::class, $array);
     }
@@ -61,5 +62,32 @@ class ContextMenu
         }
 
         return $this->actions[$name];
+    }
+
+    private function validate(): void
+    {
+        $missingActions = [];
+        foreach ($this->contexts as $name => $actions) {
+            $keys = [];
+            foreach ($actions as $actionName) {
+
+                if (!isset($this->actions[$actionName])) {
+                    throw new RuntimeException(sprintf(
+                        'Action "%s" used in context "%s" does not exist, known actions: "%s"'
+                    , $actionName, $name, implode('", "', array_keys($this->actions))));
+                }
+
+                $action = $this->actions[$actionName];
+
+                if (isset($keys[$action->key()])) {
+                    throw new RuntimeException(sprintf(
+                        'Key "%s" in context "%s" mapped by action "%s" is already used by action "%s"',
+                        $action->key(), $name, $actionName, $keys[$action->key()]
+                    ));
+                }
+
+                $keys[$action->key()] = $actionName;
+            }
+        }
     }
 }
