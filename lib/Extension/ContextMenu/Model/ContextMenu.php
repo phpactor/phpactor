@@ -70,11 +70,13 @@ class ContextMenu
         foreach ($this->contexts as $name => $actions) {
             $keys = [];
             foreach ($actions as $actionName) {
-
                 if (!isset($this->actions[$actionName])) {
                     throw new RuntimeException(sprintf(
-                        'Action "%s" used in context "%s" does not exist, known actions: "%s"'
-                    , $actionName, $name, implode('", "', array_keys($this->actions))));
+                        'Action "%s" used in context "%s" does not exist, known actions: "%s"',
+                        $actionName,
+                        $name,
+                        implode('", "', array_keys($this->actions))
+                    ));
                 }
 
                 $action = $this->actions[$actionName];
@@ -82,7 +84,10 @@ class ContextMenu
                 if (isset($keys[$action->key()])) {
                     throw new RuntimeException(sprintf(
                         'Key "%s" in context "%s" mapped by action "%s" is already used by action "%s"',
-                        $action->key(), $name, $actionName, $keys[$action->key()]
+                        $action->key(),
+                        $name,
+                        $actionName,
+                        $keys[$action->key()]
                     ));
                 }
 

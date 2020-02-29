@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Unit\Extension\PhpVersionResolver\Model;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;
 use Phpactor\Tests\IntegrationTestCase;
 
@@ -11,7 +10,8 @@ class ComposerPhpVersionResolverTest extends IntegrationTestCase
     public function testReturnsPlatform()
     {
         $this->workspace()->reset();
-        $this->workspace()->loadManifest(<<<'EOT'
+        $this->workspace()->loadManifest(
+            <<<'EOT'
 // File: composer.json
 {
     "require": {
@@ -27,7 +27,8 @@ EOT
     public function testReturnsPlatformWithHigherPrio()
     {
         $this->workspace()->reset();
-        $this->workspace()->loadManifest(<<<'EOT'
+        $this->workspace()->loadManifest(
+            <<<'EOT'
 // File: composer.json
 {
     "require": {

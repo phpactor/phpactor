@@ -30,7 +30,6 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
-use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
