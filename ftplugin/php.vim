@@ -36,9 +36,8 @@ let g:phpactorQuickfixStrategy = get(g:, 'phpactorQuickfixStrategy', 'phpactor#q
 let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor#input#list#inputlist')
 
 ""
-" When jump to the line of a file displayed in any existing window
-" reuse this window to avoid have more than one view of the same file.
-" The default is false.
+" When jumping to a file location: if the target file open in a window, switch
+" to that window instead of switching buffers.  The default is false.
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
 if g:phpactorOmniAutoClassImport == v:true

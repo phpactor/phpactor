@@ -6,6 +6,10 @@
 " Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
 " This is the help file for the VIM client. For more information see the
 " official website: https://phpactor.github.io/phpactor/
+"
+" NOTE: This help is auto-generated from the VimScript using
+"     https://github.com/google/vimdoc. See
+"     https://phpactor.github.io/phpactor/developing.html#vim-help
 
 function! phpactor#Update()
     let current = getcwd()
