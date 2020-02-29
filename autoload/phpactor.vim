@@ -11,7 +11,7 @@
 "     https://github.com/google/vimdoc. See
 "     https://phpactor.github.io/phpactor/developing.html#vim-help
 
-function! phpactor#Update()
+function! phpactor#Update() abort
     let current = getcwd()
     execute 'cd ' . g:phpactorpath
     echo system('git checkout ' . g:phpactorBranch)
@@ -20,7 +20,7 @@ function! phpactor#Update()
     execute 'cd ' .  current
 endfunction
 
-function! phpactor#Complete(findstart, base)
+function! phpactor#Complete(findstart, base) abort
 
     let lineOffset = line2byte(line("."))
 
@@ -73,7 +73,7 @@ function! phpactor#Complete(findstart, base)
     return completions
 endfunction
 
-function! phpactor#_completeTruncateLabel(label, length)
+function! phpactor#_completeTruncateLabel(label, length) abort
     if strlen(a:label) < a:length
         return a:label
     endif
@@ -81,11 +81,11 @@ function! phpactor#_completeTruncateLabel(label, length)
     return strpart(a:label, 0, a:length - 3) . '...'
 endfunction
 
-function! phpactor#_completionItemHash(completion)
+function! phpactor#_completionItemHash(completion) abort
     return a:completion['word'] . a:completion['menu'] . a:completion['kind']
 endfunction
 
-function! phpactor#_completeImportClass(completedItem)
+function! phpactor#_completeImportClass(completedItem) abort
 
     if !has_key(a:completedItem, "word")
         return
@@ -110,7 +110,7 @@ function! phpactor#_completeImportClass(completedItem)
 
 endfunction
 
-function! phpactor#ExtractMethod(...)
+function! phpactor#ExtractMethod(...) abort
     let positions = {}
 
     if 0 == a:0 " Visual mode - backward compatibility
@@ -129,7 +129,7 @@ function! phpactor#ExtractMethod(...)
     call phpactor#rpc("extract_method", { "path": phpactor#_path(), "offset_start": positions.start, "offset_end": positions.end, "source": phpactor#_source()})
 endfunction
 
-function! phpactor#ExtractExpression(type)
+function! phpactor#ExtractExpression(type) abort
     let positions = {}
 
     if v:true == a:type  " Invoked from Visual mode - backward compatibility
@@ -151,11 +151,11 @@ function! phpactor#ExtractExpression(type)
     call phpactor#rpc("extract_expression", { "path": phpactor#_path(), "offset_start": positions.start, "offset_end": positions.end, "source": phpactor#_source()})
 endfunction
 
-function! phpactor#ExtractConstant()
+function! phpactor#ExtractConstant() abort
     call phpactor#rpc("extract_constant", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": phpactor#_path()})
 endfunction
 
-function! phpactor#ClassExpand()
+function! phpactor#ClassExpand() abort
     let word = expand("<cword>")
     let classInfo = phpactor#rpc("class_search", { "short_name": word })
 
@@ -171,17 +171,17 @@ function! phpactor#ClassExpand()
     execute "normal! ciw" . namespace_prefix.word
 endfunction
 
-function! phpactor#UseAdd()
+function! phpactor#UseAdd() abort
     call phpactor#ImportClass()
 endfunction
-function! phpactor#ImportClass()
+function! phpactor#ImportClass() abort
     call phpactor#rpc("import_class", {"offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p')})
 endfunction
-function! phpactor#ImportMissingClasses()
+function! phpactor#ImportMissingClasses() abort
     call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
-function! phpactor#_GotoDefinitionTarget(target)
+function! phpactor#_GotoDefinitionTarget(target) abort
     call phpactor#rpc("goto_definition", {
                 \"offset": phpactor#_offset(),
                 \"source": phpactor#_source(),
@@ -189,10 +189,10 @@ function! phpactor#_GotoDefinitionTarget(target)
                 \"target": a:target,
                 \'language': &ft})
 endfunction
-function! phpactor#GotoDefinition()
+function! phpactor#GotoDefinition() abort
     call phpactor#_GotoDefinitionTarget('focused_window')
 endfunction
-function! phpactor#GotoImplementations()
+function! phpactor#GotoImplementations() abort
     call phpactor#rpc("goto_implementation", {
                 \"offset": phpactor#_offset(),
                 \"source": phpactor#_source(),
@@ -200,41 +200,41 @@ function! phpactor#GotoImplementations()
                 \"target": 'focused_window',
                 \'language': &ft})
 endfunction
-function! phpactor#GotoDefinitionVsplit()
+function! phpactor#GotoDefinitionVsplit() abort
     call phpactor#_GotoDefinitionTarget('vsplit')
 endfunction
-function! phpactor#GotoDefinitionHsplit()
+function! phpactor#GotoDefinitionHsplit() abort
     call phpactor#_GotoDefinitionTarget('hsplit')
 endfunction
-function! phpactor#GotoDefinitionTab()
+function! phpactor#GotoDefinitionTab() abort
     call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
-function! phpactor#Hover()
+function! phpactor#Hover() abort
     call phpactor#rpc("hover", { "offset": phpactor#_offset(), "source": phpactor#_source() })
 endfunction
 
-function! phpactor#ContextMenu()
+function! phpactor#ContextMenu() abort
     call phpactor#rpc("context_menu", { "offset": phpactor#_offset(), "source": phpactor#_source(), "current_path": expand('%:p') })
 endfunction
 
-function! phpactor#CopyFile()
+function! phpactor#CopyFile() abort
     call phpactor#rpc("copy_class", { "source_path": phpactor#_path() })
 endfunction
 
-function! phpactor#MoveFile()
+function! phpactor#MoveFile() abort
     call phpactor#rpc("move_class", { "source_path": phpactor#_path() })
 endfunction
 
-function! phpactor#OffsetTypeInfo()
+function! phpactor#OffsetTypeInfo() abort
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction
 
-function! phpactor#ExtensionList()
+function! phpactor#ExtensionList() abort
     call phpactor#rpc("extension_list", {})
 endfunction
 
-function! phpactor#ExtensionInstall(...)
+function! phpactor#ExtensionInstall(...) abort
     if v:false != get(a:,1, v:false)
         call phpactor#rpc("extension_install", {"extension_name":get(a:,1)})
         return
@@ -242,7 +242,7 @@ function! phpactor#ExtensionInstall(...)
     call phpactor#rpc("extension_install", {})
 endfunction
 
-function! phpactor#ExtensionRemove(...)
+function! phpactor#ExtensionRemove(...) abort
     if v:false != get(a:,1, v:false)
         call phpactor#rpc("extension_remove", {"extension_name":get(a:,1)})
         return
@@ -250,7 +250,7 @@ function! phpactor#ExtensionRemove(...)
     call phpactor#rpc("extension_remove", {})
 endfunction
 
-function! phpactor#Transform(...)
+function! phpactor#Transform(...) abort
     let transform = get(a:, 1, '')
 
     let args = { "path": phpactor#_path(), "source": phpactor#_source() }
@@ -262,67 +262,67 @@ function! phpactor#Transform(...)
     call phpactor#rpc("transform", args)
 endfunction
 
-function! phpactor#ClassNew()
+function! phpactor#ClassNew() abort
     call phpactor#rpc("class_new", { "current_path": phpactor#_path() })
 endfunction
 
-function! phpactor#ClassInflect()
+function! phpactor#ClassInflect() abort
     call phpactor#rpc("class_inflect", { "current_path": phpactor#_path() })
 endfunction
 
 " Deprecated!! Use FindReferences
-function! phpactor#ClassReferences()
+function! phpactor#ClassReferences() abort
     call phpactor#FindReferences()
 endfunction
 
-function! phpactor#FindReferences()
+function! phpactor#FindReferences() abort
     call phpactor#rpc("references", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": phpactor#_path()})
 endfunction
 
-function! phpactor#Navigate()
+function! phpactor#Navigate() abort
     call phpactor#rpc("navigate", { "source_path": phpactor#_path() })
 endfunction
 
-function! phpactor#CacheClear()
+function! phpactor#CacheClear() abort
     call phpactor#rpc("cache_clear", {})
 endfunction
 
-function! phpactor#Status()
+function! phpactor#Status() abort
     call phpactor#rpc("status", {})
 endfunction
 
-function! phpactor#Config()
+function! phpactor#Config() abort
     call phpactor#rpc("config", {})
 endfunction
 
-function! phpactor#GetNamespace()
+function! phpactor#GetNamespace() abort
     let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
 
     return fileInfo['class_namespace']
 endfunction
 
-function! phpactor#GetClassFullName()
+function! phpactor#GetClassFullName() abort
     let fileInfo = phpactor#rpc("file_info", { "path": phpactor#_path() })
 
     return fileInfo['class']
 endfunction
 
-function! phpactor#ChangeVisibility()
+function! phpactor#ChangeVisibility() abort
     call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p') })
 endfunction
 
-function! phpactor#GenerateAccessors()
+function! phpactor#GenerateAccessors() abort
     call phpactor#rpc("generate_accessor", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
 endfunction
 
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""
-function! s:isOpenInCurrentWindow(filePath)
+function! s:isOpenInCurrentWindow(filePath) abort
   return expand('%:p') == a:filePath
 endfunction
 
-function! phpactor#_switchToBufferOrEdit(filePath)
+function! phpactor#_switchToBufferOrEdit(filePath) abort
     if s:isOpenInCurrentWindow(a:filePath)
         return v:false
     endif
@@ -336,19 +336,19 @@ function! phpactor#_switchToBufferOrEdit(filePath)
     exec command
 endfunction
 
-function! phpactor#_offset()
+function! phpactor#_offset() abort
     return line2byte(line('.')) + col('.') - 1
 endfunction
 
-function! phpactor#_source()
+function! phpactor#_source() abort
     return join(getline(1,'$'), "\n")
 endfunction
 
-function! phpactor#_path()
+function! phpactor#_path() abort
     return expand('%:p')
 endfunction
 
-function! s:getStartOffsetFromMark(mark, linewise)
+function! s:getStartOffsetFromMark(mark, linewise) abort
     let [line, column] = getpos(a:mark)[1:2]
     let offset = line2byte(line)
 
@@ -359,7 +359,7 @@ function! s:getStartOffsetFromMark(mark, linewise)
     return offset + column - 2
 endfunction
 
-function! s:getEndOffsetFromMark(mark, linewise)
+function! s:getEndOffsetFromMark(mark, linewise) abort
     let [line, column] = getpos(a:mark)[1:2]
     let offset = line2byte(line)
     let lineLenght = strlen(getline(line))
@@ -376,15 +376,15 @@ function! s:getEndOffsetFromMark(mark, linewise)
     return offset + column - 1
 endfunction
 
-function! phpactor#_selectionStart()
+function! phpactor#_selectionStart() abort
     return s:getStartOffsetFromMark("'<", v:false)
 endfunction
 
-function! phpactor#_selectionEnd()
+function! phpactor#_selectionEnd() abort
     return s:getEndOffsetFromMark("'>", v:false)
 endfunction
 
-function! phpactor#_applyTextEdits(path, edits)
+function! phpactor#_applyTextEdits(path, edits) abort
     call phpactor#_switchToBufferOrEdit(a:path)
 
     let postCursorPosition = getpos('.')
@@ -427,7 +427,7 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
-function! phpactor#rpc(action, arguments)
+function! phpactor#rpc(action, arguments) abort
     " Remove any existing output in the message window
     execute ':redraw'
 
@@ -457,7 +457,7 @@ function! phpactor#rpc(action, arguments)
     endif
 endfunction
 
-function! phpactor#_rpc_dispatch(actionName, parameters)
+function! phpactor#_rpc_dispatch(actionName, parameters) abort
 
     " >> return_choice
     if a:actionName == "return"
@@ -646,7 +646,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
-function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload)
+function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload) abort
     let bufferNumber = bufnr(a:filePath . "$")
     if v:true == a:useOpenWindow && -1 != bufferNumber
         let firstWindowId = get(win_findbuf(bufferNumber), 0, v:null)
@@ -681,13 +681,13 @@ function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReloa
     endif
 endfunction
 
-function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)
+function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result) abort
     let a:parameters[a:parameterName] = a:result
 
     call a:Next(a:parameters)
 endfunction
 
-function! phpactor#_rpc_dispatch_input(inputs, action, parameters)
+function! phpactor#_rpc_dispatch_input(inputs, action, parameters) abort
     let input = remove(a:inputs, 0)
     let inputParameters = input['parameters']
 
