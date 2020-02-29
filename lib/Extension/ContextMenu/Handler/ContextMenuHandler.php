@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\ContextMenu\Handler;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
+use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\TextDocument\ByteOffset;
@@ -38,7 +39,7 @@ class ContextMenuHandler implements Handler
     private $offsetFinder;
 
     /**
-     * @var array
+     * @var ContextMenu
      */
     private $menu;
 
@@ -56,7 +57,7 @@ class ContextMenuHandler implements Handler
         Reflector $reflector,
         InterestingOffsetFinder $offsetFinder,
         ClassFileNormalizer $classFileNormalizer,
-        array $menu,
+        ContextMenu $menu,
         Container $container
     ) {
         $this->reflector = $reflector;
@@ -98,14 +99,14 @@ class ContextMenuHandler implements Handler
 
     private function resolveAction(ReflectionOffset $offset, Symbol $symbol, array $arguments)
     {
-        if (false === isset($this->menu[$symbol->symbolType()])) {
+        if (false === $this->menu->hasContext($symbol->symbolType())) {
             return EchoResponse::fromMessage(sprintf(
                 'No context actions available for symbol type "%s"',
                 $symbol->symbolType()
             ));
         }
 
-        $symbolMenu = $this->menu[$symbol->symbolType()];
+        $symbolMenu = $this->menu->forContext($symbol->symbolType());
 
         if (null !== $arguments[self::PARAMETER_ACTION]) {
             return $this->delegateAction($symbolMenu, $arguments, $offset);
@@ -121,8 +122,8 @@ class ContextMenuHandler implements Handler
         // to avoid a cyclic dependency we get the request handler from the container ...
         return $this->container->get(ContextMenuExtension::SERVICE_REQUEST_HANDLER)->handle(
             Request::fromNameAndParameters(
-                $action[self::PARAMETER_ACTION],
-                $this->replaceTokens($action['parameters'], $offset, $arguments)
+                $action->action(),
+                $this->replaceTokens($action->parameters(), $offset, $arguments)
             )
         );
     }

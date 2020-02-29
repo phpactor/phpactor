@@ -3,6 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\ContextMenu\Handler;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
+use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\TextDocument\ByteOffset;
@@ -78,6 +79,20 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testNoActionsAvailable()
     {
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                ]
+            ]
+        ]);
         $source = SourceCode::fromPathAndString(
             '/hello.php',
             '<?php $hello = "world"; echo $hello;'
@@ -99,14 +114,21 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testReturnMenu()
     {
-        $this->menu = [
-            Symbol::VARIABLE => [
-                'action' => self::VARIABLE_ACTION,
-                'parameters' => [
-                    'one' => 1,
-                ],
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    Symbol::VARIABLE
+                ]
             ]
-        ];
+        ]);
 
         $source = SourceCode::fromPathAndString(
             '/hello.php',
@@ -130,14 +152,21 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testReturnMenuWithOriginalOffset()
     {
-        $this->menu = [
-            Symbol::VARIABLE => [
-                'action' => self::VARIABLE_ACTION,
-                'parameters' => [
-                    'one' => 1,
-                ],
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    Symbol::VARIABLE
+                ]
             ]
-        ];
+        ]);
 
         $source = SourceCode::fromPathAndString(
             '/hello.php',
@@ -185,8 +214,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
             EchoResponse::fromMessage('Hello')
         );
 
-        $this->menu = [
-            Symbol::VARIABLE => [
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
                 self::VARIABLE_ACTION => [
                     'action' => self::VARIABLE_ACTION,
                     'parameters' => [
@@ -194,9 +223,14 @@ class ContextMenuHandlerTest extends HandlerTestCase
                         'some_offset' => '%offset%',
                         'some_path' => '%path%',
                     ],
-                ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    self::VARIABLE_ACTION
+                ]
             ]
-        ];
+        ]);
 
         $action = $this->handle(ContextMenuHandler::NAME, [
             'action' => self::VARIABLE_ACTION,

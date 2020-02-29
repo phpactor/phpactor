@@ -12,6 +12,7 @@
         },
         "hover": {
             "action": "hover",
+            "key": "h",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
@@ -19,6 +20,7 @@
         },
         "extract_constant": {
             "action": "extract_constant",
+            "key": "e",
             "parameters": {
                 "path": "%path%",
                 "offset": "%offset%",
@@ -27,6 +29,7 @@
         },
         "cycle_visiblity": {
             "action": "change_visibility",
+            "key": "v",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -35,6 +38,7 @@
         },
         "find_references": {
             "action": "references",
+            "key": "r",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -43,23 +47,26 @@
         },
         "goto_definition": {
             "action": "goto_definition",
+            "key": "g",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
                 "path": "%path%"
-            },
-            "replace_references": {
-                "action": "references",
-                "parameters": {
-                    "offset": "%offset%",
-                    "source": "%source%",
-                    "path": "%current_path%",
-                    "mode": "replace"
-                }
+            }
+        },
+        "replace_references": {
+            "action": "references",
+            "key": "R",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%current_path%",
+                "mode": "replace"
             }
         },
         "hover": {
             "action": "hover",
+            "key": "h",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
@@ -67,36 +74,42 @@
         },
         "class_new": {
             "action": "class_new",
+            "key": "c",
             "parameters": {
                 "current_path": "%path%"
             }
         },
         "copy": {
             "action": "copy_class",
+            "key": "C",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "inflect": {
             "action": "class_inflect",
+            "key": "i",
             "parameters": {
                 "current_path": "%path%"
             }
         },
         "move": {
             "action": "move_class",
+            "key": "m",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "navigate": {
             "action": "navigate",
+            "key": "n",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "override_method": {
             "action": "override_method",
+            "key": "v",
             "parameters": {
                 "path": "%current_path%",
                 "source": "%source%"
@@ -104,6 +117,7 @@
         },
         "transform_file": {
             "action": "transform",
+            "key": "t",
             "parameters": {
                 "path": "%path%",
                 "source": "%source%"
@@ -111,6 +125,7 @@
         },
         "import": {
             "action": "import_class",
+            "key": "u",
             "parameters": {
                 "offset": "%offset%",
                 "path": "%current_path%",
@@ -119,6 +134,7 @@
         },
         "import_missing_classes": {
             "action": "import_missing_classes",
+            "key": "U",
             "parameters": {
                 "path": "%current_path%",
                 "source": "%source%"
@@ -126,6 +142,7 @@
         },
         "generate_accessor": {
             "action": "generate_accessor",
+            "key": "a",
             "parameters": {
                 "path": "%path%",
                 "source": "%source%",
@@ -134,10 +151,20 @@
         },
         "goto_implementation": {
             "action": "goto_implementation",
+            "key": "l",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
                 "path": "%path%"
+            }
+        },
+        "generate_method": {
+            "action": "generate_method",
+            "key": "m",
+            "parameters": {
+                "path": "%current_path%",
+                "offset": "%offset%",
+                "source": "%source%"
             }
         }
     },
