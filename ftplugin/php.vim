@@ -9,43 +9,37 @@ let g:phpactorInitialCwd = getcwd()
 let g:phpactorCompleteLabelTruncateLength=50
 let g:_phpactorCompletionMeta = {}
 
-if !exists('g:phpactorPhpBin')
-    ""
-    " Path to the PHP binary used by Phpactor
-    let g:phpactorPhpBin = 'php'
-endif
+""
+" Path to the PHP binary used by Phpactor
+let g:phpactorPhpBin = get(g:, 'phpactorPhpBin', 'php')
 
-if !exists('g:phpactorBranch')
-    ""
-    " The Phpactor branch to use when calling @command(PhpactorUpdate)
-    let g:phpactorBranch = 'master'
-endif
+""
+" The Phpactor branch to use when calling @command(PhpactorUpdate)
+let g:phpactorBranch = get(g:, 'phpactorBranch', 'master')
 
-if !exists('g:phpactorOmniAutoClassImport')
-    ""
-    " Automatically import classes when using VIM native omni-completion
-    let g:phpactorOmniAutoClassImport = v:true
-endif
+""
+" Automatically import classes when using VIM native omni-completion
+let g:phpactorOmniAutoClassImport = get(g:, 'phpactorOmniAutoClassImport', v:true)
 
-if !exists('g:phpactorCompletionIgnoreCase')
-    ""
-    " Ignore case when suggestion completion results
-    let g:phpactorCompletionIgnoreCase = 1
-endif
+""
+" Ignore case when suggestion completion results
+let g:phpactorCompletionIgnoreCase = get(g:, 'phpactorCompletionIgnoreCase', 1)
 
-if !exists('g:phpactorQuickfixStrategy')
-    ""
-    " Function to use when populating a list of code references. The default
-    " is to use the VIM quick-fix list.
-    let g:phpactorQuickfixStrategy = 'phpactor#quickfix#vim'
-endif
+""
+" Function to use when populating a list of code references. The default
+" is to use the VIM quick-fix list.
+let g:phpactorQuickfixStrategy = get(g:, 'phpactorQuickfixStrategy', 'phpactor#quickfix#vim')
 
-if !exists('g:phpactorInputListStrategy')
-    ""
-    " Function to use when presenting a user with a choice of options. The default
-    " is to use the VIM inputlist.
-    let g:phpactorInputListStrategy = 'phpactor#input#list#inputlist'
-endif
+""
+" Function to use when presenting a user with a choice of options. The default
+" is to use the VIM inputlist.
+let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor#input#list#inputlist')
+
+""
+" When jump to the line of a file displayed in any existing window
+" reuse this window to avoid have more than one view of the same file.
+" The default is false.
+let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
@@ -53,4 +47,3 @@ endif
 
 
 " vim: et ts=4 sw=4 fdm=marker
-

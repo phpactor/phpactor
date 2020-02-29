@@ -44,6 +44,11 @@ use the VIM quick-fix list.
 Function to use when presenting a user with a choice of options. The default
 is to use the VIM inputlist.
 
+                                                    *g:phpactorUseOpenWindows*
+When jump to the line of a file displayed in any existing window reuse this
+window to avoid have more than one view of the same file. The default is
+false.
+
 ==============================================================================
 COMPLETION                                               *phpactor-completion*
 
