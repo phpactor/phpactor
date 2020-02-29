@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01fd9474dfc05580849e040e3ac18c9b",
+    "content-hash": "f0ad39e3462ddefbeeb96079dc77c1e5",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -306,6 +306,47 @@
                 "performance"
             ],
             "time": "2019-11-06T16:40:04+00:00"
+        },
+        {
+            "name": "dantleech/invoke",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dantleech/invoke.git",
+                "reference": "cd7a41cc2a915939fab12720dffe1f41684848f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dantleech/invoke/zipball/cd7a41cc2a915939fab12720dffe1f41684848f4",
+                "reference": "cd7a41cc2a915939fab12720dffe1f41684848f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.11.4",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DTL\\Invoke\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "daniel leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Emulate named parameters",
+            "time": "2019-12-18T09:44:11+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1821,12 +1862,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
-                "reference": "1f4ae33c4bc6e0c0006164e6294940abd33c151d"
+                "reference": "8ed9a1709c885b87415341897387cb34dad2bd94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/1f4ae33c4bc6e0c0006164e6294940abd33c151d",
-                "reference": "1f4ae33c4bc6e0c0006164e6294940abd33c151d",
+                "url": "https://api.github.com/repos/phpactor/rpc-extension/zipball/8ed9a1709c885b87415341897387cb34dad2bd94",
+                "reference": "8ed9a1709c885b87415341897387cb34dad2bd94",
                 "shasum": ""
             },
             "require": {
@@ -1864,7 +1905,7 @@
                 }
             ],
             "description": "RPC Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-02-29T09:54:08+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem",
@@ -5680,16 +5721,17 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "dantleech/invoke": 20,
         "phpactor/test-utils": 20,
         "friendsofphp/php-cs-fixer": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.1.3"
+        "php": "7.2.0"
     }
 }

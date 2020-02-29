@@ -39,7 +39,8 @@
         "sebastian/diff": "^3.0",
         "symfony/filesystem": "^3.3",
         "symfony/yaml": "^3.3",
-        "webmozart/glob": "^4.1"
+        "webmozart/glob": "^4.1",
+        "dantleech/invoke": "dev-master"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
@@ -66,7 +67,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.1.3"
+            "php": "7.2.0"
         }
     }
 }
