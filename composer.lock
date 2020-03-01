@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "250347a05e5b8127e5f3accbeaccd2e5",
+    "content-hash": "80d2b752be84d07668ec2ccb6f16ebeb",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2107,16 +2107,16 @@
         },
         {
             "name": "phpactor/worse-reference-finders",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "e9ca13bc3d514cd71135eb3349ccfc0a67ddc7e5"
+                "reference": "30945125d5d537e003de04386af2c47057f73fc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/e9ca13bc3d514cd71135eb3349ccfc0a67ddc7e5",
-                "reference": "e9ca13bc3d514cd71135eb3349ccfc0a67ddc7e5",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/30945125d5d537e003de04386af2c47057f73fc7",
+                "reference": "30945125d5d537e003de04386af2c47057f73fc7",
                 "shasum": ""
             },
             "require": {
@@ -2153,7 +2153,7 @@
                 }
             ],
             "description": "Worse Reflection reference finder implementations",
-            "time": "2020-03-01T14:25:01+00:00"
+            "time": "2020-03-01T16:37:16+00:00"
         },
         {
             "name": "phpactor/worse-reflection",

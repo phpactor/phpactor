@@ -37,7 +37,7 @@
         "phpactor/source-code-filesystem-extension": "^0.1.3",
         "phpactor/text-document": "^1.2.0",
         "phpactor/worse-reference-finder-extension": "^0.1.1",
-        "phpactor/worse-reference-finders": "^0.2.0",
+        "phpactor/worse-reference-finders": "^0.2.2",
         "phpactor/worse-reflection": "^0.4.0",
         "phpactor/worse-reflection-extension": "^0.2.2",
         "sebastian/diff": "^3.0",
