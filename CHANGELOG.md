@@ -1,6 +1,49 @@
 Changelog
 =========
 
+## 2020-03-01 0.14.0
+
+Features:
+
+  - [vim-plugin] Introduces Commands for user actions (instead of having to
+    call the functions)
+  - [vim-plugin] Generate the VIM help from the plugin's code documentation
+  - [code-builder] Support for nullable types - @elythyr / @dantleech
+  - [code-builder] Generates typed property for PHP 7.4 - @elythyr
+  - [worse-reflection] Support for PHP 7.4 property types - @dantleech / @elythyr
+  - [phpactor|code-builder] Allow to override the templates by PHP version - @elythyr
+  - [phpactor] Auto-detection of project PHP version - @dantleech
+  - [code-transform|rpc] Import missing classes - @dantleech
+  - [context-menu] Invoke menu for the nearest actionable node (i.e. you can
+    invoke the context menu on whitespace now) - @elythyr
+  - [vim-plugin] Extract functions handles motions @elythyr
+  - [vim-plugin] Jumping to another file preserves the jumplist @elythyr
+  - [class-mover] Jump to implementation - @dantleech
+
+Bug fix:
+
+  - [code-transform] Cannot rename variable from anonymous function variable
+    (#829) - @dantleech
+  - [code-transform] Complete constructor does not take into account aliased
+    imports (#886) - @dantleech
+  - [code-builder] New aliased class imports alias not added (#860) - @dantleech
+  - [worse-reflection] instanceof returns negative if class implements
+    interface but extends another class - @dantleech
+  - [worse-reflection] foreach key variable resolves as symbol type "unknown"
+    - @dantleech
+  - [text-document] Word splitting includes commas, and other non-word chars
+    (#851) - @einenlum
+  - [worse-reflection] Functions wrongly memonized as classes - @dantleech
+  - [class-new-cli] response shows source code instead of path (#792)
+  - [class-new] Wrong file path when destination shares the same namespace as source (#795).
+
+Improvements:
+
+  - [vim-plugin] Better handling of `json_decode` errors
+  - [vim-plugin] Add option to switch to open windows
+    `g:phpactorUseOpenWindows` - @przepompownia
+  - [vim-plugin] Stable context menu shortcuts - @dantleech (#896)
+
 ## 2019-10-23 0.13.5
 
 Bug fix:
@@ -18,7 +61,6 @@ Bug fixes:
 Bug fixes:
 
   - [context-menu] Import class from context menu not working #816
-
 
 ## 2019-08-25 0.13.0
 

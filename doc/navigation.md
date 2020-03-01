@@ -12,6 +12,7 @@ references etc.
 - [Class Member References](#class-member-references)
 - [Hover](#hover)
 - [Jump to Definition](#jump-to-definition)
+- [Jump to Implementation](#jump-to-implementation)
 - [Jump to or generate related file](#jump-to-or-generate-related-file)
 
 Class References
@@ -76,6 +77,39 @@ Jump to the definition of a class or class member.
 Open the file containing the class or class member under the cursor and move the cursor to the place where class or class member is defined.
 
 This feature is **extremely useful**! Be sure to map it to a keyboard shortcut and use it often to quickly navigate through your source code.
+
+Jump to Implementation
+----------------------
+
+Jump to the implementatoin(s) of an interface or class
+
+- **Command**: _RPC Only_
+- **VIM Context Menu**: _Member/class context menu > Goto implementation_.
+- **VIM Command**:`:call phpactor#GotoImplementations()`
+n
+### Description
+
+Jump to implementations of the interface or class under the cursor.
+
+NOTE: This is a hugely expensive operation if not optimised. We apply the following filters to avoid parsing all classes in the entire project:
+
+- Filter files which do not contain classes which extend or implement something.
+- Filter files whoses classes do not contain share at least one "word" with the interface's FQN from the last 2 path segments.
+
+So, given the interface `Phpactor\Rpc\Handler`, the following will be considered:
+
+- `/src/Completion/Rpc/CompletionHandler.php`
+- `/src/Completion/Handler/Completion.php`
+
+Where as the following will not:
+
+- `/src/Completion/Completion.php`
+- `/src/Handler/Completion/Completion.php`
+
+The filters can be disabled via the following configuration options:
+
+- `worse_reference_finder.implementation_finder.abstractness_filter`: Enable abstractness filter (default `true`)
+- `worse_reference_finder.implementation_finder.similarity_filter` Enable similarity filter (default `true`)
 
 Jump to or generate related file
 --------------------------------

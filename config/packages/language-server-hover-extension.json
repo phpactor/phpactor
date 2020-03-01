@@ -1,0 +1,10 @@
+{
+  "name": "phpactor/language-server-hover-extension",
+  "type": "package",
+  "args": {
+    "url": "git@github.com:phpactor/language-server-hover-extension"
+  },
+  "vars": {
+    "version": "0.1.0"
+  }
+}

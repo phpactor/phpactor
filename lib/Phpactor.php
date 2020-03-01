@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
@@ -25,6 +26,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Extension;
@@ -53,7 +55,7 @@ class Phpactor
             ->loader();
 
         $config = $loader->load();
-        $config[CoreExtension::COMMAND] = $input->getFirstArgument();
+        $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = self::configureExtensionManager($config, $vendorDir);
 
@@ -61,7 +63,7 @@ class Phpactor
             $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
-        if (!isset($config[CoreExtension::XDEBUG_DISABLE]) || $config[CoreExtension::XDEBUG_DISABLE]) {
+        if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
             $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
             $xdebug->check();
             unset($xdebug);
@@ -93,6 +95,7 @@ class Phpactor
             WorseReferenceFinderExtension::class,
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
+            PhpExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {

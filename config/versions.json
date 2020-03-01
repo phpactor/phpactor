@@ -1,0 +1,19 @@
+{
+    "nodes": {
+        "include": "packages/*.json"
+    },
+    "prototypes": {
+        "default": {
+            "type": "package",
+            "args": {
+                "url": "git@github.com:$PACKAGE_NAME",
+                "version": "%version%"
+            },
+            "nodes": {
+                "survey": {
+                    "type": "survey"
+                }
+            }
+        }
+    }
+}

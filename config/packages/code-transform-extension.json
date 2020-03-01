@@ -1,0 +1,8 @@
+{
+  "name": "phpactor/code-transform-extension",
+  "prototype": "default",
+  "args": {},
+  "vars": {
+    "version": "0.1.1"
+  }
+}

@@ -1,7 +1,8 @@
 {
-    "variable": {
+    "actions": {
         "rename_variable": {
             "action": "rename_variable",
+            "key": "r",
             "parameters": {
                 "path": "%current_path%",
                 "offset": "%offset%",
@@ -11,35 +12,24 @@
         },
         "hover": {
             "action": "hover",
+            "key": "h",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
             }
-        }
-    },
-    "string": {
+        },
         "extract_constant": {
             "action": "extract_constant",
+            "key": "e",
             "parameters": {
                 "path": "%path%",
                 "offset": "%offset%",
                 "source": "%source%"
             }
-        }
-    },
-    "number": {
-        "extract_constant": {
-            "action": "extract_constant",
-            "parameters": {
-                "path": "%path%",
-                "offset": "%offset%",
-                "source": "%source%"
-            }
-        }
-    },
-    "constant": {
-        "cycle_visiblity": {
+        },
+        "cycle_visibility": {
             "action": "change_visibility",
+            "key": "v",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -48,6 +38,7 @@
         },
         "find_references": {
             "action": "references",
+            "key": "f",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -56,6 +47,7 @@
         },
         "goto_definition": {
             "action": "goto_definition",
+            "key": "g",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -64,6 +56,7 @@
         },
         "replace_references": {
             "action": "references",
+            "key": "r",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
@@ -73,77 +66,58 @@
         },
         "hover": {
             "action": "hover",
+            "key": "h",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
             }
-        }
-    },
-    "class": {
+        },
         "class_new": {
             "action": "class_new",
+            "key": "l",
             "parameters": {
                 "current_path": "%path%"
             }
         },
         "copy": {
             "action": "copy_class",
+            "key": "c",
             "parameters": {
                 "source_path": "%path%"
             }
         },
-        "find_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%"
-            }
-        },
-        "goto_definition": {
-            "action": "goto_definition",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%path%"
-            }
-        },
         "inflect": {
             "action": "class_inflect",
+            "key": "i",
             "parameters": {
                 "current_path": "%path%"
             }
         },
         "move": {
             "action": "move_class",
+            "key": "m",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "navigate": {
             "action": "navigate",
+            "key": "n",
             "parameters": {
                 "source_path": "%path%"
             }
         },
         "override_method": {
             "action": "override_method",
+            "key": "v",
             "parameters": {
                 "path": "%current_path%",
                 "source": "%source%"
             }
         },
-        "replace_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "mode": "replace",
-                "path": "%current_path%"
-            }
-        },
         "transform_file": {
             "action": "transform",
+            "key": "t",
             "parameters": {
                 "path": "%path%",
                 "source": "%source%"
@@ -151,6 +125,7 @@
         },
         "import": {
             "action": "import_class",
+            "key": "p",
             "parameters": {
                 "offset": "%offset%",
                 "path": "%current_path%",
@@ -164,114 +139,93 @@
                 "source": "%source%"
             }
         },
+        "import_missing_classes": {
+            "action": "import_missing_classes",
+            "key": "o",
+            "parameters": {
+                "path": "%current_path%",
+                "source": "%source%"
+            }
+        },
         "generate_accessor": {
             "action": "generate_accessor",
+            "key": "a",
             "parameters": {
                 "path": "%path%",
                 "source": "%source%",
                 "offset": "%offset%"
             }
-        }
-    },
-    "property": {
-        "cycle_visiblity": {
-            "action": "change_visibility",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%"
-            }
         },
-        "find_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%"
-            }
-        },
-        "generate_accessor": {
-            "action": "generate_accessor",
-            "parameters": {
-                "path": "%path%",
-                "names": "%symbol%",
-                "source": "%source%",
-                "offset": "%offset%"
-            }
-        },
-        "goto_definition": {
-            "action": "goto_definition",
+        "goto_implementation": {
+            "action": "goto_implementation",
+            "key": "_",
             "parameters": {
                 "offset": "%offset%",
                 "source": "%source%",
                 "path": "%path%"
-            }
-        },
-        "replace_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%",
-                "mode": "replace"
-            }
-        },
-        "hover": {
-            "action": "hover",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%"
-            }
-        }
-    },
-    "method": {
-        "cycle_visiblity": {
-            "action": "change_visibility",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%"
-            }
-        },
-        "find_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%current_path%"
             }
         },
         "generate_method": {
             "action": "generate_method",
+            "key": "m",
             "parameters": {
                 "path": "%current_path%",
-                "offset": "%offset%",
-                "source": "%source%"
-            }
-        },
-        "goto_definition": {
-            "action": "goto_definition",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%",
-                "path": "%path%"
-            }
-        },
-        "replace_references": {
-            "action": "references",
-            "parameters": {
-                "offset": "%offset%",
-                "path": "%current_path%",
-                "source": "%source%",
-                "mode": "replace"
-            }
-        },
-        "hover": {
-            "action": "hover",
-            "parameters": {
                 "offset": "%offset%",
                 "source": "%source%"
             }
         }
+    },
+    "contexts": {
+        "variable": [
+            "rename_variable",
+            "hover"
+        ],
+        "string": [
+            "extract_constant",
+            "hover"
+        ],
+        "number": [
+            "extract_constant"
+        ],
+        "constant": [
+            "cycle_visibility",
+            "find_references",
+            "goto_definition",
+            "replace_references",
+            "hover"
+        ],
+        "class": [
+            "class_new",
+            "copy",
+            "find_references",
+            "goto_definition",
+            "inflect",
+            "move",
+            "navigate",
+            "override_method",
+            "replace_references",
+            "transform_file",
+            "import",
+            "import_missing_classes",
+            "hover",
+            "generate_accessor",
+            "goto_implementation"
+        ],
+        "property": [
+            "cycle_visibility",
+            "find_references",
+            "generate_accessor",
+            "goto_definition",
+            "replace_references",
+            "hover"
+        ],
+        "method": [
+            "cycle_visibility",
+            "find_references",
+            "generate_method",
+            "goto_definition",
+            "replace_references",
+            "hover"
+        ]
     }
 }

@@ -13,6 +13,8 @@ Fixes:
 - [Generate Method](#generate-method)
 - [Implement Contracts](#implement-contracts)
 - [Import Class](#import-class)
+- [Expand Class](#expand-class)
+- [Import Missing Classes](#import-missing-classes)
 - [Override Method](#override-method)
 
 Generation:
@@ -891,6 +893,68 @@ class Hello
 	}
 }
 ```
+
+Expand Class
+------------
+
+Expand the class name from unqualified name to fully qualified name.
+
+- **Command**: _VIM function only_
+- **VIM plugin**: _VIM function only_
+- **VIM function**:`:call phpactor#ClassExpand()`
+
+### Motivation
+
+Although importing classes can make code cleaner, sometimes the code can be more
+readable if the fully qualified name is specified. For example, we might register
+a list of listeners in a file.
+
+### Before and After
+
+Cursor position shown as `<>`:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        AssignDefaultRole<>ToNewUser::class
+    ];
+}
+```
+
+After selecting `App\Listeners\AssignDefaultRoleToNewUser` from the list of candidates:
+
+```php
+<?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        \App\Listeners\AssignDefaultRoleToNewUser::class
+    ];
+}
+```
+
+Import Missing Classes
+----------------------
+
+Import all missing classes in the current file.
+
+- **Command**: **RPC Only**
+- **VIM plugin**: _Class context menu > Import Missing_
+- **VIM function**:`:call phpactor#ImportMissingClasses()`
+
+### Motivation
+
+You may copy and paste some code from one file to another and subsequently
+need to import all the foreign classes into the current namespace. This
+refactoring will identify all unresolvable classes and import them.
 
 Override Method
 ---------------
