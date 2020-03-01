@@ -208,8 +208,7 @@
             "import",
             "import_missing_classes",
             "hover",
-            "generate_accessor",
-            "goto_implementation"
+            "generate_accessor"
         ],
         "property": [
             "cycle_visibility",
