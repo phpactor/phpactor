@@ -2,10 +2,12 @@
 
 namespace Phpactor\Extension\CodeTransformExtra;
 
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -14,6 +16,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpres
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseUnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
@@ -22,14 +25,13 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
-use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Generators;
-use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -62,6 +64,13 @@ class CodeTransformExtraExtension implements Extension
     const INDENTATION = 'code_transform.indentation';
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
+
+    const PARAM_FIXER_INDENTATION = 'code_transform.fixer.indentation';
+    const PARAM_FIXER_MEMBER_NEWLINES = 'code_transform.fixer.member_newlines';
+    const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
+    const PARAM_FIXER_TOLERANCE = 'code_transform.fixer.tolerance';
+    const SERVICE_TEXT_FORMAT = 'code_transform.text_format';
 
     /**
      * {@inheritDoc}
@@ -70,13 +79,16 @@ class CodeTransformExtraExtension implements Extension
     {
         $schema->setDefaults([
             self::CLASS_NEW_VARIANTS => [],
-            self::TEMPLATE_PATHS => [
+            self::TEMPLATE_PATHS => [ // Ordered by priority
                 '%project_config%/templates',
                 '%config%/templates',
             ],
             self::INDENTATION => '    ',
             self::GENERATE_ACCESSOR_PREFIX => '',
             self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
+            self::PARAM_FIXER_INDENTATION => true,
+            self::PARAM_FIXER_MEMBER_NEWLINES => true,
+            self::PARAM_FIXER_TOLERANCE => 80
         ]);
     }
 
@@ -174,17 +186,22 @@ class CodeTransformExtraExtension implements Extension
     {
         $container->register('code_transform.twig_loader', function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
-            $loaders = [];
-            $loaders[] = new FilesystemLoader($resolver->resolve('%application_root%/vendor/phpactor/code-builder/templates'));
+            $loader = new ChainLoader();
+            $templatePaths = $container->getParameter(self::TEMPLATE_PATHS);
+            $templatePaths[] = self::APP_TEMPLATE_PATH;
 
-            foreach ($container->getParameter(self::TEMPLATE_PATHS) as $templatePath) {
-                $templatePath = $resolver->resolve($templatePath);
-                if (file_exists($templatePath)) {
-                    $loaders[] = new FilesystemLoader($templatePath);
-                }
+            $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
+                return $resolver->resolve($path);
+            }, $templatePaths);
+
+            $phpVersion = $container->get(PhpVersionResolver::class)->resolve();
+            $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
+
+            foreach ($paths as $path) {
+                $loader->addLoader(new FilesystemLoader($path));
             }
 
-            return new ChainLoader($loaders);
+            return $loader;
         });
 
         $container->register('code_transform.renderer', function (Container $container) {
@@ -192,12 +209,12 @@ class CodeTransformExtraExtension implements Extension
                 'strict_variables' => true,
             ]);
             $renderer = new TwigRenderer($twig);
-            $twig->addExtension(new TwigExtension($renderer, $container->get('code_transform.text_format')));
+            $twig->addExtension(new TwigExtension($renderer, $container->get(self::SERVICE_TEXT_FORMAT)));
 
             return $renderer;
         });
 
-        $container->register('code_transform.text_format', function (Container $container) {
+        $container->register(self::SERVICE_TEXT_FORMAT, function (Container $container) {
             return new TextFormat($container->getParameter(self::INDENTATION));
         });
     }
@@ -261,6 +278,12 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.refactor.change_visiblity', function (Container $container) {
             return new TolerantChangeVisiblity();
         });
+
+        $container->register('code_transform.helper.unresolvable_class_name_finder', function (Container $container) {
+            return new WorseUnresolvableClassNameFinder(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+            );
+        });
     }
 
     private function registerUpdater(ContainerBuilder $container)
@@ -268,11 +291,16 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.updater', function (Container $container) {
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
-                $container->get('code_transform.text_format')
+                $container->get(self::SERVICE_TEXT_FORMAT),
+                $container->get(self::SERVICE_TOLERANT_PARSER)
             );
         });
         $container->register('code_transform.builder_factory', function (Container $container) {
             return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
+        });
+
+        $container->register(self::SERVICE_TOLERANT_PARSER, function (Container $container) {
+            return new Parser();
         });
     }
 
@@ -335,6 +363,13 @@ class CodeTransformExtraExtension implements Extension
                 $container->get('code_transform.refactor.extract_expression')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ExtractExpressionHandler::NAME] ]);
+
+        $container->register('code_transform.rpc.handler.import_unresolvable_classes', function (Container $container) {
+            return new ImportMissingClassesHandler(
+                $container->get(RpcExtension::SERVICE_REQUEST_HANDLER),
+                $container->get('code_transform.helper.unresolvable_class_name_finder')
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ImportMissingClassesHandler::NAME] ]);
     }
 
     private function registerGenerators(ContainerBuilder $container)

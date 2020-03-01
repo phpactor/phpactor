@@ -2,8 +2,11 @@
 
 namespace Phpactor\Tests\Unit\Extension\ContextMenu\Handler;
 
+use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
+use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -21,6 +24,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
 {
     const VARIABLE_ACTION = 'do_something';
     const SOURCE = '<?php $hello = "world"; echo $hello;';
+    const FOUND_OFFSET = 10;
+    const ORIGINAL_OFFSET = 8;
 
     /**
      * @var Reflector
@@ -47,9 +52,15 @@ class ContextMenuHandlerTest extends HandlerTestCase
      */
     private $classFileNormalizer;
 
+    /**
+     * @var InterestingOffsetFinder
+     */
+    private $offsetFinder;
+
     public function setUp()
     {
         $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
+        $this->offsetFinder = $this->prophesize(InterestingOffsetFinder::class);
         $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);
         $this->requestHandler = $this->prophesize(RequestHandler::class);
@@ -59,6 +70,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
     {
         return new ContextMenuHandler(
             $this->reflector,
+            $this->offsetFinder->reveal(),
             $this->classFileNormalizer->reveal(),
             $this->menu,
             $this->container->reveal()
@@ -67,10 +79,33 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testNoActionsAvailable()
     {
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                ]
+            ]
+        ]);
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(4);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $action = $this->handle(ContextMenuHandler::NAME, [
-            'source' => '<?php $hello = "world"; echo $hello;',
-            'offset' => 4,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
@@ -79,23 +114,77 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function testReturnMenu()
     {
-        $this->menu = [
-            Symbol::VARIABLE => [
-                'action' => self::VARIABLE_ACTION,
-                'parameters' => [
-                    'one' => 1,
-                ],
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    Symbol::VARIABLE
+                ]
             ]
-        ];
+        ]);
+
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $action = $this->handle(ContextMenuHandler::NAME, [
-            'source' => '<?php $hello = "world"; echo $hello;',
-            'offset' => 8,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
         $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
+    }
+
+    public function testReturnMenuWithOriginalOffset()
+    {
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
+                Symbol::VARIABLE => [
+                    'action' => self::VARIABLE_ACTION,
+                    'parameters' => [
+                        'one' => 1,
+                    ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    Symbol::VARIABLE
+                ]
+            ]
+        ]);
+
+        $source = SourceCode::fromPathAndString(
+            '/hello.php',
+            '<?php $hello = "world"; echo $hello;'
+        );
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn(ByteOffset::fromInt(self::FOUND_OFFSET));
+
+        $action = $this->handle(ContextMenuHandler::NAME, [
+            'source' => (string) $source,
+            'offset' => self::ORIGINAL_OFFSET,
+            'current_path' => $source->path(),
+        ]);
+
+        $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        $this->assertEquals(self::ORIGINAL_OFFSET, $action->callbackAction()->parameters()['offset']);
     }
 
     public function testReplaceTokens()
@@ -106,12 +195,18 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
+        $source = SourceCode::fromPathAndString('/hello.php', self::SOURCE);
+        $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
+
+        $this->offsetFinder->find($source, $offset)
+            ->willReturn($offset);
+
         $this->requestHandler->handle(
             Request::fromNameAndParameters(
                 self::VARIABLE_ACTION,
                 [
-                    'some_source' => self::SOURCE,
-                    'some_offset' => 8,
+                    'some_source' => (string) $source,
+                    'some_offset' => $offset->toInt(),
                     'some_path' => __FILE__
                 ]
             )
@@ -119,8 +214,8 @@ class ContextMenuHandlerTest extends HandlerTestCase
             EchoResponse::fromMessage('Hello')
         );
 
-        $this->menu = [
-            Symbol::VARIABLE => [
+        $this->menu = ContextMenu::fromArray([
+            'actions' => [
                 self::VARIABLE_ACTION => [
                     'action' => self::VARIABLE_ACTION,
                     'parameters' => [
@@ -128,15 +223,20 @@ class ContextMenuHandlerTest extends HandlerTestCase
                         'some_offset' => '%offset%',
                         'some_path' => '%path%',
                     ],
-                ],
+                ]
+            ],
+            'contexts' => [
+                Symbol::VARIABLE => [
+                    self::VARIABLE_ACTION
+                ]
             ]
-        ];
+        ]);
 
         $action = $this->handle(ContextMenuHandler::NAME, [
             'action' => self::VARIABLE_ACTION,
-            'source' => self::SOURCE,
-            'offset' => 8,
-            'current_path' => '/hello.php',
+            'source' => (string) $source,
+            'offset' => $offset->toInt(),
+            'current_path' => $source->path(),
         ]);
 
         $parameters = $action->parameters();

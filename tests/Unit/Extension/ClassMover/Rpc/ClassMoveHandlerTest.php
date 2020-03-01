@@ -124,7 +124,6 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $action = array_shift($actions);
         $this->assertInstanceOf(CloseFileResponse::class, $action);
         $this->assertEquals(self::SOURCE_PATH, $action->path());
-
     }
 
     public function testItAskIfRelatedFilesShouldBeMoved()
@@ -168,6 +167,5 @@ class ClassMoveHandlerTest extends HandlerTestCase
             'confirmed' => true,
             'move_related' => true,
         ]);
-
     }
 }

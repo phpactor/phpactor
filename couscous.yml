@@ -58,8 +58,11 @@ menu:
                     text: Integrations
                     relativeUrl: integrations.html
                 development:
-                    text: Debugging Phpactor
+                    text: Developing
                     relativeUrl: developing.html
                 rpc:
                     text: RPC Protocol
                     relativeUrl: rpc.html
+                experimental-vim-plugin:
+                    text: VIM plugin experimental
+                    relativeUrl: vim-plugin/experimental.html

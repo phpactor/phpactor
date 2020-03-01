@@ -7,6 +7,7 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
@@ -30,16 +31,17 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-    const DUMPER = 'console_dumper_default';
-    const XDEBUG_DISABLE = 'xdebug_disable';
-    const COMMAND = 'command';
+
+    const PARAM_DUMPER = 'console_dumper_default';
+    const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
+    const PARAM_COMMAND = 'command';
 
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::DUMPER => 'indented',
-            self::XDEBUG_DISABLE => true,
-            self::COMMAND => null,
+            self::PARAM_DUMPER => 'indented',
+            self::PARAM_XDEBUG_DISABLE => true,
+            self::PARAM_COMMAND => null,
         ]);
     }
 
@@ -82,7 +84,7 @@ class CoreExtension implements Extension
                 $dumpers[$attrs['name']] = $container->get($dumperId);
             }
 
-            return new DumperRegistry($dumpers, $container->getParameter(self::DUMPER));
+            return new DumperRegistry($dumpers, $container->getParameter(self::PARAM_DUMPER));
         });
 
         $container->register('console.dumper.indented', function (Container $container) {
@@ -120,7 +122,8 @@ class CoreExtension implements Extension
             return new Status(
                 $container->get('source_code_filesystem.registry'),
                 $container->get('config_loader.candidates'),
-                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%')
+                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
+                $container->get(PhpVersionResolver::class)
             );
         });
     }

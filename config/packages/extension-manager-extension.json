@@ -1,0 +1,8 @@
+{
+  "name": "phpactor/extension-manager-extension",
+  "prototype": "default",
+  "args": {},
+  "vars": {
+    "version": "0.8.1"
+  }
+}

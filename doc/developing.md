@@ -1,8 +1,6 @@
 ---
 currentMenu: developing
 ---
-Debugging RPC and Phpactor
-==========================
 
 Debugging RPC
 -------------
@@ -62,4 +60,37 @@ Enable it as follows:
 logging.enabled: true
 logging.level: DEBUG
 logging.path: phpactor.log
+```
+
+Documentation
+-------------
+
+Phpactor Documentation
+----------------------
+
+Phpactor uses [couscous](https://github.com/CouscousPHP/Couscous). In order to
+develop the documentation (located in `doc/`) download the PHAR:
+
+```bash
+$ curl -OS http://couscous.io/couscous.phar 
+```
+
+and run:
+
+```
+$ php couscous.phar preview
+```
+
+To run serve the documentation locally.
+
+VIM Help
+--------
+
+The VIM plugin is documented in the _generated_ `doc/phpactor.txt` file.
+
+Install the [vimdoc](https://github.com/google/vimdoc) tool, followw the
+installation instructions and then run:
+
+```bash
+$ vimdoc .
 ```

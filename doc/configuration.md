@@ -51,6 +51,13 @@ Reference
 
 ### Core
 
+#### core.php_version
+
+*Default*: Your current version of PHP (e.g.  `7.3.0`)
+
+You can override it if your local PHP installation does not match the one used
+by your project.
+
 #### composer.autoloader_path
 
 *Default*: `vendor/autoload.php`
@@ -127,6 +134,22 @@ or any of the XDG directories (e.g. `$HOME/.config/phpactor/templates`).
 *Default*: `<xdg paths>/templates` and local project `.phpactor/templates`
 
 Directories where class templates can be located.
+The order matter since the system will look for a template in each directory
+and stop on the first match.
+
+#### code_transform.fixer.tolerance
+
+When applying fixes to generated code, only apply fixes to code within a
+_tolerance_ (number of characters) of the code edits. Defaults to 80
+characters.
+
+#### code_transform.fixer.indentation
+
+Fix indentation on generated code (default true)
+
+#### code_transform.fixer.member_newlines
+
+Fix empty lines between class members on generated code (default true)
 
 ### Navigator Extension
 
