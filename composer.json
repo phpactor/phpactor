@@ -67,6 +67,11 @@
             "Phpactor\\Tests\\": "tests/"
         }
     },
+    "config": {
+        "platform": {
+            "php": "7.2.5"
+        }
+    },
     "scripts": {
         "integrate": [
             "vendor/bin/phpunit",
