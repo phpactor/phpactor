@@ -100,7 +100,7 @@
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/developing.html">
-                                            Debugging Phpactor
+                                            Developing
                                         </a>
                                     </li>
                                                                     <li class="">
@@ -108,13 +108,17 @@
                                             RPC Protocol
                                         </a>
                                     </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/vim-plugin/experimental.html">
+                                            VIM plugin experimental
+                                        </a>
+                                    </li>
                                                             </ul>
                         
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="debugging-rpc-and-phpactor">Debugging RPC and Phpactor</h1>
-<h2 id="debugging-rpc">Debugging RPC</h2>
+                    <h2 id="debugging-rpc">Debugging RPC</h2>
 <p>When executing commands in an editor, it can be tricky to consistently
 reproduce errors, or to isolate and debug them in Phpactor.</p>
 <p>Thankfully there is a feature called RPC replay which allows you to replay
@@ -147,6 +151,19 @@ as errors encountered when parsing files etc).</p>
 <pre><code>logging.enabled: true
 logging.level: DEBUG
 logging.path: phpactor.log</code></pre>
+<h2 id="documentation">Documentation</h2>
+<h2 id="phpactor-documentation">Phpactor Documentation</h2>
+<p>Phpactor uses <a href="https://github.com/CouscousPHP/Couscous">couscous</a>. In order to
+develop the documentation (located in <code>doc/</code>) download the PHAR:</p>
+<pre><code class="language-bash">$ curl -OS http://couscous.io/couscous.phar </code></pre>
+<p>and run:</p>
+<pre><code>$ php couscous.phar preview</code></pre>
+<p>To run serve the documentation locally.</p>
+<h2 id="vim-help">VIM Help</h2>
+<p>The VIM plugin is documented in the <em>generated</em> <code>doc/phpactor.txt</code> file.</p>
+<p>Install the <a href="https://github.com/google/vimdoc">vimdoc</a> tool, followw the
+installation instructions and then run:</p>
+<pre><code class="language-bash">$ vimdoc .</code></pre>
                 </section>
 
             </div>

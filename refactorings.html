@@ -100,12 +100,17 @@
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/developing.html">
-                                            Debugging Phpactor
+                                            Developing
                                         </a>
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/rpc.html">
                                             RPC Protocol
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/vim-plugin/experimental.html">
+                                            VIM plugin experimental
                                         </a>
                                     </li>
                                                             </ul>
@@ -123,6 +128,8 @@
 <li><a href="#generate-method">Generate Method</a></li>
 <li><a href="#implement-contracts">Implement Contracts</a></li>
 <li><a href="#import-class">Import Class</a></li>
+<li><a href="#expand-class">Expand Class</a></li>
+<li><a href="#import-missing-classes">Import Missing Classes</a></li>
 <li><a href="#override-method">Override Method</a></li>
 </ul>
 <p>Generation:</p>
@@ -791,6 +798,51 @@ class Hello
     {
     }
 }</code></pre>
+<h2 id="expand-class">Expand Class</h2>
+<p>Expand the class name from unqualified name to fully qualified name.</p>
+<ul>
+<li><strong>Command</strong>: <em>VIM function only</em></li>
+<li><strong>VIM plugin</strong>: <em>VIM function only</em></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ClassExpand()</code></li>
+</ul>
+<h3 id="motivation-15">Motivation</h3>
+<p>Although importing classes can make code cleaner, sometimes the code can be more
+readable if the fully qualified name is specified. For example, we might register
+a list of listeners in a file.</p>
+<h3 id="before-and-after-15">Before and After</h3>
+<p>Cursor position shown as <code>&lt;&gt;</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        AssignDefaultRole&lt;&gt;ToNewUser::class
+    ];
+}</code></pre>
+<p>After selecting <code>App\Listeners\AssignDefaultRoleToNewUser</code> from the list of candidates:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Event;
+
+class UserCreatedEvent
+{
+    protected $listenrs = [
+        \App\Listeners\AssignDefaultRoleToNewUser::class
+    ];
+}</code></pre>
+<h2 id="import-missing-classes">Import Missing Classes</h2>
+<p>Import all missing classes in the current file.</p>
+<ul>
+<li><strong>Command</strong>: <strong>RPC Only</strong></li>
+<li><strong>VIM plugin</strong>: <em>Class context menu &gt; Import Missing</em></li>
+<li><strong>VIM function</strong>:<code>:call phpactor#ImportMissingClasses()</code></li>
+</ul>
+<h3 id="motivation-16">Motivation</h3>
+<p>You may copy and paste some code from one file to another and subsequently
+need to import all the foreign classes into the current namespace. This
+refactoring will identify all unresolvable classes and import them.</p>
 <h2 id="override-method">Override Method</h2>
 <p>Overide a method from a parent class.</p>
 <ul>
@@ -799,12 +851,12 @@ class Hello
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 <li><strong>Multiple selection</strong>: Supports selecting multiple methods.</li>
 </ul>
-<h3 id="motivation-15">Motivation</h3>
+<h3 id="motivation-17">Motivation</h3>
 <p>Sometimes it is expected or necessary that you override a parent classes method
 (for example when authoring a Symfony Command class).</p>
 <p>This refactoring will allow you to select a method to override and generate that method
 in your class.</p>
-<h3 id="before-and-after-15">Before and After</h3>
+<h3 id="before-and-after-16">Before and After</h3>
 <pre><code class="language-php">&lt;?php
 
 use Symfony\Component\Console\Command\Command;
@@ -832,14 +884,14 @@ class MyCommand extends Command
 <li><strong>VIM plugin</strong>: <em>Variable context menu &gt; Rename</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-16">Motivation</h3>
+<h3 id="motivation-18">Motivation</h3>
 <p>Having meaningful and descriptive variable names makes the intention of
 code clearer and therefore easier to maintain. Renaming variables is a frequent
 refactoring, but doing this with a simple search and replace can often have unintended
 consequences (e.g. renaming the variable <code>$class</code> also changes the <code>class</code> keyword).</p>
 <p>This refactoring will rename a variable, and only variables, in either the method scope
 or the class scope.</p>
-<h3 id="before-and-after-16">Before and After</h3>
+<h3 id="before-and-after-17">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -877,11 +929,11 @@ class Hello
 <li><strong>VIM plugin</strong>: <em>Class context menu &gt; Replace references</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-17">Motivation</h3>
+<h3 id="motivation-19">Motivation</h3>
 <p>This refactoring is <em>similar</em> to <a href="#class-move">Move Class</a>, but without
 renaming the file. This is a useful refactoring when a dependant library has
 changed a class name and you need to update that class name in your project.</p>
-<h3 id="before-and-after-17">Before and After</h3>
+<h3 id="before-and-after-18">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 
@@ -920,7 +972,7 @@ When renaming classes in your project use <a href="#class-move">Class Move</a>.
 <li><strong>VIM plugin</strong>: <em>Member context menu &gt; Replace references</em>.</li>
 <li><strong>VIM function</strong>:<code>:call phpactor#ContextMenu()</code></li>
 </ul>
-<h3 id="motivation-18">Motivation</h3>
+<h3 id="motivation-20">Motivation</h3>
 <p>Having an API which is expressive of the intent of the class is important, and
 contributes to making your code more consistent and maintainable.</p>
 <p>When renaming members global search and replace can be used, but is a shotgun approach and
@@ -942,7 +994,7 @@ applying this refactoring.</p>
 the query but whose containing classes could not be resolved.
 </div>
 <p><img src="images/risky.png" alt="Risky references" /></p>
-<h3 id="before-and-after-18">Before and After</h3>
+<h3 id="before-and-after-19">Before and After</h3>
 <p>Cursor position shown as <code>&lt;&gt;</code>:</p>
 <pre><code class="language-php">&lt;?php
 

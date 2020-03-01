@@ -100,12 +100,17 @@
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/developing.html">
-                                            Debugging Phpactor
+                                            Developing
                                         </a>
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/rpc.html">
                                             RPC Protocol
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/vim-plugin/experimental.html">
+                                            VIM plugin experimental
                                         </a>
                                     </li>
                                                             </ul>
@@ -122,6 +127,7 @@ references etc.</p>
 <li><a href="#class-member-references">Class Member References</a></li>
 <li><a href="#hover">Hover</a></li>
 <li><a href="#jump-to-definition">Jump to Definition</a></li>
+<li><a href="#jump-to-implementation">Jump to Implementation</a></li>
 <li><a href="#jump-to-or-generate-related-file">Jump to or generate related file</a></li>
 </ul>
 <h2 id="class-references">Class References</h2>
@@ -168,6 +174,36 @@ brief information about the symbol underneath the cursor.</p>
 <h3 id="description-2">Description</h3>
 <p>Open the file containing the class or class member under the cursor and move the cursor to the place where class or class member is defined.</p>
 <p>This feature is <strong>extremely useful</strong>! Be sure to map it to a keyboard shortcut and use it often to quickly navigate through your source code.</p>
+<h2 id="jump-to-implementation">Jump to Implementation</h2>
+<p>Jump to the implementatoin(s) of an interface or class</p>
+<ul>
+<li><strong>Command</strong>: <em>RPC Only</em></li>
+<li><strong>VIM Context Menu</strong>: <em>Member/class context menu &gt; Goto implementation</em>.</li>
+<li><strong>VIM Command</strong>:<code>:call phpactor#GotoImplementations()</code>
+n
+<h3 id="description-3">Description</h3></li>
+</ul>
+<p>Jump to implementations of the interface or class under the cursor.</p>
+<p>NOTE: This is a hugely expensive operation if not optimised. We apply the following filters to avoid parsing all classes in the entire project:</p>
+<ul>
+<li>Filter files which do not contain classes which extend or implement something.</li>
+<li>Filter files whoses classes do not contain share at least one &quot;word&quot; with the interface's FQN from the last 2 path segments.</li>
+</ul>
+<p>So, given the interface <code>Phpactor\Rpc\Handler</code>, the following will be considered:</p>
+<ul>
+<li><code>/src/Completion/Rpc/CompletionHandler.php</code></li>
+<li><code>/src/Completion/Handler/Completion.php</code></li>
+</ul>
+<p>Where as the following will not:</p>
+<ul>
+<li><code>/src/Completion/Completion.php</code></li>
+<li><code>/src/Handler/Completion/Completion.php</code></li>
+</ul>
+<p>The filters can be disabled via the following configuration options:</p>
+<ul>
+<li><code>worse_reference_finder.implementation_finder.abstractness_filter</code>: Enable abstractness filter (default <code>true</code>)</li>
+<li><code>worse_reference_finder.implementation_finder.similarity_filter</code> Enable similarity filter (default <code>true</code>)</li>
+</ul>
 <h2 id="jump-to-or-generate-related-file">Jump to or generate related file</h2>
 <p>Jump to a related file (e.g. parent class, interfaces, unit test, integration
 test, benchmark), and optionally generate it if it doesn't exist (where
@@ -177,7 +213,7 @@ supported).</p>
 <li><strong>VIM Context Menu</strong>: <em>Class context menu &gt; Navigate</em>.</li>
 <li><strong>VIM Command</strong>:<code>:call phpactor#Navigate()</code></li>
 </ul>
-<h3 id="description-3">Description</h3>
+<h3 id="description-4">Description</h3>
 <p>Often classes will have a one-to-one relationship with another class, for example a single class will often have a matching unit test.</p>
 <p>Phpactor provides a way to define this relationship:</p>
 <pre><code class="language-yaml"># .phpactor.yml

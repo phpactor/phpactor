@@ -118,31 +118,34 @@
                     </nav>
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="templates">Templates</h1>
-<p>Phpactor allows you to provide your own templates for some class and code generation.</p>
-<div class="alert alert-danger">
-This section is incomplete
-</div>
-<p>When generating a new class you can specify a variant:</p>
-<pre><code>$ phpactor class:new tests/Registry/GeneratorTest.php --variant=phpunit_test</code></pre>
-<p>Variants are registered in <code>.phpactor.yml</code>:</p>
-<pre><code class="language-yaml">code_transform.class_new.variants:
-    "Phpunit test": phpunit_test</code></pre>
-<p>In order to create the above variant we need to create a template locally in
-<code>.phpactor/templates</code> (note you can also create them globally in the XDG
-directories, in a <code>templates</code> folder):</p>
-<pre><code class="language-twig">&lt;?php
-
-{# /path/to/project/.phpactor/templates/phpunit_test/SourceCode.php.twig #}
-namespace {{ prototype.namespace }};
-
-use PHPUnit\Framework\TestCase;
-
-{% for class in prototype.classes %}
-class {{ class.name }} extends TestCase
-{
-}
-{% endfor %}</code></pre>
+                    <h1 id="experimental">Experimental</h1>
+<h2 id="fzf-and-bat">FZF and BAT</h2>
+<p>Experimental functionality with FZF and BAT depends on:</p>
+<ul>
+<li><a href="https://github.com/junegunn/fzf">fzf</a></li>
+<li><a href="https://github.com/sharkdp/bat">bat</a></li>
+</ul>
+<p>In addition FZF support requires the FZF VIM plugin:</p>
+<p><a href="https://github.com/junegunn/fzf.vim">fzf.vim</a></p>
+<h3 id="fzf-choice-selection">FZF Choice Selection</h3>
+<p>Some refactorings will allow you to select multiple entires (for example
+<a href="https://phpactor.github.io/phpactor/refactorings.html#override-method">override
+method</a>.</p>
+<p>FZF provides a fuzzy search interface and the possiblity to select multiple
+entries at once.</p>
+<p>Use <code>&lt;tab&gt;</code> to toggle selection and CTRL-A/CTRL-D to select all/select none. </p>
+<p>See the <a href="https://github.com/junegunn/fzf">Fzf</a> documentation for more details.</p>
+<p>Enable this feature by configuring FZF as the <code>inputlist</code> strategy in your
+`.vimrc':</p>
+<pre><code>let g:phpactorInputListStrategy = 'phpactor#input#list#fzf'</code></pre>
+<h3 id="fzf-qucikfix-with-bat-preview">FZF Qucikfix with BAT preview</h3>
+<p>The VIM quickfix list is used to navigate through a set of references (where a
+reference is a file / character position).</p>
+<p>The FZF strategy provides a layer on top this to allow you to efficiently
+filter, preview and select only those entries you want to navigate to to the
+quickfix list.</p>
+<p>Enable it as follows:</p>
+<pre><code>let g:phpactorQuickfixStrategy = 'phpactor#quickfix#fzf'</code></pre>
                 </section>
 
             </div>

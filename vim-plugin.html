@@ -100,12 +100,17 @@
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/developing.html">
-                                            Debugging Phpactor
+                                            Developing
                                         </a>
                                     </li>
                                                                     <li class="">
                                         <a href="https://phpactor.github.io/phpactor/rpc.html">
                                             RPC Protocol
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://phpactor.github.io/phpactor/vim-plugin/experimental.html">
+                                            VIM plugin experimental
                                         </a>
                                     </li>
                                                             </ul>
@@ -114,37 +119,23 @@
 
                 <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="phpactor-vim-plugin">Phpactor VIM Plugin</h1>
-<ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#updating">Updating</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#completion">Completion</a></li>
-<li><a href="#completion-plugins">Completion plugins</a></li>
-<li><a href="#context-menu">Context Menu</a></li>
-</ul>
 <h2 id="installation">Installation</h2>
 <p><strong>Prerequisites</strong>:</p>
 <ul>
 <li><a href="https://getcomposer.org/download">Composer</a></li>
-<li>PHP 7.0</li>
+<li>PHP 7.2</li>
 <li><a href="https://github.com/vim/vim">VIM 8</a> or
 <a href="https://github.com/neovim/neovim">Neovim</a></li>
 </ul>
-<p>It is recommended (but not necessary) for you to use a VIM plugin manager. In
-this document we will use the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
-plugin manager, but other plugin managers are quite similar.</p>
-<p>Require Phpactor in your VIM configuration file (e.g. <code>~/.vimrc</code> or
+<p>Using the <a href="https://github.com/junegunn/vim-plug">vim-plug</a>
+plugin manager add the following in your VIM configuration (e.g. <code>~/.vimrc</code> or
 <code>~/.config/nvim/init.vim</code> when using Neovim):</p>
-<pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}</code></pre>
-<p>Then update your plugins:</p>
+<pre><code>Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}</code></pre>
+<p>Reload VIM (or <code>:source ~/.vimrc</code>) then update your plugins:</p>
 <pre><code>:PlugInstall</code></pre>
 <p>If you need to install the dependencies manually, then:</p>
 <pre><code>$ cd ~/.vim/plugged/phpactor
 $ composer install</code></pre>
-<div class="alert alert-info">
-Make a <b><i class="fa fa-github"></i> <a href="https://github.com/phpactor/phpactor">Pull Request</a></b> to improve this
-installation procedure!
-</div>
 <p>Now open a PHP file and issue the following command <code>:call phpactor#Status()</code>:</p>
 <pre><code>Support
 -------
@@ -157,8 +148,7 @@ Config files
 [✔] /home/daniel/www/phpactor/phpactor/.phpactor.yml
 [✔] /home/daniel/.config/phpactor/phpactor.yml
 [✘] /etc/xdg/phpactor/phpactor.yml</code></pre>
-<p>Phpactor works best with Composer - but much functionality including
-auto-completion can still work (sometimes slowly depending on project size).</p>
+<p>To find out more about the plugin type <code>:help phpactor</code></p>
 <h3 id="troubleshooting">Troubleshooting</h3>
 <p><strong>E117: Unknown function: phpactor#Status</strong>:</p>
 <p>Vim-plug and most other package managers for Vim will lazy-load Phpactor when it's
@@ -168,158 +158,19 @@ run the command again.</p>
 <p>The Git and Composer checks are referring to the current &quot;workspace&quot; (i.e. where you
 started Vim from). If you've already setup Git and Composer for your project, ensure
 you are starting Vim from the project directory to enable detection.</p>
-<h2 id="updating">Updating</h2>
-<p>Updating Phpactor from VIM is easy:</p>
-<pre><code class="language-vim">:call phpactor#Update()</code></pre>
-<div class="alert alert-warning">
-Note that if the update included changes to the VIM plugin you will currently
-need to either re-source (`:source ~/path/to/phpactor/plugin/phpactor.vim`) the plugin or reload VIM (pull requests are open!).
-</div>
-<p>If you are feeling dangerous, you may choose to track the <code>develop</code> branch,
-by specifying a branch name in your VIM configuration file:</p>
-<pre><code>let g:phpactorBranch = "develop"</code></pre>
-<h2 id="keyboard-mappings">Keyboard Mappings</h2>
-<p>The Phpactor plugin will <strong>not</strong> automatically assume any shortcuts, copy
-the following configuration into your <code>.vimrc</code>:</p>
-<pre><code class="language-vimscript">" Include use statement
-nmap &lt;Leader&gt;u :call phpactor#UseAdd()&lt;CR&gt;
-
-" Invoke the context menu
-nmap &lt;Leader&gt;mm :call phpactor#ContextMenu()&lt;CR&gt;
-
-" Invoke the navigation menu
-nmap &lt;Leader&gt;nn :call phpactor#Navigate()&lt;CR&gt;
-
-" Goto definition of class or class member under the cursor
-nmap &lt;Leader&gt;oo :call phpactor#GotoDefinition()&lt;CR&gt;
-nmap &lt;Leader&gt;oh :call phpactor#GotoDefinitionHsplit()&lt;CR&gt;
-nmap &lt;Leader&gt;ov :call phpactor#GotoDefinitionVsplit()&lt;CR&gt;
-nmap &lt;Leader&gt;ot :call phpactor#GotoDefinitionTab()&lt;CR&gt;
-
-" Show brief information about the symbol under the cursor
-nmap &lt;Leader&gt;K :call phpactor#Hover()&lt;CR&gt;
-
-" Transform the classes in the current file
-nmap &lt;Leader&gt;tt :call phpactor#Transform()&lt;CR&gt;
-
-" Generate a new class (replacing the current file)
-nmap &lt;Leader&gt;cc :call phpactor#ClassNew()&lt;CR&gt;
-
-" Extract expression (normal mode)
-nmap &lt;silent&gt;&lt;Leader&gt;ee :call phpactor#ExtractExpression(v:false)&lt;CR&gt;
-
-" Extract expression from selection
-vmap &lt;silent&gt;&lt;Leader&gt;ee :&lt;C-U&gt;call phpactor#ExtractExpression(v:true)&lt;CR&gt;
-
-" Extract method from selection
-vmap &lt;silent&gt;&lt;Leader&gt;em :&lt;C-U&gt;call phpactor#ExtractMethod()&lt;CR&gt;</code></pre>
-<p>See the <a href="refactorings.html">Refactorings</a> chapter for more functions you can map
-shortcuts to.</p>
-<p>Phpactor requires at least PHP 7.0. If you use a different version of PHP
-locally, you may need to target a new version of PHP - add the following to
-your <code>.vimrc</code> to change the PHP binary:</p>
-<pre><code>let g:phpactorPhpBin = "/usr/bin/local/php6.0"</code></pre>
-<h2 id="configuration">Configuration</h2>
-<p>The plugin has some configuration options:</p>
-<pre><code class="language-vim">let g:phpactorPhpBin = 'php'
-let g:phpactorBranch = 'master'
-let g:phpactorOmniAutoClassImport = v:true
-let g:phpactorInputListStrategy = 'inputlist|fzf'
-
-" Example of implementation with vim's inputlist() function
-function! InputListCustomStrategy(label, choices, ResultHandler)
-    echo a:label
-    let choice = inputlist(s:add_number_to_choices(a:choices))
-
-    if (choice == 0)
-        throw "cancelled"
-    endif
-
-    call a:ResultHandler(a:choices[choice - 1])
-endfunction
-
-let g:phpactorCustomInputListStrategy = 'InputListCustomStrategy'</code></pre>
+<h2 id="plugin-usage">Plugin Usage</h2>
+<p>To find out how to use the plugin type <code>:help phpactor</code> or view the plugin documentation  <a href="https://raw.githubusercontent.com/phpactor/phpactor/develop/doc/phpactor.txt">here</a>.</p>
+<h2 id="complementary-plugins">Complementary Plugins</h2>
+<p>The following plugins add more functionality to Phpactor</p>
 <ul>
-<li><code>g:phpactorPhpBin</code>: PHP executable to use.</li>
-<li><code>g:phpactorBranch</code>: Phpactor branch (default is <code>master</code>, use <code>develop</code> for
-bleeding edge).</li>
-<li><code>g:phpactorOmniAutoClassImport</code>: Automatically import classes when
-completing class names with OmniComplete.</li>
-<li><code>g:phpactorInputListStrategy</code>: Select a strategy for the <a href="#input-list">Input
-List</a>.</li>
-<li><code>g:phpactorCustomInputListStrategy</code>: Specify your own strategy.</li>
+<li><a href="https://github.com/phpactor/ncm2-phpactor">ncm2-phpactor</a>:
+Integrates with the <a href="https://github.com/ncm2/ncm2">ncm2</a> autocompletion
+manager (for Neovim).</li>
+<li><a href="https://github.com/kristijanhusak/deoplete-phpactor">deoplete-phpactor</a>:
+Integrates with <a href="https://github.com/Shougo/deoplete.nvim">deoplete</a></li>
+<li><a href="https://github.com/elythyr/phpactor-mappings">phpactor-mappings</a>: Provides
+sensible default key mappings for Phpactor.</li>
 </ul>
-<h2 id="extensions">Extensions</h2>
-<p>You can manage your <a href="/extensions.html">Phpactor extensions</a> from with VIM:</p>
-<pre><code>call phpactor#ExtensionList()
-call phpactor#ExtensionInstall()
-call phpactor#ExtensionRemove()</code></pre>
-<p>Note that these commands are not very verbose. For increased verbosity
-execute the commands from the command line (as detailed
-<a href="/extensions.html">here</a>.</p>
-<h2 id="completion">Completion</h2>
-<h3 id="omni-completion">Omni-completion</h3>
-<p>Omni-completion
-(<a href="./screenshots.html#code-completion">Screenshot</a>) is
-VIM's built-in auto-completion mechanism.</p>
-<p>Add the following to your <code>.vimrc</code> in order to use Phpactor for omni-completion (for PHP files):</p>
-<pre><code class="language-vimscript">autocmd FileType php setlocal omnifunc=phpactor#Complete</code></pre>
-<p>To invoke omni complete in insert mode <code>&lt;C-x&gt;&lt;C-o&gt;</code> (<code>ctrl-x</code> then <code>ctrl-o</code>).
-See <code>:help compl-omni</code>.</p>
-<p>For case sensitive searching, set</p>
-<pre><code class="language-vimscript">let g:phpactorCompletionIgnoreCase = 0</code></pre>
-<p>Omni complete can also provide feedback when something fails to complete, this
-can be useful, enable it with:</p>
-<pre><code>let g:phpactorOmniError = v:true</code></pre>
-<h2 id="completion-plugins">Completion plugins</h2>
-<p>Completion plugins provide a significantly better completion experience.</p>
-<h3 id="neovim-completion-manager-ncm">Neovim Completion Manager (NCM)</h3>
-<p><em>deprecated, use NCM2 below</em></p>
-<p>The <a href="https://github.com/roxma/nvim-completion-manager">Neovim Completion
-Manager</a> add this to your
-(e.g. <code>~/.config/nvim/init.vim</code>) (NCM) is a very fast completion manager for
-<a href="https://neovim.io/">Neovim</a>, install using the Plug plugin manager:</p>
-<pre><code class="language-vim">Plug 'roxma/nvim-completion-manager'
-Plug 'phpactor/ncm-phpactor'</code></pre>
-<h3 id="ncm2">NCM2</h3>
-<p>The <a href="https://github.com/ncm2/ncm2">NCM2</a> is the successor to NCM.</p>
-<p>See the
-<a href="https://github.com/phpactor/ncm2-phpactor">README</a> file
-for instructions on installing NCM2 and the Phpactor plugin.</p>
-<h3 id="deoplete">Deoplete</h3>
-<p><a href="https://github.com/Shougo/deoplete.nvim">deoplete.nvim</a> is a completion
-plugin for both standard VIM Neovim, install it and the Phpactor integration
-as follows:</p>
-<pre><code class="language-vimL">Plug 'Shougo/deoplete.nvim'
-Plug 'kristijanhusak/deoplete-phpactor'</code></pre>
-<h2 id="context-menu">Context Menu</h2>
-<p>The context menu is the main point of contact with Phpactor. Invoke it on any
-class, member, variable, method call, or anything really.</p>
-<p>If you move over a method and invoke the context menu with <code>:call phpactor#ContextMenu()</code> (or with <code>&lt;Leader&gt;mm</code> as per the configuration above) you
-should see something like the following:</p>
-<pre><code>Method "execute":
-[r]eplace_references, (f)ind_references, (g)enerate_method, g(o)to_definition:</code></pre>
-<h2 id="input-list">Input List</h2>
-<p>The input list is the window shown to let you choose an item among a list.</p>
-<h3 id="strategies">Strategies</h3>
-<p>This plugin provides two strategy to handle input lists:</p>
-<ul>
-<li><code>inputlist</code>: Vim's internal <code>inputlist()</code> function.</li>
-<li><code>fzf</code>: Fuzzy finder using <a href="https://github.com/junegunn/fzf">Fzf</a> plugin.</li>
-</ul>
-<p>You can choose between those strategies by specifying the option
-<a href="#configuration">g:phpactorInputListStrategy</a>.</p>
-<h3 id="input-list-strategies-auto-detection">Input list strategies auto-detection</h3>
-<p>When no strategy is defined the plugin will default to the <code>fzf</code> strategy if
-the <a href="https://github.com/junegunn/fzf">Fzf</a> plugin is loaded or to <code>inputlist</code>
-if it's not.</p>
-<h3 id="fzf-multi-selection">FZF Multi-selection</h3>
-<p>Some refactorings will allow you to select multiple entires (for example
-<a href="https://phpactor.github.io/phpactor/refactorings.html#override-method">override
-method</a>.
-Use <code>&lt;tab&gt;</code> to toggle selection and CTRL-A/CTRL-D to select all/select none. </p>
-<p>See the
-<a href="https://github.com/junegunn/fzf">Fzf</a> documentation for more details.</p>
                 </section>
 
             </div>
