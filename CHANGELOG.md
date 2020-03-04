@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2020-03-04 0.14.1
+
+Bug fixes:
+
+  - [vim-plugin] Fix `force_reload` behavior with `g:useOpenWindow`
+
 ## 2020-03-01 0.14.0
 
 Features:

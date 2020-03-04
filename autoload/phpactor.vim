@@ -647,36 +647,40 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 endfunction
 
 function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload)
-    let bufferNumber = bufnr(a:filePath . "$")
-    if v:true == a:useOpenWindow && -1 != bufferNumber
-        let firstWindowId = get(win_findbuf(bufferNumber), 0, v:null)
+    let l:bufferNumber = bufnr(a:filePath . '$')
 
-        if v:null != firstWindowId
-            call win_gotoid(firstWindowId)
+    if v:true == a:useOpenWindow && -1 != l:bufferNumber
+        let l:firstWindowId = get(win_findbuf(l:bufferNumber), 0, v:null)
+
+        if v:null != l:firstWindowId
+            call win_gotoid(l:firstWindowId)
+            if v:true == a:forceReload
+              exec 'e!'
+            endif
             return
         endif
     endif
 
-    if a:target == 'focused_window'
+    if a:target ==# 'focused_window'
         call phpactor#_switchToBufferOrEdit(a:filePath)
         if v:true == a:forceReload
-          exec "e!"
+          exec 'e!'
         endif
         return
     endif
 
-    if a:target == 'vsplit'
-        exec ":vsplit " . a:filePath
+    if a:target ==# 'vsplit'
+        exec ':vsplit ' . a:filePath
         return
     endif
 
-    if a:target == 'hsplit'
-        exec ":split " . a:filePath
+    if a:target ==# 'hsplit'
+        exec ':split ' . a:filePath
         return
     endif
 
-    if a:target == 'new_tab'
-        exec ":tabnew " . a:filePath
+    if a:target ==# 'new_tab'
+        exec ':tabnew ' . a:filePath
         return
     endif
 endfunction
