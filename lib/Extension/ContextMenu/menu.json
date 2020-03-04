@@ -129,6 +129,16 @@
             "parameters": {
                 "offset": "%offset%",
                 "path": "%current_path%",
+<<<<<<< HEAD
+=======
+                "source": "%source%"
+            }
+        },
+        "hover": {
+            "action": "hover",
+            "parameters": {
+                "offset": "%offset%",
+>>>>>>> origin/master
                 "source": "%source%"
             }
         },
@@ -201,8 +211,12 @@
             "import",
             "import_missing_classes",
             "hover",
+<<<<<<< HEAD
             "generate_accessor",
             "goto_implementation"
+=======
+            "generate_accessor"
+>>>>>>> origin/master
         ],
         "property": [
             "cycle_visibility",

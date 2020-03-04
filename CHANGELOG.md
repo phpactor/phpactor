@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## Develop
+## 2020-03-01 0.14.0
 
 Features:
 
@@ -50,7 +50,13 @@ Bug fix:
 
   - [text-document] `?` included with word-at-offset #833
 
-## 2019-08-25 0.13.4
+## 2019-09-13 0.13.4
+
+Bug fixes:
+
+  - [text-document] Word-at-offset offset off by one #816
+
+## 2019-08-25 0.13.3
 
 Bug fixes:
 
