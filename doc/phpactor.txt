@@ -122,6 +122,9 @@ COMMANDS                                                   *phpactor-commands*
   Goto the definition of the class, method or function under the cursor. Open
   the definition in the current window.
 
+:PhpactorGotoType                                          *:PhpactorGotoType*
+  Goto type (class) of the symbol under the cursor.
+
 :PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
   As with |:PhpactorGotoDefinition| but open in a vertical split.
 

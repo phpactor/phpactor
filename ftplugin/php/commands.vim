@@ -48,6 +48,10 @@ command! -nargs=0 PhpactorImportMissingClasses call phpactor#ImportMissingClasse
 command! -nargs=0 PhpactorGotoDefinition call phpactor#GotoDefinition()
 
 ""
+" Goto type (class) of the symbol under the cursor.
+command! -nargs=0 PhpactorGotoType call phpactor#GotoType()
+
+""
 " As with @command(PhpactorGotoDefinition) but open in a vertical split.
 command! -nargs=0 PhpactorGotoDefinitionVsplit call phpactor#GotoDefinitionVsplit()
 

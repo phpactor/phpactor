@@ -41,7 +41,7 @@ Automatically add any missing properties to a class.
 
 - **Command**: `$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments`
 - **VIM Context Menu**: _Class context menu > Transform > Add missing properties_.
-- **VIM Command**:`:call phpactor#Transform()`
+- **VIM Command**:`:PhpactorTransform`
 
 ### Motivation
 
@@ -88,7 +88,7 @@ Copy an existing class to another location updating its name and namespace.
 
 - **Command**: `$ phpactor class:copy path/to/ClassA.php path/to/ClassB.php` (class FQN also accepted).
 - **VIM context menu**: _Class context menu > Copy Class_
-- **VIM function**:`:call phpactor#CopyFile()`
+- **VIM function**:`:PhpactorCopyFile`
 
 ### Motivation
 
@@ -141,7 +141,7 @@ Change the visibility of a class member
 
 - **Command**: __RPC only__
 - **VIM context menu**: _Class member context menu > Change Visiblity_
-- **VIM function**:`:call phpactor#ChangeVisibility()`
+- **VIM function**:`:PhpactorChangeVisibility`
 
 Currently this will cycle through the 3 visibilities: `public`, `protected` and
 `private`.
@@ -200,7 +200,7 @@ Move a class (or folder containing classes) from one location to another.
 
 - **Command**: `$ phpactor class:move path/to/ClassA.php path/to/ClassB.php` (class FQN also accepted).
 - **VIM context menu**: _Class context menu > Move Class_
-- **VIM function**:`:call phpactor#MoveFile()`
+- **VIM function**:`:PhpactorMoveFile`
 
 ### Motivation
 
@@ -259,7 +259,7 @@ Generate a new class with a name and namespace at a given location or from a cla
 
 - **Command**: `$ phpactor class:new path/To/ClassName.php` (class FQN also accepted).
 - **VIM context menu**: _Class context menu > New Class_
-- **VIM function**:`:call phpactor#ClassNew()`
+- **VIM function**:`:PhpactorClassNew`
 
 ### Motivation
 
@@ -311,7 +311,7 @@ Complete the assignments and add properties for an incomplete constructor.
 
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=complete_constructor`
 - **VIM plugin**: _Class context menu > Transform > Complete Constructor_.
-- **VIM function**:`:call phpactor#Transform()`
+- **VIM function**:`:PhpactorTransform`
 
 ### Motivation
 
@@ -369,7 +369,7 @@ configuration.
 
 - **Command**: `$ phpactor class:transform path/to/class.php --transform=fix_namespace_class_name`
 - **VIM plugin**: _Class context menu > Transform > Fix namespace or classname_.
-- **VIM function**: `:call phpactor#Transform()`
+- **VIM function**: `:PhpactorTransform`
 
 <div class="alert alert-warning">
 This refactoring will currently only work fully on Composer based projects.
@@ -426,7 +426,7 @@ Extract a constant from a scalar value.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Symbol context menu > Extract Constant_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 
 ### Motivation
 
@@ -495,7 +495,7 @@ Extract an expression
 
 - **Command**: _VIM function only_
 - **VIM plugin**: _VIM function only_
-- **VIM function**:`:call phpactor#ExtractExpression()` (call with
+- **VIM function**:`:PhpactorExtractExpression` (call with
   `v:true` to invoke on a selection)
 
 ### Motivation
@@ -555,7 +555,7 @@ Extract a method from a selection.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Function only_
-- **VIM function**:`:call phpactor#ExtractMethod()`
+- **VIM function**:`:PhpactorExtractMethod`
 
 This refactoring is NOT currently available through the context menu. You
 will need to [map it to a keyboard shortcut](vim-plugin.md#keyboard-mappings)
@@ -640,7 +640,7 @@ Extract an interface from a class. If a wildcard is given (CLI only) generate an
 
 - **Command**: `$ phpactor class:inflect path/to/Class.php path/to/Interface.php` (wild card accepted).
 - **VIM plugin**: _Class context menu > Inflect > Extract interface_.
-- **VIM function**:`:call phpactor#ClassInflect()`
+- **VIM function**:`:PhpactorClassInflect`
 
 ### Motivation
 
@@ -681,7 +681,7 @@ Generate accessors for a class.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Class context menu > Generate accessor_.
-- **VIM function**:`:call phpactor#GenerateAccessor()`
+- **VIM function**:`:PhpactorGenerateAccessor`
 
 ### Motivation
 
@@ -733,7 +733,7 @@ Generate or update a method based on the method call under the cursor.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Method context menu > Generate method_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 
 ### Motivation
 
@@ -805,7 +805,7 @@ Add any non-implemented methods from interfaces or abstract classes.
 
 - **Command**: `$ phpactor class:transform /path/to/class.php --transform=implement_contracts`
 - **VIM plugin**: _Class context menu > Transform > Implement contracts_.
-- **VIM function**:`:call phpactor#Transform()`
+- **VIM function**:`:PhpactorTransform`
 
 ### Motivation
 
@@ -846,7 +846,7 @@ Import a class into the current namespace based on the class name under the curs
 
 - **Command**: _VIM function only_
 - **VIM plugin**: _VIM function only_
-- **VIM function**:`:call phpactor#UseAdd()`
+- **VIM function**:`:PhpactorUseAdd`
 
 ### Motivation
 
@@ -901,7 +901,7 @@ Expand the class name from unqualified name to fully qualified name.
 
 - **Command**: _VIM function only_
 - **VIM plugin**: _VIM function only_
-- **VIM function**:`:call phpactor#ClassExpand()`
+- **VIM function**:`:PhpactorClassExpand`
 
 ### Motivation
 
@@ -948,7 +948,7 @@ Import all missing classes in the current file.
 
 - **Command**: **RPC Only**
 - **VIM plugin**: _Class context menu > Import Missing_
-- **VIM function**:`:call phpactor#ImportMissingClasses()`
+- **VIM function**:`:PhpactorImportMissingClasses`
 
 ### Motivation
 
@@ -963,7 +963,7 @@ Overide a method from a parent class.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Class context menu > Override method_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 - **Multiple selection**: Supports selecting multiple methods.
 
 ### Motivation
@@ -1010,7 +1010,7 @@ Rename a variable in the local or class scope.
 
 - **Command**: _RPC only_
 - **VIM plugin**: _Variable context menu > Rename_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 
 ### Motivation
 
@@ -1069,7 +1069,7 @@ Rename a class.
 
 - **Command**: `$ phpactor references:class path/to/Class.php --replace="NewName"` (class FQN accepted)
 - **VIM plugin**: _Class context menu > Replace references_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 
 ### Motivation
 
@@ -1126,7 +1126,7 @@ Rename a class member.
 
 - **Command**: `$ phpactor references:member path/to/Class.php memberName --type="method" --replace="newMemberName"` (FQN accepted)
 - **VIM plugin**: _Member context menu > Replace references_.
-- **VIM function**:`:call phpactor#ContextMenu()`
+- **VIM function**:`:PhpactorContextMenu`
 
 ### Motivation
 

@@ -1,0 +1,13 @@
+Given php:
+  <?php 
+
+  use Phpactor\Phpactor;
+
+  new Phpactor();
+
+Do:
+  /Phpactor\<Enter>nn
+  :call phpactor#GotoType()\<Enter>
+
+Then:
+  AssertEqual "Phpactor.php", expand('%:t')

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Features:
+
+  - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
+
 ## 2020-03-04 0.14.1
 
 Bug fixes:

@@ -49,11 +49,14 @@ class ClassNewCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('list')) {
-            return $this->listGenerators($input, $output);
+            $this->listGenerators($input, $output);
+            return 0;
         }
 
         $out = $this->process($input, $output);
         $this->dumperRegistry->get($input->getOption('format'))->dump($output, $out);
+
+        return 0;
     }
 
     private function process(InputInterface $input, OutputInterface $output)

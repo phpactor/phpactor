@@ -51,5 +51,7 @@ class OffsetInfoCommand extends Command
 
         $format = $input->getOption('format');
         $this->dumperRegistry->get($format)->dump($output, $info);
+
+        return 0;
     }
 }
