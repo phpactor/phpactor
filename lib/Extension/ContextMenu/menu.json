@@ -55,7 +55,7 @@
             }
         },
         "goto_type": {
-            "action": "goto_definition",
+            "action": "goto_type",
             "key": "t",
             "parameters": {
                 "offset": "%offset%",
