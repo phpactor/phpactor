@@ -12,6 +12,7 @@ references etc.
 - [Class Member References](#class-member-references)
 - [Hover](#hover)
 - [Jump to Definition](#jump-to-definition)
+- [Jump to Type](#jump-to-type)
 - [Jump to Implementation](#jump-to-implementation)
 - [Jump to or generate related file](#jump-to-or-generate-related-file)
 
@@ -22,7 +23,7 @@ Navigate / list all references to a given class.
 
 - **Command**: `$ phpactor references:class path/to/Class.php`
 - **VIM Context Menu**: _Class context menu > Find references_.
-- **VIM Command**:`:call phpactor#FindReferences()`
+- **VIM Command**:`:PhpactorFindReferences`
 
 ### Description
 
@@ -42,7 +43,7 @@ Navigate / list all references to a given class member (method, property or cons
 
 - **Command**: `$ phpactor references:member path/to/Class.php memberName`
 - **VIM Context Menu**: _Member context menu > Find references_.
-- **VIM Command**:`:call phpactor#FindReferences()`
+- **VIM Command**:`:PhpactorFindReferences`
 
 ### Description
 
@@ -61,7 +62,7 @@ brief information about the symbol underneath the cursor.
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Context menu_ > Hover_.
-- **VIM Command**:`:call phpactor#Hover()`
+- **VIM Command**:`:PhpactorHover`
 
 Jump to definition
 ------------------
@@ -70,13 +71,28 @@ Jump to the definition of a class or class member.
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Member/class context menu > Goto definition_.
-- **VIM Command**:`:call phpactor#GotoDefinition()`
+- **VIM Command**:`:PhpactorGotoDefinition`
 
 ### Description
 
 Open the file containing the class or class member under the cursor and move the cursor to the place where class or class member is defined.
 
 This feature is **extremely useful**! Be sure to map it to a keyboard shortcut and use it often to quickly navigate through your source code.
+
+Jump to type
+------------
+
+Jump to the type of the symbol under the cursor.
+
+- **Command**: _RPC Only_
+- **VIM Context Menu**: _Member/class context menu > Goto type.
+- **VIM Command**:`:PhpactorGotoType()`
+
+### Description
+
+Sometimes you will want to jump to the type (i.e. the class) of a symbol, for
+example if you reference a property in code, `$this->locator`, you can invoke
+_goto type_ on the property and jump to the, for example, `Locator` type.
 
 Jump to Implementation
 ----------------------
@@ -85,7 +101,7 @@ Jump to the implementatoin(s) of an interface or class
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Member/class context menu > Goto implementation_.
-- **VIM Command**:`:call phpactor#GotoImplementations()`
+- **VIM Command**:`:PhpactorGotoImplementations`
 n
 ### Description
 
@@ -120,7 +136,7 @@ supported).
 
 - **Command**: _RPC Only_
 - **VIM Context Menu**: _Class context menu > Navigate_.
-- **VIM Command**:`:call phpactor#Navigate()`
+- **VIM Command**:`:PhpactorNavigate`
 
 ### Description
 
