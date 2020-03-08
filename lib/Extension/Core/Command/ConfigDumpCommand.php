@@ -61,6 +61,8 @@ class ConfigDumpCommand extends Command
         }
 
         $output->writeln(json_encode($this->config, JSON_PRETTY_PRINT));
+
+        return 0;
     }
 
     private function dumpMetaInformation(OutputInterface $output)

@@ -210,6 +210,14 @@ function! phpactor#GotoDefinitionTab()
     call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
+function! phpactor#GotoType()
+    call phpactor#rpc('goto_type', {
+        \'offset': phpactor#_offset(),
+        \'source': phpactor#_source(),
+        \'path': expand('%:p'),
+        \'language': &filetype})
+endfunction
+
 function! phpactor#Hover()
     call phpactor#rpc("hover", { "offset": phpactor#_offset(), "source": phpactor#_source() })
 endfunction

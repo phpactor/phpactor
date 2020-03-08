@@ -95,6 +95,7 @@ class ReferencesMemberCommand extends Command
 
         $output->write(PHP_EOL);
         $output->writeln(sprintf('%s reference(s), %s risky references', $count, $riskyCount));
+        return 0;
     }
 
     private function renderTable(OutputInterface $output, array $results, string $type, bool $ansi)

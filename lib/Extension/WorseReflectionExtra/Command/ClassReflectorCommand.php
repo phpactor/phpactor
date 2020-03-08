@@ -42,5 +42,7 @@ class ClassReflectorCommand extends Command
     {
         $reflection = $this->reflector->reflect($input->getArgument('name'));
         $this->dumperRegistry->get($input->getOption('format'))->dump($output, $reflection);
+
+        return 0;
     }
 }

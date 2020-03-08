@@ -54,6 +54,8 @@ class ClassInflectCommand extends Command
 
         $out = $this->process($input, $output);
         $this->dumperRegistry->get($input->getOption('format'))->dump($output, $out);
+
+        return 0;
     }
 
     private function process(InputInterface $input, OutputInterface $output)
@@ -90,5 +92,7 @@ class ClassInflectCommand extends Command
     {
         $dumper = $this->dumperRegistry->get($input->getOption('format'));
         $dumper->dump($output, $this->classInflect->availableGenerators());
+
+        return 0;
     }
 }

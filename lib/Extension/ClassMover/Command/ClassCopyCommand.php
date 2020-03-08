@@ -60,11 +60,14 @@ class ClassCopyCommand extends Command
 
         switch ($type) {
             case 'auto':
-                return $this->copier->copy($logger, $src, $dest);
+                $this->copier->copy($logger, $src, $dest);
+                return 0;
             case 'file':
-                return $this->copier->copyFile($logger, $src, $dest);
+                $this->copier->copyFile($logger, $src, $dest);
+                return 0;
             case 'class':
-                return $this->copier->copyClass($logger, $src, $dest);
+                $this->copier->copyClass($logger, $src, $dest);
+                return 0;
         }
 
         throw new \InvalidArgumentException(sprintf(

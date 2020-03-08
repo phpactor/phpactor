@@ -94,5 +94,7 @@ class ClassTransformCommand extends Command
             $affected,
             $dryRun ? ' (dry run)' : ''
         ));
+
+        return 0;
     }
 }

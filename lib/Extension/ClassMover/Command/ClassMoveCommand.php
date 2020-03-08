@@ -66,11 +66,14 @@ class ClassMoveCommand extends Command
 
         switch ($type) {
             case 'auto':
-                return $this->mover->move($logger, $filesystem, $src, $dest, $related);
+                $this->mover->move($logger, $filesystem, $src, $dest, $related);
+                return 0;
             case 'file':
-                return $this->mover->moveFile($logger, $filesystem, $src, $dest, $related);
+                $this->mover->moveFile($logger, $filesystem, $src, $dest, $related);
+                return 0;
             case 'class':
-                return $this->mover->moveClass($logger, $filesystem, $src, $dest, $related);
+                $this->mover->moveClass($logger, $filesystem, $src, $dest, $related);
+                return 0;
         }
 
         throw new \InvalidArgumentException(sprintf(

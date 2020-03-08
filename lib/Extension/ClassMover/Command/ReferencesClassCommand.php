@@ -63,7 +63,7 @@ class ReferencesClassCommand extends Command
 
         if ($format) {
             $this->dumperRegistry->get($format)->dump($output, $results);
-            return;
+            return 0;
         }
 
         $output->writeln('<comment># References:</>');
@@ -77,6 +77,8 @@ class ReferencesClassCommand extends Command
 
         $output->write(PHP_EOL);
         $output->writeln(sprintf('%s reference(s)', $count));
+
+        return 0;
     }
 
     private function findOrReplaceReferences($filesystem, $class, $replace, $dryRun)
