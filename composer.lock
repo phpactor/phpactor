@@ -1815,12 +1815,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-rpc-extension.git",
-                "reference": "ff9545483f2e63230e022c85d2ecbe1cc87f633d"
+                "reference": "a4343f79bdc21760b034e56f3950f6e253b45838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/ff9545483f2e63230e022c85d2ecbe1cc87f633d",
-                "reference": "ff9545483f2e63230e022c85d2ecbe1cc87f633d",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-rpc-extension/zipball/a4343f79bdc21760b034e56f3950f6e253b45838",
+                "reference": "a4343f79bdc21760b034e56f3950f6e253b45838",
                 "shasum": ""
             },
             "require": {
@@ -1857,7 +1857,7 @@
                 }
             ],
             "description": "Description about my project",
-            "time": "2020-03-08T13:09:54+00:00"
+            "time": "2020-03-08T15:41:02+00:00"
         },
         {
             "name": "phpactor/rpc-extension",
