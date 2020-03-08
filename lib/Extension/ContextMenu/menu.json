@@ -54,6 +54,15 @@
                 "path": "%path%"
             }
         },
+        "goto_type": {
+            "action": "goto_definition",
+            "key": "t",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
         "replace_references": {
             "action": "references",
             "key": "r",
@@ -170,8 +179,9 @@
     },
     "contexts": {
         "variable": [
-            "rename_variable",
-            "hover"
+            "goto_type",
+            "hover",
+            "rename_variable"
         ],
         "string": [
             "extract_constant",
@@ -184,41 +194,43 @@
             "cycle_visibility",
             "find_references",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "hover",
+            "replace_references"
         ],
         "class": [
             "class_new",
             "copy",
             "find_references",
+            "generate_accessor",
             "goto_definition",
+            "goto_implementation",
+            "hover",
+            "import",
+            "import_missing_classes",
             "inflect",
             "move",
             "navigate",
             "override_method",
             "replace_references",
-            "transform_file",
-            "import",
-            "import_missing_classes",
-            "hover",
-            "generate_accessor",
-            "goto_implementation"
+            "transform_file"
         ],
         "property": [
             "cycle_visibility",
             "find_references",
             "generate_accessor",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "goto_type",
+            "hover",
+            "replace_references"
         ],
         "method": [
             "cycle_visibility",
             "find_references",
             "generate_method",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "goto_type",
+            "hover",
+            "replace_references"
         ]
     }
 }
