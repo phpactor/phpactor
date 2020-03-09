@@ -115,7 +115,7 @@ command! -nargs=0 PhpactorFindReferences call phpactor#FindReferences()
 ""
 " Navigate - jump to the parent class, interface, or any of the relationships
 " defined in `navigation.destinations` https://phpactor.github.io/phpactor/configuration.html#reference
-command! -nargs=0 PhpactorNavigate call phpactor#Naviagate()
+command! -nargs=0 PhpactorNavigate call phpactor#Navigate()
 
 ""
 " Rotate the visiblity of the method under the cursor
@@ -124,3 +124,7 @@ command! -nargs=0 PhpactorChangeVisibility call phpactor#ChangeVisibility()
 ""
 " Generate accessors for the current class
 command! -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
+
+""
+" Automatically add any missing properties to a class
+command! -nargs=0 PhpactorTransform call phpactor#Transform()
