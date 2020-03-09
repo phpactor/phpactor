@@ -120,7 +120,7 @@ class Post
 After moving to `src/Cms/Article.php`:
 
 ```php
-# src/Cms/Page.php
+# src/Cms/Article.php
 <?php
 
 namespace Acme\Cms;
@@ -160,7 +160,7 @@ isolate some of it's responsibility. When doing this you may:
 Cursor position shown as `<>`:
 
 ```php
-# src/Blog/Post.php
+# src/Blog/FoobarResolver.php
 <?php
 
 namespace Acme\Blog;
@@ -177,7 +177,7 @@ class FoobarResolver
 After invoking "change visibility" on or within the method.
 
 ```php
-# src/Blog/Post.php
+# src/Blog/FoobarResolver.php
 <?php
 
 namespace Acme\Blog;
