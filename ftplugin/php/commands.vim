@@ -124,3 +124,7 @@ command! -nargs=0 PhpactorChangeVisibility call phpactor#ChangeVisibility()
 ""
 " Generate accessors for the current class
 command! -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
+
+""
+" Automatically add any missing properties to a class
+command! -nargs=0 PhpactorTransform call phpactor#Transform()
