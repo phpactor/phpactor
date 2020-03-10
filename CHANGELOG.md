@@ -7,6 +7,11 @@ Features:
 
   - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
 
+Documentation:
+
+  - [doc] Fix examples in refactoring documentation - @Great-Antique
+  - [doc] Fix example mappings and add missing commands - @yeagassy
+
 ## 2020-03-04 0.14.1
 
 Bug fixes:
