@@ -213,11 +213,11 @@ are available for you to copy:
     au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
     au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
     au FileType php nmap <buffer> <silent> <Leader>ee
-    :PhpactorExtractExpression<CR>
+        \ :PhpactorExtractExpression<CR>
     au FileType php vmap <buffer> <silent> <Leader>ee
-    :<C-u>PhpactorExtractExpression<CR>
+        \ :<C-u>PhpactorExtractExpression<CR>
     au FileType php vmap <buffer> <silent> <Leader>em
-    :<C-u>PhpactorExtractMethod<CR>
+        \ :<C-u>PhpactorExtractMethod<CR>
   augroup END
 <
 

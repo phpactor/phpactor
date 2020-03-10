@@ -22,9 +22,12 @@
 "     au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
 "     au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
 "     au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
-"     au FileType php nmap <buffer> <silent> <Leader>ee :PhpactorExtractExpression<CR>
-"     au FileType php vmap <buffer> <silent> <Leader>ee :<C-u>PhpactorExtractExpression<CR>
-"     au FileType php vmap <buffer> <silent> <Leader>em :<C-u>PhpactorExtractMethod<CR>
+"     au FileType php nmap <buffer> <silent> <Leader>ee
+"         \ :PhpactorExtractExpression<CR>
+"     au FileType php vmap <buffer> <silent> <Leader>ee
+"         \ :<C-u>PhpactorExtractExpression<CR>
+"     au FileType php vmap <buffer> <silent> <Leader>em
+"         \ :<C-u>PhpactorExtractMethod<CR>
 "   augroup END
 " <
 "
