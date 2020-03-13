@@ -92,11 +92,11 @@ command! -nargs=0 PhpactorExtensionList call phpactor#ExtensionList()
 
 ""
 " Install an extension
-command! -nargs=1 PhpactorExtensionInstall call phpactor#ExtensionInstall()
+command! -nargs=1 PhpactorExtensionInstall call phpactor#ExtensionInstall(<q-args>)
 
 ""
 " Remove an extension
-command! -nargs=1 PhpactorExtensionRemove call phpactor#ExtensionRemove()
+command! -nargs=1 PhpactorExtensionRemove call phpactor#ExtensionRemove(<q-args>)
 
 ""
 " Create a new class. You will be offered a choice of templates.
