@@ -435,9 +435,6 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
-let g:phpactorProjectRootPatterns = ['composer.json', '.git']
-let g:phpactorGlobalRootPatterns = ['/', '/home']
-
 function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, rootPatterns, fallbackDirectory)
   let l:directory = a:initialDirectory
   while index(g:phpactorGlobalRootPatterns, l:directory) < 0
