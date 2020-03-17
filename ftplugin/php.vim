@@ -41,7 +41,7 @@ let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
 " The list of files that determine workspace root directory.
-let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', ['composer.json', '.git'])
+let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', ['composer.json', '.git', '.phpactor.json', '.phpactor.yml'])
 
 " The list of directories that should not be considered as workspace root directory.
 let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '/home'])
