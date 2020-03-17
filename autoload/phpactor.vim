@@ -446,8 +446,8 @@ function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, rootPatterns,
     let l:directory = fnamemodify(l:directory, ':h')
   endwhile
 
-  if index(g:phpactorGlobalRootPatterns, l:workspaceDir) >= 0
-    let l:workspaceDir = a:fallbackDirectory
+  if index(g:phpactorGlobalRootPatterns, l:directory) >= 0
+    let l:directory = a:fallbackDirectory
   endif
 
   return l:directory
