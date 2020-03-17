@@ -435,14 +435,41 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
+let g:phpactorProjectRootPatterns = ['composer.json', '.git']
+let g:phpactorGlobalRootPatterns = ['/', '/home']
+
+function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, rootPatterns, fallbackDirectory)
+  let l:directory = a:initialDirectory
+  while index(g:phpactorGlobalRootPatterns, l:directory) < 0
+    for l:pattern in a:rootPatterns
+      if (filereadable(l:directory .'/'. l:pattern))
+        return l:directory
+      endif
+    endfor
+    let l:directory = fnamemodify(l:directory, ':h')
+  endwhile
+
+  if index(g:phpactorGlobalRootPatterns, l:workspaceDir) >= 0
+    let l:workspaceDir = a:fallbackDirectory
+  endif
+
+  return l:directory
+endfunction
+
 function! phpactor#rpc(action, arguments)
     " Remove any existing output in the message window
     execute ':redraw'
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
-    let result = system(cmd, json_encode(request))
+    let l:workspaceDir = s:searchDirectoryUpwardForRootPatterns(
+          \ expand('%:p:h'),
+          \ g:phpactorProjectRootPatterns,
+          \ g:phpactorInitialCwd
+          \)
+
+    let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
+    let result = system(l:cmd, json_encode(request))
 
     if (v:shell_error == 0)
         try
