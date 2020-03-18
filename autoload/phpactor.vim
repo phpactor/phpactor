@@ -437,7 +437,7 @@ endfunction
 
 function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, workspaceRootPatterns, fallbackDirectory)
   if index(g:phpactorGlobalRootPatterns, '/') < 0
-    let call add(g:phpactorGlobalRootPatterns, '/')
+    call add(g:phpactorGlobalRootPatterns, '/')
   endif
 
   let l:directory = a:initialDirectory
