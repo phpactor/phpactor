@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44f5863fe41238b837f50614a4733d3f",
+    "content-hash": "e714924a69daddd3f97bf37c84dce81d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1916,12 +1916,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "72f53091d3692324ccde5d98cd9b666963884c9f"
+                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/72f53091d3692324ccde5d98cd9b666963884c9f",
-                "reference": "72f53091d3692324ccde5d98cd9b666963884c9f",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/b1e11fdf14053becb37795f01bc5b9b48ea5871e",
+                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e",
                 "shasum": ""
             },
             "require": {
@@ -1955,7 +1955,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2019-12-04T19:21:48+00:00"
+            "time": "2020-03-18T11:45:50+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
@@ -5779,6 +5779,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/source-code-filesystem": 20,
         "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
@@ -5789,5 +5790,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2.5"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
