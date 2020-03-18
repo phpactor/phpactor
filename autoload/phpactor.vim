@@ -355,7 +355,7 @@ endfunction
 function! phpactor#_path()
     let l:path = expand('%:p')
 
-    if filereadable(l:path)
+    if filereadable(l:path) || stridx(l:path, '/') == 0
       return l:path
     endif
 
