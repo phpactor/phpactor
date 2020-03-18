@@ -327,7 +327,7 @@ endfunction
 " Utility functions
 """""""""""""""""""""""
 function! s:isOpenInCurrentWindow(filePath)
-  return expand('%:p') == a:filePath
+  return phpactor#_path() == a:filePath
 endfunction
 
 function! phpactor#_switchToBufferOrEdit(filePath)
@@ -353,7 +353,15 @@ function! phpactor#_source()
 endfunction
 
 function! phpactor#_path()
-    return expand('%:p')
+    let l:path = expand('%:p')
+
+    if filereadable(l:path)
+      return l:path
+    endif
+
+    " todo if empty path
+    "
+    return printf('%s/%s', g:phpactorInitialCwd, l:path)
 endfunction
 
 function! s:getStartOffsetFromMark(mark, linewise)
@@ -474,12 +482,13 @@ function! phpactor#rpc(action, arguments)
     let request = { "action": a:action, "parameters": a:arguments }
 
     let l:workspaceDir = s:searchDirectoryUpwardForRootPatterns(
-          \ expand('%:p:h'),
+          \ fnamemodify(phpactor#_path(), ':h'),
           \ g:phpactorProjectRootPatterns,
           \ g:phpactorInitialCwd
           \)
 
     let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
+
     let result = system(l:cmd, json_encode(request))
 
     if (v:shell_error == 0)
