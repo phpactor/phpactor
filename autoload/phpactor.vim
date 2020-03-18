@@ -441,12 +441,12 @@ function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, workspaceRoot
   endif
 
   let l:directory = a:initialDirectory
+
   while index(g:phpactorGlobalRootPatterns, l:directory) < 0
-    for l:pattern in a:workspaceRootPatterns
-      if (filereadable(l:directory .'/'. l:pattern))
-        return l:directory
-      endif
-    endfor
+    if s:directoryMatchesToPatterns(l:directory, a:workspaceRootPatterns)
+      return l:directory
+    endif
+
     let l:directory = fnamemodify(l:directory, ':h')
   endwhile
 
@@ -455,6 +455,16 @@ function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, workspaceRoot
   endif
 
   return l:directory
+endfunction
+
+function s:directoryMatchesToPatterns(directory, patterns) abort
+  for l:pattern in a:patterns
+    if (filereadable(a:directory .'/'. l:pattern))
+      return v:true
+    endif
+  endfor
+
+  return v:false
 endfunction
 
 function! phpactor#rpc(action, arguments)
