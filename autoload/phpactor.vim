@@ -435,14 +435,14 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
-function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, rootPatterns, fallbackDirectory)
+function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, workspaceRootPatterns, fallbackDirectory)
   if index(g:phpactorGlobalRootPatterns, '/') < 0
     let call add(g:phpactorGlobalRootPatterns, '/')
   endif
 
   let l:directory = a:initialDirectory
   while index(g:phpactorGlobalRootPatterns, l:directory) < 0
-    for l:pattern in a:rootPatterns
+    for l:pattern in a:workspaceRootPatterns
       if (filereadable(l:directory .'/'. l:pattern))
         return l:directory
       endif
