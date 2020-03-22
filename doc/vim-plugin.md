@@ -35,7 +35,7 @@ $ cd ~/.vim/plugged/phpactor
 $ composer install
 ```
 
-Now open a PHP file and issue the following command `:call phpactor#Status()`:
+Now open a PHP file and issue the following command `:PhpactorStatus`:
 
 ```
 Support
@@ -55,11 +55,9 @@ To find out more about the plugin type `:help phpactor`
 
 ### Troubleshooting
 
-**E117: Unknown function: phpactor#Status**:
+**E492: Not an editor command: PhpactorStatus**:
 
-Vim-plug and most other package managers for Vim will lazy-load Phpactor when it's
-needed, i.e. when opening a PHP file. If you get this error, open a PHP file and
-run the command again.
+You need to open a PHP file before using Phpactor.
 
 **Composer not found** or **Git not detected**:
 
