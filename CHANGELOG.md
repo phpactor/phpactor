@@ -7,6 +7,11 @@ Features:
 
   - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
 
+Bug fixes:
+
+  - [class-mover] `$` was removed when renaming static variables (#925) -
+    @dantleech
+
 Documentation:
 
   - [doc] Fix examples in refactoring documentation - @Great-Antique
