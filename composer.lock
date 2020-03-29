@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44f5863fe41238b837f50614a4733d3f",
+    "content-hash": "dd612121c75618da098bef78dc7b9b79",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2166,18 +2166,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "93e987f3d55de5040169b5b9eca395c036726b97"
+                "reference": "1f10e5beceb73f339bdd54c56b9d2dfe1316937b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/93e987f3d55de5040169b5b9eca395c036726b97",
-                "reference": "93e987f3d55de5040169b5b9eca395c036726b97",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/1f10e5beceb73f339bdd54c56b9d2dfe1316937b",
+                "reference": "1f10e5beceb73f339bdd54c56b9d2dfe1316937b",
                 "shasum": ""
             },
             "require": {
                 "jetbrains/phpstorm-stubs": "*",
                 "microsoft/tolerant-php-parser": "~0.0",
-                "php": "^7.1",
+                "php": "^7.2",
                 "phpactor/docblock": "~0.2",
                 "phpactor/text-document": "~1.0",
                 "psr/log": "^1.0"
@@ -2213,7 +2213,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-03-18T13:34:29+00:00"
+            "time": "2020-03-29T20:47:13+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -2221,25 +2221,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "9b39282a5867e22792777c8a542d94d5f0fec37e"
+                "reference": "eacaa7b0acc57904256012705b52b1a92779829d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/9b39282a5867e22792777c8a542d94d5f0fec37e",
-                "reference": "9b39282a5867e22792777c8a542d94d5f0fec37e",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/eacaa7b0acc57904256012705b52b1a92779829d",
+                "reference": "eacaa7b0acc57904256012705b52b1a92779829d",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.2",
                 "phpactor/class-to-file-extension": "~0.1",
                 "phpactor/composer-autoloader-extension": "~0.1",
                 "phpactor/container": "^1.2",
                 "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/logging-extension": "~0.3",
-                "phpactor/worse-reflection": "~0.1"
+                "phpactor/worse-reflection": "~0.4.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "php": "^7.2",
                 "phpstan/phpstan": "^0.12",
                 "phpunit/phpunit": "^7.3"
             },
@@ -2266,7 +2266,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2020-03-17T23:02:20+00:00"
+            "time": "2020-03-29T20:49:11+00:00"
         },
         {
             "name": "psr/container",

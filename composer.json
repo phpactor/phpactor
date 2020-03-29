@@ -39,7 +39,7 @@
         "phpactor/worse-reference-finder-extension": "^0.1.2",
         "phpactor/worse-reference-finders": "^0.2.3",
         "phpactor/worse-reflection": "^0.4.0",
-        "phpactor/worse-reflection-extension": "^0.2.2",
+        "phpactor/worse-reflection-extension": "^0.2.3",
         "sebastian/diff": "^3.0",
         "symfony/filesystem": "^3.3|^4.2|^5.0",
         "symfony/yaml": "^3.3",
