@@ -10,10 +10,17 @@ Features:
     processes) (#929) - @dantleech
   - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
 
+Improvements:
+
+  - [text-document] Include `<` and `>` when getting "class" name undercursor
+    (allow implorting `Foobar` from an `@var array<Foobar>` doc
+
 Bug fixes:
 
   - [class-mover] `$` was removed when renaming static variables (#925) -
     @dantleech
+  - [class-to-file] Remove duplicate candidates (fixes issue with class
+    completion duplicate suggestions)
 
 Documentation:
 
