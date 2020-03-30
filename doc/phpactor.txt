@@ -48,6 +48,13 @@ is to use the VIM inputlist.
 When jumping to a file location: if the target file open in a window, switch
 to that window instead of switching buffers.  The default is false.
 
+                                               *g:phpactorProjectRootPatterns*
+The list of files that determine workspace root directory if contained within
+
+                                                *g:phpactorGlobalRootPatterns*
+The list of directories that should not be considered as workspace root
+directory (in addition to '/' which is always considered)
+
 ==============================================================================
 COMPLETION                                               *phpactor-completion*
 

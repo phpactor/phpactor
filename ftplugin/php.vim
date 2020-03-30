@@ -40,6 +40,16 @@ let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor
 " to that window instead of switching buffers.  The default is false.
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
+""
+" The list of files that determine workspace root directory
+" if contained within
+let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', ['composer.json', '.git', '.phpactor.json', '.phpactor.yml'])
+
+""
+" The list of directories that should not be considered as workspace root directory
+" (in addition to '/' which is always considered)
+let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '/home'])
+
 if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
