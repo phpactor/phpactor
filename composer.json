@@ -10,7 +10,7 @@
         "ocramius/package-versions": "^1.0",
         "php": "^7.2",
         "phpactor/class-mover": "^0.1.2",
-        "phpactor/class-to-file": "^0.3.2",
+        "phpactor/class-to-file": "^0.3.3",
         "phpactor/class-to-file-extension": "^0.2.1",
         "phpactor/code-builder": "^0.3.2",
         "phpactor/code-transform": "^0.2.1",

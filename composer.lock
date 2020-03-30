@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd612121c75618da098bef78dc7b9b79",
+    "content-hash": "ba19d786b44727fa512e69105d95fd09",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -713,16 +713,16 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "fd360d8c2c2dbd2314ace81f0467bf36269b4ef2"
+                "reference": "1e232ab2708e3baa1927c391d3b2f5b578068d29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/fd360d8c2c2dbd2314ace81f0467bf36269b4ef2",
-                "reference": "fd360d8c2c2dbd2314ace81f0467bf36269b4ef2",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/1e232ab2708e3baa1927c391d3b2f5b578068d29",
+                "reference": "1e232ab2708e3baa1927c391d3b2f5b578068d29",
                 "shasum": ""
             },
             "require": {
@@ -757,7 +757,7 @@
                 }
             ],
             "description": "Library to covert class names to file paths and vice-versa",
-            "time": "2020-01-26T12:15:38+00:00"
+            "time": "2020-03-30T19:25:34+00:00"
         },
         {
             "name": "phpactor/class-to-file-extension",

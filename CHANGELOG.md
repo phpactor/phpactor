@@ -13,6 +13,8 @@ Bug fixes:
 
   - [class-mover] `$` was removed when renaming static variables (#925) -
     @dantleech
+  - [class-to-file] Remove duplicate candidates (fixes issue with class
+    completion duplicate suggestions)
 
 Documentation:
 
