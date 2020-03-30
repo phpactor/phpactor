@@ -9,6 +9,11 @@ Features:
   - [worse-reflection] Enable cache lifetime (important for long running
     processes) (#929) - @dantleech
 
+Improvements:
+
+  - [text-document] Include `<` and `>` when getting "class" name undercursor
+    (allow implorting `Foobar` from an `@var array<Foobar>` doc.
+
 Bug fixes:
 
   - [class-mover] `$` was removed when renaming static variables (#925) -
