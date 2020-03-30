@@ -8,6 +8,7 @@ Features:
   - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
   - [worse-reflection] Enable cache lifetime (important for long running
     processes) (#929) - @dantleech
+  - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
 
 Bug fixes:
 
