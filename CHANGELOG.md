@@ -12,7 +12,7 @@ Features:
 Improvements:
 
   - [text-document] Include `<` and `>` when getting "class" name undercursor
-    (allow implorting `Foobar` from an `@var array<Foobar>` doc.
+    (allow implorting `Foobar` from an `@var array<Foobar>` doc
 
 Bug fixes:
 
