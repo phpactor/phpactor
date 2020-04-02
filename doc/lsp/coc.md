@@ -16,9 +16,6 @@ follwing:
 
 ```
 {
-    "coc.source.around.enable":false,
-    "coc.source.buffer.enable":false,
-    "coc.source.file.enable":false,
     "languageserver": {
         "phpactor": {
             "trace.server": "verbose",
@@ -51,7 +48,7 @@ You can try adding `$` to the list of keywords to solve the problem:
 autocmd FileType php set iskeyword+=$
 ```
 
-or trim the `$` prefix in `.phpactor.json`:
+or configure Phpactor to trim the `$` prefix in `.phpactor.json`:
 
 ```
 {
