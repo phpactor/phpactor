@@ -35,6 +35,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Phpactor\Extension\ClassToFileExtra\ClassToFileExtraExtension;
 use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 
@@ -104,6 +105,7 @@ class Phpactor
             ReferenceFinderExtension::class,
             PhpExtension::class,
             LanguageServerCompletionExtension::class,
+            LanguageServerExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
