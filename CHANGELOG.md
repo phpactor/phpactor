@@ -9,6 +9,7 @@ Features:
   - [worse-reflection] Enable cache lifetime (important for long running
     processes) (#929) - @dantleech
   - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
+  - [language-server] Included in the core.
 
 Improvements:
 
