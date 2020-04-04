@@ -1760,12 +1760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "b96def3cd8946c5211fe9f4cee779b31d21ee5ab"
+                "reference": "0a3f715faaf42db9319aed6e6b47ba21411b4bed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/b96def3cd8946c5211fe9f4cee779b31d21ee5ab",
-                "reference": "b96def3cd8946c5211fe9f4cee779b31d21ee5ab",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/0a3f715faaf42db9319aed6e6b47ba21411b4bed",
+                "reference": "0a3f715faaf42db9319aed6e6b47ba21411b4bed",
                 "shasum": ""
             },
             "require": {
@@ -1812,7 +1812,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-04T10:08:21+00:00"
+            "time": "2020-04-04T11:31:31+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",

@@ -13,11 +13,11 @@ while read -r dep; do
     if [ ! -e vendor ]; then
         ln -s ../../../vendor .
     fi
+    if [ ! -e composer.lock ]; then
+        ln -s ../../../composer.lock .
+    fi
     composer dumpautoload
     CMD=vendor/bin/phpunit
-    if [ "$dep" = "phpactor/completion" ]; then
-        continue
-    fi
 
     if [ "$dep" = "phpactor/extension-manager-extension" ]; then
         CMD=$CMD" --process-isolation"
