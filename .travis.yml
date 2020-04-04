@@ -30,7 +30,7 @@ jobs:
   include:
     - stage: test
       env: VIM
-      php: 7.2
+      php: 7.3
       before_script:
         - composer validate --strict
         # Install the PHP dependencies
@@ -43,7 +43,7 @@ jobs:
       script:
         # Run the VIM Plugin tests
         - config/travis/vim-plugin-test.sh
-    - php: 7.2
+    - php: 7.3
     - stage: docs
       php: 7.2
       if: branch = master
