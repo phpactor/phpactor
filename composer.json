@@ -16,6 +16,7 @@
         "phpactor/code-transform": "^0.2.1",
         "phpactor/code-transform-extension": "^0.1.2",
         "phpactor/completion": "^0.4",
+        "phpactor/language-server": "^0.3",
         "phpactor/composer-autoloader-extension": "^0.2.1",
         "phpactor/config-loader": "^0.1",
         "phpactor/console-extension": "^0.1.5",
@@ -41,8 +42,7 @@
         "symfony/filesystem": "^3.3|^4.2|^5.0",
         "symfony/yaml": "^3.3",
         "symfony/console": "^4.0",
-        "webmozart/glob": "^4.1",
-        "phpactor/language-server-extension": "^0.2.0@dev"
+        "webmozart/glob": "^4.1"
     },
     "require-dev": {
         "symfony/debug": "^4.0",
