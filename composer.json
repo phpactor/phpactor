@@ -15,7 +15,7 @@
         "phpactor/code-builder": "^0.3.2",
         "phpactor/code-transform": "^0.2.1",
         "phpactor/code-transform-extension": "^0.1.2",
-        "phpactor/completion": "^1.0.0",
+        "phpactor/completion": "^0.4",
         "phpactor/composer-autoloader-extension": "^0.2.1",
         "phpactor/config-loader": "^0.1",
         "phpactor/console-extension": "^0.1.5",

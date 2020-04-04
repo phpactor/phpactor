@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "adf7be38aa54c35cc2024a24dde5a422",
+    "content-hash": "71caaf0ec2e814d2216675cba7dfa8dc",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1760,12 +1760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "0a3f715faaf42db9319aed6e6b47ba21411b4bed"
+                "reference": "29b04e513a1de39799c0726c2ee7bdfdc93fecbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/0a3f715faaf42db9319aed6e6b47ba21411b4bed",
-                "reference": "0a3f715faaf42db9319aed6e6b47ba21411b4bed",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/29b04e513a1de39799c0726c2ee7bdfdc93fecbe",
+                "reference": "29b04e513a1de39799c0726c2ee7bdfdc93fecbe",
                 "shasum": ""
             },
             "require": {
@@ -1793,7 +1793,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "0.4.x-dev"
                 }
             },
             "autoload": {
@@ -1812,7 +1812,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-04T11:31:31+00:00"
+            "time": "2020-04-04T11:47:44+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
