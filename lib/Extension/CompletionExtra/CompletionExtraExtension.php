@@ -5,7 +5,7 @@ namespace Phpactor\Extension\CompletionExtra;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
-use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Completion\Extension\CompletionExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\Rpc\RpcExtension;

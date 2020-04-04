@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cd2f97076ec51e33f8e8b584a812e8d",
+    "content-hash": "167d6892b3d45a3e6629159bd09c004a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -612,34 +612,35 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.4.2",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d"
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
-                "reference": "44af6f3a2e2e04f2af46bcb302ad9600cba41c7d",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/1d32342b8c1eb27353c8887c366147b4c2da673c",
+                "reference": "1d32342b8c1eb27353c8887c366147b4c2da673c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0.0",
-                "php": "^7.1.0"
+                "php": "^7.3.0"
             },
             "require-dev": {
-                "composer/composer": "^1.6.3",
-                "doctrine/coding-standard": "^5.0.1",
+                "composer/composer": "^1.8.6",
+                "doctrine/coding-standard": "^6.0.0",
                 "ext-zip": "*",
-                "infection/infection": "^0.7.1",
-                "phpunit/phpunit": "^7.5.17"
+                "infection/infection": "^0.13.4",
+                "phpunit/phpunit": "^8.2.5",
+                "vimeo/psalm": "^3.4.9"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "PackageVersions\\Installer",
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -658,7 +659,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2019-11-15T16:17:10+00:00"
+            "time": "2019-07-17T15:49:50+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -967,32 +968,40 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "7dda572f892475844c7e06a6ffc707b37e7ec399"
+                "reference": "b96def3cd8946c5211fe9f4cee779b31d21ee5ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/7dda572f892475844c7e06a6ffc707b37e7ec399",
-                "reference": "7dda572f892475844c7e06a6ffc707b37e7ec399",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/b96def3cd8946c5211fe9f4cee779b31d21ee5ab",
+                "reference": "b96def3cd8946c5211fe9f4cee779b31d21ee5ab",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1",
+                "php": "^7.3",
                 "phpactor/class-to-file": "~0.3",
                 "phpactor/source-code-filesystem": "~0.1",
                 "phpactor/text-document": "^1.0",
-                "phpactor/worse-reflection": "~0.2"
+                "phpactor/worse-reflection": "~0.4"
             },
             "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpactor/test-utils": "^1.0@dev",
-                "phpbench/phpbench": "^1.0@dev",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpactor/container": "^1.0",
+                "phpactor/language-server-extension": "~0.2",
+                "phpactor/logging-extension": "~0.1",
+                "phpactor/rpc-extension": "~0.1",
+                "phpactor/source-code-filesystem-extension": "~0.1",
+                "phpactor/test-utils": "^1.0",
+                "phpactor/worse-reflection-extension": "~0.2",
+                "phpbench/phpbench": "^1.0",
+                "phpspec/prophecy-phpunit": "dev-master",
+                "phpstan/phpstan": "~0.12.0",
+                "phpunit/phpunit": "~9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -1011,154 +1020,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-03-30T19:41:08+00:00"
-        },
-        {
-            "name": "phpactor/completion-extension",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
-                "shasum": ""
-            },
-            "require": {
-                "phpactor/completion": "~0.2",
-                "phpactor/container": "^1.0",
-                "phpactor/logging-extension": "~0.1"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
-            },
-            "type": "phpactor-extension",
-            "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\Completion\\CompletionExtension",
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Extension\\Completion\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Phpactor Code Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
-        },
-        {
-            "name": "phpactor/completion-rpc-extension",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/136d401141964e7faecbd66c31efddab85e9b45b",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b",
-                "shasum": ""
-            },
-            "require": {
-                "phpactor/completion-extension": "~0.2",
-                "phpactor/rpc-extension": "~0.1"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpactor/test-utils": "^1.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
-            },
-            "type": "phpactor-extension",
-            "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\CompletionRpc\\CompletionRpcExtension",
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Extension\\CompletionRpc\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "RPC support for the Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
-        },
-        {
-            "name": "phpactor/completion-worse-extension",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "3f381acce7d3e6b936bc9b711559316c210ceff9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3f381acce7d3e6b936bc9b711559316c210ceff9",
-                "reference": "3f381acce7d3e6b936bc9b711559316c210ceff9",
-                "shasum": ""
-            },
-            "require": {
-                "phpactor/completion-extension": "~0.2",
-                "phpactor/source-code-filesystem-extension": "~0.1",
-                "phpactor/worse-reflection-extension": "~0.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
-            },
-            "type": "phpactor-extension",
-            "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension",
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Extension\\CompletionWorse\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2019-08-24T11:33:25+00:00"
+            "time": "2020-04-04T10:08:21+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -1767,12 +1629,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-extension.git",
-                "reference": "9391d589c2752ca50a3d161a90a55d43b1e801b9"
+                "reference": "a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-extension/zipball/9391d589c2752ca50a3d161a90a55d43b1e801b9",
-                "reference": "9391d589c2752ca50a3d161a90a55d43b1e801b9",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-extension/zipball/a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc",
+                "reference": "a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc",
                 "shasum": ""
             },
             "require": {
@@ -1808,7 +1670,7 @@
                 }
             ],
             "description": "Goto definition functionality",
-            "time": "2020-03-08T12:42:58+00:00"
+            "time": "2020-04-01T10:33:17+00:00"
         },
         {
             "name": "phpactor/reference-finder-rpc-extension",
@@ -3035,12 +2897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "f88d55308f74d45a03edded027dd28fbbf79be96"
+                "reference": "e3ff236877694af42d51506dd7476a224fb829fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f88d55308f74d45a03edded027dd28fbbf79be96",
-                "reference": "f88d55308f74d45a03edded027dd28fbbf79be96",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/e3ff236877694af42d51506dd7476a224fb829fb",
+                "reference": "e3ff236877694af42d51506dd7476a224fb829fb",
                 "shasum": ""
             },
             "require": {
@@ -3092,7 +2954,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2020-03-30T13:08:57+00:00"
+            "time": "2020-03-31T06:42:10+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3355,16 +3217,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.9.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "dc73c4659324f87f4eee190ee1db60d3c3b2bb52"
+                "reference": "5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/dc73c4659324f87f4eee190ee1db60d3c3b2bb52",
-                "reference": "dc73c4659324f87f4eee190ee1db60d3c3b2bb52",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf",
+                "reference": "5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf",
                 "shasum": ""
             },
             "require": {
@@ -3379,7 +3241,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.11.x-dev"
                 }
             },
             "autoload": {
@@ -3420,7 +3282,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2020-03-28T10:27:42+00:00"
+            "time": "2020-04-02T18:32:07+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -5854,7 +5716,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.2.5"
-    },
-    "plugin-api-version": "1.1.0"
+        "php": "7.3.0"
+    }
 }

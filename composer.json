@@ -15,10 +15,7 @@
         "phpactor/code-builder": "^0.3.2",
         "phpactor/code-transform": "^0.2.1",
         "phpactor/code-transform-extension": "^0.1.2",
-        "phpactor/completion": "^0.3.1",
-        "phpactor/completion-extension": "^0.2.1",
-        "phpactor/completion-rpc-extension": "^0.2.1",
-        "phpactor/completion-worse-extension": "^0.1.0",
+        "phpactor/completion": "^1.0.0",
         "phpactor/composer-autoloader-extension": "^0.2.1",
         "phpactor/config-loader": "^0.1",
         "phpactor/console-extension": "^0.1.5",
@@ -70,7 +67,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2.5"
+            "php": "7.3.0"
         }
     },
     "scripts": {
