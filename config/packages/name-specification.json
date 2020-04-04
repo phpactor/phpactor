@@ -1,0 +1,9 @@
+{
+  "name": "phpactor/name",
+  "prototype": "default",
+  "args": {},
+  "vars": {
+    "version": "1.0.0"
+  }
+}
+

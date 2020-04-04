@@ -15,6 +15,10 @@ while read -r dep; do
     fi
     composer dumpautoload
     CMD=vendor/bin/phpunit
+    if [ "$dep" = "phpactor/completion" ]; then
+        continue
+    fi
+
     if [ "$dep" = "phpactor/extension-manager-extension" ]; then
         CMD=$CMD" --process-isolation"
     fi
