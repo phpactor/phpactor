@@ -18,9 +18,9 @@ Phpactor\\<subject>\\{Model|Core}\\
 
 - The `Extension` connects the `<subject>` `Model` to the Phpactor
   container. There may be an Extension which is "pure" (abstract) and provide
-  an exnteion point. Others will use the extension point to integrate
+  an extension point. Others will use the extension point to integrate
   adapters (concrete implementations).
-- The `LanguageServer` and (Phpactor) `Rpc` extensions proide handlers for
+- The `LanguageServer` and (Phpactor) `Rpc` extensions pride handlers for
   these two RPC methods.
 - The adapters are the concrete implementations (e.g. `WorseReflection` for
   fulfilling the completion APIs).
@@ -28,7 +28,7 @@ Phpactor\\<subject>\\{Model|Core}\\
 
 Each separate namespace as a special concern. Originally it was intended that
 package stability principles be followed and each package would live as a
-seperate repository with a separate package (let's call them micro-packages).
+separate repository with a separate package (let's call them micro-packages).
 
 This has led to a situation where there are far too many packages, integrating
 them all has become a huge problem and for the past year or more it has
@@ -41,7 +41,7 @@ significantly slowed down development on Phpactor:
 - Maintaining the metadata over so many packages (build processes, supported
   PHP versions, etc) becomes repetitive.
 
-Some steps were made towards a mono-repo with a subtree split but:
+Some steps were made towards a mono-repo with a sub-tree split but:
 
 - We would lose (or at least aim towards) semantic versioning without new
   tooling.
@@ -76,7 +76,7 @@ is not like this (even if the code never changes, PHP versions do).
 Consequences
 ------------
 
-This should significantly reduce the maintainance overhead as all packages
+This should significantly reduce the maintenance overhead as all packages
 that change together are packaged together. 
 
 Semantic versioning will not be as accurate as before - changes in the
@@ -95,12 +95,12 @@ While we could have provided stubs in the old namespace in the packages, many
 packages exposed multiple public classes, so it wasn't practical.
 
 We solved this by mapping `Phpactor\\` to `lib/` and move everything in to keep the
-same namespace structure as before. (e.g. `Phpactor\\LanguageServer``,
-`Phpactor\\Extension\\LanguageServer`>
+same namespace structure as before. (e.g. `Phpactor\\LanguageServer`,
+`Phpactor\\Extension\\LanguageServer`.
 
 But finally the **whole idea is flawed**: The "extension" dependencies were in
 `require-dev`, which meant that packages depending on an extension, would need
-to explicitly require the package, the extensions and any other depdencies of
+to explicitly require the package, the extensions and any other dependencies of
 the extension.
 
 As extensions often depend on multiple other extensions, this is completely
