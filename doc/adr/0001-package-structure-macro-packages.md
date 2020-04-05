@@ -20,13 +20,13 @@ Phpactor\\<subject>\\{Model|Core}\\
   container. There may be an Extension which is "pure" (abstract) and provide
   an extension point. Others will use the extension point to integrate
   adapters (concrete implementations).
-- The `LanguageServer` and (Phpactor) `Rpc` extensions pride handlers for
+- The `LanguageServer` and (Phpactor) `Rpc` extensions provide handlers for
   these two RPC methods.
 - The adapters are the concrete implementations (e.g. `WorseReflection` for
   fulfilling the completion APIs).
 - The `Model` is the pure domain code and APIs.
 
-Each separate namespace as a special concern. Originally it was intended that
+Each separate namespace has a special concern. Originally it was intended that
 package stability principles be followed and each package would live as a
 separate repository with a separate package (let's call them micro-packages).
 
