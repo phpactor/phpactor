@@ -1,5 +1,7 @@
-Package Structure
-=================
+Package Structure: Macro Packages
+=================================
+
+**REJECTED**
 
 Context
 -------
@@ -85,5 +87,21 @@ The namespace changes from `Phpactor\\Extension\\` to
 `Phpactor\\<subject>\\Extension`, which means that all external extensions
 will have a BC break.
 
+Rejected
+--------
 
+First of all, changing the namespace caused more trouble than anticipated.
+While we could have provided stubs in the old namespace in the packages, many
+packages exposed multiple public classes, so it wasn't practical.
 
+We solved this by mapping `Phpactor\\` to `lib/` and move everything in to keep the
+same namespace structure as before. (e.g. `Phpactor\\LanguageServer``,
+`Phpactor\\Extension\\LanguageServer`>
+
+But finally the **whole idea is flawed**: The "extension" dependencies were in
+`require-dev`, which meant that packages depending on an extension, would need
+to explicitly require the package, the extensions and any other depdencies of
+the extension.
+
+As extensions often depend on multiple other extensions, this is completely
+unpractical.
