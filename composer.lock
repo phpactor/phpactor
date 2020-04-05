@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e6f4b5781c705d74d18ba6fe9db871f",
+    "content-hash": "7b4bd5466f5fd56ee4f43f43978bb648",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2467,30 +2467,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "61c11928e2bfa6bebcc539693f36b0fe898cfe02"
+                "reference": "867dfd0e761b63a18daa4a52f0851dd63c6937ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/61c11928e2bfa6bebcc539693f36b0fe898cfe02",
-                "reference": "61c11928e2bfa6bebcc539693f36b0fe898cfe02",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/867dfd0e761b63a18daa4a52f0851dd63c6937ad",
+                "reference": "867dfd0e761b63a18daa4a52f0851dd63c6937ad",
                 "shasum": ""
             },
             "require": {
                 "amphp/socket": "^1.1",
                 "dantleech/argument-resolver": "^1.0",
                 "felixfbecker/language-server-protocol": "^1.0",
-                "php": "^7.3",
-                "phpactor/console-extension": "~0.1",
-                "phpactor/container": "^1.3",
-                "phpactor/file-path-resolver-extension": "~0.2",
-                "phpactor/logging-extension": "~0.3",
+                "php": "^7.2",
                 "psr/log": "^1.0"
             },
             "require-dev": {
-                "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "^2.15.0",
                 "phpactor/test-utils": "^1.1",
-                "phpspec/prophecy-phpunit": "dev-master",
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
@@ -2502,8 +2496,9 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phpactor\\": "lib/",
-                    "LanguageServerProtocol\\": "protocol/"
+                    "Phpactor\\LanguageServer\\": "lib/",
+                    "LanguageServerProtocol\\": "protocol/",
+                    "Phpactor\\Extension\\LanguageServer\\": "language-server-extension/lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2517,7 +2512,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-05T14:33:00+00:00"
+            "time": "2020-04-05T19:36:35+00:00"
         },
         {
             "name": "phpactor/language-server-completion-extension",
@@ -2525,15 +2520,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-completion-extension.git",
-                "reference": "b2a5f281bcf036440c7a147416a8539ebadbcf9b"
+                "reference": "bf2089ed9703afc819340a57a394a3d2d2d3355e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/b2a5f281bcf036440c7a147416a8539ebadbcf9b",
-                "reference": "b2a5f281bcf036440c7a147416a8539ebadbcf9b",
+                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/bf2089ed9703afc819340a57a394a3d2d2d3355e",
+                "reference": "bf2089ed9703afc819340a57a394a3d2d2d3355e",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion-extension": "~0.1",
                 "phpactor/container": "^1.0",
                 "phpactor/language-server-extension": "~0.2",
@@ -2569,7 +2565,7 @@
                 }
             ],
             "description": "Phpactor Language Server Handlers",
-            "time": "2020-04-05T18:46:16+00:00"
+            "time": "2020-04-05T19:10:20+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2577,12 +2573,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "42ebd5494dea95e1cdfca7ba3e6e0c822982d23d"
+                "reference": "c8d107658ee7998ae86e46a1060eb82f79dcc424"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/42ebd5494dea95e1cdfca7ba3e6e0c822982d23d",
-                "reference": "42ebd5494dea95e1cdfca7ba3e6e0c822982d23d",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/c8d107658ee7998ae86e46a1060eb82f79dcc424",
+                "reference": "c8d107658ee7998ae86e46a1060eb82f79dcc424",
                 "shasum": ""
             },
             "require": {
@@ -2624,7 +2620,56 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-05T14:34:28+00:00"
+            "time": "2020-04-05T19:30:08+00:00"
+        },
+        {
+            "name": "phpactor/language-server-reference-finder-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/language-server-reference-finder-extension.git",
+                "reference": "7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/language-server-reference-finder-extension/zipball/7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad",
+                "reference": "7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/container": "^1.0",
+                "phpactor/language-server": "~0.3",
+                "phpactor/reference-finder-extension": "~0.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.7",
+                "phpunit/phpunit": "^7.5"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerReferenceFinder\\LanguageServerReferenceFinderExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\LanguageServerReferenceFinder\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Language Server support for Goto Definition etc",
+            "time": "2020-04-04T21:08:26+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -7065,7 +7110,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/indexer": 20,
         "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
