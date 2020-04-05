@@ -53,7 +53,7 @@
         "phpunit/phpunit": "^7.0",
         "symfony/process": "^2.7|^3.0|^4.0",
         "phpbench/phpbench": "^0.17",
-        "phpactor/test-utils": "^1.1.0",
+        "phpactor/test-utils": "^1.1.2",
         "friendsofphp/php-cs-fixer": "^3.0@dev",
         "dantleech/what-changed": "^0.1"
     },

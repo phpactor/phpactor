@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f57d70993a26ab6a27a4d80b577ebd3",
+    "content-hash": "4139dcb075018bf2b0e6dcb923d4b026",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1963,7 +1963,6 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "abandoned": true,
             "time": "2019-12-04T19:51:46+00:00"
         },
         {
@@ -4513,12 +4512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "5fa669eb2b0084bb611685a3d3574c2cdee8b74b"
+                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/5fa669eb2b0084bb611685a3d3574c2cdee8b74b",
-                "reference": "5fa669eb2b0084bb611685a3d3574c2cdee8b74b",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b6b9038a94f444350bfea39a816644e8fc9a2149",
+                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149",
                 "shasum": ""
             },
             "require": {
@@ -4596,7 +4595,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-03-10T15:01:14+00:00"
+            "time": "2020-04-05T10:31:13+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4990,12 +4989,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "bea54b57f44a4b22d6c60b1ac97cc845d1b1f5c2"
+                "reference": "f1b92319ae9b57d0372c40a5a5a0adfe164d05e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/bea54b57f44a4b22d6c60b1ac97cc845d1b1f5c2",
-                "reference": "bea54b57f44a4b22d6c60b1ac97cc845d1b1f5c2",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/f1b92319ae9b57d0372c40a5a5a0adfe164d05e5",
+                "reference": "f1b92319ae9b57d0372c40a5a5a0adfe164d05e5",
                 "shasum": ""
             },
             "require": {
@@ -5031,7 +5030,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2020-04-04T19:28:34+00:00"
+            "time": "2020-04-05T10:40:25+00:00"
         },
         {
             "name": "phpbench/container",
