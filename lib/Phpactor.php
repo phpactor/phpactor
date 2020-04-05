@@ -4,6 +4,7 @@ namespace Phpactor;
 
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
@@ -43,7 +44,8 @@ class Phpactor
 {
     private const LEGACY_EXTENSIONS = [
         '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension',
-        '\Phpactor\Extension\LanguageServer\LanguageServerExtension'
+        '\Phpactor\Extension\LanguageServer\LanguageServerExtension',
+        '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
     ];
 
     public static function boot(InputInterface $input, string $vendorDir): PhpactorContainer
@@ -105,6 +107,7 @@ class Phpactor
             PhpExtension::class,
             LanguageServerExtension::class,
             LanguageServerCompletionExtension::class,
+            IndexerExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
