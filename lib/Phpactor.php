@@ -2,7 +2,8 @@
 
 namespace Phpactor;
 
-use Phpactor\Completion\Extension\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
@@ -10,9 +11,9 @@ use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransformExtra\CodeTransformExtraExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionExtra\CompletionExtraExtension;
-use Phpactor\Completion\Extension\CompletionExtension;
-use Phpactor\Completion\Extension\CompletionRpcExtension;
-use Phpactor\Completion\Extension\CompletionWorseExtension;
+use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;
+use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\Navigation\NavigationExtension;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -38,12 +39,11 @@ use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 
-class_alias(CompletionExtension::class, 'Phpactor\Extension\Completion\CompletionExtension');
-
 class Phpactor
 {
     private const LEGACY_EXTENSIONS = [
-        '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension'
+        '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension',
+        '\Phpactor\Extension\LanguageServer\LanguageServerExtension'
     ];
 
     public static function boot(InputInterface $input, string $vendorDir): PhpactorContainer
@@ -103,6 +103,7 @@ class Phpactor
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
             PhpExtension::class,
+            LanguageServerExtension::class,
             LanguageServerCompletionExtension::class,
         ];
 

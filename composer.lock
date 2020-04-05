@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71caaf0ec2e814d2216675cba7dfa8dc",
+    "content-hash": "4139dcb075018bf2b0e6dcb923d4b026",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "8f7300b1c3073e50b2e22d69a62548789c73cd76"
+                "reference": "feca077369a47263b22156b3c6389e55f3809f24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/8f7300b1c3073e50b2e22d69a62548789c73cd76",
-                "reference": "8f7300b1c3073e50b2e22d69a62548789c73cd76",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/feca077369a47263b22156b3c6389e55f3809f24",
+                "reference": "feca077369a47263b22156b3c6389e55f3809f24",
                 "shasum": ""
             },
             "require": {
@@ -82,20 +82,20 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-03-31T19:57:37+00:00"
+            "time": "2020-04-04T15:05:26+00:00"
         },
         {
             "name": "amphp/byte-stream",
-            "version": "v1.7.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/byte-stream.git",
-                "reference": "1e52f1752b2e20e2a7e464476ef887a2388e3832"
+                "reference": "b867505edb79dda8f253ca3c3a2bbadae4b16592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/1e52f1752b2e20e2a7e464476ef887a2388e3832",
-                "reference": "1e52f1752b2e20e2a7e464476ef887a2388e3832",
+                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/b867505edb79dda8f253ca3c3a2bbadae4b16592",
+                "reference": "b867505edb79dda8f253ca3c3a2bbadae4b16592",
                 "shasum": ""
             },
             "require": {
@@ -105,10 +105,16 @@
                 "amphp/php-cs-fixer-config": "dev-master",
                 "amphp/phpunit-util": "^1",
                 "friendsofphp/php-cs-fixer": "^2.3",
-                "infection/infection": "^0.9.3",
-                "phpunit/phpunit": "^6"
+                "jetbrains/phpstorm-stubs": "^2019.3",
+                "phpunit/phpunit": "^6 || ^7 || ^8",
+                "vimeo/psalm": "^3.9@dev"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Amp\\ByteStream\\": "lib"
@@ -141,7 +147,7 @@
                 "non-blocking",
                 "stream"
             ],
-            "time": "2020-01-29T18:22:23+00:00"
+            "time": "2020-04-04T16:56:54+00:00"
         },
         {
             "name": "amphp/cache",
@@ -384,12 +390,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/socket.git",
-                "reference": "b217f13e644df9364174f29cdf7d3ecabc2b3c08"
+                "reference": "5978b841476681b31d9d2df10ea187a1abc3764d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/socket/zipball/b217f13e644df9364174f29cdf7d3ecabc2b3c08",
-                "reference": "b217f13e644df9364174f29cdf7d3ecabc2b3c08",
+                "url": "https://api.github.com/repos/amphp/socket/zipball/5978b841476681b31d9d2df10ea187a1abc3764d",
+                "reference": "5978b841476681b31d9d2df10ea187a1abc3764d",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +410,8 @@
             "require-dev": {
                 "amphp/php-cs-fixer-config": "dev-master",
                 "amphp/phpunit-util": "^1",
-                "phpunit/phpunit": "^6"
+                "phpunit/phpunit": "^6 || ^7 || ^8",
+                "vimeo/psalm": "^3.9@dev"
             },
             "type": "library",
             "extra": {
@@ -450,7 +457,7 @@
                 "tcp",
                 "tls"
             ],
-            "time": "2020-03-31T19:57:46+00:00"
+            "time": "2020-04-04T19:14:17+00:00"
         },
         {
             "name": "amphp/sync",
@@ -1760,17 +1767,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "29b04e513a1de39799c0726c2ee7bdfdc93fecbe"
+                "reference": "4b495020a58d9f4144f2403e15ea57e6d065a385"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/29b04e513a1de39799c0726c2ee7bdfdc93fecbe",
-                "reference": "29b04e513a1de39799c0726c2ee7bdfdc93fecbe",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/4b495020a58d9f4144f2403e15ea57e6d065a385",
+                "reference": "4b495020a58d9f4144f2403e15ea57e6d065a385",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3",
                 "phpactor/class-to-file": "~0.3",
+                "phpactor/container": "^1.0",
+                "phpactor/logging-extension": "~0.1",
+                "phpactor/rpc-extension": "~0.1",
                 "phpactor/source-code-filesystem": "~0.1",
                 "phpactor/text-document": "^1.0",
                 "phpactor/worse-reflection": "~0.4"
@@ -1778,13 +1788,7 @@
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpactor/container": "^1.0",
-                "phpactor/language-server-extension": "~0.2",
-                "phpactor/logging-extension": "~0.1",
-                "phpactor/rpc-extension": "~0.1",
-                "phpactor/source-code-filesystem-extension": "~0.1",
-                "phpactor/test-utils": "^1.0",
-                "phpactor/worse-reflection-extension": "~0.2",
+                "phpactor/test-utils": "^1.1",
                 "phpbench/phpbench": "^1.0",
                 "phpspec/prophecy-phpunit": "dev-master",
                 "phpstan/phpstan": "~0.12.0",
@@ -1812,7 +1816,154 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-04T11:47:44+00:00"
+            "time": "2020-04-05T09:22:14+00:00"
+        },
+        {
+            "name": "phpactor/completion-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-extension.git",
+                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
+                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion": "~0.2",
+                "phpactor/container": "^1.0",
+                "phpactor/logging-extension": "~0.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "phpstan/phpstan": "~0.11.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\Completion\\CompletionExtension",
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\Completion\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Phpactor Code Completion Extension",
+            "time": "2019-12-04T19:51:46+00:00"
+        },
+        {
+            "name": "phpactor/completion-rpc-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-rpc-extension.git",
+                "reference": "136d401141964e7faecbd66c31efddab85e9b45b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/136d401141964e7faecbd66c31efddab85e9b45b",
+                "reference": "136d401141964e7faecbd66c31efddab85e9b45b",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion-extension": "~0.2",
+                "phpactor/rpc-extension": "~0.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "phpactor/test-utils": "^1.0",
+                "phpstan/phpstan": "~0.11.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\CompletionRpc\\CompletionRpcExtension",
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\CompletionRpc\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "RPC support for the Completion Extension",
+            "time": "2019-12-04T19:51:46+00:00"
+        },
+        {
+            "name": "phpactor/completion-worse-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/completion-worse-extension.git",
+                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
+                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion-extension": "~0.2",
+                "phpactor/source-code-filesystem-extension": "~0.1",
+                "phpactor/worse-reflection-extension": "~0.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "phpstan/phpstan": "~0.11.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension",
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\CompletionWorse\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
+            "time": "2019-12-04T19:51:46+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -2201,12 +2352,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "b418216f670680eb3034023b9d72b77c9099203e"
+                "reference": "49f18495518eeff0cd6df7d404129b61ac496f4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/b418216f670680eb3034023b9d72b77c9099203e",
-                "reference": "b418216f670680eb3034023b9d72b77c9099203e",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/49f18495518eeff0cd6df7d404129b61ac496f4e",
+                "reference": "49f18495518eeff0cd6df7d404129b61ac496f4e",
                 "shasum": ""
             },
             "require": {
@@ -2214,22 +2365,29 @@
                 "dantleech/argument-resolver": "^1.0",
                 "felixfbecker/language-server-protocol": "^1.0",
                 "php": "^7.2",
+                "phpactor/console-extension": "~0.1",
+                "phpactor/container": "^1.3",
+                "phpactor/file-path-resolver-extension": "~0.2",
+                "phpactor/logging-extension": "~0.3",
                 "psr/log": "^1.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "dms/phpunit-arraysubset-asserts": "dev-master",
+                "friendsofphp/php-cs-fixer": "^2.15.0",
+                "phpactor/test-utils": "^1.1",
+                "phpspec/prophecy-phpunit": "dev-master",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.3.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Phpactor\\LanguageServer\\": "lib/",
+                    "Phpactor\\": "lib/",
                     "LanguageServerProtocol\\": "protocol/"
                 }
             },
@@ -2244,7 +2402,56 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-03-30T18:47:17+00:00"
+            "time": "2020-04-04T21:01:28+00:00"
+        },
+        {
+            "name": "phpactor/language-server-completion-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/language-server-completion-extension.git",
+                "reference": "65696611ebf625ca62922104de75e5a6f76bccd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/65696611ebf625ca62922104de75e5a6f76bccd0",
+                "reference": "65696611ebf625ca62922104de75e5a6f76bccd0",
+                "shasum": ""
+            },
+            "require": {
+                "phpactor/completion-extension": "~0.1",
+                "phpactor/container": "^1.0",
+                "phpactor/language-server-extension": "~0.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpstan/phpstan": "^0.10.7",
+                "phpunit/phpunit": "^7.5"
+            },
+            "type": "phpactor-extension",
+            "extra": {
+                "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerCompletion\\LanguageServerCompletionExtension",
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\Extension\\LanguageServerCompletion\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Phpactor Language Server Handlers",
+            "time": "2020-04-02T21:30:24+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2252,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "360fd17fd807ba65ee6f839b8f49357bb85b74aa"
+                "reference": "c73ea3d276d68251199c6e81a9d246ad00f84cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/360fd17fd807ba65ee6f839b8f49357bb85b74aa",
-                "reference": "360fd17fd807ba65ee6f839b8f49357bb85b74aa",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/c73ea3d276d68251199c6e81a9d246ad00f84cac",
+                "reference": "c73ea3d276d68251199c6e81a9d246ad00f84cac",
                 "shasum": ""
             },
             "require": {
@@ -2268,10 +2475,12 @@
                 "phpactor/logging-extension": "~0.3"
             },
             "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "^2.13",
-                "phpactor/test-utils": "^1.0",
-                "phpstan/phpstan": "^0.10.5",
-                "phpunit/phpunit": "^7.4"
+                "phpactor/test-utils": "^1.1",
+                "phpspec/prophecy-phpunit": "dev-master",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^9.0"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -2296,7 +2505,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-03-14T15:36:10+00:00"
+            "time": "2020-04-05T09:20:24+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -4303,12 +4512,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "5fa669eb2b0084bb611685a3d3574c2cdee8b74b"
+                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/5fa669eb2b0084bb611685a3d3574c2cdee8b74b",
-                "reference": "5fa669eb2b0084bb611685a3d3574c2cdee8b74b",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b6b9038a94f444350bfea39a816644e8fc9a2149",
+                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149",
                 "shasum": ""
             },
             "require": {
@@ -4386,7 +4595,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-03-10T15:01:14+00:00"
+            "time": "2020-04-05T10:31:13+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -4780,26 +4989,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "a7b4098312a02d4aea3ac10352cb398c95202da6"
+                "reference": "f1b92319ae9b57d0372c40a5a5a0adfe164d05e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/a7b4098312a02d4aea3ac10352cb398c95202da6",
-                "reference": "a7b4098312a02d4aea3ac10352cb398c95202da6",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/f1b92319ae9b57d0372c40a5a5a0adfe164d05e5",
+                "reference": "f1b92319ae9b57d0372c40a5a5a0adfe164d05e5",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpspec/prophecy-phpunit": "dev-master",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -4818,7 +5030,7 @@
                 }
             ],
             "description": "Utilities for managing the test environment",
-            "time": "2020-02-09T22:37:52+00:00"
+            "time": "2020-04-05T10:40:25+00:00"
         },
         {
             "name": "phpbench/container",
@@ -6602,7 +6814,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server-extension": 20,
         "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
