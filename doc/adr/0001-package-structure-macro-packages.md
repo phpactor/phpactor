@@ -17,7 +17,7 @@ Phpactor\\<subject>\\{Model|Core}\\
 ```
 
 - The `Extension` connects the `<subject>` `Model` to the Phpactor
-  conatiner. There may be an Extension which is "pure" (abstract) and provide
+  container. There may be an Extension which is "pure" (abstract) and provide
   an exnteion point. Others will use the extension point to integrate
   adapters (concrete implementations).
 - The `LanguageServer` and (Phpactor) `Rpc` extensions proide handlers for
