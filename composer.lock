@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b4bd5466f5fd56ee4f43f43978bb648",
+    "content-hash": "7c865e751d8bfc23d21b19804d70a8ce",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3140,16 +3140,16 @@
         },
         {
             "name": "phpactor/text-document",
-            "version": "1.2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "e4ec801b3569ed7107d53400498e253f1f78524b"
+                "reference": "3dc592b3ce544665a93885d0db3f02c685625c44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/e4ec801b3569ed7107d53400498e253f1f78524b",
-                "reference": "e4ec801b3569ed7107d53400498e253f1f78524b",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/3dc592b3ce544665a93885d0db3f02c685625c44",
+                "reference": "3dc592b3ce544665a93885d0db3f02c685625c44",
                 "shasum": ""
             },
             "require": {
@@ -3166,7 +3166,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -3185,7 +3185,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2019-12-09T13:51:25+00:00"
+            "time": "2020-04-05T20:13:45+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",

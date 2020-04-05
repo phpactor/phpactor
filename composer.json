@@ -39,7 +39,7 @@
         "phpactor/rpc-extension": "^0.2.1",
         "phpactor/source-code-filesystem": "^0.1.4",
         "phpactor/source-code-filesystem-extension": "^0.1.3",
-        "phpactor/text-document": "^1.2.0",
+        "phpactor/text-document": "^1.2.1",
         "phpactor/worse-reference-finder-extension": "^0.1.2",
         "phpactor/worse-reference-finders": "^0.2.3",
         "phpactor/worse-reflection": "^0.4.0",
