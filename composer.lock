@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c865e751d8bfc23d21b19804d70a8ce",
+    "content-hash": "4d131e38cc5b28588f433a59f4036edd",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "feca077369a47263b22156b3c6389e55f3809f24"
+                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/feca077369a47263b22156b3c6389e55f3809f24",
-                "reference": "feca077369a47263b22156b3c6389e55f3809f24",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/2053b42fdbf522c6bce1e786f08e554a92ae0368",
+                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-04-04T15:05:26+00:00"
+            "time": "2020-04-05T20:37:09+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -563,12 +563,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "47fe531de31fca4a1b997f87308e7d7804348f7e"
+                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/47fe531de31fca4a1b997f87308e7d7804348f7e",
-                "reference": "47fe531de31fca4a1b997f87308e7d7804348f7e",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/95c63ab2117a72f48f5a55da9740a3273d45b7fd",
+                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd",
                 "shasum": ""
             },
             "require": {
@@ -611,20 +611,30 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2020-01-13T10:02:55+00:00"
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-08T08:27:21+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "dev-master",
+            "version": "1.10.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a8c105da344dd84ebd5d11be7943a45b09dc076f"
+                "reference": "8e2e9caf6a5021a1afbbc0aae1e32937024f249d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a8c105da344dd84ebd5d11be7943a45b09dc076f",
-                "reference": "a8c105da344dd84ebd5d11be7943a45b09dc076f",
+                "url": "https://api.github.com/repos/composer/composer/zipball/8e2e9caf6a5021a1afbbc0aae1e32937024f249d",
+                "reference": "8e2e9caf6a5021a1afbbc0aae1e32937024f249d",
                 "shasum": ""
             },
             "require": {
@@ -691,7 +701,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2020-03-29T14:59:26+00:00"
+            "time": "2020-04-10T09:44:13+00:00"
         },
         {
             "name": "composer/semver",
@@ -751,6 +761,16 @@
                 "semver",
                 "validation",
                 "versioning"
+            ],
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-17T11:42:48+00:00"
         },
@@ -856,23 +876,30 @@
                 "Xdebug",
                 "performance"
             ],
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-01T12:26:26+00:00"
         },
         {
             "name": "dantleech/argument-resolver",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/dantleech/argument-resolver.git",
-                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726"
+                "reference": "e34fabf7d6e53e5194f745ad069c4a87cc4b34cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=a3bb13ed9cff37ae46638924f02b6159250c3726",
-                "reference": "a3bb13ed9cff37ae46638924f02b6159250c3726",
+                "url": "https://gitlab.com/api/v4/projects/dantleech%2Fargument-resolver/repository/archive.zip?sha=e34fabf7d6e53e5194f745ad069c4a87cc4b34cc",
+                "reference": "e34fabf7d6e53e5194f745ad069c4a87cc4b34cc",
                 "shasum": ""
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
                 "phpstan/phpstan": "^0.10.1",
                 "phpunit/phpunit": "^7.2"
             },
@@ -898,7 +925,7 @@
                 }
             ],
             "description": "Resolve method arguments from an associative array",
-            "time": "2018-09-30T09:50:30+00:00"
+            "time": "2020-04-09T09:32:31+00:00"
         },
         {
             "name": "dantleech/invoke",
@@ -1406,6 +1433,16 @@
                 "log",
                 "logging",
                 "psr-3"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/Seldaek",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/monolog/monolog",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-13T16:46:09+00:00"
         },
@@ -2405,19 +2442,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer.git",
-                "reference": "ad7aa9b1daa7bcd2a55d68b27eacb03d4d4827b5"
+                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer/zipball/ad7aa9b1daa7bcd2a55d68b27eacb03d4d4827b5",
-                "reference": "ad7aa9b1daa7bcd2a55d68b27eacb03d4d4827b5",
+                "url": "https://api.github.com/repos/phpactor/indexer/zipball/6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
+                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
                 "shasum": ""
             },
             "require": {
                 "dantleech/invoke": "^1.0",
                 "php": "^7.3",
                 "phpactor/amp-fswatch": "^0.1.0@dev",
-                "phpactor/language-server-extension": "^0.2",
+                "phpactor/language-server-extension": "~0.3",
                 "phpactor/name-specification": "^0.1",
                 "phpactor/reference-finder": "^0.1.2",
                 "phpactor/reference-finder-extension": "^0.1.3",
@@ -2459,7 +2496,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-05T19:18:55+00:00"
+            "time": "2020-04-09T09:54:18+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2467,17 +2504,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "867dfd0e761b63a18daa4a52f0851dd63c6937ad"
+                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/867dfd0e761b63a18daa4a52f0851dd63c6937ad",
-                "reference": "867dfd0e761b63a18daa4a52f0851dd63c6937ad",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/1f89e2ddca8c8500515f70ec607488a913650ddf",
+                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf",
                 "shasum": ""
             },
             "require": {
                 "amphp/socket": "^1.1",
-                "dantleech/argument-resolver": "^1.0",
+                "dantleech/argument-resolver": "^1.1",
                 "felixfbecker/language-server-protocol": "^1.0",
                 "php": "^7.2",
                 "psr/log": "^1.0"
@@ -2485,6 +2522,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.15.0",
                 "phpactor/test-utils": "^1.1",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
@@ -2512,7 +2550,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-05T19:36:35+00:00"
+            "time": "2020-04-10T12:31:37+00:00"
         },
         {
             "name": "phpactor/language-server-completion-extension",
@@ -2520,19 +2558,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-completion-extension.git",
-                "reference": "bf2089ed9703afc819340a57a394a3d2d2d3355e"
+                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/bf2089ed9703afc819340a57a394a3d2d2d3355e",
-                "reference": "bf2089ed9703afc819340a57a394a3d2d2d3355e",
+                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/a2ada91e5b23814ff8437b8930287350d04197f4",
+                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3",
                 "phpactor/completion-extension": "~0.1",
                 "phpactor/container": "^1.0",
-                "phpactor/language-server-extension": "~0.2",
+                "phpactor/language-server-extension": "~0.3",
                 "phpactor/worse-reflection-extension": "~0.2"
             },
             "require-dev": {
@@ -2546,7 +2584,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerCompletion\\LanguageServerCompletionExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2565,7 +2603,7 @@
                 }
             ],
             "description": "Phpactor Language Server Handlers",
-            "time": "2020-04-05T19:10:20+00:00"
+            "time": "2020-04-10T09:54:53+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2573,19 +2611,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "c8d107658ee7998ae86e46a1060eb82f79dcc424"
+                "reference": "fbdba678ada06633a39194fd41d452f2c172737c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/c8d107658ee7998ae86e46a1060eb82f79dcc424",
-                "reference": "c8d107658ee7998ae86e46a1060eb82f79dcc424",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/fbdba678ada06633a39194fd41d452f2c172737c",
+                "reference": "fbdba678ada06633a39194fd41d452f2c172737c",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/console-extension": "~0.1",
                 "phpactor/container": "~1.3",
                 "phpactor/file-path-resolver-extension": "~0.2",
-                "phpactor/language-server": "~0.2",
+                "phpactor/language-server": "~0.3",
                 "phpactor/logging-extension": "~0.3",
                 "phpactor/text-document": "^1.1"
             },
@@ -2601,7 +2640,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\LanguageServer\\LanguageServerExtension",
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -2620,7 +2659,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-05T19:30:08+00:00"
+            "time": "2020-04-10T10:13:32+00:00"
         },
         {
             "name": "phpactor/language-server-reference-finder-extension",
@@ -2628,17 +2667,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-reference-finder-extension.git",
-                "reference": "7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad"
+                "reference": "a895a7a0a173b53a395b82f379ce840563e337f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-reference-finder-extension/zipball/7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad",
-                "reference": "7eae23e6b15305bb280a4ff9dee1cb5f6af4e8ad",
+                "url": "https://api.github.com/repos/phpactor/language-server-reference-finder-extension/zipball/a895a7a0a173b53a395b82f379ce840563e337f9",
+                "reference": "a895a7a0a173b53a395b82f379ce840563e337f9",
                 "shasum": ""
             },
             "require": {
                 "phpactor/container": "^1.0",
-                "phpactor/language-server": "~0.3",
+                "phpactor/language-server-extension": "~0.3",
                 "phpactor/reference-finder-extension": "~0.1"
             },
             "require-dev": {
@@ -2650,7 +2689,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerReferenceFinder\\LanguageServerReferenceFinderExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2669,7 +2708,7 @@
                 }
             ],
             "description": "Language Server support for Goto Definition etc",
-            "time": "2020-04-04T21:08:26+00:00"
+            "time": "2020-04-10T10:20:36+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3245,12 +3284,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "bdc19747338cd89a22361a4f7b5460c9e6a5ae87"
+                "reference": "39d14f373bdebc69bc3f1b7bc7c89fc5baa60edb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/bdc19747338cd89a22361a4f7b5460c9e6a5ae87",
-                "reference": "bdc19747338cd89a22361a4f7b5460c9e6a5ae87",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/39d14f373bdebc69bc3f1b7bc7c89fc5baa60edb",
+                "reference": "39d14f373bdebc69bc3f1b7bc7c89fc5baa60edb",
                 "shasum": ""
             },
             "require": {
@@ -3288,7 +3327,7 @@
                 }
             ],
             "description": "Worse Reflection reference finder implementations",
-            "time": "2020-03-08T13:58:53+00:00"
+            "time": "2020-04-10T12:39:42+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -3296,12 +3335,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "1f10e5beceb73f339bdd54c56b9d2dfe1316937b"
+                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/1f10e5beceb73f339bdd54c56b9d2dfe1316937b",
-                "reference": "1f10e5beceb73f339bdd54c56b9d2dfe1316937b",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/099e9a4923dbc23c6823c7839a953144e76bf41c",
+                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c",
                 "shasum": ""
             },
             "require": {
@@ -3343,7 +3382,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-03-29T20:47:13+00:00"
+            "time": "2020-04-10T15:23:29+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -3717,6 +3756,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:41:10+00:00"
         },
         {
@@ -3767,6 +3820,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:43:41+00:00"
         },
         {
@@ -3816,6 +3883,20 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:43:41+00:00"
         },
         {
@@ -3933,6 +4014,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-09T19:04:49+00:00"
         },
         {
@@ -4040,6 +4135,20 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -4098,6 +4207,20 @@
                 "interoperability",
                 "standards"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-18T08:01:26+00:00"
         },
         {
@@ -4106,12 +4229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c"
+                "reference": "e366a2e28466e004fb0e00f20a02745c4a0eeb7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e701b47e11749970f63803879c4febb520f07b6c",
-                "reference": "e701b47e11749970f63803879c4febb520f07b6c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e366a2e28466e004fb0e00f20a02745c4a0eeb7f",
+                "reference": "e366a2e28466e004fb0e00f20a02745c4a0eeb7f",
                 "shasum": ""
             },
             "require": {
@@ -4157,7 +4280,21 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-25T12:02:26+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-06T10:01:14+00:00"
         },
         {
             "name": "thecodingmachine/safe",
@@ -4353,6 +4490,28 @@
             "homepage": "https://twig.symfony.com",
             "keywords": [
                 "templating"
+            ],
+            "funding": [
+                {
+                    "url": "https://certification.symfony.com/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://live.symfony.com/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://symfony.com/cloud/",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-31T06:42:10+00:00"
         },
@@ -4621,12 +4780,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf"
+                "reference": "d415728ac32e509d61cb873581e13b1fbba778be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf",
-                "reference": "5ce13d0a7ed32dea4075b9a3d3837602d1eecfbf",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/d415728ac32e509d61cb873581e13b1fbba778be",
+                "reference": "d415728ac32e509d61cb873581e13b1fbba778be",
                 "shasum": ""
             },
             "require": {
@@ -4682,7 +4841,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2020-04-02T18:32:07+00:00"
+            "time": "2020-04-10T13:16:27+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -4808,12 +4967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149"
+                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/b6b9038a94f444350bfea39a816644e8fc9a2149",
-                "reference": "b6b9038a94f444350bfea39a816644e8fc9a2149",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2d57d93c7a773cf9d02a642bdb1a08082839d8df",
+                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df",
                 "shasum": ""
             },
             "require": {
@@ -4891,7 +5050,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-04-05T10:31:13+00:00"
+            "time": "2020-04-10T10:59:02+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -5080,6 +5239,12 @@
                 "duplicate",
                 "object",
                 "object graph"
+            ],
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-12T21:49:07+00:00"
         },
@@ -6608,6 +6773,20 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6724,6 +6903,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -6790,12 +6983,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "691914a2f3f9b9a54a0f8ded3dba9694d0ea94a5"
+                "reference": "1cfd933f283e2f8991169eef7beeb6e8888347ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/691914a2f3f9b9a54a0f8ded3dba9694d0ea94a5",
-                "reference": "691914a2f3f9b9a54a0f8ded3dba9694d0ea94a5",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/1cfd933f283e2f8991169eef7beeb6e8888347ac",
+                "reference": "1cfd933f283e2f8991169eef7beeb6e8888347ac",
                 "shasum": ""
             },
             "require": {
@@ -6838,7 +7031,21 @@
                 "configuration",
                 "options"
             ],
-            "time": "2020-03-30T11:43:41+00:00"
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-06T17:48:46+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -7014,6 +7221,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-03T16:59:03+00:00"
         },
         {
@@ -7064,6 +7285,20 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T11:43:41+00:00"
         },
         {
@@ -7120,5 +7355,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.3.0"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
