@@ -1,0 +1,10 @@
+Include (Prepare project directories): lib/create_fixtures_directory.vader
+
+Execute (Check if a given path belongs to the project):
+  let rootPath = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
+  let project = phpactor#project#createFromRootPath(rootPath)
+
+  let file = rootPath . '/foo.strangeext'
+
+  Assert project.containsFile(file), printf('Cannot find a file "%s" inside root path "%s"', file,  project.getPrimaryRootPath())
+  Assert !project.containsFile(rootPath . '../outside.strangeext')

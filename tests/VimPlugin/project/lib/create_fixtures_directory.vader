@@ -1,0 +1,14 @@
+Before:
+  Save g:projectDirs
+
+  let fixtureDir = tempname()
+  let g:projectDirs = {
+    \'SillyWalksProject': fixtureDir.'/SillyWalksProject',
+    \'TwoShedsProject': g:fixtureDir.'/TwoShedsProject'
+    \ }
+
+  call mkdir(g:projectDirs['SillyWalksProject'].'/subdir', 'p')
+  call mkdir(g:projectDirs['TwoShedsProject'].'/subdir', 'p')
+
+After:
+  Restore
