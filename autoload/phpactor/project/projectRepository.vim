@@ -1,4 +1,4 @@
-function! phpactor#project#projectRepository#create()
+function! phpactor#project#projectRepository#create() abort
   let l:repository = {
         \ 'projects': {},
         \ 'isEmpty': function('s:isEmpty'),
