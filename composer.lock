@@ -1855,12 +1855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "4ab78073d245de9fe803958c18604b7c41081219"
+                "reference": "560b580420252274a5c148f8418245e73cdb2c9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/4ab78073d245de9fe803958c18604b7c41081219",
-                "reference": "4ab78073d245de9fe803958c18604b7c41081219",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/560b580420252274a5c148f8418245e73cdb2c9b",
+                "reference": "560b580420252274a5c148f8418245e73cdb2c9b",
                 "shasum": ""
             },
             "require": {
@@ -1906,7 +1906,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-12T08:19:29+00:00"
+            "time": "2020-04-12T10:43:25+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2612,12 +2612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "9f4fd2abc5f7dd6ded2c9ffebd28dd14cc11431b"
+                "reference": "bffc42eace82b0e9479b29970af6e03336bdd1be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/9f4fd2abc5f7dd6ded2c9ffebd28dd14cc11431b",
-                "reference": "9f4fd2abc5f7dd6ded2c9ffebd28dd14cc11431b",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/bffc42eace82b0e9479b29970af6e03336bdd1be",
+                "reference": "bffc42eace82b0e9479b29970af6e03336bdd1be",
                 "shasum": ""
             },
             "require": {
@@ -2660,7 +2660,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-12T10:23:55+00:00"
+            "time": "2020-04-12T10:49:36+00:00"
         },
         {
             "name": "phpactor/language-server-reference-finder-extension",
