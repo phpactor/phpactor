@@ -45,6 +45,22 @@ a single package:
 - `phpactor/language-server-extension`: Macro package containing all the
   Phpactor Language Server extensions.
 
+The macro package will be organised with all extensions living in their own
+namespaces, i.e. `lib/<extension name>`:
+
+```
+lib/LanguageServer/
+lib/LanguageServerCompletion/
+lib/LanguageServerReferenceFinder/
+lib/...
+```
+
+The namespace will be mapped as `'Phpactor\\Extension\\' => 'lib/'` - so the
+extensions namespaces remain unchanged.
+
+Tests will also be namespaces as before, but will require additional autoload
+mapping.
+
 Consequences
 ------------
 
@@ -55,3 +71,5 @@ In the future it should still be possible to break micro-packages out of the
 macro-package.
 
 The risk is that it is much easier for packages to contaminate each other.
+
+As all the extensions are stil
