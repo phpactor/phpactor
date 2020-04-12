@@ -1,0 +1,18 @@
+Include (Prepare project directories): lib/create_fixtures_directory.vader
+
+Execute (Check if there is a project containing the file):
+  let g:phpactorProjects = {}
+
+  let rootPath = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
+
+  let file = rootPath . '/foo.strangeext'
+
+  let project = phpactor#project#projectRepository#findProjectForFile(file)
+
+  AssertEqual v:null, project
+
+  let existingProject = phpactor#project#project#createFromRootPath(rootPath)
+  let g:phpactorProjects[existingProject.getPrimaryRootPath()] = existingProject
+
+  let project = phpactor#project#projectRepository#findProjectForFile(file)
+  AssertEqual existingProject, project
