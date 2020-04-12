@@ -1094,12 +1094,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "429eac8eefa8ce5576c84af869cdc160fd8fdba0"
+                "reference": "84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/429eac8eefa8ce5576c84af869cdc160fd8fdba0",
-                "reference": "429eac8eefa8ce5576c84af869cdc160fd8fdba0",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65",
+                "reference": "84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65",
                 "shasum": ""
             },
             "require-dev": {
@@ -1130,7 +1130,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2020-03-04T13:02:15+00:00"
+            "time": "2020-04-09T12:26:55+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1855,12 +1855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "ef12aad9032b85c636304aeff244ecebdd0fe95a"
+                "reference": "560b580420252274a5c148f8418245e73cdb2c9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/ef12aad9032b85c636304aeff244ecebdd0fe95a",
-                "reference": "ef12aad9032b85c636304aeff244ecebdd0fe95a",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/560b580420252274a5c148f8418245e73cdb2c9b",
+                "reference": "560b580420252274a5c148f8418245e73cdb2c9b",
                 "shasum": ""
             },
             "require": {
@@ -1871,7 +1871,7 @@
                 "phpactor/rpc-extension": "~0.1",
                 "phpactor/source-code-filesystem": "~0.1",
                 "phpactor/text-document": "^1.0",
-                "phpactor/worse-reflection": "~0.4"
+                "phpactor/worse-reflection": "~0.4.1"
             },
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
@@ -1906,7 +1906,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-05T15:03:29+00:00"
+            "time": "2020-04-12T10:43:25+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2442,12 +2442,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer.git",
-                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83"
+                "reference": "cae74cd9f612e2f32df4b3ed908f3b1f47fb2da9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer/zipball/6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
-                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
+                "url": "https://api.github.com/repos/phpactor/indexer/zipball/cae74cd9f612e2f32df4b3ed908f3b1f47fb2da9",
+                "reference": "cae74cd9f612e2f32df4b3ed908f3b1f47fb2da9",
                 "shasum": ""
             },
             "require": {
@@ -2496,7 +2496,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-09T09:54:18+00:00"
+            "time": "2020-04-12T10:10:21+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2504,17 +2504,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf"
+                "reference": "659f0581cae396578d77342f0413b227d76c3fdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/1f89e2ddca8c8500515f70ec607488a913650ddf",
-                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/659f0581cae396578d77342f0413b227d76c3fdc",
+                "reference": "659f0581cae396578d77342f0413b227d76c3fdc",
                 "shasum": ""
             },
             "require": {
                 "amphp/socket": "^1.1",
                 "dantleech/argument-resolver": "^1.1",
+                "dantleech/invoke": "^1.0",
                 "felixfbecker/language-server-protocol": "^1.0",
                 "php": "^7.2",
                 "psr/log": "^1.0"
@@ -2550,7 +2551,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-10T12:31:37+00:00"
+            "time": "2020-04-11T16:51:11+00:00"
         },
         {
             "name": "phpactor/language-server-completion-extension",
@@ -2558,12 +2559,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-completion-extension.git",
-                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4"
+                "reference": "488584609b5bfb30564ba402b61e82465e03195f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/a2ada91e5b23814ff8437b8930287350d04197f4",
-                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4",
+                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/488584609b5bfb30564ba402b61e82465e03195f",
+                "reference": "488584609b5bfb30564ba402b61e82465e03195f",
                 "shasum": ""
             },
             "require": {
@@ -2603,7 +2604,7 @@
                 }
             ],
             "description": "Phpactor Language Server Handlers",
-            "time": "2020-04-10T09:54:53+00:00"
+            "time": "2020-04-12T09:14:25+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2611,12 +2612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "fbdba678ada06633a39194fd41d452f2c172737c"
+                "reference": "bffc42eace82b0e9479b29970af6e03336bdd1be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/fbdba678ada06633a39194fd41d452f2c172737c",
-                "reference": "fbdba678ada06633a39194fd41d452f2c172737c",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/bffc42eace82b0e9479b29970af6e03336bdd1be",
+                "reference": "bffc42eace82b0e9479b29970af6e03336bdd1be",
                 "shasum": ""
             },
             "require": {
@@ -2659,7 +2660,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-10T10:13:32+00:00"
+            "time": "2020-04-12T10:49:36+00:00"
         },
         {
             "name": "phpactor/language-server-reference-finder-extension",
@@ -3335,12 +3336,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c"
+                "reference": "4573ff7ddea7d4b69538c4c729445093ed5b3114"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/099e9a4923dbc23c6823c7839a953144e76bf41c",
-                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4573ff7ddea7d4b69538c4c729445093ed5b3114",
+                "reference": "4573ff7ddea7d4b69538c4c729445093ed5b3114",
                 "shasum": ""
             },
             "require": {
@@ -3382,7 +3383,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-04-10T15:23:29+00:00"
+            "time": "2020-04-12T09:15:19+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -3390,12 +3391,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "eacaa7b0acc57904256012705b52b1a92779829d"
+                "reference": "14168d855ee12bcc9b193a70941fb9c8a2c4339c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/eacaa7b0acc57904256012705b52b1a92779829d",
-                "reference": "eacaa7b0acc57904256012705b52b1a92779829d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/14168d855ee12bcc9b193a70941fb9c8a2c4339c",
+                "reference": "14168d855ee12bcc9b193a70941fb9c8a2c4339c",
                 "shasum": ""
             },
             "require": {
@@ -3435,7 +3436,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2020-03-29T20:49:11+00:00"
+            "time": "2020-04-12T06:54:00+00:00"
         },
         {
             "name": "psr/container",
@@ -4094,12 +4095,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "3e40e87a20eaf83a1db825e1fa5097ae89042db3"
+                "reference": "25ae024706a958a768689aa893328d709365fa0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/3e40e87a20eaf83a1db825e1fa5097ae89042db3",
-                "reference": "3e40e87a20eaf83a1db825e1fa5097ae89042db3",
+                "url": "https://api.github.com/repos/symfony/process/zipball/25ae024706a958a768689aa893328d709365fa0d",
+                "reference": "25ae024706a958a768689aa893328d709365fa0d",
                 "shasum": ""
             },
             "require": {
@@ -4135,21 +4136,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-03-27T16:54:36+00:00"
+            "time": "2020-04-07T19:12:26+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -4967,12 +4954,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df"
+                "reference": "3662cac29fb80769d9aef8cef55a0cb284d07d39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2d57d93c7a773cf9d02a642bdb1a08082839d8df",
-                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/3662cac29fb80769d9aef8cef55a0cb284d07d39",
+                "reference": "3662cac29fb80769d9aef8cef55a0cb284d07d39",
                 "shasum": ""
             },
             "require": {
@@ -5050,7 +5037,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-04-10T10:59:02+00:00"
+            "time": "2020-04-11T13:25:57+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -5665,12 +5652,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "b0843c8cbcc2dc5eda5158e583c7199a5e44c86d"
+                "reference": "74a67151cce1fe4aa5960636ae510ddf1faefdb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/b0843c8cbcc2dc5eda5158e583c7199a5e44c86d",
-                "reference": "b0843c8cbcc2dc5eda5158e583c7199a5e44c86d",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/74a67151cce1fe4aa5960636ae510ddf1faefdb3",
+                "reference": "74a67151cce1fe4aa5960636ae510ddf1faefdb3",
                 "shasum": ""
             },
             "require": {
@@ -5709,7 +5696,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2019-12-20T12:45:35+00:00"
+            "time": "2020-04-10T20:41:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
