@@ -2,7 +2,7 @@ Include (Prepare project directories): lib/create_fixtures_directory.vader
 
 Execute (Check if a given path belongs to the project):
   let rootPath = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
-  let project = phpactor#project#createFromRootPath(rootPath)
+  let project = phpactor#project#project#createFromRootPath(rootPath)
 
   let file = rootPath . '/foo.strangeext'
 

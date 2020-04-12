@@ -1,4 +1,4 @@
-function! phpactor#project#createFromRootPath(primaryRootPath) abort
+function! phpactor#project#project#createFromRootPath(primaryRootPath) abort
   let l:project = {
         \ 'primaryRootPath': s:normalizeRootPath(a:primaryRootPath),
         \ 'getPrimaryRootPath': function('s:getPrimaryRootPath'),

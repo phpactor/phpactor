@@ -1,13 +1,15 @@
 Include: lib/create_fixtures_directory.vader
 
 Execute (Create project from a nonexisting path):
-  let path = g:projectDirs['SillyWalksProject'].'/doesNotExist'
-  AssertThrows call phpactor#project#createFromRootPath(path)
-  AssertEqual printf('Path "%s" does not exist or is not a directory so it cannot be a root path.', path), g:vader_exception
+  " local variable was unavailable after exception was thrown
+  Save g:path
+  let g:path = g:projectDirs['SillyWalksProject'].'/doesNotExist'
+  AssertThrows call phpactor#project#project#createFromRootPath(g:path)
+  AssertEqual printf('Path "%s" does not exist or is not a directory so it cannot be a root path.', g:path), g:vader_exception
 
 Execute (Create project from an existing path):
   let path = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
 
-  let project = phpactor#project#createFromRootPath(path)
+  let project = phpactor#project#project#createFromRootPath(path)
   
   AssertEqual path, project.getPrimaryRootPath()
