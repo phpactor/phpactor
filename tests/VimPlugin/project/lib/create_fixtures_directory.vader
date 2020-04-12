@@ -10,5 +10,7 @@ Before:
   call mkdir(g:projectDirs['SillyWalksProject'].'/subdir', 'p')
   call mkdir(g:projectDirs['TwoShedsProject'].'/subdir', 'p')
 
+  let g:phpactorProjectRepository = phpactor#project#projectRepository#create()
+
 After:
   Restore

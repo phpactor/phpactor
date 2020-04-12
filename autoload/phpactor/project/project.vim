@@ -14,8 +14,6 @@ endfunction
 
 function! s:containsFile(filename) dict
   let l:path = simplify(fnamemodify(a:filename, ':p:h'))
-  echomsg l:path
-  echomsg self.primaryRootPath
 
   " @todo Is this working on Windows filesystem?
   while resolve(l:path) !=# resolve(self.primaryRootPath)
