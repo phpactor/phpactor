@@ -13,7 +13,7 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
-use Phpactor\WorseReflection\Core\Logger\ArrayLogger;
+use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
