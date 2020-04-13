@@ -61,6 +61,4 @@ let g:phpactorBufferMatcher = get(g:, 'phpactorBufferMatcher', phpactor#project#
             \ g:phpactorInitialCwd
             \ ))
 
-command PhpactorListProjects echo keys(map(g:phpactorBufferMatcher.getRepository().listProjects(), { key, val -> key}))
-
 " vim: et ts=4 sw=4 fdm=marker

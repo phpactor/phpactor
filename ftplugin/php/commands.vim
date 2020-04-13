@@ -128,3 +128,8 @@ command! -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
 ""
 " Automatically add any missing properties to a class
 command! -nargs=0 PhpactorTransform call phpactor#Transform()
+
+""
+" List projects existing in this vim instance
+" (currently each project consist of its root directory only)
+command PhpactorListProjects echo keys(map(g:phpactorBufferMatcher.getRepository().listProjects(), { key, val -> key}))
