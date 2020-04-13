@@ -63,6 +63,7 @@ function s:matchFileToProject(file) dict abort
     let l:manualPath = input('Enter file path: ', l:initialDirectory, 'file')
     redraw
     if ! empty(glob(l:manualPath.'/'))
+      " todo validate path
       let l:selectedDir = l:manualPath
     endif
   elseif l:choice == 3
