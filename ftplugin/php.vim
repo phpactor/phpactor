@@ -54,9 +54,8 @@ if g:phpactorOmniAutoClassImport == v:true
     autocmd CompleteDone *.php call phpactor#_completeImportClass(v:completed_item)
 endif
 
-let g:phpactorProjectRepository = get(g:, 'phpactorProjectRepository', phpactor#project#projectRepository#create())
 let g:phpactorBufferMatcher = get(g:, 'phpactorBufferMatcher', phpactor#project#bufferMatcher#create(
-            \ g:phpactorProjectRepository,
+            \ phpactor#project#projectRepository#create(),
             \ g:phpactorProjectRootPatterns,
             \ g:phpactorGlobalRootPatterns,
             \ g:phpactorInitialCwd
