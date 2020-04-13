@@ -16,6 +16,7 @@ Improvements:
 
   - [text-document] Include `<` and `>` when getting "class" name undercursor
     (allow implorting `Foobar` from an `@var array<Foobar>` doc
+  - [completion] Deduplicate suggetions (#905) - @dantleech
 
 Bug fixes:
 
