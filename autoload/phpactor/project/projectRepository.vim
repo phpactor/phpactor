@@ -1,11 +1,17 @@
 function! phpactor#project#projectRepository#create() abort
-  let l:repository = {
+  return {
         \ 'projects': {},
         \ 'isEmpty': function('s:isEmpty'),
         \ 'addProject': function('s:addProject'),
-        \ 'findProjectContainingFile': function('s:findProjectContainingFile')
+        \ 'findProjectContainingFile': function('s:findProjectContainingFile'),
+        \ 'listProjects': function('s:listProjects'),
+        \ 'hasProjectWithPrimaryRoot': function('s:hasProjectWithPrimaryRoot'),
+        \ 'hasProject': function('s:hasProject')
         \ }
-  return l:repository
+endfunction
+
+function! s:listProjects() dict abort
+  return copy(self.projects)
 endfunction
 
 function! s:findProjectContainingFile(file) dict abort
@@ -26,6 +32,14 @@ function! s:addProject(project) dict abort
   endif
 
   let self.projects[a:project.getPrimaryRootPath()] = a:project
+endfunction
+
+function! s:hasProject(project) dict abort
+  return get(self.projects, a:project.getPrimaryRootPath(), v:false) isnot v:false
+endfunction
+
+function! s:hasProjectWithPrimaryRoot(path) dict abort
+  return get(self.projects, a:path, v:false) isnot v:false
 endfunction
 
 function! s:isEmpty() dict abort
