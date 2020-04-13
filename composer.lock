@@ -1900,12 +1900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "489c3851a559e9b5dbfc1067caf38d6c4279f32e"
+                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/489c3851a559e9b5dbfc1067caf38d6c4279f32e",
-                "reference": "489c3851a559e9b5dbfc1067caf38d6c4279f32e",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
+                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
                 "shasum": ""
             },
             "require": {
@@ -1951,7 +1951,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-13T19:19:27+00:00"
+            "time": "2020-04-13T19:50:50+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1959,15 +1959,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "ae48b61d51f028013f97fd16d94232a5d53252e7"
+                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/ae48b61d51f028013f97fd16d94232a5d53252e7",
-                "reference": "ae48b61d51f028013f97fd16d94232a5d53252e7",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/ab15452f488b57483725d5e1b5a49899ccb71287",
+                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion": "~0.4.1",
                 "phpactor/container": "^1.0",
                 "phpactor/logging-extension": "~0.1"
@@ -2000,7 +2001,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2020-04-13T19:32:46+00:00"
+            "time": "2020-04-13T20:04:31+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
