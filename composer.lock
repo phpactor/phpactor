@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f96726d458c40e2b879c312db18c14b5",
+    "content-hash": "e5c2325c970da03b2697bfd2cc603f71",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1548,12 +1548,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/amp-fswatch.git",
-                "reference": "ae059fa3e537b49d7947c92e1d9747f515fc1b48"
+                "reference": "259d11a1d7d9d9accb6370c2a018d851d377ec91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/ae059fa3e537b49d7947c92e1d9747f515fc1b48",
-                "reference": "ae059fa3e537b49d7947c92e1d9747f515fc1b48",
+                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/259d11a1d7d9d9accb6370c2a018d851d377ec91",
+                "reference": "259d11a1d7d9d9accb6370c2a018d851d377ec91",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,7 @@
                 }
             ],
             "description": "Async Filesystem Watcher for Amphp",
-            "time": "2020-04-13T14:05:30+00:00"
+            "time": "2020-04-13T18:43:32+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -1900,12 +1900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "560b580420252274a5c148f8418245e73cdb2c9b"
+                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/560b580420252274a5c148f8418245e73cdb2c9b",
-                "reference": "560b580420252274a5c148f8418245e73cdb2c9b",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
+                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
                 "shasum": ""
             },
             "require": {
@@ -1951,7 +1951,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-12T10:43:25+00:00"
+            "time": "2020-04-13T19:50:50+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1959,22 +1959,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c"
+                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/ab15452f488b57483725d5e1b5a49899ccb71287",
+                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion": "~0.2",
+                "php": "^7.3",
+                "phpactor/completion": "~0.4.1",
                 "phpactor/container": "^1.0",
                 "phpactor/logging-extension": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
+                "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "~7.0"
             },
             "type": "phpactor-extension",
@@ -2000,7 +2001,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-13T20:04:31+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -2008,23 +2009,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b"
+                "reference": "d758402c283fb7e5d6c9ccc5fc199015f771b491"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/136d401141964e7faecbd66c31efddab85e9b45b",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/d758402c283fb7e5d6c9ccc5fc199015f771b491",
+                "reference": "d758402c283fb7e5d6c9ccc5fc199015f771b491",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion-extension": "~0.2",
                 "phpactor/rpc-extension": "~0.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "friendsofphp/php-cs-fixer": "^2.14",
                 "phpactor/test-utils": "^1.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpstan/phpstan": "~0.12.0",
+                "phpunit/phpunit": "^7.4"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -2049,7 +2051,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-13T20:27:38+00:00"
         },
         {
             "name": "phpactor/completion-worse-extension",
@@ -2605,19 +2607,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "0fa512e254e4a9d4609ad5f006363b464453bf58"
+                "reference": "68c3b0740e09c2ac2d4620bea175eb97d21e259f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/0fa512e254e4a9d4609ad5f006363b464453bf58",
-                "reference": "0fa512e254e4a9d4609ad5f006363b464453bf58",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/68c3b0740e09c2ac2d4620bea175eb97d21e259f",
+                "reference": "68c3b0740e09c2ac2d4620bea175eb97d21e259f",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3",
                 "phpactor/code-transform": "^0.2.1",
                 "phpactor/completion": "~0.4.0",
-                "phpactor/completion-extension": "~0.1",
+                "phpactor/completion-extension": "~0.2.2",
                 "phpactor/completion-worse-extension": "^0.2.0",
                 "phpactor/console-extension": "~0.1",
                 "phpactor/container": "~1.3",
@@ -2660,7 +2662,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-13T08:23:32+00:00"
+            "time": "2020-04-13T20:26:54+00:00"
         },
         {
             "name": "phpactor/logging-extension",
