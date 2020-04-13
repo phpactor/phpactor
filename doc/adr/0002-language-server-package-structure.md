@@ -70,6 +70,4 @@ refactor, and much easier to add new features.
 In the future it should still be possible to break micro-packages out of the
 macro-package.
 
-The risk is that it is much easier for packages to contaminate each other.
-
-As all the extensions are stil
+There is a risk that it is easier for packages to contaminate each other.
