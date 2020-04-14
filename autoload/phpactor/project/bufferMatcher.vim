@@ -1,3 +1,23 @@
+function! phpactor#project#bufferMatcher#assignFileToProject(filename)
+  if !exists('g:phpactorLoaded')
+    return
+  endif
+
+  if exists('b:project')
+    return
+  endif
+  let l:project = g:phpactorBufferMatcher.matchFileToProject(a:filename)
+  if v:null is l:project
+    return
+  endif
+  let b:project = l:project
+  if g:phpactorBufferMatcher.getRepository().hasProject(b:project)
+    return
+  endif
+
+  call g:phpactorBufferMatcher.getRepository().addProject(b:project)
+endfunction
+
 function! phpactor#project#bufferMatcher#create(projectRepository, projectRootMarkers, filesystemRootMarkers, initialCwd) abort
   let l:filesystemRootMarkers = a:filesystemRootMarkers
   if index(l:filesystemRootMarkers, '/') < 0
