@@ -93,7 +93,7 @@ function s:matchFileToProject(file) dict abort
 
   if v:null != l:selectedDir
     let l:project = phpactor#project#project#createFromRootPath(l:selectedDir)
-    echomsg printf('Project with root "%s" has been created.', l:project.getPrimaryRootPath())
+    echomsg printf('Project with root "%s" has been created.', l:project.primaryRootPath)
 
     return l:project
   endif

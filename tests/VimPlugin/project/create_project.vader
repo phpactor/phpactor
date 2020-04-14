@@ -12,4 +12,4 @@ Execute (Create project from an existing path):
 
   let project = phpactor#project#project#createFromRootPath(path)
   
-  AssertEqual path, project.getPrimaryRootPath()
+  AssertEqual path, project.primaryRootPath

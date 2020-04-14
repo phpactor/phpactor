@@ -1,15 +1,10 @@
 function! phpactor#project#project#createFromRootPath(primaryRootPath) abort
   let l:project = {
         \ 'primaryRootPath': s:normalizeRootPath(a:primaryRootPath),
-        \ 'getPrimaryRootPath': function('s:getPrimaryRootPath'),
         \ 'containsFile': function('s:containsFile')
         \ }
 
   return l:project
-endfunction
-
-function! s:getPrimaryRootPath() dict
-  return l:self.primaryRootPath
 endfunction
 
 function! s:containsFile(filename) dict

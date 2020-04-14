@@ -22,15 +22,15 @@ endfunction
 
 function! s:addProject(project) dict abort
   " todo check type
-  if v:null isnot get(self.projects, a:project.getPrimaryRootPath(), v:null)
-    throw printf('Project "%s" already exists', a:project.getPrimaryRootPath())
+  if v:null isnot get(self.projects, a:project.primaryRootPath, v:null)
+    throw printf('Project "%s" already exists', a:project.primaryRootPath)
   endif
 
-  let self.projects[a:project.getPrimaryRootPath()] = a:project
+  let self.projects[a:project.primaryRootPath] = a:project
 endfunction
 
 function! s:hasProject(project) dict abort
-  return get(self.projects, a:project.getPrimaryRootPath(), v:false) isnot v:false
+  return get(self.projects, a:project.primaryRootPath, v:false) isnot v:false
 endfunction
 
 function! s:hasProjectWithPrimaryRoot(path) dict abort

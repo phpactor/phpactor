@@ -6,5 +6,5 @@ Execute (Check if a given path belongs to the project):
 
   let file = rootPath . '/foo.strangeext'
 
-  Assert project.containsFile(file), printf('Cannot find a file "%s" inside root path "%s"', file,  project.getPrimaryRootPath())
+  Assert project.containsFile(file), printf('Cannot find a file "%s" inside root path "%s"', file,  project.primaryRootPath)
   Assert !project.containsFile(rootPath . '../outside.strangeext')
