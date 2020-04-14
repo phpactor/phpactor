@@ -31,7 +31,7 @@ function s:normalizeRootPath(path) abort
   let l:path = simplify(fnamemodify(a:path, ':p'))
 
   " @todo better check if it is not an existing directory
-  if empty(glob(l:path.'/'))
+  if ! isdirectory(l:path)
     throw printf('Path "%s" does not exist or is not a directory so it cannot be a root path.', l:path)
   endif
 
