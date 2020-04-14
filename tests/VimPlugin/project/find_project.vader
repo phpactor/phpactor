@@ -22,7 +22,5 @@ Execute (Check if there is a project containing the file):
 
   AssertEqual type({}), type(project)
 
-Execute (Ensure both projects have the correct type):
-
 Execute (Try to add the same project again):
   AssertThrows call g:phpactorProjectRepository.addProject(existingProject)
