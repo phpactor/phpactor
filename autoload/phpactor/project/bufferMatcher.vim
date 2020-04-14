@@ -70,7 +70,7 @@ function s:matchFileToProject(file) dict abort
   endif
 
   let l:choice = v:null
-  while index([0,1,2,3], l:choice) < 0
+  while index(range(0, len(l:choices)), l:choice) < 0
     " bug: neovim assigns 0 without any interaction, so I used input()
     let l:choice = inputlist(l:choices)
     " let l:choice = str2nr(input(l:choices[0], join(l:choices[1:], "\n")))
