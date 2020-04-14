@@ -11,11 +11,11 @@ function! phpactor#project#bufferMatcher#assignFileToProject(filename)
     return
   endif
   let b:project = l:project
-  if g:phpactorBufferMatcher.getRepository().hasProject(b:project)
+  if g:phpactorBufferMatcher.repository.hasProject(b:project)
     return
   endif
 
-  call g:phpactorBufferMatcher.getRepository().addProject(b:project)
+  call g:phpactorBufferMatcher.repository.addProject(b:project)
 endfunction
 
 function! phpactor#project#bufferMatcher#create(projectRepository, projectRootMarkers, filesystemRootMarkers, initialCwd) abort
@@ -29,7 +29,6 @@ function! phpactor#project#bufferMatcher#create(projectRepository, projectRootMa
         \ 'projectRootMarkers': a:projectRootMarkers,
         \ 'filesystemRootMarkers': l:filesystemRootMarkers,
         \ 'repository': a:projectRepository,
-        \ 'getRepository': function('s:getRepository'),
         \ 'matchFileToProject': function('s:matchFileToProject')
         \ }
 endfunction
@@ -98,10 +97,6 @@ function s:matchFileToProject(file) dict abort
 
     return l:project
   endif
-endfunction
-
-function s:getRepository() dict abort
-  return self.repository
 endfunction
 
 function! s:searchDirectoryUpwardForRootMarkers(initialDirectory, workspaceRootMarkers, filesystemRootMarkers)

@@ -4,7 +4,7 @@ Execute (Match the file knowing that there is a project containing it):
   let rootPath = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
   let project = phpactor#project#project#createFromRootPath(rootPath)
 
-  call g:phpactorBufferMatcher.getRepository().addProject(project)
+  call g:phpactorBufferMatcher.repository.addProject(project)
   let file = rootPath . '/foo.strangeext'
 
   let matchedProject = g:phpactorBufferMatcher.matchFileToProject(file)
