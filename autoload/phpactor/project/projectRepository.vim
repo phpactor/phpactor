@@ -4,14 +4,9 @@ function! phpactor#project#projectRepository#create() abort
         \ 'isEmpty': function('s:isEmpty'),
         \ 'addProject': function('s:addProject'),
         \ 'findProjectContainingFile': function('s:findProjectContainingFile'),
-        \ 'listProjects': function('s:listProjects'),
         \ 'hasProjectWithPrimaryRoot': function('s:hasProjectWithPrimaryRoot'),
         \ 'hasProject': function('s:hasProject')
         \ }
-endfunction
-
-function! s:listProjects() dict abort
-  return copy(self.projects)
 endfunction
 
 function! s:findProjectContainingFile(file) dict abort

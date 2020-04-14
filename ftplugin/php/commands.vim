@@ -132,4 +132,4 @@ command! -nargs=0 PhpactorTransform call phpactor#Transform()
 ""
 " List projects existing in this vim instance
 " (currently each project consist of its root directory only)
-command PhpactorListProjects echo keys(map(g:phpactorBufferMatcher.repository.listProjects(), { key, val -> key}))
+command PhpactorListProjects echo keys(map(copy(g:phpactorBufferMatcher.repository.projects), { key, val -> key}))
