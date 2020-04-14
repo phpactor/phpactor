@@ -2608,12 +2608,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "f8c19af243eb45a5edd23d170e614fe8df284f64"
+                "reference": "30d3d60a3542196f5f650496273087ef87349bbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/f8c19af243eb45a5edd23d170e614fe8df284f64",
-                "reference": "f8c19af243eb45a5edd23d170e614fe8df284f64",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/30d3d60a3542196f5f650496273087ef87349bbc",
+                "reference": "30d3d60a3542196f5f650496273087ef87349bbc",
                 "shasum": ""
             },
             "require": {
@@ -2663,20 +2663,20 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-14T10:04:38+00:00"
+            "time": "2020-04-14T18:04:00+00:00"
         },
         {
             "name": "phpactor/logging-extension",
-            "version": "0.3.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/logging-extension.git",
-                "reference": "306149d2ab1582ff389a71fce45d270f5f7c9ac1"
+                "reference": "371e3ce37611d6587a5b4ff9adcd7a17a08799cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/306149d2ab1582ff389a71fce45d270f5f7c9ac1",
-                "reference": "306149d2ab1582ff389a71fce45d270f5f7c9ac1",
+                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/371e3ce37611d6587a5b4ff9adcd7a17a08799cf",
+                "reference": "371e3ce37611d6587a5b4ff9adcd7a17a08799cf",
                 "shasum": ""
             },
             "require": {
@@ -2690,7 +2690,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\Logger\\LoggingExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\Logger\\LoggingExtension",
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -2708,7 +2711,7 @@
                 }
             ],
             "description": "PSR logging extension",
-            "time": "2019-08-24T11:33:25+00:00"
+            "time": "2020-04-14T16:57:48+00:00"
         },
         {
             "name": "phpactor/map-resolver",

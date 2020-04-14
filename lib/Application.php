@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,7 +39,9 @@ class Application extends SymfonyApplication
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
-            $this->container->get(LoggingExtension::SERVICE_LOGGER)->pushHandler(new StreamHandler(STDERR));
+            $handler = new StreamHandler(STDERR);
+            $handler->setFormatter($this->container->get(PrettyFormatter::class));
+            $this->container->get(LoggingExtension::SERVICE_LOGGER)->pushHandler($handler);
         }
 
         $formatter = $output->getFormatter();
