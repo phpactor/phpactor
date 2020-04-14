@@ -1,4 +1,4 @@
-function! phpactor#project#bufferMatcher#assignFileToProject(filename)
+function! phpactor#project#bufferMatcher#assignProjectToBuffer(filename)
   if !exists('g:phpactorLoaded')
     return
   endif
