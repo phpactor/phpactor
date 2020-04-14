@@ -1548,12 +1548,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/amp-fswatch.git",
-                "reference": "259d11a1d7d9d9accb6370c2a018d851d377ec91"
+                "reference": "040b0c32ea261cdfb8e63def702827ef4754a98e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/259d11a1d7d9d9accb6370c2a018d851d377ec91",
-                "reference": "259d11a1d7d9d9accb6370c2a018d851d377ec91",
+                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/040b0c32ea261cdfb8e63def702827ef4754a98e",
+                "reference": "040b0c32ea261cdfb8e63def702827ef4754a98e",
                 "shasum": ""
             },
             "require": {
@@ -1591,7 +1591,7 @@
                 }
             ],
             "description": "Async Filesystem Watcher for Amphp",
-            "time": "2020-04-13T18:43:32+00:00"
+            "time": "2020-04-14T08:15:24+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -2489,12 +2489,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "c3786003f2e6456610bb17c5a82f77949277afe9"
+                "reference": "824a7094eeaf4af06b6df97a6b1899d65adeeab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/c3786003f2e6456610bb17c5a82f77949277afe9",
-                "reference": "c3786003f2e6456610bb17c5a82f77949277afe9",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/824a7094eeaf4af06b6df97a6b1899d65adeeab0",
+                "reference": "824a7094eeaf4af06b6df97a6b1899d65adeeab0",
                 "shasum": ""
             },
             "require": {
@@ -2543,7 +2543,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-13T14:24:53+00:00"
+            "time": "2020-04-14T08:31:16+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2551,12 +2551,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "dbc11faf7b31c421e3d4c272e56cf0da257d400c"
+                "reference": "35738182df6e92cd96135578df110aa77f72d92d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/dbc11faf7b31c421e3d4c272e56cf0da257d400c",
-                "reference": "dbc11faf7b31c421e3d4c272e56cf0da257d400c",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/35738182df6e92cd96135578df110aa77f72d92d",
+                "reference": "35738182df6e92cd96135578df110aa77f72d92d",
                 "shasum": ""
             },
             "require": {
@@ -2569,6 +2569,7 @@
                 "ramsey/uuid": "^4.0"
             },
             "require-dev": {
+                "amphp/phpunit-util": "^1.3",
                 "friendsofphp/php-cs-fixer": "^2.15.0",
                 "phpactor/test-utils": "^1.1",
                 "phpspec/prophecy-phpunit": "^2.0",
@@ -2599,7 +2600,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-13T08:58:50+00:00"
+            "time": "2020-04-14T10:01:50+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2607,12 +2608,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "68c3b0740e09c2ac2d4620bea175eb97d21e259f"
+                "reference": "f8c19af243eb45a5edd23d170e614fe8df284f64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/68c3b0740e09c2ac2d4620bea175eb97d21e259f",
-                "reference": "68c3b0740e09c2ac2d4620bea175eb97d21e259f",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/f8c19af243eb45a5edd23d170e614fe8df284f64",
+                "reference": "f8c19af243eb45a5edd23d170e614fe8df284f64",
                 "shasum": ""
             },
             "require": {
@@ -2662,7 +2663,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-13T20:26:54+00:00"
+            "time": "2020-04-14T10:04:38+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3289,12 +3290,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "4573ff7ddea7d4b69538c4c729445093ed5b3114"
+                "reference": "15692d51e9b777bbee99ead11d0356425bc92d30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4573ff7ddea7d4b69538c4c729445093ed5b3114",
-                "reference": "4573ff7ddea7d4b69538c4c729445093ed5b3114",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/15692d51e9b777bbee99ead11d0356425bc92d30",
+                "reference": "15692d51e9b777bbee99ead11d0356425bc92d30",
                 "shasum": ""
             },
             "require": {
@@ -3336,7 +3337,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-04-12T09:15:19+00:00"
+            "time": "2020-04-14T08:21:48+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
