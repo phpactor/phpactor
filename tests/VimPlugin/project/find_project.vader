@@ -20,7 +20,7 @@ Execute (Check if there is a project containing the file):
 
   AssertEqual existingProject, project
 
-  AssertEqual v:t_dict, type(project)
+  AssertEqual type({}), type(project)
 
 Execute (Ensure both projects have the correct type):
 

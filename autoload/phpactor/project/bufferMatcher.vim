@@ -17,7 +17,7 @@ endfunction
 function s:matchFileToProject(file) dict abort
   let l:project = self.repository.findProjectContainingFile(a:file)
 
-  if type(l:project) == v:t_dict
+  if type(l:project) == type({})
     return l:project
   endif
 
