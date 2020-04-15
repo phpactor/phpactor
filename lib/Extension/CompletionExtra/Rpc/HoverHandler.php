@@ -108,7 +108,7 @@ class HoverHandler implements Handler
                 break;
             }
 
-            return $this->prependDocumentation($member->docblock(), $this->formatter->format($member));
+            return $this->formatter->format($member);
         } catch (NotFound $e) {
             return $e->getMessage();
         }
@@ -119,7 +119,7 @@ class HoverHandler implements Handler
         $name = $symbolContext->symbol()->name();
         $function = $this->reflector->reflectFunction($name);
 
-        return $this->prependDocumentation($function->docblock(), $this->formatter->format($function));
+        return $this->formatter->format($function);
     }
 
     private function renderVariable(SymbolContext $symbolContext)
@@ -131,7 +131,7 @@ class HoverHandler implements Handler
     {
         try {
             $class = $this->reflector->reflectClassLike((string) $type);
-            return $this->prependDocumentation($class->docblock(), $this->formatter->format($class));
+            return $this->formatter->format($class);
         } catch (NotFound $e) {
             return $e->getMessage();
         }
@@ -145,19 +145,5 @@ class HoverHandler implements Handler
         }
 
         return null;
-    }
-
-    private function prependDocumentation(DocBlock $docBlock, string $info): string
-    {
-        if (!$docBlock->isDefined()) {
-            return $info;
-        }
-
-        $documentation = trim($docBlock->formatted());
-        if (empty($documentation) ) {
-            return $info;
-        }
-
-        return $info . "\n\n" . $documentation;
     }
 }

@@ -120,8 +120,6 @@ EOT
             ,
             <<<'EOT'
 pub foobar()
-
-this is documentation
 EOT
         ];
 
@@ -137,8 +135,6 @@ EOT
             ,
             <<<'EOT'
 Foobar
-
-this is documentation
 EOT
         ];
 
