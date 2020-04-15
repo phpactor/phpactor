@@ -11,6 +11,7 @@ Features:
   - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
+  - [rpc] Add docblock prose to hover 
 
 Improvements:
 
