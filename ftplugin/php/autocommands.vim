@@ -1,1 +1,1 @@
-call phpactor#project#bufferMatcher#assignProjectToBuffer(expand('%'))
+call phpactor#project#assigner#assignProjectToBuffer(expand('%'))

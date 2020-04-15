@@ -11,7 +11,7 @@ Before:
   call mkdir(g:projectDirs['TwoShedsProject'].'/subdir', 'p')
 
   let g:phpactorProjectRepository = phpactor#project#projectRepository#create()
-  let g:phpactorBufferMatcher = phpactor#project#bufferMatcher#create(g:phpactorProjectRepository)
+  let g:phpactorBufferMatcher = phpactor#project#assigner#create(g:phpactorProjectRepository)
 
 After:
   Restore
