@@ -1,8 +1,8 @@
-if exists('g:phpactorLoaded')
+if exists('g:loaded_phpactor')
   finish
 endif
 
-let g:phpactorLoaded = 1
+let g:loaded_phpactor = 1
 let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
