@@ -7,6 +7,7 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
@@ -106,7 +107,8 @@ class HoverHandler implements Handler
                 $member = $class->members()->get($name);
                 break;
             }
-            return $this->formatter->format($member);
+
+            return $this->prependDocumentation($member->docblock(), $this->formatter->format($member));
         } catch (NotFound $e) {
             return $e->getMessage();
         }
@@ -117,7 +119,7 @@ class HoverHandler implements Handler
         $name = $symbolContext->symbol()->name();
         $function = $this->reflector->reflectFunction($name);
 
-        return $this->formatter->format($function);
+        return $this->prependDocumentation($function->docblock(), $this->formatter->format($function));
     }
 
     private function renderVariable(SymbolContext $symbolContext)
@@ -129,7 +131,7 @@ class HoverHandler implements Handler
     {
         try {
             $class = $this->reflector->reflectClassLike((string) $type);
-            return $this->formatter->format($class);
+            return $this->prependDocumentation($class->docblock(), $this->formatter->format($class));
         } catch (NotFound $e) {
             return $e->getMessage();
         }
@@ -143,5 +145,19 @@ class HoverHandler implements Handler
         }
 
         return null;
+    }
+
+    private function prependDocumentation(DocBlock $docBlock, string $info): string
+    {
+        if (!$docBlock->isDefined()) {
+            return $info;
+        }
+
+        $documentation = trim($docBlock->formatted());
+        if (empty($documentation) ) {
+            return $info;
+        }
+
+        return $documentation . "\n\n" . $info;
     }
 }
