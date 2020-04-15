@@ -7,7 +7,6 @@ let g:phpactorpath = expand('<sfile>:p:h') . '/..'
 let g:phpactorbinpath = g:phpactorpath. '/bin/phpactor'
 let g:phpactorInitialCwd = getcwd()
 let g:phpactorCompleteLabelTruncateLength=50
-let g:_phpactorCompletionMeta = {}
 
 ""
 " Path to the PHP binary used by Phpactor
