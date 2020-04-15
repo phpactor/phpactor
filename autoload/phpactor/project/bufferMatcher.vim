@@ -6,7 +6,7 @@ function! phpactor#project#bufferMatcher#assignProjectToBuffer(filename)
   if exists('b:project')
     return
   endif
-  let l:project = g:phpactorBufferMatcher.matchFileToProject(a:filename)
+  let l:project = g:phpactorBufferMatcher.resolveProjectForFile(a:filename)
   if v:null is l:project
     return
   endif
@@ -29,11 +29,11 @@ function! phpactor#project#bufferMatcher#create(projectRepository, projectRootMa
         \ 'projectRootMarkers': a:projectRootMarkers,
         \ 'filesystemRootMarkers': l:filesystemRootMarkers,
         \ 'repository': a:projectRepository,
-        \ 'matchFileToProject': function('s:matchFileToProject')
+        \ 'resolveProjectForFile': function('s:resolveProjectForFile')
         \ }
 endfunction
 
-function s:matchFileToProject(file) dict abort
+function s:resolveProjectForFile(file) dict abort
   let l:project = self.repository.findProjectContainingFile(a:file)
 
   if type(l:project) == type({})

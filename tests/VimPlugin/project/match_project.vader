@@ -7,6 +7,6 @@ Execute (Match the file knowing that there is a project containing it):
   call g:phpactorBufferMatcher.repository.addProject(project)
   let file = rootPath . '/foo.strangeext'
 
-  let matchedProject = g:phpactorBufferMatcher.matchFileToProject(file)
+  let matchedProject = g:phpactorBufferMatcher.resolveProjectForFile(file)
 
   AssertEqual project, matchedProject
