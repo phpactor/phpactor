@@ -119,9 +119,9 @@ public function fo<>obar() { }
 EOT
             ,
             <<<'EOT'
-this is documentation
-
 pub foobar()
+
+this is documentation
 EOT
         ];
 
@@ -136,9 +136,9 @@ class F<>oobar {}
 EOT
             ,
             <<<'EOT'
-this is documentation
-
 Foobar
+
+this is documentation
 EOT
         ];
 

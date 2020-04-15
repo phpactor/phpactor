@@ -158,6 +158,6 @@ class HoverHandler implements Handler
             return $info;
         }
 
-        return $documentation . "\n\n" . $info;
+        return $info . "\n\n" . $documentation;
     }
 }
