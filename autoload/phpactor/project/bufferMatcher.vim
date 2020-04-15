@@ -57,39 +57,33 @@ function s:matchFileToProject(file) dict abort
         \ self.filesystemRootMarkers
         \ )
 
-  let l:choices  = [
-          \ l:message,
-          \ printf('1. manual (default "%s")', l:initialDirectory),
-          \ printf('2. use initial working directory: "%s"', self.initialCwd)
-          \ ]
+  let l:choices = [
+        \ {
+        \ 'action': { -> self.initialCwd },
+        \ 'message': l:message
+        \ },
+        \ {
+        \ 'action': function('input', ['Enter file path: ', l:initialDirectory, 'file']),
+        \ 'message': printf('manual (default "%s")', l:initialDirectory)
+        \ }
+        \ ]
 
   if v:null != l:rootDirByMarker
-    let l:item = '3. autodetected by root marker: '.l:rootDirByMarker
+    let l:item = {
+          \ 'action': { -> l:rootDirByMarker },
+          \ 'message': 'autodetected by root marker: '.l:rootDirByMarker
+          \ }
     call add(l:choices, l:item)
   endif
 
   let l:choice = v:null
-  while index(range(0, len(l:choices)), l:choice) < 0
-    " bug: neovim assigns 0 without any interaction, so I used input()
-    let l:choice = inputlist(l:choices)
-    " let l:choice = str2nr(input(l:choices[0], join(l:choices[1:], "\n")))
-    " echo join(l:choices)."\n"
-    " let l:choice = str2nr(input('Enter number: '))
+  while index(range(0, len(l:choices)-1), l:choice) < 0
+    let l:choice = inputlist(map(copy(l:choices), { number, item -> (number ? printf('%d: ', number) : '') . item['message'] }))
     redraw
   endwhile
 
-  if l:choice == 1
-    let l:manualPath = input('Enter file path: ', l:initialDirectory, 'file')
-    redraw
-    if isdirectory(l:manualPath)
-      " todo validate path
-      let l:selectedDir = l:manualPath
-    endif
-  elseif l:choice == 3
-    let l:selectedDir = l:rootDirByMarker
-  else
-    let l:selectedDir = self.initialCwd
-  endif
+  let l:selectedDir = l:choices[l:choice]['action']()
+  redraw
 
   if v:null != l:selectedDir
     let l:project = phpactor#project#project#createFromRootPath(l:selectedDir)
