@@ -559,25 +559,26 @@
         },
         {
             "name": "brick/math",
-            "version": "0.8.14",
+            "version": "0.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "6f7a46b5c3d487b277f38fbd17df57d348cace8a"
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/6f7a46b5c3d487b277f38fbd17df57d348cace8a",
-                "reference": "6f7a46b5c3d487b277f38fbd17df57d348cace8a",
+                "url": "https://api.github.com/repos/brick/math/zipball/9b08d412b9da9455b210459ff71414de7e6241cd",
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1"
+                "ext-json": "*",
+                "php": "^7.1|^8.0"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "2.*",
-                "phpunit/phpunit": "7.*",
-                "vimeo/psalm": "3.*"
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpunit/phpunit": "^7.5.15|^8.5",
+                "vimeo/psalm": "^3.5"
             },
             "type": "library",
             "autoload": {
@@ -600,7 +601,7 @@
                 "brick",
                 "math"
             ],
-            "time": "2020-02-17T13:57:43+00:00"
+            "time": "2020-04-15T15:59:35+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -2608,12 +2609,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "76beea1c468f4111c7a4f30b27ca8bfc9ba22298"
+                "reference": "7915cc529aa56bfb65352b9a92125781a66529c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/76beea1c468f4111c7a4f30b27ca8bfc9ba22298",
-                "reference": "76beea1c468f4111c7a4f30b27ca8bfc9ba22298",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/7915cc529aa56bfb65352b9a92125781a66529c8",
+                "reference": "7915cc529aa56bfb65352b9a92125781a66529c8",
                 "shasum": ""
             },
             "require": {
@@ -2663,7 +2664,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-15T20:06:35+00:00"
+            "time": "2020-04-15T20:52:59+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -4186,12 +4187,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "c8f04848d30da60c1773cdfd49a83d75d51aa536"
+                "reference": "4b6a9a4013baa65d409153cbb5a895bf093dc7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/c8f04848d30da60c1773cdfd49a83d75d51aa536",
-                "reference": "c8f04848d30da60c1773cdfd49a83d75d51aa536",
+                "url": "https://api.github.com/repos/symfony/process/zipball/4b6a9a4013baa65d409153cbb5a895bf093dc7f4",
+                "reference": "4b6a9a4013baa65d409153cbb5a895bf093dc7f4",
                 "shasum": ""
             },
             "require": {
@@ -4227,7 +4228,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-12T16:56:09+00:00"
+            "time": "2020-04-15T15:56:18+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -5045,12 +5046,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "3662cac29fb80769d9aef8cef55a0cb284d07d39"
+                "reference": "32790493e7c7cd505c73074b340b891a03719366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/3662cac29fb80769d9aef8cef55a0cb284d07d39",
-                "reference": "3662cac29fb80769d9aef8cef55a0cb284d07d39",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/32790493e7c7cd505c73074b340b891a03719366",
+                "reference": "32790493e7c7cd505c73074b340b891a03719366",
                 "shasum": ""
             },
             "require": {
@@ -5128,7 +5129,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-04-11T13:25:57+00:00"
+            "time": "2020-04-15T18:52:10+00:00"
         },
         {
             "name": "lstrojny/functional-php",
