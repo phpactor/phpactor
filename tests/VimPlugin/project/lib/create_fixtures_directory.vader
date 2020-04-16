@@ -16,7 +16,7 @@ Before:
   let g:phpactorGlobalRootPatterns = ['/', '/home']
   let g:phpactorProjectRootPatterns = ['composer.json', '.git', '.phpactor.json', '.phpactor.yml']
   let g:phpactorInitialCwd = '/'
-  let g:phpactorProjectRepository = phpactor#project#projectRepository#create()
+  let g:phpactorProjectRepository = phpactor#project#repository#create()
   let g:phpactorBufferMatcher = phpactor#project#assigner#create(
           \ g:phpactorProjectRepository,
             \ g:phpactorProjectRootPatterns,

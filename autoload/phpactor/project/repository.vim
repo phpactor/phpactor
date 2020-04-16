@@ -1,4 +1,4 @@
-function! phpactor#project#projectRepository#create() abort
+function! phpactor#project#repository#create() abort
   return {
         \ 'projects': {},
         \ 'isEmpty': function('s:isEmpty'),

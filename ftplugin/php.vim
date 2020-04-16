@@ -55,7 +55,7 @@ if g:phpactorOmniAutoClassImport == v:true
 endif
 
 let g:phpactorBufferMatcher = get(g:, 'phpactorBufferMatcher', phpactor#project#assigner#create(
-            \ phpactor#project#projectRepository#create(),
+            \ phpactor#project#repository#create(),
             \ g:phpactorProjectRootPatterns,
             \ g:phpactorGlobalRootPatterns,
             \ g:phpactorInitialCwd
