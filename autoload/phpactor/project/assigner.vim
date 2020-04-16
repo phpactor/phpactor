@@ -76,9 +76,12 @@ function s:resolveProjectForFile(file) dict abort
     call add(l:choices, l:item)
   endif
 
-  let l:choice = v:null
-  while index(range(0, len(l:choices)-1), l:choice) < 0
+  let l:choice = 0
+  while index(range(1, len(l:choices)-1), l:choice) < 0
     let l:choice = inputlist(map(copy(l:choices), { number, item -> (number ? printf('%d: ', number) : '') . item['message'] }))
+    if l:choice == 0
+      break
+    endif
     redraw
   endwhile
 
