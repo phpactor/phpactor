@@ -1,5 +1,8 @@
 Before:
   Save g:projectDirs
+  Save g:phpactorProjectRootPatterns
+  Save g:phpactorGlobalRootPatterns
+  Save g:phpactorInitialCwd
 
   let fixtureDir = tempname()
   let g:projectDirs = {
@@ -10,8 +13,16 @@ Before:
   call mkdir(g:projectDirs['SillyWalksProject'].'/subdir', 'p')
   call mkdir(g:projectDirs['TwoShedsProject'].'/subdir', 'p')
 
+  let g:phpactorGlobalRootPatterns = ['/', '/home']
+  let g:phpactorProjectRootPatterns = ['composer.json', '.git', '.phpactor.json', '.phpactor.yml']
+  let g:phpactorInitialCwd = '/'
   let g:phpactorProjectRepository = phpactor#project#projectRepository#create()
-  let g:phpactorBufferMatcher = phpactor#project#assigner#create(g:phpactorProjectRepository)
+  let g:phpactorBufferMatcher = phpactor#project#assigner#create(
+          \ g:phpactorProjectRepository,
+            \ g:phpactorProjectRootPatterns,
+            \ g:phpactorGlobalRootPatterns,
+            \ g:phpactorInitialCwd
+            \ )
 
 After:
   Restore
