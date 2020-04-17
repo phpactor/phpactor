@@ -89,6 +89,10 @@ endfunction
 
 function! phpactor#_completeImportClass(completedItem)
 
+    if get(b:, 'phpactorOmniAutoClassImport', g:phpactorOmniAutoClassImport) != v:true
+      return
+    endif
+
     if !has_key(a:completedItem, "word")
         return
     endif
