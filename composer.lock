@@ -1544,6 +1544,66 @@
             "time": "2019-07-17T15:49:50+00:00"
         },
         {
+            "name": "phly/phly-event-dispatcher",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-event-dispatcher.git",
+                "reference": "d52fe7164876395724519d04b67766cedc411fc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-event-dispatcher/zipball/d52fe7164876395724519d04b67766cedc411fc1",
+                "reference": "d52fe7164876395724519d04b67766cedc411fc1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "psr/container": "^1.0",
+                "psr/event-dispatcher": "^1.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.7.5"
+            },
+            "provide": {
+                "psr/event-dispatcher-implementation": "^1.0"
+            },
+            "require-dev": {
+                "fig/event-dispatcher-util": "^1.0",
+                "phpunit/phpunit": "^7.1.1",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
+                },
+                "zf": {
+                    "config-provider": "Phly\\EventDispatcher\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions/lazy_listener.php"
+                ],
+                "psr-4": {
+                    "Phly\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Experimental event dispatcher for PSR-14",
+            "keywords": [
+                "components",
+                "event-dispatcher",
+                "psr-14"
+            ],
+            "time": "2019-03-25T16:27:02+00:00"
+        },
+        {
             "name": "phpactor/amp-fswatch",
             "version": "dev-master",
             "source": {
@@ -2490,19 +2550,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "824a7094eeaf4af06b6df97a6b1899d65adeeab0"
+                "reference": "0e52ea64cc211bca85f5a6f88c4b6b64a1125663"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/824a7094eeaf4af06b6df97a6b1899d65adeeab0",
-                "reference": "824a7094eeaf4af06b6df97a6b1899d65adeeab0",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/0e52ea64cc211bca85f5a6f88c4b6b64a1125663",
+                "reference": "0e52ea64cc211bca85f5a6f88c4b6b64a1125663",
                 "shasum": ""
             },
             "require": {
                 "dantleech/invoke": "^1.0",
                 "php": "^7.3",
                 "phpactor/amp-fswatch": "^0.1.0@dev",
-                "phpactor/language-server-extension": "~0.3",
                 "phpactor/name-specification": "^0.1",
                 "phpactor/reference-finder": "^0.1.2",
                 "phpactor/reference-finder-extension": "^0.1.3",
@@ -2544,7 +2603,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-14T08:31:16+00:00"
+            "time": "2020-04-18T07:15:59+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2552,12 +2611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "35738182df6e92cd96135578df110aa77f72d92d"
+                "reference": "5d68a1b8abf1f83c325f06812a495f0900215d8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/35738182df6e92cd96135578df110aa77f72d92d",
-                "reference": "35738182df6e92cd96135578df110aa77f72d92d",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/5d68a1b8abf1f83c325f06812a495f0900215d8f",
+                "reference": "5d68a1b8abf1f83c325f06812a495f0900215d8f",
                 "shasum": ""
             },
             "require": {
@@ -2566,6 +2625,7 @@
                 "dantleech/invoke": "^1.0",
                 "felixfbecker/language-server-protocol": "^1.0",
                 "php": "^7.2",
+                "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.0",
                 "ramsey/uuid": "^4.0"
             },
@@ -2601,7 +2661,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-14T10:01:50+00:00"
+            "time": "2020-04-17T21:20:21+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2609,15 +2669,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "7915cc529aa56bfb65352b9a92125781a66529c8"
+                "reference": "04afcd30bd9a9e26a0c197098965fab7b6f334bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/7915cc529aa56bfb65352b9a92125781a66529c8",
-                "reference": "7915cc529aa56bfb65352b9a92125781a66529c8",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/04afcd30bd9a9e26a0c197098965fab7b6f334bb",
+                "reference": "04afcd30bd9a9e26a0c197098965fab7b6f334bb",
                 "shasum": ""
             },
             "require": {
+                "phly/phly-event-dispatcher": "^1.0",
                 "php": "^7.3",
                 "phpactor/code-transform": "^0.2.1",
                 "phpactor/completion": "~0.4.0",
@@ -2626,7 +2687,7 @@
                 "phpactor/console-extension": "~0.1",
                 "phpactor/container": "~1.3",
                 "phpactor/file-path-resolver-extension": "~0.2",
-                "phpactor/indexer-extension": "^0.1.4",
+                "phpactor/indexer-extension": "^0.1.5",
                 "phpactor/language-server": "~0.3",
                 "phpactor/logging-extension": "~0.3",
                 "phpactor/reference-finder-extension": "~0.1.4",
@@ -2664,7 +2725,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-15T20:52:59+00:00"
+            "time": "2020-04-18T07:20:26+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3444,6 +3505,52 @@
                 "psr"
             ],
             "time": "2019-10-04T14:07:35+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "cfea31e2e2abbe98159e825ce7d5040a39fba5f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/cfea31e2e2abbe98159e825ce7d5040a39fba5f0",
+                "reference": "cfea31e2e2abbe98159e825ce7d5040a39fba5f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "time": "2019-05-22T19:30:22+00:00"
         },
         {
             "name": "psr/log",
