@@ -21,7 +21,7 @@ function! s:containsFile(filename) dict
 endfunction
 
 function s:normalizeRootPath(path) abort
-  let l:path = simplify(fnamemodify(a:path, ':p'))
+  let l:path = phpactor#fileutils#normalizePath(a:path)
 
   " @todo better check if it is not an existing directory
   if ! isdirectory(l:path)

@@ -18,16 +18,16 @@ function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassig
   call g:phpactorBufferMatcher.repository.addProject(b:project)
 endfunction
 
-function! phpactor#project#assigner#create(projectRepository, projectRootMarkers, filesystemRootMarkers, initialCwd) abort
-  let l:filesystemRootMarkers = a:filesystemRootMarkers
-  if index(l:filesystemRootMarkers, '/') < 0
-    call add(l:filesystemRootMarkers, '/')
+function! phpactor#project#assigner#create(projectRepository, projectRootMarkers, forbiddenProjectRoots, initialCwd) abort
+  let l:forbiddenProjectRoots = a:forbiddenProjectRoots
+  if index(l:forbiddenProjectRoots, '/') < 0
+    call add(l:forbiddenProjectRoots, '/')
   endif
 
   return {
         \ 'initialCwd': a:initialCwd,
         \ 'projectRootMarkers': a:projectRootMarkers,
-        \ 'filesystemRootMarkers': l:filesystemRootMarkers,
+        \ 'forbiddenProjectRoots': l:forbiddenProjectRoots,
         \ 'repository': a:projectRepository,
         \ 'resolveProjectForFile': function('s:resolveProjectForFile')
         \ }
@@ -51,10 +51,10 @@ function s:resolveProjectForFile(file) dict abort
 
   " see phpactor#_path
   let l:initialDirectory = fnamemodify(a:file, ':p:h')
-  let l:rootDirByMarker = s:searchDirectoryUpwardForRootMarkers(
+  let l:rootDirByMarker = phpactor#fileutils#searchDirectoryUpwardByRootMarkers(
         \ l:initialDirectory,
         \ l:self.projectRootMarkers,
-        \ l:self.filesystemRootMarkers
+        \ l:self.forbiddenProjectRoots
         \ )
 
   let l:choices = [
@@ -100,28 +100,4 @@ function s:resolveProjectForFile(file) dict abort
 
     return l:project
   endif
-endfunction
-
-function! s:searchDirectoryUpwardForRootMarkers(initialDirectory, workspaceRootMarkers, filesystemRootMarkers)
-  let l:directory = a:initialDirectory
-
-  while index(a:filesystemRootMarkers, l:directory) < 0
-    if s:directoryMatchesToPatterns(l:directory, a:workspaceRootMarkers)
-      return l:directory
-    endif
-
-    let l:directory = fnamemodify(l:directory, ':h')
-  endwhile
-
-  return v:null
-endfunction
-
-function s:directoryMatchesToPatterns(directory, patterns) abort
-  for l:pattern in a:patterns
-    if (filereadable(a:directory .'/'. l:pattern))
-      return v:true
-    endif
-  endfor
-
-  return v:false
 endfunction

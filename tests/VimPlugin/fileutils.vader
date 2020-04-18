@@ -1,0 +1,40 @@
+Before:
+  Save g:fixtureDir
+  Save g:project1Dir
+  Save g:subdir
+  Save g:marker
+  Save g:markerFilePath
+  let g:fixtureDir = tempname()
+  let g:project1Dir = g:fixtureDir . '/project1'
+  let g:subdir = g:project1Dir . '/foo/bar'
+  let g:marker = 'composer.json'
+  let g:markerFilePath = g:project1Dir . '/' . g:marker
+
+  call mkdir(g:subdir, 'p')
+  execute "write " . g:markerFilePath
+
+Execute (Test search upward for the nearest directory containing given file as a g:marker):
+  AssertEqual g:project1Dir, phpactor#fileutils#searchUpwardBySingleMarker(g:project1Dir, g:marker)
+  AssertEqual g:project1Dir, phpactor#fileutils#searchUpwardBySingleMarker(g:markerFilePath, g:marker)
+  AssertEqual g:project1Dir, phpactor#fileutils#searchUpwardBySingleMarker(g:subdir, g:marker)
+  AssertEqual v:null, phpactor#fileutils#searchUpwardBySingleMarker(g:fixtureDir, g:marker)
+
+  execute "write " . g:project1Dir . '/foo/' .g:marker
+  AssertEqual g:project1Dir . '/foo', phpactor#fileutils#searchUpwardBySingleMarker(g:subdir, g:marker)
+
+Execute (Test phpactor#fileutils#isSubdir()):
+  Assert phpactor#fileutils#isSubdir('/usr/bin', '/usr')
+  Assert phpactor#fileutils#isSubdir('/usr/', '/usr')
+  Assert ! phpactor#fileutils#isSubdir('/', '/usr')
+
+Execute (Test searching upward given root markers and forbidden dirs):
+  let rootMarkers = ['bar', g:marker]
+  let forbiddenDirs = []
+
+  AssertEqual g:project1Dir, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(g:subdir, rootMarkers, forbiddenDirs)
+
+  let forbiddenDirs = [g:project1Dir.'/foo']
+  AssertEqual v:null, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(g:subdir, rootMarkers, forbiddenDirs)
+
+After:
+  Restore
