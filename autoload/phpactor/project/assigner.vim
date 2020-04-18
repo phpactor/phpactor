@@ -6,16 +6,16 @@ function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassig
   if exists('b:project') && (v:false is a:allowReassign)
     return
   endif
-  let l:project = g:phpactorBufferMatcher.resolveProjectForFile(a:filename)
+  let l:project = g:phpactorProjectAssigner.resolveProjectForFile(a:filename)
   if v:null is l:project
     return
   endif
   let b:project = l:project
-  if g:phpactorBufferMatcher.repository.hasProject(b:project)
+  if g:phpactorProjectAssigner.repository.hasProject(b:project)
     return
   endif
 
-  call g:phpactorBufferMatcher.repository.addProject(b:project)
+  call g:phpactorProjectAssigner.repository.addProject(b:project)
 endfunction
 
 function! phpactor#project#assigner#create(projectRepository, projectRootMarkers, forbiddenProjectRoots, initialCwd) abort
