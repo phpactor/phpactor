@@ -34,7 +34,7 @@ function! phpactor#project#assigner#create(projectRepository, projectRootMarkers
 endfunction
 
 function s:resolveProjectForFile(file) dict abort
-  let l:project = self.repository.findProjectContainingFile(a:file)
+  let l:project = l:self.repository.findProjectContainingFile(a:file)
 
   if type(l:project) == type({})
     return l:project
@@ -47,19 +47,19 @@ function s:resolveProjectForFile(file) dict abort
         \ 'There is no project enabled for "%s" yet.',
         \ 'Select the way of assign the project root',
         \ 'If cancelled, "%s" will be used.'
-        \], "\n"), a:file, self.initialCwd)
+        \], "\n"), a:file, l:self.initialCwd)
 
   " see phpactor#_path
   let l:initialDirectory = fnamemodify(a:file, ':p:h')
   let l:rootDirByMarker = s:searchDirectoryUpwardForRootMarkers(
         \ l:initialDirectory,
-        \ self.projectRootMarkers,
-        \ self.filesystemRootMarkers
+        \ l:self.projectRootMarkers,
+        \ l:self.filesystemRootMarkers
         \ )
 
   let l:choices = [
         \ {
-        \ 'action': { -> self.initialCwd },
+        \ 'action': { -> l:self.initialCwd },
         \ 'message': l:message
         \ },
         \ {
@@ -78,7 +78,6 @@ function s:resolveProjectForFile(file) dict abort
 
   let l:choice = 0
   while index(range(1, len(l:choices)-1), l:choice) < 0
-    let l:choice = 0
     try
       let l:choice = inputlist(map(copy(l:choices), { number, item -> (number ? printf('%d: ', number) : '') . item['message'] }))
     catch /^Vim:Interrupt$/

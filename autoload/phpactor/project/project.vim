@@ -1,17 +1,15 @@
 function! phpactor#project#project#createFromRootPath(primaryRootPath) abort
-  let l:project = {
+  return {
         \ 'primaryRootPath': s:normalizeRootPath(a:primaryRootPath),
         \ 'containsFile': function('s:containsFile')
         \ }
-
-  return l:project
 endfunction
 
 function! s:containsFile(filename) dict
   let l:path = simplify(fnamemodify(a:filename, ':p:h'))
 
   " @todo Is this working on Windows filesystem?
-  while resolve(l:path) !=# resolve(self.primaryRootPath)
+  while resolve(l:path) !=# resolve(l:self.primaryRootPath)
     let l:path = fnamemodify(l:path, ':h')
 
     if l:path ==# '/'
