@@ -1,9 +1,9 @@
-function! phpactor#project#assigner#assignProjectToBuffer(filename)
+function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassign)
   if !exists('g:phpactorLoaded')
     return
   endif
 
-  if exists('b:project')
+  if exists('b:project') && (v:false is a:allowReassign)
     return
   endif
   let l:project = g:phpactorBufferMatcher.resolveProjectForFile(a:filename)
