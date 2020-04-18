@@ -37,6 +37,7 @@ Execute (Test searching upward given root markers and forbidden dirs):
   AssertEqual v:null, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(g:subdir, rootMarkers, forbiddenDirs)
 
 Execute (Test phpactor#fileutils#normalizePath()):
+  AssertEqual '/usr', phpactor#fileutils#normalizePath('/usr')
   AssertEqual '/usr', phpactor#fileutils#normalizePath('/usr/')
   AssertEqual '/usr/bin', phpactor#fileutils#normalizePath('/usr//bin/')
   AssertEqual '/usr/bin/env', phpactor#fileutils#normalizePath('/usr//bin/env')
