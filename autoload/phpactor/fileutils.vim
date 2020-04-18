@@ -43,5 +43,5 @@ function! phpactor#fileutils#isSubdir(expectedSubdir, directory) abort
   let l:expectedSubdir = phpactor#fileutils#normalizePath(a:expectedSubdir)
   let l:directory = phpactor#fileutils#normalizePath(a:directory)
 
-  return stridx(l:expectedSubdir, l:directory) >= 0
+  return stridx(l:expectedSubdir, l:directory) == 0
 endfunction
