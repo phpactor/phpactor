@@ -5,7 +5,7 @@ Execute (Ensure that the repository is empty):
 
 Then (Find the project in an empty repository):
   let rootPath = fnamemodify(g:projectDirs['SillyWalksProject'], ':p')
-  let file = rootPath . '/foo.strangeext'
+  let file = rootPath . '/subdir/foo.strangeext'
 
   let project = g:phpactorProjectRepository.findProjectContainingFile(file)
 
@@ -13,12 +13,14 @@ Then (Find the project in an empty repository):
 
 Execute (Check if there is a project containing the file):
   let existingProject = phpactor#project#project#createFromRootPath(rootPath)
+  let subProject = phpactor#project#project#createFromRootPath(rootPath.'/subdir')
 
   call g:phpactorProjectRepository.addProject(existingProject)
+  call g:phpactorProjectRepository.addProject(subProject)
 
   let project = g:phpactorProjectRepository.findProjectContainingFile(file)
 
-  AssertEqual existingProject, project
+  AssertEqual subProject, project
 
   AssertEqual type({}), type(project)
 

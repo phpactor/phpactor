@@ -10,7 +10,7 @@ function! phpactor#project#repository#create() abort
 endfunction
 
 function! s:findProjectContainingFile(file) dict abort
-    for l:rootPath in keys(l:self.projects)
+  for l:rootPath in reverse(sort(keys(l:self.projects)))
       let l:project = l:self.projects[l:rootPath]
       if l:project.containsFile(a:file)
         return l:project
