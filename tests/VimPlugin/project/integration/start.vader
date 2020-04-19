@@ -1,0 +1,46 @@
+" This test requires interaction with the user 
+" 
+Before:
+  let g:fixtureDir = tempname()
+  let g:projectDirs = {
+    \'SillyWalksProject': g:fixtureDir.'/SillyWalksProject',
+    \'TwoShedsProject': g:fixtureDir.'/TwoShedsProject'
+    \ }
+
+  call mkdir(g:projectDirs['SillyWalksProject'].'/subdir', 'p')
+  call mkdir(g:projectDirs['TwoShedsProject'].'/subdir', 'p')
+
+  let g:phpactorGlobalRootPatterns = ['/']
+  let g:phpactorProjectRootPatterns = ['composer.json']
+
+Execute:
+  set shortmess-=F
+  for dir in values(g:projectDirs)
+    execute 'write '.dir.'/composer.json'
+  endfor
+    
+  " Change the current directory to somewhere outside any project
+  execute 'cd ' . g:fixtureDir
+
+  let stepOne = g:projectDirs['SillyWalksProject'] . '/subdir/stepOne.php'
+  let stepTwo = g:projectDirs['SillyWalksProject'] . '/subdir/stepTwo.php'
+  let stepThree = g:projectDirs['SillyWalksProject'] . '/subdir/stepThree.php'
+  let shedOne = g:projectDirs['TwoShedsProject'] . '/subdir/shedOne.php'
+  let shedTwo = g:projectDirs['TwoShedsProject'] . '/subdir/shedTwo.php'
+
+  " Try to create new project (let it name SillyWalksProject) 
+  " and assign it to stepOne
+  execute 'tabedit ' . stepOne
+  " Silently assign SillyWalksProject to stepTwo
+  execute 'tabedit ' . stepTwo
+  " Try to create new project (let it name TwoShedsProject) 
+  " and assign it to shedOne
+  execute 'tabedit ' . shedOne
+  " Silently assign SillyWalksProject to stepThree
+  execute 'tabedit ' . stepThree
+  " Try to create the next project
+  execute 'tabedit /usr/bin/x.php'
+  " Silently assign TwoShedsProject to shedTwo
+  execute 'tabedit ' . shedTwo
+
+  AssertEqual g:fixtureDir, g:phpactorInitialCwd
