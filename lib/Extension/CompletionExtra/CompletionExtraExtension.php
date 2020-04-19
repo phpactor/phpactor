@@ -40,7 +40,7 @@ class CompletionExtraExtension implements Extension
         $container->register('class_mover.handler.hover', function (Container $container) {
             return new HoverHandler(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_FORMATTER)
+                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => HoverHandler::NAME] ]);
     }
