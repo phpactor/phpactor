@@ -3,19 +3,19 @@ function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassig
     return
   endif
 
-  if exists('b:project') && (v:false is a:allowReassign)
+  if exists('b:phpactorProject') && (v:false is a:allowReassign)
     return
   endif
   let l:project = g:phpactorProjectAssigner.resolveProjectForFile(a:filename)
   if v:null is l:project
     return
   endif
-  let b:project = l:project
-  if g:phpactorProjectAssigner.repository.hasProject(b:project)
+  let b:phpactorProject = l:project
+  if g:phpactorProjectAssigner.repository.hasProject(b:phpactorProject)
     return
   endif
 
-  call g:phpactorProjectAssigner.repository.addProject(b:project)
+  call g:phpactorProjectAssigner.repository.addProject(b:phpactorProject)
 endfunction
 
 function! phpactor#project#assigner#create(projectRepository, projectRootMarkers, forbiddenProjectRoots, initialCwd) abort
