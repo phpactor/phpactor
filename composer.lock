@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368"
+                "reference": "8ee469be9018e20a0fc86165b077192ea69dd25b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/2053b42fdbf522c6bce1e786f08e554a92ae0368",
-                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/8ee469be9018e20a0fc86165b077192ea69dd25b",
+                "reference": "8ee469be9018e20a0fc86165b077192ea69dd25b",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,7 @@
                 "jetbrains/phpstorm-stubs": "^2019.3",
                 "phpunit/phpunit": "^6.0.9 | ^7",
                 "react/promise": "^2",
-                "vimeo/psalm": "^3.9@dev"
+                "vimeo/psalm": "^3.11@dev"
             },
             "type": "library",
             "extra": {
@@ -82,7 +82,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-04-05T20:37:09+00:00"
+            "time": "2020-04-19T13:38:36+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -1609,19 +1609,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/amp-fswatch.git",
-                "reference": "040b0c32ea261cdfb8e63def702827ef4754a98e"
+                "reference": "a32e93e3349808bfae5a56fe00d2c16e310b0ba3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/040b0c32ea261cdfb8e63def702827ef4754a98e",
-                "reference": "040b0c32ea261cdfb8e63def702827ef4754a98e",
+                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/a32e93e3349808bfae5a56fe00d2c16e310b0ba3",
+                "reference": "a32e93e3349808bfae5a56fe00d2c16e310b0ba3",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.4",
                 "amphp/process": "^1.1",
                 "php": "^7.2",
-                "psr/log": "^1.1"
+                "psr/log": "^1.1",
+                "webmozart/glob": "^4.1"
             },
             "require-dev": {
                 "amphp/phpunit-util": "^1.3",
@@ -1652,7 +1653,7 @@
                 }
             ],
             "description": "Async Filesystem Watcher for Amphp",
-            "time": "2020-04-14T08:15:24+00:00"
+            "time": "2020-04-19T13:40:31+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -1961,12 +1962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c"
+                "reference": "207475b1c75481c3efec1e03d7b7fbfeb293feb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
-                "reference": "5d4e31258f3148544a40d0d5a0177e0fa0032c1c",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/207475b1c75481c3efec1e03d7b7fbfeb293feb4",
+                "reference": "207475b1c75481c3efec1e03d7b7fbfeb293feb4",
                 "shasum": ""
             },
             "require": {
@@ -2012,7 +2013,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-13T19:50:50+00:00"
+            "time": "2020-04-19T12:05:07+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2020,12 +2021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287"
+                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/ab15452f488b57483725d5e1b5a49899ccb71287",
-                "reference": "ab15452f488b57483725d5e1b5a49899ccb71287",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/46972d35f2cf69805dceb13227e484f5047c99ab",
+                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab",
                 "shasum": ""
             },
             "require": {
@@ -2062,7 +2063,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2020-04-13T20:04:31+00:00"
+            "time": "2020-04-19T12:09:09+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -2120,15 +2121,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9"
+                "reference": "ecbf196b3bcd9769a21fdc945bbab2a19746c029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
-                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/ecbf196b3bcd9769a21fdc945bbab2a19746c029",
+                "reference": "ecbf196b3bcd9769a21fdc945bbab2a19746c029",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion-extension": "~0.2",
                 "phpactor/source-code-filesystem-extension": "~0.1",
                 "phpactor/worse-reflection-extension": "~0.2"
@@ -2161,7 +2163,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-19T12:16:18+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -2550,12 +2552,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "0e52ea64cc211bca85f5a6f88c4b6b64a1125663"
+                "reference": "512b89fa5ec83e2690f6623c2a0f543b67db31d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/0e52ea64cc211bca85f5a6f88c4b6b64a1125663",
-                "reference": "0e52ea64cc211bca85f5a6f88c4b6b64a1125663",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/512b89fa5ec83e2690f6623c2a0f543b67db31d5",
+                "reference": "512b89fa5ec83e2690f6623c2a0f543b67db31d5",
                 "shasum": ""
             },
             "require": {
@@ -2565,7 +2567,7 @@
                 "phpactor/name-specification": "^0.1",
                 "phpactor/reference-finder": "^0.1.2",
                 "phpactor/reference-finder-extension": "^0.1.3",
-                "phpactor/source-code-filesystem": "^0.1",
+                "phpactor/source-code-filesystem": "~0.1.5",
                 "phpactor/source-code-filesystem-extension": "^0.1.3",
                 "phpactor/text-document": "^1.1.3",
                 "phpactor/worse-reflection": "^0.4",
@@ -2603,7 +2605,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-18T07:15:59+00:00"
+            "time": "2020-04-19T14:14:26+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2611,12 +2613,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "5d68a1b8abf1f83c325f06812a495f0900215d8f"
+                "reference": "effc8ec0bcc70cbd9c33e101408e712b48eed99f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/5d68a1b8abf1f83c325f06812a495f0900215d8f",
-                "reference": "5d68a1b8abf1f83c325f06812a495f0900215d8f",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/effc8ec0bcc70cbd9c33e101408e712b48eed99f",
+                "reference": "effc8ec0bcc70cbd9c33e101408e712b48eed99f",
                 "shasum": ""
             },
             "require": {
@@ -2661,7 +2663,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-17T21:20:21+00:00"
+            "time": "2020-04-19T07:23:06+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2669,12 +2671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "04afcd30bd9a9e26a0c197098965fab7b6f334bb"
+                "reference": "490c78feb3f6d1df8a26e6786917b72995050a35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/04afcd30bd9a9e26a0c197098965fab7b6f334bb",
-                "reference": "04afcd30bd9a9e26a0c197098965fab7b6f334bb",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/490c78feb3f6d1df8a26e6786917b72995050a35",
+                "reference": "490c78feb3f6d1df8a26e6786917b72995050a35",
                 "shasum": ""
             },
             "require": {
@@ -2725,7 +2727,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-18T07:20:26+00:00"
+            "time": "2020-04-19T13:57:07+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3106,15 +3108,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e"
+                "reference": "86709b0ea861a512e3379dfe0d19d55a488de4f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/b1e11fdf14053becb37795f01bc5b9b48ea5871e",
-                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/86709b0ea861a512e3379dfe0d19d55a488de4f6",
+                "reference": "86709b0ea861a512e3379dfe0d19d55a488de4f6",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
+                "webmozart/glob": "^4.1",
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
@@ -3145,7 +3149,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2020-03-18T11:45:50+00:00"
+            "time": "2020-04-19T09:29:49+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
@@ -4703,16 +4707,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598"
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
                 "shasum": ""
             },
             "require": {
@@ -4720,7 +4724,7 @@
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "vimeo/psalm": "<3.6.0"
+                "vimeo/psalm": "<3.9.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.36 || ^7.5.13"
@@ -4747,7 +4751,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-02-14T12:15:55+00:00"
+            "time": "2020-04-18T12:12:48+00:00"
         },
         {
             "name": "webmozart/glob",
