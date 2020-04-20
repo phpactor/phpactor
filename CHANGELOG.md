@@ -15,6 +15,7 @@ Features:
 
 Improvements:
 
+  - [hover|completion] Show constant values in completion help / hover
   - [text-document] Include `<` and `>` when getting "class" name undercursor
     (allow implorting `Foobar` from an `@var array<Foobar>` doc
   - [completion] Option to deduplicate suggetions (#905) - @dantleech
