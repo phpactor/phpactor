@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "8ee469be9018e20a0fc86165b077192ea69dd25b"
+                "reference": "4faeca163b7034da56bc94a09cbae664b2dbc3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/8ee469be9018e20a0fc86165b077192ea69dd25b",
-                "reference": "8ee469be9018e20a0fc86165b077192ea69dd25b",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/4faeca163b7034da56bc94a09cbae664b2dbc3f7",
+                "reference": "4faeca163b7034da56bc94a09cbae664b2dbc3f7",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-04-19T13:38:36+00:00"
+            "time": "2020-04-20T17:01:50+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -1962,12 +1962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "207475b1c75481c3efec1e03d7b7fbfeb293feb4"
+                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/207475b1c75481c3efec1e03d7b7fbfeb293feb4",
-                "reference": "207475b1c75481c3efec1e03d7b7fbfeb293feb4",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/74e0cde0169efb2b0964fa0ec23c03825e29697a",
+                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a",
                 "shasum": ""
             },
             "require": {
@@ -2013,7 +2013,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-19T12:05:07+00:00"
+            "time": "2020-04-20T21:53:57+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2121,12 +2121,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "ecbf196b3bcd9769a21fdc945bbab2a19746c029"
+                "reference": "9858af437adddbd9c5e7040babd7d9b5580481f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/ecbf196b3bcd9769a21fdc945bbab2a19746c029",
-                "reference": "ecbf196b3bcd9769a21fdc945bbab2a19746c029",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/9858af437adddbd9c5e7040babd7d9b5580481f8",
+                "reference": "9858af437adddbd9c5e7040babd7d9b5580481f8",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2163,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2020-04-19T12:16:18+00:00"
+            "time": "2020-04-20T20:15:22+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -2613,12 +2613,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "effc8ec0bcc70cbd9c33e101408e712b48eed99f"
+                "reference": "796cf9292d3572ea10aa0f57b34fedf6aa099c72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/effc8ec0bcc70cbd9c33e101408e712b48eed99f",
-                "reference": "effc8ec0bcc70cbd9c33e101408e712b48eed99f",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/796cf9292d3572ea10aa0f57b34fedf6aa099c72",
+                "reference": "796cf9292d3572ea10aa0f57b34fedf6aa099c72",
                 "shasum": ""
             },
             "require": {
@@ -2663,7 +2663,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-19T07:23:06+00:00"
+            "time": "2020-04-20T20:47:07+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -3359,12 +3359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "15692d51e9b777bbee99ead11d0356425bc92d30"
+                "reference": "e2295cfb8669b28353e341f6cd1ba40e91574f09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/15692d51e9b777bbee99ead11d0356425bc92d30",
-                "reference": "15692d51e9b777bbee99ead11d0356425bc92d30",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e2295cfb8669b28353e341f6cd1ba40e91574f09",
+                "reference": "e2295cfb8669b28353e341f6cd1ba40e91574f09",
                 "shasum": ""
             },
             "require": {
@@ -3406,7 +3406,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-04-14T08:21:48+00:00"
+            "time": "2020-04-20T20:03:45+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
