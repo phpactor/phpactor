@@ -11,6 +11,8 @@
 "     https://github.com/google/vimdoc. See
 "     https://phpactor.github.io/phpactor/developing.html#vim-help
 
+let s:_phpactorCompletionMeta = {}
+
 function! phpactor#Update()
     let current = getcwd()
     execute 'cd ' . g:phpactorpath
@@ -53,7 +55,7 @@ function! phpactor#Complete(findstart, base)
     let issues = result['issues']
 
     let completions = []
-    let g:_phpactorCompletionMeta = {}
+    let s:_phpactorCompletionMeta = {}
 
     if !empty(suggestions)
         for suggestion in suggestions
@@ -66,7 +68,7 @@ function! phpactor#Complete(findstart, base)
                         \ 'icase': g:phpactorCompletionIgnoreCase
                         \ }
             call add(completions, completion)
-            let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
+            let s:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
         endfor
     endif
 
@@ -87,16 +89,20 @@ endfunction
 
 function! phpactor#_completeImportClass(completedItem)
 
+    if get(b:, 'phpactorOmniAutoClassImport', g:phpactorOmniAutoClassImport) != v:true
+      return
+    endif
+
     if !has_key(a:completedItem, "word")
         return
     endif
 
     let hash = phpactor#_completionItemHash(a:completedItem)
-    if !has_key(g:_phpactorCompletionMeta, hash)
+    if !has_key(s:_phpactorCompletionMeta, hash)
         return
     endif
 
-    let suggestion = g:_phpactorCompletionMeta[hash]
+    let suggestion = s:_phpactorCompletionMeta[hash]
 
     if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
@@ -106,7 +112,7 @@ function! phpactor#_completeImportClass(completedItem)
                     \ "path": expand('%:p')})
     endif
 
-    let g:_phpactorCompletionMeta = {}
+    let s:_phpactorCompletionMeta = {}
 
 endfunction
 

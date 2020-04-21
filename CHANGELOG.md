@@ -11,14 +11,18 @@ Features:
   - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
+  - [rpc] Add docblock prose to hover 
 
 Improvements:
 
   - [text-document] Include `<` and `>` when getting "class" name undercursor
     (allow implorting `Foobar` from an `@var array<Foobar>` doc
+  - [completion] Option to deduplicate suggetions (#905) - @dantleech
+  - [completion] Option to limit completion options - @dantleech
 
 Bug fixes:
 
+  - [vim-plugin] Configuration was not global (#964) - @elythyr
   - [class-mover] `$` was removed when renaming static variables (#925) -
     @dantleech
   - [class-to-file] Remove duplicate candidates (fixes issue with class

@@ -7,6 +7,7 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
@@ -106,6 +107,7 @@ class HoverHandler implements Handler
                 $member = $class->members()->get($name);
                 break;
             }
+
             return $this->formatter->format($member);
         } catch (NotFound $e) {
             return $e->getMessage();

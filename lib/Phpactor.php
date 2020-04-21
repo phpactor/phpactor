@@ -3,7 +3,9 @@
 namespace Phpactor;
 
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
+use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
@@ -109,6 +111,8 @@ class Phpactor
             LanguageServerExtension::class,
             LanguageServerCompletionExtension::class,
             LanguageServerReferenceFinderExtension::class,
+            LanguageServerWorseReflectionExtension::class,
+            LanguageServerIndexerExtension::class,
             IndexerExtension::class,
         ];
 

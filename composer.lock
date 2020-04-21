@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d131e38cc5b28588f433a59f4036edd",
+    "content-hash": "e5c2325c970da03b2697bfd2cc603f71",
     "packages": [
         {
             "name": "amphp/amp",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368"
+                "reference": "4faeca163b7034da56bc94a09cbae664b2dbc3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/2053b42fdbf522c6bce1e786f08e554a92ae0368",
-                "reference": "2053b42fdbf522c6bce1e786f08e554a92ae0368",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/4faeca163b7034da56bc94a09cbae664b2dbc3f7",
+                "reference": "4faeca163b7034da56bc94a09cbae664b2dbc3f7",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,7 @@
                 "jetbrains/phpstorm-stubs": "^2019.3",
                 "phpunit/phpunit": "^6.0.9 | ^7",
                 "react/promise": "^2",
-                "vimeo/psalm": "^3.9@dev"
+                "vimeo/psalm": "^3.11@dev"
             },
             "type": "library",
             "extra": {
@@ -82,7 +82,7 @@
                 "non-blocking",
                 "promise"
             ],
-            "time": "2020-04-05T20:37:09+00:00"
+            "time": "2020-04-20T17:01:50+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -558,6 +558,52 @@
             "time": "2018-10-24T03:34:54+00:00"
         },
         {
+            "name": "brick/math",
+            "version": "0.8.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brick/math.git",
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brick/math/zipball/9b08d412b9da9455b210459ff71414de7e6241cd",
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpunit/phpunit": "^7.5.15|^8.5",
+                "vimeo/psalm": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Brick\\Math\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Arbitrary-precision arithmetic library",
+            "keywords": [
+                "Arbitrary-precision",
+                "BigInteger",
+                "BigRational",
+                "arithmetic",
+                "bigdecimal",
+                "bignum",
+                "brick",
+                "math"
+            ],
+            "time": "2020-04-15T15:59:35+00:00"
+        },
+        {
             "name": "composer/ca-bundle",
             "version": "dev-master",
             "source": {
@@ -629,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "8e2e9caf6a5021a1afbbc0aae1e32937024f249d"
+                "reference": "19902ba6a9fdb1b46e3feca4cf333e91af469067"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/8e2e9caf6a5021a1afbbc0aae1e32937024f249d",
-                "reference": "8e2e9caf6a5021a1afbbc0aae1e32937024f249d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/19902ba6a9fdb1b46e3feca4cf333e91af469067",
+                "reference": "19902ba6a9fdb1b46e3feca4cf333e91af469067",
                 "shasum": ""
             },
             "require": {
@@ -701,7 +747,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2020-04-10T09:44:13+00:00"
+            "time": "2020-04-13T10:41:02+00:00"
         },
         {
             "name": "composer/semver",
@@ -1094,12 +1140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "429eac8eefa8ce5576c84af869cdc160fd8fdba0"
+                "reference": "84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/429eac8eefa8ce5576c84af869cdc160fd8fdba0",
-                "reference": "429eac8eefa8ce5576c84af869cdc160fd8fdba0",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65",
+                "reference": "84392cc7b7a66c6eb6d21f7d7cda540ad1e7da65",
                 "shasum": ""
             },
             "require-dev": {
@@ -1130,7 +1176,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2020-03-04T13:02:15+00:00"
+            "time": "2020-04-09T12:26:55+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1498,24 +1544,85 @@
             "time": "2019-07-17T15:49:50+00:00"
         },
         {
+            "name": "phly/phly-event-dispatcher",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phly/phly-event-dispatcher.git",
+                "reference": "d52fe7164876395724519d04b67766cedc411fc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phly/phly-event-dispatcher/zipball/d52fe7164876395724519d04b67766cedc411fc1",
+                "reference": "d52fe7164876395724519d04b67766cedc411fc1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "psr/container": "^1.0",
+                "psr/event-dispatcher": "^1.0"
+            },
+            "conflict": {
+                "phpspec/prophecy": "<1.7.5"
+            },
+            "provide": {
+                "psr/event-dispatcher-implementation": "^1.0"
+            },
+            "require-dev": {
+                "fig/event-dispatcher-util": "^1.0",
+                "phpunit/phpunit": "^7.1.1",
+                "zendframework/zend-coding-standard": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
+                },
+                "zf": {
+                    "config-provider": "Phly\\EventDispatcher\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions/lazy_listener.php"
+                ],
+                "psr-4": {
+                    "Phly\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Experimental event dispatcher for PSR-14",
+            "keywords": [
+                "components",
+                "event-dispatcher",
+                "psr-14"
+            ],
+            "time": "2019-03-25T16:27:02+00:00"
+        },
+        {
             "name": "phpactor/amp-fswatch",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/amp-fswatch.git",
-                "reference": "5c9cb7f1c3539df4ddf1df21482dabc54eae0a24"
+                "reference": "a32e93e3349808bfae5a56fe00d2c16e310b0ba3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/5c9cb7f1c3539df4ddf1df21482dabc54eae0a24",
-                "reference": "5c9cb7f1c3539df4ddf1df21482dabc54eae0a24",
+                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/a32e93e3349808bfae5a56fe00d2c16e310b0ba3",
+                "reference": "a32e93e3349808bfae5a56fe00d2c16e310b0ba3",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.4",
                 "amphp/process": "^1.1",
                 "php": "^7.2",
-                "psr/log": "^1.1"
+                "psr/log": "^1.1",
+                "webmozart/glob": "^4.1"
             },
             "require-dev": {
                 "amphp/phpunit-util": "^1.3",
@@ -1546,7 +1653,7 @@
                 }
             ],
             "description": "Async Filesystem Watcher for Amphp",
-            "time": "2020-03-29T17:18:21+00:00"
+            "time": "2020-04-19T13:40:31+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -1855,12 +1962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "ef12aad9032b85c636304aeff244ecebdd0fe95a"
+                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/ef12aad9032b85c636304aeff244ecebdd0fe95a",
-                "reference": "ef12aad9032b85c636304aeff244ecebdd0fe95a",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/74e0cde0169efb2b0964fa0ec23c03825e29697a",
+                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a",
                 "shasum": ""
             },
             "require": {
@@ -1871,7 +1978,7 @@
                 "phpactor/rpc-extension": "~0.1",
                 "phpactor/source-code-filesystem": "~0.1",
                 "phpactor/text-document": "^1.0",
-                "phpactor/worse-reflection": "~0.4"
+                "phpactor/worse-reflection": "~0.4.1"
             },
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
@@ -1906,7 +2013,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-05T15:03:29+00:00"
+            "time": "2020-04-20T21:53:57+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -1914,22 +2021,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c"
+                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
-                "reference": "eed9d9b1bb069df7bbc65f010f6b319fe2ad236c",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/46972d35f2cf69805dceb13227e484f5047c99ab",
+                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab",
                 "shasum": ""
             },
             "require": {
-                "phpactor/completion": "~0.2",
+                "php": "^7.3",
+                "phpactor/completion": "~0.4.1",
                 "phpactor/container": "^1.0",
                 "phpactor/logging-extension": "~0.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
+                "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "~7.0"
             },
             "type": "phpactor-extension",
@@ -1955,7 +2063,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-19T12:09:09+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
@@ -1963,23 +2071,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-rpc-extension.git",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b"
+                "reference": "d758402c283fb7e5d6c9ccc5fc199015f771b491"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/136d401141964e7faecbd66c31efddab85e9b45b",
-                "reference": "136d401141964e7faecbd66c31efddab85e9b45b",
+                "url": "https://api.github.com/repos/phpactor/completion-rpc-extension/zipball/d758402c283fb7e5d6c9ccc5fc199015f771b491",
+                "reference": "d758402c283fb7e5d6c9ccc5fc199015f771b491",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion-extension": "~0.2",
                 "phpactor/rpc-extension": "~0.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
+                "friendsofphp/php-cs-fixer": "^2.14",
                 "phpactor/test-utils": "^1.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpstan/phpstan": "~0.12.0",
+                "phpunit/phpunit": "^7.4"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -2004,7 +2113,7 @@
                 }
             ],
             "description": "RPC support for the Completion Extension",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-13T20:27:38+00:00"
         },
         {
             "name": "phpactor/completion-worse-extension",
@@ -2012,15 +2121,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9"
+                "reference": "9858af437adddbd9c5e7040babd7d9b5580481f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
-                "reference": "3a5ac832be637c3cf3c06e935aae2d6df87cfce9",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/9858af437adddbd9c5e7040babd7d9b5580481f8",
+                "reference": "9858af437adddbd9c5e7040babd7d9b5580481f8",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/completion-extension": "~0.2",
                 "phpactor/source-code-filesystem-extension": "~0.1",
                 "phpactor/worse-reflection-extension": "~0.2"
@@ -2053,7 +2163,7 @@
                 }
             ],
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
-            "time": "2019-12-04T19:51:46+00:00"
+            "time": "2020-04-20T20:15:22+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -2437,28 +2547,27 @@
             "time": "2020-03-15T13:48:47+00:00"
         },
         {
-            "name": "phpactor/indexer",
+            "name": "phpactor/indexer-extension",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpactor/indexer.git",
-                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83"
+                "url": "https://github.com/phpactor/indexer-extension.git",
+                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer/zipball/6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
-                "reference": "6cf028e4a9b93d49c55d0c19fc6ccc787d4cab83",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/965bd91e322c03522403d7f00cf26d0fc9666626",
+                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626",
                 "shasum": ""
             },
             "require": {
                 "dantleech/invoke": "^1.0",
                 "php": "^7.3",
                 "phpactor/amp-fswatch": "^0.1.0@dev",
-                "phpactor/language-server-extension": "~0.3",
                 "phpactor/name-specification": "^0.1",
                 "phpactor/reference-finder": "^0.1.2",
                 "phpactor/reference-finder-extension": "^0.1.3",
-                "phpactor/source-code-filesystem": "^0.1",
+                "phpactor/source-code-filesystem": "~0.1.5",
                 "phpactor/source-code-filesystem-extension": "^0.1.3",
                 "phpactor/text-document": "^1.1.3",
                 "phpactor/worse-reflection": "^0.4",
@@ -2496,7 +2605,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-09T09:54:18+00:00"
+            "time": "2020-04-19T14:43:30+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2504,22 +2613,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf"
+                "reference": "796cf9292d3572ea10aa0f57b34fedf6aa099c72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/1f89e2ddca8c8500515f70ec607488a913650ddf",
-                "reference": "1f89e2ddca8c8500515f70ec607488a913650ddf",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/796cf9292d3572ea10aa0f57b34fedf6aa099c72",
+                "reference": "796cf9292d3572ea10aa0f57b34fedf6aa099c72",
                 "shasum": ""
             },
             "require": {
                 "amphp/socket": "^1.1",
                 "dantleech/argument-resolver": "^1.1",
+                "dantleech/invoke": "^1.0",
                 "felixfbecker/language-server-protocol": "^1.0",
                 "php": "^7.2",
-                "psr/log": "^1.0"
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^1.0",
+                "ramsey/uuid": "^4.0"
             },
             "require-dev": {
+                "amphp/phpunit-util": "^1.3",
                 "friendsofphp/php-cs-fixer": "^2.15.0",
                 "phpactor/test-utils": "^1.1",
                 "phpspec/prophecy-phpunit": "^2.0",
@@ -2550,60 +2663,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-10T12:31:37+00:00"
-        },
-        {
-            "name": "phpactor/language-server-completion-extension",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/language-server-completion-extension.git",
-                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-completion-extension/zipball/a2ada91e5b23814ff8437b8930287350d04197f4",
-                "reference": "a2ada91e5b23814ff8437b8930287350d04197f4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3",
-                "phpactor/completion-extension": "~0.1",
-                "phpactor/container": "^1.0",
-                "phpactor/language-server-extension": "~0.3",
-                "phpactor/worse-reflection-extension": "~0.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phpactor/completion-worse-extension": "^0.2.0",
-                "phpactor/test-utils": "^1.1",
-                "phpstan/phpstan": "^0.10.7",
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "phpactor-extension",
-            "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerCompletion\\LanguageServerCompletionExtension",
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Extension\\LanguageServerCompletion\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Phpactor Language Server Handlers",
-            "time": "2020-04-10T09:54:53+00:00"
+            "time": "2020-04-20T20:47:07+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2611,28 +2671,36 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "fbdba678ada06633a39194fd41d452f2c172737c"
+                "reference": "d1b9f84d2f2e5105aaaaf13b8263389eca41130d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/fbdba678ada06633a39194fd41d452f2c172737c",
-                "reference": "fbdba678ada06633a39194fd41d452f2c172737c",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/d1b9f84d2f2e5105aaaaf13b8263389eca41130d",
+                "reference": "d1b9f84d2f2e5105aaaaf13b8263389eca41130d",
                 "shasum": ""
             },
             "require": {
+                "phly/phly-event-dispatcher": "^1.0",
                 "php": "^7.3",
+                "phpactor/code-transform": "^0.2.1",
+                "phpactor/completion": "~0.4.0",
+                "phpactor/completion-extension": "~0.2.2",
+                "phpactor/completion-worse-extension": "^0.2.0",
                 "phpactor/console-extension": "~0.1",
                 "phpactor/container": "~1.3",
                 "phpactor/file-path-resolver-extension": "~0.2",
+                "phpactor/indexer-extension": "^0.1.5",
                 "phpactor/language-server": "~0.3",
                 "phpactor/logging-extension": "~0.3",
-                "phpactor/text-document": "^1.1"
+                "phpactor/reference-finder-extension": "~0.1.4",
+                "phpactor/text-document": "^1.1",
+                "phpactor/worse-reflection-extension": "~0.2.3"
             },
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "phpactor/test-utils": "^1.1",
-                "phpspec/prophecy-phpunit": "dev-master",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
@@ -2645,7 +2713,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Phpactor\\Extension\\LanguageServer\\": "lib/"
+                    "Phpactor\\Extension\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2659,69 +2727,20 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-10T10:13:32+00:00"
-        },
-        {
-            "name": "phpactor/language-server-reference-finder-extension",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/language-server-reference-finder-extension.git",
-                "reference": "a895a7a0a173b53a395b82f379ce840563e337f9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-reference-finder-extension/zipball/a895a7a0a173b53a395b82f379ce840563e337f9",
-                "reference": "a895a7a0a173b53a395b82f379ce840563e337f9",
-                "shasum": ""
-            },
-            "require": {
-                "phpactor/container": "^1.0",
-                "phpactor/language-server-extension": "~0.3",
-                "phpactor/reference-finder-extension": "~0.1"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phpstan/phpstan": "^0.10.7",
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "phpactor-extension",
-            "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\LanguageServerReferenceFinder\\LanguageServerReferenceFinderExtension",
-                "branch-alias": {
-                    "dev-master": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Extension\\LanguageServerReferenceFinder\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Language Server support for Goto Definition etc",
-            "time": "2020-04-10T10:20:36+00:00"
+            "time": "2020-04-19T14:47:59+00:00"
         },
         {
             "name": "phpactor/logging-extension",
-            "version": "0.3.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/logging-extension.git",
-                "reference": "306149d2ab1582ff389a71fce45d270f5f7c9ac1"
+                "reference": "371e3ce37611d6587a5b4ff9adcd7a17a08799cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/306149d2ab1582ff389a71fce45d270f5f7c9ac1",
-                "reference": "306149d2ab1582ff389a71fce45d270f5f7c9ac1",
+                "url": "https://api.github.com/repos/phpactor/logging-extension/zipball/371e3ce37611d6587a5b4ff9adcd7a17a08799cf",
+                "reference": "371e3ce37611d6587a5b4ff9adcd7a17a08799cf",
                 "shasum": ""
             },
             "require": {
@@ -2735,7 +2754,10 @@
             },
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\Logger\\LoggingExtension"
+                "phpactor.extension_class": "Phpactor\\Extension\\Logger\\LoggingExtension",
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -2753,7 +2775,7 @@
                 }
             ],
             "description": "PSR logging extension",
-            "time": "2019-08-24T11:33:25+00:00"
+            "time": "2020-04-14T16:57:48+00:00"
         },
         {
             "name": "phpactor/map-resolver",
@@ -3086,15 +3108,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e"
+                "reference": "86709b0ea861a512e3379dfe0d19d55a488de4f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/b1e11fdf14053becb37795f01bc5b9b48ea5871e",
-                "reference": "b1e11fdf14053becb37795f01bc5b9b48ea5871e",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/86709b0ea861a512e3379dfe0d19d55a488de4f6",
+                "reference": "86709b0ea861a512e3379dfe0d19d55a488de4f6",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
+                "webmozart/glob": "^4.1",
                 "webmozart/path-util": "^2.3"
             },
             "require-dev": {
@@ -3125,7 +3149,7 @@
                 }
             ],
             "description": "Filesystem library for working with source code files",
-            "time": "2020-03-18T11:45:50+00:00"
+            "time": "2020-04-19T09:29:49+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
@@ -3335,12 +3359,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c"
+                "reference": "e2295cfb8669b28353e341f6cd1ba40e91574f09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/099e9a4923dbc23c6823c7839a953144e76bf41c",
-                "reference": "099e9a4923dbc23c6823c7839a953144e76bf41c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e2295cfb8669b28353e341f6cd1ba40e91574f09",
+                "reference": "e2295cfb8669b28353e341f6cd1ba40e91574f09",
                 "shasum": ""
             },
             "require": {
@@ -3382,7 +3406,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-04-10T15:23:29+00:00"
+            "time": "2020-04-20T20:03:45+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -3390,12 +3414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "eacaa7b0acc57904256012705b52b1a92779829d"
+                "reference": "14168d855ee12bcc9b193a70941fb9c8a2c4339c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/eacaa7b0acc57904256012705b52b1a92779829d",
-                "reference": "eacaa7b0acc57904256012705b52b1a92779829d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/14168d855ee12bcc9b193a70941fb9c8a2c4339c",
+                "reference": "14168d855ee12bcc9b193a70941fb9c8a2c4339c",
                 "shasum": ""
             },
             "require": {
@@ -3435,7 +3459,7 @@
                 }
             ],
             "description": "Worse Reflection",
-            "time": "2020-03-29T20:49:11+00:00"
+            "time": "2020-04-12T06:54:00+00:00"
         },
         {
             "name": "psr/container",
@@ -3487,6 +3511,52 @@
             "time": "2019-10-04T14:07:35+00:00"
         },
         {
+            "name": "psr/event-dispatcher",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "cfea31e2e2abbe98159e825ce7d5040a39fba5f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/cfea31e2e2abbe98159e825ce7d5040a39fba5f0",
+                "reference": "cfea31e2e2abbe98159e825ce7d5040a39fba5f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "time": "2019-05-22T19:30:22+00:00"
+        },
+        {
             "name": "psr/log",
             "version": "dev-master",
             "source": {
@@ -3532,6 +3602,154 @@
                 "psr-3"
             ],
             "time": "2020-03-23T09:12:05+00:00"
+        },
+        {
+            "name": "ramsey/collection",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/collection.git",
+                "reference": "925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca",
+                "reference": "925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+                "fzaninotto/faker": "^1.5",
+                "jakub-onderka/php-parallel-lint": "^1",
+                "jangregor/phpstan-prophecy": "^0.6",
+                "mockery/mockery": "^1.3",
+                "phpstan/extension-installer": "^1",
+                "phpstan/phpdoc-parser": "0.4.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-mockery": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5",
+                "slevomat/coding-standard": "^6.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Collection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                }
+            ],
+            "description": "A PHP 7.2+ library for representing and manipulating collections.",
+            "homepage": "https://github.com/ramsey/collection",
+            "keywords": [
+                "array",
+                "collection",
+                "hash",
+                "map",
+                "queue",
+                "set"
+            ],
+            "time": "2020-01-05T00:22:59+00:00"
+        },
+        {
+            "name": "ramsey/uuid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "b3c39208757f739e3e53c391e21dc7fc6afa1cf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/b3c39208757f739e3e53c391e21dc7fc6afa1cf5",
+                "reference": "b3c39208757f739e3e53c391e21dc7fc6afa1cf5",
+                "shasum": ""
+            },
+            "require": {
+                "brick/math": "^0.8",
+                "ext-json": "*",
+                "php": "^7.2 || ^8",
+                "ramsey/collection": "^1.0",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "replace": {
+                "rhumsaa/uuid": "self.version"
+            },
+            "require-dev": {
+                "codeception/aspect-mock": "^3",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "doctrine/annotations": "^1.8",
+                "goaop/framework": "^2",
+                "mockery/mockery": "^1.3",
+                "moontoast/math": "^1.1",
+                "paragonie/random-lib": "^2",
+                "php-mock/php-mock-mockery": "^1.3",
+                "php-mock/php-mock-phpunit": "^2.5",
+                "php-parallel-lint/php-parallel-lint": "^1.1",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpdoc-parser": "0.4.3",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-mockery": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5",
+                "psy/psysh": "^0.10.0",
+                "slevomat/coding-standard": "^6.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "3.9.4"
+            },
+            "suggest": {
+                "ext-bcmath": "Enables faster math with arbitrary-precision integers using BCMath.",
+                "ext-ctype": "Enables faster processing of character classification using ctype functions.",
+                "ext-gmp": "Enables faster math with arbitrary-precision integers using GMP.",
+                "ext-uuid": "Enables the use of PeclUuidTimeGenerator and PeclUuidRandomGenerator.",
+                "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
+                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Uuid\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
+            "homepage": "https://github.com/ramsey/uuid",
+            "keywords": [
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/ramsey",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-03-31T21:52:23+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -3778,12 +3996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "682216b4f4f35b39eebb8460b6d91cae0a302705"
+                "reference": "b3ee7d5b1c50a1e85455664805012ce56f35267a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/682216b4f4f35b39eebb8460b6d91cae0a302705",
-                "reference": "682216b4f4f35b39eebb8460b6d91cae0a302705",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/b3ee7d5b1c50a1e85455664805012ce56f35267a",
+                "reference": "b3ee7d5b1c50a1e85455664805012ce56f35267a",
                 "shasum": ""
             },
             "require": {
@@ -3820,21 +4038,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-03-30T11:43:41+00:00"
+            "time": "2020-04-12T14:42:09+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4094,12 +4298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "3e40e87a20eaf83a1db825e1fa5097ae89042db3"
+                "reference": "4b6a9a4013baa65d409153cbb5a895bf093dc7f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/3e40e87a20eaf83a1db825e1fa5097ae89042db3",
-                "reference": "3e40e87a20eaf83a1db825e1fa5097ae89042db3",
+                "url": "https://api.github.com/repos/symfony/process/zipball/4b6a9a4013baa65d409153cbb5a895bf093dc7f4",
+                "reference": "4b6a9a4013baa65d409153cbb5a895bf093dc7f4",
                 "shasum": ""
             },
             "require": {
@@ -4135,21 +4339,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-03-27T16:54:36+00:00"
+            "time": "2020-04-15T15:56:18+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -4517,16 +4707,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598"
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
                 "shasum": ""
             },
             "require": {
@@ -4534,7 +4724,7 @@
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "vimeo/psalm": "<3.6.0"
+                "vimeo/psalm": "<3.9.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.36 || ^7.5.13"
@@ -4561,7 +4751,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-02-14T12:15:55+00:00"
+            "time": "2020-04-18T12:12:48+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -4967,12 +5157,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df"
+                "reference": "32790493e7c7cd505c73074b340b891a03719366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/2d57d93c7a773cf9d02a642bdb1a08082839d8df",
-                "reference": "2d57d93c7a773cf9d02a642bdb1a08082839d8df",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/32790493e7c7cd505c73074b340b891a03719366",
+                "reference": "32790493e7c7cd505c73074b340b891a03719366",
                 "shasum": ""
             },
             "require": {
@@ -5050,7 +5240,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2020-04-10T10:59:02+00:00"
+            "time": "2020-04-15T18:52:10+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -5665,12 +5855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "b0843c8cbcc2dc5eda5158e583c7199a5e44c86d"
+                "reference": "74a67151cce1fe4aa5960636ae510ddf1faefdb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/b0843c8cbcc2dc5eda5158e583c7199a5e44c86d",
-                "reference": "b0843c8cbcc2dc5eda5158e583c7199a5e44c86d",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/74a67151cce1fe4aa5960636ae510ddf1faefdb3",
+                "reference": "74a67151cce1fe4aa5960636ae510ddf1faefdb3",
                 "shasum": ""
             },
             "require": {
@@ -5709,7 +5899,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2019-12-20T12:45:35+00:00"
+            "time": "2020-04-10T20:41:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
