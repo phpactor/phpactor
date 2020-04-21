@@ -2552,12 +2552,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626"
+                "reference": "bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/965bd91e322c03522403d7f00cf26d0fc9666626",
-                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a",
+                "reference": "bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a",
                 "shasum": ""
             },
             "require": {
@@ -2605,7 +2605,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-19T14:43:30+00:00"
+            "time": "2020-04-21T21:15:02+00:00"
         },
         {
             "name": "phpactor/language-server",
