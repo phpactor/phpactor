@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "19902ba6a9fdb1b46e3feca4cf333e91af469067"
+                "reference": "e25bea03437e6371f791c3b492b6e6b8e22a0c29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/19902ba6a9fdb1b46e3feca4cf333e91af469067",
-                "reference": "19902ba6a9fdb1b46e3feca4cf333e91af469067",
+                "url": "https://api.github.com/repos/composer/composer/zipball/e25bea03437e6371f791c3b492b6e6b8e22a0c29",
+                "reference": "e25bea03437e6371f791c3b492b6e6b8e22a0c29",
                 "shasum": ""
             },
             "require": {
@@ -747,7 +747,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2020-04-13T10:41:02+00:00"
+            "time": "2020-04-21T13:40:39+00:00"
         },
         {
             "name": "composer/semver",
@@ -1962,12 +1962,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a"
+                "reference": "14e284c5f44b45bda1ff850e2286353880726746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/74e0cde0169efb2b0964fa0ec23c03825e29697a",
-                "reference": "74e0cde0169efb2b0964fa0ec23c03825e29697a",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/14e284c5f44b45bda1ff850e2286353880726746",
+                "reference": "14e284c5f44b45bda1ff850e2286353880726746",
                 "shasum": ""
             },
             "require": {
@@ -2013,7 +2013,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-20T21:53:57+00:00"
+            "time": "2020-04-21T20:44:17+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2552,12 +2552,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626"
+                "reference": "bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/965bd91e322c03522403d7f00cf26d0fc9666626",
-                "reference": "965bd91e322c03522403d7f00cf26d0fc9666626",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a",
+                "reference": "bf6d0b7d2d4f7ea1788b088f1bb4825897f7f93a",
                 "shasum": ""
             },
             "require": {
@@ -2605,7 +2605,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-19T14:43:30+00:00"
+            "time": "2020-04-21T21:15:02+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2671,12 +2671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "d1b9f84d2f2e5105aaaaf13b8263389eca41130d"
+                "reference": "e43fcd8b7ee0f0e90fca29f0c7b6a03037d13b3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/d1b9f84d2f2e5105aaaaf13b8263389eca41130d",
-                "reference": "d1b9f84d2f2e5105aaaaf13b8263389eca41130d",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/e43fcd8b7ee0f0e90fca29f0c7b6a03037d13b3e",
+                "reference": "e43fcd8b7ee0f0e90fca29f0c7b6a03037d13b3e",
                 "shasum": ""
             },
             "require": {
@@ -2727,7 +2727,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-19T14:47:59+00:00"
+            "time": "2020-04-21T20:53:16+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -2909,12 +2909,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder.git",
-                "reference": "9eabe467f2c1b0c5fb00a576532508d3815b0d26"
+                "reference": "b705aade068015edd3a81145a84428386348acd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/9eabe467f2c1b0c5fb00a576532508d3815b0d26",
-                "reference": "9eabe467f2c1b0c5fb00a576532508d3815b0d26",
+                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/b705aade068015edd3a81145a84428386348acd7",
+                "reference": "b705aade068015edd3a81145a84428386348acd7",
                 "shasum": ""
             },
             "require": {
@@ -2950,7 +2950,7 @@
                 }
             ],
             "description": "Base library for finding definitions",
-            "time": "2020-03-08T14:24:26+00:00"
+            "time": "2020-04-21T20:34:52+00:00"
         },
         {
             "name": "phpactor/reference-finder-extension",
@@ -2958,12 +2958,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder-extension.git",
-                "reference": "a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc"
+                "reference": "e8bc4260f6f4534e7ea260ce127dc49546b708ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder-extension/zipball/a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc",
-                "reference": "a35fe0f32b9634eb76d8838bcaa57f5c543a3ebc",
+                "url": "https://api.github.com/repos/phpactor/reference-finder-extension/zipball/e8bc4260f6f4534e7ea260ce127dc49546b708ba",
+                "reference": "e8bc4260f6f4534e7ea260ce127dc49546b708ba",
                 "shasum": ""
             },
             "require": {
@@ -2999,7 +2999,7 @@
                 }
             ],
             "description": "Goto definition functionality",
-            "time": "2020-04-01T10:33:17+00:00"
+            "time": "2020-04-21T20:35:56+00:00"
         },
         {
             "name": "phpactor/reference-finder-rpc-extension",

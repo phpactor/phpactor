@@ -19,6 +19,8 @@ Improvements:
     (allow implorting `Foobar` from an `@var array<Foobar>` doc
   - [completion] Option to deduplicate suggetions (#905) - @dantleech
   - [completion] Option to limit completion options - @dantleech
+  - [completion] Allow completors to return `true` when they finish (allow
+    final consumer to know if list is complete) - @elythyr
 
 Bug fixes:
 
