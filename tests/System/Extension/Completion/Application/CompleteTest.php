@@ -260,12 +260,12 @@ EOT
                     [
                         'type' => 'constant',
                         'name' => 'BARFOO',
-                        'short_description' => 'const BARFOO',
+                        'short_description' => 'BARFOO = "barfoo"',
                     ],
                     [
                         'type' => 'constant',
                         'name' => 'FOOBAR',
-                        'short_description' => 'const FOOBAR',
+                        'short_description' => 'FOOBAR = "foobar"',
                     ],
                 ],
             ],
