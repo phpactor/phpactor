@@ -12,6 +12,8 @@ Features:
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
   - [rpc] Add docblock prose to hover 
+  - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
+    terminal window (#974) - @elythyr
 
 Improvements:
 
