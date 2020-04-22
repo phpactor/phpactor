@@ -117,7 +117,6 @@ function s:resolveProjectForFile(file, allowInteractive) dict abort
   endwhile
 
   let l:selectedDir = l:choices[l:choice]['action']()
-  redraw
 
   if v:null != l:selectedDir
     let l:project = phpactor#project#project#createFromRootPath(l:selectedDir)
