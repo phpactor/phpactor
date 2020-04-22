@@ -40,15 +40,6 @@ function s:resolveProjectForFile(file) dict abort
     return l:project
   endif
 
-  " early version to refactor or change
-  " heredoc are available since vim 8.1.1354
-  let l:message = printf(join([
-        \ 'Phpactor [RPC]',
-        \ 'There is no project enabled for "%s" yet.',
-        \ 'Select the way of assign the project root',
-        \ 'If cancelled, "%s" will be used.'
-        \], "\n"), a:file, l:self.initialCwd)
-
   " see phpactor#_path
   let l:initialDirectory = fnamemodify(a:file, ':p:h')
   let l:rootDirByMarker = phpactor#fileutils#searchDirectoryUpwardByRootMarkers(
@@ -60,7 +51,7 @@ function s:resolveProjectForFile(file) dict abort
   let l:choices = [
         \ {
         \ 'action': { -> l:self.initialCwd },
-        \ 'message': l:message
+        \ 'message': s:printHeader(a:file, l:self.initialCwd)
         \ },
         \ {
         \ 'action': function('input', ['Enter file path: ', l:initialDirectory, 'file']),
@@ -102,4 +93,14 @@ function s:resolveProjectForFile(file) dict abort
 
     return l:project
   endif
+endfunction
+
+function s:printHeader(filePath, initialCwd) abort
+  " heredoc are available since vim 8.1.1354
+  return printf(join([
+        \ 'Phpactor [RPC]',
+        \ 'There is no project enabled for "%s" yet.',
+        \ 'Select the way of assign the project root',
+        \ 'If cancelled, "%s" will be used.'
+        \], "\n"), a:filePath, a:initialCwd)
 endfunction
