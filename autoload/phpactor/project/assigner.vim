@@ -1,5 +1,5 @@
 function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassign)
-  if !exists('g:phpactorLoaded')
+  if !exists('g:loaded_phpactor')
     return
   endif
 
