@@ -79,7 +79,9 @@ function s:resolveProjectForFile(file) dict abort
   let l:choice = 0
   while index(range(1, len(l:choices)-1), l:choice) < 0
     try
-      let l:choice = inputlist(map(copy(l:choices), { number, item -> (number ? printf('%d: ', number) : '') . item['message'] }))
+      let l:choice = inputlist(map(copy(l:choices), {
+            \ number, item -> (number ? printf('%d. ', number) : '') . item['message']
+            \ }))
     catch /^Vim:Interrupt$/
       break
     endtry
