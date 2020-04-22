@@ -48,20 +48,29 @@ function s:resolveProjectForFile(file) dict abort
         \ l:self.forbiddenProjectRoots
         \ )
 
+  let l:resolvers = {
+        \ 'initialCwd': { -> l:self.initialCwd },
+        \ 'manual': function('input', ['Enter file path: ', l:initialDirectory, 'file'])
+        \ }
+
+  if v:null != l:rootDirByMarker
+    let l:resolvers['rootMarkers'] = { -> l:rootDirByMarker }
+  endif
+
   let l:choices = [
         \ {
-        \ 'action': { -> l:self.initialCwd },
+        \ 'action': l:resolvers['initialCwd'],
         \ 'message': s:printHeader(a:file, l:self.initialCwd)
         \ },
         \ {
-        \ 'action': function('input', ['Enter file path: ', l:initialDirectory, 'file']),
+        \ 'action': l:resolvers['manual'],
         \ 'message': printf('manual (default "%s")', l:initialDirectory)
         \ }
         \ ]
 
   if v:null != l:rootDirByMarker
     let l:item = {
-          \ 'action': { -> l:rootDirByMarker },
+          \ 'action': l:resolvers['rootMarkers'],
           \ 'message': 'autodetected by root marker: '.l:rootDirByMarker
           \ }
     call add(l:choices, l:item)
