@@ -8,16 +8,7 @@ endfunction
 function! s:containsFile(filename) dict
   let l:path = simplify(fnamemodify(a:filename, ':p:h'))
 
-  " @todo Is this working on Windows filesystem?
-  while resolve(l:path) !=# resolve(l:self.primaryRootPath)
-    let l:path = fnamemodify(l:path, ':h')
-
-    if l:path ==# '/'
-      return v:false
-    endif
-  endwhile
-
-  return v:true
+  return phpactor#fileutils#isSubdir(l:path, l:self.primaryRootPath)
 endfunction
 
 function s:normalizeRootPath(path) abort
