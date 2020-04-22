@@ -188,12 +188,21 @@ function! phpactor#ImportMissingClasses()
 endfunction
 
 function! phpactor#_GotoDefinitionTarget(target)
-    call phpactor#rpc("goto_definition", {
+    let tag = expand('<cword>')
+    let pos = [bufnr()] + getcurpos()[1:]
+    let item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
+    let result = phpactor#rpc("goto_definition", {
                 \"offset": phpactor#_offset(),
                 \"source": phpactor#_source(),
                 \"path": expand('%:p'),
                 \"target": a:target,
                 \'language': &ft})
+    if result == 0
+        let winid = win_getid()
+        let stack = gettagstack(winid)
+        let stack['items'] = [item]
+        call settagstack(winid, stack, 't')
+    endif
 endfunction
 function! phpactor#GotoDefinition()
     call phpactor#_GotoDefinitionTarget('focused_window')
