@@ -5,8 +5,8 @@ function! phpactor#project#project#createFromRootPath(primaryRootPath) abort
         \ }
 endfunction
 
-function! s:containsFile(filename) dict
-  let l:path = simplify(fnamemodify(a:filename, ':p:h'))
+function! s:containsFile(filepath) dict
+  let l:path = simplify(fnamemodify(a:filepath, ':p:h'))
 
   return phpactor#fileutils#isSubdir(l:path, l:self.primaryRootPath)
 endfunction
