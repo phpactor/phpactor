@@ -302,7 +302,17 @@ function! phpactor#CacheClear()
 endfunction
 
 function! phpactor#Status()
-    call phpactor#rpc("status", {})
+    if exists(':terminal')
+        if has('nvim')
+            split term://phpactor\ status
+            " Press any key to leave
+            normal i
+        else
+            terminal phpactor status
+        endif
+    else
+        call phpactor#rpc("status", {'type': 'formatted'})
+    endif
 endfunction
 
 function! phpactor#Config()

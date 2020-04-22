@@ -12,6 +12,8 @@ Features:
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
   - [rpc] Add docblock prose to hover 
+  - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
+    terminal window (#974) - @elythyr
 
 Improvements:
 
@@ -19,6 +21,8 @@ Improvements:
     (allow implorting `Foobar` from an `@var array<Foobar>` doc
   - [completion] Option to deduplicate suggetions (#905) - @dantleech
   - [completion] Option to limit completion options - @dantleech
+  - [completion] Allow completors to return `true` when they finish (allow
+    final consumer to know if list is complete) - @elythyr
 
 Bug fixes:
 
