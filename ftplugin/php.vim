@@ -7,7 +7,8 @@ let g:phpactorProjectAssigner = get(g:, 'phpactorProjectAssigner', phpactor#proj
             \ phpactor#project#repository#create(),
             \ g:phpactorProjectRootPatterns,
             \ g:phpactorGlobalRootPatterns,
-            \ g:phpactorInitialCwd
+            \ g:phpactorInitialCwd,
+            \ g:phpactorNoninteractiveProjectResolvers
             \ ))
 
 " vim: et ts=4 sw=4 fdm=marker
