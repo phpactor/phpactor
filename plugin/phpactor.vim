@@ -60,7 +60,9 @@ let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '
 let g:phpactorNoninteractiveProjectResolvers = get(g:, 'phpactorProjectResolvers', ['rootMarkers'])
 
 ""
-"
-let g:phpactorAllowInteractiveProjectResolution = v:false
+" Once a php buffer has been open prompt user how to resolve its project root.
+" Note that  you can have to `set shortmess +=F`
+" otherwise it probably will not work.
+let g:phpactorAllowInteractiveProjectResolution = get(g:, 'phpactorAllowInteractiveProjectResolution', v:false)
 
 " vim: et ts=4 sw=4 fdm=marker
