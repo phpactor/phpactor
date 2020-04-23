@@ -55,13 +55,13 @@ let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '
 " Valid are 'initialCwd', 'rootMarkers', 'manual'. Invalid entries will be ignored.
 " 'initialCwd' always returns with a success and will be always appended to this list as a fallback.
 " There is no need to add 'initialCwd' explicitely because any method present after it will be ignored.
-" Since the resolver can be run from autocommand, you can have to `set shortmess +=F`
+" Since the resolver can be run from autocommand, you can have to `set shortmess -=F`
 " to prevent disable user prompt needed to use 'manual'.
 let g:phpactorNoninteractiveProjectResolvers = get(g:, 'phpactorProjectResolvers', ['rootMarkers'])
 
 ""
 " Once a php buffer has been open prompt user how to resolve its project root.
-" Note that  you can have to `set shortmess +=F`
+" Note that  you can have to `set shortmess -=F`
 " otherwise it probably will not work.
 let g:phpactorAllowInteractiveProjectResolution = get(g:, 'phpactorAllowInteractiveProjectResolution', v:false)
 
