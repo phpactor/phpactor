@@ -11,12 +11,13 @@ function! phpactor#project#assigner#assignProjectToBuffer(filename, allowReassig
     return
   endif
   let b:phpactorProject = l:project
-  echomsg printf('Project with root "%s" has been created.', l:project.primaryRootPath)
+
   if g:phpactorProjectAssigner.repository.hasProject(b:phpactorProject)
     return
   endif
 
   call g:phpactorProjectAssigner.repository.addProject(b:phpactorProject)
+  echomsg printf('Project with root "%s" has been created.', b:phpactorProject.primaryRootPath)
 endfunction
 
 function! phpactor#project#assigner#create(
