@@ -3,6 +3,7 @@
 namespace Phpactor;
 
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
@@ -113,6 +114,7 @@ class Phpactor
             LanguageServerReferenceFinderExtension::class,
             LanguageServerWorseReflectionExtension::class,
             LanguageServerIndexerExtension::class,
+            LanguageServerHoverExtension::class,
             IndexerExtension::class,
         ];
 
