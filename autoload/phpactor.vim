@@ -1,6 +1,5 @@
 ""
 " @section Introduction, intro
-" @library
 " @order intro config completion commands mappings
 "
 " Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
