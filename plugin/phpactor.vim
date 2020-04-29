@@ -143,4 +143,11 @@ command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations(
 
 " Commands }}}
 
+" Autocommands {{{
+augroup phpactor
+    autocmd!
+    autocmd FileType php call phpactor#project#assigner#assignProjectToBuffer(expand('<afile>'), v:false, g:phpactorAllowInteractiveProjectResolution)
+augroup END
+" Autocommands }}}
+
 " vim: et ts=4 sw=4 fdm=marker
