@@ -93,21 +93,33 @@ command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
 command! -nargs=0 PhpactorClassNew call phpactor#ClassNew()
 
 ""
-" Goto the definition of the class, method or function under the cursor. Open
-" the definition in the current window.
-command! -nargs=0 PhpactorGotoDefinition call phpactor#GotoDefinition()
-
+" @default target=`focused_window`
+"
+" Goto the definition of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoDefinition call phpactor#GotoDefinition(<f-args>)
 ""
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
 " As with @command(PhpactorGotoDefinition) but open in a vertical split.
-command! -nargs=0 PhpactorGotoDefinitionVsplit call phpactor#GotoDefinitionVsplit()
-
+command! -nargs=0 PhpactorGotoDefinitionVsplit 
+  \ echoerr 'PhpactorGotoDefinitionVsplit is deprecated, use PhpactorGotoDefinition instead' |
+  \ PhpactorGotoDefinition vsplit
 ""
-" As with @command(PhpactorGotoDefinition) but open in a horizontal split.
-command! -nargs=0 PhpactorGotoDefinitionHsplit call phpactor#GotoDefinitionHsplit()
-
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
+" As with @command(PhpactorGotoDefinition) but open in an horizontal split.
+command! -nargs=0 PhpactorGotoDefinitionHsplit 
+  \ echoerr 'PhpactorGotoDefinitionHsplit is deprecated, use PhpactorGotoDefinition instead' |
+  \ PhpactorGotoDefinition hsplit
 ""
-" As with @command(PhpactorGotoDefinition) but open in a new tab
-command! -nargs=0 PhpactorGotoDefinitionTab call phpactor#GotoDefinitionTab()
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
+" As with @command(PhpactorGotoDefinition) but open in a new tab.
+command! -nargs=0 PhpactorGotoDefinitionTab 
+  \ echoerr 'PhpactorGotoDefinitionTab is deprecated, use PhpactorGotoDefinition instead' |
+  \ PhpactorGotoDefinition new_tab
 
 ""
 " Goto type (class) of the symbol under the cursor.
@@ -119,5 +131,29 @@ command! -nargs=0 PhpactorGotoType call phpactor#GotoType()
 command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations()
 
 " Commands }}}
+
+" Functions {{{
+
+""
+" @section Window targets, window-targets
+" @parentsection commands
+"
+" Phpactor provide a few window targets to use with some commands and
+" functions.
+" See @command(PhpactorGotoDefinition) or @function(phpactor#GotoDefinition)
+" for an example of how to use them.
+"
+" Possible values are:
+" * `focused_window`: open in the current window or in the window containing the
+"   destination buffer if it exists in the current tab
+" * `hsplit`: open in an horizontal split window
+" * `vplist`: open in a vertical split window
+" * `new_tab`: open in a new tab
+
+function! s:CompleteWindowTarget(...) abort
+  return ['focused_window', 'vsplit', 'hsplit', 'new_tab']
+endfunction
+
+" }}}
 
 " vim: et ts=4 sw=4 fdm=marker

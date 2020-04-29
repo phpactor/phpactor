@@ -186,17 +186,45 @@ function! phpactor#ImportMissingClasses()
     call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
-function! phpactor#_GotoDefinitionTarget(target)
+""
+" @default target=`focused_window`
+"
+" Goto the definition of the symbol under the cursor.
+" Open the definition in the [target] window, see @section(window-target) for
+" the list of possible targets.
+function! phpactor#GotoDefinition(...)
     call phpactor#rpc("goto_definition", {
                 \"offset": phpactor#_offset(),
                 \"source": phpactor#_source(),
                 \"path": expand('%:p'),
-                \"target": a:target,
+                \"target": a:0 ? a:1 : 'focused_window',
                 \'language': &ft})
 endfunction
-function! phpactor#GotoDefinition()
-    call phpactor#_GotoDefinitionTarget('focused_window')
+""
+" deprecated, use @function(phpactor#gotodefinition) instead
+"
+" as with @function(phpactor#gotodefinition) but open in a vertical split.
+function! phpactor#GotoDefinitionVsplit()
+    echoerr "phpactor#GotoDefinitionVsplit is deprecated use phpactor#GotoDefinition('vsplit') instead"
+    call phpactor#GotoDefinition('vsplit')
 endfunction
+""
+" deprecated, use @function(phpactor#gotodefinition) instead
+"
+" as with @function(phpactor#gotodefinition) but open in an horizontal split.
+function! phpactor#GotoDefinitionHsplit()
+    echoerr "phpactor#GotoDefinitionHsplit is deprecated use phpactor#GotoDefinition('hsplit') instead"
+    call phpactor#GotoDefinition('hsplit')
+endfunction
+""
+" deprecated, use @function(phpactor#gotodefinition) instead
+"
+" as with @function(phpactor#gotodefinition) but open in a new tab.
+function! phpactor#GotoDefinitionTab()
+    echoerr "phpactor#GotoDefinitionTab is deprecated use phpactor#GotoDefinition('new_tab') instead"
+    call phpactor#GotoDefinition('new_tab')
+endfunction
+
 function! phpactor#GotoImplementations()
     call phpactor#rpc("goto_implementation", {
                 \"offset": phpactor#_offset(),
@@ -204,15 +232,6 @@ function! phpactor#GotoImplementations()
                 \"path": expand('%:p'),
                 \"target": 'focused_window',
                 \'language': &ft})
-endfunction
-function! phpactor#GotoDefinitionVsplit()
-    call phpactor#_GotoDefinitionTarget('vsplit')
-endfunction
-function! phpactor#GotoDefinitionHsplit()
-    call phpactor#_GotoDefinitionTarget('hsplit')
-endfunction
-function! phpactor#GotoDefinitionTab()
-    call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
 function! phpactor#GotoType()

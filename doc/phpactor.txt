@@ -7,6 +7,7 @@ CONTENTS                                                   *phpactor-contents*
   2. Configuration...........................................|phpactor-config|
   3. Completion..........................................|phpactor-completion|
   4. Commands..............................................|phpactor-commands|
+      1. Window targets..............................|phpactor-window-targets|
   5. Mappings..............................................|phpactor-mappings|
 
 ==============================================================================
@@ -175,18 +176,26 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorClassNew                                          *:PhpactorClassNew*
   Create a new class. You will be offered a choice of templates.
 
-:PhpactorGotoDefinition                              *:PhpactorGotoDefinition*
-  Goto the definition of the class, method or function under the cursor. Open
-  the definition in the current window.
+:PhpactorGotoDefinition [target]                     *:PhpactorGotoDefinition*
+  [target] is `focused_window` if omitted.
+
+  Goto the definition of the symbol under the cursor. Opens in the [target]
+  window, see |phpactor-window-target| for the list of possible targets.
 
 :PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
+  deprecated, use |:PhpactorGotoDefinition| instead
+
   As with |:PhpactorGotoDefinition| but open in a vertical split.
 
 :PhpactorGotoDefinitionHsplit                  *:PhpactorGotoDefinitionHsplit*
-  As with |:PhpactorGotoDefinition| but open in a horizontal split.
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in an horizontal split.
 
 :PhpactorGotoDefinitionTab                        *:PhpactorGotoDefinitionTab*
-  As with |:PhpactorGotoDefinition| but open in a new tab
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in a new tab.
 
 :PhpactorGotoType                                          *:PhpactorGotoType*
   Goto type (class) of the symbol under the cursor.
@@ -194,6 +203,21 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
   Load all implementations of the class under the cursor into the quick-fix
   list.
+
+==============================================================================
+WINDOW TARGETS                                       *phpactor-window-targets*
+
+
+Phpactor provide a few window targets to use with some commands and functions.
+See |:PhpactorGotoDefinition| or |phpactor#GotoDefinition()| for an example of
+how to use them.
+
+Possible values are:
+  * `focused_window`: open in the current window or in the window containing
+    the destination buffer if it exists in the current tab
+  * `hsplit`: open in an horizontal split window
+  * `vplist`: open in a vertical split window
+  * `new_tab`: open in a new tab
 
 ==============================================================================
 MAPPINGS                                                   *phpactor-mappings*
