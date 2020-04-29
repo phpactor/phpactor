@@ -497,7 +497,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let l:workspaceDir = s:searchDirectoryUpwardForRootPatterns(
+    let l:workspaceDir = empty(g:phpactorProjectRootPatterns) ? g:phpactorInitialCwd : s:searchDirectoryUpwardForRootPatterns(
           \ fnamemodify(phpactor#_path(), ':h'),
           \ g:phpactorProjectRootPatterns,
           \ g:phpactorInitialCwd
