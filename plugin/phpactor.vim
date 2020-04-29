@@ -44,7 +44,7 @@ let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 ""
 " The list of files that determine workspace root directory
 " if contained within
-let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', ['composer.json', '.git', '.phpactor.json', '.phpactor.yml'])
+let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', [])
 
 ""
 " The list of directories that should not be considered as workspace root directory
