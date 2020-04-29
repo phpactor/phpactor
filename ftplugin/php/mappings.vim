@@ -14,11 +14,11 @@
 "     au FileType php,cucumber nmap <buffer> <Leader>o
 "         \ :PhpactorGotoDefinition<CR>
 "     au FileType php,cucumber nmap <buffer> <Leader>Oh 
-"         \ :PhpactorGotoDefinitionHsplit<CR>
+"         \ :PhpactorGotoDefinition hsplit<CR>
 "     au FileType php,cucumber nmap <buffer> <Leader>Ov 
-"         \ :PhpactorGotoDefinitionVsplit<CR>
+"         \ :PhpactorGotoDefinition vsplit<CR>
 "     au FileType php,cucumber nmap <buffer> <Leader>Ot 
-"         \ :PhpactorGotoDefinitionTab<CR>
+"         \ :PhpactorGotoDefinition new_tab<CR>
 "     au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
 "     au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
 "     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
