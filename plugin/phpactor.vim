@@ -66,6 +66,14 @@ let g:phpactorNoninteractiveProjectResolvers = get(g:, 'phpactorNoninteractivePr
 " otherwise it probably will not work.
 let g:phpactorAllowInteractiveProjectResolution = get(g:, 'phpactorAllowInteractiveProjectResolution', v:false)
 
+let g:phpactorProjectAssigner = get(g:, 'phpactorProjectAssigner', phpactor#project#assigner#create(
+            \ phpactor#project#repository#create(),
+            \ g:phpactorProjectRootPatterns,
+            \ g:phpactorGlobalRootPatterns,
+            \ g:phpactorInitialCwd,
+            \ g:phpactorNoninteractiveProjectResolvers
+            \ ))
+
 " Config }}}
 
 " Commands {{{
