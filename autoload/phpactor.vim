@@ -234,11 +234,18 @@ function! phpactor#GotoImplementations()
                 \'language': &ft})
 endfunction
 
-function! phpactor#GotoType()
+""
+" @default target=`focused_window`
+"
+" Goto the implementation of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+function! phpactor#GotoType(...)
     call phpactor#rpc('goto_type', {
         \'offset': phpactor#_offset(),
         \'source': phpactor#_source(),
         \'path': expand('%:p'),
+        \"target": a:0 ? a:1 : 'focused_window',
         \'language': &filetype})
 endfunction
 

@@ -197,8 +197,11 @@ COMMANDS                                                   *phpactor-commands*
 
   As with |:PhpactorGotoDefinition| but open in a new tab.
 
-:PhpactorGotoType                                          *:PhpactorGotoType*
-  Goto type (class) of the symbol under the cursor.
+:PhpactorGotoType [target]                                 *:PhpactorGotoType*
+  [target] is `focused_window` if omitted.
+
+  Goto the type of the symbol under the cursor. Opens in the [target] window,
+  see |phpactor-window-target| for the list of possible targets.
 
 :PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
   Load all implementations of the class under the cursor into the quick-fix

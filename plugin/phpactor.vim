@@ -122,8 +122,12 @@ command! -nargs=0 PhpactorGotoDefinitionTab
   \ PhpactorGotoDefinition new_tab
 
 ""
-" Goto type (class) of the symbol under the cursor.
-command! -nargs=0 PhpactorGotoType call phpactor#GotoType()
+" @default target=`focused_window`
+"
+" Goto the type of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType call phpactor#GotoType(<f-args>)
 
 ""
 " Load all implementations of the class under the cursor into the quick-fix
