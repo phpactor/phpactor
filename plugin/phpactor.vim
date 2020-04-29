@@ -159,8 +159,10 @@ command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplem
 " * `vplist`: open in a vertical split window
 " * `new_tab`: open in a new tab
 
-function! s:CompleteWindowTarget(...) abort
-  return ['focused_window', 'vsplit', 'hsplit', 'new_tab']
+let s:windowTargets = ['focused_window', 'vsplit', 'hsplit', 'new_tab']
+
+function! s:CompleteWindowTarget(argLead, ...) abort
+    return filter(copy(s:windowTargets), {k,v -> 0 == stridx(v, a:argLead)})
 endfunction
 
 " }}}
