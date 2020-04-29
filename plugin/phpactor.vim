@@ -84,6 +84,40 @@ command! -nargs=1 PhpactorExtensionInstall call phpactor#ExtensionInstall(<q-arg
 " Remove an extension
 command! -nargs=1 PhpactorExtensionRemove call phpactor#ExtensionRemove(<q-args>)
 
+""
+" Expand the class name under the cursor to it's fully-qualified-name
+command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
+
+""
+" Create a new class. You will be offered a choice of templates.
+command! -nargs=0 PhpactorClassNew call phpactor#ClassNew()
+
+""
+" Goto the definition of the class, method or function under the cursor. Open
+" the definition in the current window.
+command! -nargs=0 PhpactorGotoDefinition call phpactor#GotoDefinition()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a vertical split.
+command! -nargs=0 PhpactorGotoDefinitionVsplit call phpactor#GotoDefinitionVsplit()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a horizontal split.
+command! -nargs=0 PhpactorGotoDefinitionHsplit call phpactor#GotoDefinitionHsplit()
+
+""
+" As with @command(PhpactorGotoDefinition) but open in a new tab
+command! -nargs=0 PhpactorGotoDefinitionTab call phpactor#GotoDefinitionTab()
+
+""
+" Goto type (class) of the symbol under the cursor.
+command! -nargs=0 PhpactorGotoType call phpactor#GotoType()
+
+""
+" Load all implementations of the class under the cursor into the quick-fix
+" list.
+command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations()
+
 " Commands }}}
 
 " vim: et ts=4 sw=4 fdm=marker
