@@ -23,6 +23,9 @@ Improvements:
   - [completion] Option to limit completion options - @dantleech
   - [completion] Allow completors to return `true` when they finish (allow
     final consumer to know if list is complete) - @elythyr
+  - [vim-plugin] Improved command registration (#965) - @elythyr
+  - [completion] Improved signature help (https://github.com/phpactor/completion/pull/31) - @elythyr
+  - [completion] Completors can return if they are complete (https://github.com/phpactor/completion/pull/30) - @elythyr
 
 Bug fixes:
 
