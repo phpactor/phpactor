@@ -225,12 +225,20 @@ function! phpactor#GotoDefinitionTab()
     call phpactor#GotoDefinition('new_tab')
 endfunction
 
-function! phpactor#GotoImplementations()
+""
+" @default target=`focused_window`
+"
+" Goto the implementation of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+" If there is more than one result the quickfix strategy will be used and [target]
+" will be ignored, see @setting(g:phpactorQuickfixStrategy).
+function! phpactor#GotoImplementations(...)
     call phpactor#rpc("goto_implementation", {
                 \"offset": phpactor#_offset(),
                 \"source": phpactor#_source(),
                 \"path": expand('%:p'),
-                \"target": 'focused_window',
+                \"target": a:0 ? a:1 : 'focused_window',
                 \'language': &ft})
 endfunction
 

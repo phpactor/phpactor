@@ -203,9 +203,13 @@ COMMANDS                                                   *phpactor-commands*
   Goto the type of the symbol under the cursor. Opens in the [target] window,
   see |phpactor-window-target| for the list of possible targets.
 
-:PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
-  Load all implementations of the class under the cursor into the quick-fix
-  list.
+:PhpactorGotoImplementations [target]           *:PhpactorGotoImplementations*
+  [target] is `focused_window` if omitted.
+
+  Goto the implementation of the symbol under the cursor. Opens in the
+  [target] window, see |phpactor-window-target| for the list of possible
+  targets. If there is more than one result the quickfix strategy will be used
+  and [target] will be ignored, see |g:phpactorQuickfixStrategy|.
 
 ==============================================================================
 WINDOW TARGETS                                       *phpactor-window-targets*

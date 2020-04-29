@@ -130,9 +130,14 @@ command! -nargs=0 PhpactorGotoDefinitionTab
 command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType call phpactor#GotoType(<f-args>)
 
 ""
-" Load all implementations of the class under the cursor into the quick-fix
-" list.
-command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations()
+" @default target=`focused_window`
+"
+" Goto the implementation of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+" If there is more than one result the quickfix strategy will be used and [target]
+" will be ignored, see @setting(g:phpactorQuickfixStrategy).
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplementations call phpactor#GotoImplementations(<f-args>)
 
 " Commands }}}
 
