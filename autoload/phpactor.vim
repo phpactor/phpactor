@@ -187,18 +187,38 @@ function! phpactor#ImportMissingClasses()
 endfunction
 
 ""
-" @default target=`focused_window`
+" @default target=`edit`
+" @default mods=''
 "
 " Goto the definition of the symbol under the cursor.
 " Open the definition in the [target] window, see @section(window-target) for
 " the list of possible targets.
+" [mods] is a string containing |<mods>| values separated by a space.
+"
+" Examples:
+" >
+"     " Opens in the current buffer
+"     call phpactor#GotoDefinition()
+"
+"     " Opens in a vertical split opened on the right side
+"     call phpactor#GotoDefinition('split', 'vertical botright')
+"
+"     " Opens in a new tab
+"     call phpactor#GotoDefinition('tabnew')
+" <
 function! phpactor#GotoDefinition(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
     call phpactor#rpc("goto_definition", {
-                \"offset": phpactor#_offset(),
-                \"source": phpactor#_source(),
-                \"path": expand('%:p'),
-                \"target": a:0 ? a:1 : 'focused_window',
-                \'language': &ft})
+        \ "offset": phpactor#_offset(),
+        \ "source": phpactor#_source(),
+        \ "path": expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
 endfunction
 ""
 " deprecated, use @function(phpactor#gotodefinition) instead
@@ -213,48 +233,59 @@ endfunction
 "
 " as with @function(phpactor#gotodefinition) but open in an horizontal split.
 function! phpactor#GotoDefinitionHsplit()
-    echoerr "phpactor#GotoDefinitionHsplit is deprecated use phpactor#GotoDefinition('hsplit') instead"
-    call phpactor#GotoDefinition('hsplit')
+    echoerr "phpactor#GotoDefinitionHsplit is deprecated use phpactor#GotoDefinition('split') instead"
+    call phpactor#GotoDefinition('split')
 endfunction
 ""
 " deprecated, use @function(phpactor#gotodefinition) instead
 "
 " as with @function(phpactor#gotodefinition) but open in a new tab.
 function! phpactor#GotoDefinitionTab()
-    echoerr "phpactor#GotoDefinitionTab is deprecated use phpactor#GotoDefinition('new_tab') instead"
-    call phpactor#GotoDefinition('new_tab')
+    echoerr "phpactor#GotoDefinitionTab is deprecated use phpactor#GotoDefinition('tabnew') instead"
+    call phpactor#GotoDefinition('tabnew')
 endfunction
 
 ""
-" @default target=`focused_window`
+" @usage [target] [mods]
 "
-" Goto the implementation of the symbol under the cursor.
-" Opens in the [target] window, see @section(window-target) for
-" the list of possible targets.
+" Same as @function(phpactor#GotoDefinition) but goto the implementation of
+" the symbol under the cursor.
+"
 " If there is more than one result the quickfix strategy will be used and [target]
 " will be ignored, see @setting(g:phpactorQuickfixStrategy).
 function! phpactor#GotoImplementations(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
     call phpactor#rpc("goto_implementation", {
-                \"offset": phpactor#_offset(),
-                \"source": phpactor#_source(),
-                \"path": expand('%:p'),
-                \"target": a:0 ? a:1 : 'focused_window',
-                \'language': &ft})
+        \ "offset": phpactor#_offset(),
+        \ "source": phpactor#_source(),
+        \ "path": expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
 endfunction
 
 ""
-" @default target=`focused_window`
+" @usage [target] [mods]
 "
-" Goto the implementation of the symbol under the cursor.
-" Opens in the [target] window, see @section(window-target) for
-" the list of possible targets.
+" Same as @function(phpactor#GotoDefinition) but goto the type of
+" the symbol under the cursor.
 function! phpactor#GotoType(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
     call phpactor#rpc('goto_type', {
-        \'offset': phpactor#_offset(),
-        \'source': phpactor#_source(),
-        \'path': expand('%:p'),
-        \"target": a:0 ? a:1 : 'focused_window',
-        \'language': &filetype})
+        \ 'offset': phpactor#_offset(),
+        \ 'source': phpactor#_source(),
+        \ 'path': expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
 endfunction
 
 function! phpactor#Hover()
@@ -507,7 +538,7 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
-function! phpactor#rpc(action, arguments)
+function! phpactor#rpc(action, arguments, ...)
     " Remove any existing output in the message window
     execute ':redraw'
 
@@ -529,7 +560,7 @@ function! phpactor#rpc(action, arguments)
         endtry
 
         let actionName = response['action']
-        let parameters = response['parameters']
+        let parameters = extend(copy(response['parameters']), a:0 ? a:1 : {})
 
         let response = phpactor#_rpc_dispatch(actionName, parameters)
 
@@ -600,12 +631,13 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
         call s:openFileInSelectedTarget(
               \ a:parameters["path"],
-              \ a:parameters["target"],
+              \ get(a:parameters, 'target'),
+              \ get(a:parameters, 'mods'),
               \ get(a:parameters, "use_open_window", g:phpactorUseOpenWindows),
               \ a:parameters["force_reload"]
               \ )
 
-        if a:parameters["target"] == 'focused_window'
+        if a:parameters["target"] == 'edit'
             let changedFileOrWindow = !s:isOpenInCurrentWindow(a:parameters["path"])
         endif
 
@@ -731,7 +763,7 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
-function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload)
+function! s:openFileInSelectedTarget(filePath, target, mods, useOpenWindow, forceReload)
     let l:bufferNumber = bufnr(a:filePath . '$')
 
     if v:true == a:useOpenWindow && -1 != l:bufferNumber
@@ -746,28 +778,7 @@ function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReloa
         endif
     endif
 
-    if a:target ==# 'focused_window'
-        call phpactor#_switchToBufferOrEdit(a:filePath)
-        if v:true == a:forceReload
-          exec 'e!'
-        endif
-        return
-    endif
-
-    if a:target ==# 'vsplit'
-        exec ':vsplit ' . a:filePath
-        return
-    endif
-
-    if a:target ==# 'hsplit'
-        exec ':split ' . a:filePath
-        return
-    endif
-
-    if a:target ==# 'new_tab'
-        exec ':tabnew ' . a:filePath
-        return
-    endif
+    execute printf('%s %s %s', a:mods, a:target, a:filePath)
 endfunction
 
 function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)

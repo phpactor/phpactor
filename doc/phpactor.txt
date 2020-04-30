@@ -177,10 +177,25 @@ COMMANDS                                                   *phpactor-commands*
   Create a new class. You will be offered a choice of templates.
 
 :PhpactorGotoDefinition [target]                     *:PhpactorGotoDefinition*
-  [target] is `focused_window` if omitted.
+  [target] is `edit` if omitted.
 
   Goto the definition of the symbol under the cursor. Opens in the [target]
   window, see |phpactor-window-target| for the list of possible targets.
+  |<mods>| can be provided to the command to change how the window will be
+  opened.
+
+  Examples:
+>
+      " Opens in the current buffer
+      PhpactorGotoDefinition
+
+      " Opens in a vertical split opened on the right side
+      botright PhpactorGotoDefinition vsplit
+      vertical botright PhpactorGotoDefinition split
+
+      " Opens in a new tab
+      PhpactorGotoDefinition tabnew
+<
 
 :PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
   deprecated, use |:PhpactorGotoDefinition| instead
@@ -198,33 +213,31 @@ COMMANDS                                                   *phpactor-commands*
   As with |:PhpactorGotoDefinition| but open in a new tab.
 
 :PhpactorGotoType [target]                                 *:PhpactorGotoType*
-  [target] is `focused_window` if omitted.
 
-  Goto the type of the symbol under the cursor. Opens in the [target] window,
-  see |phpactor-window-target| for the list of possible targets.
+  Same as |:PhpactorGotoDefinition| but goto the type of the symbol under the
+  cursor.
 
 :PhpactorGotoImplementations [target]           *:PhpactorGotoImplementations*
-  [target] is `focused_window` if omitted.
 
-  Goto the implementation of the symbol under the cursor. Opens in the
-  [target] window, see |phpactor-window-target| for the list of possible
-  targets. If there is more than one result the quickfix strategy will be used
-  and [target] will be ignored, see |g:phpactorQuickfixStrategy|.
+  Same as |:PhpactorGotoDefinition| but goto the implmentation of the symbol
+  under the cursor.
+
+  If there is more than one result the quickfix strategy will be used and
+  [target] will be ignored, see |g:phpactorQuickfixStrategy|.
 
 ==============================================================================
 WINDOW TARGETS                                       *phpactor-window-targets*
 
 
-Phpactor provide a few window targets to use with some commands and functions.
-See |:PhpactorGotoDefinition| or |phpactor#GotoDefinition()| for an example of
-how to use them.
+Phpactor provide a few window targets to use with some commands. See
+|:PhpactorGotoDefinition| for an example of how to use them.
 
 Possible values are:
-  * `focused_window`: open in the current window or in the window containing
-    the destination buffer if it exists in the current tab
-  * `hsplit`: open in an horizontal split window
-  * `vplist`: open in a vertical split window
-  * `new_tab`: open in a new tab
+  * `e`, `edit`, `ex`
+  * `new`, `vne`, `vnew`
+  * `sp`, `split`, `vs`, `vsplit`
+  * `vie`, `view`, `sv`, `sview`, `splitview`
+  * `tabe`, `tabedit`, `tabnew`
 
 ==============================================================================
 MAPPINGS                                                   *phpactor-mappings*
@@ -244,11 +257,11 @@ are available for you to copy:
     au FileType php,cucumber nmap <buffer> <Leader>o
         \ :PhpactorGotoDefinition<CR>
     au FileType php,cucumber nmap <buffer> <Leader>Oh
-        \ :PhpactorGotoDefinition hsplit<CR>
+        \ :PhpactorGotoDefinition split<CR>
     au FileType php,cucumber nmap <buffer> <Leader>Ov
         \ :PhpactorGotoDefinition vsplit<CR>
     au FileType php,cucumber nmap <buffer> <Leader>Ot
-        \ :PhpactorGotoDefinition new_tab<CR>
+        \ :PhpactorGotoDefinition tabnew<CR>
     au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
     au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>

@@ -93,51 +93,65 @@ command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
 command! -nargs=0 PhpactorClassNew call phpactor#ClassNew()
 
 ""
-" @default target=`focused_window`
+" @default target=`edit`
 "
 " Goto the definition of the symbol under the cursor.
 " Opens in the [target] window, see @section(window-target) for
 " the list of possible targets.
-command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoDefinition call phpactor#GotoDefinition(<f-args>)
+" |<mods>| can be provided to the command to change how the window will be
+" opened.
+"
+" Examples:
+" >
+"     " Opens in the current buffer
+"     PhpactorGotoDefinition
+"
+"     " Opens in a vertical split opened on the right side
+"     botright PhpactorGotoDefinition vsplit
+"     vertical botright PhpactorGotoDefinition split
+"
+"     " Opens in a new tab
+"     PhpactorGotoDefinition tabnew
+" <
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoDefinition call phpactor#GotoDefinition(<q-args>, <q-mods>)
 ""
 " deprecated, use @command(PhpactorGotoDefinition) instead
 "
 " As with @command(PhpactorGotoDefinition) but open in a vertical split.
-command! -nargs=0 PhpactorGotoDefinitionVsplit 
+command! -nargs=0 PhpactorGotoDefinitionVsplit
   \ echoerr 'PhpactorGotoDefinitionVsplit is deprecated, use PhpactorGotoDefinition instead' |
-  \ PhpactorGotoDefinition vsplit
+  \ <mods> PhpactorGotoDefinition vsplit
 ""
 " deprecated, use @command(PhpactorGotoDefinition) instead
 "
 " As with @command(PhpactorGotoDefinition) but open in an horizontal split.
-command! -nargs=0 PhpactorGotoDefinitionHsplit 
+command! -nargs=0 PhpactorGotoDefinitionHsplit
   \ echoerr 'PhpactorGotoDefinitionHsplit is deprecated, use PhpactorGotoDefinition instead' |
-  \ PhpactorGotoDefinition hsplit
+  \ <mods> PhpactorGotoDefinition hsplit
 ""
 " deprecated, use @command(PhpactorGotoDefinition) instead
 "
 " As with @command(PhpactorGotoDefinition) but open in a new tab.
-command! -nargs=0 PhpactorGotoDefinitionTab 
+command! -nargs=0 PhpactorGotoDefinitionTab
   \ echoerr 'PhpactorGotoDefinitionTab is deprecated, use PhpactorGotoDefinition instead' |
   \ PhpactorGotoDefinition new_tab
 
 ""
-" @default target=`focused_window`
+" @usage [target]
 "
-" Goto the type of the symbol under the cursor.
-" Opens in the [target] window, see @section(window-target) for
-" the list of possible targets.
-command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType call phpactor#GotoType(<f-args>)
+" Same as @command(PhpactorGotoDefinition) but goto the type of the symbol
+" under the cursor.
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType call phpactor#GotoType(<q-args>, <q-mods>)
 
 ""
-" @default target=`focused_window`
+" @usage [target]
 "
-" Goto the implementation of the symbol under the cursor.
-" Opens in the [target] window, see @section(window-target) for
-" the list of possible targets.
+" Same as @command(PhpactorGotoDefinition) but goto the implmentation of the
+" symbol under the cursor.
+"
 " If there is more than one result the quickfix strategy will be used and [target]
 " will be ignored, see @setting(g:phpactorQuickfixStrategy).
-command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplementations call phpactor#GotoImplementations(<f-args>)
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplementations call phpactor#GotoImplementations(<q-args>, <q-mods>)
 
 " Commands }}}
 
@@ -147,19 +161,23 @@ command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplem
 " @section Window targets, window-targets
 " @parentsection commands
 "
-" Phpactor provide a few window targets to use with some commands and
-" functions.
-" See @command(PhpactorGotoDefinition) or @function(phpactor#GotoDefinition)
-" for an example of how to use them.
+" Phpactor provide a few window targets to use with some commands.
+" See @command(PhpactorGotoDefinition) for an example of how to use them.
 "
 " Possible values are:
-" * `focused_window`: open in the current window or in the window containing the
-"   destination buffer if it exists in the current tab
-" * `hsplit`: open in an horizontal split window
-" * `vplist`: open in a vertical split window
-" * `new_tab`: open in a new tab
+" * `e`, `edit`, `ex`
+" * `new`, `vne`, `vnew`
+" * `sp`, `split`, `vs`, `vsplit`
+" * `vie`, `view`, `sv`, `sview`, `splitview`
+" * `tabe`, `tabedit`, `tabnew`
 
-let s:windowTargets = ['focused_window', 'vsplit', 'hsplit', 'new_tab']
+let s:windowTargets = [
+  \ 'e', 'edit', 'ex',
+  \ 'new', 'vne', 'vnew',
+  \ 'sp', 'split', 'vs', 'vsplit',
+  \ 'vie', 'view', 'sv', 'sview', 'splitview',
+  \ 'tabe', 'tabedit', 'tabnew',
+\ ]
 
 function! s:CompleteWindowTarget(argLead, ...) abort
     return filter(copy(s:windowTargets), {k,v -> 0 == stridx(v, a:argLead)})
