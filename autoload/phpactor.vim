@@ -454,6 +454,15 @@ function! phpactor#_applyTextEdits(path, edits)
     call setpos('.', postCursorPosition)
 endfunction
 
+function! phpactor#getRootDirectory() abort
+  let l:Strategy = get(b:, 'PhpactorRootDirectoryStrategy', g:PhpactorRootDirectoryStrategy)
+
+  if type(function('type')) != type(l:Strategy)
+    let l:Strategy = {-> g:phpactorInitialCwd}
+  endif
+
+  return l:Strategy()
+endfunction
 
 """""""""""""""""""""""
 " RPC -->-->-->-->-->--
@@ -497,11 +506,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let l:workspaceDir = empty(g:phpactorProjectRootPatterns) ? g:phpactorInitialCwd : s:searchDirectoryUpwardForRootPatterns(
-          \ fnamemodify(phpactor#_path(), ':h'),
-          \ g:phpactorProjectRootPatterns,
-          \ g:phpactorInitialCwd
-          \)
+    let l:workspaceDir = phpactor#getRootDirectory()
 
     let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
 

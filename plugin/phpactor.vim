@@ -51,6 +51,12 @@ let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', [])
 " (in addition to '/' which is always considered)
 let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '/home'])
 
+""
+" The strategy, declared as Funcref, used to call phpactor 
+" with a specified orkspace root directory. It can be overriden by
+" b:PhpactorRootDirectoryStrategy for each buffer supported by phpactor.
+let g:PhpactorRootDirectoryStrategy = get(g:, 'PhpactorRootDirectoryStrategy', {-> g:phpactorInitialCwd})
+
 " Config }}}
 
 " Commands {{{
