@@ -38,6 +38,18 @@ Execute (Test searching upward given root markers and forbidden dirs):
   let forbiddenDirs = [g:project1Dir.'/foo']
   AssertEqual v:null, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(g:subdir, rootMarkers, forbiddenDirs)
 
+Execute (Test searching upward with root marker below forbidden dir):
+  let vendorDir = g:project1Dir.'/vendor'
+  let packageDir = vendorDir.'/package'
+  let packageSubDir = packageDir.'/src'
+  let rootMarkers = [g:marker]
+  let forbiddenDirs = []
+  call mkdir(packageSubDir, 'p')
+  execute "write " . packageDir."/".g:marker
+  AssertEqual packageDir, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(packageSubDir, rootMarkers, forbiddenDirs)
+  let forbiddenDirs = [vendorDir]
+  AssertEqual packageDir, phpactor#fileutils#searchDirectoryUpwardByRootMarkers(packageSubDir, rootMarkers, forbiddenDirs)
+
 Execute (Test phpactor#fileutils#normalizePath()):
   AssertEqual '/usr', phpactor#fileutils#normalizePath('/usr')
   AssertEqual '/usr', phpactor#fileutils#normalizePath('/usr/')
