@@ -1,5 +1,5 @@
-Extensions
-==========
+Extension List
+==============
 
 Behat
 -----
