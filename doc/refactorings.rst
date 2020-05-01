@@ -1,0 +1,1372 @@
+Refactorings
+============
+
+Fixes:
+
+-  `Add Missing Assignments <#add-missing-assignments>`__
+-  `Complete Constructor <#complete-constructor>`__
+-  `Fix namespace and/or class name <#fix-namespace-or-class-name>`__
+-  `Generate Accessors <#generate-accessors>`__
+-  `Generate Method <#generate-method>`__
+-  `Implement Contracts <#implement-contracts>`__
+-  `Import Class <#import-class>`__
+-  `Expand Class <#expand-class>`__
+-  `Import Missing Classes <#import-missing-classes>`__
+-  `Override Method <#override-method>`__
+
+Generation:
+
+-  `Class New <#class-new>`__
+-  `Class Copy <#class-copy>`__
+-  `Extract Interface <#extract-interface>`__
+
+Refactoring:
+
+-  `Change Visibility <#change-visibility>`__
+-  `Class Move <#class-move>`__
+-  `Extract Constant <#extract-constant>`__
+-  `Extract Expression <#extract-expression>`__
+-  `Extract Method <#extract-method>`__
+-  `Rename Class <#rename-class>`__
+-  `Rename Class Member <#rename-class-member>`__
+-  `Rename Variable <#rename-variable>`__
+
+Add Missing Assignments
+-----------------------
+
+Automatically add any missing properties to a class.
+
+-  **Command**:
+   ``$ phpactor class:transform path/to/Class.php --transform=add_missing_assignments``
+-  **VIM Context Menu**: *Class context menu > Transform > Add missing
+   properties*.
+-  **VIM Command**:``:PhpactorTransform``
+
+Motivation
+~~~~~~~~~~
+
+When authoring a class it is redundant effort to add a property and
+documentation tag when making an assignment. This refactoring will scan
+for any assignments which have do not have corresponding properties and
+add the required properties with docblocks based on inferred types where
+possible.
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   class AcmeBlogTest extends TestCase
+   {
+       public function setUp()
+       {
+           $this->blog = new Blog();
+       }
+   }
+
+Becomes:
+
+.. code:: php
+
+   <?php
+
+   class AcmeBlogTest extends TestCase
+   {
+       /**
+        * @var Blog
+        */
+       private $blog;
+
+       public function setUp()
+       {
+           $this->blog = new Blog();
+       }
+   }
+
+Class Copy
+----------
+
+Copy an existing class to another location updating its name and
+namespace.
+
+-  **Command**:
+   ``$ phpactor class:copy path/to/ClassA.php path/to/ClassB.php``
+   (class FQN also accepted).
+-  **VIM context menu**: *Class context menu > Copy Class*
+-  **VIM function**:``:PhpactorCopyFile``
+
+.. _motivation-1:
+
+Motivation
+~~~~~~~~~~
+
+Sometimes you find that an existing class is a good starting point for a
+new class. In this situation you may:
+
+1. Copy the class to a new file location.
+2. Update the class name and namespace.
+3. Adjust the copied class as necessary.
+
+This refactoring performs steps 1 and 2.
+
+.. _before-and-after-1:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   # src/Blog/Post.php
+   <?php
+
+   namespace Acme\Blog;
+
+   class Post
+   {
+       public function title()
+       {
+           return 'Hello';
+       }
+   }
+
+After moving to ``src/Cms/Article.php``:
+
+.. code:: php
+
+   # src/Cms/Article.php
+   <?php
+
+   namespace Acme\Cms;
+
+   class Article
+   {
+       public function title()
+       {
+           return 'Hello';
+       }
+   }
+
+Change Visibility
+-----------------
+
+Change the visibility of a class member
+
+-  **Command**: **RPC only**
+-  **VIM context menu**: *Class member context menu > Change Visiblity*
+-  **VIM function**:``:PhpactorChangeVisibility``
+
+Currently this will cycle through the 3 visibilities: ``public``,
+``protected`` and ``private``.
+
+.. _motivation-2:
+
+Motivation
+~~~~~~~~~~
+
+Sometimes you may want to extract a class from an existing class in
+order to isolate some of it’s responsibility. When doing this you may:
+
+1. Create a new class using `Class New <#class-new>`__.
+2. Copy the method(s) which you want to extract to the new class.
+3. Change the visibility of the main method from ``private`` to
+   ``public``.
+
+.. _before-and-after-2:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   # src/Blog/FoobarResolver.php
+   <?php
+
+   namespace Acme\Blog;
+
+   class FoobarResolver
+   {
+       private function resolveFoobar()
+       {
+           <>
+       }
+   }
+
+After invoking “change visibility” on or within the method.
+
+.. code:: php
+
+   # src/Blog/FoobarResolver.php
+   <?php
+
+   namespace Acme\Blog;
+
+   class FoobarResolver
+   {
+       public function resolveFoobar();
+       {
+       }
+   }
+
+*Note*: This also works on constants and properties. It will NOT change
+the visibility of any related parent or child class members.
+
+Class Move
+----------
+
+Move a class (or folder containing classes) from one location to
+another.
+
+-  **Command**:
+   ``$ phpactor class:move path/to/ClassA.php path/to/ClassB.php``
+   (class FQN also accepted).
+-  **VIM context menu**: *Class context menu > Move Class*
+-  **VIM function**:``:PhpactorMoveFile``
+
+.. _motivation-3:
+
+Motivation
+~~~~~~~~~~
+
+When authoring classes, it is often difficult to determine really
+appropriate names and namespaces, this is unfortunate as a class name
+can quickly propagate through your code, making the class name harder to
+change as time goes on.
+
+This problem is multiplied if you have chosen an incorrect namespace.
+
+This refactoring will move either a class, class-containing-file or
+folder to a new location, updating the classes namespace and all
+references to that class where possible in a given *scope* (i.e. files
+known by GIT: ``git``, files known by Composer: ``composer``, or all PHP
+files under the current CWD: ``simple``).
+
+If you have defined file relationships with
+`navigator.destinations <https://phpactor.github.io/phpactor/navigation.html#jump-to-or-generate-related-file>`__,
+then you have the option to move the related files in addition to the
+specified file. If using the command then specify ``--related``, or if
+using the RPC interface (f.e. VIM) you will be prompted.
+
+.. container:: alert alert-danger
+
+   This is a dangerous refactoring! Ensure that you commit your work
+   before executing it and be aware that success is not guaranteed
+   (e.g. class references in non-PHP files or docblocks are not
+   currently updated).
+
+   This refactoring works best when you have a well tested code base.
+
+.. _before-and-after-3:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   # src/Blog/Post.php
+   <?php
+
+   namespace Acme\Blog;
+
+   class Post
+   {
+   }
+
+After moving to ``src/Writer.php``:
+
+.. code:: php
+
+   # src/Writer.php
+   <?php
+
+   namespace Acme;
+
+   class Writer
+   {
+   }
+
+Class New
+---------
+
+Generate a new class with a name and namespace at a given location or
+from a class name.
+
+-  **Command**: ``$ phpactor class:new path/To/ClassName.php`` (class
+   FQN also accepted).
+-  **VIM context menu**: *Class context menu > New Class*
+-  **VIM function**:``:PhpactorClassNew``
+
+.. _motivation-4:
+
+Motivation
+~~~~~~~~~~
+
+Creating classes is one of the most general actions we perform:
+
+1. Create a new file.
+2. Code the namespace, ensuring that it is compatible with the
+   autoloading scheme.
+3. Code the class name, ensuring that it is the same as the file name.
+
+This refactoring will perform steps 1, 2 and 3 for:
+
+-  Any given file name.
+-  Any given class name.
+-  A class name under the cursor.
+
+It is also possible to choose a class template, see
+`templates <templates.md>`__ for more information.
+
+.. _before-and-after-4:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. container:: alert alert-success
+
+   This example is from an existing, empty, file. Note that you can also
+   use the context menu to generate classes from non-existing class
+   names in the current file
+
+Given a new file:
+
+.. code:: php
+
+   # src/Blog/Post.php
+
+After invoking *class new* using the ``default`` variant:
+
+.. code:: php
+
+   <?php
+
+   namespace Acme/Blog;
+
+   class Post
+   {
+   }
+
+Complete Constructor
+--------------------
+
+Complete the assignments and add properties for an incomplete
+constructor.
+
+-  **Command**:
+   ``$ phpactor class:transform path/to/class.php --transform=complete_constructor``
+-  **VIM plugin**: *Class context menu > Transform > Complete
+   Constructor*.
+-  **VIM function**:``:PhpactorTransform``
+
+.. _motivation-5:
+
+Motivation
+~~~~~~~~~~
+
+When authoring a new class, it is often required to:
+
+1. Create a constructor method with typed arguments.
+2. Assign the arguments to class properties.
+3. Create the class properties with docblocks.
+
+This refactoring will automatically take care of 2 and 3.
+
+.. _before-and-after-5:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   class Post
+   {
+       public function __construct(Hello $hello, Goodbye $goodbye)
+       {
+       }
+   }
+
+After:
+
+.. code:: php
+
+   <?php
+
+   class Post
+   {
+       /**
+        * @var Hello
+        */
+       private $hello;
+
+       /**
+        * @var Goodbye
+        */
+       private $goodbye;
+
+       public function __construct(Hello $hello, Goodbye $goodbye)
+       {
+           $this->hello = $hello;
+           $this->goodbye = $goodbye;
+       }
+   }
+
+Fix Namespace or Class Name
+---------------------------
+
+Update a file’s namespace (and/or class name) based on the composer
+configuration.
+
+-  **Command**:
+   ``$ phpactor class:transform path/to/class.php --transform=fix_namespace_class_name``
+-  **VIM plugin**: *Class context menu > Transform > Fix namespace or
+   classname*.
+-  **VIM function**: ``:PhpactorTransform``
+
+.. container:: alert alert-warning
+
+   This refactoring will currently only work fully on Composer based
+   projects.
+
+.. _motivation-6:
+
+Motivation
+~~~~~~~~~~
+
+Phpactor already has the possibility of generating new classes, and
+moving classes. But sometimes your project may get into a state where
+class-containing files have an incorrect namespace or class name.
+
+This refactoring will:
+
+-  Update the namespace based on the file path (and the autoloading
+   config).
+-  Update the class name.
+-  When given an empty file, it will generate a PHP tag and the
+   namespace.
+
+.. _before-and-after-6:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   // lib/Barfoo/Hello.php
+   <?php
+
+   class Foobar
+   {
+       public function hello()
+       {
+           echo 'hello';
+       }
+   }
+
+After:
+
+.. code:: php
+
+   // lib/Barfoo/Hello.php
+   <?php
+
+   namespace Barfoo;
+
+   class Hello
+   {
+       public function hello()
+       {
+           echo 'hello';
+       }
+   }
+
+Extract Constant
+----------------
+
+Extract a constant from a scalar value.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Symbol context menu > Extract Constant*.
+-  **VIM function**:``:PhpactorContextMenu``
+
+.. _motivation-7:
+
+Motivation
+~~~~~~~~~~
+
+Each time a value is duplicated in a class a fairy dies. Duplicated
+values increase the fragility of your code. Replacing them with a
+constant helps to ensure runtime integrity.
+
+This refactoring includes `Replace Magic Number with Symbolic
+Constant <https://refactoring.com/catalog/replaceMagicNumberWithSymbolicConstant.html>`__
+(Fowler, Refactoring).
+
+.. _before-and-after-7:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class DecisionMaker
+   {
+       public function yesOrNo($arg)
+       {
+           if ($arg == 'y<>es') {
+               return true;
+           }
+
+           return false;
+       }
+
+       public function yes()
+       {
+           return 'yes';
+       }
+   }
+
+After:
+
+.. code:: php
+
+   <?php
+
+   class DecisionMaker
+   {
+       const YES = 'yes';
+
+       public function yesOrNo($arg)
+       {
+           if ($arg == self::YES) {
+               return true;
+           }
+
+           return false;
+       }
+
+       public function yes()
+       {
+           return self::YES;
+       }
+   }
+
+Extract Expression
+------------------
+
+Extract an expression
+
+-  **Command**: *VIM function only*
+-  **VIM plugin**: *VIM function only*
+-  **VIM function**:``:PhpactorExtractExpression`` (call with ``v:true``
+   to invoke on a selection)
+
+.. _motivation-8:
+
+Motivation
+~~~~~~~~~~
+
+Sometimes you find yourself using inline expressions, and later you
+realise that you want to re-use that value.
+
+.. _before-and-after-8:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   if (<>1 + 2 + 3 + 5 === 6) {
+       echo 'You win!';
+   }
+
+After (entering ``$hasWon`` as a variable name):
+
+.. code:: php
+
+   <?php
+
+   $hasWon = 1 + 2 + 3 + 5 === 6;
+   if ($hasWon) {
+       echo 'You win!';
+   }
+
+Note that this also works with a visual selection if you invoke the VIM
+function with ``v:true``:
+
+.. code:: php
+
+   <?php
+
+   if (<>1 + 2 + 3 + 5<> === 6) {
+       echo 'You win!';
+   }
+
+After (using ``$winningCombination`` as a variable name):
+
+.. code:: php
+
+   <?php
+
+   $winningCombination = 1 + 2 + 3 + 5;
+   if ($winningCombination == 6) {
+       echo 'You win!';
+   }
+
+Extract Method
+--------------
+
+Extract a method from a selection.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Function only*
+-  **VIM function**:``:PhpactorExtractMethod``
+
+This refactoring is NOT currently available through the context menu.
+You will need to `map it to a keyboard
+shortcut <vim-plugin.md#keyboard-mappings>`__ or invoke it manually.
+
+.. _motivation-9:
+
+Motivation
+~~~~~~~~~~
+
+This is one of the most common refactorings. Decomposing code into
+discrete methods helps to make code understandable and maintainable.
+
+Extracting a method manually involes:
+
+1. Creating a new method
+2. Moving the relevant block of code to that method.
+3. Scanning the code for variables which are from the original code.
+4. Adding these variables as parameters to your new method.
+5. Calling the new method in place of the moved code.
+
+This refactoring takes care of steps 1 through 5 and:
+
+-  If a *single* variable that is declared in the selection which is
+   used in the parent scope, it will be returned.
+-  If *multiple* variables are used, the extracted method will return a
+   tuple.
+-  In both cases the variable(s) will be assigned at the point of
+   extraction.
+-  Any class parameters which are not already imported, will be
+   imported.
+
+.. _before-and-after-9:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Selection shown between the two ``<>`` markers:
+
+.. code:: php
+
+   <?php
+
+   class extractMethod
+   {
+       public function bigMethod()
+       {
+           $foobar = 'yes';
+
+           <>
+           if ($foobar) {
+               return 'yes';
+           }
+
+           return $foobar;
+           <>
+
+       }
+   }
+
+After extracting method ``newMethod``:
+
+.. code:: php
+
+   <?php
+
+   class extractMethod
+   {
+       public function bigMethod()
+       {
+           $foobar = 'yes';
+
+           $this->newMethod($foobar);
+
+       }
+
+       private function newMethod(string $foobar)
+       {
+           if ($foobar) {
+               return 'yes';
+           }
+           
+           return $foobar;
+       }
+   }
+
+Extract Interface
+-----------------
+
+Extract an interface from a class. If a wildcard is given (CLI only)
+generate an interface per class.
+
+-  **Command**:
+   ``$ phpactor class:inflect path/to/Class.php path/to/Interface.php``
+   (wild card accepted).
+-  **VIM plugin**: *Class context menu > Inflect > Extract interface*.
+-  **VIM function**:``:PhpactorClassInflect``
+
+.. _motivation-10:
+
+Motivation
+~~~~~~~~~~
+
+It is sometimes unwise to preemptively create interfaces for all your
+classes, as doing so adds maintainance overhead, and the interfaces may
+never be needed.
+
+This refactoring allows you to generate an interface from an existing
+class. All public methods will be added to generated interface.
+
+.. _before-and-after-10:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   class Foobar
+   {
+       public function foobar(string $bar): Barfoo
+       {
+       }
+   }
+
+Generated interface (suffix added for illustration):
+
+.. code:: php
+
+   <?php
+
+   interface FoobarInterface
+   {
+       public function foobar(string $bar): Barfoo;
+   }
+
+Generate Accessors
+------------------
+
+Generate accessors for a class.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Class context menu > Generate accessor*.
+-  **VIM function**:``:PhpactorGenerateAccessor``
+
+.. _motivation-11:
+
+Motivation
+~~~~~~~~~~
+
+When creating entities and value objects it is frequently necessary to
+add accessors.
+
+This refactoring automates the generation of accessors.
+
+.. _before-and-after-11:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Foo<>bar
+   {
+       /**
+        * @var Barfoo
+        */
+       private $barfoo;
+   }
+
+After selecting `one or more
+accessors </vim-plugin.html#fzf-multi-selection>`__
+
+.. code:: php
+
+   <?php
+
+   class Foobar
+   {
+       /**
+        * @var Barfoo
+        */
+       private $barfoo;
+
+       public function barfoo(): Barfoo
+       {
+           return $this->barfoo;
+       }
+   }
+
+Note the accessor template can be customized see
+`Templates <templates.md>`__.
+
+Generate Method
+---------------
+
+Generate or update a method based on the method call under the cursor.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Method context menu > Generate method*.
+-  **VIM function**:``:PhpactorContextMenu``
+
+.. _motivation-12:
+
+Motivation
+~~~~~~~~~~
+
+When initially authoring a package you will often write a method call
+which doesn’t exist and then add the method to the corresponding class.
+
+This refactoring will automatically generate the method inferring any
+type information that it can.
+
+.. _before-and-after-12:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Foobar
+   {
+       /**
+        * @var Barfoo
+        */
+       private $barfoo;
+
+       // ...
+
+       public function hello(Hello $hello)
+       {
+            $this->barfoo->good<>bye($hello);
+       }
+   }
+
+   class Barfoo
+   {
+   }
+
+After generating the method:
+
+.. code:: php
+
+   <?php
+
+   class Foobar
+   {
+       /**
+        * @var Barfoo
+        */
+       private $barfoo;
+
+       // ...
+
+       public function hello(Hello $hello)
+       {
+            $this->barfoo->goodbye($hello);
+       }
+   }
+
+   class Barfoo
+   {
+       public function goodbye(Hello $hello)
+       {
+       }
+   }
+
+Implement Contracts
+-------------------
+
+Add any non-implemented methods from interfaces or abstract classes.
+
+-  **Command**:
+   ``$ phpactor class:transform /path/to/class.php --transform=implement_contracts``
+-  **VIM plugin**: *Class context menu > Transform > Implement
+   contracts*.
+-  **VIM function**:``:PhpactorTransform``
+
+.. _motivation-13:
+
+Motivation
+~~~~~~~~~~
+
+It can be very tiresome to manually implement contracts for interfaces
+and abstract classes, especially interfaces with many methods
+(e.g. ``ArrayAccess``).
+
+This refactoring will automatically add the required methods to your
+class. If the interface uses any foreign classes, the necessary ``use``
+statements will also be added.
+
+.. _before-and-after-13:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   class Foobar implements Countable
+   {
+   }
+
+After:
+
+.. code:: php
+
+   <?php
+
+   class Foobar implements Countable
+   {
+       public function count()
+       {
+       }
+   }
+
+Import Class
+------------
+
+Import a class into the current namespace based on the class name under
+the cursor.
+
+-  **Command**: *VIM function only*
+-  **VIM plugin**: *VIM function only*
+-  **VIM function**:``:PhpactorUseAdd``
+
+.. _motivation-14:
+
+Motivation
+~~~~~~~~~~
+
+It is easy to remember the name of a class, but more difficult to
+remember its namespace, and certainly it is time consuming to manually
+code class imports:
+
+Manually one would:
+
+1. Perform a fuzzy search for the class by its short name.
+2. Identify the class you want to import.
+3. Copy the namespace.
+4. Paste it into your current file
+5. Add the class name to the new ``use`` statement.
+
+This refactoring covers steps 1, 3, 4 and 5.
+
+.. _before-and-after-14:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Hello
+   {
+       public function index(Re<>quest $request)
+       {
+       }
+
+   }
+
+After selecting ``Symfony\Component\HttpFoundation\Request`` from the
+list of candidates:
+
+.. code:: php
+
+   <?php
+
+   use Symfony\Component\HttpFoundation\Request;
+
+   class Hello
+   {
+       public function index(Request $request)
+       {
+       }
+   }
+
+Expand Class
+------------
+
+Expand the class name from unqualified name to fully qualified name.
+
+-  **Command**: *VIM function only*
+-  **VIM plugin**: *VIM function only*
+-  **VIM function**:``:PhpactorClassExpand``
+
+.. _motivation-15:
+
+Motivation
+~~~~~~~~~~
+
+Although importing classes can make code cleaner, sometimes the code can
+be more readable if the fully qualified name is specified. For example,
+we might register a list of listeners in a file.
+
+.. _before-and-after-15:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   namespace App\Event;
+
+   class UserCreatedEvent
+   {
+       protected $listenrs = [
+           AssignDefaultRole<>ToNewUser::class
+       ];
+   }
+
+After selecting ``App\Listeners\AssignDefaultRoleToNewUser`` from the
+list of candidates:
+
+.. code:: php
+
+   <?php
+
+   namespace App\Event;
+
+   class UserCreatedEvent
+   {
+       protected $listenrs = [
+           \App\Listeners\AssignDefaultRoleToNewUser::class
+       ];
+   }
+
+Import Missing Classes
+----------------------
+
+Import all missing classes in the current file.
+
+-  **Command**: **RPC Only**
+-  **VIM plugin**: *Class context menu > Import Missing*
+-  **VIM function**:``:PhpactorImportMissingClasses``
+
+.. _motivation-16:
+
+Motivation
+~~~~~~~~~~
+
+You may copy and paste some code from one file to another and
+subsequently need to import all the foreign classes into the current
+namespace. This refactoring will identify all unresolvable classes and
+import them.
+
+Override Method
+---------------
+
+Overide a method from a parent class.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Class context menu > Override method*.
+-  **VIM function**:``:PhpactorContextMenu``
+-  **Multiple selection**: Supports selecting multiple methods.
+
+.. _motivation-17:
+
+Motivation
+~~~~~~~~~~
+
+Sometimes it is expected or necessary that you override a parent classes
+method (for example when authoring a Symfony Command class).
+
+This refactoring will allow you to select a method to override and
+generate that method in your class.
+
+.. _before-and-after-16:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   use Symfony\Component\Console\Command\Command;
+
+   class MyCommand extends Command
+   {
+   }
+
+Override method ``execute``:
+
+.. code:: php
+
+   <?php
+
+   use Symfony\Component\Console\Command\Command;
+   use Symfony\Component\Console\Input\InputInterface;
+   use Symfony\Component\Console\Output\OutputInterface;
+
+   class MyCommand extends Command
+   {
+       protected function execute(InputInterface $input, OutputInterface $output)
+       {
+       }
+   }
+
+Rename Variable
+---------------
+
+Rename a variable in the local or class scope.
+
+-  **Command**: *RPC only*
+-  **VIM plugin**: *Variable context menu > Rename*.
+-  **VIM function**:``:PhpactorContextMenu``
+
+.. _motivation-18:
+
+Motivation
+~~~~~~~~~~
+
+Having meaningful and descriptive variable names makes the intention of
+code clearer and therefore easier to maintain. Renaming variables is a
+frequent refactoring, but doing this with a simple search and replace
+can often have unintended consequences (e.g. renaming the variable
+``$class`` also changes the ``class`` keyword).
+
+This refactoring will rename a variable, and only variables, in either
+the method scope or the class scope.
+
+.. _before-and-after-17:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Hello
+   {
+       public function say(array $hell<>os)
+       {
+           foreach ($hellos as $greeting) {
+               echo $greeting;
+           }
+
+           return $hellos;
+       }
+
+   }
+
+Rename the variable ``$hellos`` to ``$foobars`` in the local scope:
+
+.. code:: php
+
+   <?php
+
+   class Hello
+   {
+       public function say(array $foobars)
+       {
+           foreach ($foobars as $greeting) {
+               echo $greeting;
+           }
+
+           return $foobars;
+       }
+
+   }
+
+Rename Class
+------------
+
+Rename a class.
+
+-  **Command**:
+   ``$ phpactor references:class path/to/Class.php --replace="NewName"``
+   (class FQN accepted)
+-  **VIM plugin**: *Class context menu > Replace references*.
+-  **VIM function**:``:PhpactorContextMenu``
+
+.. _motivation-19:
+
+Motivation
+~~~~~~~~~~
+
+This refactoring is *similar* to `Move Class <#class-move>`__, but
+without renaming the file. This is a useful refactoring when a dependant
+library has changed a class name and you need to update that class name
+in your project.
+
+.. _before-and-after-18:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Hel<>lo
+   {
+       public function say()
+       {
+           
+       }
+
+   }
+
+   $hello = new Hello();
+   $hello->say();
+
+Rename ``Hello`` to ``Goodbye``
+
+.. code:: php
+
+   <?php
+
+   class Goodbye
+   {
+       public function say()
+       {
+           
+       }
+
+   }
+
+   $hello = new Goodbye();
+   $hello->say();
+
+.. container:: alert alert-danger
+
+   When renaming classes in your project use Class Move.
+
+Rename Class Member
+-------------------
+
+Rename a class member.
+
+-  **Command**:
+   ``$ phpactor references:member path/to/Class.php memberName --type="method" --replace="newMemberName"``
+   (FQN accepted)
+-  **VIM plugin**: *Member context menu > Replace references*.
+-  **VIM function**:``:PhpactorContextMenu``
+
+.. _motivation-20:
+
+Motivation
+~~~~~~~~~~
+
+Having an API which is expressive of the intent of the class is
+important, and contributes to making your code more consistent and
+maintainable.
+
+When renaming members global search and replace can be used, but is a
+shotgun approach and you may end up replacing many things you did not
+mean to replace (e.g. imagine renaming the method ``name()``).
+
+This refactoring will:
+
+1. Scan for files in your project which contain the member name text.
+2. Parse all of the candidate files.
+3. Identify the members, and try and identify the containing class.
+4. Replace only the members which certainly belong to the target class.
+
+When replacing *private* and *protected* members, only the related
+classes will be updated.
+
+Due to the loosely typed nature of PHP this refactoring may not find all
+of the member accesses for the given class. Run your tests before and
+after applying this refactoring.
+
+.. container:: alert alert-info
+
+   Hint: Use the CLI command to list all of the risky references. Risky
+   references are those member accesses which match the query but whose
+   containing classes could not be resolved.
+
+.. figure:: images/risky.png
+   :alt: Risky references
+
+   Risky references
+
+.. _before-and-after-19:
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   class Hello
+   {
+       public function sa<>y()
+       {
+           
+       }
+
+   }
+
+   $hello = new Hello();
+   $hello->say();
+
+Rename ``Hello#say()`` to ``Hello#speak()``
+
+.. code:: php
+
+   <?php
+
+   class Hello
+   {
+       public function speak()
+       {
+           
+       }
+
+   }
+
+   $hello = new Hello();
+   $hello->speak();
