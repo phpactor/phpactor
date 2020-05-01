@@ -25,6 +25,8 @@ Execute (Test search upward for the nearest directory containing given file as a
 Execute (Test phpactor#fileutils#isSubdir()):
   Assert phpactor#fileutils#isSubdir('/usr/bin', '/usr')
   Assert phpactor#fileutils#isSubdir('/usr/', '/usr')
+  Assert phpactor#fileutils#isSubdir('/usr', '/usr')
+  Assert phpactor#fileutils#isSubdir('/usr', '/usr/')
   Assert ! phpactor#fileutils#isSubdir('/', '/usr')
 
 Execute (Test searching upward given root markers and forbidden dirs):
