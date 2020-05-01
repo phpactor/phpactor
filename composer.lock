@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "270c7c3262b928835b78c2c809cb51aaabfe4fed"
+                "reference": "3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/270c7c3262b928835b78c2c809cb51aaabfe4fed",
-                "reference": "270c7c3262b928835b78c2c809cb51aaabfe4fed",
+                "url": "https://api.github.com/repos/composer/composer/zipball/3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f",
+                "reference": "3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f",
                 "shasum": ""
             },
             "require": {
@@ -757,7 +757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-28T14:04:00+00:00"
+            "time": "2020-04-30T19:30:13+00:00"
         },
         {
             "name": "composer/semver",
@@ -774,7 +774,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.2 || ^7.0"
+                "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.5 || ^5.0.5"
@@ -2021,12 +2021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "9d23f252e22a02ed99f76a4da26e9cc4504471e5"
+                "reference": "1cf7ee4c90080c29fb03185c49c7b91957f9fb9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/9d23f252e22a02ed99f76a4da26e9cc4504471e5",
-                "reference": "9d23f252e22a02ed99f76a4da26e9cc4504471e5",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/1cf7ee4c90080c29fb03185c49c7b91957f9fb9b",
+                "reference": "1cf7ee4c90080c29fb03185c49c7b91957f9fb9b",
                 "shasum": ""
             },
             "require": {
@@ -2072,7 +2072,7 @@
                 }
             ],
             "description": "Completion library for Worse Reflection",
-            "time": "2020-04-29T09:33:21+00:00"
+            "time": "2020-04-30T20:32:00+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2672,12 +2672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "47e2ecb3f400b81bf919ce4d3a27d0b62a0088d4"
+                "reference": "d710981ad6029f9a6765425c7a84ee67df28ad97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/47e2ecb3f400b81bf919ce4d3a27d0b62a0088d4",
-                "reference": "47e2ecb3f400b81bf919ce4d3a27d0b62a0088d4",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/d710981ad6029f9a6765425c7a84ee67df28ad97",
+                "reference": "d710981ad6029f9a6765425c7a84ee67df28ad97",
                 "shasum": ""
             },
             "require": {
@@ -2722,7 +2722,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-04-28T20:02:34+00:00"
+            "time": "2020-05-01T10:03:10+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2730,12 +2730,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "14026a42effbae6458086867cab902b9b130cfca"
+                "reference": "c25fa29a225e4b7044d8e3e23a211d4ff9fdb330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/14026a42effbae6458086867cab902b9b130cfca",
-                "reference": "14026a42effbae6458086867cab902b9b130cfca",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/c25fa29a225e4b7044d8e3e23a211d4ff9fdb330",
+                "reference": "c25fa29a225e4b7044d8e3e23a211d4ff9fdb330",
                 "shasum": ""
             },
             "require": {
@@ -2787,7 +2787,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-04-28T19:15:14+00:00"
+            "time": "2020-04-30T20:36:43+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3869,20 +3869,20 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.7.2",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19"
+                "reference": "ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/e2e5d290e4d2a4f0eb449f510071392e00e10d19",
-                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1",
+                "reference": "ff2aa5420bfbc296cf6a0bc785fa5b35736de7c1",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3 || ^7.0"
+                "php": "^5.3 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
@@ -3914,7 +3914,17 @@
                 "parser",
                 "validator"
             ],
-            "time": "2019-10-24T14:27:39+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Seldaek",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/seld/jsonlint",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-30T19:05:18+00:00"
         },
         {
             "name": "seld/phar-utils",
