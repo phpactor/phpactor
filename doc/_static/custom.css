@@ -1,0 +1,21 @@
+div.document {
+    width: 1050px;
+}
+.logo h2 {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#contents, .toctree-wrapper {
+    background-color: white;
+    border-style: none;
+    padding: 0px;
+}
+
+#contents > ul > li {
+}
+.toctree-wrapper > ul > li {
+}
+
+#contents > ul, .toctree-wrapper > ul {
+}
