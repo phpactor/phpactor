@@ -31,8 +31,6 @@ jobs:
         - config/travis/vim-plugin-test.sh
     - name: Phpactor Tests
       php: 7.3
-    - name: Phpactor Tests
-      php: 7.3
       before_script:
         - composer install
       script:
