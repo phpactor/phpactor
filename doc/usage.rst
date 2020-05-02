@@ -6,6 +6,3 @@ Usage
    :glob:
 
    usage/*
-
-
-

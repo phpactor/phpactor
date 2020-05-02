@@ -7,7 +7,6 @@ provides subject-under-test member completion.
 Installing
 ----------
 
-
 .. code:: bash
 
     $ phpactor extension:install phpactor/phpspec-extension
