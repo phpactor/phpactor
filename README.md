@@ -12,13 +12,13 @@ This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
 
-- Accurate code [completion](https://phpactor.github.io/phpactor/completion.html) including class name auto-import.
-- [Various](https://phpactor.github.io/phpactor/refactorings.html) refactoring,fixes and code generation options.
-- Native [VIM plugin](https://phpactor.github.io/phpactor/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
-- [Navigation](https://phpactor.github.io/phpactor/navigation.html) (jump to
+- Accurate code [completion](https://phpactor.readthedocs.io/en/develop/reference/completion.html) including class name auto-import.
+- [Various](https://phpactor.readthedocs.io/en/develop/reference/refactorings.html) refactoring,fixes and code generation options.
+- Provides a [Language Server](https://phpactor.readthedocs.io/en/develop/usage/language-server.html)
+- Native [VIM plugin](https://phpactor.readthedocs.io/en/develop/usage/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
+- [Navigation](https://phpactor.readthedocs.io/en/develop/reference/navigation.html) (jump to
   definition, related classes, references etc).
-- Context menu.
-- [More](http://phpactor.github.io/phpactor).
+- [More](https://phpactor.readthedocs.io/en/develop).
 
 Installation
 ------------
@@ -26,7 +26,7 @@ Installation
 Phpactor is a general tool, it is not intended that it be installed as a project dependency.
 
 See
-[Installation](http://phpactor.github.io/phpactor/standalone.html#installation)
+[Installation](https://phpactor.readthedocs.io/en/develop/usage/standalone.html)
 for installation instructions.
 
 Requirements
