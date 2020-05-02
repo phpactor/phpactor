@@ -2,3 +2,20 @@
     text-align: center;
     font-family: sans-serif;
 }
+
+#contents, .toctree-wrapper {
+    background-color: white;
+    border-style: none;
+    padding: 0px;
+}
+
+#contents > ul > li {
+    list-style-type: none;
+}
+.toctree-wrapper > ul > li {
+    list-style-type: none;
+}
+
+#contents > ul, .toctree-wrapper > ul {
+    margin: 0px;
+}

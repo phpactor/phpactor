@@ -5,14 +5,10 @@ Phpactor provides some functionality for navigating to (and generating)
 contextually relevant files such as parent classes, definitions, unit
 tests, references etc.
 
--  `Class References <#class-references>`__
--  `Class Member References <#class-member-references>`__
--  `Hover <#hover>`__
--  `Jump to Definition <#jump-to-definition>`__
--  `Jump to Type <#jump-to-type>`__
--  `Jump to Implementation <#jump-to-implementation>`__
--  `Jump to or generate related
-   file <#jump-to-or-generate-related-file>`__
+.. contents::
+   :depth: 1
+   :backlinks: none
+   :local:
 
 Class References
 ----------------
