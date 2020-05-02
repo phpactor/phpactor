@@ -45,11 +45,8 @@ jobs:
         - config/travis/vim-plugin-test.sh
     - php: 7.3
     - stage: docs
-      php: 7.2
-      if: branch = master
       before_script:
-        - git config --global user.email "phpactor@dantleech.com"
-        - git config --global user.name "Phpactor"
-        - curl -OS http://couscous.io/couscous.phar
+        - sudo apt-get -y install python3-pip
+        - pip install -r requirements.txt
       script:
-        - php couscous.phar travis-auto-deploy
+        - make html
