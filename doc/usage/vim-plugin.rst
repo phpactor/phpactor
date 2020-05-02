@@ -1,7 +1,9 @@
 .. _vim_plugin:
 
-VIM Plugin
-==========
+VIM RPC Plugin
+==============
+
+This is the original VIM plugin, and is bundled with Phpactor by default.
 
 Installation
 ------------

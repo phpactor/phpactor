@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Phpactor'
-copyright = '2020, Daniel Leech'
-author = 'Daniel Leech'
+copyright = '2020, Phpactor Community'
+author = 'Phpactor Community'
 
 # The full version, including alpha/beta/rc tags
 release = '15'

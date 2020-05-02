@@ -1,3 +1,5 @@
+.. _rpc_protocol:
+
 RPC Protocol
 ============
 
