@@ -44,7 +44,7 @@ a lesser extent, with [GiT](https://git-scm.org).
 Documentation
 -------------
 
-Full documentation can be found on [Read the Docs](https://phpactor.readthedocs.io/en)
+Full documentation can be found on [Read the Docs](https://phpactor.readthedocs.io/en/develop)
 
 Community
 ---------
