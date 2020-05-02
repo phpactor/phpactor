@@ -6,8 +6,8 @@
 Phpactor
 ========
 
-Phpactor is an intelligent code-completion and refactoring tool and **Language
-Server** for PHP.
+Phpactor is an intelligent :ref:`completion` and :ref:`refactoring` tool for PHP which is available over
+it's own RPC protocol and as a :ref:`language_server`:
 
 -  :ref:`completion`: Provides broad and accurate context aware code
    completion.

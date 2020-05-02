@@ -1,3 +1,5 @@
+.. _language_server:
+
 Language Server
 ===============
 

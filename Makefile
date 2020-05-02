@@ -15,8 +15,6 @@ help:
 livehtml:
 	@sphinx-autobuild -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-
-
 .PHONY: help Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new

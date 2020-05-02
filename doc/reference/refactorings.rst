@@ -1,7 +1,7 @@
 .. _refactoring:
 
-Refactorings
-************
+Refactoring
+***********
 
 .. contents::
    :depth: 2
