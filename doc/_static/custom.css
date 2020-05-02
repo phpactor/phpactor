@@ -11,15 +11,3 @@ div.document {
     border-style: none;
     padding: 0px;
 }
-
-#contents > ul > li {
-}
-.toctree-wrapper > ul > li {
-}
-
-#contents > ul, .toctree-wrapper > ul {
-}
-
-.fa .fa-check {
-    color: green;
-}
