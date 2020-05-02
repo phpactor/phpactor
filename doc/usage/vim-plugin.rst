@@ -1,5 +1,5 @@
-Phpactor VIM Plugin
-===================
+VIM Plugin
+==========
 
 Installation
 ------------
@@ -64,12 +64,11 @@ The Git and Composer checks are referring to the current “workspace”
 Composer for your project, ensure you are starting Vim from the project
 directory to enable detection.
 
-Plugin Usage
-------------
+Usage and Configuration
+-----------------------
 
 To find out how to use the plugin type ``:help phpactor`` or view the
-plugin documentation
-`here <https://raw.githubusercontent.com/phpactor/phpactor/develop/doc/phpactor.txt>`__.
+:doc:`../vim-plugin/man`.
 
 Complementary Plugins
 ---------------------

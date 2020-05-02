@@ -18,9 +18,7 @@ server for PHP.
 -  **CLI interface**: Some functionality is exposed through CLI commands.
 
 Phpactor can be used in a limited way as a **standalone application**,
-but its full power can only be utilized through its :doc:`rpc` protocol or
-through its :doc:`lsp`.
-
-For a list of clients see :doc:`clients`
+but its full power can only be utilized through its :doc:`other/rpc` protocol or
+through its :doc:`usage/language-server`.
 
 Phpactor is pronounced “factor”, as in “factorisation” and “re-factoring”.

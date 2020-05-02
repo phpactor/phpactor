@@ -1,3 +1,6 @@
+div.document {
+    width: 1050px;
+}
 .logo h2 {
     text-align: center;
     font-family: sans-serif;
@@ -10,12 +13,9 @@
 }
 
 #contents > ul > li {
-    list-style-type: none;
 }
 .toctree-wrapper > ul > li {
-    list-style-type: none;
 }
 
 #contents > ul, .toctree-wrapper > ul {
-    margin: 0px;
 }

@@ -12,13 +12,16 @@ Phpactor
    home
    usage
    reference
+   extensions
    other
 
 .. toctree::
    :hidden:
 
-   adr/*
-
+   vim
+   adr
+   integrations/drupal8
+   screenshots
     
 Indices and tables
 ------------------

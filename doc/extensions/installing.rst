@@ -1,5 +1,5 @@
-Introduction
-============
+Installing
+==========
 
 Phpactor allows you to add custom extensions which can extend Phpactor.
 
@@ -25,10 +25,7 @@ To list all available extensions, run the following:
    | phpactor/console-extension                | 0.1.x-dev 970c787* | Integrate Symfony Console commands  |
    +-------------------------------------------+--------------------+-------------------------------------+
 
-Note that extensions without a version are not installed.
-
-Pretending that ``phpactor/completion-worse-extension`` isn’t installed,
-you can install it with:
+New extensions can be installed as follows:
 
 ::
 

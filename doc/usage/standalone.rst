@@ -1,14 +1,17 @@
+
 Standalone
 ==========
 
-Installation
-------------
+.. _installation_global:
+
+Global Installation
+-------------------
 
 You can checkout the project and then create a symlink:
 
 .. code:: bash
 
-   $ cd ~/your/projects
+   $ cd ~/home/you/somewhere
    $ git clone git@github.com:phpactor/phpactor
    $ cd phpactor
    $ composer install

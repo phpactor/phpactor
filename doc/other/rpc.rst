@@ -16,7 +16,7 @@ turn Phpactor can also instruct the editor to do things.
 
 Requests can be sent via. ``stdin`` to the Phpactor ``rpc`` command
 
-.. code:: bash
+.. code::
 
    $ echo '{"action": "echo", "parameters": { "message": "Hello" }}' | ./bin/phpactor rpc
 
@@ -243,7 +243,7 @@ will be handled by your editor.
 
 The complete RPC command returns a list of completions:
 
-.. code:: bash
+.. code::
 
    $ echo '{"actions": [ {"action": "complete", "parameters": { "source": "<?php $foo = new Exception(); $foo->", "offset": 37} }] }' | ./bin/phpactor rpc
 
@@ -281,7 +281,7 @@ Example response:
 ``class_search``
 ~~~~~~~~~~~~~~~~
 
-.. code:: bash
+.. code::
 
    $ echo '{"actions": [ {"action": "class_search", "parameters": { "short_name": "InputInterface" } }] }' | ./bin/phpactor rpc
 
@@ -297,7 +297,7 @@ source code:
    -  ``source``: Source code as a string
    -  ``offset``: Offset of symbol (int)
 
-.. code:: bash
+.. code::
 
    $ echo '{"actions": [ {"action": "goto_definition", "parameters": { "source": "<?php $foo = new Exception(); $foo->getMessage()", "offset": 37} }] }' | ./bin/phpactor rpc
 
@@ -315,7 +315,7 @@ Copy a class to a new location and update its name accordingly:
    -  ``source_path``: File containing class to copy..
    -  ``dest_path``: (eventually required) Destination path
 
-.. code:: bash
+.. code::
 
    $ echo '{"actions": [ {"action": "copy_class", "parameters": { "source_path": "/path/to/class.php" } } ] }| ./bin/phpactor rpc
 

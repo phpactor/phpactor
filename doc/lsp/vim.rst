@@ -1,8 +1,10 @@
-CoC
-===
+VIM / NeoVim
+============
 
-Installation
-------------
+CoC
+---
+
+Install Phpactor with :ref:`installation_global` then:
 
 ::
 
@@ -17,7 +19,7 @@ the follwing:
        "languageserver": {
            "phpactor": {
                "trace.server": "verbose",
-               "command": "/home/you/.vim/plugged/phpactor/bin/phpactor",
+               "command": "phpactor",
                "args": ["language-server"],
                "filetypes": ["php","cucumber"],
                "initializationOptions": {
@@ -28,9 +30,32 @@ the follwing:
        },
    }
 
-Replace the path (``command``) to Phpactor and customize as appropriate,
-the CoC configuration schema can be seen
-`here <https://github.com/neoclide/coc.nvim/blob/master/data/schema.json>`__
+You can pass Phpactor :ref:`configuration` in the
+``initializationOptions``.
+
+Autozimu
+--------
+
+Install Phpactor with :ref:`installation_global` then:
+
+::
+
+   Plug 'autozimu/LanguageClient-neovim', {
+       \ 'branch': 'next',
+       \ 'do': 'bash install.sh',
+       \ }
+
+And let it know about Phpactor:
+
+::
+
+   let g:LanguageClient_serverCommands = {
+       \ 'php': [ 'phpactor', 'server:start', '--stdio']
+       \}
+
+See the `github
+repository <https://github.com/autozimu/LanguageClient-neovim>`__ for
+more details.
 
 Troubleshooting
 ---------------

@@ -58,7 +58,6 @@ html_theme_options = {
         'description_font_style': 'italic',
         'github_banner': True,
         'travis_button': True,
-        'show_relbars': True,
 }
 html_sidebars = {
     '**': [
