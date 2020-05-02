@@ -17,3 +17,5 @@ the following is a list of integration guides for *some* clients:
    :glob:
 
    ../lsp/clients
+
+.. _Language Server Protocol: https://microsoft.github.io/language-server-protocol/specification
