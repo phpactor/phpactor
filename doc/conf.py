@@ -18,13 +18,13 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Phpactor'
-copyright = '2020, Daniel Leech'
-author = 'Daniel Leech'
+copyright = '2020, Phpactor Community'
+author = 'Phpactor Community'
 
 # The full version, including alpha/beta/rc tags
 release = '15'
 
-master_doc = 'index'
+master_doc = 'contents'
 
 
 # -- General configuration ---------------------------------------------------
@@ -64,9 +64,9 @@ html_theme_options = {
 html_sidebars = {
     '**': [
         'about.html',
+        'searchbox.html',
         'navigation.html',
         'relations.html',
-        'searchbox.html',
         'donate.html',
     ]
 }

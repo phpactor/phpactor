@@ -1,6 +1,8 @@
 VIM / NeoVim
 ============
 
+.. _lsp_client_vim_coc:
+
 CoC
 ---
 

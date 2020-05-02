@@ -1135,6 +1135,8 @@ After extracting method ``newMethod``:
        }
    }
 
+.. _refactoring_rename_variable:
+
 Rename Variable
 ---------------
 
@@ -1201,6 +1203,8 @@ Rename the variable ``$hellos`` to ``$foobars`` in the local scope:
 
    }
 
+.. _refactoring_rename_class:
+
 Rename Class
 ------------
 
@@ -1266,6 +1270,8 @@ Rename ``Hello`` to ``Goodbye``
 .. container:: alert alert-danger
 
    When renaming classes in your project use Class Move.
+
+.. _refactoring_rename_member:
 
 Rename Class Member
 -------------------

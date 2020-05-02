@@ -1,5 +1,8 @@
+Clients
+=======
+
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    vim
    sublime

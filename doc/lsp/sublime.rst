@@ -1,3 +1,5 @@
+.. _lsp_client_sublime:
+
 Sublime Text
 ============
 

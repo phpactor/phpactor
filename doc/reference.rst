@@ -6,3 +6,4 @@ Reference
    :glob:
 
    reference/*
+   language-server

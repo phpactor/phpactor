@@ -22,22 +22,3 @@ it's own RPC protocol and as a :ref:`language_server`:
 Phpactor can be used in a limited way as a **standalone application**,
 but its full power can only be utilized through its :doc:`other/rpc` protocol or
 through its :doc:`usage/language-server`.
-
-Find out more about Phpactor:
-
-.. toctree::
-   :maxdepth: 2
-
-   home
-   usage
-   reference
-   extensions
-   other
-
-.. toctree::
-   :hidden:
-
-   vim
-   adr
-   integrations/drupal8
-   screenshots

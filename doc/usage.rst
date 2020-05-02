@@ -3,6 +3,10 @@ Usage
 
 .. toctree::
    :maxdepth: 2
-   :glob:
 
-   usage/*
+   usage/getting-started
+   usage/configuration
+   usage/language-server
+   usage/vim-plugin
+   usage/other-clients
+   usage/standalone
