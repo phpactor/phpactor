@@ -6,6 +6,25 @@
 Phpactor
 ========
 
+Phpactor is an intelligent code-completion and refactoring tool and **Language
+Server** for PHP.
+
+-  :ref:`completion`: Provides broad and accurate context aware code
+   completion.
+-  :ref:`navigation`: Jump to class and method definitions, find
+   references, hover.
+-  :ref:`refactoring`: Move classes, complete constructors, implement
+   contracts, generate methods, etc.
+-  :ref:`language_server`:: Language Server Protocol implementation.
+-  :ref:`vim_plugin`: Lightweight VIM plugin.
+
+
+Phpactor can be used in a limited way as a **standalone application**,
+but its full power can only be utilized through its :doc:`other/rpc` protocol or
+through its :doc:`usage/language-server`.
+
+Find out more about Phpactor:
+
 .. toctree::
    :maxdepth: 2
 
@@ -22,12 +41,3 @@ Phpactor
    adr
    integrations/drupal8
    screenshots
-    
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`search`
-
-
-.. _Github: https://github.com/phpbench/phpbench

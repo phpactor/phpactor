@@ -1,3 +1,5 @@
+.. _vim_plugin:
+
 VIM Plugin
 ==========
 

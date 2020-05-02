@@ -1,3 +1,5 @@
+.. _refactoring:
+
 Refactorings
 ************
 
