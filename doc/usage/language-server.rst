@@ -3,19 +3,23 @@
 Language Server
 ===============
 
-Phpactor implements the `Language Server Protocol`_ which is supported by many
-text editors and IDEs.
+Phpactor implements the `Language Server Protocol`_
+which is supported by many text editors and IDEs.
 
-Client Integration
-------------------
-
-In general it should be possible to enable it on any LSP compatible client,
-the following is a list of integration guides for *some* clients:
+See :doc:`/lsp/support` for the list of supported features.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
 
    ../lsp/clients
 
+Other Clients
+-------------
+
+In general it should be possible to enable it on any LSP compatible client.
+First perform a :ref:`installation_global` and then configure a generic
+language server in your client, typically using :ref:`lsp_running_stdio`. See
+:ref:`lsp_client_sublime` for an example.
+ 
 .. _Language Server Protocol: https://microsoft.github.io/language-server-protocol/specification

@@ -4,6 +4,8 @@ Manually Running the Server
 Typically you should never need to run the Language Server yourself, the
 following methods are useful for development.
 
+.. _lsp_running_stdio:
+
 STDIO
 ~~~~~
 
