@@ -24,7 +24,7 @@ author = 'Daniel Leech'
 # The full version, including alpha/beta/rc tags
 release = '15'
 
-master_doc = 'index'
+master_doc = 'contents'
 
 
 # -- General configuration ---------------------------------------------------
@@ -64,9 +64,9 @@ html_theme_options = {
 html_sidebars = {
     '**': [
         'about.html',
+        'searchbox.html',
         'navigation.html',
         'relations.html',
-        'searchbox.html',
         'donate.html',
     ]
 }
@@ -75,3 +75,4 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+sphinxemoji_style = 'twemoji'

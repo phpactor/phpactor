@@ -19,3 +19,7 @@ div.document {
 
 #contents > ul, .toctree-wrapper > ul {
 }
+
+.fa .fa-check {
+    color: green;
+}

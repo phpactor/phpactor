@@ -12,6 +12,8 @@ tests, references etc.
    :backlinks: none
    :local:
 
+.. _navigation_class_references:
+
 Class References
 ----------------
 
@@ -37,6 +39,8 @@ where the references were found.
    :alt: Class references
 
    Class references
+
+.. _navigation_class_member_references:
 
 Class Member References
 -----------------------
