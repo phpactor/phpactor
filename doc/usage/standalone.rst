@@ -6,7 +6,7 @@ Installation
 
 You can checkout the project and then create a symlink:
 
-::
+.. code:: bash
 
    $ cd ~/your/projects
    $ git clone git@github.com:phpactor/phpactor

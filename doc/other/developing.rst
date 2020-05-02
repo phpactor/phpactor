@@ -1,3 +1,6 @@
+Development
+===========
+
 Debugging RPC
 -------------
 
@@ -62,7 +65,7 @@ Documentation
 -------------
 
 Phpactor Documentation
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Phpactor uses `couscous <https://github.com/CouscousPHP/Couscous>`__. In
 order to develop the documentation (located in ``doc/``) download the
@@ -81,7 +84,7 @@ and run:
 To run serve the documentation locally.
 
 VIM Help
---------
+~~~~~~~~
 
 The VIM plugin is documented in the *generated* ``doc/phpactor.txt``
 file.

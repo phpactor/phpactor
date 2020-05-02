@@ -1,5 +1,8 @@
+Home
+====
+
 About
-=====
+-----
 
 Phpactor is an intelligent code-completion and refactoring tool and language
 server for PHP.
@@ -21,11 +24,3 @@ through its :doc:`lsp`.
 For a list of clients see :doc:`clients`
 
 Phpactor is pronounced “factor”, as in “factorisation” and “re-factoring”.
-
-More Information
-----------------
-
-.. toctree::
-   :maxdepth: 1
-
-   about/completion
