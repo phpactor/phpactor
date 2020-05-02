@@ -44,6 +44,8 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Folding/Selection Range | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
+| Diagnostics             | ✘ | Planned [#static]_                  |
++-------------------------+---+-------------------------------------+
 
 .. _Language Server Specification: https://microsoft.github.io/language-server-protocol/specification
 
@@ -52,3 +54,4 @@ See the `Language Server Specification`_ for details.
           added soon.
 .. [#nav] RPC supports :ref:`navigation_class_references` and :ref:`navigation_class_member_references`
 .. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
+.. [#static] Extension(s) will be provided to integrate static analynsis tools such as PHPStan https://github.com/phpactor/phpactor/issues/980
