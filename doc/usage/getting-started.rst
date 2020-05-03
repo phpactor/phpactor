@@ -1,21 +1,36 @@
 Getting Started
 ===============
 
+How you start depends on your editor.
 
-Are you using:
+Currently Phpactor has most support when used over it's own RPC protocol, but
+an :ref:`increasing amount <lsp_support>` of support is offered from the
+:ref:`language_server`.
 
-... VIM or Neovim?
-    :doc:`vim-plugin`, optionally supplement with :ref:`lsp_client_vim_coc`:
+In addition you can also so somethings from the CLI only.
 
-... Sublime Text?
-    :ref:`client_rpc_sublime` optionally supplement with
-    :ref:`lsp_client_sublime`:
+.. tabs::
 
-... Emacs?
-    :ref:`client_rpc_emacs`
+    .. tab:: VIM or Neovim
 
-... Another editor? 
-    You should be able to use the :ref:`language_server`. The procedure should be similar to the ones outlined here, when you get it working submit a pull request here.
+        :doc:`vim-plugin`, optionally supplement with :ref:`lsp_client_vim_coc`:
 
+    .. tab:: Sublme Text
 
+        :ref:`client_rpc_sublime` optionally supplement with
+        :ref:`lsp_client_sublime`:
 
+    .. tab:: Emacs
+
+        :ref:`client_rpc_emacs`
+
+    .. tab:: Other Editor 
+
+        You should be able to use the :ref:`language_server`. The procedure should be similar to the ones outlined for :ref:`other clients <language_server_clients>`. When you get one working, make a pull request to add it here ☺
+
+    .. tab:: CLI
+
+        Phpactor exposes a number of commands over the CLI (e.g. moving
+        classes, applying transformations).
+
+        See :ref:`installation_global`

@@ -115,6 +115,8 @@ symbol, for example if you reference a property in code,
 ``$this->locator``, you can invoke *goto type* on the property and jump
 to the, for example, ``Locator`` type.
 
+.. _navigation_goto_implementation:
+
 Jump to Implementation
 ----------------------
 

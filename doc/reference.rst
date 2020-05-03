@@ -7,3 +7,4 @@ Reference
 
    reference/*
    language-server
+   reference/indexer

@@ -1,3 +1,5 @@
+.. _lsp_support:
+
 LSP Support
 ===========
 

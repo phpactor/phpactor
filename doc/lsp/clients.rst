@@ -1,3 +1,5 @@
+.. _language_server_clients:
+
 Clients
 =======
 

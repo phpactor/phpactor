@@ -7,6 +7,5 @@ See :ref:`language_server` for getting started instructions.
    :maxdepth: 2
 
    lsp/clients
-   lsp/watcher
    lsp/running
    lsp/support
