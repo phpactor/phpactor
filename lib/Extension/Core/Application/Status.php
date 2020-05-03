@@ -63,9 +63,9 @@ class Status
         ];
 
         if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER, $filesystems)) {
-            $diagnostics['good'][] = 'Composer detected - faster class location and more features!';
+            $diagnostics['good'][] = 'Composer detected - Phpactor could work faster without an index';
         } else {
-            $diagnostics['bad'][] = 'Composer not found - some functionality will not be available (e.g. class creation) and class location will fallback to scanning the filesystem - this can be slow. Make sure you\'ve run `composer install` in your project!';
+            $diagnostics['bad'][] = 'Composer not found - some functionality will not be available (e.g. class creation) and class location will fallback to scanning the filesystem if index not enabled - this can be slow. Make sure you\'ve run `composer install` in your project!';
         }
 
         if (in_array(SourceCodeFilesystemExtension::FILESYSTEM_GIT, $filesystems)) {
