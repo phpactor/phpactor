@@ -1,12 +1,12 @@
 Standalone
 ==========
 
-.. _installation_global:
-
 Requirements
 ------------
 
 Phpactor requires PHP 7.3.
+
+.. _installation_global:
 
 Global Installation
 -------------------
