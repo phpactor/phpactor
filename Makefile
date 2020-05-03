@@ -21,10 +21,10 @@ build/vimdoc/build: build/vimdoc
 	cd build/vimdoc; python3 setup.py build 
 
 build/bin/vimdoc: build/vimdoc/build
-	cd build/vimdoc; python3 setup.py install --install-scripts ../bin --install-lib ../lib
+	cd build/vimdoc; python3 setup.py install --user
 
 vimdoc: build/bin/vimdoc
-	./build/bin/vimdoc .
+	vimdoc .
 
 # Put it first so that "make" without argument is like "make help".
 help:
