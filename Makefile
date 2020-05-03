@@ -13,10 +13,10 @@ BUILDDIR      = doc/_build
 build:
 	mkdir build
 
-build/vimdoc/.git/index: build
+build/vimdoc:
 	git clone https://github.com/google/vimdoc build/vimdoc
 
-build/vimdoc/build: build/vimdoc/.git
+build/vimdoc/build: build/vimdoc
 	cd build/vimdoc; python3 setup.py config
 	cd build/vimdoc; python3 setup.py build 
 
