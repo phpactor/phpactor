@@ -14,7 +14,7 @@ build:
 	mkdir build
 
 build/vimdoc: build
-	git clone git@github.com:google/vimdoc build/vimdoc
+	git clone https://github.com/google/vimdoc build/vimdoc
 
 build/vimdoc/build: build/vimdoc
 	cd build/vimdoc; python3 setup.py config
