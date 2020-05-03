@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9af32ad022480387e46ac75df1ac6afc",
+    "content-hash": "cbe087fdda4bb662aee34cd691f1663c",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2586,16 +2586,16 @@
         },
         {
             "name": "phpactor/indexer-extension",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "4ad307652d15724d550aa43cfa53cfa0586daaa8"
+                "reference": "790e75e47a7de63e7e9d13d265f83d102d7e4956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/4ad307652d15724d550aa43cfa53cfa0586daaa8",
-                "reference": "4ad307652d15724d550aa43cfa53cfa0586daaa8",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/790e75e47a7de63e7e9d13d265f83d102d7e4956",
+                "reference": "790e75e47a7de63e7e9d13d265f83d102d7e4956",
                 "shasum": ""
             },
             "require": {
@@ -2643,7 +2643,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-29T21:36:44+00:00"
+            "time": "2020-05-03T20:03:12+00:00"
         },
         {
             "name": "phpactor/language-server",

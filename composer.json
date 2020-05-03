@@ -27,7 +27,7 @@
         "phpactor/extension-manager-extension": "^0.8.2",
         "phpactor/file-path-resolver": "^0.8.2",
         "phpactor/file-path-resolver-extension": "^0.3.2",
-        "phpactor/indexer-extension": "^0.2.0",
+        "phpactor/indexer-extension": "^0.2.1",
         "phpactor/language-server-extension": "~0.3",
         "phpactor/logging-extension": "^0.3.2",
         "phpactor/path-finder": "^0.1.0",
