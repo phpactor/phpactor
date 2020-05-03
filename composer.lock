@@ -2647,16 +2647,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "9970695d78a3d5547431718a6de6180eb16505cd"
+                "reference": "8bdd80aa00d86bf16993febe0c341955a08c49ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/9970695d78a3d5547431718a6de6180eb16505cd",
-                "reference": "9970695d78a3d5547431718a6de6180eb16505cd",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/8bdd80aa00d86bf16993febe0c341955a08c49ef",
+                "reference": "8bdd80aa00d86bf16993febe0c341955a08c49ef",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-03T16:30:50+00:00"
+            "time": "2020-05-03T20:30:52+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
