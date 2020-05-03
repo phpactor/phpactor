@@ -28,6 +28,7 @@ Improvements:
 
 Bug fixes:
 
+  - [code-transform] Generate accessor doesn't work on selected property (regression)
   - [vim-plugin] Configuration was not global (#964) - @elythyr
   - [class-mover] `$` was removed when renaming static variables (#925) -
     @dantleech
