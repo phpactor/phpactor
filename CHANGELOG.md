@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2020-05-03 0.15.0
 
 Features:
 
