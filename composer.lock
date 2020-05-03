@@ -675,12 +675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f"
+                "reference": "bfe71fb9520c0862f3465e4e92af43d178b4955c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f",
-                "reference": "3c2889672bf07e1e0ea4d5b5b56f6ab60a92452f",
+                "url": "https://api.github.com/repos/composer/composer/zipball/bfe71fb9520c0862f3465e4e92af43d178b4955c",
+                "reference": "bfe71fb9520c0862f3465e4e92af43d178b4955c",
                 "shasum": ""
             },
             "require": {
@@ -757,7 +757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-30T19:30:13+00:00"
+            "time": "2020-05-01T16:03:22+00:00"
         },
         {
             "name": "composer/semver",
@@ -2672,12 +2672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "d710981ad6029f9a6765425c7a84ee67df28ad97"
+                "reference": "ee8a38bedacd4e0e1da42afb71a402d1e7c08df0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/d710981ad6029f9a6765425c7a84ee67df28ad97",
-                "reference": "d710981ad6029f9a6765425c7a84ee67df28ad97",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/ee8a38bedacd4e0e1da42afb71a402d1e7c08df0",
+                "reference": "ee8a38bedacd4e0e1da42afb71a402d1e7c08df0",
                 "shasum": ""
             },
             "require": {
@@ -2722,7 +2722,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-01T10:03:10+00:00"
+            "time": "2020-05-01T15:53:47+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -6982,12 +6982,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "346636d2cae417992ecfd761979b2ab98b339a45"
+                "reference": "4431584a895fec6da5e2827626378362f218df6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/346636d2cae417992ecfd761979b2ab98b339a45",
-                "reference": "346636d2cae417992ecfd761979b2ab98b339a45",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/4431584a895fec6da5e2827626378362f218df6a",
+                "reference": "4431584a895fec6da5e2827626378362f218df6a",
                 "shasum": ""
             },
             "require": {
@@ -7044,7 +7044,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-03-27T16:54:36+00:00"
+            "time": "2020-05-01T16:55:10+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
