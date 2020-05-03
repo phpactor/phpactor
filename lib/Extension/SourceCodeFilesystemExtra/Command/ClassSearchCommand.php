@@ -50,5 +50,7 @@ class ClassSearchCommand extends Command
 
         $dumper = $this->dumperRegistry->get($input->getOption('format'));
         $dumper->dump($output, $results);
+
+        return 0;
     }
 }

@@ -58,5 +58,7 @@ class CompleteCommand extends Command
 
         $format = $input->getOption('format');
         $this->dumperRegistry->get($format)->dump($output, $completions);
+
+        return 0;
     }
 }

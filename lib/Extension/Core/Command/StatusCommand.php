@@ -56,5 +56,7 @@ class StatusCommand extends Command
             $output->writeln('  <error>✘</> ' . $bad);
         }
         $output->write(PHP_EOL);
+
+        return 0;
     }
 }

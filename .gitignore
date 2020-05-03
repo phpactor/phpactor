@@ -12,8 +12,9 @@
 /.phpactor/*
 
 # docs
-/.couscous
+/doc/_build
 
 # php-cs-fixer
 /.php_cs.cache
 ./.php_cs
+/build

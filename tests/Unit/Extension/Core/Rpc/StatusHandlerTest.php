@@ -4,6 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
 use Phpactor\ConfigLoader\Adapter\PathCandidate\AbsolutePathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\Status;
@@ -37,7 +38,7 @@ class StatusHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testStatus()
+    public function testMessageStatus()
     {
         $this->status->check()->willReturn([
             'php_version' => '7.1',
@@ -53,5 +54,40 @@ class StatusHandlerTest extends HandlerTestCase
 
         $response = $this->handle('status', []);
         $this->assertInstanceOf(EchoResponse::class, $response);
+    }
+
+    public function testDetailStatus(): void
+    {
+        $this->status->check()->willReturn([
+            'php_version' => '7.1',
+            'phpactor_version' => 'version one',
+            'cwd' => '/path/to/here',
+            'good' => ['i am good'],
+            'bad' => ['i am bad'],
+            'config_files' => [
+                '/config/file1.yml' => true,
+                '/config/file2.yml' => false,
+            ],
+            'filesystems' => ['git', 'simple'],
+        ]);
+
+        $expected = [
+            'php_version' => '7.1',
+            'phpactor_version' => 'version one',
+            'cwd' => '/path/to/here',
+            'config_files' => [
+                '/config/file1.yml' => true,
+                '/config/file2.yml' => false,
+            ],
+            'filesystems' => ['git', 'simple'],
+            'diagnostics' => [
+                'i am good' => true,
+                'i am bad' => false,
+            ],
+        ];
+
+        $response = $this->handle('status', ['type' => 'detailed']);
+        $this->assertInstanceOf(ReturnResponse::class, $response);
+        $this->assertEquals($expected, $response->value());
     }
 }

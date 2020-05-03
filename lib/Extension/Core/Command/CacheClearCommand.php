@@ -26,5 +26,7 @@ class CacheClearCommand extends Command
     {
         $this->cache->clearCache();
         $output->writeln(sprintf('<info>Cache cleared: </>%s', $this->cache->cachePath()));
+
+        return 0;
     }
 }

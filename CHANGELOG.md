@@ -1,6 +1,45 @@
 Changelog
 =========
 
+## 2020-05-03 0.15.0
+
+Features:
+
+  - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
+  - [worse-reflection] Enable cache lifetime (important for long running
+    processes) (#929) - @dantleech
+  - [language-server] Included in the core - @dantleech
+  - [indexer] Indexer included in the core - @dantleech
+  - [rpc] Add docblock prose to hover 
+  - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
+    terminal window (#974) - @elythyr
+
+Improvements:
+
+  - [text-document] Include `<` and `>` when getting "class" name undercursor
+    (allow implorting `Foobar` from an `@var array<Foobar>` doc
+  - [completion] Option to deduplicate suggetions (#905) - @dantleech
+  - [completion] Option to limit completion options - @dantleech
+  - [completion] Allow completors to return `true` when they finish (allow
+    final consumer to know if list is complete) - @elythyr
+  - [vim-plugin] Improved command registration (#965) - @elythyr
+  - [completion] Improved signature help (https://github.com/phpactor/completion/pull/31) - @elythyr
+  - [completion] Completors can return if they are complete (https://github.com/phpactor/completion/pull/30) - @elythyr
+
+Bug fixes:
+
+  - [code-transform] Generate accessor doesn't work on selected property (regression)
+  - [vim-plugin] Configuration was not global (#964) - @elythyr
+  - [class-mover] `$` was removed when renaming static variables (#925) -
+    @dantleech
+  - [class-to-file] Remove duplicate candidates (fixes issue with class
+    completion duplicate suggestions)
+
+Documentation:
+
+  - [doc] Fix examples in refactoring documentation - @Great-Antique
+  - [doc] Fix example mappings and add missing commands - @yeagassy
+
 ## 2020-03-04 0.14.1
 
 Bug fixes:

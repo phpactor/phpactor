@@ -84,6 +84,60 @@ https://github.com/kristijanhusak/deoplete-phpactor
 ==============================================================================
 COMMANDS                                                   *phpactor-commands*
 
+:[range][N]PhpactorExtractMethod                      *:PhpactorExtractMethod*
+  Extract a new method from the current selection
+
+:[range][N]PhpactorExtractExpression              *:PhpactorExtractExpression*
+  Extract the selected expression and assign it to a variable before (placing
+  it before the current statement)
+
+:[N]PhpactorExtractConstant                         *:PhpactorExtractConstant*
+  Extract a constant from a literal
+
+:[N]PhpactorImportClass                                 *:PhpactorImportClass*
+  Import the name under the cusor. If multiple options are available, you are
+  able to choose one.
+
+:[N]PhpactorImportMissingClasses               *:PhpactorImportMissingClasses*
+  Attempt to import all non-resolvable classes in the current class (based on
+  offset position)
+
+:[N]PhpactorHover                                             *:PhpactorHover*
+  Show information about the symbol under the cursor.
+
+:[N]PhpactorContextMenu                                 *:PhpactorContextMenu*
+  Show the context menu for the current cursor position.
+
+:[N]PhpactorCopyFile                                       *:PhpactorCopyFile*
+  Copy the current file - updating the namespace and class name according to
+  the new file location and name
+
+:[N]PhpactorMoveFile                                       *:PhpactorMoveFile*
+  Move the current file - updating the namespace and class name according to
+  the new file location and name
+
+:[N]PhpactorClassInflect                               *:PhpactorClassInflect*
+  Inflect a new class from the current class (e.g. generate an interface for
+  the current class)
+
+:[N]PhpactorFindReferences                           *:PhpactorFindReferences*
+  Attempt to find all references to the class name or method under the cursor.
+  The results will be loaded into the quik-fix list
+
+:[N]PhpactorNavigate                                       *:PhpactorNavigate*
+  Navigate - jump to the parent class, interface, or any of the relationships
+  defined in `navigation.destinations`
+  https://phpactor.github.io/phpactor/configuration.html#reference
+
+:[N]PhpactorChangeVisibility                       *:PhpactorChangeVisibility*
+  Rotate the visiblity of the method under the cursor
+
+:[N]PhpactorGenerateAccessors                     *:PhpactorGenerateAccessors*
+  Generate accessors for the current class
+
+:[N]PhpactorTransform                                     *:PhpactorTransform*
+  Automatically add any missing properties to a class
+
 :PhpactorUpdate                                              *:PhpactorUpdate*
   Update Phpactor to the latest version using the branch defined with
   |g:phpactorBranch|
@@ -97,26 +151,20 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorConfig                                              *:PhpactorConfig*
   Dump Phpactor's configuration
 
-:[range]PhpactorExtractMethod                         *:PhpactorExtractMethod*
-  Extract a new method from the current selection
+:PhpactorExtensionList                                *:PhpactorExtensionList*
+  List all installed extensions
 
-:[range]PhpactorExtractExpression                 *:PhpactorExtractExpression*
-  Extract the selected expression and assign it to a variable before (placing
-  it before the current statement)
+:PhpactorExtensionInstall                          *:PhpactorExtensionInstall*
+  Install an extension
 
-:PhpactorExtractConstant                            *:PhpactorExtractConstant*
-  Extract a constant from a literal
+:PhpactorExtensionRemove                            *:PhpactorExtensionRemove*
+  Remove an extension
 
 :PhpactorClassExpand                                    *:PhpactorClassExpand*
   Expand the class name under the cursor to it's fully-qualified-name
 
-:PhpactorImportClass                                    *:PhpactorImportClass*
-  Import the name under the cusor. If multiple options are available, you are
-  able to choose one.
-
-:PhpactorImportMissingClasses                  *:PhpactorImportMissingClasses*
-  Attempt to import all non-resolvable classes in the current class (based on
-  offset position)
+:PhpactorClassNew                                          *:PhpactorClassNew*
+  Create a new class. You will be offered a choice of templates.
 
 :PhpactorGotoDefinition                              *:PhpactorGotoDefinition*
   Goto the definition of the class, method or function under the cursor. Open
@@ -131,54 +179,12 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorGotoDefinitionTab                        *:PhpactorGotoDefinitionTab*
   As with |:PhpactorGotoDefinition| but open in a new tab
 
+:PhpactorGotoType                                          *:PhpactorGotoType*
+  Goto type (class) of the symbol under the cursor.
+
 :PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
   Load all implementations of the class under the cursor into the quick-fix
   list.
-
-:PhpactorHover                                                *:PhpactorHover*
-  Show information about the symbol under the cursor.
-
-:PhpactorContextMenu                                    *:PhpactorContextMenu*
-  Show the context menu for the current cursor position.
-
-:PhpactorCopyFile                                          *:PhpactorCopyFile*
-  Copy the current file - updating the namespace and class name according to
-  the new file location and name
-
-:PhpactorMoveFile                                          *:PhpactorMoveFile*
-  Move the current file - updating the namespace and class name according to
-  the new file location and name
-
-:PhpactorExtensionList                                *:PhpactorExtensionList*
-  List all installed extensions
-
-:PhpactorExtensionInstall                          *:PhpactorExtensionInstall*
-  Install an extension
-
-:PhpactorExtensionRemove                            *:PhpactorExtensionRemove*
-  Remove an extension
-
-:PhpactorClassNew                                          *:PhpactorClassNew*
-  Create a new class. You will be offered a choice of templates.
-
-:PhpactorClassInflect                                  *:PhpactorClassInflect*
-  Inflect a new class from the current class (e.g. generate an interface for
-  the current class)
-
-:PhpactorFindReferences                              *:PhpactorFindReferences*
-  Attempt to find all references to the class name or method under the cursor.
-  The results will be loaded into the quik-fix list
-
-:PhpactorNavigate                                          *:PhpactorNavigate*
-  Navigate - jump to the parent class, interface, or any of the relationships
-  defined in `navigation.destinations`
-  https://phpactor.github.io/phpactor/configuration.html#reference
-
-:PhpactorChangeVisibility                          *:PhpactorChangeVisibility*
-  Rotate the visiblity of the method under the cursor
-
-:PhpactorGenerateAccessors                        *:PhpactorGenerateAccessors*
-  Generate accessors for the current class
 
 ==============================================================================
 MAPPINGS                                                   *phpactor-mappings*
@@ -188,22 +194,40 @@ Phpactor does not assume any mappings automatically, the following mappings
 are available for you to copy:
 >
 
-  nmap <Leader>u :PhpactorImportClass<CR>
-  nmap <Leader>ua :PhpactorImportAllClasses<CR>
-  nmap <Leader>mm :PhpactorContextMenu()<CR>
-  nmap <Leader>nn :PhpactorNavigate()<CR>
-  nmap <Leader>oo :PhpactorGotoDefinition()<CR>
-  nmap <Leader>oh :PhpactorGotoDefinitionHsplit()<CR>
-  nmap <Leader>ov :PhpactorGotoDefinitionVsplit()<CR>
-  nmap <Leader>ot :PhpactorGotoDefinitionTab()<CR>
-  nmap <Leader>K :PhpactorHover()<CR>
-  nmap <Leader>tt :PhpactorTransform()<CR>
-  nmap <Leader>cc :PhpactorClassNew()<CR>
-  nmap <silent><Leader>ee :PhpactorExtractExpression(v:false)<CR>
-  vmap <silent><Leader>ee :<C-U>PhpactorExtractExpression(v:true)<CR>
-  vmap <silent><Leader>em :<C-U>PhpactorExtractMethod()<CR>
+  augroup PhpactorMappings
+    au!
+    au FileType php nmap <buffer> <Leader>u :PhpactorImportClass<CR>
+    au FileType php nmap <buffer> <Leader>e :PhpactorClassExpand<CR>
+    au FileType php nmap <buffer> <Leader>ua :PhpactorImportMissingClasses<CR>
+    au FileType php nmap <buffer> <Leader>mm :PhpactorContextMenu<CR>
+    au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
+    au FileType php,cucumber nmap <buffer> <Leader>o
+        \ :PhpactorGotoDefinition<CR>
+    au FileType php,cucumber nmap <buffer> <Leader>Oh
+        \ :PhpactorGotoDefinitionHsplit<CR>
+    au FileType php,cucumber nmap <buffer> <Leader>Ov
+        \ :PhpactorGotoDefinitionVsplit<CR>
+    au FileType php,cucumber nmap <buffer> <Leader>Ot
+        \ :PhpactorGotoDefinitionTab<CR>
+    au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
+    au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
+    au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
+    au FileType php nmap <buffer> <Leader>ci :PhpactorClassInflect<CR>
+    au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
+    au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
+    au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
+    au FileType php nmap <buffer> <silent> <Leader>ee
+        \ :PhpactorExtractExpression<CR>
+    au FileType php vmap <buffer> <silent> <Leader>ee
+        \ :<C-u>PhpactorExtractExpression<CR>
+    au FileType php vmap <buffer> <silent> <Leader>em
+        \ :<C-u>PhpactorExtractMethod<CR>
+  augroup END
 <
 
+Note: the cucumber mappings are for the Behat extension:
+
+    https://github.com/phpactor/behat-extension
 
 
 vim:tw=78:ts=8:ft=help:norl:

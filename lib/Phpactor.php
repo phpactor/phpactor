@@ -2,6 +2,13 @@
 
 namespace Phpactor;
 
+use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
+use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
+use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
+use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
@@ -39,6 +46,12 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 
 class Phpactor
 {
+    private const LEGACY_EXTENSIONS = [
+        '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension',
+        '\Phpactor\Extension\LanguageServer\LanguageServerExtension',
+        '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
+    ];
+
     public static function boot(InputInterface $input, string $vendorDir): PhpactorContainer
     {
         $config = [];
@@ -96,10 +109,20 @@ class Phpactor
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
             PhpExtension::class,
+            LanguageServerExtension::class,
+            LanguageServerCompletionExtension::class,
+            LanguageServerReferenceFinderExtension::class,
+            LanguageServerWorseReflectionExtension::class,
+            LanguageServerIndexerExtension::class,
+            LanguageServerHoverExtension::class,
+            IndexerExtension::class,
         ];
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
-            $extensionNames = array_merge($extensionNames, require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]));
+            $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
+
+            $installedExtensionNames = array_diff($installedExtensionNames, self::LEGACY_EXTENSIONS);
+            $extensionNames = array_merge($extensionNames, $installedExtensionNames);
         }
 
         $container = new PhpactorContainer();

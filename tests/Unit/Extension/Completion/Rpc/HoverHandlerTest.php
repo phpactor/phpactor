@@ -2,6 +2,9 @@
 
 namespace Phpactor\Tests\Unit\Extension\Completion\Rpc;
 
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
+use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
 use Phpactor\Extension\Rpc\Handler;
@@ -45,7 +48,7 @@ class HoverHandlerTest extends HandlerTestCase
     {
         yield 'method' => [
             '<?php class Foobar { public function fo<>obar() { } }',
-            'method foobar',
+            'method foobar'
         ];
 
         yield 'property' => [
@@ -66,6 +69,73 @@ class HoverHandlerTest extends HandlerTestCase
         yield 'variable' => [
             '<?php $f<>oo = "bar"',
             'variable foo',
+        ];
+
+        yield 'unknown' => [
+            '<?php <> $foo = "bar"',
+            '<unknown> <unknown>',
+        ];
+    }
+
+    /**
+     * @dataProvider provideHoverWithFormatter
+     */
+    public function testHoverWithFormatter(string $source, string $expectedMessage)
+    {
+        $this->formatter = new ObjectFormatter([
+            new MethodFormatter(),
+            new ClassFormatter(),
+            new VariableFormatter(),
+        ]);
+
+        [ $source, $offset ] = ExtractOffset::fromSource($source);
+
+        $response = $this->handle(HoverHandler::NAME, [
+            'source' => $source,
+            'offset' => $offset,
+        ]);
+
+        $this->assertEquals($expectedMessage, $response->message());
+    }
+
+    public function provideHoverWithFormatter()
+    {
+        yield 'method' => [
+            '<?php class Foobar { public function fo<>obar() { } }',
+            'pub foobar()',
+        ];
+
+
+        yield 'method with documentation' => [
+            <<<'EOT'
+<?php 
+
+class Foobar { 
+    /**
+     * this is documentation
+     */
+public function fo<>obar() { } 
+}
+EOT
+            ,
+            <<<'EOT'
+pub foobar()
+EOT
+        ];
+
+        yield 'class with documentation' => [
+            <<<'EOT'
+<?php 
+
+/**
+ * this is documentation
+ */
+class F<>oobar {}
+EOT
+            ,
+            <<<'EOT'
+Foobar
+EOT
         ];
 
         yield 'unknown' => [

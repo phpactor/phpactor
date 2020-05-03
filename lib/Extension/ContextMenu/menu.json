@@ -54,6 +54,15 @@
                 "path": "%path%"
             }
         },
+        "goto_type": {
+            "action": "goto_type",
+            "key": "t",
+            "parameters": {
+                "offset": "%offset%",
+                "source": "%source%",
+                "path": "%path%"
+            }
+        },
         "replace_references": {
             "action": "references",
             "key": "r",
@@ -132,13 +141,6 @@
                 "source": "%source%"
             }
         },
-        "hover": {
-            "action": "hover",
-            "parameters": {
-                "offset": "%offset%",
-                "source": "%source%"
-            }
-        },
         "import_missing_classes": {
             "action": "import_missing_classes",
             "key": "o",
@@ -177,8 +179,9 @@
     },
     "contexts": {
         "variable": [
-            "rename_variable",
-            "hover"
+            "goto_type",
+            "hover",
+            "rename_variable"
         ],
         "string": [
             "extract_constant",
@@ -191,40 +194,43 @@
             "cycle_visibility",
             "find_references",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "hover",
+            "replace_references"
         ],
         "class": [
             "class_new",
             "copy",
             "find_references",
+            "generate_accessor",
             "goto_definition",
+            "goto_implementation",
+            "hover",
+            "import",
+            "import_missing_classes",
             "inflect",
             "move",
             "navigate",
             "override_method",
             "replace_references",
-            "transform_file",
-            "import",
-            "import_missing_classes",
-            "hover",
-            "generate_accessor"
+            "transform_file"
         ],
         "property": [
             "cycle_visibility",
             "find_references",
             "generate_accessor",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "goto_type",
+            "hover",
+            "replace_references"
         ],
         "method": [
             "cycle_visibility",
             "find_references",
             "generate_method",
             "goto_definition",
-            "replace_references",
-            "hover"
+            "goto_type",
+            "hover",
+            "replace_references"
         ]
     }
 }

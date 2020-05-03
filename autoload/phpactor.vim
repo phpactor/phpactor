@@ -11,6 +11,8 @@
 "     https://github.com/google/vimdoc. See
 "     https://phpactor.github.io/phpactor/developing.html#vim-help
 
+let s:_phpactorCompletionMeta = {}
+
 function! phpactor#Update()
     let current = getcwd()
     execute 'cd ' . g:phpactorpath
@@ -53,7 +55,7 @@ function! phpactor#Complete(findstart, base)
     let issues = result['issues']
 
     let completions = []
-    let g:_phpactorCompletionMeta = {}
+    let s:_phpactorCompletionMeta = {}
 
     if !empty(suggestions)
         for suggestion in suggestions
@@ -66,7 +68,7 @@ function! phpactor#Complete(findstart, base)
                         \ 'icase': g:phpactorCompletionIgnoreCase
                         \ }
             call add(completions, completion)
-            let g:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
+            let s:_phpactorCompletionMeta[phpactor#_completionItemHash(completion)] = suggestion
         endfor
     endif
 
@@ -87,16 +89,20 @@ endfunction
 
 function! phpactor#_completeImportClass(completedItem)
 
+    if get(b:, 'phpactorOmniAutoClassImport', g:phpactorOmniAutoClassImport) != v:true
+      return
+    endif
+
     if !has_key(a:completedItem, "word")
         return
     endif
 
     let hash = phpactor#_completionItemHash(a:completedItem)
-    if !has_key(g:_phpactorCompletionMeta, hash)
+    if !has_key(s:_phpactorCompletionMeta, hash)
         return
     endif
 
-    let suggestion = g:_phpactorCompletionMeta[hash]
+    let suggestion = s:_phpactorCompletionMeta[hash]
 
     if !empty(get(suggestion, "class_import", ""))
         call phpactor#rpc("import_class", {
@@ -106,7 +112,7 @@ function! phpactor#_completeImportClass(completedItem)
                     \ "path": expand('%:p')})
     endif
 
-    let g:_phpactorCompletionMeta = {}
+    let s:_phpactorCompletionMeta = {}
 
 endfunction
 
@@ -210,6 +216,14 @@ function! phpactor#GotoDefinitionTab()
     call phpactor#_GotoDefinitionTarget('new_tab')
 endfunction
 
+function! phpactor#GotoType()
+    call phpactor#rpc('goto_type', {
+        \'offset': phpactor#_offset(),
+        \'source': phpactor#_source(),
+        \'path': expand('%:p'),
+        \'language': &filetype})
+endfunction
+
 function! phpactor#Hover()
     call phpactor#rpc("hover", { "offset": phpactor#_offset(), "source": phpactor#_source() })
 endfunction
@@ -288,7 +302,17 @@ function! phpactor#CacheClear()
 endfunction
 
 function! phpactor#Status()
-    call phpactor#rpc("status", {})
+    if exists(':terminal')
+        if has('nvim')
+            split term://phpactor\ status
+            " Press any key to leave
+            normal i
+        else
+            terminal phpactor status
+        endif
+    else
+        call phpactor#rpc("status", {'type': 'formatted'})
+    endif
 endfunction
 
 function! phpactor#Config()
@@ -319,7 +343,7 @@ endfunction
 " Utility functions
 """""""""""""""""""""""
 function! s:isOpenInCurrentWindow(filePath)
-  return expand('%:p') == a:filePath
+  return phpactor#_path() == a:filePath
 endfunction
 
 function! phpactor#_switchToBufferOrEdit(filePath)
@@ -345,7 +369,15 @@ function! phpactor#_source()
 endfunction
 
 function! phpactor#_path()
-    return expand('%:p')
+    let l:path = expand('%:p')
+
+    if filereadable(l:path) || stridx(l:path, '/') == 0
+      return l:path
+    endif
+
+    " todo if empty path
+    "
+    return printf('%s/%s', g:phpactorInitialCwd, l:path)
 endfunction
 
 function! s:getStartOffsetFromMark(mark, linewise)
@@ -433,8 +465,10 @@ function! phpactor#rpc(action, arguments)
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . g:phpactorInitialCwd
-    let result = system(cmd, json_encode(request))
+    let l:workspaceDir = g:phpactorInitialCwd
+    let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
+
+    let result = system(l:cmd, json_encode(request))
 
     if (v:shell_error == 0)
         try
