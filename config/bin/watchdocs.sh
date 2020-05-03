@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-make html
+make sphinx
 while RES=$(inotifywait -e modify doc -r); do
     echo $RES
-    make html
+    make sphinx
 done

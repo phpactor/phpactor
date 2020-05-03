@@ -8,16 +8,35 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = doc
 BUILDDIR      = doc/_build
 
+.PHONY: help sphinx
+
+build:
+	mkdir build
+
+build/vimdoc:
+	git clone https://github.com/google/vimdoc build/vimdoc
+
+build/vimdoc/build: build/vimdoc
+	cd build/vimdoc; python3 setup.py config
+	cd build/vimdoc; python3 setup.py build 
+
+build/bin/vimdoc: build/vimdoc/build
+	cd build/vimdoc; python3 setup.py install --user
+
+vimdoc: build/bin/vimdoc
+	vimdoc .
+
 # Put it first so that "make" without argument is like "make help".
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-livehtml:
+sphinxwatch:
 	@config/bin/watchdocs.sh
 
-.PHONY: help Makefile
+sphinx:
+	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+docs: sphinx vimdoc
+
+clean:
+	rm -Rf build
