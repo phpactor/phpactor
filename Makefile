@@ -18,7 +18,8 @@ build/vimdoc: build
 
 build/vimdoc/build: build/vimdoc
 	cd build/vimdoc; python3 setup.py config
-	cd build/vimdoc; python3 setup.py build
+	cd build/vimdoc; python3 setup.py build 
+	cd build/vimdoc; python3 setup.py install --install-scripts ../bin --install-lib ../lib
 
 vimdoc: build/vimdoc/build
 	./build/vimdoc/build/scripts-3.8/vimdoc .
