@@ -67,31 +67,52 @@ Documentation
 Phpactor Documentation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Phpactor uses `couscous <https://github.com/CouscousPHP/Couscous>`__. In
-order to develop the documentation (located in ``doc/``) download the
-PHAR:
+Phpactor uses `Sphinx <https://www.sphinx-doc.org>`_ (RST) for doucmentation.
 
-.. code:: bash
+Docs are located in the ``docs``.
 
-   $ curl -OS http://couscous.io/couscous.phar 
+A useful primer on RST can be found `here <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_.
 
-and run:
+.. tabs::
 
-::
+    .. tab:: Debian/Ubuntu
 
-   $ php couscous.phar preview
+        ::
+          
+            apt-get install python3-sphinx
 
-To run serve the documentation locally.
+You can then build the docs with:
 
+
+    ::
+        
+        make sphinx
+
+Or, to watch for changes (requires ``inotifywait``):
+
+    ::
+        
+        make sphinxwatch
+    
 VIM Help
 ~~~~~~~~
 
 The VIM plugin is documented in the *generated* ``doc/phpactor.txt``
-file.
+file using `vimdoc <https://github.com/google/vimdoc>`_.
 
-Install the `vimdoc <https://github.com/google/vimdoc>`__ tool, followw
-the installation instructions and then run:
+In order to add documentation just annotate properties / methods with
+comments, for example:
 
-.. code:: bash
+.. code:: vim
 
-   $ vimdoc .
+    ""
+    " Extract the selected expression and assign it to a variable before
+    command! -buffer -range=% PhpactorExtractExpression call phpactor#ExtractExpression('v')
+
+See `vimdoc <https://github.com/google/vimdoc>`_ for more information.
+
+Use the following command to both install vimdoc and build the documentation:
+
+.. code:: sh
+
+    make vimdoc
