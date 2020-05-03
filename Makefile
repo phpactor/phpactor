@@ -13,16 +13,18 @@ BUILDDIR      = doc/_build
 build:
 	mkdir build
 
-build/vimdoc: build
+build/vimdoc/.git/index: build
 	git clone https://github.com/google/vimdoc build/vimdoc
 
-build/vimdoc/build: build/vimdoc
+build/vimdoc/build: build/vimdoc/.git
 	cd build/vimdoc; python3 setup.py config
 	cd build/vimdoc; python3 setup.py build 
+
+build/bin/vimdoc: build/vimdoc/build
 	cd build/vimdoc; python3 setup.py install --install-scripts ../bin --install-lib ../lib
 
-vimdoc: build/vimdoc/build
-	./build/vimdoc/build/scripts-3.8/vimdoc .
+vimdoc: build/bin/vimdoc
+	./build/bin/vimdoc .
 
 # Put it first so that "make" without argument is like "make help".
 help:
