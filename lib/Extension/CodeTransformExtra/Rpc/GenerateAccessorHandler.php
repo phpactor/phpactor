@@ -4,11 +4,14 @@ namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use InvalidArgumentException;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
@@ -57,6 +60,26 @@ class GenerateAccessorHandler extends AbstractHandler
     }
 
     public function handle(array $arguments)
+    {
+        if ($context = $this->getPropertyContext($arguments)) {
+            return $this->handleSingle($context, $arguments);
+        }
+
+        return $this->handleClass($arguments);
+    }
+
+    private function getPropertyContext(array $arguments): ?SymbolContext
+    {
+        $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
+
+        if ($offset->symbolContext()->symbol()->symbolType() === Symbol::PROPERTY) {
+            return $offset->symbolContext();
+        }
+
+        return null;
+    }
+
+    private function handleClass(array $arguments): Response
     {
         $class = $this->class($arguments[self::PARAM_SOURCE]);
 
@@ -125,5 +148,20 @@ class GenerateAccessorHandler extends AbstractHandler
         natsort($propertiesNames);
 
         return array_combine($propertiesNames, $propertiesNames);
+    }
+
+    private function handleSingle(SymbolContext $context, array $arguments)
+    {
+        $newSource = $this->generateAccessor->generate(
+            SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),
+            $context->symbol()->name(),
+            $arguments[self::PARAM_OFFSET]
+        );
+
+        return UpdateFileSourceResponse::fromPathOldAndNewSource(
+            $newSource->path(),
+            $arguments[self::PARAM_SOURCE],
+            (string) $newSource
+        );
     }
 }
