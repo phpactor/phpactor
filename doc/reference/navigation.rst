@@ -19,9 +19,23 @@ Class References
 
 Navigate / list all references to a given class.
 
--  **Command**: ``$ phpactor references:class path/to/Class.php``
--  **VIM Context Menu**: *Class context menu > Find references*.
--  **VIM Command**:``:PhpactorFindReferences``
+.. tabs::
+
+   .. tab:: CLI
+
+       .. code-block:: sh
+
+           $ phpactor references:class path/to/Class.php
+
+   .. tab:: VIM Context Menu
+
+       *Class context menu > Find references*.
+
+   .. tab:: VIM Plugin
+
+       .. code:: sh
+
+           :PhpactorFindReferences
 
 Description
 ~~~~~~~~~~~
@@ -48,10 +62,23 @@ Class Member References
 Navigate / list all references to a given class member (method, property
 or constant).
 
--  **Command**:
-   ``$ phpactor references:member path/to/Class.php memberName``
--  **VIM Context Menu**: *Member context menu > Find references*.
--  **VIM Command**:``:PhpactorFindReferences``
+.. tabs::
+
+   .. tab:: CLI
+
+       .. code-block:: sh
+
+           $ phpactor references:member path/to/Class.php memberName
+
+   .. tab:: VIM Context Menu
+
+       *Member context menu > Find references*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorFindReferences
 
 .. _description-1:
 
@@ -72,18 +99,36 @@ Hover
 While not a navigation function as such, this RPC command will show
 brief information about the symbol underneath the cursor.
 
--  **Command**: *RPC Only*
--  **VIM Context Menu**: *Context menu* > Hover_.
--  **VIM Command**:``:PhpactorHover``
+.. tabs::
+
+   .. tab:: VIM Context Menu
+
+       *Context menu* > Hover_.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorHover
+
 
 Jump to definition
 ------------------
 
 Jump to the definition of a class or class member.
 
--  **Command**: *RPC Only*
--  **VIM Context Menu**: *Member/class context menu > Goto definition*.
--  **VIM Command**:``:PhpactorGotoDefinition``
+.. tabs::
+
+   .. tab:: VIM Context Menu
+
+       *Member/class context menu > Goto definition*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorGotoDefinition
+
 
 .. _description-2:
 
@@ -101,9 +146,17 @@ Jump to type
 
 Jump to the type of the symbol under the cursor.
 
--  **Command**: *RPC Only*
--  **VIM Context Menu**: \_Member/class context menu > Goto type.
--  **VIM Command**:``:PhpactorGotoType()``
+.. tabs::
+
+   .. tab:: VIM Context Menu
+
+       \_Member/class context menu > Goto type.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorGotoType()
 
 .. _description-3:
 
@@ -122,39 +175,22 @@ Jump to Implementation
 
 Jump to the implementatoin(s) of an interface or class
 
--  **Command**: *RPC Only*
--  **VIM Context Menu**: *Member/class context menu > Goto
-   implementation*.
--  **VIM Command**:``:PhpactorGotoImplementations`` n ### Description
+.. tabs::
+
+   .. tab:: VIM Context Menu
+
+       *Member/class context menu > Goto implementation*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorGotoImplementations
+
 
 Jump to implementations of the interface or class under the cursor.
 
-NOTE: This is a hugely expensive operation if not optimised. We apply
-the following filters to avoid parsing all classes in the entire
-project:
-
--  Filter files which do not contain classes which extend or implement
-   something.
--  Filter files whoses classes do not contain share at least one “word”
-   with the interface’s FQN from the last 2 path segments.
-
-So, given the interface ``Phpactor\Rpc\Handler``, the following will be
-considered:
-
--  ``/src/Completion/Rpc/CompletionHandler.php``
--  ``/src/Completion/Handler/Completion.php``
-
-Where as the following will not:
-
--  ``/src/Completion/Completion.php``
--  ``/src/Handler/Completion/Completion.php``
-
-The filters can be disabled via the following configuration options:
-
--  ``worse_reference_finder.implementation_finder.abstractness_filter``:
-   Enable abstractness filter (default ``true``)
--  ``worse_reference_finder.implementation_finder.similarity_filter``
-   Enable similarity filter (default ``true``)
+Note that this feature only works when used with the :ref:`indexer`.
 
 Jump to or generate related file
 --------------------------------
@@ -163,9 +199,17 @@ Jump to a related file (e.g. parent class, interfaces, unit test,
 integration test, benchmark), and optionally generate it if it doesn’t
 exist (where supported).
 
--  **Command**: *RPC Only*
--  **VIM Context Menu**: *Class context menu > Navigate*.
--  **VIM Command**:``:PhpactorNavigate``
+.. tabs::
+
+   .. tab:: VIM Context Menu
+
+       *Class context menu > Navigate*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorNavigate
 
 .. _description-4:
 
