@@ -48,6 +48,12 @@ is to use the VIM inputlist.
 When jumping to a file location: if the target file open in a window, switch
 to that window instead of switching buffers.  The default is false.
 
+                                             *g:PhpactorRootDirectoryStrategy*
+Each RPC call to phpactor comes with some workspace root directory. This
+setting allows select a |Funcref| to the custom strategy that can assign this
+directory. Notice the upper case of the first letter of this variable.
+Currently no arguments is passed to the function.
+
 ==============================================================================
 COMPLETION                                               *phpactor-completion*
 

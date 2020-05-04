@@ -41,6 +41,13 @@ let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor
 " to that window instead of switching buffers.  The default is false.
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
+""
+" Each RPC call to phpactor comes with some workspace root directory.
+" This setting allows select a |Funcref| to the custom strategy that can assign this directory.
+" Notice the upper case of the first letter of this variable.
+" Currently no arguments is passed to the function.
+let g:PhpactorRootDirectoryStrategy = get(g:, 'PhpactorRootDirectoryStrategy', {-> g:phpactorInitialCwd})
+
 " Config }}}
 
 " Commands {{{
