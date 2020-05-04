@@ -9,6 +9,7 @@ use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
+use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -72,6 +73,32 @@ PHP;
         $this->assertInstanceOf(ListInput::class, $input);
 
         $this->assertEquals(self::PROPERTIES_CHOICES, $input->choices());
+    }
+
+    public function testGeneratesAccessorIfSpecificPropertyIsSelected()
+    {
+        [ $source, $offset ] = ExtractOffset::fromSource(<<<'EOT'
+<?php
+
+class
+{
+    private $<>foo;
+}
+EOT
+        );
+
+        $this->generateAccessor->generate($source, 'foo', $offset)
+             ->willReturn(SourceCode::fromStringAndPath('new source', self::PATH))
+             ->shouldBeCalledTimes(1);
+
+        $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
+            'source' => $source,
+            'path' => self::PATH,
+            'offset' => $offset,
+        ]);
+
+        /** @var InputCallbackResponse $action */
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
     }
 
     public function testGenerateAccessorFromAPropertyName()

@@ -1,0 +1,7 @@
+ADRs
+====
+
+.. toctree::
+   :glob:
+
+   adr/*

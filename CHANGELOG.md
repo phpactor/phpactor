@@ -1,14 +1,13 @@
 Changelog
 =========
 
-## develop
+## 2020-05-03 0.15.0
 
 Features:
 
   - [reference-finder] Goto type: goto the type of the symbol under the cursor #892 - @dantleech
   - [worse-reflection] Enable cache lifetime (important for long running
     processes) (#929) - @dantleech
-  - [vim-plugin] Detect the current workspace directory (#923) - @przepompownia
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
   - [rpc] Add docblock prose to hover 
@@ -29,6 +28,7 @@ Improvements:
 
 Bug fixes:
 
+  - [code-transform] Generate accessor doesn't work on selected property (regression)
   - [vim-plugin] Configuration was not global (#964) - @elythyr
   - [class-mover] `$` was removed when renaming static variables (#925) -
     @dantleech

@@ -41,22 +41,6 @@ let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor
 " to that window instead of switching buffers.  The default is false.
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
-""
-" The list of files that determine workspace root directory
-" if contained within
-let g:phpactorProjectRootPatterns = get(g:, 'phpactorProjectRootPatterns', [])
-
-""
-" The list of directories that should not be considered as workspace root directory
-" (in addition to '/' which is always considered)
-let g:phpactorGlobalRootPatterns = get(g:, 'phpactorGlobalRootPatterns', ['/', '/home'])
-
-""
-" The strategy, declared as Funcref, used to call phpactor 
-" with a specified orkspace root directory. It can be overriden by
-" b:PhpactorRootDirectoryStrategy for each buffer supported by phpactor.
-let g:PhpactorRootDirectoryStrategy = get(g:, 'PhpactorRootDirectoryStrategy', {-> g:phpactorInitialCwd})
-
 " Config }}}
 
 " Commands {{{
