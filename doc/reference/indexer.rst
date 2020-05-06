@@ -74,8 +74,6 @@ indexer``, explanations of some important ones:
   ``php``
 - ``indexer.buffer_time``: Time to wait to collect batch messages from
   "realtime" watchers (e.g. ``inotify``)
-- ``indexer.follow_syminks``: If the indexer should follow symlinks (default
-  ``true``).
 
 Troubleshooting
 ---------------

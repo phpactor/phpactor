@@ -9,20 +9,22 @@ an :ref:`increasing amount <lsp_support>` of support is offered from the
 
 In addition you can also so somethings from the CLI only.
 
+Select one of the following to get started:
+
 .. tabs::
 
     .. tab:: VIM or Neovim
 
-        :doc:`vim-plugin`, optionally supplement with :ref:`lsp_client_vim_coc`:
+        Use the :doc:`vim-plugin`, optionally supplement with :ref:`CoC <lsp_client_vim_coc>`:
 
     .. tab:: Sublme Text
 
-        :ref:`client_rpc_sublime` optionally supplement with
-        :ref:`lsp_client_sublime`:
+        Use :ref:`client_rpc_sublime` optionally supplement with
+        :ref:`Sublime LSP <lsp_client_sublime>`:
 
     .. tab:: Emacs
 
-        :ref:`client_rpc_emacs`
+        Use the :ref:`Emacs RPC client <client_rpc_emacs>`
 
     .. tab:: Other Editor 
 

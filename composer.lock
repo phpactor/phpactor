@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9af32ad022480387e46ac75df1ac6afc",
+    "content-hash": "53684b52acd9021739cd91aae389a02f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2586,16 +2586,16 @@
         },
         {
             "name": "phpactor/indexer-extension",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "4ad307652d15724d550aa43cfa53cfa0586daaa8"
+                "reference": "790e75e47a7de63e7e9d13d265f83d102d7e4956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/4ad307652d15724d550aa43cfa53cfa0586daaa8",
-                "reference": "4ad307652d15724d550aa43cfa53cfa0586daaa8",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/790e75e47a7de63e7e9d13d265f83d102d7e4956",
+                "reference": "790e75e47a7de63e7e9d13d265f83d102d7e4956",
                 "shasum": ""
             },
             "require": {
@@ -2643,20 +2643,20 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-04-29T21:36:44+00:00"
+            "time": "2020-05-03T20:03:12+00:00"
         },
         {
             "name": "phpactor/language-server",
-            "version": "0.3.1",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "14ba75d029cc2b3b4b950b141640ce413715db6d"
+                "reference": "8bdd80aa00d86bf16993febe0c341955a08c49ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/14ba75d029cc2b3b4b950b141640ce413715db6d",
-                "reference": "14ba75d029cc2b3b4b950b141640ce413715db6d",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/8bdd80aa00d86bf16993febe0c341955a08c49ef",
+                "reference": "8bdd80aa00d86bf16993febe0c341955a08c49ef",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-03T09:27:42+00:00"
+            "time": "2020-05-03T20:30:52+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -4579,16 +4579,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v1.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "f440677bad66c0ef42fa3f875bf05718028af5d3"
+                "reference": "04f9ffae372a9816d4472dfb7bcf6126b623a9df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/f440677bad66c0ef42fa3f875bf05718028af5d3",
-                "reference": "f440677bad66c0ef42fa3f875bf05718028af5d3",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/04f9ffae372a9816d4472dfb7bcf6126b623a9df",
+                "reference": "04f9ffae372a9816d4472dfb7bcf6126b623a9df",
                 "shasum": ""
             },
             "require": {
@@ -4672,6 +4672,7 @@
                     "generated/ps.php",
                     "generated/pspell.php",
                     "generated/readline.php",
+                    "generated/rpminfo.php",
                     "generated/rrd.php",
                     "generated/sem.php",
                     "generated/session.php",
@@ -4707,7 +4708,7 @@
                 "MIT"
             ],
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
-            "time": "2020-03-24T13:59:42+00:00"
+            "time": "2020-05-04T15:25:36+00:00"
         },
         {
             "name": "twig/twig",
