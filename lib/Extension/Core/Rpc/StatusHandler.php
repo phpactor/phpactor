@@ -69,7 +69,7 @@ class StatusHandler implements Handler
     {
         $status['diagnostics'] = \array_merge(
             \array_fill_keys($status['good'], true),
-            \array_fill_keys($status['bad'], false),
+            \array_fill_keys($status['bad'], false)
         );
 
         unset($status['good']);
