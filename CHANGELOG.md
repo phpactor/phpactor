@@ -1,5 +1,11 @@
 Changelog
 =========
+ 
+## develop (0.16.0)
+
+Features:
+
+  - [vim-plugin] Ability to set custom project root strategy (#1027) - @przepompownia
 
 ## 2020-05-03 0.15.0
 
