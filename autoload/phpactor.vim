@@ -463,42 +463,19 @@ function! phpactor#_applyTextEdits(path, edits)
     call setpos('.', postCursorPosition)
 endfunction
 
+function! phpactor#getRootDirectory() abort
+  let l:Strategy = get(b:, 'PhpactorRootDirectoryStrategy', g:PhpactorRootDirectoryStrategy)
+
+  if type(function('type')) != type(l:Strategy)
+    let l:Strategy = {-> g:phpactorInitialCwd}
+  endif
+
+  return l:Strategy()
+endfunction
 
 """""""""""""""""""""""
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
-
-function! s:searchDirectoryUpwardForRootPatterns(initialDirectory, workspaceRootPatterns, fallbackDirectory)
-  if index(g:phpactorGlobalRootPatterns, '/') < 0
-    call add(g:phpactorGlobalRootPatterns, '/')
-  endif
-
-  let l:directory = a:initialDirectory
-
-  while index(g:phpactorGlobalRootPatterns, l:directory) < 0
-    if s:directoryMatchesToPatterns(l:directory, a:workspaceRootPatterns)
-      return l:directory
-    endif
-
-    let l:directory = fnamemodify(l:directory, ':h')
-  endwhile
-
-  if index(g:phpactorGlobalRootPatterns, l:directory) >= 0
-    let l:directory = a:fallbackDirectory
-  endif
-
-  return l:directory
-endfunction
-
-function s:directoryMatchesToPatterns(directory, patterns) abort
-  for l:pattern in a:patterns
-    if (filereadable(a:directory .'/'. l:pattern))
-      return v:true
-    endif
-  endfor
-
-  return v:false
-endfunction
 
 function! phpactor#rpc(action, arguments)
     " Remove any existing output in the message window
@@ -506,11 +483,7 @@ function! phpactor#rpc(action, arguments)
 
     let request = { "action": a:action, "parameters": a:arguments }
 
-    let l:workspaceDir = s:searchDirectoryUpwardForRootPatterns(
-          \ fnamemodify(phpactor#_path(), ':h'),
-          \ g:phpactorProjectRootPatterns,
-          \ g:phpactorInitialCwd
-          \)
+    let l:workspaceDir = phpactor#getRootDirectory()
 
     let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
 

@@ -1,0 +1,20 @@
+div.document {
+    width: 1050px;
+}
+
+@media screen and (max-width: 875px) {
+    div.document {
+        width: 100%;
+    }
+}
+
+.logo h2 {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#contents, .toctree-wrapper {
+    background-color: white;
+    border-style: none;
+    padding: 0px;
+}

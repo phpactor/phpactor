@@ -8,27 +8,13 @@ env:
     - GH_REF: github.com/phpactor/phpactor
     - secure: "VW6FdcejZkI5Qir/MqzTsDxGGmrPKr1CLrFZirkD9wHUehiaJr2Z8JixBQsZy7D1z9nEycdt6Yq4ZFqoI0mSUhElOO8AY96Wed4PjIIhJ3tJKta8Eoks0KtHT12qxaFmZvVAkqfzQ3RrtIexwTb2axS7/tQRE0ZhECGppUnCges/tjqTm0nRox96l4pdtTXXlWsjbLjyFhDdURZY0t5QXDKiNh0ctHswc3MrSCc9BcRsX5+zuz/E/0RAI+J0w2ghVWRj9eIeuhvf9zIiFZdA07B4V3TSdF0E2ftPli7YUyZA2KmQ/8MBOF3PBI48KhU+kt6iHFa1EDlqp4t2NqHaRUEtmaHhlv+0cXHmKF1xMKLbMQdnqTg/NeWa9p87wAJ4dnvF1k1I9T2c0opKM7D4hUDBkFsx62jlstVxjmv+STwdaAw8WDZUnyNOLczTrAEg7jzwroigd/mYF6/8hiNsol1PeQsVbJqsi/61y3T8WkjeqnJJYisRrXcgi09sJ64crnr4CW+PxBR/88ETp8mLeM3oBGn+Nh5FjOKPc9pAVoai6DgfeJZ3UATY+7i82Q5vRlG860axhLVqqt2nYMnjKDBwHnh6CNaPArT5hIQgq/9AmW30dhFXheHy8XKgJMiyUtgktBk2zx4YilwcZKtP2/Gb5DCTbdQPjLJAu9/h6w4="
 
-sudo: false
-
 cache:
   directories:
     - "$HOME/.composer/cache"
 
-before_script:
-  - composer install
-
-script:
-  - vendor/bin/phpunit
-  # Run the benchmarks and send the results to the PHPBench reports server
-  # (only if the secure key is present)
-  - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
-  # Run the test suites for all the Phpactor packages
-  - config/travis/testdeps
-  - config/travis/testexts
-
 jobs:
   include:
-    - stage: test
+    - name: VIM Tests
       env: VIM
       php: 7.3
       before_script:
@@ -36,6 +22,7 @@ jobs:
         # Install the PHP dependencies
         - composer install --optimize-autoloader --classmap-authoritative
         - bin/phpactor --version
+        - sudo add-apt-repository --yes ppa:jonathonf/vim
         - sudo apt-get update -y
         - sudo apt-get install vim -fy
         # Install the VIM testing framework
@@ -43,13 +30,26 @@ jobs:
       script:
         # Run the VIM Plugin tests
         - config/travis/vim-plugin-test.sh
-    - php: 7.3
-    - stage: docs
-      php: 7.2
-      if: branch = master
+    - name: Phpactor Tests
+      php: 7.3
       before_script:
-        - git config --global user.email "phpactor@dantleech.com"
-        - git config --global user.name "Phpactor"
-        - curl -OS http://couscous.io/couscous.phar
+        - composer install
       script:
-        - php couscous.phar travis-auto-deploy
+        - vendor/bin/phpunit
+        # Run the benchmarks and send the results to the PHPBench reports server
+        # (only if the secure key is present)
+        - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
+        # Run the test suites for all the Phpactor packages
+    - name: Phpactor Extensions
+      php: 7.3
+      before_script:
+        - composer install
+      script:
+        - config/travis/testdeps
+        - config/travis/testexts
+    - name: Docs
+      before_script:
+        - sudo apt-get -y install python3-pip python3-setuptools
+        - pip3 install -r requirements.txt
+      script:
+        - make docs
