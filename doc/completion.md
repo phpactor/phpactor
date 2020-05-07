@@ -1,3 +1,5 @@
+.. _completion:
+
 Completion
 ==========
 
@@ -134,3 +136,4 @@ function foobar(Barfoo $foobar, $barbar = 'foofoo')
     $barbar; // type: foofoo
 }
 ```
+
