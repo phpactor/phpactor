@@ -7,7 +7,7 @@ Currently Phpactor has most support when used over it's own RPC protocol, but
 an :ref:`increasing amount <lsp_support>` of support is offered from the
 :ref:`language_server`.
 
-In addition you can also so somethings from the CLI only.
+In addition you can also do somethings from the CLI only.
 
 Select one of the following to get started:
 
