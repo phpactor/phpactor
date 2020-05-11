@@ -2592,12 +2592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "db1adeab66d5bafc5fddee87a5d9e39a475119ba"
+                "reference": "cd71499d9e2a0a818fb285e89d11da9ca1ab1dde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/db1adeab66d5bafc5fddee87a5d9e39a475119ba",
-                "reference": "db1adeab66d5bafc5fddee87a5d9e39a475119ba",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/cd71499d9e2a0a818fb285e89d11da9ca1ab1dde",
+                "reference": "cd71499d9e2a0a818fb285e89d11da9ca1ab1dde",
                 "shasum": ""
             },
             "require": {
@@ -2646,7 +2646,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-05-10T17:56:24+00:00"
+            "time": "2020-05-11T06:50:50+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2769,12 +2769,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "67336cc225852bb2676a453eb0fdb9bc4d7730aa"
+                "reference": "77af56ff315125f9d265c3a53565924e9a5de861"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/67336cc225852bb2676a453eb0fdb9bc4d7730aa",
-                "reference": "67336cc225852bb2676a453eb0fdb9bc4d7730aa",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/77af56ff315125f9d265c3a53565924e9a5de861",
+                "reference": "77af56ff315125f9d265c3a53565924e9a5de861",
                 "shasum": ""
             },
             "require": {
@@ -2826,7 +2826,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-10T17:24:27+00:00"
+            "time": "2020-05-11T05:24:39+00:00"
         },
         {
             "name": "phpactor/logging-extension",
