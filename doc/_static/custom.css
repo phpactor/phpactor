@@ -2,6 +2,14 @@ div.document {
     width: 1050px;
 }
 
+.github-link {
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #eee;
+    border-color: #ddd;
+}
+
 @media screen and (max-width: 875px) {
     div.document {
         width: 100%;

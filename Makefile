@@ -6,7 +6,7 @@
 SPHINXOPTS    ?= -W
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = doc
-BUILDDIR      = doc/_build
+BUILDDIR      = build
 
 .PHONY: help sphinx
 

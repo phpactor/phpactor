@@ -1,8 +1,9 @@
-PHPSpec
+Phpspec
 =======
 
-The `PHPSpec extension <https://github.com/phpactor/phpspec-extension>`__
-provides subject-under-test member completion.
+.. github-link:: https://github.com/phpactor/phpspec-extension
+
+The PHPSpec extension provides subject-under-test member completion.
 
 Installing
 ----------
