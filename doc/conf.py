@@ -77,7 +77,3 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-html_css_files =  [
-    "http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-]
