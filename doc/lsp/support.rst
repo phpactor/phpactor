@@ -22,7 +22,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Goto Implementation     | ✔ |                                     |
 +-------------------------+---+-------------------------------------+
-| Find References         | ✘ | Supported by RPC  [#rpc]_ [#nav]_   |
+| Find References         | ✔ | [#references]                       |
 +-------------------------+---+-------------------------------------+
 | Document Highlight      | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
@@ -54,6 +54,6 @@ See the `Language Server Specification`_ for details.
 .. [#rpc] Available through RPC (i.e. non-LSP client) LSP support should be added soon.
 .. [#code] Code actions translate to :ref:`refactoring` actions in Phpactor, and should be available in the next release.
           added soon.
-.. [#nav] RPC supports :ref:`navigation_class_references` and :ref:`navigation_class_member_references`
+.. [#references] For class like references, functions and member accesses (static and object instances)
 .. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
 .. [#static] Extension(s) will be provided to integrate static analynsis tools such as PHPStan https://github.com/phpactor/phpactor/issues/980
