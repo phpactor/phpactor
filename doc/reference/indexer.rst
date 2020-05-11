@@ -80,21 +80,22 @@ You can query the index from the CLI:
 
             $ phpactor index:query "Symfony\\Component\\Console\\Output\\OutputInterface"
 
-        Build from scratch
+    .. tab:: Show function information
 
         .. code:: sh
 
-            $ phpactor index:build --reset
+            $ phpactor index:query "sprintf"
 
-    .. tab:: VIM (CoC)
-
-        The index is built automatically on LS initialize.
-
-        Build from scratch:
+    .. tab:: Show member information
 
         .. code:: sh
 
-            :call CocRequest('phpactor','indexer/reindex')
+            $ phpactor index:query "method#createFoobar"
+            $ phpactor index:query "property#createFoobar"
+            $ phpactor index:query "constant#createFoobar"
+
+Note that this information is primarily intended for the indexer and is not
+yet intended to provide a true "querying" facility.
 
 Configuration
 -------------
