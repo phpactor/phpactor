@@ -77,7 +77,8 @@ PHP;
 
     public function testGeneratesAccessorIfSpecificPropertyIsSelected()
     {
-        [ $source, $offset ] = ExtractOffset::fromSource(<<<'EOT'
+        [ $source, $offset ] = ExtractOffset::fromSource(
+            <<<'EOT'
 <?php
 
 class

@@ -32,7 +32,7 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 7.1+
+- PHP 7.3+
 - Composer
 
 Project Recommendations

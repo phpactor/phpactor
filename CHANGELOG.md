@@ -19,6 +19,8 @@ Features:
   - [rpc] Add docblock prose to hover 
   - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
     terminal window (#974) - @elythyr
+  - [ref-finder] Goto definition works for vars (https://github.com/phpactor/worse-reference-finder/pull/1) - @FatBoyXPC
+  - [phpactor-ls] workspace/references support - @dantleech
 
 Improvements:
 
