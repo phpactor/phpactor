@@ -27,7 +27,7 @@ if (!isset($autoloadFile)) {
     exit(255);
 }
 
-$minVersion = '7.0.0';
+$minVersion = '7.3.0';
 
 if (version_compare(PHP_VERSION, $minVersion) < 0) {
     echo sprintf('Phpactor requires at least PHP %s', $minVersion) . PHP_EOL;
