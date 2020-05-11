@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "605ce3242f989ff9f9f8656f26580b9a",
+    "content-hash": "a79a8902c65af4158f4a295fbebbac40",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2441,16 +2441,16 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "0.8.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
-                "reference": "71cb61651fb7f8a8cb082f773cc8c423a78a7420"
+                "reference": "2ae5ea478f9ff3b698b4bb96cdaec7887a90f037"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/71cb61651fb7f8a8cb082f773cc8c423a78a7420",
-                "reference": "71cb61651fb7f8a8cb082f773cc8c423a78a7420",
+                "url": "https://api.github.com/repos/phpactor/extension-manager-extension/zipball/2ae5ea478f9ff3b698b4bb96cdaec7887a90f037",
+                "reference": "2ae5ea478f9ff3b698b4bb96cdaec7887a90f037",
                 "shasum": ""
             },
             "require": {
@@ -2490,7 +2490,7 @@
                 }
             ],
             "description": "Install, remove and otherwise manage extensions",
-            "time": "2020-02-09T22:10:14+00:00"
+            "time": "2020-05-11T07:17:08+00:00"
         },
         {
             "name": "phpactor/file-path-resolver",
@@ -2769,12 +2769,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "77af56ff315125f9d265c3a53565924e9a5de861"
+                "reference": "aba2dadb591fff1c3ec255aabc65c8cee6550e26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/77af56ff315125f9d265c3a53565924e9a5de861",
-                "reference": "77af56ff315125f9d265c3a53565924e9a5de861",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/aba2dadb591fff1c3ec255aabc65c8cee6550e26",
+                "reference": "aba2dadb591fff1c3ec255aabc65c8cee6550e26",
                 "shasum": ""
             },
             "require": {
@@ -2808,7 +2808,13 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "0.4.x-dev"
-                }
+                },
+                "phpactor.extension_class": [
+                    "Phpactor\\Extension\\LanguageServerCompletion\\LanguageServerCompletionExtension",
+                    "Phpactor\\Extension\\LanguageServerIndexer\\LanguageServerIndexerExtension",
+                    "Phpactor\\Extension\\LanguageServerReferenceFinder\\LanguageServerReferenceFinderExtension",
+                    "Phpactor\\Extension\\LanguageServerWorseReflection\\LanguageServerWorseReflectionExtension"
+                ]
             },
             "autoload": {
                 "psr-4": {
@@ -2826,7 +2832,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-11T05:24:39+00:00"
+            "time": "2020-05-11T07:03:30+00:00"
         },
         {
             "name": "phpactor/logging-extension",
