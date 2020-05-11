@@ -18,7 +18,7 @@ class GitHubRepoDirective(Directive):
 
         title = nodes.paragraph(classes=['github-link'])
         
-        github_icon = nodes.image(uri=directives.uri("../images/github.svg"),width=15)
+        github_icon = nodes.image(uri=directives.uri("/images/github.svg"),width="15px",height="15px")
         title += github_icon,
         title += nodes.emphasis(strong=True,text=' Github:')
         title += nodes.inline(text=' ')

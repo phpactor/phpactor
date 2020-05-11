@@ -18,3 +18,4 @@
 /.php_cs.cache
 ./.php_cs
 /build
+__pycache__
