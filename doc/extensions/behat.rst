@@ -1,8 +1,9 @@
 Behat
 =====
 
-The `behat extension <https://github.com/phpactor/behat-extension>`__
-provides goto definition support and basic completion.
+.. github-link:: https://github.com/phpactor/behat-extension
+
+The Behat extension provides goto definition support and basic completion.
 
 Installation
 ------------

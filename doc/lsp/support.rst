@@ -10,8 +10,6 @@ See the `Language Server Specification`_ for details.
 +=========================+===+=====================================+
 | Completion              | ✔ | See :ref:`completion`               |
 +-------------------------+---+-------------------------------------+
-| Completion Resolve      | ✘ |                                     |
-+-------------------------+---+-------------------------------------+
 | Hover                   | ✔ |                                     |
 +-------------------------+---+-------------------------------------+
 | Signature Help          | ✔ |                                     |
@@ -22,7 +20,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Goto Implementation     | ✔ |                                     |
 +-------------------------+---+-------------------------------------+
-| Find References         | ✔ | [#references]                       |
+| Find References         | ✔ | [#references]_                      |
 +-------------------------+---+-------------------------------------+
 | Document Highlight      | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
@@ -46,7 +44,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Folding/Selection Range | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
-| Diagnostics             | ✘ | Planned [#static]_                  |
+| Diagnostics             | - | Provided by extensions [#static]_   |
 +-------------------------+---+-------------------------------------+
 
 .. _Language Server Specification: https://microsoft.github.io/language-server-protocol/specification
@@ -56,4 +54,4 @@ See the `Language Server Specification`_ for details.
           added soon.
 .. [#references] For class like references, functions and member accesses (static and object instances)
 .. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
-.. [#static] Extension(s) will be provided to integrate static analynsis tools such as PHPStan https://github.com/phpactor/phpactor/issues/980
+.. [#static] For example PHPStan https://github.com/phpactor/language-server-phpstan-extension

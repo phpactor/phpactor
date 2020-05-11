@@ -9,6 +9,11 @@ classes and functions in your project.
 The indexer *only required* for some features (such as
 :ref:`navigation_goto_implementation`).
 
+.. _indexer_building:
+
+Building the index
+------------------
+
 It will be *automatically enabled* when used with the language server but can
 also be used with RPC if run manually.
 
@@ -59,6 +64,37 @@ To contribute to the available watchers see `amp-fswatch
 <https://github.com/phpactor/amp-fswatch>`_.
 
 If you want to find out which watcher your system is using, enable _`logging`.
+
+.. _indexer_querying:
+
+Querying from the CLI
+---------------------
+
+You can query the index from the CLI:
+
+.. tabs::
+
+    .. tab:: Show class index information
+
+        .. code:: sh
+
+            $ phpactor index:query "Symfony\\Component\\Console\\Output\\OutputInterface"
+
+        Build from scratch
+
+        .. code:: sh
+
+            $ phpactor index:build --reset
+
+    .. tab:: VIM (CoC)
+
+        The index is built automatically on LS initialize.
+
+        Build from scratch:
+
+        .. code:: sh
+
+            :call CocRequest('phpactor','indexer/reindex')
 
 Configuration
 -------------
