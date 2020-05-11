@@ -36,6 +36,9 @@ sphinxwatch:
 sphinx:
 	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+sphinxlatex:
+	@$(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
 docs: sphinx vimdoc
 
 clean:
