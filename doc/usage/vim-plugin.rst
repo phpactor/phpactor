@@ -68,6 +68,10 @@ You need to open a PHP file before using Phpactor.
 If you run an older version of PHP by default, you will need to install
 another version and set ``:phpactorPhpBin`` in your ``.vimrc`` (or equivalent):
 
+.. code:: vim
+
+     let g:phpactorPhpBin = "/usr/bin/php7.3"
+
 ``Composer not found** or **Git not detected``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -75,10 +79,6 @@ The Git and Composer checks are referring to the current “workspace”
 (i.e. where you started Vim from). If you’ve already setup Git and
 Composer for your project, ensure you are starting Vim from the project
 directory to enable detection.
-
-.. code:: vim
-
-     let g:phpactorPhpBin = "/usr/bin/php7.3"
 
 Usage and Configuration
 -----------------------
