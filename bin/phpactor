@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-use Symfony\Component\Debug\Debug;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Phpactor\Application;
