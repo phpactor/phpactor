@@ -6,6 +6,26 @@ Changelog
 Features:
 
   - [vim-plugin] Ability to set custom project root strategy (#1027) - @przepompownia
+  - [indexer-extension] Workspace reference finder (classes,functions,members) - @dantleech
+  - [worse-reflection] Support "final" keyword - @dantleech
+  - [language-server-hover] Show "final" keyword on class hover - @dantleech
+  - [language-server-hover] Show inherited method documentation - @dantleech
+
+Improvements:
+
+  - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
+
+Bug fixes;
+
+  - [ampfs-watch] Inotify watcher not reporting error when out of available
+    watchers
+    (https://github.com/phpactor/amp-fswatch/commit/1e38faadc3fb73158de9a966ee12d17992dad4fe)
+    - @dantleech
+  - [ampfs-watch] Buffered watcher not allowing errors to bubble up
+    (https://github.com/phpactor/amp-fswatch/commit/b5cb54b6d01a9ec3dcbfdcca804c2d63c0e84a19)
+    - @dantleech
+  - [language-server] Ensure that `result` key is missing when `NULL` (some
+    clients require it) - @dantleech
 
 ## 2020-05-03 0.15.0
 

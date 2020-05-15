@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
@@ -115,6 +116,7 @@ class Phpactor
             LanguageServerWorseReflectionExtension::class,
             LanguageServerIndexerExtension::class,
             LanguageServerHoverExtension::class,
+            LanguageServerBridgeExtension::class,
             IndexerExtension::class,
         ];
 
