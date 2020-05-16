@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a79a8902c65af4158f4a295fbebbac40",
+    "content-hash": "7b044aafbb5c54565daaa8ba7217a1bb",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1845,21 +1845,22 @@
         },
         {
             "name": "phpactor/code-builder",
-            "version": "0.3.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "2ed43ab30433557671b95fe0cbe2b533e2891638"
+                "reference": "0dae729c9b95d7dba70848308d49703202dd9427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/2ed43ab30433557671b95fe0cbe2b533e2891638",
-                "reference": "2ed43ab30433557671b95fe0cbe2b533e2891638",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/0dae729c9b95d7dba70848308d49703202dd9427",
+                "reference": "0dae729c9b95d7dba70848308d49703202dd9427",
                 "shasum": ""
             },
             "require": {
                 "microsoft/tolerant-php-parser": "~0.0.1",
-                "phpactor/text-document": "^1.0",
+                "php": "^7.3",
+                "phpactor/text-document": "^1.2.2",
                 "phpactor/worse-reflection": "~0.2",
                 "twig/twig": "^2.4"
             },
@@ -1867,12 +1868,12 @@
                 "friendsofphp/php-cs-fixer": "~2.15.0",
                 "phpactor/test-utils": "^1.0",
                 "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpunit/phpunit": "~8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3.x-dev"
+                    "dev-master": "0.4.x-dev"
                 }
             },
             "autoload": {
@@ -1891,25 +1892,26 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-02-09T20:24:12+00:00"
+            "time": "2020-05-16T11:23:00+00:00"
         },
         {
             "name": "phpactor/code-transform",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "e6d7c309d4b9e3c92bfb34be980bf3f4d41e8c8b"
+                "reference": "ef2a9840f2711e1fea8d430a8d593cec38ccd3aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/e6d7c309d4b9e3c92bfb34be980bf3f4d41e8c8b",
-                "reference": "e6d7c309d4b9e3c92bfb34be980bf3f4d41e8c8b",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/ef2a9840f2711e1fea8d430a8d593cec38ccd3aa",
+                "reference": "ef2a9840f2711e1fea8d430a8d593cec38ccd3aa",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/class-to-file": "~0.3",
-                "phpactor/code-builder": "~0.3",
+                "phpactor/code-builder": "^0.4",
                 "phpactor/name-specification": "^0.1",
                 "webmozart/path-util": "~2.3"
             },
@@ -1918,12 +1920,12 @@
                 "phpactor/test-utils": "^1.0@dev",
                 "phpactor/worse-reflection": "~0.3",
                 "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.2.x-dev"
+                    "dev-master": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1942,7 +1944,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-03-01T10:00:50+00:00"
+            "time": "2020-05-16T11:43:47+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2592,12 +2594,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "a3e0055f111919666a8818d55d381004fae8d109"
+                "reference": "b1c26f55f9ad072ca031f9699ead8ee68f98cba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/a3e0055f111919666a8818d55d381004fae8d109",
-                "reference": "a3e0055f111919666a8818d55d381004fae8d109",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/b1c26f55f9ad072ca031f9699ead8ee68f98cba5",
+                "reference": "b1c26f55f9ad072ca031f9699ead8ee68f98cba5",
                 "shasum": ""
             },
             "require": {
@@ -2646,7 +2648,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-05-14T21:50:31+00:00"
+            "time": "2020-05-15T20:42:17+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2654,12 +2656,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "944fa1c8f67de2342796207b2ca28a979da471a3"
+                "reference": "7063e20ab017da77131cb73cbc10ca1c76fd55f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/944fa1c8f67de2342796207b2ca28a979da471a3",
-                "reference": "944fa1c8f67de2342796207b2ca28a979da471a3",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/7063e20ab017da77131cb73cbc10ca1c76fd55f9",
+                "reference": "7063e20ab017da77131cb73cbc10ca1c76fd55f9",
                 "shasum": ""
             },
             "require": {
@@ -2704,7 +2706,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-11T19:50:24+00:00"
+            "time": "2020-05-16T08:23:00+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2712,12 +2714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "a68e9e2643a445a3f853c17332646fb8762a8565"
+                "reference": "f7bf2f8bfea26e076fb001eaa118a634327dc589"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/a68e9e2643a445a3f853c17332646fb8762a8565",
-                "reference": "a68e9e2643a445a3f853c17332646fb8762a8565",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/f7bf2f8bfea26e076fb001eaa118a634327dc589",
+                "reference": "f7bf2f8bfea26e076fb001eaa118a634327dc589",
                 "shasum": ""
             },
             "require": {
@@ -2761,7 +2763,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-06T18:54:15+00:00"
+            "time": "2020-05-16T07:48:44+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
@@ -2769,19 +2771,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "457265a133fe1b164642ecf8e928909e155dbd11"
+                "reference": "d252d0b0c877b079cbcfd701a52503fa28debb2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/457265a133fe1b164642ecf8e928909e155dbd11",
-                "reference": "457265a133fe1b164642ecf8e928909e155dbd11",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/d252d0b0c877b079cbcfd701a52503fa28debb2e",
+                "reference": "d252d0b0c877b079cbcfd701a52503fa28debb2e",
                 "shasum": ""
             },
             "require": {
-                "dantleech/object-renderer": "^0.1.0@dev",
+                "dantleech/object-renderer": "^0.1.0",
                 "phly/phly-event-dispatcher": "^1.0",
                 "php": "^7.3",
-                "phpactor/code-transform": "^0.2.1",
                 "phpactor/completion": "~0.4.0",
                 "phpactor/completion-extension": "~0.2.2",
                 "phpactor/completion-worse-extension": "^0.2.0",
@@ -2833,7 +2834,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-12T22:03:28+00:00"
+            "time": "2020-05-16T11:51:01+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3313,12 +3314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "a8c5eab921889537d3827e7052154e530a87a52f"
+                "reference": "41195d446c46413594f4bb69caa91973d56b6802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/a8c5eab921889537d3827e7052154e530a87a52f",
-                "reference": "a8c5eab921889537d3827e7052154e530a87a52f",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/41195d446c46413594f4bb69caa91973d56b6802",
+                "reference": "41195d446c46413594f4bb69caa91973d56b6802",
                 "shasum": ""
             },
             "require": {
@@ -3354,7 +3355,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2020-05-09T05:37:38+00:00"
+            "time": "2020-05-16T09:26:42+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
