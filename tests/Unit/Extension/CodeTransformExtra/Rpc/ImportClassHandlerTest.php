@@ -141,7 +141,7 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testUsesGivenAlias()
     {
-        $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
+        $transformed = TextEdits::one(TextEdit::create(0, 0, 'hello'));
         $this->importClass->importClass(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
