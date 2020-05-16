@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
+namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler;

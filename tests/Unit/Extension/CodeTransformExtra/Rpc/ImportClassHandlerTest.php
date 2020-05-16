@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
+namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
@@ -15,6 +15,8 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
+use Phpactor\TextDocument\TextEdit;
+use Phpactor\TextDocument\TextEdits;
 
 class ImportClassHandlerTest extends HandlerTestCase
 {
@@ -94,7 +96,7 @@ class ImportClassHandlerTest extends HandlerTestCase
                 'class' => self::TEST_NAME
             ],
         ]);
-        $transformed = SourceCode::fromStringAndPath('hello', self::TEST_PATH);
+        $transformed = TextEdits::one(TextEdit::create(0, 0, 'hello'));
         $this->importClass->importClass(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             self::TEST_OFFSET,
