@@ -81,6 +81,7 @@
     },
     "scripts": {
         "integrate": [
+            "vendor/bin/phpstan analyse --level=1",
             "vendor/bin/phpunit",
             "vendor/bin/php-cs-fixer fix",
             "config/travis/testdeps",
