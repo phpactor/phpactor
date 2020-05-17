@@ -1849,12 +1849,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "0dae729c9b95d7dba70848308d49703202dd9427"
+                "reference": "3877f25fdee4f5d4c737b9a8870f76f3b1c4cbf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/0dae729c9b95d7dba70848308d49703202dd9427",
-                "reference": "0dae729c9b95d7dba70848308d49703202dd9427",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/3877f25fdee4f5d4c737b9a8870f76f3b1c4cbf8",
+                "reference": "3877f25fdee4f5d4c737b9a8870f76f3b1c4cbf8",
                 "shasum": ""
             },
             "require": {
@@ -1892,7 +1892,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-05-16T11:23:00+00:00"
+            "time": "2020-05-17T20:39:37+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -1900,12 +1900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "ef2a9840f2711e1fea8d430a8d593cec38ccd3aa"
+                "reference": "0d3ac40985a7e0a5e8fa5d232428a70caf25f321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/ef2a9840f2711e1fea8d430a8d593cec38ccd3aa",
-                "reference": "ef2a9840f2711e1fea8d430a8d593cec38ccd3aa",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/0d3ac40985a7e0a5e8fa5d232428a70caf25f321",
+                "reference": "0d3ac40985a7e0a5e8fa5d232428a70caf25f321",
                 "shasum": ""
             },
             "require": {
@@ -1944,7 +1944,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-05-16T11:43:47+00:00"
+            "time": "2020-05-17T20:12:23+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -1952,15 +1952,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
-                "reference": "a7c4df8434704722628293d074c873e854ec6bc9"
+                "reference": "c3086cea3e632a7efcc32fd09bfdd685c259ae4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/a7c4df8434704722628293d074c873e854ec6bc9",
-                "reference": "a7c4df8434704722628293d074c873e854ec6bc9",
+                "url": "https://api.github.com/repos/phpactor/code-transform-extension/zipball/c3086cea3e632a7efcc32fd09bfdd685c259ae4b",
+                "reference": "c3086cea3e632a7efcc32fd09bfdd685c259ae4b",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/class-to-file-extension": "~0.1",
                 "phpactor/code-transform": "~0.2",
                 "phpactor/container": "^1.3.3",
@@ -1997,7 +1998,7 @@
                 }
             ],
             "description": "Code transform base package",
-            "time": "2020-05-17T12:08:28+00:00"
+            "time": "2020-05-17T20:37:10+00:00"
         },
         {
             "name": "phpactor/completion",
@@ -2662,12 +2663,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "c988e4889836be9bc26df89f9a6d115a79d3e2a1"
+                "reference": "9f5bf94be7c607ec24f3e4ea4af6f617edfa8be0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/c988e4889836be9bc26df89f9a6d115a79d3e2a1",
-                "reference": "c988e4889836be9bc26df89f9a6d115a79d3e2a1",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/9f5bf94be7c607ec24f3e4ea4af6f617edfa8be0",
+                "reference": "9f5bf94be7c607ec24f3e4ea4af6f617edfa8be0",
                 "shasum": ""
             },
             "require": {
@@ -2712,7 +2713,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-17T13:45:40+00:00"
+            "time": "2020-05-17T20:41:21+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2777,12 +2778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "f70743f19235cd235a7f7ce2048f23df9f0ba018"
+                "reference": "6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f70743f19235cd235a7f7ce2048f23df9f0ba018",
-                "reference": "f70743f19235cd235a7f7ce2048f23df9f0ba018",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf",
+                "reference": "6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf",
                 "shasum": ""
             },
             "require": {
@@ -2809,6 +2810,7 @@
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
                 "friendsofphp/php-cs-fixer": "^2.13",
+                "jangregor/phpstan-prophecy": "^0.8.0",
                 "phpactor/test-utils": "^1.1",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12.0",
@@ -2842,7 +2844,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-17T14:22:01+00:00"
+            "time": "2020-05-17T20:51:48+00:00"
         },
         {
             "name": "phpactor/logging-extension",
