@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\ContextMenu;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
-use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;

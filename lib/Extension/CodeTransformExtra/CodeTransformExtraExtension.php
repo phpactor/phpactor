@@ -2,29 +2,6 @@
 
 namespace Phpactor\Extension\CodeTransformExtra;
 
-use Microsoft\PhpParser\Parser;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
-use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
-use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
-use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
-use Phpactor\CodeBuilder\Util\TextFormat;
-use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
-use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantChangeVisiblity;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportClass;
-use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
-use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseUnresolvableClassNameFinder;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -39,19 +16,12 @@ use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CodeTransformExtra\Rpc\ClassNewHandler;
-use Phpactor\Extension\CodeTransformExtra\Rpc\TransformHandler;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Extension\CodeTransformExtra\Rpc\ClassInflectHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
-use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassInflect;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
@@ -68,9 +38,6 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
-use Twig\Environment;
-use Twig\Loader\ChainLoader;
-use Twig\Loader\FilesystemLoader;
 
 class CodeTransformExtraExtension implements Extension
 {

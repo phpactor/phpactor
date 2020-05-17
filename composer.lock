@@ -2662,12 +2662,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "51647c2c9a42eb47516f19f73c1327f8ec39f2e3"
+                "reference": "942d1b3973d08e31e045ec04e785e4fb6fd0541c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/51647c2c9a42eb47516f19f73c1327f8ec39f2e3",
-                "reference": "51647c2c9a42eb47516f19f73c1327f8ec39f2e3",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/942d1b3973d08e31e045ec04e785e4fb6fd0541c",
+                "reference": "942d1b3973d08e31e045ec04e785e4fb6fd0541c",
                 "shasum": ""
             },
             "require": {
@@ -2712,7 +2712,7 @@
                 }
             ],
             "description": "Phpactor Language Server",
-            "time": "2020-05-17T09:40:22+00:00"
+            "time": "2020-05-17T13:04:13+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2777,12 +2777,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "c80adbdfce9bd4c27f6e22614f612ff32cd29334"
+                "reference": "b7c1594d1aca907d0a0943ba701d530a33c0c1b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/c80adbdfce9bd4c27f6e22614f612ff32cd29334",
-                "reference": "c80adbdfce9bd4c27f6e22614f612ff32cd29334",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/b7c1594d1aca907d0a0943ba701d530a33c0c1b1",
+                "reference": "b7c1594d1aca907d0a0943ba701d530a33c0c1b1",
                 "shasum": ""
             },
             "require": {
@@ -2790,6 +2790,7 @@
                 "phly/phly-event-dispatcher": "^1.0",
                 "php": "^7.3",
                 "phpactor/code-transform": "^0.3.0",
+                "phpactor/code-transform-extension": "^0.2",
                 "phpactor/completion": "~0.4.0",
                 "phpactor/completion-extension": "~0.2.2",
                 "phpactor/completion-worse-extension": "^0.2.0",
@@ -2841,7 +2842,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-17T09:01:34+00:00"
+            "time": "2020-05-17T13:15:37+00:00"
         },
         {
             "name": "phpactor/logging-extension",
