@@ -14,7 +14,8 @@
         "phpactor/class-to-file": "^0.3.3",
         "phpactor/class-to-file-extension": "^0.2.1",
         "phpactor/code-transform": "^0.3",
-        "phpactor/code-transform-extension": "^0.1.2",
+        "phpactor/code-transform-extension": "^0.2",
+        "phpactor/php-extension": "^0.1",
         "phpactor/completion": "^0.4.1",
         "phpactor/completion-extension": "~0.2.2",
         "phpactor/completion-rpc-extension": "^0.2.0",
@@ -57,7 +58,8 @@
         "phpactor/test-utils": "^1.1.2",
         "friendsofphp/php-cs-fixer": "^3.0@dev",
         "dantleech/what-changed": "^0.1",
-        "symfony/var-dumper": "^5.0"
+        "symfony/var-dumper": "^5.0",
+        "phpstan/phpstan": "^0.12.25"
     },
     "bin": [
         "bin/phpactor"
