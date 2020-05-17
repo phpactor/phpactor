@@ -10,6 +10,8 @@ Features:
   - [worse-reflection] Support "final" keyword - @dantleech
   - [language-server-hover] Show "final" keyword on class hover - @dantleech
   - [language-server-hover] Show inherited method documentation - @dantleech
+  - [language-server-code-transform] Add command to import class - @dantleech
+  - [language-server-completion] Automatically import class on completion confirm - @dantleech
 
 Improvements:
 
@@ -26,6 +28,8 @@ Bug fixes;
     - @dantleech
   - [language-server] Ensure that `result` key is missing when `NULL` (some
     clients require it) - @dantleech
+  - [code-transform] Fixed occasional whitespace issues when importing classes
+  - [language-server] Support for LSP commands
 
 ## 2020-05-03 0.15.0
 

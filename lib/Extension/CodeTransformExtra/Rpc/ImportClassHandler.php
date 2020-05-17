@@ -110,7 +110,7 @@ class ImportClassHandler extends AbstractHandler
                 $arguments[self::PARAM_OFFSET],
                 $arguments[self::PARAM_QUALIFIED_NAME],
                 $arguments[self::PARAM_ALIAS]
-            );
+            )->apply($arguments[self::PARAM_SOURCE]);
         } catch (NameAlreadyUsedException $e) {
             if ($e instanceof ClassAlreadyImportedException && $e->existingName() === $arguments[self::PARAM_QUALIFIED_NAME]) {
                 return EchoResponse::fromMessage(sprintf(
@@ -136,7 +136,7 @@ class ImportClassHandler extends AbstractHandler
 
         return CollectionResponse::fromActions([
             UpdateFileSourceResponse::fromPathOldAndNewSource(
-                $sourceCode->path(),
+                $arguments[self::PARAM_PATH],
                 $arguments[self::PARAM_SOURCE],
                 (string) $sourceCode
             ),

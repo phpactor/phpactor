@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
+namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;

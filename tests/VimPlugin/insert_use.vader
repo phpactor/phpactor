@@ -15,7 +15,6 @@ Expect php (the use statement to be inserted):
   <?php
 
   use Phpactor\Phpactor;
-
   
   class Foobar
   {
