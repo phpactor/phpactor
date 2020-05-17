@@ -28,6 +28,8 @@ Bug fixes;
     - @dantleech
   - [language-server] Ensure that `result` key is missing when `NULL` (some
     clients require it) - @dantleech
+  - [code-transform] Fixed occasional whitespace issues when importing classes
+  - [language-server] Support for LSP commands
 
 ## 2020-05-03 0.15.0
 
