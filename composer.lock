@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f394c3bb2132af9ac24df4e74cff1b1e",
+    "content-hash": "af0dd12d8e60b514887d67dff85d03c7",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2061,7 +2061,7 @@
         },
         {
             "name": "phpactor/completion-extension",
-            "version": "0.2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",

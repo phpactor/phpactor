@@ -20,6 +20,7 @@ Improvements:
 
 Bug fixes;
 
+  - [completion] Completion limit of 32 imposed in 0.15 removed.
   - [ampfs-watch] Inotify watcher not reporting error when out of available
     watchers
     (https://github.com/phpactor/amp-fswatch/commit/1e38faadc3fb73158de9a966ee12d17992dad4fe)
