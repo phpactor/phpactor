@@ -2065,12 +2065,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
-                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab"
+                "reference": "141a8e202bd42d781281f671b14df5c5a6af1620"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/46972d35f2cf69805dceb13227e484f5047c99ab",
-                "reference": "46972d35f2cf69805dceb13227e484f5047c99ab",
+                "url": "https://api.github.com/repos/phpactor/completion-extension/zipball/141a8e202bd42d781281f671b14df5c5a6af1620",
+                "reference": "141a8e202bd42d781281f671b14df5c5a6af1620",
                 "shasum": ""
             },
             "require": {
@@ -2107,7 +2107,7 @@
                 }
             ],
             "description": "Phpactor Code Completion Extension",
-            "time": "2020-04-19T12:09:09+00:00"
+            "time": "2020-05-19T16:06:57+00:00"
         },
         {
             "name": "phpactor/completion-rpc-extension",
