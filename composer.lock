@@ -2778,12 +2778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf"
+                "reference": "abfcba62fc7bf363a0252a8d7314b3e4816f6199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf",
-                "reference": "6dc14e37b1fd1ba1d222d4977cfc2b21eeed8ebf",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/abfcba62fc7bf363a0252a8d7314b3e4816f6199",
+                "reference": "abfcba62fc7bf363a0252a8d7314b3e4816f6199",
                 "shasum": ""
             },
             "require": {
@@ -2844,7 +2844,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-17T20:51:48+00:00"
+            "time": "2020-05-18T17:22:02+00:00"
         },
         {
             "name": "phpactor/logging-extension",
