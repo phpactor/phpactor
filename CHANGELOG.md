@@ -12,6 +12,7 @@ Features:
   - [language-server-hover] Show inherited method documentation - @dantleech
   - [language-server-code-transform] Add command to import class - @dantleech
   - [language-server-completion] Automatically import class on completion confirm - @dantleech
+  - [code-transform] Consider current class as a potential conflict for imports - @dantleech
 
 Improvements:
 

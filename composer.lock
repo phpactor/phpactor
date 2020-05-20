@@ -1900,12 +1900,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "0d3ac40985a7e0a5e8fa5d232428a70caf25f321"
+                "reference": "45b3c64fbd2abee6f4adb49b175d8f136166aa27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/0d3ac40985a7e0a5e8fa5d232428a70caf25f321",
-                "reference": "0d3ac40985a7e0a5e8fa5d232428a70caf25f321",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/45b3c64fbd2abee6f4adb49b175d8f136166aa27",
+                "reference": "45b3c64fbd2abee6f4adb49b175d8f136166aa27",
                 "shasum": ""
             },
             "require": {
@@ -1944,7 +1944,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-05-17T20:12:23+00:00"
+            "time": "2020-05-20T21:16:57+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
