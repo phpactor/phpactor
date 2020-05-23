@@ -1,0 +1,989 @@
+Configuration
+=============
+
+
+.. This document is generated via. the `documentation:configuration-reference` command (2020-05-23T13:18:56+01:00)
+
+
+.. contents::
+   :depth: 2
+   :backlinks: none
+   :local:
+
+
+.. _CoreExtension:
+
+
+CoreExtension
+-------------
+
+
+.. _param_console_dumper_default:
+
+
+``console_dumper_default``
+""""""""""""""""""""""""""
+
+
+
+
+Name of the "dumper" (renderer) to use for some CLI commands
+
+
+**Default**: ``"indented"``
+
+
+.. _param_xdebug_disable:
+
+
+``xdebug_disable``
+""""""""""""""""""
+
+
+
+
+If XDebug should be automatically disabled
+
+
+**Default**: ``true``
+
+
+.. _param_command:
+
+
+``command``
+"""""""""""
+
+
+
+
+Internal use only - name of the command which was executed
+
+
+**Default**: ``null``
+
+
+.. _ClassToFileExtension:
+
+
+ClassToFileExtension
+--------------------
+
+
+.. _param_class_to_file.project_root:
+
+
+``class_to_file.project_root``
+""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%"``
+
+
+.. _CodeTransformExtension:
+
+
+CodeTransformExtension
+----------------------
+
+
+.. _param_code_transform.class_new.variants:
+
+
+``code_transform.class_new.variants``
+"""""""""""""""""""""""""""""""""""""
+
+
+
+
+Variants which should be suggested when class-create is invoked
+
+
+**Default**: ``[]``
+
+
+.. _param_code_transform.template_paths:
+
+
+``code_transform.template_paths``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+Paths in which to look for code templates
+
+
+**Default**: ``["%project_config%\/templates","%config%\/templates"]``
+
+
+.. _param_code_transform.indentation:
+
+
+``code_transform.indentation``
+""""""""""""""""""""""""""""""
+
+
+
+
+Indentation chars to use in code generation and transformation
+
+
+**Default**: ``"    "``
+
+
+.. _param_code_transform.refactor.generate_accessor.prefix:
+
+
+``code_transform.refactor.generate_accessor.prefix``
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Prefix to use for generated accessors
+
+
+**Default**: ``""``
+
+
+.. _param_code_transform.refactor.generate_accessor.upper_case_first:
+
+
+``code_transform.refactor.generate_accessor.upper_case_first``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+If the first letter of a generated accessor should be made uppercase
+
+
+**Default**: ``false``
+
+
+.. _CompletionWorseExtension:
+
+
+CompletionWorseExtension
+------------------------
+
+
+.. _param_completion_worse.completor.class.limit:
+
+
+``completion_worse.completor.class.limit``
+""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``100``
+
+
+.. _CompletionExtension:
+
+
+CompletionExtension
+-------------------
+
+
+.. _param_completion.dedupe:
+
+
+``completion.dedupe``
+"""""""""""""""""""""
+
+
+
+
+If results should be de-duplicated
+
+
+**Default**: ``true``
+
+
+.. _param_completion.dedupe_match_short_description:
+
+
+``completion.dedupe_match_short_description``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+If ``completion.dedupe``, match on completion description intead of name
+
+
+**Default**: ``true``
+
+
+.. _param_completion.limit:
+
+
+``completion.limit``
+""""""""""""""""""""
+
+
+
+
+Sets a limit on the number of completion suggestions for any request
+
+
+**Default**: ``null``
+
+
+.. _NavigationExtension:
+
+
+NavigationExtension
+-------------------
+
+
+.. _param_navigator.destinations:
+
+
+``navigator.destinations``
+""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``[]``
+
+
+.. _param_navigator.autocreate:
+
+
+``navigator.autocreate``
+""""""""""""""""""""""""
+
+
+
+
+**Default**: ``[]``
+
+
+.. _RpcExtension:
+
+
+RpcExtension
+------------
+
+
+.. _param_rpc.store_replay:
+
+
+``rpc.store_replay``
+""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _param_rpc.replay_path:
+
+
+``rpc.replay_path``
+"""""""""""""""""""
+
+
+
+
+**Default**: ``"%cache%\/replay.json"``
+
+
+.. _SourceCodeFilesystemExtension:
+
+
+SourceCodeFilesystemExtension
+-----------------------------
+
+
+.. _param_source_code_filesystem.project_root:
+
+
+``source_code_filesystem.project_root``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%"``
+
+
+.. _WorseReflectionExtension:
+
+
+WorseReflectionExtension
+------------------------
+
+
+.. _param_worse_reflection.enable_cache:
+
+
+``worse_reflection.enable_cache``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``true``
+
+
+.. _param_worse_reflection.cache_lifetime:
+
+
+``worse_reflection.cache_lifetime``
+"""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``5``
+
+
+.. _param_worse_reflection.enable_context_location:
+
+
+``worse_reflection.enable_context_location``
+""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``true``
+
+
+.. _param_worse_reflection.cache_dir:
+
+
+``worse_reflection.cache_dir``
+""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%cache%\/worse-reflection"``
+
+
+.. _param_worse_reflection.stub_dir:
+
+
+``worse_reflection.stub_dir``
+"""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
+
+
+.. _FilePathResolverExtension:
+
+
+FilePathResolverExtension
+-------------------------
+
+
+.. _param_file_path_resolver.project_root:
+
+
+``file_path_resolver.project_root``
+"""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+
+
+.. _param_file_path_resolver.app_name:
+
+
+``file_path_resolver.app_name``
+"""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"phpactor"``
+
+
+.. _param_file_path_resolver.application_root:
+
+
+``file_path_resolver.application_root``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``null``
+
+
+.. _param_file_path_resolver.enable_cache:
+
+
+``file_path_resolver.enable_cache``
+"""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``true``
+
+
+.. _param_file_path_resolver.enable_logging:
+
+
+``file_path_resolver.enable_logging``
+"""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``true``
+
+
+.. _LoggingExtension:
+
+
+LoggingExtension
+----------------
+
+
+.. _param_logging.enabled:
+
+
+``logging.enabled``
+"""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _param_logging.fingers_crossed:
+
+
+``logging.fingers_crossed``
+"""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _param_logging.path:
+
+
+``logging.path``
+""""""""""""""""
+
+
+
+
+**Default**: ``"application.log"``
+
+
+.. _param_logging.level:
+
+
+``logging.level``
+"""""""""""""""""
+
+
+
+
+**Default**: ``"warning"``
+
+
+.. _param_logger.name:
+
+
+``logger.name``
+"""""""""""""""
+
+
+
+
+**Default**: ``"logger"``
+
+
+.. _param_logging.formatter:
+
+
+``logging.formatter``
+"""""""""""""""""""""
+
+
+
+
+**Default**: ``null``
+
+
+.. _ComposerAutoloaderExtension:
+
+
+ComposerAutoloaderExtension
+---------------------------
+
+
+.. _param_composer.autoloader_path:
+
+
+``composer.autoloader_path``
+""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/vendor\/autoload.php"``
+
+
+.. _param_composer.autoload_deregister:
+
+
+``composer.autoload_deregister``
+""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``true``
+
+
+.. _ConsoleExtension:
+
+
+ConsoleExtension
+----------------
+
+
+.. _param_console.verbosity:
+
+
+``console.verbosity``
+"""""""""""""""""""""
+
+
+
+
+**Default**: ``32``
+
+
+.. _param_console.decorated:
+
+
+``console.decorated``
+"""""""""""""""""""""
+
+
+
+
+**Default**: ``null``
+
+
+.. _ExtensionManagerExtension:
+
+
+ExtensionManagerExtension
+-------------------------
+
+
+.. _param_extension_manager.extension_vendor_dir:
+
+
+``extension_manager.extension_vendor_dir``
+""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%application_root%\/extensions"``
+
+
+.. _param_extension_manager.vendor_dir:
+
+
+``extension_manager.vendor_dir``
+""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%application_root%\/vendor"``
+
+
+.. _param_extension_manager.config_path:
+
+
+``extension_manager.config_path``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%application_root%\/extensions.json"``
+
+
+.. _param_extension_manager.extension_list_path:
+
+
+``extension_manager.extension_list_path``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%application_root%\/extensions\/extensions.php"``
+
+
+.. _param_extension_manager.root_package_name:
+
+
+``extension_manager.root_package_name``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"phpactor-extensions"``
+
+
+.. _param_extension_manager.minimum_stability:
+
+
+``extension_manager.minimum_stability``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"stable"``
+
+
+.. _param_extension_manager.repositories:
+
+
+``extension_manager.repositories``
+""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``[]``
+
+
+.. _param_extension_manager.quiet:
+
+
+``extension_manager.quiet``
+"""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _WorseReferenceFinderExtension:
+
+
+WorseReferenceFinderExtension
+-----------------------------
+
+
+.. _param_worse_reference_finder.plain_text_break_chars:
+
+
+``worse_reference_finder.plain_text_break_chars``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+**Default**: ``[" ","\"","'","|","%","(",")","[","]",":","\r\n","\n","\r"]``
+
+
+.. _PhpExtension:
+
+
+PhpExtension
+------------
+
+
+.. _param_php.version:
+
+
+``php.version``
+"""""""""""""""
+
+
+
+
+Consider this value to be the project\'s version of PHP (e.g. `7.4`). If omitted
+it will check `composer.json` (by the configured platform then the PHP requirement) before
+falling back to the PHP version of the current process.
+
+
+**Default**: ``null``
+
+
+.. _LanguageServerExtension:
+
+
+LanguageServerExtension
+-----------------------
+
+
+.. _param_language_server.client_capabilities:
+
+
+``language_server.client_capabilities``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+For internal use only: will contain the capabilities of the connected language server client
+
+
+**Default**: ``[]``
+
+
+.. _param_language_server.enable_workspace:
+
+
+``language_server.enable_workspace``
+""""""""""""""""""""""""""""""""""""
+
+
+
+
+If workspace management / text synchronization should be enabled (this isn't required for some language server implementations, e.g. static analyzers)
+
+
+**Default**: ``true``
+
+
+.. _LanguageServerCompletionExtension:
+
+
+LanguageServerCompletionExtension
+---------------------------------
+
+
+.. _param_language_server_completion.trim_leading_dollar:
+
+
+``language_server_completion.trim_leading_dollar``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+If the leading dollar should be trimmed for variable completion suggestions
+
+
+**Default**: ``false``
+
+
+.. _LanguageServerReferenceFinderExtension:
+
+
+LanguageServerReferenceFinderExtension
+--------------------------------------
+
+
+.. _param_language_server_reference_reference_finder.reference_timeout:
+
+
+``language_server_reference_reference_finder.reference_timeout``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Stop searching for references after this time (in seconds) has expired
+
+
+**Default**: ``10``
+
+
+.. _IndexerExtension:
+
+
+IndexerExtension
+----------------
+
+
+.. _param_indexer.enabled_watchers:
+
+
+``indexer.enabled_watchers``
+""""""""""""""""""""""""""""
+
+
+
+
+List of allowed watchers. The first watcher that supports the current system will be used
+
+
+**Default**: ``["inotify","find","php"]``
+
+
+.. _param_indexer.index_path:
+
+
+``indexer.index_path``
+""""""""""""""""""""""
+
+
+
+
+Path where the index should be saved
+
+
+**Default**: ``"%cache%\/index\/%project_id%"``
+
+
+.. _param_indexer.include_patterns:
+
+
+``indexer.include_patterns``
+""""""""""""""""""""""""""""
+
+
+
+
+Glob patterns to include while indexing
+
+
+**Default**: ``["\/**\/*.php"]``
+
+
+.. _param_indexer.exclude_patterns:
+
+
+``indexer.exclude_patterns``
+""""""""""""""""""""""""""""
+
+
+
+
+Glob patterns to exclude while indexing
+
+
+**Default**: ``["\/vendor\/**\/Tests\/**\/*","\/vendor\/**\/tests\/**\/*","\/vendor\/composer\/**\/*"]``
+
+
+.. _param_indexer.poll_time:
+
+
+``indexer.poll_time``
+"""""""""""""""""""""
+
+
+
+
+For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)
+
+
+**Default**: ``5000``
+
+
+.. _param_indexer.buffer_time:
+
+
+``indexer.buffer_time``
+"""""""""""""""""""""""
+
+
+
+
+For real-time indexers only: the time, in milliseconds, to buffer the results
+
+
+**Default**: ``500``
+
+
+.. _param_indexer.project_root:
+
+
+``indexer.project_root``
+""""""""""""""""""""""""
+
+
+
+
+The root path to use for scanning the index
+
+
+**Default**: ``"%project_root%"``
+
+
+.. _BehatExtension:
+
+
+BehatExtension
+--------------
+
+
+.. _param_behat.config_path:
+
+
+``behat.config_path``
+"""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/behat.yml"``
+
+
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _PhpSpecExtension:
+
+
+PhpSpecExtension
+----------------
+
+
+.. _param_phpspec.spec_prefix:
+
+
+``phpspec.spec_prefix``
+"""""""""""""""""""""""
+
+
+
+
+**Default**: ``"spec"``
+
