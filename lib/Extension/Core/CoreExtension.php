@@ -43,6 +43,9 @@ class CoreExtension implements Extension
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
         ]);
+        $schema->setDescriptions([
+            self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
+        ]);
     }
 
     public function load(ContainerBuilder $container)
