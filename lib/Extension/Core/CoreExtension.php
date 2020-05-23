@@ -45,6 +45,8 @@ class CoreExtension implements Extension
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
+            self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
+            self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
         ]);
     }
 
