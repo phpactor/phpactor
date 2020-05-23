@@ -5856,12 +5856,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/debug-extension.git",
-                "reference": "1f3f5e6b7bb8a9dba066d187ad37707aa163ddb2"
+                "reference": "b2c49bf47fce90112e8c8e0809854a0d824d95fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/debug-extension/zipball/1f3f5e6b7bb8a9dba066d187ad37707aa163ddb2",
-                "reference": "1f3f5e6b7bb8a9dba066d187ad37707aa163ddb2",
+                "url": "https://api.github.com/repos/phpactor/debug-extension/zipball/b2c49bf47fce90112e8c8e0809854a0d824d95fa",
+                "reference": "b2c49bf47fce90112e8c8e0809854a0d824d95fa",
                 "shasum": ""
             },
             "require": {
@@ -5901,7 +5901,7 @@
                 }
             ],
             "description": "Add some debugging facilities",
-            "time": "2020-05-23T12:19:31+00:00"
+            "time": "2020-05-23T12:29:16+00:00"
         },
         {
             "name": "phpactor/test-utils",

@@ -2,7 +2,7 @@ Configuration
 =============
 
 
-.. This document is generated via. the `documentation:configuration-reference` command (2020-05-23T13:18:56+01:00)
+.. This document is generated via. the `documentation:configuration-reference` command
 
 
 .. contents::
