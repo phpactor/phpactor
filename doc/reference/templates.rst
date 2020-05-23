@@ -1,3 +1,5 @@
+.. _template_variants:
+
 Templates
 =========
 
