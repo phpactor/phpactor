@@ -41,36 +41,12 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
 
 class CodeTransformExtraExtension implements Extension
 {
-    const CLASS_NEW_VARIANTS = 'code_transform.class_new.variants';
-    const TEMPLATE_PATHS = 'code_transform.template_paths';
-    const INDENTATION = 'code_transform.indentation';
-    const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
-    const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
-    const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
-
-    const PARAM_FIXER_INDENTATION = 'code_transform.fixer.indentation';
-    const PARAM_FIXER_MEMBER_NEWLINES = 'code_transform.fixer.member_newlines';
-    const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
-    const PARAM_FIXER_TOLERANCE = 'code_transform.fixer.tolerance';
-    const SERVICE_TEXT_FORMAT = 'code_transform.text_format';
-
     /**
      * {@inheritDoc}
      */
     public function configure(Resolver $schema)
     {
         $schema->setDefaults([
-            self::CLASS_NEW_VARIANTS => [],
-            self::TEMPLATE_PATHS => [ // Ordered by priority
-                '%project_config%/templates',
-                '%config%/templates',
-            ],
-            self::INDENTATION => '    ',
-            self::GENERATE_ACCESSOR_PREFIX => '',
-            self::GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
-            self::PARAM_FIXER_INDENTATION => true,
-            self::PARAM_FIXER_MEMBER_NEWLINES => true,
-            self::PARAM_FIXER_TOLERANCE => 80
         ]);
     }
 
@@ -81,7 +57,7 @@ class CodeTransformExtraExtension implements Extension
         $this->registerRpc($container);
     }
 
-    private function registerApplication(ContainerBuilder $container)
+    private function registerApplication(ContainerBuilder $container): void
     {
         $container->register('application.transform', function (Container $container) {
             return new Transformer(

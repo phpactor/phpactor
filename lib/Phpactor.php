@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
@@ -121,6 +122,10 @@ class Phpactor
             LanguageServerCodeTransformExtension::class,
             IndexerExtension::class,
         ];
+
+        if (class_exists(DebugExtension::class)) {
+            $extensionNames[] = DebugExtension::class;
+        }
 
         if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
             $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
