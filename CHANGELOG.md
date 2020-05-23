@@ -19,6 +19,7 @@ Improvements:
   - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
   - [code-transform] Class import updates context name on alias - @dantleech
   - [documentation] Generate the configuration reference - @dantleech
+  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech
 
 Bug fixes;
 
