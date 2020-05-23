@@ -180,7 +180,25 @@ CompletionWorseExtension
 
 
 
+Suggestion limit for the filesystem based SCF class_completor
+
+
 **Default**: ``100``
+
+
+.. _param_completion_worse.disabled_completors:
+
+
+``completion_worse.disabled_completors``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+List of completors to disable (e.g. ``scf_class`` and ``declared_function``)
+
+
+**Default**: ``[]``
 
 
 .. _CompletionExtension:
