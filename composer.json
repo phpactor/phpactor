@@ -51,6 +51,7 @@
         "webmozart/glob": "^4.1"
     },
     "require-dev": {
+        "phpactor/debug-extension": "^0.1.0@dev",
         "symfony/debug": "^4.0",
         "phpunit/phpunit": "^7.0",
         "symfony/process": "^2.7|^3.0|^4.0",
