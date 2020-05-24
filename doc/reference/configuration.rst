@@ -793,6 +793,21 @@ If workspace management / text synchronization should be enabled (this isn't req
 **Default**: ``true``
 
 
+.. _param_language_server.session_parameters:
+
+
+``language_server.session_parameters``
+""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Phpactor parameters (config) that apply only to the language server session
+
+
+**Default**: ``[]``
+
+
 .. _LanguageServerCompletionExtension:
 
 

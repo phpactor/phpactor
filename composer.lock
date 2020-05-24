@@ -2733,12 +2733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "5a399e8d7b09e685cdad408bdb50ba9dfcb979dc"
+                "reference": "7e580334280d77f526eebddbf212ddc565c8c209"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/5a399e8d7b09e685cdad408bdb50ba9dfcb979dc",
-                "reference": "5a399e8d7b09e685cdad408bdb50ba9dfcb979dc",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/7e580334280d77f526eebddbf212ddc565c8c209",
+                "reference": "7e580334280d77f526eebddbf212ddc565c8c209",
                 "shasum": ""
             },
             "require": {
@@ -2782,7 +2782,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-23T11:35:23+00:00"
+            "time": "2020-05-24T13:12:28+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",

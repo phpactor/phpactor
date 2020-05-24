@@ -49,11 +49,18 @@ As with ``worse_parameter`` but for constructor arguments.
 Provides class member (methods, properties and constants) suggestions.
 Triggered on ``::`` and ``->``.
 
+``indexed_name``
+~~~~~~~~~~~~~~~~
+
+Provides class and function name completion from the :ref:`indexer`.
+
 ``scf_class``
 ~~~~~~~~~~~~~
 
 This completor will provide class names by *scanning the vendor directory* and
 transposing the file names into class names.
+
+This completor is disabled by default when using the :ref:`language_server`.
 
 ``worse_local_variable``
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,6 +75,8 @@ Phpactor process.
 
 Note that any functions which are not loaded when _Phpactor_
 loads will not be available. So this is mainly useful for built-in functions.
+
+This completor is disabled by default when using the :ref:`language_server`.
 
 ``declared_constant``
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -93,6 +102,8 @@ process.
 
 This is mainly useful when used with the ``scf_class`` completor to provide
 built-in classes.
+
+This completor is disabled by default when using the :ref:`language_server`.
 
 Type inference
 --------------
