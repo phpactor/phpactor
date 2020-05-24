@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\Container\Container;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -55,7 +56,7 @@ class Phpactor
         '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
     ];
 
-    public static function boot(InputInterface $input, string $vendorDir): PhpactorContainer
+    public static function boot(InputInterface $input, string $vendorDir): Container
     {
         $config = [];
 
@@ -74,6 +75,7 @@ class Phpactor
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = self::configureExtensionManager($config, $vendorDir);
+        $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
@@ -227,6 +229,27 @@ class Phpactor
         if (file_exists($autoloadFile)) {
             require($autoloadFile);
         }
+
+        return $config;
+    }
+
+    /**
+     * Optimize Phpactor for the language server (these settings will apply
+     * only to LanguageServer sessions).
+     *
+     * @param array<string, mixed> $config
+     * @return array<string, mixed>
+     */
+    private static function configureLanguageServer(array $config): array
+    {
+        $config[LanguageServerExtension::PARAM_SESSION_PARAMETERS] = [
+            WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION => false,
+            CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
+                'scf_class',
+                'declared_class',
+                'declared_function',
+            ],
+        ];
 
         return $config;
     }
