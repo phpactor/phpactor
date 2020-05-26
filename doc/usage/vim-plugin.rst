@@ -21,7 +21,7 @@ or ``~/.config/nvim/init.vim`` when using Neovim):
 
 ::
 
-   Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
+   Plug 'phpactor/phpactor', {'for': 'php', 'branch': 'master', 'do': 'composer install --no-dev -o'}
 
 Reload VIM (or ``:source ~/.vimrc``) then update your plugins:
 
