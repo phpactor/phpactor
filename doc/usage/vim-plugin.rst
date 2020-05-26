@@ -21,7 +21,7 @@ or ``~/.config/nvim/init.vim`` when using Neovim):
 
 ::
 
-   Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install --no-dev -o'}
+   Plug 'phpactor/phpactor', {'for': 'php', 'branch': 'master', 'do': 'composer install --no-dev -o'}
 
 Reload VIM (or ``:source ~/.vimrc``) then update your plugins:
 
@@ -57,11 +57,23 @@ To find out more about the plugin type ``:help phpactor``
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
-**E492: Not an editor command: PhpactorStatus**:
+``E492: Not an editor command: PhpactorStatus``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You need to open a PHP file before using Phpactor.
 
-**Composer not found** or **Git not detected**:
+``Phpactor requires at least PHP 7.3.0``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you run an older version of PHP by default, you will need to install
+another version and set ``:phpactorPhpBin`` in your ``.vimrc`` (or equivalent):
+
+.. code:: vim
+
+     let g:phpactorPhpBin = "/usr/bin/php7.3"
+
+``Composer not found** or **Git not detected``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Git and Composer checks are referring to the current “workspace”
 (i.e. where you started Vim from). If you’ve already setup Git and
