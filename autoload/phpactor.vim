@@ -466,7 +466,7 @@ function! phpactor#rpc(action, arguments)
     let request = { "action": a:action, "parameters": a:arguments }
 
     let l:workspaceDir = g:phpactorInitialCwd
-    let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
+    let l:cmd = [g:phpactorPhpBin, g:phpactorbinpath , 'rpc', '--working-dir=' . l:workspaceDir]
 
     let result = system(l:cmd, json_encode(request))
 
