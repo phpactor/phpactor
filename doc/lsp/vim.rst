@@ -19,28 +19,13 @@ Client Guides
 
            Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-        Restart VIM and type ``:CocConfig`` to edit the CoC configuration, enter
-        the follwing:
+        Restart VIM and type ``:CocInstall coc-phpactor``.
 
-        ::
+        You may need to set `phpactor.path` in `:CocConfig` to point to the
+        Phpactor binary.
 
-           {
-               "languageserver": {
-                   "phpactor": {
-                       "trace.server": "verbose",
-                       "command": "phpactor",
-                       "args": ["language-server"],
-                       "filetypes": ["php","cucumber"],
-                       "initializationOptions": {
-                       },
-                       "settings": {
-                       }
-                   }
-               },
-           }
-
-        You can pass Phpactor :ref:`configuration` in the
-        ``initializationOptions``.
+        See [coc-phpactor](https://github.com/phpactor/coc-phpactor) for more
+        information.
 
     .. tab:: Autozimu
 
