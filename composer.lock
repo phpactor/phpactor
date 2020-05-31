@@ -2612,12 +2612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "2fc0dfde515a40d3895a2c3a4ee124f14d3b6906"
+                "reference": "6fdbcb6a339f64591326156f3903e1a3543ae0e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/2fc0dfde515a40d3895a2c3a4ee124f14d3b6906",
-                "reference": "2fc0dfde515a40d3895a2c3a4ee124f14d3b6906",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/6fdbcb6a339f64591326156f3903e1a3543ae0e8",
+                "reference": "6fdbcb6a339f64591326156f3903e1a3543ae0e8",
                 "shasum": ""
             },
             "require": {
@@ -2667,7 +2667,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-05-31T06:23:45+00:00"
+            "time": "2020-05-31T13:13:08+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2790,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "20cb73ca5078daa8fc2ac4db654d77c653a105f4"
+                "reference": "db5603207f3f1aa8b8194466df89e3362ace1502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/20cb73ca5078daa8fc2ac4db654d77c653a105f4",
-                "reference": "20cb73ca5078daa8fc2ac4db654d77c653a105f4",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/db5603207f3f1aa8b8194466df89e3362ace1502",
+                "reference": "db5603207f3f1aa8b8194466df89e3362ace1502",
                 "shasum": ""
             },
             "require": {
@@ -2856,7 +2856,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-23T11:37:37+00:00"
+            "time": "2020-05-31T12:10:44+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3549,12 +3549,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "bcb10ecd41d0c2fc999ce9154d6eccb9e47dbb71"
+                "reference": "41197db9d3b63e71993f28555e9e596e3ffecd7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/bcb10ecd41d0c2fc999ce9154d6eccb9e47dbb71",
-                "reference": "bcb10ecd41d0c2fc999ce9154d6eccb9e47dbb71",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/41197db9d3b63e71993f28555e9e596e3ffecd7f",
+                "reference": "41197db9d3b63e71993f28555e9e596e3ffecd7f",
                 "shasum": ""
             },
             "require": {
@@ -3596,7 +3596,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-05-28T20:08:25+00:00"
+            "time": "2020-05-31T10:58:40+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",

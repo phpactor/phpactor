@@ -37,6 +37,10 @@ Navigate / list all references to a given class.
 
            :PhpactorFindReferences
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/references` action.
+
 Description
 ~~~~~~~~~~~
 
@@ -80,6 +84,10 @@ or constant).
 
            :PhpactorFindReferences
 
+   .. tab:: Language Server
+       
+       Supported via. the `textDocument/references` action.
+
 .. _description-1:
 
 Description
@@ -111,6 +119,10 @@ brief information about the symbol underneath the cursor.
 
            :PhpactorHover
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/hover` action.
+
 
 Jump to definition
 ------------------
@@ -128,6 +140,10 @@ Jump to the definition of a class or class member.
        .. code-block::
 
            :PhpactorGotoDefinition
+
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/definition` action.
 
 
 .. _description-2:
@@ -158,6 +174,10 @@ Jump to the type of the symbol under the cursor.
 
            :PhpactorGotoType()
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/typeDefinition` action.
+
 .. _description-3:
 
 Description
@@ -186,6 +206,10 @@ Jump to the implementatoin(s) of an interface or class
        .. code-block::
 
            :PhpactorGotoImplementations
+
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/implementation` action.
 
 
 Jump to implementations of the interface or class under the cursor.

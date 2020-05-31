@@ -964,6 +964,36 @@ The root path to use for scanning the index
 **Default**: ``"%project_root%"``
 
 
+.. _param_indexer.reference_finder.deep:
+
+
+``indexer.reference_finder.deep``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+Recurse over class implementations to resolve all references
+
+
+**Default**: ``true``
+
+
+.. _param_indexer.implementation_finder.deep:
+
+
+``indexer.implementation_finder.deep``
+""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)
+
+
+**Default**: ``true``
+
+
 .. _BehatExtension:
 
 
