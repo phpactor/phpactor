@@ -14,6 +14,7 @@ Features:
   - [language-server-completion] Automatically import class on completion confirm - @dantleech
   - [code-transform] Consider current class as a potential conflict for imports - @dantleech
   - [completion] Indexed class name and function completion - @dantleech
+  - [indexer-extension] Support "deep references" (search over all implementaions) - @dantleech
 
 Improvements:
 
@@ -21,6 +22,10 @@ Improvements:
   - [code-transform] Class import updates context name on alias - @dantleech
   - [documentation] Generate the configuration reference - @dantleech
   - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech
+  - [indexer-extension] Validate search results (remove from search index if
+    invalid).
+  - [language-server] Exit session immediately if NULL given as CWD (instead
+    of crashing).
 
 Bug fixes;
 
