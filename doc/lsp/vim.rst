@@ -21,10 +21,10 @@ Client Guides
 
         Restart VIM and type ``:CocInstall coc-phpactor``.
 
-        You may need to set `phpactor.path` in `:CocConfig` to point to the
-        Phpactor binary.
+        If Phpactor is already installed you can set ``phpactor.path`` in
+        ``:CocConfig`` to point to the Phpactor binary.
 
-        See [coc-phpactor](https://github.com/phpactor/coc-phpactor) for more
+        See `coc-phpactor<https://github.com/phpactor/coc-phpactor>` for more
         information.
 
     .. tab:: Autozimu
