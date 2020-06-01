@@ -2374,12 +2374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "cffa11aa416cd65d7af0512ca8941fc437483ee2"
+                "reference": "75ece710de5c50a2477c7c1f3a0ae570afd9b692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/cffa11aa416cd65d7af0512ca8941fc437483ee2",
-                "reference": "cffa11aa416cd65d7af0512ca8941fc437483ee2",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/75ece710de5c50a2477c7c1f3a0ae570afd9b692",
+                "reference": "75ece710de5c50a2477c7c1f3a0ae570afd9b692",
                 "shasum": ""
             },
             "require": {
@@ -2414,7 +2414,7 @@
                 }
             ],
             "description": "Phpactor's DI Container",
-            "time": "2020-05-23T09:26:10+00:00"
+            "time": "2020-06-01T07:18:03+00:00"
         },
         {
             "name": "phpactor/docblock",
