@@ -15,17 +15,18 @@ Features:
   - [code-transform] Consider current class as a potential conflict for imports - @dantleech
   - [completion] Indexed class name and function completion - @dantleech
   - [indexer-extension] Support "deep references" (search over all implementaions) - @dantleech
+  - [composer] Enable disbaling of autoloader inclusion via. `composer.enable` - @dantleech
 
 Improvements:
 
   - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
   - [code-transform] Class import updates context name on alias - @dantleech
   - [documentation] Generate the configuration reference - @dantleech
-  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech
-  - [indexer-extension] Validate search results (remove from search index if
-    invalid).
-  - [language-server] Exit session immediately if NULL given as CWD (instead
-    of crashing).
+  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech 
+  - [indexer-extension] Validate search results (remove from search index if invalid).
+  - [language-server] Exit session immediately if NULL given as CWD (instead of crashing).
+  - [container] Adds command for introspecting the container (`container:dump`) - @dantleech
+  - [indexer-extension] Increase priority of indexer source-locators (they should come before the composer locatos) - ~dantleech
 
 Bug fixes;
 

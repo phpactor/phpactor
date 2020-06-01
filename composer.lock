@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb88b08e0692f1822ca34cf97ec8ceae",
+    "content-hash": "6ee0d11ce0e68aa233578b375ace052e",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2222,20 +2222,20 @@
         },
         {
             "name": "phpactor/composer-autoloader-extension",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/composer-autoloader-extension.git",
-                "reference": "6ef27b06a49f39db92380833d24d7f92eca363b6"
+                "reference": "4897d9d1afb3153a633eeeb6e42c8d9af61b6b48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/6ef27b06a49f39db92380833d24d7f92eca363b6",
-                "reference": "6ef27b06a49f39db92380833d24d7f92eca363b6",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/4897d9d1afb3153a633eeeb6e42c8d9af61b6b48",
+                "reference": "4897d9d1afb3153a633eeeb6e42c8d9af61b6b48",
                 "shasum": ""
             },
             "require": {
-                "phpactor/container": "^1.2",
+                "phpactor/container": "^1.3.3",
                 "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/logging-extension": "~0.2"
             },
@@ -2248,7 +2248,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2267,7 +2267,7 @@
                 }
             ],
             "description": "Composer Autoloader provider",
-            "time": "2019-08-24T11:33:25+00:00"
+            "time": "2020-06-01T09:11:31+00:00"
         },
         {
             "name": "phpactor/config-loader",
@@ -2374,12 +2374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "75ece710de5c50a2477c7c1f3a0ae570afd9b692"
+                "reference": "007e4e14556c63e608d1f8a0b78f82c79a3aafbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/75ece710de5c50a2477c7c1f3a0ae570afd9b692",
-                "reference": "75ece710de5c50a2477c7c1f3a0ae570afd9b692",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/007e4e14556c63e608d1f8a0b78f82c79a3aafbc",
+                "reference": "007e4e14556c63e608d1f8a0b78f82c79a3aafbc",
                 "shasum": ""
             },
             "require": {
@@ -2414,7 +2414,7 @@
                 }
             ],
             "description": "Phpactor's DI Container",
-            "time": "2020-06-01T07:18:03+00:00"
+            "time": "2020-06-01T09:14:20+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -2612,12 +2612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "6fdbcb6a339f64591326156f3903e1a3543ae0e8"
+                "reference": "cc6bb7a0e0fae2762f18a772221332a810b9ce0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/6fdbcb6a339f64591326156f3903e1a3543ae0e8",
-                "reference": "6fdbcb6a339f64591326156f3903e1a3543ae0e8",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/cc6bb7a0e0fae2762f18a772221332a810b9ce0a",
+                "reference": "cc6bb7a0e0fae2762f18a772221332a810b9ce0a",
                 "shasum": ""
             },
             "require": {
@@ -2667,7 +2667,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-05-31T13:13:08+00:00"
+            "time": "2020-06-01T08:43:00+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2790,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "db5603207f3f1aa8b8194466df89e3362ace1502"
+                "reference": "f35cafe6c65cb4102e61e501ac38e8b19b6d5396"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/db5603207f3f1aa8b8194466df89e3362ace1502",
-                "reference": "db5603207f3f1aa8b8194466df89e3362ace1502",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f35cafe6c65cb4102e61e501ac38e8b19b6d5396",
+                "reference": "f35cafe6c65cb4102e61e501ac38e8b19b6d5396",
                 "shasum": ""
             },
             "require": {
@@ -2856,7 +2856,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-05-31T12:10:44+00:00"
+            "time": "2020-06-01T08:48:17+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -5496,12 +5496,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "7b14d7886969aeb30248933284fabfcae6d88aed"
+                "reference": "4d4f9a6a80bb927581ee99d34db7a1daac5a128f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/7b14d7886969aeb30248933284fabfcae6d88aed",
-                "reference": "7b14d7886969aeb30248933284fabfcae6d88aed",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/4d4f9a6a80bb927581ee99d34db7a1daac5a128f",
+                "reference": "4d4f9a6a80bb927581ee99d34db7a1daac5a128f",
                 "shasum": ""
             },
             "require": {
@@ -5585,7 +5585,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-05-27T14:03:14+00:00"
+            "time": "2020-05-31T20:23:37+00:00"
         },
         {
             "name": "lstrojny/functional-php",

@@ -40,7 +40,8 @@ class DebugContainerCommand extends Command
             $this->renderTags($output);
         }
 
-        foreach ($input->getOption('tag') as $tag) {
+        foreach ((array)$input->getOption('tag') as $tag) {
+            assert(is_string($tag));
             $this->renderTag($output, $tag);
         }
 
