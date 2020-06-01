@@ -554,6 +554,21 @@ ComposerAutoloaderExtension
 ---------------------------
 
 
+.. _param_composer.enable:
+
+
+``composer.enable``
+"""""""""""""""""""
+
+
+
+
+Include of the projects autoloader to facilitate class location. Note that when including an autoloader code _may_ be executed. This option may be disabled when using the indexer
+
+
+**Default**: ``true``
+
+
 .. _param_composer.autoloader_path:
 
 
@@ -561,6 +576,9 @@ ComposerAutoloaderExtension
 """"""""""""""""""""""""""""
 
 
+
+
+Path to project's autoloader, can be an array
 
 
 **Default**: ``"%project_root%\/vendor\/autoload.php"``
@@ -573,6 +591,9 @@ ComposerAutoloaderExtension
 """"""""""""""""""""""""""""""""
 
 
+
+
+Immediately de-register the autoloader once it has been included (prevent conflicts with Phpactor's autoloader). Some platforms may require this to be disabled
 
 
 **Default**: ``true``
