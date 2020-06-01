@@ -33,15 +33,22 @@ also be used with RPC if run manually.
 
             $ phpactor index:build --reset
 
-    .. tab:: VIM (CoC)
+    .. tab:: Language Server CoC
 
-        The index is built automatically on LS initialize.
+        The index is built automatically on LS initialize and subsequently
+        updated as necessary.
+
+        You can however force a reindex:
 
         Build from scratch:
 
         .. code:: sh
 
-            :call CocRequest('phpactor','indexer/reindex')
+            :CocCommand phpactor.reindex
+
+    .. tab:: Language Server General
+
+       Make a request to `indexer/reindex`.
 
 
 .. _watcher:
