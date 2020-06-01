@@ -26,7 +26,7 @@ Improvements:
   - [indexer-extension] Validate search results (remove from search index if invalid).
   - [language-server] Exit session immediately if NULL given as CWD (instead of crashing).
   - [container] Adds command for introspecting the container (`container:dump`) - @dantleech
-  - [indexer-extension] Increase priority of indexer source-locators (they should come before the composer locatos) - ~dantleech
+  - [indexer-extension] Increase priority of indexer source-locators (they should come before the composer locators) - @dantleech
 
 Bug fixes;
 
