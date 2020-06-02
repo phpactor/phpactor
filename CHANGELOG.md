@@ -27,6 +27,7 @@ Improvements:
   - [language-server] Exit session immediately if NULL given as CWD (instead of crashing).
   - [container] Adds command for introspecting the container (`container:dump`) - @dantleech
   - [indexer-extension] Increase priority of indexer source-locators (they should come before the composer locators) - @dantleech
+  - [language-server] Show explicit meassage when indexer dies
 
 Bug fixes;
 
@@ -42,6 +43,7 @@ Bug fixes;
     clients require it) - @dantleech
   - [code-transform] Fixed occasional whitespace issues when importing classes
   - [language-server] Support for LSP commands
+  - [indexer] Fixed crash with empty class name
 
 ## 2020-05-03 0.15.0
 

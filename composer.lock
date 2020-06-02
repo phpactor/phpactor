@@ -2374,12 +2374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "007e4e14556c63e608d1f8a0b78f82c79a3aafbc"
+                "reference": "acf36175d0e5f043a830e3bf2616e02f1efc5b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/007e4e14556c63e608d1f8a0b78f82c79a3aafbc",
-                "reference": "007e4e14556c63e608d1f8a0b78f82c79a3aafbc",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/acf36175d0e5f043a830e3bf2616e02f1efc5b5c",
+                "reference": "acf36175d0e5f043a830e3bf2616e02f1efc5b5c",
                 "shasum": ""
             },
             "require": {
@@ -2414,7 +2414,7 @@
                 }
             ],
             "description": "Phpactor's DI Container",
-            "time": "2020-06-01T09:14:20+00:00"
+            "time": "2020-06-02T20:02:50+00:00"
         },
         {
             "name": "phpactor/docblock",
@@ -2612,12 +2612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "cc6bb7a0e0fae2762f18a772221332a810b9ce0a"
+                "reference": "960a6e6e167b7097262fd46a26ea8e91d4eeef4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/cc6bb7a0e0fae2762f18a772221332a810b9ce0a",
-                "reference": "cc6bb7a0e0fae2762f18a772221332a810b9ce0a",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/960a6e6e167b7097262fd46a26ea8e91d4eeef4f",
+                "reference": "960a6e6e167b7097262fd46a26ea8e91d4eeef4f",
                 "shasum": ""
             },
             "require": {
@@ -2667,7 +2667,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-06-01T08:43:00+00:00"
+            "time": "2020-06-02T20:20:05+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2790,12 +2790,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "f35cafe6c65cb4102e61e501ac38e8b19b6d5396"
+                "reference": "c92741e19b61e97db2a56dbda27dd3462da091ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f35cafe6c65cb4102e61e501ac38e8b19b6d5396",
-                "reference": "f35cafe6c65cb4102e61e501ac38e8b19b6d5396",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/c92741e19b61e97db2a56dbda27dd3462da091ce",
+                "reference": "c92741e19b61e97db2a56dbda27dd3462da091ce",
                 "shasum": ""
             },
             "require": {
@@ -2856,7 +2856,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-06-01T08:48:17+00:00"
+            "time": "2020-06-02T20:57:20+00:00"
         },
         {
             "name": "phpactor/logging-extension",
