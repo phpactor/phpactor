@@ -16,6 +16,7 @@ Features:
   - [completion] Indexed class name and function completion - @dantleech
   - [indexer-extension] Support "deep references" (search over all implementaions) - @dantleech
   - [composer] Enable disbaling of autoloader inclusion via. `composer.enable` - @dantleech
+  - [lanaguage-server-completion] Auto-import functions - @dantleech
 
 Improvements:
 

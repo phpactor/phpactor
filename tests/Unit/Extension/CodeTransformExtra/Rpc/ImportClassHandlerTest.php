@@ -2,10 +2,11 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
+use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -14,7 +15,8 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 
@@ -29,7 +31,7 @@ class ImportClassHandlerTest extends HandlerTestCase
     /**
      * @var ObjectProphecy
      */
-    private $importClass;
+    private $importName;
 
     /**
      * @var ObjectProphecy
@@ -38,14 +40,14 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function setUp()
     {
-        $this->importClass = $this->prophesize(ImportClass::class);
+        $this->importName = $this->prophesize(ImportName::class);
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
 
     protected function createHandler(): Handler
     {
         return new ImportClassHandler(
-            $this->importClass->reveal(),
+            $this->importName->reveal(),
             $this->classSearch->reveal(),
             'composer'
         );
@@ -97,11 +99,10 @@ class ImportClassHandlerTest extends HandlerTestCase
             ],
         ]);
         $transformed = TextEdits::one(TextEdit::create(0, 0, 'hello'));
-        $this->importClass->importClass(
+        $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
-            self::TEST_OFFSET,
-            self::TEST_NAME,
-            null
+            ByteOffset::fromInt(self::TEST_OFFSET),
+            NameImport::forClass(self::TEST_NAME)
         )->willReturn($transformed);
 
         /** @var EchoResponse $response */
@@ -116,12 +117,11 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testAsksForAliasIfClassAlreadyUsed()
     {
-        $this->importClass->importClass(
+        $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
-            self::TEST_OFFSET,
-            self::TEST_NAME,
-            null
-        )->willThrow(new AliasAlreadyUsedException(self::TEST_ALIAS));
+            ByteOffset::fromInt(self::TEST_OFFSET),
+            NameImport::forClass(self::TEST_NAME)
+        )->willThrow(new AliasAlreadyUsedException(NameImport::forClass(self::TEST_NAME, self::TEST_ALIAS)));
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
@@ -142,11 +142,10 @@ class ImportClassHandlerTest extends HandlerTestCase
     public function testUsesGivenAlias()
     {
         $transformed = TextEdits::one(TextEdit::create(0, 0, 'hello'));
-        $this->importClass->importClass(
+        $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
-            self::TEST_OFFSET,
-            self::TEST_NAME,
-            self::TEST_ALIAS
+            ByteOffset::fromInt(self::TEST_OFFSET),
+            NameImport::forClass(self::TEST_NAME, self::TEST_ALIAS)
         )->willReturn($transformed);
 
         /** @var EchoResponse $response */
@@ -163,12 +162,11 @@ class ImportClassHandlerTest extends HandlerTestCase
 
     public function testShowsMessageIfSelectedClassIsAlreadyImported()
     {
-        $this->importClass->importClass(
+        $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
-            self::TEST_OFFSET,
-            self::TEST_NAME,
-            null
-        )->willThrow(new ClassAlreadyImportedException(self::TEST_NAME, self::TEST_NAME));
+            ByteOffset::fromInt(self::TEST_OFFSET),
+            NameImport::forClass(self::TEST_NAME)
+        )->willThrow(new NameAlreadyImportedException(NameImport::forClass(self::TEST_NAME), self::TEST_NAME));
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [

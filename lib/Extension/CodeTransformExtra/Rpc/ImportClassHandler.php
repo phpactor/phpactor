@@ -2,10 +2,11 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
+use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
@@ -13,8 +14,9 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassAlreadyImportedException;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Util\WordAtOffset;
 
 class ImportClassHandler extends AbstractHandler
@@ -29,9 +31,9 @@ class ImportClassHandler extends AbstractHandler
 
     /**
 
-     * @var ImportClass
+     * @var ImportName
      */
-    private $classImport;
+    private $nameImport;
 
     /**
      * @var ClassSearch
@@ -44,11 +46,11 @@ class ImportClassHandler extends AbstractHandler
     private $filesystem;
 
     public function __construct(
-        ImportClass $classImport,
+        ImportName $nameImport,
         ClassSearch $classSearch,
         string $filesystem
     ) {
-        $this->classImport = $classImport;
+        $this->nameImport = $nameImport;
         $this->classSearch = $classSearch;
         $this->filesystem = $filesystem;
     }
@@ -102,17 +104,16 @@ class ImportClassHandler extends AbstractHandler
         }
 
         try {
-            $sourceCode = $this->classImport->importClass(
+            $sourceCode = $this->nameImport->importName(
                 SourceCode::fromStringAndPath(
                     $arguments[self::PARAM_SOURCE],
                     $arguments[self::PARAM_PATH]
                 ),
-                $arguments[self::PARAM_OFFSET],
-                $arguments[self::PARAM_QUALIFIED_NAME],
-                $arguments[self::PARAM_ALIAS]
+                ByteOffset::fromInt($arguments[self::PARAM_OFFSET]),
+                NameImport::forClass($arguments[self::PARAM_QUALIFIED_NAME], $arguments[self::PARAM_ALIAS])
             )->apply($arguments[self::PARAM_SOURCE]);
         } catch (NameAlreadyUsedException $e) {
-            if ($e instanceof ClassAlreadyImportedException && $e->existingName() === $arguments[self::PARAM_QUALIFIED_NAME]) {
+            if ($e instanceof NameAlreadyImportedException && $e->existingName() === $arguments[self::PARAM_QUALIFIED_NAME]) {
                 return EchoResponse::fromMessage(sprintf(
                     'Class "%s" is already imported',
                     $arguments[self::PARAM_QUALIFIED_NAME]
