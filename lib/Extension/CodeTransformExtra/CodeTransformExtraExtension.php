@@ -11,7 +11,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
+use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
@@ -133,7 +133,7 @@ class CodeTransformExtraExtension implements Extension
 
         $container->register('code_transform.rpc.handler.refactor.import_class', function (Container $container) {
             return new ImportClassHandler(
-                $container->get(ImportClass::class),
+                $container->get(ImportName::class),
                 $container->get('application.class_search'),
                 SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER
             );
