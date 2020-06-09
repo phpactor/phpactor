@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
+namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -77,7 +77,8 @@ PHP;
 
     public function testGeneratesAccessorIfSpecificPropertyIsSelected()
     {
-        [ $source, $offset ] = ExtractOffset::fromSource(<<<'EOT'
+        [ $source, $offset ] = ExtractOffset::fromSource(
+            <<<'EOT'
 <?php
 
 class

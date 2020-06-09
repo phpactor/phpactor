@@ -16,4 +16,3 @@ Contents
    vim
    adr
    integrations/drupal8
-   screenshots

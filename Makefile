@@ -6,7 +6,7 @@
 SPHINXOPTS    ?= -W
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = doc
-BUILDDIR      = doc/_build
+BUILDDIR      = build
 
 .PHONY: help sphinx
 
@@ -26,6 +26,9 @@ build/bin/vimdoc: build/vimdoc/build
 vimdoc: build/bin/vimdoc
 	vimdoc .
 
+configreference:
+	./bin/phpactor development:configuration-reference > doc/reference/configuration.rst
+
 # Put it first so that "make" without argument is like "make help".
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
@@ -36,7 +39,10 @@ sphinxwatch:
 sphinx:
 	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-docs: sphinx vimdoc
+sphinxlatex:
+	@$(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+docs: configreference sphinx vimdoc
 
 clean:
 	rm -Rf build

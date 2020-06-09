@@ -37,6 +37,10 @@ Navigate / list all references to a given class.
 
            :PhpactorFindReferences
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/references` action.
+
 Description
 ~~~~~~~~~~~
 
@@ -80,6 +84,10 @@ or constant).
 
            :PhpactorFindReferences
 
+   .. tab:: Language Server
+       
+       Supported via. the `textDocument/references` action.
+
 .. _description-1:
 
 Description
@@ -111,6 +119,10 @@ brief information about the symbol underneath the cursor.
 
            :PhpactorHover
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/hover` action.
+
 
 Jump to definition
 ------------------
@@ -128,6 +140,10 @@ Jump to the definition of a class or class member.
        .. code-block::
 
            :PhpactorGotoDefinition
+
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/definition` action.
 
 
 .. _description-2:
@@ -158,6 +174,10 @@ Jump to the type of the symbol under the cursor.
 
            :PhpactorGotoType()
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/typeDefinition` action.
+
 .. _description-3:
 
 Description
@@ -187,6 +207,10 @@ Jump to the implementatoin(s) of an interface or class
 
            :PhpactorGotoImplementations
 
+   .. tab:: LSP
+       
+       Supported via. the `textDocument/implementation` action.
+
 
 Jump to implementations of the interface or class under the cursor.
 
@@ -199,6 +223,9 @@ Jump to a related file (e.g. parent class, interfaces, unit test,
 integration test, benchmark), and optionally generate it if it doesn’t
 exist (where supported).
 
+Jumping
+~~~~~~~
+
 .. tabs::
 
    .. tab:: VIM Context Menu
@@ -210,6 +237,41 @@ exist (where supported).
        .. code-block::
 
            :PhpactorNavigate
+
+You specify the jump patterns in ``.phpactor.json`` with :ref:`param_navigator.destinations`:
+
+::
+
+    {
+        "navigator.destinations": 
+        {
+          "source": "lib/<kernel>.php",
+          "unit_test": "tests/Unit/<kernel>Test.php"
+        }
+    }
+
+This would enable you to jump from
+ ``lib/Acme/Post.php`` to ``tests/Unit/Acme/Post.php`` and vice-versa.
+
+Generating
+~~~~~~~~~~
+
+If the file doesn't exist you automatically create it by mapping the
+navigation targets to template :ref:`variants <template_variants>`:
+
+::
+
+    {
+        "code_transform.class_new.variants":
+        {
+            "source": "default",
+            "unit_test": "phpunit_test",
+            "exception": "exception",
+            "symfony_command": "symfony_command"
+        }
+    }
+
+Now Phpactor should prompt you to create the navigation target if it doesn't exist.
 
 .. _description-4:
 

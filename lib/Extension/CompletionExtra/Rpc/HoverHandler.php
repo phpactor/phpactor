@@ -7,12 +7,12 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
+use RuntimeException;
 
 class HoverHandler implements Handler
 {
@@ -91,22 +91,26 @@ class HoverHandler implements Handler
 
         try {
             $class = $this->reflector->reflectClassLike((string) $container);
+            $member = null;
 
             // note that all class-likes (classes, traits and interfaces) have
             // methods but not all have constants or properties, so we play safe
             // with members() which is first-come-first-serve, rather than risk
             // a fatal error because of a non-existing method.
             switch ($symbolContext->symbol()->symbolType()) {
-            case Symbol::METHOD:
-                $member = $class->methods()->get($name);
-                break;
-            case Symbol::CONSTANT:
-                $member = $class->members()->get($name);
-                break;
-            case Symbol::PROPERTY:
-                $member = $class->members()->get($name);
-                break;
+                case Symbol::METHOD:
+                    $member = $class->methods()->get($name);
+                    break;
+                case Symbol::CONSTANT:
+                    $member = $class->members()->get($name);
+                    break;
+                case Symbol::PROPERTY:
+                    $member = $class->members()->get($name);
+                    break;
+                default:
+                    throw new RuntimeException('Unknown member type');
             }
+
 
             return $this->formatter->format($member);
         } catch (NotFound $e) {

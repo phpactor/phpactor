@@ -22,6 +22,7 @@ jobs:
         # Install the PHP dependencies
         - composer install --optimize-autoloader --classmap-authoritative
         - bin/phpactor --version
+        - sudo add-apt-repository --yes ppa:jonathonf/vim
         - sudo apt-get update -y
         - sudo apt-get install vim -fy
         # Install the VIM testing framework
@@ -47,8 +48,10 @@ jobs:
         - config/travis/testdeps
         - config/travis/testexts
     - name: Docs
+      php: 7.3
       before_script:
         - sudo apt-get -y install python3-pip python3-setuptools
         - pip3 install -r requirements.txt
+        - composer install
       script:
         - make docs

@@ -9,6 +9,11 @@ classes and functions in your project.
 The indexer *only required* for some features (such as
 :ref:`navigation_goto_implementation`).
 
+.. _indexer_building:
+
+Building the index
+------------------
+
 It will be *automatically enabled* when used with the language server but can
 also be used with RPC if run manually.
 
@@ -28,15 +33,22 @@ also be used with RPC if run manually.
 
             $ phpactor index:build --reset
 
-    .. tab:: VIM (CoC)
+    .. tab:: Language Server CoC
 
-        The index is built automatically on LS initialize.
+        The index is built automatically on LS initialize and subsequently
+        updated as necessary.
+
+        You can however force a reindex:
 
         Build from scratch:
 
         .. code:: sh
 
-            :call CocRequest('phpactor','indexer/reindex')
+            :CocCommand phpactor.reindex
+
+    .. tab:: Language Server General
+
+       Make a request to `indexer/reindex`.
 
 
 .. _watcher:
@@ -59,6 +71,38 @@ To contribute to the available watchers see `amp-fswatch
 <https://github.com/phpactor/amp-fswatch>`_.
 
 If you want to find out which watcher your system is using, enable _`logging`.
+
+.. _indexer_querying:
+
+Querying from the CLI
+---------------------
+
+You can query the index from the CLI:
+
+.. tabs::
+
+    .. tab:: Show class index information
+
+        .. code:: sh
+
+            $ phpactor index:query "Symfony\\Component\\Console\\Output\\OutputInterface"
+
+    .. tab:: Show function information
+
+        .. code:: sh
+
+            $ phpactor index:query "sprintf"
+
+    .. tab:: Show member information
+
+        .. code:: sh
+
+            $ phpactor index:query "method#createFoobar"
+            $ phpactor index:query "property#createFoobar"
+            $ phpactor index:query "constant#createFoobar"
+
+Note that this information is primarily intended for the indexer and is not
+yet intended to provide a true "querying" facility.
 
 Configuration
 -------------

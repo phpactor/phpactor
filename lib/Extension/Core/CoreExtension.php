@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Core;
 
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Command\DebugContainerCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
@@ -43,6 +44,11 @@ class CoreExtension implements Extension
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
         ]);
+        $schema->setDescriptions([
+            self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
+            self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
+            self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
+        ]);
     }
 
     public function load(ContainerBuilder $container)
@@ -53,7 +59,7 @@ class CoreExtension implements Extension
         $this->registerFilePathExpanders($container);
     }
 
-    private function registerConsole(ContainerBuilder $container)
+    private function registerConsole(ContainerBuilder $container): void
     {
         $container->register('command.config_dump', function (Container $container) {
             return new ConfigDumpCommand(
@@ -64,6 +70,11 @@ class CoreExtension implements Extension
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
 
+        $container->register('command.debug_container', function (Container $container) {
+            return new DebugContainerCommand(
+                $container
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'container:dump']]);
 
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
@@ -106,7 +117,7 @@ class CoreExtension implements Extension
         });
     }
 
-    private function registerApplicationServices(Container $container)
+    private function registerApplicationServices(ContainerBuilder $container): void
     {
         $container->register('application.cache_clear', function (Container $container) {
             return new CacheClear(

@@ -1,5 +1,53 @@
 Changelog
 =========
+ 
+## 2020-06-09 (0.16.0)
+
+Features:
+
+  - [vim-plugin] Ability to set custom project root strategy (#1027) - @przepompownia
+  - [indexer-extension] Workspace reference finder (classes,functions,members) - @dantleech
+  - [worse-reflection] Support "final" keyword - @dantleech
+  - [language-server-hover] Show "final" keyword on class hover - @dantleech
+  - [language-server-hover] Show inherited method documentation - @dantleech
+  - [language-server-code-transform] Add command to import class - @dantleech
+  - [language-server-completion] Automatically import class on completion confirm - @dantleech
+  - [code-transform] Consider current class as a potential conflict for imports - @dantleech
+  - [completion] Indexed class name and function completion - @dantleech
+  - [indexer-extension] Support "deep references" (search over all implementaions) - @dantleech
+  - [composer] Enable disbaling of autoloader inclusion via. `composer.enable` - @dantleech
+  - [lanaguage-server-completion] Auto-import functions - @dantleech
+
+Improvements:
+
+  - [code-builder] Removed functionality to "update" parameters: was very
+    buggy. Now only new parameters will be added when updating methods via.
+    generate method.
+  - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
+  - [code-transform] Class import updates context name on alias - @dantleech
+  - [documentation] Generate the configuration reference - @dantleech
+  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech 
+  - [indexer-extension] Validate search results (remove from search index if invalid).
+  - [language-server] Exit session immediately if NULL given as CWD (instead of crashing).
+  - [container] Adds command for introspecting the container (`container:dump`) - @dantleech
+  - [indexer-extension] Increase priority of indexer source-locators (they should come before the composer locators) - @dantleech
+  - [language-server] Show explicit meassage when indexer dies
+
+Bug fixes;
+
+  - [completion] Completion limit of 32 imposed in 0.15 removed.
+  - [ampfs-watch] Inotify watcher not reporting error when out of available
+    watchers
+    (https://github.com/phpactor/amp-fswatch/commit/1e38faadc3fb73158de9a966ee12d17992dad4fe)
+    - @dantleech
+  - [ampfs-watch] Buffered watcher not allowing errors to bubble up
+    (https://github.com/phpactor/amp-fswatch/commit/b5cb54b6d01a9ec3dcbfdcca804c2d63c0e84a19)
+    - @dantleech
+  - [language-server] Ensure that `result` key is missing when `NULL` (some
+    clients require it) - @dantleech
+  - [code-transform] Fixed occasional whitespace issues when importing classes
+  - [language-server] Support for LSP commands
+  - [indexer] Fixed crash with empty class name
 
 ## 2020-05-03 0.15.0
 
@@ -13,6 +61,8 @@ Features:
   - [rpc] Add docblock prose to hover 
   - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
     terminal window (#974) - @elythyr
+  - [ref-finder] Goto definition works for vars (https://github.com/phpactor/worse-reference-finder/pull/1) - @FatBoyXPC
+  - [phpactor-ls] workspace/references support - @dantleech
 
 Improvements:
 

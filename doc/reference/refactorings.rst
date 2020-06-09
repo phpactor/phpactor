@@ -678,6 +678,8 @@ Override method ``execute``:
 Generation
 ==========
 
+.. _generation_class_new:
+
 Class New
 ---------
 
@@ -695,6 +697,9 @@ from a class name.
        (Note that class FQN is also accepted)
 
    .. tab:: VIM context menu
+
+       When on a class name (preferable a non-existing one) you can create a
+       new class via. the context menu.
 
        *Class context menu > New Class*
 

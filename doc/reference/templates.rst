@@ -1,29 +1,25 @@
+.. _template_variants:
+
 Templates
 =========
 
 Phpactor allows you to provide your own templates for some class and
 code generation.
 
-.. container:: alert alert-danger
+When :ref:`generating a new class <generation_class_new>` you can specify a **variant**.
 
-   This section is incomplete
-
-When generating a new class you can specify a variant:
-
-::
-
-   $ phpactor class:new tests/Registry/GeneratorTest.php --variant=phpunit_test
-
-Variants are registered in ``.phpactor.yml``:
+Variants are registered in ``.phpactor.yml`` with
+:ref:`param_code_transform.class_new.variants`:
 
 .. code:: yaml
 
    code_transform.class_new.variants:
-       "Phpunit test": phpunit_test
+       unit: phpunit_test
 
-In order to create the above variant we need to create a template
-locally in ``.phpactor/templates`` (note you can also create them
-globally in the XDG directories, in a ``templates`` folder):
+This will make the variant ``unit`` available.
+
+Implement the templates by placing template files in
+``.phpactor/templates/phpunit_test``:
 
 .. code:: twig
 
@@ -39,3 +35,9 @@ globally in the XDG directories, in a ``templates`` folder):
    {
    }
    {% endfor %}
+
+.. note::
+
+    You can also create templates globally in the XDG directories, in a
+    ``templates`` folder - e.g. ``$HOME/.config/phpactor/templates``:
+

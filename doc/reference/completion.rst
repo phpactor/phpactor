@@ -3,21 +3,107 @@
 Completion
 ==========
 
-Phpactor provides completion for:
+.. contents::
+   :depth: 2
+   :backlinks: none
+   :local:
 
--  **Class names**: All PSR compliant classes in the project and vendor
-   tree.
--  **Class members**: Methods, constants, properties of auto-loadable
-   classes.
--  **Functions**: Built-in and bootstrapped.
--  **Constants**: Built-in and bootstrapped.
--  **Parameters**: Will suggest appropriate local variables for method
-   parameters.
+Completors
+----------
 
 .. note::
 
-   Phpactors type inference is based on
-   `WorseReflection <https://github.com/phpactor/worse-reflection>`__.
+    Completors can be disabled using the :ref:`param_completion_worse.disabled_completors` configuration.
+
+``worse_parameter``
+~~~~~~~~~~~~~~~~~~~
+
+Provides suggestions for arguments.
+
+If there are suitable variables in the current scope they will be given
+priority if they match the type of the method parameter.
+
+.. code:: php
+
+    <?php
+
+    function foobar(string $string) {}
+
+    $foobar = 'foobar';
+    $barfoo = 1234;
+
+    foobar(/** completion invoked here */);
+
+Given the cursor is at ``<>`` ``$foobar`` will be suggested with a higher
+priority than ``$barfoo`` and the parameter index will be shown in the
+completion description.
+
+``worse_constructor``
+~~~~~~~~~~~~~~~~~~~~~
+
+As with ``worse_parameter`` but for constructor arguments.
+
+``worse_class_member``
+~~~~~~~~~~~~~~~~~~~~~~
+
+Provides class member (methods, properties and constants) suggestions.
+Triggered on ``::`` and ``->``.
+
+``indexed_name``
+~~~~~~~~~~~~~~~~
+
+Provides class and function name completion from the :ref:`indexer`.
+
+``scf_class``
+~~~~~~~~~~~~~
+
+This completor will provide class names by *scanning the vendor directory* and
+transposing the file names into class names.
+
+This completor is disabled by default when using the :ref:`language_server`.
+
+``worse_local_variable``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Provide completion for local variables in a scope. Triggered on ``$``.
+
+``declared_function``
+~~~~~~~~~~~~~~~~~~~~~
+
+Provide function name completion based on functions defined at _runtime_ in the
+Phpactor process. 
+
+Note that any functions which are not loaded when _Phpactor_
+loads will not be available. So this is mainly useful for built-in functions.
+
+This completor is disabled by default when using the :ref:`language_server`.
+
+``declared_constant``
+~~~~~~~~~~~~~~~~~~~~~~
+
+Provide constant name completion based on constants defined at _runtime_ in the
+Phpactor process. 
+
+This is mainly useful for built-in constants (e.g. ``JSON_PRETTY_PRINT`` or
+``PHP_INT_MAX``).
+
+``worse_class_alias``
+~~~~~~~~~~~~~~~~~~~~~~
+
+Provide suggestions for any classes imported into the current class with
+aliases.
+
+
+``declared_class``
+~~~~~~~~~~~~~~~~~~
+
+Provide completion for class names from class names defined in the Phpactor
+process.
+
+This is mainly useful when used with the ``scf_class`` completor to provide
+built-in classes.
+
+This completor is disabled by default when using the :ref:`language_server`.
 
 Type inference
 --------------
