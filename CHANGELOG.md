@@ -1,7 +1,7 @@
 Changelog
 =========
  
-## develop (0.16.0)
+## 2020-06-09 (0.16.0)
 
 Features:
 

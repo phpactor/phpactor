@@ -1,7 +1,7 @@
 {
     "name": "phpactor/phpactor",
     "description": "PHP refactoring and intellisense tool for text editors",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "license": "MIT",
     "require": {
