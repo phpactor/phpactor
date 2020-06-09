@@ -20,6 +20,9 @@ Features:
 
 Improvements:
 
+  - [code-builder] Removed functionality to "update" parameters: was very
+    buggy. Now only new parameters will be added when updating methods via.
+    generate method.
   - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
   - [code-transform] Class import updates context name on alias - @dantleech
   - [documentation] Generate the configuration reference - @dantleech

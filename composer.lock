@@ -1870,12 +1870,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
-                "reference": "9b8a647f971eba0a0d33604ee16e7d0e55186d04"
+                "reference": "ee4d1036bf4d61190cbabd1a9ad507c160d0204d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/9b8a647f971eba0a0d33604ee16e7d0e55186d04",
-                "reference": "9b8a647f971eba0a0d33604ee16e7d0e55186d04",
+                "url": "https://api.github.com/repos/phpactor/code-builder/zipball/ee4d1036bf4d61190cbabd1a9ad507c160d0204d",
+                "reference": "ee4d1036bf4d61190cbabd1a9ad507c160d0204d",
                 "shasum": ""
             },
             "require": {
@@ -1889,7 +1889,8 @@
                 "friendsofphp/php-cs-fixer": "~2.15.0",
                 "phpactor/test-utils": "^1.0",
                 "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~8.0"
+                "phpunit/phpunit": "~8.0",
+                "symfony/var-dumper": "^5.0"
             },
             "type": "library",
             "extra": {
@@ -1913,7 +1914,7 @@
                 }
             ],
             "description": "Generating and modifying source code",
-            "time": "2020-06-04T19:37:54+00:00"
+            "time": "2020-06-09T19:31:03+00:00"
         },
         {
             "name": "phpactor/code-transform",
@@ -2802,12 +2803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "ea6a0984a1d78bd3f4b24aabb5a521c54fb7984b"
+                "reference": "8c93ddc876de1b69b387973f8eb9ed1c60ee0c87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/ea6a0984a1d78bd3f4b24aabb5a521c54fb7984b",
-                "reference": "ea6a0984a1d78bd3f4b24aabb5a521c54fb7984b",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/8c93ddc876de1b69b387973f8eb9ed1c60ee0c87",
+                "reference": "8c93ddc876de1b69b387973f8eb9ed1c60ee0c87",
                 "shasum": ""
             },
             "require": {
@@ -2838,7 +2839,8 @@
                 "phpactor/test-utils": "^1.1",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12.0",
-                "phpunit/phpunit": "^9.0"
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^5.1"
             },
             "type": "phpactor-extension",
             "extra": {
@@ -2868,7 +2870,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-06-04T21:57:04+00:00"
+            "time": "2020-06-05T19:39:02+00:00"
         },
         {
             "name": "phpactor/logging-extension",
@@ -3561,12 +3563,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "41197db9d3b63e71993f28555e9e596e3ffecd7f"
+                "reference": "35fe6041a1d24f6043df364bcf2c63dac6780757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/41197db9d3b63e71993f28555e9e596e3ffecd7f",
-                "reference": "41197db9d3b63e71993f28555e9e596e3ffecd7f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/35fe6041a1d24f6043df364bcf2c63dac6780757",
+                "reference": "35fe6041a1d24f6043df364bcf2c63dac6780757",
                 "shasum": ""
             },
             "require": {
@@ -3608,7 +3610,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-05-31T10:58:40+00:00"
+            "time": "2020-06-06T06:31:12+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -6465,16 +6467,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.25",
+            "version": "0.12.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9619551d68b2d4c0d681a8df73f3c847c798ee64"
+                "reference": "2abbd3253e38a258137f647f4e5fdbcb13142c3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9619551d68b2d4c0d681a8df73f3c847c798ee64",
-                "reference": "9619551d68b2d4c0d681a8df73f3c847c798ee64",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2abbd3253e38a258137f647f4e5fdbcb13142c3e",
+                "reference": "2abbd3253e38a258137f647f4e5fdbcb13142c3e",
                 "shasum": ""
             },
             "require": {
@@ -6517,7 +6519,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-10T20:36:16+00:00"
+            "time": "2020-06-08T21:28:12+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
