@@ -42,10 +42,13 @@ let g:phpactorInputListStrategy = get(g:, 'phpactorInputListStrategy', 'phpactor
 let g:phpactorUseOpenWindows = get(g:, 'phpactorUseOpenWindows', v:false)
 
 ""
-" Each RPC call to phpactor comes with some workspace root directory.
-" This setting allows select a |Funcref| to the custom strategy that can assign this directory.
-" Notice the upper case of the first letter of this variable.
-" Currently no arguments is passed to the function.
+" Each Phpactor request requires the project's root directory to be known. By
+" default it will assume the directory in which you started VIM, but this may
+" not suit all workflows.
+"
+" This setting allows |Funcref| to be specified. This function should return
+" the working directory in whichever way is required. No arguments are passed
+" to this function.
 let g:PhpactorRootDirectoryStrategy = get(g:, 'PhpactorRootDirectoryStrategy', {-> g:phpactorInitialCwd})
 
 " Config }}}
