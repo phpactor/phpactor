@@ -476,6 +476,8 @@ function! phpactor#rpc(action, arguments)
 
     let l:workspaceDir = phpactor#getRootDirectory()
 
+    " note that we should escape these arguments, but using the list syntax
+    " here causes tests to fail on travis with VIM 8.3 ...
     let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' rpc --working-dir=' . l:workspaceDir
 
     let result = system(l:cmd, json_encode(request))

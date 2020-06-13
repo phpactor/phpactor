@@ -1,5 +1,11 @@
 Changelog
 =========
+
+## develop
+
+Improvements:
+
+  - [worse-reflection] Support for virtual methods in interfaces - @dantleech
  
 ## 2020-06-09 (0.16.0)
 

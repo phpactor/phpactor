@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1e790b6bc4f2d581d7871dbc86ef459",
+    "content-hash": "f4486cc3326ff144f9721a901f925dd5",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3559,16 +3559,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "0.4.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "35fe6041a1d24f6043df364bcf2c63dac6780757"
+                "reference": "91d4c6b353c6c678e5f4d1dba2513fe93218841f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/35fe6041a1d24f6043df364bcf2c63dac6780757",
-                "reference": "35fe6041a1d24f6043df364bcf2c63dac6780757",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/91d4c6b353c6c678e5f4d1dba2513fe93218841f",
+                "reference": "91d4c6b353c6c678e5f4d1dba2513fe93218841f",
                 "shasum": ""
             },
             "require": {
@@ -3584,7 +3584,7 @@
                 "phpactor/class-to-file": "~0.1",
                 "phpactor/test-utils": "@dev",
                 "phpbench/phpbench": "^0.16.0",
-                "phpstan/phpstan": "~0.11.0",
+                "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "~7.0",
                 "symfony/filesystem": "^3.3"
             },
@@ -3610,7 +3610,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-06-06T06:31:12+00:00"
+            "time": "2020-06-13T11:06:24+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -8048,7 +8048,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "phpactor/debug-extension": 20,
         "friendsofphp/php-cs-fixer": 20
