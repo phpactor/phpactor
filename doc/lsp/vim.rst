@@ -90,15 +90,7 @@ You can try adding ``$`` to the list of keywords to solve the problem:
 
 ::
 
-   autocmd FileType php set iskeyword+=$
-    "languageserver": {
-        "phpactor": {
-            "command": "phpactor",
-            "args": ["language-server"],
-            "trace.server": "verbose",
-            "filetypes": ["php"]
-        }
-    }
+autocmd FileType php set iskeyword+=$
 
 or configure Phpactor to trim the ``$`` prefix in ``.phpactor.json``:
 
