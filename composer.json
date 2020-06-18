@@ -8,7 +8,7 @@
         "composer/xdebug-handler": "^1.1",
         "dantleech/invoke": "^1.0.1",
         "monolog/monolog": "^1.0",
-        "ocramius/package-versions": "^1.0",
+        "composer/package-versions-deprecated": "^1.0",
         "php": "^7.3",
         "phpactor/class-mover": "^0.1.2",
         "phpactor/class-to-file": "^0.3.3",
