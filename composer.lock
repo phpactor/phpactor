@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f9c044b0dba1d0ad892f3050da2e99c",
+    "content-hash": "3f21d735daa1808a88990d86410e939f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3902,7 +3902,7 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "dev-master",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
@@ -5692,7 +5692,7 @@
         },
         {
             "name": "dantleech/what-changed",
-            "version": "dev-master",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/what-changed.git",
@@ -5744,7 +5744,7 @@
             "description": "Report changes in your dependencies",
             "support": {
                 "issues": "https://github.com/dantleech/what-changed/issues",
-                "source": "https://github.com/dantleech/what-changed/tree/master"
+                "source": "https://github.com/dantleech/what-changed/tree/0.4.0"
             },
             "time": "2020-06-19T23:30:41+00:00"
         },
@@ -8693,7 +8693,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
         "phpactor/debug-extension": 20,
         "friendsofphp/php-cs-fixer": 20
