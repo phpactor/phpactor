@@ -1,5 +1,12 @@
 Changelog
 =========
+
+## 2020-06-09 (0.16.1)
+
+Improvements:
+
+  - [worse-reflection] Support for virtual methods in interfaces - @dantleech
+  - [code-transform] Fix regression with importing from root namespace
  
 ## 2020-06-09 (0.16.0)
 
