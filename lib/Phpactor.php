@@ -243,6 +243,12 @@ class Phpactor
     private static function configureLanguageServer(array $config): array
     {
         $config[LanguageServerExtension::PARAM_SESSION_PARAMETERS] = [
+            LanguageServerExtension::PARAM_METHOD_ALIAS_MAP => [
+                'indexer/reindex' => 'phpactor/indexer/reindex',
+                'session/dumpConfig' => 'phpactor/debug/config',
+                'service/running' => 'phpactor/service/running',
+                'system/status' => 'phpactor/stats',
+            ],
             WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION => false,
             CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
                 'scf_class',
