@@ -2766,12 +2766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "3555d911480f7e0cde6a5e3576a46a5407c35c7b"
+                "reference": "e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/3555d911480f7e0cde6a5e3576a46a5407c35c7b",
-                "reference": "3555d911480f7e0cde6a5e3576a46a5407c35c7b",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111",
+                "reference": "e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111",
                 "shasum": ""
             },
             "require": {
@@ -2820,7 +2820,7 @@
                 }
             ],
             "description": "Generic Language Server Platform",
-            "time": "2020-07-29T17:50:01+00:00"
+            "time": "2020-07-29T18:08:02+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
