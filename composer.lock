@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a769b6119b77c1286011d8a57f930210",
+    "content-hash": "ef48e534d813318f3c573fd658fb89bf",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2762,16 +2762,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "dev-lsp-prot-1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "b70fa335962bdeafbdf62a317389f9c6de5d897b"
+                "reference": "ef65f2f8a9c82957a1709d351cb661658ad996df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/b70fa335962bdeafbdf62a317389f9c6de5d897b",
-                "reference": "b70fa335962bdeafbdf62a317389f9c6de5d897b",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/ef65f2f8a9c82957a1709d351cb661658ad996df",
+                "reference": "ef65f2f8a9c82957a1709d351cb661658ad996df",
                 "shasum": ""
             },
             "require": {
@@ -2799,7 +2799,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.5.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -2820,20 +2820,20 @@
                 }
             ],
             "description": "Generic Language Server Platform",
-            "time": "2020-07-26T13:19:29+00:00"
+            "time": "2020-07-29T17:42:09+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
-            "version": "dev-lsp-prot-1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "9f4e81671f76bf1f86203fc8de27691ca88b9e90"
+                "reference": "17d649a6f1b85ff4469c0d5c3a1737d414ccaefc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/9f4e81671f76bf1f86203fc8de27691ca88b9e90",
-                "reference": "9f4e81671f76bf1f86203fc8de27691ca88b9e90",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/17d649a6f1b85ff4469c0d5c3a1737d414ccaefc",
+                "reference": "17d649a6f1b85ff4469c0d5c3a1737d414ccaefc",
                 "shasum": ""
             },
             "require": {
@@ -2842,7 +2842,7 @@
                 "phpactor/console-extension": "~0.1",
                 "phpactor/container": "^1.3.3",
                 "phpactor/file-path-resolver-extension": "~0.2",
-                "phpactor/language-server": "dev-lsp-prot-1",
+                "phpactor/language-server": "^1.0.0",
                 "phpactor/logging-extension": "~0.3.3",
                 "phpactor/text-document": "^1.1"
             },
@@ -2877,20 +2877,20 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-07-26T13:22:27+00:00"
+            "time": "2020-07-29T17:08:35+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
-            "version": "dev-lsp-prot-1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "11def7282072e6fc07f86ff42f6d29262be8d164"
+                "reference": "bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/11def7282072e6fc07f86ff42f6d29262be8d164",
-                "reference": "11def7282072e6fc07f86ff42f6d29262be8d164",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30",
+                "reference": "bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30",
                 "shasum": ""
             },
             "require": {
@@ -2906,9 +2906,7 @@
                 "phpactor/container": "^1.3.3",
                 "phpactor/file-path-resolver-extension": "~0.2",
                 "phpactor/indexer-extension": "^0.2.2",
-                "phpactor/language-server": "dev-lsp-prot-1",
-                "phpactor/language-server-extension": "dev-lsp-prot-1",
-                "phpactor/language-server-protocol": "9999999-dev",
+                "phpactor/language-server-extension": "^0.5",
                 "phpactor/logging-extension": "~0.3.3",
                 "phpactor/reference-finder-extension": "^0.1.5",
                 "phpactor/text-document": "^1.2.3",
@@ -2953,7 +2951,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-07-26T12:45:39+00:00"
+            "time": "2020-07-29T17:38:30+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -3535,12 +3533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "9d6b18d650831f43a35f6a1375a72916e57b1a84"
+                "reference": "f8dae6aa7013a1ddb237fe885b1a516c098a3718"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/9d6b18d650831f43a35f6a1375a72916e57b1a84",
-                "reference": "9d6b18d650831f43a35f6a1375a72916e57b1a84",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/f8dae6aa7013a1ddb237fe885b1a516c098a3718",
+                "reference": "f8dae6aa7013a1ddb237fe885b1a516c098a3718",
                 "shasum": ""
             },
             "require": {
@@ -3576,7 +3574,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2020-07-25T11:11:11+00:00"
+            "time": "2020-07-26T20:36:51+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
@@ -3998,16 +3996,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d"
+                "reference": "988dbefc7878d0a35f12afb4df1f7dd0bd153c43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d",
-                "reference": "ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/988dbefc7878d0a35f12afb4df1f7dd0bd153c43",
+                "reference": "988dbefc7878d0a35f12afb4df1f7dd0bd153c43",
                 "shasum": ""
             },
             "require": {
@@ -4022,7 +4020,7 @@
             },
             "require-dev": {
                 "codeception/aspect-mock": "^3",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7.0",
                 "doctrine/annotations": "^1.8",
                 "goaop/framework": "^2",
                 "mockery/mockery": "^1.3",
@@ -4031,8 +4029,8 @@
                 "php-mock/php-mock-mockery": "^1.3",
                 "php-mock/php-mock-phpunit": "^2.5",
                 "php-parallel-lint/php-parallel-lint": "^1.1",
+                "phpbench/phpbench": "^0.17.1",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpdoc-parser": "0.4.3",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-mockery": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
@@ -4081,7 +4079,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-03-29T20:13:32+00:00"
+            "time": "2020-07-28T16:51:01+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -8283,8 +8281,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server-extension": 20,
-        "phpactor/language-server-phpactor-extensions": 20,
         "phpactor/debug-extension": 20,
         "friendsofphp/php-cs-fixer": 20
     },
