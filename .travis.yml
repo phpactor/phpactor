@@ -38,7 +38,7 @@ jobs:
         - vendor/bin/phpunit
         # Run the benchmarks and send the results to the PHPBench reports server
         # (only if the secure key is present)
-        - if [ -n "${REPORTS_API_KEY}" ]; then vendor/bin/phpbench run --store; else vendor/bin/phpbench run; fi;
+        - vendor/bin/phpbench run
         # Run the test suites for all the Phpactor packages
     - name: Phpactor Extensions
       php: 7.3

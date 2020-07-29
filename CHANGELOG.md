@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## develop
+
+Improvements:
+
+  - [language-server] New LSP protocol and general refactoring - @dantleech
+
 ## 2020-06-09 (0.16.1)
 
 Improvements:
