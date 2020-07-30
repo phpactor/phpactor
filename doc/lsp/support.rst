@@ -24,7 +24,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Document Highlight      | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
-| Document Symbol         | ✘ |                                     |
+| Document Symbol         | ✔ | For structural elements             |
 +-------------------------+---+-------------------------------------+
 | Code Action             | ✘ | Supported by RPC [#rpc]_ [#code]_   |
 +-------------------------+---+-------------------------------------+
