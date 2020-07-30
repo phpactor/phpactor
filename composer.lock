@@ -2766,12 +2766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111"
+                "reference": "cdc02e3c04a31600a4b440c26e17151399ae5966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111",
-                "reference": "e6cc8265a8c1d66bab6ce4eb6dcc81964ac36111",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/cdc02e3c04a31600a4b440c26e17151399ae5966",
+                "reference": "cdc02e3c04a31600a4b440c26e17151399ae5966",
                 "shasum": ""
             },
             "require": {
@@ -2820,7 +2820,7 @@
                 }
             ],
             "description": "Generic Language Server Platform",
-            "time": "2020-07-29T18:08:02+00:00"
+            "time": "2020-07-30T20:01:00+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2885,12 +2885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30"
+                "reference": "96c18de72fd23e862bde781b09e36465ebf98092"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30",
-                "reference": "bdab7a14c91e3b273b8b1946d3ff6ba7855bbd30",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/96c18de72fd23e862bde781b09e36465ebf98092",
+                "reference": "96c18de72fd23e862bde781b09e36465ebf98092",
                 "shasum": ""
             },
             "require": {
@@ -2951,7 +2951,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-07-29T17:38:30+00:00"
+            "time": "2020-07-30T19:53:55+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -3533,12 +3533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "f8dae6aa7013a1ddb237fe885b1a516c098a3718"
+                "reference": "ab5177217b7eb0064b8a67bb3c88a67265383510"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/f8dae6aa7013a1ddb237fe885b1a516c098a3718",
-                "reference": "f8dae6aa7013a1ddb237fe885b1a516c098a3718",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/ab5177217b7eb0064b8a67bb3c88a67265383510",
+                "reference": "ab5177217b7eb0064b8a67bb3c88a67265383510",
                 "shasum": ""
             },
             "require": {
@@ -3574,7 +3574,7 @@
                 }
             ],
             "description": "Collection of value objects for representing and referencing text documents",
-            "time": "2020-07-26T20:36:51+00:00"
+            "time": "2020-07-30T19:59:46+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
@@ -6662,16 +6662,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.33",
+            "version": "0.12.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "46e698a0452526a05c4a351d7c47c4b8c37a548d"
+                "reference": "ad75388d71fb0b4a954f71a852fd989915a51cb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/46e698a0452526a05c4a351d7c47c4b8c37a548d",
-                "reference": "46e698a0452526a05c4a351d7c47c4b8c37a548d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ad75388d71fb0b4a954f71a852fd989915a51cb7",
+                "reference": "ad75388d71fb0b4a954f71a852fd989915a51cb7",
                 "shasum": ""
             },
             "require": {
@@ -6714,7 +6714,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-19T22:10:11+00:00"
+            "time": "2020-07-30T15:31:10+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
