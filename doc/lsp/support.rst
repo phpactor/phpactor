@@ -22,7 +22,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Find References         | ✔ | [#references]_                      |
 +-------------------------+---+-------------------------------------+
-| Document Highlight      | ✘ |                                     |
+| Document Highlight      | ✔ | Symbol highlighting                 |
 +-------------------------+---+-------------------------------------+
 | Document Symbol         | ✔ | For structural elements             |
 +-------------------------+---+-------------------------------------+

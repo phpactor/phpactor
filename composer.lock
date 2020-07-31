@@ -2885,12 +2885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "96c18de72fd23e862bde781b09e36465ebf98092"
+                "reference": "17c12273e62f3e0645bba993345e06aff07d59b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/96c18de72fd23e862bde781b09e36465ebf98092",
-                "reference": "96c18de72fd23e862bde781b09e36465ebf98092",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/17c12273e62f3e0645bba993345e06aff07d59b4",
+                "reference": "17c12273e62f3e0645bba993345e06aff07d59b4",
                 "shasum": ""
             },
             "require": {
@@ -2951,7 +2951,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-07-30T19:53:55+00:00"
+            "time": "2020-07-31T09:46:53+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -2959,12 +2959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "4285d2ece2ca3611ffa100a84d169d53f1ac3cb1"
+                "reference": "179d8f7d412523aba498e7a117406a624513ff37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/4285d2ece2ca3611ffa100a84d169d53f1ac3cb1",
-                "reference": "4285d2ece2ca3611ffa100a84d169d53f1ac3cb1",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/179d8f7d412523aba498e7a117406a624513ff37",
+                "reference": "179d8f7d412523aba498e7a117406a624513ff37",
                 "shasum": ""
             },
             "require": {
@@ -2991,7 +2991,7 @@
                 }
             ],
             "description": "Langauge Server Protocol for PHP (transpiled)",
-            "time": "2020-07-23T13:49:21+00:00"
+            "time": "2020-07-31T06:43:54+00:00"
         },
         {
             "name": "phpactor/logging-extension",
