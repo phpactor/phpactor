@@ -1,7 +1,7 @@
 Behat
 =====
 
-.. github-link:: https://github.com/phpactor/behat-extension
+.. github-link:: phpactor/behat-extension
 
 The Behat extension provides goto definition support and basic completion.
 
