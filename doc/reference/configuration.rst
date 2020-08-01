@@ -784,19 +784,16 @@ LanguageServerExtension
 -----------------------
 
 
-.. _param_language_server.client_capabilities:
+.. _param_language_server.catch_errors:
 
 
-``language_server.client_capabilities``
-"""""""""""""""""""""""""""""""""""""""
+``language_server.catch_errors``
+""""""""""""""""""""""""""""""""
 
 
 
 
-For internal use only: will contain the capabilities of the connected language server client
-
-
-**Default**: ``[]``
+**Default**: ``true``
 
 
 .. _param_language_server.enable_workspace:
@@ -824,6 +821,21 @@ If workspace management / text synchronization should be enabled (this isn't req
 
 
 Phpactor parameters (config) that apply only to the language server session
+
+
+**Default**: ``[]``
+
+
+.. _param_language_server.method_alias_map:
+
+
+``language_server.method_alias_map``
+""""""""""""""""""""""""""""""""""""
+
+
+
+
+Allow method names to be re-mapped. Useful for maintaining backwards compatibility
 
 
 **Default**: ``[]``
@@ -1015,25 +1027,6 @@ Recurse over class implementations to resolve all class implementations (not jus
 **Default**: ``true``
 
 
-.. _BehatExtension:
-
-
-BehatExtension
---------------
-
-
-.. _param_behat.config_path:
-
-
-``behat.config_path``
-"""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/behat.yml"``
-
-
 .. _LanguageServerPhpstanExtension:
 
 
@@ -1053,21 +1046,14 @@ LanguageServerPhpstanExtension
 **Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
 
 
-.. _PhpSpecExtension:
+.. _param_phpstan.level:
 
 
-PhpSpecExtension
-----------------
-
-
-.. _param_phpspec.spec_prefix:
-
-
-``phpspec.spec_prefix``
-"""""""""""""""""""""""
+``phpstan.level``
+"""""""""""""""""
 
 
 
 
-**Default**: ``"spec"``
+**Default**: ``null``
 
