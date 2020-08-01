@@ -88,7 +88,7 @@ Client Guides
             omap ac <Plug>(coc-classobj-a)
             autocmd CursorHold * silent call CocActionAsync('highlight')
 
-        See `coc-phpactor<https://github.com/phpactor/coc-phpactor>`__ for more
+        See `coc-phpactor <https://github.com/phpactor/coc-phpactor>`_ for more
         information.
 
     .. tab:: Autozimu
@@ -110,8 +110,7 @@ Client Guides
                \ 'php': [ 'phpactor', 'server:start', '--stdio']
                \}
 
-        See the `github
-        repository <https://github.com/autozimu/LanguageClient-neovim>`__ for
+        See the `github repository <https://github.com/autozimu/LanguageClient-neovim>`_ for
         more details.
 
 Troubleshooting
