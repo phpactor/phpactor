@@ -3,6 +3,10 @@ Changelog
 
 ## develop
 
+Features:
+
+  - [language-server] Import class/function code action and diagnostics
+
 Improvements:
 
   - [language-server] New LSP protocol and general refactoring - @dantleech
