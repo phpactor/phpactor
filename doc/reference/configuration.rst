@@ -885,6 +885,28 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``10``
 
 
+.. _LanguageServerCodeTransformExtension:
+
+
+LanguageServerCodeTransformExtension
+------------------------------------
+
+
+.. _param_language_server_code_transform.import_globals:
+
+
+``language_server_code_transform.import_globals``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Show hints for non-imported global classes and functions
+
+
+**Default**: ``false``
+
+
 .. _IndexerExtension:
 
 
@@ -1025,35 +1047,4 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
-
-
-.. _LanguageServerPhpstanExtension:
-
-
-LanguageServerPhpstanExtension
-------------------------------
-
-
-.. _param_language_server_phpstan.bin:
-
-
-``language_server_phpstan.bin``
-"""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
-
-
-.. _param_phpstan.level:
-
-
-``phpstan.level``
-"""""""""""""""""
-
-
-
-
-**Default**: ``null``
 

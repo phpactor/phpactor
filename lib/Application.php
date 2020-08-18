@@ -63,7 +63,7 @@ class Application extends SymfonyApplication
             }
 
             if ($output instanceof ConsoleOutputInterface) {
-                $this->renderException($e, $output->getErrorOutput());
+                $this->renderThrowable($e, $output->getErrorOutput());
             }
 
             return 255;
