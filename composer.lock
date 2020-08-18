@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26abaa37303584767c7be4aae3e2d915",
+    "content-hash": "cbe7e590c9ae4d49a3df3436113aed7d",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3678,16 +3678,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "0.4.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "91d4c6b353c6c678e5f4d1dba2513fe93218841f"
+                "reference": "50e3222e705622463eee28d0a8181e43f90ece2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/91d4c6b353c6c678e5f4d1dba2513fe93218841f",
-                "reference": "91d4c6b353c6c678e5f4d1dba2513fe93218841f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/50e3222e705622463eee28d0a8181e43f90ece2c",
+                "reference": "50e3222e705622463eee28d0a8181e43f90ece2c",
                 "shasum": ""
             },
             "require": {
@@ -3729,7 +3729,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-06-13T11:06:24+00:00"
+            "time": "2020-08-18T13:11:53+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
