@@ -6,6 +6,9 @@ Changelog
 Features:
 
   - [language-server] Import class/function code action and diagnostics
+  - [language-server] Transform code actions and diagnostics (complete
+    constructor, implement contracts, fix class name and add missing
+    properties)
 
 Improvements:
 
