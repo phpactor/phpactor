@@ -28,7 +28,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Selection Range         | ✔ |                                     |
 +-------------------------+---+-------------------------------------+
-| Code Action             | ✘ | Supported by RPC [#rpc]_ [#code]_   |
+| Code Action             | ✔ | [#code]_                            |
 +-------------------------+---+-------------------------------------+
 | Code Lens               | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
@@ -46,7 +46,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Folding/Selection Range | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
-| Diagnostics             | - | Provided by extensions [#static]_   |
+| Diagnostics             | ✔ | [#diagnostics]_                     |
 +-------------------------+---+-------------------------------------+
 
 .. _Language Server Specification: https://microsoft.github.io/language-server-protocol/specification
@@ -56,4 +56,4 @@ See the `Language Server Specification`_ for details.
           added soon.
 .. [#references] For class like references, functions and member accesses (static and object instances)
 .. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
-.. [#static] For example PHPStan https://github.com/phpactor/language-server-phpstan-extension
+.. [#diagnostics] For code actions and also via. plugins, for example PHPStan https://github.com/phpactor/language-server-phpstan-extension
