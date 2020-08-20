@@ -1996,12 +1996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "7ffe2982daaf66a03b8d5750172cc9c0633c25f7"
+                "reference": "7d510c235adfd54890bfba63fc99b97a839be129"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7ffe2982daaf66a03b8d5750172cc9c0633c25f7",
-                "reference": "7ffe2982daaf66a03b8d5750172cc9c0633c25f7",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7d510c235adfd54890bfba63fc99b97a839be129",
+                "reference": "7d510c235adfd54890bfba63fc99b97a839be129",
                 "shasum": ""
             },
             "require": {
@@ -2041,7 +2041,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-08-19T22:26:11+00:00"
+            "time": "2020-08-20T15:04:29+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2764,12 +2764,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "2e891834dff78128a7d6371300e3b1be2d734ea3"
+                "reference": "aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/2e891834dff78128a7d6371300e3b1be2d734ea3",
-                "reference": "2e891834dff78128a7d6371300e3b1be2d734ea3",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0",
+                "reference": "aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0",
                 "shasum": ""
             },
             "require": {
@@ -2818,7 +2818,7 @@
                 }
             ],
             "description": "Generic Language Server Platform",
-            "time": "2020-08-19T22:31:04+00:00"
+            "time": "2020-08-20T19:13:52+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
@@ -2826,12 +2826,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "0cbdad64429ade8a2ded72ed96b26e5a5ea1605a"
+                "reference": "ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/0cbdad64429ade8a2ded72ed96b26e5a5ea1605a",
-                "reference": "0cbdad64429ade8a2ded72ed96b26e5a5ea1605a",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2",
+                "reference": "ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2",
                 "shasum": ""
             },
             "require": {
@@ -2875,7 +2875,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-08-18T08:28:43+00:00"
+            "time": "2020-08-20T20:40:18+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
@@ -2883,12 +2883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "83365a1638f06902931a1657ccd40b5fc55d3c67"
+                "reference": "c001cb9c4449d8e52f53da50d03eaf93a134d687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/83365a1638f06902931a1657ccd40b5fc55d3c67",
-                "reference": "83365a1638f06902931a1657ccd40b5fc55d3c67",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/c001cb9c4449d8e52f53da50d03eaf93a134d687",
+                "reference": "c001cb9c4449d8e52f53da50d03eaf93a134d687",
                 "shasum": ""
             },
             "require": {
@@ -2949,7 +2949,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-08-19T22:40:10+00:00"
+            "time": "2020-08-20T20:43:12+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
