@@ -2883,12 +2883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "c001cb9c4449d8e52f53da50d03eaf93a134d687"
+                "reference": "7a79ea7178ffb4d6fbae4ada5bd64d9607b13799"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/c001cb9c4449d8e52f53da50d03eaf93a134d687",
-                "reference": "c001cb9c4449d8e52f53da50d03eaf93a134d687",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/7a79ea7178ffb4d6fbae4ada5bd64d9607b13799",
+                "reference": "7a79ea7178ffb4d6fbae4ada5bd64d9607b13799",
                 "shasum": ""
             },
             "require": {
@@ -2916,6 +2916,7 @@
                 "friendsofphp/php-cs-fixer": "^2.13",
                 "jangregor/phpstan-prophecy": "^0.8.0",
                 "phpactor/test-utils": "^1.1",
+                "phpbench/phpbench": "^0.17.1",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0",
@@ -2949,7 +2950,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-08-20T20:43:12+00:00"
+            "time": "2020-08-21T14:24:59+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
