@@ -1996,12 +1996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "7d510c235adfd54890bfba63fc99b97a839be129"
+                "reference": "14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7d510c235adfd54890bfba63fc99b97a839be129",
-                "reference": "7d510c235adfd54890bfba63fc99b97a839be129",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14",
+                "reference": "14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14",
                 "shasum": ""
             },
             "require": {
@@ -2010,12 +2010,12 @@
                 "phpactor/code-builder": "^0.4",
                 "phpactor/name-specification": "^0.1",
                 "phpactor/text-document": "^1.2.3",
+                "phpactor/worse-reflection": "^0.4.4",
                 "webmozart/path-util": "~2.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
                 "phpactor/test-utils": "^1.0@dev",
-                "phpactor/worse-reflection": "~0.3",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^8.0"
             },
@@ -2041,7 +2041,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-08-20T15:04:29+00:00"
+            "time": "2020-08-21T13:26:56+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2826,12 +2826,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2"
+                "reference": "45f4dc8e2118e17e0e03cc9efb97202a7eaca434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2",
-                "reference": "ef85ebcf13d97588ed0bb0a1324c79ea6ac08ef2",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/45f4dc8e2118e17e0e03cc9efb97202a7eaca434",
+                "reference": "45f4dc8e2118e17e0e03cc9efb97202a7eaca434",
                 "shasum": ""
             },
             "require": {
@@ -2875,7 +2875,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-08-20T20:40:18+00:00"
+            "time": "2020-08-20T20:49:41+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
@@ -3683,12 +3683,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "50e3222e705622463eee28d0a8181e43f90ece2c"
+                "reference": "f13c33aed242c70c86ccf0da6c204c90be7f2a31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/50e3222e705622463eee28d0a8181e43f90ece2c",
-                "reference": "50e3222e705622463eee28d0a8181e43f90ece2c",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/f13c33aed242c70c86ccf0da6c204c90be7f2a31",
+                "reference": "f13c33aed242c70c86ccf0da6c204c90be7f2a31",
                 "shasum": ""
             },
             "require": {
@@ -3730,7 +3730,7 @@
                 }
             ],
             "description": "Lazy AST reflector that is much worse than better",
-            "time": "2020-08-18T13:11:53+00:00"
+            "time": "2020-08-21T14:10:11+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
