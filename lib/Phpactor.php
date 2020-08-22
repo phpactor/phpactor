@@ -254,6 +254,7 @@ class Phpactor
                 'system/status' => 'phpactor/stats',
             ],
             WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION => false,
+            ClassToFileExtension::PARAM_BRUTE_FORCE_CONVERSION => false,
             CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
                 'scf_class',
                 'declared_class',

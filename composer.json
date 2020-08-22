@@ -12,7 +12,7 @@
         "php": "^7.3",
         "phpactor/class-mover": "^0.1.2",
         "phpactor/class-to-file": "^0.3.3",
-        "phpactor/class-to-file-extension": "^0.2.1",
+        "phpactor/class-to-file-extension": "^0.2.2",
         "phpactor/code-transform": "^0.4",
         "phpactor/code-transform-extension": "^0.2.1",
         "phpactor/php-extension": "^0.1",

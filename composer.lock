@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbce527c0ec6841c9d5c853d20db3065",
+    "content-hash": "2a17f8f3592e245b95e748fb4ca386ab",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1891,16 +1891,16 @@
         },
         {
             "name": "phpactor/class-to-file-extension",
-            "version": "0.2.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file-extension.git",
-                "reference": "f7bc66301f996f316386eccda642874e3a4d424e"
+                "reference": "9bf0b955faf38e3620798a05a93008211a302a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/f7bc66301f996f316386eccda642874e3a4d424e",
-                "reference": "f7bc66301f996f316386eccda642874e3a4d424e",
+                "url": "https://api.github.com/repos/phpactor/class-to-file-extension/zipball/9bf0b955faf38e3620798a05a93008211a302a3e",
+                "reference": "9bf0b955faf38e3620798a05a93008211a302a3e",
                 "shasum": ""
             },
             "require": {
@@ -1917,7 +1917,7 @@
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ClassToFile\\ClassToFileExtension",
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1936,7 +1936,7 @@
                 }
             ],
             "description": "Converts classes to files and vice-versa",
-            "time": "2019-08-24T11:33:25+00:00"
+            "time": "2020-08-22T11:40:14+00:00"
         },
         {
             "name": "phpactor/code-builder",
@@ -1996,12 +1996,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14"
+                "reference": "ecfd4ee66928dd545d3cf932f94488305fbef58d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14",
-                "reference": "14e809fe17d0ec8038a2cc4ca98ccb0b851d9f14",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/ecfd4ee66928dd545d3cf932f94488305fbef58d",
+                "reference": "ecfd4ee66928dd545d3cf932f94488305fbef58d",
                 "shasum": ""
             },
             "require": {
@@ -2041,7 +2041,7 @@
                 }
             ],
             "description": "Applies introspective transformations on source code",
-            "time": "2020-08-21T13:26:56+00:00"
+            "time": "2020-08-22T11:59:53+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2764,12 +2764,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0"
+                "reference": "27b51bddbe43bafa6d06710182b054c33dda5c54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0",
-                "reference": "aa9b59331d5150aa6ea3d8e1261b17deae1a4ac0",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/27b51bddbe43bafa6d06710182b054c33dda5c54",
+                "reference": "27b51bddbe43bafa6d06710182b054c33dda5c54",
                 "shasum": ""
             },
             "require": {
@@ -2818,7 +2818,7 @@
                 }
             ],
             "description": "Generic Language Server Platform",
-            "time": "2020-08-20T19:13:52+00:00"
+            "time": "2020-08-22T11:47:47+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
