@@ -9,6 +9,7 @@ Features:
   - [language-server] Transform code actions and diagnostics (complete
     constructor, implement contracts, fix class name and add missing
     properties)
+  - [completion] Show warning character if method or class is deprecated
 
 Improvements:
 
