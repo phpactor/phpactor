@@ -1570,16 +1570,16 @@
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "v0.0.22",
+            "version": "v0.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/microsoft/tolerant-php-parser.git",
-                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6"
+                "reference": "1d76657e3271754515ace52501d3e427eca42ad0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
-                "reference": "3fdca6be0f9dc318b8c440d0c0f2a47a173de7a6",
+                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/1d76657e3271754515ace52501d3e427eca42ad0",
+                "reference": "1d76657e3271754515ace52501d3e427eca42ad0",
                 "shasum": ""
             },
             "require": {
@@ -1607,7 +1607,7 @@
                 }
             ],
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "time": "2020-08-08T23:25:34+00:00"
+            "time": "2020-09-13T17:29:12+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1757,16 +1757,16 @@
         },
         {
             "name": "phpactor/amp-fswatch",
-            "version": "0.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/amp-fswatch.git",
-                "reference": "463ff941ddf02a3237406c8e2fef515a9b21dd1b"
+                "reference": "1575c389d00e469b8d88026426fc2b1e891ce049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/463ff941ddf02a3237406c8e2fef515a9b21dd1b",
-                "reference": "463ff941ddf02a3237406c8e2fef515a9b21dd1b",
+                "url": "https://api.github.com/repos/phpactor/amp-fswatch/zipball/1575c389d00e469b8d88026426fc2b1e891ce049",
+                "reference": "1575c389d00e469b8d88026426fc2b1e891ce049",
                 "shasum": ""
             },
             "require": {
@@ -1779,6 +1779,7 @@
             "require-dev": {
                 "amphp/phpunit-util": "^1.3",
                 "friendsofphp/php-cs-fixer": "^2.15.0",
+                "jangregor/phpstan-prophecy": "^0.8.0",
                 "phpactor/test-utils": "^1.0.2",
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^8.0"
@@ -1786,7 +1787,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1805,7 +1806,7 @@
                 }
             ],
             "description": "Async Filesystem Watcher for Amphp",
-            "time": "2020-05-23T14:15:40+00:00"
+            "time": "2020-09-20T09:37:22+00:00"
         },
         {
             "name": "phpactor/class-mover",
@@ -2722,18 +2723,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "f2833eb1acbc195fc6fefea6aff282db977e2c54"
+                "reference": "110335a71e4220f82e8bd0bf877ae8b826f2410c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/f2833eb1acbc195fc6fefea6aff282db977e2c54",
-                "reference": "f2833eb1acbc195fc6fefea6aff282db977e2c54",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/110335a71e4220f82e8bd0bf877ae8b826f2410c",
+                "reference": "110335a71e4220f82e8bd0bf877ae8b826f2410c",
                 "shasum": ""
             },
             "require": {
                 "dantleech/invoke": "^1.0",
                 "php": "^7.3",
-                "phpactor/amp-fswatch": "^0.1.1",
+                "phpactor/amp-fswatch": "^0.2.0",
                 "phpactor/container": "^1.3.3",
                 "phpactor/name-specification": "^0.1",
                 "phpactor/reference-finder": "^0.1.3",
@@ -2778,7 +2779,7 @@
                 }
             ],
             "description": "Indexer and related integrations",
-            "time": "2020-08-17T14:38:18+00:00"
+            "time": "2020-09-20T09:41:43+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2905,12 +2906,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "84b37f21d3518fddfe389d2f2ef6ef57c89db56a"
+                "reference": "d5c6c4d3d5f3e8683ea30a8908c348034517de7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/84b37f21d3518fddfe389d2f2ef6ef57c89db56a",
-                "reference": "84b37f21d3518fddfe389d2f2ef6ef57c89db56a",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/d5c6c4d3d5f3e8683ea30a8908c348034517de7d",
+                "reference": "d5c6c4d3d5f3e8683ea30a8908c348034517de7d",
                 "shasum": ""
             },
             "require": {
@@ -2972,7 +2973,7 @@
                 }
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
-            "time": "2020-09-13T10:05:27+00:00"
+            "time": "2020-09-20T10:22:03+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -5694,12 +5695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "a7f8a9f521cb795f3664406a49d7159c36276db2"
+                "reference": "fbf43aa0edfb6eacb43a669691231805eb6ca9dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/a7f8a9f521cb795f3664406a49d7159c36276db2",
-                "reference": "a7f8a9f521cb795f3664406a49d7159c36276db2",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/fbf43aa0edfb6eacb43a669691231805eb6ca9dd",
+                "reference": "fbf43aa0edfb6eacb43a669691231805eb6ca9dd",
                 "shasum": ""
             },
             "require": {
@@ -5783,7 +5784,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-08T09:35:01+00:00"
+            "time": "2020-09-16T17:28:19+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -6497,16 +6498,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.1",
+            "version": "5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44"
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/d870572532cd70bc3fab58f2e23ad423c8404c44",
-                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/069a785b2141f5bcf49f3e353548dc1cce6df556",
+                "reference": "069a785b2141f5bcf49f3e353548dc1cce6df556",
                 "shasum": ""
             },
             "require": {
@@ -6545,20 +6546,20 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2020-08-15T11:14:08+00:00"
+            "time": "2020-09-03T19:13:55+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "e878a14a65245fbe78f8080eba03b47c3b705651"
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/e878a14a65245fbe78f8080eba03b47c3b705651",
-                "reference": "e878a14a65245fbe78f8080eba03b47c3b705651",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
+                "reference": "6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0",
                 "shasum": ""
             },
             "require": {
@@ -6590,7 +6591,7 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-            "time": "2020-06-27T10:12:23+00:00"
+            "time": "2020-09-17T18:55:26+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -6657,16 +6658,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.42",
+            "version": "0.12.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "7c43b7c2d5ca6554f6231e82e342a710163ac5f4"
+                "reference": "54221b44766cb4bdfe40d1828d5bba5dd79c38c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7c43b7c2d5ca6554f6231e82e342a710163ac5f4",
-                "reference": "7c43b7c2d5ca6554f6231e82e342a710163ac5f4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/54221b44766cb4bdfe40d1828d5bba5dd79c38c6",
+                "reference": "54221b44766cb4bdfe40d1828d5bba5dd79c38c6",
                 "shasum": ""
             },
             "require": {
@@ -6709,7 +6710,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T13:14:53+00:00"
+            "time": "2020-09-19T21:19:38+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
