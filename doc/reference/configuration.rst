@@ -79,7 +79,25 @@ ClassToFileExtension
 
 
 
+Root path of the project (e.g. where composer.json is)
+
+
 **Default**: ``"%project_root%"``
+
+
+.. _param_class_to_file.brute_force_conversion:
+
+
+``class_to_file.brute_force_conversion``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+If composer not found, fallback to scanning all files (very time consuming depending on project size)
+
+
+**Default**: ``true``
 
 
 .. _CodeTransformExtension:
@@ -841,6 +859,21 @@ Allow method names to be re-mapped. Useful for maintaining backwards compatibili
 **Default**: ``[]``
 
 
+.. _param_language_server.diagnostic_sleep_time:
+
+
+``language_server.diagnostic_sleep_time``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Amount of time to wait before analyzing the code again for diagnostics
+
+
+**Default**: ``1000``
+
+
 .. _LanguageServerCompletionExtension:
 
 
@@ -926,7 +959,7 @@ IndexerExtension
 List of allowed watchers. The first watcher that supports the current system will be used
 
 
-**Default**: ``["inotify","find","php"]``
+**Default**: ``["watchman","inotify","find","php"]``
 
 
 .. _param_indexer.index_path:
@@ -972,6 +1005,21 @@ Glob patterns to exclude while indexing
 
 
 **Default**: ``["\/vendor\/**\/Tests\/**\/*","\/vendor\/**\/tests\/**\/*","\/vendor\/composer\/**\/*"]``
+
+
+.. _param_indexer.stub_paths:
+
+
+``indexer.stub_paths``
+""""""""""""""""""""""
+
+
+
+
+Paths to folders where code stubs are located
+
+
+**Default**: ``[]``
 
 
 .. _param_indexer.poll_time:
@@ -1047,4 +1095,73 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
+
+
+.. _BehatExtension:
+
+
+BehatExtension
+--------------
+
+
+.. _param_behat.config_path:
+
+
+``behat.config_path``
+"""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/behat.yml"``
+
+
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_phpstan.level:
+
+
+``phpstan.level``
+"""""""""""""""""
+
+
+
+
+**Default**: ``null``
+
+
+.. _PhpSpecExtension:
+
+
+PhpSpecExtension
+----------------
+
+
+.. _param_phpspec.spec_prefix:
+
+
+``phpspec.spec_prefix``
+"""""""""""""""""""""""
+
+
+
+
+**Default**: ``"spec"``
 

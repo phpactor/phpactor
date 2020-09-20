@@ -6,7 +6,7 @@ Indexer
 The indexer scans your project directory and records meta-information about
 classes and functions in your project.
 
-The indexer *only required* for some features (such as
+The indexer required only for some features (such as
 :ref:`navigation_goto_implementation`).
 
 .. _indexer_building:
@@ -58,19 +58,58 @@ Watching
 
 File watchers are used to keep the index up-to-date.
 
-The type of watcher used depends on your system. Currently the following
-watchers will be used, in order of priority:
+Several watching systems can be used, by default Phpactor will choose the
+first supported one:
 
-1. ``inotifywait``: **Linux** only, react immediately[1] to file changes.
+watchman
+~~~~~~~~
 
-2. ``find``: **Linux/Mac/POSIX** Poll the system for changes every 5 seconds.
+**Linux/Mac** cross platform, reacts immediately to file changes, see Watchman_ documentation.
 
-3. ``php``: **Any system**: Poll system using PHP (slow) every 5 seconds.
+Watchman is the recommended watcher.
 
-To contribute to the available watchers see `amp-fswatch
-<https://github.com/phpactor/amp-fswatch>`_.
+Installation:
 
-If you want to find out which watcher your system is using, enable _`logging`.
+.. tabs::
+
+    .. tab:: Debian/Ubuntu
+       
+        .. code-block:: bash
+
+            apt install watchman
+
+    .. tab:: MacOS
+       
+        .. code-block:: bash
+
+            brew install watchman
+
+inotifywait
+~~~~~~~~~~~
+
+**Linux** only, react immediately to file changes.
+
+Installation
+
+.. tabs::
+
+    .. tab:: Debian/Ubuntu
+       
+        .. code-block:: bash
+
+            apt install inotify-tools
+
+find
+~~~~
+
+**Linux/Mac/POSIX** Poll the system for changes every 5 seconds.
+
+This tool should be installed by default.
+
+php
+~~~
+
+**Any system**: Poll system using PHP (slow) every 5 seconds.
 
 .. _indexer_querying:
 
@@ -129,7 +168,7 @@ It may not be installed, on Debian/Ubuntu
 
 .. code:: sh
 
-   $ sudo apt-get install inotify-tools
+   $ sudo apt install inotify-tools
 
 Inotify: ``inotify`` limit reached
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
