@@ -16,6 +16,7 @@ Improvements:
   - [language-server] New LSP protocol and general refactoring - @dantleech
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
+  - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
 
 ## 2020-06-09 (0.16.1)
 
