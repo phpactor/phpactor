@@ -12,13 +12,7 @@
 "     au FileType php nmap <buffer> <Leader>mm :PhpactorContextMenu<CR>
 "     au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
 "     au FileType php,cucumber nmap <buffer> <Leader>o
-"         \ :PhpactorGotoDefinition<CR>
-"     au FileType php,cucumber nmap <buffer> <Leader>Oh 
-"         \ :PhpactorGotoDefinition split<CR>
-"     au FileType php,cucumber nmap <buffer> <Leader>Ov 
-"         \ :PhpactorGotoDefinition vsplit<CR>
-"     au FileType php,cucumber nmap <buffer> <Leader>Ot 
-"         \ :PhpactorGotoDefinition tabnew<CR>
+"         \ :PhpactorGotoDefinition edit<CR>
 "     au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
 "     au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
 "     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
