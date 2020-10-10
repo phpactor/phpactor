@@ -220,30 +220,6 @@ function! phpactor#GotoDefinition(...)
         \ "mods": mods,
     \ })
 endfunction
-""
-" deprecated, use @function(phpactor#gotodefinition) instead
-"
-" as with @function(phpactor#gotodefinition) but open in a vertical split.
-function! phpactor#GotoDefinitionVsplit()
-    echoerr "phpactor#GotoDefinitionVsplit is deprecated use phpactor#GotoDefinition('vsplit') instead"
-    call phpactor#GotoDefinition('vsplit')
-endfunction
-""
-" deprecated, use @function(phpactor#gotodefinition) instead
-"
-" as with @function(phpactor#gotodefinition) but open in an horizontal split.
-function! phpactor#GotoDefinitionHsplit()
-    echoerr "phpactor#GotoDefinitionHsplit is deprecated use phpactor#GotoDefinition('split') instead"
-    call phpactor#GotoDefinition('split')
-endfunction
-""
-" deprecated, use @function(phpactor#gotodefinition) instead
-"
-" as with @function(phpactor#gotodefinition) but open in a new tab.
-function! phpactor#GotoDefinitionTab()
-    echoerr "phpactor#GotoDefinitionTab is deprecated use phpactor#GotoDefinition('tabnew') instead"
-    call phpactor#GotoDefinition('tabnew')
-endfunction
 
 ""
 " @usage [target] [mods]
