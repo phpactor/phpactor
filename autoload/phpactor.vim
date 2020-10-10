@@ -763,6 +763,30 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
+""
+" @section Window targets, window-targets
+" @parentsection commands
+"
+" Phpactor provide a few window targets to use with some commands.
+" See @command(PhpactorGotoDefinition) for an example of how to use them.
+"
+" Possible values are:
+" * `e`, `edit`, `ex`
+" * `new`, `vne`, `vnew`
+" * `sp`, `split`, `vs`, `vsplit`
+" * `vie`, `view`, `sv`, `sview`, `splitview`
+" * `tabe`, `tabedit`, `tabnew`
+
+function! phpactor#_window_targets() abort
+  return [
+        \ 'e', 'edit', 'ex',
+        \ 'new', 'vne', 'vnew',
+        \ 'sp', 'split', 'vs', 'vsplit',
+        \ 'vie', 'view', 'sv', 'sview', 'splitview',
+        \ 'tabe', 'tabedit', 'tabnew',
+        \ ]
+endfunction
+
 function! s:openFileInSelectedTarget(filePath, target, mods, useOpenWindow, forceReload)
     let l:bufferNumber = bufnr(a:filePath . '$')
 
@@ -776,6 +800,15 @@ function! s:openFileInSelectedTarget(filePath, target, mods, useOpenWindow, forc
             endif
             return
         endif
+    endif
+
+    if -1 == index(phpactor#_window_targets(), a:target)
+      echohl WarningMsg
+      echomsg printf('Error executing: %s %s %s', a:mods, a:target, a:filePath)
+      echomsg printf('Invalid target: %s', a:target)
+      echomsg printf('Valid targets are: %s', join(phpactor#_window_targets(), ', '))
+      echohl None
+      return
     endif
 
     execute printf('%s %s %s', a:mods, a:target, a:filePath)

@@ -157,30 +157,8 @@ command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplem
 
 " Functions {{{
 
-""
-" @section Window targets, window-targets
-" @parentsection commands
-"
-" Phpactor provide a few window targets to use with some commands.
-" See @command(PhpactorGotoDefinition) for an example of how to use them.
-"
-" Possible values are:
-" * `e`, `edit`, `ex`
-" * `new`, `vne`, `vnew`
-" * `sp`, `split`, `vs`, `vsplit`
-" * `vie`, `view`, `sv`, `sview`, `splitview`
-" * `tabe`, `tabedit`, `tabnew`
-
-let s:windowTargets = [
-  \ 'e', 'edit', 'ex',
-  \ 'new', 'vne', 'vnew',
-  \ 'sp', 'split', 'vs', 'vsplit',
-  \ 'vie', 'view', 'sv', 'sview', 'splitview',
-  \ 'tabe', 'tabedit', 'tabnew',
-\ ]
-
 function! s:CompleteWindowTarget(argLead, ...) abort
-    return filter(copy(s:windowTargets), {k,v -> 0 == stridx(v, a:argLead)})
+    return filter(phpactor#windowTargets(), {k,v -> 0 == stridx(v, a:argLead)})
 endfunction
 
 " }}}
