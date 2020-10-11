@@ -89,7 +89,6 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->assertEquals('git', $input->default());
     }
 
-
     public function testInvalidSymbolType()
     {
         $this->expectException(\RuntimeException::class);
@@ -364,6 +363,94 @@ class ReferencesHandlerTest extends HandlerTestCase
         $first = array_shift($actions);
         $this->assertInstanceOf(EchoResponse::class, $first);
         $this->assertContains('risky', $first->message());
+    }
+
+    public function testReferencesAreSorted()
+    {
+        $this->classMemberReferences->findOrReplaceReferences(
+            SourceCodeFilesystemExtension::FILESYSTEM_GIT,
+            __CLASS__,
+            'testMemberReferences',
+            ClassMemberQuery::TYPE_METHOD,
+            null
+        )->willReturn([
+            'references' => [[
+                'file' => 'foobar',
+                'references' => [
+                    [
+                        'start' => 10,
+                        'line_no' => 8,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 12,
+                    ],
+                ],
+            ], [
+                'file' => 'barfoo',
+                'references' => [
+                    [
+                        'start' => 13,
+                        'line_no' => 10,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 15,
+                    ], [
+                        'start' => 10,
+                        'line_no' => 10,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 12,
+                    ],
+                ],
+            ]],
+        ]);
+
+        $action = $this->handle('references', [
+            'source' => $std = '<?php $foo = new ' . __CLASS__ . '(); $foo->testMemberReferences();',
+            'offset' => 104,
+            'path' => self::TEST_PATH,
+            'filesystem' => 'git',
+        ]);
+
+        $this->assertInstanceOf(CollectionResponse::class, $action);
+
+        $actions = $action->actions();
+
+        $first = array_shift($actions);
+        $this->assertInstanceOf(EchoResponse::class, $first);
+
+        $second = array_shift($actions);
+        $this->assertEquals([
+            'file_references' => [[
+                'file' => 'barfoo',
+                'references' => [
+                    [
+                        'start' => 10,
+                        'line_no' => 10,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 12,
+                    ], [
+                        'start' => 13,
+                        'line_no' => 10,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 15,
+                    ],
+                ],
+            ], [
+                'file' => 'foobar',
+                'references' => [
+                    [
+                        'start' => 10,
+                        'line_no' => 8,
+                        'end' => 20,
+                        'line' => '',
+                        'col_no' => 12,
+                    ],
+                ],
+            ]],
+        ], $second->parameters());
     }
 
     private function exampleMemberRiskyResponse()
