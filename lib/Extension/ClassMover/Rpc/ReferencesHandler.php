@@ -268,19 +268,46 @@ class ReferencesHandler extends AbstractHandler
     ) {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::CLASS_:
-                return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
+                [$source, $references] = $this->classReferences($filesystem, $symbolContext, $source, $replacement);
+                break;
             case Symbol::METHOD:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
+                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
+                break;
             case Symbol::PROPERTY:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
+                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
+                break;
             case Symbol::CONSTANT:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
+                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
+                break;
+            default:
+                throw new \RuntimeException(sprintf(
+                    'Cannot find references for symbol type "%s"',
+                    $symbolContext->symbol()->symbolType()
+                ));
         }
 
-        throw new \RuntimeException(sprintf(
-            'Cannot find references for symbol type "%s"',
-            $symbolContext->symbol()->symbolType()
-        ));
+        return [$source, $this->sortReferences($references)];
+    }
+
+    public function sortReferences(array $fileReferences): array
+    {
+        // Sort the references for each file
+        \array_walk($fileReferences, function (array &$fileReference) {
+            if (empty($fileReference['references'])) {
+                return; // Do nothing if there is no references
+            }
+
+            usort($fileReference['references'], function (array $first, array $second) {
+                return $first['start'] - $second['start'];
+            });
+        });
+
+        // Sort the list by file
+        usort($fileReferences, function (array $first, array $second) {
+            return strcmp($first['file'], $second['file']);
+        });
+
+        return $fileReferences;
     }
 
     private function echoMessage(string $action, SymbolContext $symbolContext, string $filesystem, array $references): EchoResponse
