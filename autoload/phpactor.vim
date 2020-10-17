@@ -303,12 +303,13 @@ endfunction
 
 function! phpactor#Status()
     if exists(':terminal')
+        let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' status'
         if has('nvim')
-            split term://phpactor\ status
+            execute 'split term://' . l:cmd
             " Press any key to leave
             normal i
         else
-            terminal phpactor status
+            execute 'terminal ' . l:cmd
         endif
     else
         call phpactor#rpc("status", {'type': 'formatted'})
