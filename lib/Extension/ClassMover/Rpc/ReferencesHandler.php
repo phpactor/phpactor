@@ -266,27 +266,37 @@ class ReferencesHandler extends AbstractHandler
         string $source = null,
         string $replacement = null
     ) {
-        switch ($symbolContext->symbol()->symbolType()) {
-            case Symbol::CLASS_:
-                [$source, $references] = $this->classReferences($filesystem, $symbolContext, $source, $replacement);
-                break;
-            case Symbol::METHOD:
-                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
-                break;
-            case Symbol::PROPERTY:
-                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
-                break;
-            case Symbol::CONSTANT:
-                [$source, $references] = $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
-                break;
-            default:
-                throw new \RuntimeException(sprintf(
-                    'Cannot find references for symbol type "%s"',
-                    $symbolContext->symbol()->symbolType()
-                ));
-        }
+        [$source, $references] = $this->doPerformFindOrReplaceReferences(
+            $symbolContext,
+            $filesystem,
+            $source,
+            $replacement,
+        );
 
         return [$source, $this->sortReferences($references)];
+    }
+
+    private function doPerformFindOrReplaceReferences(
+        SymbolContext $symbolContext,
+        string $filesystem,
+        string $source = null,
+        string $replacement = null
+    ) {
+        switch ($symbolContext->symbol()->symbolType()) {
+            case Symbol::CLASS_:
+                return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
+            case Symbol::METHOD:
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
+            case Symbol::PROPERTY:
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
+            case Symbol::CONSTANT:
+                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
+        }
+
+        throw new \RuntimeException(sprintf(
+            'Cannot find references for symbol type "%s"',
+            $symbolContext->symbol()->symbolType()
+        ));
     }
 
     public function sortReferences(array $fileReferences): array
