@@ -299,10 +299,10 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    public function sortReferences(array $fileReferences): array
+    private function sortReferences(array $fileReferences): array
     {
         // Sort the references for each file
-        \array_walk($fileReferences, function (array &$fileReference) {
+        array_walk($fileReferences, function (array &$fileReference) {
             if (empty($fileReference['references'])) {
                 return; // Do nothing if there is no references
             }
