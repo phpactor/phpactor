@@ -5,11 +5,15 @@ Changelog
 
 Features:
 
+  - [completion] Basic Doctrine annotation completion support - @elythyr
   - [language-server] Import class/function code action and diagnostics
   - [language-server] Transform code actions and diagnostics (complete
     constructor, implement contracts, fix class name and add missing
     properties)
   - [completion] Show warning character if method or class is deprecated
+  - [indexer] PhpStorm stubs are now indexed
+  - [indexer] CLI command for index search (mainly for debugging)
+  - [completion] References are sorted alphabetically - @elythyr
 
 Improvements:
 
