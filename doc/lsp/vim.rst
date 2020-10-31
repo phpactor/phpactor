@@ -66,9 +66,14 @@ Client Guides
             nmap <Leader>I <Plug>(coc-implementation)
             nmap <Leader>R <Plug>(coc-references)
 
+            " List code actions available for the current buffer
+            nmap <leader>ca  <Plug>(coc-codeaction)
+
+            " Use <CR> to validate completion (allows auto import on completion)
+            inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
             " Hover
             nmap K :call <SID>show_documentation()<CR>
-            inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
             function! s:show_documentation()
               if (index(['vim','help'], &filetype) >= 0)
                 execute 'h '.expand('<cword>')
