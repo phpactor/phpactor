@@ -14,6 +14,7 @@ Features:
   - [indexer] PhpStorm stubs are now indexed
   - [indexer] CLI command for index search (mainly for debugging)
   - [completion] References are sorted alphabetically - @elythyr
+  - [file-watcher] Experimental support for [watchman](https://facebook.github.io/watchman/)
 
 Improvements:
 
