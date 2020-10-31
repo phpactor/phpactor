@@ -11,6 +11,8 @@ Refactoring
 Fixes
 =====
 
+.. _refactoring_add_missing_assignements:
+
 Add Missing Assignments
 -----------------------
 
@@ -77,6 +79,8 @@ Becomes:
            $this->blog = new Blog();
        }
    }
+
+.. _refactoring_complete_constructor:
 
 Complete Constructor
 --------------------
@@ -156,6 +160,8 @@ After:
            $this->goodbye = $goodbye;
        }
    }
+
+.. _refactoring_fix_namespace_and_class:
 
 Fix Namespace or Class Name
 ---------------------------
@@ -399,6 +405,8 @@ After generating the method:
        }
    }
 
+.. _implement_contracts:
+
 Implement Contracts
 -------------------
 
@@ -458,6 +466,8 @@ After:
        {
        }
    }
+
+.. _refactoring_import_missing_class:
 
 Import Class
 ------------
