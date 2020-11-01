@@ -617,6 +617,21 @@ Immediately de-register the autoloader once it has been included (prevent confli
 **Default**: ``true``
 
 
+.. _param_composer.class_maps_only:
+
+
+``composer.class_maps_only``
+""""""""""""""""""""""""""""
+
+
+
+
+Register the composer class maps only, do not register the autoloader - RECOMMENDED
+
+
+**Default**: ``true``
+
+
 .. _ConsoleExtension:
 
 
@@ -1145,23 +1160,4 @@ LanguageServerPhpstanExtension
 
 
 **Default**: ``null``
-
-
-.. _PhpSpecExtension:
-
-
-PhpSpecExtension
-----------------
-
-
-.. _param_phpspec.spec_prefix:
-
-
-``phpspec.spec_prefix``
-"""""""""""""""""""""""
-
-
-
-
-**Default**: ``"spec"``
 
