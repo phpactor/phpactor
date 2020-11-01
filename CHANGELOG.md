@@ -6,15 +6,15 @@ Changelog
 Features:
 
   - [completion] Basic Doctrine annotation completion support - @elythyr
-  - [language-server] Import class/function code action and diagnostics
-  - [language-server] Transform code actions and diagnostics (complete
-    constructor, implement contracts, fix class name and add missing
-    properties)
-  - [completion] Show warning character if method or class is deprecated
-  - [indexer] PhpStorm stubs are now indexed
-  - [indexer] CLI command for index search (mainly for debugging)
   - [completion] References are sorted alphabetically - @elythyr
+  - [completion] Show warning character if method or class is deprecated
+  - [composer] Class map only mode by default (do not register autoloader at all, do not include files)
   - [file-watcher] Experimental support for [watchman](https://facebook.github.io/watchman/)
+  - [indexer] CLI command for index search (mainly for debugging)
+  - [indexer] PhpStorm stubs are now indexed
+  - [indexer] Show memory usage and limit in progress notification.
+  - [language-server] Import class/function code action and diagnostics
+  - [language-server] Transform code actions and diagnostics (complete constructor, implement contracts, fix class name and add missing properties)
 
 Improvements:
 
@@ -22,6 +22,11 @@ Improvements:
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
   - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
+
+Bug fixes:
+
+  - [code-transform] Fix trailing line on class import - @elythyr
+  - [code-transform] Fix importing class names in docblocks - @elythyr
 
 ## 2020-06-09 (0.16.1)
 
