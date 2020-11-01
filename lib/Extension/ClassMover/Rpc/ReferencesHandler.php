@@ -266,6 +266,22 @@ class ReferencesHandler extends AbstractHandler
         string $source = null,
         string $replacement = null
     ) {
+        [$source, $references] = $this->doPerformFindOrReplaceReferences(
+            $symbolContext,
+            $filesystem,
+            $source,
+            $replacement,
+        );
+
+        return [$source, $this->sortReferences($references)];
+    }
+
+    private function doPerformFindOrReplaceReferences(
+        SymbolContext $symbolContext,
+        string $filesystem,
+        string $source = null,
+        string $replacement = null
+    ) {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::CLASS_:
                 return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
@@ -281,6 +297,27 @@ class ReferencesHandler extends AbstractHandler
             'Cannot find references for symbol type "%s"',
             $symbolContext->symbol()->symbolType()
         ));
+    }
+
+    private function sortReferences(array $fileReferences): array
+    {
+        // Sort the references for each file
+        array_walk($fileReferences, function (array &$fileReference) {
+            if (empty($fileReference['references'])) {
+                return; // Do nothing if there is no references
+            }
+
+            usort($fileReference['references'], function (array $first, array $second) {
+                return $first['start'] - $second['start'];
+            });
+        });
+
+        // Sort the list by file
+        usort($fileReferences, function (array $first, array $second) {
+            return strcmp($first['file'], $second['file']);
+        });
+
+        return $fileReferences;
     }
 
     private function echoMessage(string $action, SymbolContext $symbolContext, string $filesystem, array $references): EchoResponse

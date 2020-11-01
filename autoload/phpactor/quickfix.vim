@@ -14,7 +14,10 @@ function! phpactor#quickfix#build(entries) abort
 endfunction
 
 function! phpactor#quickfix#fzf(entries) abort
+    " Associate each entry data with a unique key
     let entries = {}
+    " Keep track of the order of the entries by their key
+    let sortedKeys = []
     for entry in a:entries
         let key = s:relative_path(entry['filename'])
             \ .':'. entry['lnum']
@@ -22,15 +25,18 @@ function! phpactor#quickfix#fzf(entries) abort
             \ .':'. entry['text']
 
         let entries[key] = entry
+        call add(sortedKeys, key)
     endfor
 
-    let formated = s:align_pairs(keys(entries), '^\(.\{-}:\d\+:\d\+:\)\s*\(.*\)\s*$', 100)
+    let formatedEntries = s:align_pairs(sortedKeys, '^\(.\{-}:\d\+:\d\+:\)\s*\(.*\)\s*$', 100)
 
     let tmp = copy(entries)
-    let results = {}
-    for key in keys(tmp)
-        let newKey = formated[key]
-        let results[newKey] = tmp[key]
+    let entries = {}
+    let source = [] " Need a list to keep the order (dict does not guarantee it)
+    for key in sortedKeys
+        let newKey = formatedEntries[key]
+        let entries[newKey] = tmp[key]
+        call add(source, newKey)
     endfor
     unlet tmp
 
@@ -42,10 +48,10 @@ function! phpactor#quickfix#fzf(entries) abort
     \ }
 
     call fzf#run(fzf#wrap('find_references', fzf#vim#with_preview({
-        \ 'source': keys(results),
+        \ 'source': source,
         \ 'down': '60%',
         \ '_action': actions,
-        \ 'sink*': function('<SID>quickfix_sink', [results, actions]),
+        \ 'sink*': function('<SID>quickfix_sink', [entries, actions]),
         \ 'options': [
         \ '--exit-0',
         \ '--expect='. join(keys(actions), ','),
@@ -53,7 +59,8 @@ function! phpactor#quickfix#fzf(entries) abort
         \ '--bind=ctrl-a:select-all,ctrl-d:deselect-all',
         \ '--inline-info',
         \ '--header', ":: Press \x1b[35mCTRL-Q\x1b[m to open the quickfix with your selection",
-        \ '--delimiter=:', '--nth=1,4'
+        \ '--delimiter=:', '--nth=1,4',
+        \ '--reverse'
     \ ]}, 'up', '?'), 1))
 endfunction
 
