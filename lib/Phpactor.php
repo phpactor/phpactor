@@ -76,9 +76,8 @@ class Phpactor
         $config = $loader->load();
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
-        $config[IndexerExtension::PARAM_STUB_PATHS] = [
-                self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs'
-        ];
+        $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
+        $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
         $config = self::configureExtensionManager($config, $vendorDir);
         $config = self::configureLanguageServer($config);
 
