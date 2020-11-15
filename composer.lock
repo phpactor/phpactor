@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "amphp/amp",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "f220a51458bf4dd0dedebb171ac3457813c72bbc"
+                "reference": "ecdc3c476b3ccff02f8e5d5bcc04f7ccfd18751c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/f220a51458bf4dd0dedebb171ac3457813c72bbc",
-                "reference": "f220a51458bf4dd0dedebb171ac3457813c72bbc",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/ecdc3c476b3ccff02f8e5d5bcc04f7ccfd18751c",
+                "reference": "ecdc3c476b3ccff02f8e5d5bcc04f7ccfd18751c",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +85,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/amphp",
                 "issues": "https://github.com/amphp/amp/issues",
-                "source": "https://github.com/amphp/amp/tree/master"
+                "source": "https://github.com/amphp/amp/tree/v2.5.1"
             },
             "funding": [
                 {
@@ -93,7 +93,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-14T21:47:18+00:00"
+            "time": "2020-11-03T16:23:45+00:00"
         },
         {
             "name": "amphp/byte-stream",
@@ -908,16 +908,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99",
+            "version": "1.11.99.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "c8c9aa8a14cc3d3bec86d0a8c3fa52ea79936855"
+                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c8c9aa8a14cc3d3bec86d0a8c3fa52ea79936855",
-                "reference": "c8c9aa8a14cc3d3bec86d0a8c3fa52ea79936855",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
+                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
                 "shasum": ""
             },
             "require": {
@@ -959,10 +959,6 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "support": {
-                "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/master"
-            },
             "funding": [
                 {
                     "url": "https://packagist.com",
@@ -977,7 +973,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-25T05:50:16+00:00"
+            "time": "2020-11-11T10:22:58+00:00"
         },
         {
             "name": "composer/semver",
@@ -1140,16 +1136,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "1.4.4",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "6e076a124f7ee146f2487554a94b6a19a74887ba"
+                "reference": "f28d44c286812c714741478d968104c5e604a1d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/6e076a124f7ee146f2487554a94b6a19a74887ba",
-                "reference": "6e076a124f7ee146f2487554a94b6a19a74887ba",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/f28d44c286812c714741478d968104c5e604a1d4",
+                "reference": "f28d44c286812c714741478d968104c5e604a1d4",
                 "shasum": ""
             },
             "require": {
@@ -1180,11 +1176,6 @@
                 "Xdebug",
                 "performance"
             ],
-            "support": {
-                "irc": "irc://irc.freenode.org/composer",
-                "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/1.4.4"
-            },
             "funding": [
                 {
                     "url": "https://packagist.com",
@@ -1199,7 +1190,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T12:39:10+00:00"
+            "time": "2020-11-13T08:04:11+00:00"
         },
         {
             "name": "dantleech/argument-resolver",
@@ -1894,7 +1885,6 @@
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^8.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2054,7 +2044,6 @@
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ClassToFile\\ClassToFileExtension",
@@ -2112,7 +2101,6 @@
                 "phpunit/phpunit": "~8.0",
                 "symfony/var-dumper": "^5.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2147,12 +2135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "b14cf1e8984f1c2a3af02e06300964441ad04715"
+                "reference": "7f6e57166d0b2345d3e90900f183d58980f85498"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/b14cf1e8984f1c2a3af02e06300964441ad04715",
-                "reference": "b14cf1e8984f1c2a3af02e06300964441ad04715",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/7f6e57166d0b2345d3e90900f183d58980f85498",
+                "reference": "7f6e57166d0b2345d3e90900f183d58980f85498",
                 "shasum": ""
             },
             "require": {
@@ -2170,7 +2158,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^8.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2197,7 +2184,7 @@
                 "issues": "https://github.com/phpactor/code-transform/issues",
                 "source": "https://github.com/phpactor/code-transform/tree/master"
             },
-            "time": "2020-11-01T10:45:58+00:00"
+            "time": "2020-11-02T08:21:01+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2228,7 +2215,6 @@
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\CodeTransform\\CodeTransformExtension",
@@ -2293,7 +2279,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "~9.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2456,7 +2441,6 @@
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\CompletionWorse\\CompletionWorseExtension",
@@ -2492,12 +2476,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/composer-autoloader-extension.git",
-                "reference": "d437f34de3defec3303669317c2bff9e870bf33b"
+                "reference": "3ad53194ce94d0b8f6680a112eead21a796c044c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/d437f34de3defec3303669317c2bff9e870bf33b",
-                "reference": "d437f34de3defec3303669317c2bff9e870bf33b",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/3ad53194ce94d0b8f6680a112eead21a796c044c",
+                "reference": "3ad53194ce94d0b8f6680a112eead21a796c044c",
                 "shasum": ""
             },
             "require": {
@@ -2511,7 +2495,6 @@
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension",
@@ -2539,7 +2522,7 @@
                 "issues": "https://github.com/phpactor/composer-autoloader-extension/issues",
                 "source": "https://github.com/phpactor/composer-autoloader-extension/tree/master"
             },
-            "time": "2020-11-01T11:23:42+00:00"
+            "time": "2020-11-01T11:54:43+00:00"
         },
         {
             "name": "phpactor/config-loader",
@@ -2722,7 +2705,6 @@
                 "phpstan/phpstan": "~0.11.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2916,12 +2898,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "0058146c883b6fc322e3b1e957ed841f7430eaf5"
+                "reference": "06d905a6be4b2ff15ce20a2250c3cad72bf30e70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/0058146c883b6fc322e3b1e957ed841f7430eaf5",
-                "reference": "0058146c883b6fc322e3b1e957ed841f7430eaf5",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/06d905a6be4b2ff15ce20a2250c3cad72bf30e70",
+                "reference": "06d905a6be4b2ff15ce20a2250c3cad72bf30e70",
                 "shasum": ""
             },
             "require": {
@@ -2949,7 +2931,6 @@
                 "phpunit/phpunit": "^8.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Indexer\\Extension\\IndexerExtension",
@@ -2977,7 +2958,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2020-11-01T10:50:13+00:00"
+            "time": "2020-11-07T17:17:13+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -3015,7 +2996,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3078,7 +3058,6 @@
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "phpactor.extension_class": "Phpactor\\Extension\\LanguageServer\\LanguageServerExtension",
@@ -3152,7 +3131,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -3208,7 +3186,6 @@
                 "phpstan/phpstan": "^0.12",
                 "phpunit/phpunit": "^9.2"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3226,10 +3203,6 @@
                 }
             ],
             "description": "Langauge Server Protocol for PHP (transpiled)",
-            "support": {
-                "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/master"
-            },
             "time": "2020-07-31T06:43:54+00:00"
         },
         {
@@ -3404,7 +3377,6 @@
                 "phpstan/phpstan": "^0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3834,7 +3806,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "~7.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3980,12 +3951,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "360a923947ac2c4646e81ebd12fa2d2391c94830"
+                "reference": "682bb4197ad014f10988dc1f1e2335a36902fd34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/360a923947ac2c4646e81ebd12fa2d2391c94830",
-                "reference": "360a923947ac2c4646e81ebd12fa2d2391c94830",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/682bb4197ad014f10988dc1f1e2335a36902fd34",
+                "reference": "682bb4197ad014f10988dc1f1e2335a36902fd34",
                 "shasum": ""
             },
             "require": {
@@ -4005,7 +3976,6 @@
                 "phpunit/phpunit": "~7.0",
                 "symfony/filesystem": "^3.3"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4032,7 +4002,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2020-09-13T10:08:43+00:00"
+            "time": "2020-11-07T11:41:44+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
@@ -4471,16 +4441,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.8.2",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337"
+                "reference": "9ad6ce79c342fbd44df10ea95511a1b24dee5b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/590cfec960b77fd55e39b7d9246659e95dd6d337",
-                "reference": "590cfec960b77fd55e39b7d9246659e95dd6d337",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9ad6ce79c342fbd44df10ea95511a1b24dee5b57",
+                "reference": "9ad6ce79c342fbd44df10ea95511a1b24dee5b57",
                 "shasum": ""
             },
             "require": {
@@ -4516,10 +4486,6 @@
                 "parser",
                 "validator"
             ],
-            "support": {
-                "issues": "https://github.com/Seldaek/jsonlint/issues",
-                "source": "https://github.com/Seldaek/jsonlint/tree/master"
-            },
             "funding": [
                 {
                     "url": "https://github.com/Seldaek",
@@ -4530,7 +4496,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-25T06:56:57+00:00"
+            "time": "2020-11-11T09:19:24+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -5897,36 +5863,31 @@
         },
         {
             "name": "doctrine/instantiator",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "f350df0268e904597e3bd9c4685c53e0e333feea"
+                "reference": "d56bf6102915de5702778fe20f2de3b2fe570b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/f350df0268e904597e3bd9c4685c53e0e333feea",
-                "reference": "f350df0268e904597e3bd9c4685c53e0e333feea",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/d56bf6102915de5702778fe20f2de3b2fe570b5b",
+                "reference": "d56bf6102915de5702778fe20f2de3b2fe570b5b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^6.0",
+                "doctrine/coding-standard": "^8.0",
                 "ext-pdo": "*",
                 "ext-phar": "*",
-                "phpbench/phpbench": "^0.13",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-shim": "^0.11",
-                "phpunit/phpunit": "^7.0"
+                "phpbench/phpbench": "^0.13 || 1.0.0-alpha2",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
@@ -5940,7 +5901,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
+                    "homepage": "https://ocramius.github.io/"
                 }
             ],
             "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
@@ -5949,10 +5910,6 @@
                 "constructor",
                 "instantiate"
             ],
-            "support": {
-                "issues": "https://github.com/doctrine/instantiator/issues",
-                "source": "https://github.com/doctrine/instantiator/tree/1.3.x"
-            },
             "funding": [
                 {
                     "url": "https://www.doctrine-project.org/sponsorship.html",
@@ -5967,7 +5924,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-29T17:27:14+00:00"
+            "time": "2020-11-10T18:47:58+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -6055,12 +6012,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "1726988e316847da6443254bfd63c83618bdf66a"
+                "reference": "1954582371c60f1ddb104878bd57fadcb3c78b44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1726988e316847da6443254bfd63c83618bdf66a",
-                "reference": "1726988e316847da6443254bfd63c83618bdf66a",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/1954582371c60f1ddb104878bd57fadcb3c78b44",
+                "reference": "1954582371c60f1ddb104878bd57fadcb3c78b44",
                 "shasum": ""
             },
             "require": {
@@ -6138,17 +6095,13 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "support": {
-                "issues": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues",
-                "source": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/tree/3.0"
-            },
             "funding": [
                 {
                     "url": "https://github.com/keradus",
                     "type": "github"
                 }
             ],
-            "time": "2020-10-27T13:26:12+00:00"
+            "time": "2020-11-13T12:04:31+00:00"
         },
         {
             "name": "lstrojny/functional-php",
@@ -6300,16 +6253,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.10.1",
+            "version": "1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "969b211f9a51aa1f6c01d1d2aef56d3bd91598e5"
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/969b211f9a51aa1f6c01d1d2aef56d3bd91598e5",
-                "reference": "969b211f9a51aa1f6c01d1d2aef56d3bd91598e5",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/776f831124e9c62e1a2c601ecc52e776d8bb7220",
+                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220",
                 "shasum": ""
             },
             "require": {
@@ -6344,17 +6297,13 @@
                 "object",
                 "object graph"
             ],
-            "support": {
-                "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.x"
-            },
             "funding": [
                 {
                     "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-29T13:22:24+00:00"
+            "time": "2020-11-13T09:40:50+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -7033,16 +6982,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.52",
+            "version": "0.12.55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e96dd5e7ae9aefed663bc7e285ad96792b67eadc"
+                "reference": "4382b2b2059ec7e5135d07685ec1e3e16ae32d16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e96dd5e7ae9aefed663bc7e285ad96792b67eadc",
-                "reference": "e96dd5e7ae9aefed663bc7e285ad96792b67eadc",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4382b2b2059ec7e5135d07685ec1e3e16ae32d16",
+                "reference": "4382b2b2059ec7e5135d07685ec1e3e16ae32d16",
                 "shasum": ""
             },
             "require": {
@@ -7071,10 +7020,6 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "support": {
-                "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.52"
-            },
             "funding": [
                 {
                     "url": "https://github.com/ondrejmirtes",
@@ -7089,7 +7034,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-25T07:23:44+00:00"
+            "time": "2020-11-14T10:20:35+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -8728,5 +8673,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
