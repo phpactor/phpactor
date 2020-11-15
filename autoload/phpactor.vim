@@ -303,7 +303,12 @@ endfunction
 
 function! phpactor#Status()
     if exists(':terminal')
-        let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' status'
+        let l:workspaceDir = phpactor#getRootDirectory()
+
+        " note that we should escape these arguments, but using the list syntax
+        " here causes tests to fail on travis with VIM 8.3 ...
+        let l:cmd = g:phpactorPhpBin . ' ' . g:phpactorbinpath . ' status --working-dir=' . l:workspaceDir
+
         if has('nvim')
             execute 'split term://' . l:cmd
             " Press any key to leave
