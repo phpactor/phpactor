@@ -62,15 +62,19 @@ class Phpactor
     {
         $config = [];
 
-        $cwd = getcwd();
+        $projectRoot = getcwd();
+
+        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
+            $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
 
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
             ->enableYamlDeserializer('yaml')
             ->addXdgCandidate('phpactor', 'phpactor.json', 'json')
             ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml')
-            ->addCandidate($cwd . '/.phpactor.json', 'json')
-            ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
+            ->addCandidate($projectRoot . '/.phpactor.json', 'json')
+            ->addCandidate($projectRoot . '/.phpactor.yml', 'yaml')
             ->loader();
 
         $config = $loader->load();
@@ -82,7 +86,7 @@ class Phpactor
         $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $projectRoot;
         }
 
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
