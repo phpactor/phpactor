@@ -25,6 +25,7 @@ Improvements:
 
 Bug fixes:
 
+  - [worse-reflection] Do not consider "iterable" as an FQN - @elythyr
   - [code-transform] Fix trailing line on class import - @elythyr
   - [code-transform] Fix importing class names in docblocks - @elythyr
 
