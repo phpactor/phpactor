@@ -149,13 +149,13 @@ Configuration
 List the possible configuration options with ``phpactor config:dump | grep
 indexer``, explanations of some important ones:
 
-- ``indexer.enabled_watchers``: List of watchers to enable (e.g. `inotify`,
+- :ref:`param_indexer.enabled_watchers`: List of watchers to enable (e.g. `inotify`,
   `find`).
-- ``indexer.include_patterns``: List of glob patterns to include
-- ``indexer.exclude_patterns``: List of glob patterns to exclude
-- ``indexer.poll_time``: Poll time used for polling watchers (e.g. ``find``,
-  ``php``
-- ``indexer.buffer_time``: Time to wait to collect batch messages from
+- :ref:`param_indexer.include_patterns`: List of glob patterns to include
+- :ref:`param_indexer.exclude_patterns`: List of glob patterns to exclude
+- :ref:`param_indexer.stub_paths`: List of external paths to index
+- :ref:`param_indexer.poll_time`: Poll time used for polling watchers (e.g. ``find``, ``php``)
+- :ref:`param_indexer.buffer_time`: Time to wait to collect batch messages from
   "realtime" watchers (e.g. ``inotify``)
 
 Troubleshooting
