@@ -97,5 +97,8 @@ The following plugins add more functionality to Phpactor
 -  `deoplete-phpactor <https://github.com/kristijanhusak/deoplete-phpactor>`__:
    Integrates with
    `deoplete <https://github.com/Shougo/deoplete.nvim>`__
+-  `coc-phpactor <https://github.com/phpactor/coc-phpactor>`__:
+   Integrates with
+   `CoC <https://github.com/neoclide/coc.nvim>`__
 -  `phpactor-mappings <https://github.com/elythyr/phpactor-mappings>`__:
    Provides sensible default key mappings for Phpactor.
