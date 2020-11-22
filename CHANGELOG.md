@@ -22,6 +22,9 @@ Improvements:
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
   - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
+  - [worse-reflection] Improved inference for property types - @elythyr
+  - [worse-reflection] Include virtual members from traits - @scisssssssors
+  - [code-tranform] fix invalid missing property diagnostic (#1126) - @elythyr
 
 Bug fixes:
 
