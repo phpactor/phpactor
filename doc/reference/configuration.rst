@@ -1031,7 +1031,9 @@ Glob patterns to exclude while indexing
 
 
 
-Paths to folders where code stubs are located
+Paths to external folders to index
+
+They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
 
 
 **Default**: ``[]``
