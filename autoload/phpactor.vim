@@ -1,6 +1,5 @@
 ""
 " @section Introduction, intro
-" @library
 " @order intro config completion commands mappings
 "
 " Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
@@ -187,41 +186,82 @@ function! phpactor#ImportMissingClasses()
     call phpactor#rpc("import_missing_classes", {"source": phpactor#_source(), "path": expand('%:p')})
 endfunction
 
-function! phpactor#_GotoDefinitionTarget(target)
+""
+" @default target=`edit`
+" @default mods=''
+"
+" Goto the definition of the symbol under the cursor.
+" Open the definition in the [target] window, see @section(window-target) for
+" the list of possible targets.
+" [mods] is a string containing |<mods>| values separated by a space.
+"
+" Examples:
+" >
+"     " Opens in the current buffer
+"     call phpactor#GotoDefinition()
+"
+"     " Opens in a vertical split opened on the right side
+"     call phpactor#GotoDefinition('split', 'vertical botright')
+"
+"     " Opens in a new tab
+"     call phpactor#GotoDefinition('tabnew')
+" <
+function! phpactor#GotoDefinition(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
     call phpactor#rpc("goto_definition", {
-                \"offset": phpactor#_offset(),
-                \"source": phpactor#_source(),
-                \"path": expand('%:p'),
-                \"target": a:target,
-                \'language': &ft})
-endfunction
-function! phpactor#GotoDefinition()
-    call phpactor#_GotoDefinitionTarget('focused_window')
-endfunction
-function! phpactor#GotoImplementations()
-    call phpactor#rpc("goto_implementation", {
-                \"offset": phpactor#_offset(),
-                \"source": phpactor#_source(),
-                \"path": expand('%:p'),
-                \"target": 'focused_window',
-                \'language': &ft})
-endfunction
-function! phpactor#GotoDefinitionVsplit()
-    call phpactor#_GotoDefinitionTarget('vsplit')
-endfunction
-function! phpactor#GotoDefinitionHsplit()
-    call phpactor#_GotoDefinitionTarget('hsplit')
-endfunction
-function! phpactor#GotoDefinitionTab()
-    call phpactor#_GotoDefinitionTarget('new_tab')
+        \ "offset": phpactor#_offset(),
+        \ "source": phpactor#_source(),
+        \ "path": expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
 endfunction
 
-function! phpactor#GotoType()
+""
+" @usage [target] [mods]
+"
+" Same as @function(phpactor#GotoDefinition) but goto the implementation of
+" the symbol under the cursor.
+"
+" If there is more than one result the quickfix strategy will be used and [target]
+" will be ignored, see @setting(g:phpactorQuickfixStrategy).
+function! phpactor#GotoImplementations(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
+    call phpactor#rpc("goto_implementation", {
+        \ "offset": phpactor#_offset(),
+        \ "source": phpactor#_source(),
+        \ "path": expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
+endfunction
+
+""
+" @usage [target] [mods]
+"
+" Same as @function(phpactor#GotoDefinition) but goto the type of
+" the symbol under the cursor.
+function! phpactor#GotoType(...)
+    let target = !empty(a:0 ? a:1 : '') ? a:1 : 'edit'
+    let mods = a:0 > 1 ? a:2 : ''
+
     call phpactor#rpc('goto_type', {
-        \'offset': phpactor#_offset(),
-        \'source': phpactor#_source(),
-        \'path': expand('%:p'),
-        \'language': &filetype})
+        \ 'offset': phpactor#_offset(),
+        \ 'source': phpactor#_source(),
+        \ 'path': expand('%:p'),
+        \ 'language': &ft,
+    \ }, {
+        \ "target": target,
+        \ "mods": mods,
+    \ })
 endfunction
 
 function! phpactor#Hover()
@@ -474,7 +514,7 @@ endfunction
 " RPC -->-->-->-->-->--
 """""""""""""""""""""""
 
-function! phpactor#rpc(action, arguments)
+function! phpactor#rpc(action, arguments, ...)
     " Remove any existing output in the message window
     execute ':redraw'
 
@@ -496,7 +536,7 @@ function! phpactor#rpc(action, arguments)
         endtry
 
         let actionName = response['action']
-        let parameters = response['parameters']
+        let parameters = extend(copy(response['parameters']), a:0 ? a:1 : {})
 
         let response = phpactor#_rpc_dispatch(actionName, parameters)
 
@@ -567,12 +607,13 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
 
         call s:openFileInSelectedTarget(
               \ a:parameters["path"],
-              \ a:parameters["target"],
+              \ get(a:parameters, 'target'),
+              \ get(a:parameters, 'mods'),
               \ get(a:parameters, "use_open_window", g:phpactorUseOpenWindows),
               \ a:parameters["force_reload"]
               \ )
 
-        if a:parameters["target"] == 'focused_window'
+        if a:parameters["target"] == 'edit'
             let changedFileOrWindow = !s:isOpenInCurrentWindow(a:parameters["path"])
         endif
 
@@ -698,7 +739,31 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     throw "Do not know how to handle action '" . a:actionName . "'"
 endfunction
 
-function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReload)
+""
+" @section Window targets, window-targets
+" @parentsection commands
+"
+" Phpactor provide a few window targets to use with some commands.
+" See @command(PhpactorGotoDefinition) for an example of how to use them.
+"
+" Possible values are:
+" * `e`, `edit`, `ex`
+" * `new`, `vne`, `vnew`
+" * `sp`, `split`, `vs`, `vsplit`
+" * `vie`, `view`, `sv`, `sview`, `splitview`
+" * `tabe`, `tabedit`, `tabnew`
+
+function! phpactor#_window_targets() abort
+  return [
+        \ 'e', 'edit', 'ex',
+        \ 'new', 'vne', 'vnew',
+        \ 'sp', 'split', 'vs', 'vsplit',
+        \ 'vie', 'view', 'sv', 'sview', 'splitview',
+        \ 'tabe', 'tabedit', 'tabnew',
+        \ ]
+endfunction
+
+function! s:openFileInSelectedTarget(filePath, target, mods, useOpenWindow, forceReload)
     let l:bufferNumber = bufnr(a:filePath . '$')
 
     if v:true == a:useOpenWindow && -1 != l:bufferNumber
@@ -713,28 +778,16 @@ function! s:openFileInSelectedTarget(filePath, target, useOpenWindow, forceReloa
         endif
     endif
 
-    if a:target ==# 'focused_window'
-        call phpactor#_switchToBufferOrEdit(a:filePath)
-        if v:true == a:forceReload
-          exec 'e!'
-        endif
-        return
+    if -1 == index(phpactor#_window_targets(), a:target)
+      echohl WarningMsg
+      echomsg printf('Error executing: %s %s %s', a:mods, a:target, a:filePath)
+      echomsg printf('Invalid target: %s', a:target)
+      echomsg printf('Valid targets are: %s', join(phpactor#_window_targets(), ', '))
+      echohl None
+      return
     endif
 
-    if a:target ==# 'vsplit'
-        exec ':vsplit ' . a:filePath
-        return
-    endif
-
-    if a:target ==# 'hsplit'
-        exec ':split ' . a:filePath
-        return
-    endif
-
-    if a:target ==# 'new_tab'
-        exec ':tabnew ' . a:filePath
-        return
-    endif
+    execute printf('%s %s %s', a:mods, a:target, a:filePath)
 endfunction
 
 function! phpactor#_rpc_dispatch_input_handler(Next, parameters, parameterName, result)
