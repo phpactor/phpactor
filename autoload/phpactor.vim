@@ -605,10 +605,21 @@ function! phpactor#_rpc_dispatch(actionName, parameters)
     if a:actionName == "open_file"
         let changedFileOrWindow = v:true
 
+        let l:target = get(a:parameters, 'target', 'edit')
+        let l:mods = get(a:parameters, 'mods', '')
+
+        if 'focused_window' ==# l:target
+          let l:target = 'edit'
+        elseif 'hsplit' ==# l:target
+          let l:target = 'split'
+        elseif 'new_tab' ==# l:target
+          let l:target = 'tabedit'
+        endif
+
         call s:openFileInSelectedTarget(
               \ a:parameters["path"],
-              \ get(a:parameters, 'target'),
-              \ get(a:parameters, 'mods'),
+              \ l:target,
+              \ l:mods,
               \ get(a:parameters, "use_open_window", g:phpactorUseOpenWindows),
               \ a:parameters["force_reload"]
               \ )
