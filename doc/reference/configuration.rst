@@ -1031,9 +1031,7 @@ Glob patterns to exclude while indexing
 
 
 
-Paths to external folders to index
-
-They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
+Paths to external folders to index. They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
 
 
 **Default**: ``[]``
