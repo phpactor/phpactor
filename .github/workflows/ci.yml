@@ -1,0 +1,147 @@
+name: "CI"
+
+on:
+    pull_request:
+    push:
+        branches:
+            - 'master'
+
+env:
+    fail-fast: true
+    TZ: "Europe/Paris"
+
+jobs:
+    phpstan:
+        name: "PHPStan (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v2.3.3
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@2.7.0
+              with:
+                  coverage: "none"
+                  php-version: "${{ matrix.php-version }}"
+                  tools: composer:v2
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+
+            -
+                name: "Run phpstan/phpstan"
+                run: "vendor/bin/phpstan analyse --level=1 lib"
+
+    PHPUnit:
+        name: "PHPUnit ${{ matrix.php-version }} + ${{ matrix.dependency }}"
+
+        runs-on: ubuntu-latest
+
+        continue-on-error: ${{ matrix.allow-failures }}
+
+        strategy:
+            matrix:
+                php-version: 
+                    - '7.3'
+                    - '7.4'
+                allow-failures: [false]
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v2.3.3
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@2.7.0
+              with:
+                  coverage: "none"
+                  php-version: "${{ matrix.php-version }}"
+                  tools: composer:v2
+
+
+            - name: "Composer install"
+              uses: "ramsey/composer-install@v1"
+              with:
+                  dependency-versions: "${{ matrix.dependency }}"
+
+            - name: "PHPUnit"
+              run: ./vendor/bin/phpunit
+
+    Dependencies:
+        name: "Dependencies ${{ matrix.php-version }} + ${{ matrix.dependency }}"
+
+        runs-on: ubuntu-latest
+
+        continue-on-error: ${{ matrix.allow-failures }}
+
+        strategy:
+            matrix:
+                php-version: 
+                    - '7.4'
+                allow-failures: [false]
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v2.3.3
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@2.7.0
+              with:
+                  coverage: "none"
+                  php-version: "${{ matrix.php-version }}"
+                  tools: composer:v2
+
+
+            - name: "Composer install"
+              uses: "ramsey/composer-install@v1"
+              with:
+                  dependency-versions: "${{ matrix.dependency }}"
+
+            - name: "Set git author"
+              run: git config --global user.email "test@example.com"
+            - name: "Set git username"
+              run: git config --global user.name "Phpactor"
+            - name: "Test Dependencies"
+              run: config/travis/testdeps
+
+
+    Extensions:
+        name: "Extensions ${{ matrix.php-version }} + ${{ matrix.dependency }}"
+
+        runs-on: ubuntu-latest
+
+        continue-on-error: ${{ matrix.allow-failures }}
+
+        strategy:
+            matrix:
+                php-version: 
+                    - '7.4'
+                allow-failures: [false]
+
+        steps:
+            - name: "Checkout code"
+              uses: actions/checkout@v2.3.3
+
+            - name: "Install PHP with extensions"
+              uses: shivammathur/setup-php@2.7.0
+              with:
+                  coverage: "none"
+                  php-version: "${{ matrix.php-version }}"
+                  tools: composer:v2
+
+
+            - name: "Composer install"
+              uses: "ramsey/composer-install@v1"
+              with:
+                  dependency-versions: "${{ matrix.dependency }}"
+
+            - name: "Test Extensions"
+              run: config/travis/testexts
