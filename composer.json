@@ -60,7 +60,7 @@
         "friendsofphp/php-cs-fixer": "^3.0@dev",
         "dantleech/what-changed": "~0.4",
         "symfony/var-dumper": "^5.0",
-        "phpstan/phpstan": "^0.12.25"
+        "phpstan/phpstan": "~0.12.0"
     },
     "bin": [
         "bin/phpactor"
