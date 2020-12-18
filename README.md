@@ -5,8 +5,8 @@ Phpactor
 
 | Branch       | Status                                                                                                                         |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg)
-![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg)
+| master       | ![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=master)                                               |
+| develop      | ![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=develop)                                              |
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
