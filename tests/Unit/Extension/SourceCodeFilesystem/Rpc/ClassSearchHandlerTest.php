@@ -17,7 +17,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
      */
     private $classSearch;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
@@ -42,7 +42,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
-        $this->assertContains('No classes found', $action->message());
+        $this->assertStringContainsString('No classes found', $action->message());
     }
 
     /**

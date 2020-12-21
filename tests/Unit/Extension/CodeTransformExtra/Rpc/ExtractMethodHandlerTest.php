@@ -24,7 +24,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
      */
     private $extractMethod;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->extractMethod = $this->prophesize(ExtractMethod::class);
     }

@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ReferencesClassCommandTest extends SystemTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -19,7 +19,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:class "Animals\Badger"');
         $this->assertSuccess($process);
-        $this->assertContains('class ⟶Badger⟵', $process->getOutput());
+        $this->assertStringContainsString('class ⟶Badger⟵', $process->getOutput());
     }
 
     /**
@@ -29,7 +29,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:class "Animals\Badger" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('"line":"class Badger', $process->getOutput());
+        $this->assertStringContainsString('"line":"class Badger', $process->getOutput());
     }
 
     /**
@@ -39,8 +39,8 @@ class ReferencesClassCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:class "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
-        $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
-        $this->assertContains('class Kangaroo', file_get_contents(
+        $this->assertStringContainsString('class ⟶Kangaroo⟵', $process->getOutput());
+        $this->assertStringContainsString('class Kangaroo', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));
     }
@@ -52,7 +52,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
         $this->assertSuccess($process);
-        $this->assertContains('class ⟶Kangaroo⟵', $process->getOutput());
+        $this->assertStringContainsString('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertNotContains('class Kangaroo', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));
@@ -65,6 +65,6 @@ class ReferencesClassCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('references:class "Animals\Badger" --filesystem=simple');
         $this->assertSuccess($process);
-        $this->assertContains('class ⟶Badger⟵', $process->getOutput());
+        $this->assertStringContainsString('class ⟶Badger⟵', $process->getOutput());
     }
 }

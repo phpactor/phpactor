@@ -19,7 +19,7 @@ class HoverHandlerTest extends HandlerTestCase
      */
     private $reflector;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->enableContextualSourceLocation()->build();
         $this->formatter = new ObjectFormatter([]);

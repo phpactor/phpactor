@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassInflectCommandTest extends SystemTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -25,7 +25,7 @@ class ClassInflectCommandTest extends SystemTestCase
         $expectedFilePath = $this->workspaceDir() . '/' . $expectedFilePath;
         $this->assertSuccess($process);
         $this->assertFileExists($expectedFilePath);
-        $this->assertContains($expectedContents, file_get_contents($expectedFilePath));
+        $this->assertStringContainsString($expectedContents, file_get_contents($expectedFilePath));
     }
 
     public function provideInflectClass()
@@ -63,11 +63,11 @@ EOT
         $filePath =  'lib/Badger/Carnivorous.php';
         $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --no-interaction');
         $this->assertSuccess($process);
-        $this->assertContains('exists:true', $process->getOutput());
+        $this->assertStringContainsString('exists:true', $process->getOutput());
         $this->assertNotContains('interface', file_get_contents($filePath));
 
         $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --force');
-        $this->assertContains('interface', file_get_contents($filePath));
+        $this->assertStringContainsString('interface', file_get_contents($filePath));
     }
 
     /**

@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassCopyCommandTest extends SystemTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -36,7 +36,7 @@ class ClassCopyCommandTest extends SystemTestCase
         foreach ($contentExpectations as $filePath => $contentExpectation) {
             $path = $this->workspaceDir() . '/' . $filePath;
             $contents = file_get_contents($path);
-            $this->assertContains($contentExpectation, $contents);
+            $this->assertStringContainsString($contentExpectation, $contents);
         }
     }
 

@@ -23,7 +23,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
      */
     private $extractConstant;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->extractConstant = $this->prophesize(ExtractConstant::class);
     }

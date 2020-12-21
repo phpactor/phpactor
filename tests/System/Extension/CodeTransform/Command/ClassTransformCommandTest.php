@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassTransformCommandTest extends SystemTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -32,12 +32,12 @@ EOT
         $process = $this->phpactor($command);
 
         if ($error) {
-            $this->assertContains($expectedOutput, $process->getErrorOutput());
+            $this->assertStringContainsString($expectedOutput, $process->getErrorOutput());
             return;
         }
 
         $this->assertSuccess($process);
-        $this->assertContains($expectedOutput, $process->getOutput());
+        $this->assertStringContainsString($expectedOutput, $process->getOutput());
     }
 
     public function provideSmokeSuccess()

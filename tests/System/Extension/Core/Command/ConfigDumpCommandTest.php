@@ -10,7 +10,7 @@ class ConfigDumpCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('config:dump');
         $this->assertSuccess($process);
-        $this->assertContains('Config files', $process->getOutput());
+        $this->assertStringContainsString('Config files', $process->getOutput());
     }
 
     /**

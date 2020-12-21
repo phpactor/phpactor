@@ -22,7 +22,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
      */
     private $generateMethod;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->generateMethod = $this->prophesize(GenerateMethod::class);
     }

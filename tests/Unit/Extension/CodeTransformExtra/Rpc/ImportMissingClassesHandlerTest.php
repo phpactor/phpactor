@@ -33,7 +33,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
      */
     private $tester;
 
-    protected function setUp(): void
+    protected function setUp(): void: void
     {
         $this->requestHandler = $this->container()->get(RpcExtension::SERVICE_REQUEST_HANDLER);
         $this->finder = $this->prophesize(UnresolvableClassNameFinder::class);

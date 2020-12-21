@@ -28,7 +28,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
      */
     private $classMover;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->classMover = $this->prophesize(ClassMover::class);
         $this->classMover->getRelatedFiles(self::SOURCE_PATH)->willReturn([]);
@@ -52,7 +52,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
-        $this->assertContains('Cancelled', $action->message());
+        $this->assertStringContainsString('Cancelled', $action->message());
     }
 
     public function testConfirmChallenge()

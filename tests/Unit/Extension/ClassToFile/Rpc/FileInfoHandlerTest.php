@@ -16,7 +16,7 @@ class FileInfoHandlerTest extends HandlerTestCase
      */
     private $fileInfo;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->fileInfo = $this->prophesize(FileInfo::class);
     }

@@ -24,7 +24,7 @@ class StatusHandlerTest extends HandlerTestCase
      */
     private $paths;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->status = $this->prophesize(Status::class);
         $this->paths = $this->prophesize(PathCandidates::class);

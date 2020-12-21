@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
  */
 class CompleteBench extends BaseBenchCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('PhpUnit');
@@ -19,6 +19,6 @@ class CompleteBench extends BaseBenchCase
     public function benchComplete()
     {
         $output = $this->runCommand('complete tests/FoobarTest.php 145'); //145?
-        Assert::assertContains('info:pub', $output);
+        Assert::assertStringContainsString('info:pub', $output);
     }
 }

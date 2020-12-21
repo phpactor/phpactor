@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteCommandTest extends SystemTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -19,7 +19,7 @@ class CompleteCommandTest extends SystemTestCase
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
-        $this->assertContains($expected, trim($process->getOutput()));
+        $this->assertStringContainsString($expected, trim($process->getOutput()));
     }
 
     public function provideComplete()

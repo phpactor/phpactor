@@ -20,7 +20,7 @@ class ChangeVisiblityHandlerTest extends HandlerTestCase
      */
     private $changeVisibility;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->changeVisibility = $this->prophesize(ChangeVisiblity::class);
     }

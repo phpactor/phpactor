@@ -41,7 +41,7 @@ PHP;
      */
     private $reflector;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->addSource(self::SOURCE)->build();
         $this->generateAccessor = $this->prophesize(GenerateAccessor::class);

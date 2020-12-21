@@ -50,7 +50,7 @@ class ReferencesHandlerTest extends HandlerTestCase
      */
     private $filesystemRegistry;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->classReferences = $this->prophesize(ClassReferences::class);
         $this->classMemberReferences = $this->prophesize(ClassMemberReferences::class);
@@ -362,7 +362,7 @@ class ReferencesHandlerTest extends HandlerTestCase
 
         $first = array_shift($actions);
         $this->assertInstanceOf(EchoResponse::class, $first);
-        $this->assertContains('risky', $first->message());
+        $this->assertStringContainsString('risky', $first->message());
     }
 
     public function testReferencesAreSorted()

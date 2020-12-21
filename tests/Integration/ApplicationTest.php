@@ -10,12 +10,12 @@ use Phpactor\Tests\IntegrationTestCase;
 
 class ApplicationTest extends IntegrationTestCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
     }
 
-    public function tearDown()
+    protected function tearDownt (): void
     {
         $this->workspace()->reset();
     }
@@ -78,6 +78,6 @@ EOT
         ]), $output);
 
         $this->assertEquals(0, $exitCode);
-        $this->assertContains($this->workspaceDir(), $output->fetch());
+        $this->assertStringContainsString($this->workspaceDir(), $output->fetch());
     }
 }

@@ -23,7 +23,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
      */
     private $classCopy;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->classCopy = $this->prophesize(ClassCopy::class);
     }

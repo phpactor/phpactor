@@ -18,7 +18,7 @@ class ChainPromptTest extends TestCase
      */
     private $prompt2;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->prompt1 = $this->prophesize(Prompt::class);
         $this->prompt1->name()->willReturn('prompt1');

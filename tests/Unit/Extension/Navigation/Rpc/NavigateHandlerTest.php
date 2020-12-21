@@ -27,7 +27,7 @@ class NavigateHandlerTest extends HandlerTestCase
      */
     private $destinations;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->navigator = $this->prophesize(Navigator::class);
         $this->destinations = [

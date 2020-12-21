@@ -8,7 +8,7 @@ namespace Phpactor\Tests\Benchmark;
  */
 class ClassSearchBench extends BaseBenchCase
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Symfony');

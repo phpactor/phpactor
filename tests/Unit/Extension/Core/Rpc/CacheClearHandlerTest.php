@@ -15,7 +15,7 @@ class CacheClearHandlerTest extends HandlerTestCase
      */
     private $clearCache;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->clearCache = $this->prophesize(CacheClear::class);
     }

@@ -24,7 +24,7 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
      */
     private $extractExpression;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->extractExpression = $this->prophesize(ExtractExpression::class);
     }

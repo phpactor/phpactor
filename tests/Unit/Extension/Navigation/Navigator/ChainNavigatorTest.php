@@ -23,7 +23,7 @@ class ChainNavigatorTest extends TestCase
      */
     private $navigator2;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->navigator1 = $this->prophesize(Navigator::class);
         $this->navigator2 = $this->prophesize(Navigator::class);
