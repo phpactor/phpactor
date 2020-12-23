@@ -2912,12 +2912,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "bb7de59af3966ce7f698fb5ded10ded14e6274a0"
+                "reference": "c85d6dcdb821d834d813ffdd4167b182510b31ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/bb7de59af3966ce7f698fb5ded10ded14e6274a0",
-                "reference": "bb7de59af3966ce7f698fb5ded10ded14e6274a0",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/c85d6dcdb821d834d813ffdd4167b182510b31ff",
+                "reference": "c85d6dcdb821d834d813ffdd4167b182510b31ff",
                 "shasum": ""
             },
             "require": {
@@ -2973,7 +2973,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2020-12-18T23:31:44+00:00"
+            "time": "2020-12-23T21:19:13+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -3107,12 +3107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "d5f3d9f3f43700174701e7aff5f95e2f6d875616"
+                "reference": "3265e505691b5ce9e19d61125fdbed6f0250f476"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/d5f3d9f3f43700174701e7aff5f95e2f6d875616",
-                "reference": "d5f3d9f3f43700174701e7aff5f95e2f6d875616",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/3265e505691b5ce9e19d61125fdbed6f0250f476",
+                "reference": "3265e505691b5ce9e19d61125fdbed6f0250f476",
                 "shasum": ""
             },
             "require": {
@@ -3179,7 +3179,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2020-12-18T23:31:41+00:00"
+            "time": "2020-12-22T22:39:58+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -6147,20 +6147,20 @@
         },
         {
             "name": "lstrojny/functional-php",
-            "version": "1.14.1",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lstrojny/functional-php.git",
-                "reference": "9e8363e3cb9db924327f51b5804f4dfba03605aa"
+                "reference": "07940820f52820292c83419937d5c331a4ec2fb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/9e8363e3cb9db924327f51b5804f4dfba03605aa",
-                "reference": "9e8363e3cb9db924327f51b5804f4dfba03605aa",
+                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/07940820f52820292c83419937d5c331a4ec2fb3",
+                "reference": "07940820f52820292c83419937d5c331a4ec2fb3",
                 "shasum": ""
             },
             "require": {
-                "php": "~7"
+                "php": "~7|~8"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -6276,7 +6276,7 @@
                 {
                     "name": "Lars Strojny",
                     "email": "lstrojny@php.net",
-                    "homepage": "http://usrportage.de"
+                    "homepage": "https://usrportage.de"
                 },
                 {
                     "name": "Max Beutel",
@@ -6289,9 +6289,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lstrojny/functional-php/issues",
-                "source": "https://github.com/lstrojny/functional-php/tree/1.14.1"
+                "source": "https://github.com/lstrojny/functional-php/tree/1.15.0"
             },
-            "time": "2020-10-12T09:48:50+00:00"
+            "time": "2020-12-22T07:53:25+00:00"
         },
         {
             "name": "myclabs/deep-copy",

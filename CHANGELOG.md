@@ -28,6 +28,7 @@ Improvements:
 
 Bug fixes:
 
+  - [language-server] Fix occasional class-not-found error on code transform (due to incorrectly formatted path)
   - [worse-reflection] Do not consider "iterable" as an FQN - @elythyr
   - [code-transform] Fix trailing line on class import - @elythyr
   - [code-transform] Fix importing class names in docblocks - @elythyr
