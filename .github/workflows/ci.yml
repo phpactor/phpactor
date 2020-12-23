@@ -70,7 +70,6 @@ jobs:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
-
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -102,6 +101,8 @@ jobs:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
+                with:
+                    fetch-depth: 0
 
             -
                 name: "Install PHP"
@@ -142,7 +143,6 @@ jobs:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
-
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
