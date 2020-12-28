@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "480fd35a24554c1cf5e55ecc3647392f",
+    "content-hash": "d78e4547a09a2792edf11afdc2fee3de",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2551,7 +2551,7 @@
             "description": "Applies introspective transformations on source code",
             "support": {
                 "issues": "https://github.com/phpactor/code-transform/issues",
-                "source": "https://github.com/phpactor/code-transform/tree/maestro-phpbench"
+                "source": "https://github.com/phpactor/code-transform/tree/master"
             },
             "time": "2020-12-24T18:37:53+00:00"
         },
@@ -2622,12 +2622,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "5cc4fc017092f0acce94eeb859161c207545316a"
+                "reference": "4577017e01956659d48ef9f2b377d70aaca5a191"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/5cc4fc017092f0acce94eeb859161c207545316a",
-                "reference": "5cc4fc017092f0acce94eeb859161c207545316a",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/4577017e01956659d48ef9f2b377d70aaca5a191",
+                "reference": "4577017e01956659d48ef9f2b377d70aaca5a191",
                 "shasum": ""
             },
             "require": {
@@ -2678,7 +2678,7 @@
             "support": {
                 "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2020-12-28T09:50:19+00:00"
+            "time": "2020-12-28T16:31:42+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -2855,34 +2855,38 @@
         },
         {
             "name": "phpactor/composer-autoloader-extension",
-            "version": "0.2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/composer-autoloader-extension.git",
-                "reference": "4897d9d1afb3153a633eeeb6e42c8d9af61b6b48"
+                "reference": "d707a85784e908ca270a9cf300d86e8a7f112daf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/4897d9d1afb3153a633eeeb6e42c8d9af61b6b48",
-                "reference": "4897d9d1afb3153a633eeeb6e42c8d9af61b6b48",
+                "url": "https://api.github.com/repos/phpactor/composer-autoloader-extension/zipball/d707a85784e908ca270a9cf300d86e8a7f112daf",
+                "reference": "d707a85784e908ca270a9cf300d86e8a7f112daf",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/container": "^1.3.3",
                 "phpactor/file-path-resolver-extension": "~0.1",
                 "phpactor/logging-extension": "~0.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpstan/phpstan": "~0.11.0",
-                "phpunit/phpunit": "~7.0"
+                "ergebnis/composer-normalize": "^2.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpstan/phpstan": "~0.12.0",
+                "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension",
                 "branch-alias": {
                     "dev-master": "0.2.x-dev"
-                }
+                },
+                "phpactor.extension_class": "Phpactor\\Extension\\ComposerAutoloader\\ComposerAutoloaderExtension"
             },
             "autoload": {
                 "psr-4": {
@@ -2902,9 +2906,9 @@
             "description": "Composer Autoloader provider",
             "support": {
                 "issues": "https://github.com/phpactor/composer-autoloader-extension/issues",
-                "source": "https://github.com/phpactor/composer-autoloader-extension/tree/master"
+                "source": "https://github.com/phpactor/composer-autoloader-extension/tree/maestro-phpbench"
             },
-            "time": "2020-06-01T09:11:31+00:00"
+            "time": "2020-12-24T19:10:04+00:00"
         },
         {
             "name": "phpactor/config-loader",
@@ -2912,12 +2916,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/config-loader.git",
-                "reference": "ddb7d92007e0091ea5a875ce8d87621e79bb3eec"
+                "reference": "05081daa1462fc578da1a1b4d7ea811891fe09fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/config-loader/zipball/ddb7d92007e0091ea5a875ce8d87621e79bb3eec",
-                "reference": "ddb7d92007e0091ea5a875ce8d87621e79bb3eec",
+                "url": "https://api.github.com/repos/phpactor/config-loader/zipball/05081daa1462fc578da1a1b4d7ea811891fe09fe",
+                "reference": "05081daa1462fc578da1a1b4d7ea811891fe09fe",
                 "shasum": ""
             },
             "require": {
@@ -2929,7 +2933,7 @@
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^2.17",
                 "phpactor/test-utils": "^1.0",
-                "phpbench/phpbench": "^0.14.0",
+                "phpbench/phpbench": "^1.0.0-alpha3",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0",
@@ -2962,7 +2966,7 @@
                 "issues": "https://github.com/phpactor/config-loader/issues",
                 "source": "https://github.com/phpactor/config-loader/tree/master"
             },
-            "time": "2020-12-28T14:39:35+00:00"
+            "time": "2020-12-28T16:19:38+00:00"
         },
         {
             "name": "phpactor/console-extension",
@@ -3195,12 +3199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver.git",
-                "reference": "83f4157c68cdd1a2b765c147639116f9fac4260c"
+                "reference": "26be4c00952248749f110887a90a7294fd368bc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/file-path-resolver/zipball/83f4157c68cdd1a2b765c147639116f9fac4260c",
-                "reference": "83f4157c68cdd1a2b765c147639116f9fac4260c",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver/zipball/26be4c00952248749f110887a90a7294fd368bc6",
+                "reference": "26be4c00952248749f110887a90a7294fd368bc6",
                 "shasum": ""
             },
             "require": {
@@ -3211,7 +3215,7 @@
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^2.17",
-                "phpbench/phpbench": "^0.14.0",
+                "phpbench/phpbench": "^1.0.0-alpha3",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0",
@@ -3244,7 +3248,7 @@
                 "issues": "https://github.com/phpactor/file-path-resolver/issues",
                 "source": "https://github.com/phpactor/file-path-resolver/tree/master"
             },
-            "time": "2020-12-28T12:26:20+00:00"
+            "time": "2020-12-28T16:19:38+00:00"
         },
         {
             "name": "phpactor/file-path-resolver-extension",
@@ -3252,20 +3256,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/file-path-resolver-extension.git",
-                "reference": "6ee54643b5a23892d1e71796510da13f1aeb3506"
+                "reference": "2bcd54346e4b57c266f94e0062997a36dade6a64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/6ee54643b5a23892d1e71796510da13f1aeb3506",
-                "reference": "6ee54643b5a23892d1e71796510da13f1aeb3506",
+                "url": "https://api.github.com/repos/phpactor/file-path-resolver-extension/zipball/2bcd54346e4b57c266f94e0062997a36dade6a64",
+                "reference": "2bcd54346e4b57c266f94e0062997a36dade6a64",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3",
-                "phpactor/container": "^1.0",
-                "phpactor/file-path-resolver": "~0.7",
-                "phpactor/logging-extension": "~0.3",
-                "phpactor/text-document": "^1.2"
+                "phpactor/container": "^1.3.4",
+                "phpactor/file-path-resolver": "^0.8.3",
+                "phpactor/logging-extension": "^0.3.4",
+                "phpactor/text-document": "^1.2.3"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -3302,7 +3306,7 @@
                 "issues": "https://github.com/phpactor/file-path-resolver-extension/issues",
                 "source": "https://github.com/phpactor/file-path-resolver-extension/tree/master"
             },
-            "time": "2020-12-24T19:10:04+00:00"
+            "time": "2020-12-28T16:20:09+00:00"
         },
         {
             "name": "phpactor/indexer-extension",
@@ -3310,12 +3314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "f89cec87d30e87c316b214515518f6d178063d29"
+                "reference": "3b9b96bfed1d2d074794dabac1ccaa1ffdff11b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/f89cec87d30e87c316b214515518f6d178063d29",
-                "reference": "f89cec87d30e87c316b214515518f6d178063d29",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/3b9b96bfed1d2d074794dabac1ccaa1ffdff11b2",
+                "reference": "3b9b96bfed1d2d074794dabac1ccaa1ffdff11b2",
                 "shasum": ""
             },
             "require": {
@@ -3373,7 +3377,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2020-12-28T10:50:08+00:00"
+            "time": "2020-12-28T16:20:10+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -3509,12 +3513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "396d45d135de86f6222ac9d801058e4a5f3fb1e4"
+                "reference": "e61f389b0caf22147d9e072fc90e380f56f7aa3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/396d45d135de86f6222ac9d801058e4a5f3fb1e4",
-                "reference": "396d45d135de86f6222ac9d801058e4a5f3fb1e4",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/e61f389b0caf22147d9e072fc90e380f56f7aa3e",
+                "reference": "e61f389b0caf22147d9e072fc90e380f56f7aa3e",
                 "shasum": ""
             },
             "require": {
@@ -3543,7 +3547,7 @@
                 "friendsofphp/php-cs-fixer": "^2.17",
                 "jangregor/phpstan-prophecy": "^0.8.0",
                 "phpactor/test-utils": "^1.1",
-                "phpbench/phpbench": "^0.17.1",
+                "phpbench/phpbench": "^1.0.0-alpha3",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0",
@@ -3582,7 +3586,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2020-12-28T10:11:35+00:00"
+            "time": "2020-12-28T16:20:10+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -4411,12 +4415,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "fdedb625abb5eb71227b8b5fab1c01a45d6e6dcf"
+                "reference": "afffc0cabe4dea73bd74475203f0a47e5918b13b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/fdedb625abb5eb71227b8b5fab1c01a45d6e6dcf",
-                "reference": "fdedb625abb5eb71227b8b5fab1c01a45d6e6dcf",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/afffc0cabe4dea73bd74475203f0a47e5918b13b",
+                "reference": "afffc0cabe4dea73bd74475203f0a47e5918b13b",
                 "shasum": ""
             },
             "require": {
@@ -4465,7 +4469,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2020-12-24T18:37:55+00:00"
+            "time": "2020-12-28T16:19:40+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
