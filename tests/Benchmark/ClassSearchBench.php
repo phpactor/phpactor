@@ -2,6 +2,10 @@
 
 namespace Phpactor\Tests\Benchmark;
 
+use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
+use PhpBench\Benchmark\Metadata\Annotations\Iterations;
+
+
 /**
  * @BeforeMethods({"setUp"})
  * @Iterations(10)

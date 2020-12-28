@@ -10,10 +10,6 @@ class BaseBenchCase extends IntegrationTestCase
 {
     protected function runCommand(string $command, string $stdin = null): string
     {
-        $workspace = Workspace::create(__DIR__ . '/../Asserts/Workspace');
-        $workspace->reset();
-        chdir($this->workspaceDir());
-
         $process = new Process(__DIR__ . '/../../bin/phpactor ' . $command);
         $process->setInput($stdin);
         $process->setWorkingDirectory($this->workspaceDir());

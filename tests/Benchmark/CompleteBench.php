@@ -3,6 +3,8 @@
 namespace Phpactor\Tests\Benchmark;
 
 use PHPUnit\Framework\Assert;
+use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
+use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 
 /**
  * @BeforeMethods({"setUp"})
@@ -16,7 +18,7 @@ class CompleteBench extends BaseBenchCase
         $this->loadProject('PhpUnit');
     }
 
-    public function benchComplete()
+    public function benchComplete(): void
     {
         $output = $this->runCommand('complete tests/FoobarTest.php 145'); //145?
         Assert::assertStringContainsString('info:pub', $output);

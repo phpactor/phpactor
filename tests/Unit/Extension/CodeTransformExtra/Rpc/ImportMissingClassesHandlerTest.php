@@ -15,9 +15,12 @@ use Phpactor\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ImportMissingClassesHandlerTest extends IntegrationTestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_PATH = '/example/path';
     const EXAMPLE_SOURCE = 'example-source';
 

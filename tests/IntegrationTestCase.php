@@ -13,8 +13,6 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
-    use ProphecyTrait;
-
     protected function workspaceDir()
     {
         return __DIR__ . '/Assets/Workspace';

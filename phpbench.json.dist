@@ -1,4 +1,5 @@
 {
+    "annotation_import_use": true,
     "path": "tests/Benchmark",
     "bootstrap": "vendor/autoload.php",
     "extensions": [
