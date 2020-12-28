@@ -5,9 +5,12 @@ namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\Dumper;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DumperRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @testdox It throws exception if dumper not found.
      */

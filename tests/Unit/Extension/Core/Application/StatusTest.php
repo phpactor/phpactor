@@ -8,9 +8,12 @@ use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class StatusTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FilesystemRegistry
      */

@@ -5,9 +5,12 @@ namespace Phpactor\Tests\Unit\Extension\Core\Console\Prompt;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainPromptTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var Prompt
      */

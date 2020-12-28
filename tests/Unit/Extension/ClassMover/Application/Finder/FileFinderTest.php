@@ -11,10 +11,12 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 
 class FileFinderTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var ObjectProphecy
      */

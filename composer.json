@@ -8,7 +8,7 @@
         "composer/xdebug-handler": "^1.1",
         "dantleech/invoke": "^1.0.1",
         "monolog/monolog": "^1.0",
-        "phpactor/class-mover": "^0.1.2",
+        "phpactor/class-mover": "^0.1.3",
         "phpactor/class-to-file": "^0.3.3",
         "phpactor/class-to-file-extension": "^0.2.2",
         "phpactor/code-transform": "^0.4",
@@ -45,7 +45,8 @@
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/yaml": "^4.3 || ^5.1",
         "thecodingmachine/safe": "~1.1.0",
-        "webmozart/glob": "^4.1"
+        "webmozart/glob": "^4.1",
+        "dms/phpunit-arraysubset-asserts": "^0.2.1"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
@@ -58,7 +59,8 @@
         "symfony/debug": "^4.0",
         "symfony/process": "^2.7 || ^3.0 || ^4.0",
         "symfony/var-dumper": "^5.0",
-        "sebastian/diff": "^4.0"
+        "sebastian/diff": "^4.0",
+        "phpspec/prophecy-phpunit": "^2.0"
     },
     "config": {
         "platform": {

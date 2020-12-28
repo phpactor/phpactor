@@ -5,9 +5,12 @@ namespace Phpactor\Tests\Unit\Extension\Navigation\Navigator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class PathFinderNavigatorTest extends TestCase
 {
+    use ProphecyTrait;
+
     const TEST_PATH = '/test/path';
 
     /**
