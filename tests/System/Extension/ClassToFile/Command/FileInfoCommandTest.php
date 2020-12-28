@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class FileInfoCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -19,7 +19,7 @@ class FileInfoCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('file:info lib/Badger.php');
         $this->assertSuccess($process);
-        $this->assertContains('class:Animals\Badger', $process->getOutput());
+        $this->assertStringContainsString('class:Animals\Badger', $process->getOutput());
     }
 
     /**
@@ -29,6 +29,6 @@ class FileInfoCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('file:info lib/Badger.php --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"class":"Animals', $process->getOutput());
+        $this->assertStringContainsString('{"class":"Animals', $process->getOutput());
     }
 }

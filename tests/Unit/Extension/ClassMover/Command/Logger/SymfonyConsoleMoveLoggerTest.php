@@ -22,7 +22,7 @@ class SymfonyConsoleMoveLoggerTest extends TestCase
     private $output;
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->output = new BufferedOutput();
         $this->logger = new SymfonyConsoleMoveLogger($this->output);
@@ -74,6 +74,6 @@ EOT
         $target = FullyQualifiedName::fromString('Hello\World');
         $this->logger->replacing(FilePath::fromString('/path/to/file/Something.php'), $references, $target);
         $output = $this->output->fetch();
-        $this->assertContains('Hello => World', $output);
+        $this->assertStringContainsString('Hello => World', $output);
     }
 }

@@ -5,9 +5,12 @@ namespace Phpactor\Tests\Unit\Extension\Navigation\Navigator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Navigator\Navigator;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainNavigatorTest extends TestCase
 {
+    use ProphecyTrait;
+
     const TEST_PATH = '/path/to/test.php';
     const TEST_DESTINATION_1 = '/destination1.php';
     const TEST_DESTINATION_2 = '/destination2.php';
@@ -23,7 +26,7 @@ class ChainNavigatorTest extends TestCase
      */
     private $navigator2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->navigator1 = $this->prophesize(Navigator::class);
         $this->navigator2 = $this->prophesize(Navigator::class);

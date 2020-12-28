@@ -24,7 +24,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
      */
     private $renameVariable;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->renameVariable = $this->prophesize(RenameVariable::class);
     }

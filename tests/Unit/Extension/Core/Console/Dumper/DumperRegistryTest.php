@@ -5,17 +5,19 @@ namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\Dumper;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DumperRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @testdox It throws exception if dumper not found.
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown dumper "foobar", known dumpers: "dumper1"
      */
     public function testNotFound()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown dumper "foobar", known dumpers: "dumper1"');
         $registry = $this->create([
             'dumper1' => $this->prophesize(Dumper::class)->reveal(),
         ]);

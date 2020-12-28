@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -12,6 +13,8 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
+    use ProphecyTrait;
+
     protected function workspaceDir()
     {
         return __DIR__ . '/Assets/Workspace';
@@ -60,7 +63,7 @@ abstract class IntegrationTestCase extends TestCase
         }
 
         if (null !== $message) {
-            $this->assertContains($message, $process->getErrorOutput());
+            $this->assertStringContainsString($message, $process->getErrorOutput());
         }
 
         $this->addToAssertionCount(1);

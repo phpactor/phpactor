@@ -31,6 +31,6 @@ EOT
         ]);
 
         $this->assertInstanceOf(InformationResponse::class, $action);
-        $this->assertContains('symbol', $action->information());
+        $this->assertStringContainsString('symbol', $action->information());
     }
 }

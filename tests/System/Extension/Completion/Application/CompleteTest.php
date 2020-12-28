@@ -2,12 +2,15 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Application;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Phpactor\Extension\CompletionExtra\Application\Complete;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteTest extends SystemTestCase
 {
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider provideComplete
      */

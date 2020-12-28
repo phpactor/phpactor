@@ -38,7 +38,7 @@ class ImportClassHandlerTest extends HandlerTestCase
      */
     private $classSearch;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->importName = $this->prophesize(ImportName::class);
         $this->classSearch = $this->prophesize(ClassSearch::class);

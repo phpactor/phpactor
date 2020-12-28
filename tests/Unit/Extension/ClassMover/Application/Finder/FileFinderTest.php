@@ -11,10 +11,12 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 
 class FileFinderTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var ObjectProphecy
      */
@@ -25,7 +27,7 @@ class FileFinderTest extends TestCase
      */
     private $fileList;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filesystem = $this->prophesize(Filesystem::class);
         $this->fileList = $this->prophesize(FileList::class);
