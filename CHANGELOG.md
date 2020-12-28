@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [completion] Support for PHP named parameters - @dantleech
   - [completion] Basic Doctrine annotation completion support - @elythyr
   - [completion] References are sorted alphabetically - @elythyr
   - [completion] Show warning character if method or class is deprecated
@@ -18,6 +19,8 @@ Features:
 
 Improvements:
 
+  - [worse-reflection] Fixed mixed up start/end positions in symbol resolver - @BladeMF
+  - [language-server] Update classes on workspace update - @BladeMF
   - [language-server] New LSP protocol and general refactoring - @dantleech
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
@@ -28,6 +31,8 @@ Improvements:
 
 Bug fixes:
 
+  - [lanaguge-server] Correctly highlight use statements against qualified
+    names - @dantleech
   - [language-server] Fix occasional class-not-found error on code transform (due to incorrectly formatted path)
   - [worse-reflection] Do not consider "iterable" as an FQN - @elythyr
   - [code-transform] Fix trailing line on class import - @elythyr
