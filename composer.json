@@ -28,7 +28,7 @@
         "phpactor/indexer-extension": "^0.3",
         "phpactor/language-server-phpactor-extensions": "^0.5",
         "phpactor/logging-extension": "^0.3.2",
-        "phpactor/path-finder": "^1.1",
+        "phpactor/path-finder": "^0.1",
         "phpactor/php-extension": "^0.1",
         "phpactor/reference-finder": "^0.1.3",
         "phpactor/reference-finder-extension": "^0.1.4",
