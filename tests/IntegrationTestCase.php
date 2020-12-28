@@ -60,7 +60,7 @@ abstract class IntegrationTestCase extends TestCase
         }
 
         if (null !== $message) {
-            $this->assertContains($message, $process->getErrorOutput());
+            $this->assertStringContainsString($message, $process->getErrorOutput());
         }
 
         $this->addToAssertionCount(1);

@@ -57,7 +57,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
      */
     private $offsetFinder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
         $this->offsetFinder = $this->prophesize(InterestingOffsetFinder::class);
@@ -109,7 +109,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
-        $this->assertContains('No context actions', $action->message());
+        $this->assertStringContainsString('No context actions', $action->message());
     }
 
     public function testReturnMenu()

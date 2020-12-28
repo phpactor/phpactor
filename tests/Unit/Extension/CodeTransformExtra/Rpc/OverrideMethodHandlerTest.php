@@ -23,7 +23,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
      */
     private $overrideMethod;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->addSource('<?php class ParentClass { public function foobar() {}  public function barfoor() {} }')->build();
         $this->overrideMethod = $this->prophesize(OverrideMethod::class);

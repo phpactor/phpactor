@@ -10,12 +10,11 @@ class DumperRegistryTest extends TestCase
 {
     /**
      * @testdox It throws exception if dumper not found.
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown dumper "foobar", known dumpers: "dumper1"
      */
     public function testNotFound()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown dumper "foobar", known dumpers: "dumper1"');
         $registry = $this->create([
             'dumper1' => $this->prophesize(Dumper::class)->reveal(),
         ]);

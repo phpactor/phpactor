@@ -41,10 +41,9 @@
         "phpactor/worse-reference-finders": "^0.2.4",
         "phpactor/worse-reflection": "^0.4.4",
         "phpactor/worse-reflection-extension": "^0.2.3",
-        "sebastian/diff": "^3.0",
-        "symfony/console": "^4.0",
-        "symfony/filesystem": "^3.3 || ^4.2 || ^5.0",
-        "symfony/yaml": "^3.3",
+        "symfony/console": "^4.3 || ^5.1",
+        "symfony/filesystem": "^4.2 || ^5.0",
+        "symfony/yaml": "^4.3 || ^5.1",
         "thecodingmachine/safe": "~1.1.0",
         "webmozart/glob": "^4.1"
     },
@@ -55,10 +54,11 @@
         "phpactor/test-utils": "^1.1.2",
         "phpbench/phpbench": "^0.17",
         "phpstan/phpstan": "~0.12.0",
-        "phpunit/phpunit": "^7.0",
+        "phpunit/phpunit": "^9.0",
         "symfony/debug": "^4.0",
         "symfony/process": "^2.7 || ^3.0 || ^4.0",
-        "symfony/var-dumper": "^5.0"
+        "symfony/var-dumper": "^5.0",
+        "sebastian/diff": "^4.0"
     },
     "config": {
         "platform": {

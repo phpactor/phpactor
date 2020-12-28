@@ -18,7 +18,7 @@ class ChainPromptTest extends TestCase
      */
     private $prompt2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->prompt1 = $this->prophesize(Prompt::class);
         $this->prompt1->name()->willReturn('prompt1');
@@ -46,11 +46,11 @@ class ChainPromptTest extends TestCase
 
     /**
      * @testdox It throws an exception if no prompts are supported.
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Could not prompt
      */
     public function testPromptsNotSupported()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Could not prompt');
         $this->prompt1->isSupported()->willReturn(false);
         $this->prompt2->isSupported()->willReturn(false);
 

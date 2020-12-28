@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassNewCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -33,7 +33,7 @@ EOF
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
 
-        $this->assertContains($expected, trim($process->getOutput()));
+        $this->assertStringContainsString($expected, trim($process->getOutput()));
         $this->assertFileExists($this->workspaceDir() . $expectedFile);
     }
 

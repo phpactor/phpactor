@@ -20,7 +20,7 @@ class PathFinderNavigatorTest extends TestCase
      */
     private $navigator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->pathFinder = $this->prophesize(PathFinder::class);
         $this->navigator = new PathFinderNavigator($this->pathFinder->reveal());

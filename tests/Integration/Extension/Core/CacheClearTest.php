@@ -12,7 +12,7 @@ class CacheClearTest extends IntegrationTestCase
      */
     private $cacheClear;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest(

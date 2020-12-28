@@ -25,7 +25,7 @@ class FileFinderTest extends TestCase
      */
     private $fileList;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->filesystem = $this->prophesize(Filesystem::class);
         $this->fileList = $this->prophesize(FileList::class);

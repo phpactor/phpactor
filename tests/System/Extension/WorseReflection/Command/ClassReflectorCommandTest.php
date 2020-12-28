@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassReflectorCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -20,8 +20,8 @@ class ClassReflectorCommandTest extends SystemTestCase
         $process = $this->phpactor('class:reflect lib/Badger.php');
         $this->assertSuccess($process);
         $output = $process->getOutput();
-        $this->assertContains('Animals\Badger', $output);
-        $this->assertContains('methods', $output);
+        $this->assertStringContainsString('Animals\Badger', $output);
+        $this->assertStringContainsString('methods', $output);
     }
 
     /**
@@ -32,7 +32,7 @@ class ClassReflectorCommandTest extends SystemTestCase
         $process = $this->phpactor('class:reflect "Animals\\Badger"');
         $this->assertSuccess($process);
         $output = $process->getOutput();
-        $this->assertContains('Animals\Badger', $output);
-        $this->assertContains('methods', $output);
+        $this->assertStringContainsString('Animals\Badger', $output);
+        $this->assertStringContainsString('methods', $output);
     }
 }

@@ -27,7 +27,7 @@ class StatusTest extends TestCase
     private $paths;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->prophesize(FilesystemRegistry::class);
         $this->resolver = $this->prophesize(PhpVersionResolver::class);

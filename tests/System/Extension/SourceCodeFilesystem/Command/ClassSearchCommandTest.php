@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassSearchCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -19,7 +19,7 @@ class ClassSearchCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:search "Badger"');
         $this->assertSuccess($process);
-        $this->assertContains('Badger.php', $process->getOutput());
+        $this->assertStringContainsString('Badger.php', $process->getOutput());
     }
 
     /**
@@ -29,14 +29,14 @@ class ClassSearchCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:search "Badger" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('Badger.php"', $process->getOutput());
+        $this->assertStringContainsString('Badger.php"', $process->getOutput());
     }
 
     public function testSearchByQualifiedName()
     {
         $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('Carnivorous.php"', $process->getOutput());
+        $this->assertStringContainsString('Carnivorous.php"', $process->getOutput());
     }
 
     /**
@@ -46,6 +46,6 @@ class ClassSearchCommandTest extends SystemTestCase
     {
         $process = $this->phpactor('class:search "DateTime" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('DateTime', $process->getOutput());
+        $this->assertStringContainsString('DateTime', $process->getOutput());
     }
 }
