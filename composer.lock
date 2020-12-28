@@ -2622,12 +2622,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "4577017e01956659d48ef9f2b377d70aaca5a191"
+                "reference": "8edc85ee9cccf52faa8835eff5dc52631b03e51f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/4577017e01956659d48ef9f2b377d70aaca5a191",
-                "reference": "4577017e01956659d48ef9f2b377d70aaca5a191",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/8edc85ee9cccf52faa8835eff5dc52631b03e51f",
+                "reference": "8edc85ee9cccf52faa8835eff5dc52631b03e51f",
                 "shasum": ""
             },
             "require": {
@@ -2678,7 +2678,7 @@
             "support": {
                 "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2020-12-28T16:31:42+00:00"
+            "time": "2020-12-28T18:58:23+00:00"
         },
         {
             "name": "phpactor/completion-extension",
