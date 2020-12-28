@@ -50,7 +50,7 @@
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
-        "friendsofphp/php-cs-fixer": "^3.0@dev",
+        "friendsofphp/php-cs-fixer": "^2.17",
         "phpactor/debug-extension": "^0.1.0@dev",
         "phpactor/test-utils": "^1.1.2",
         "phpbench/phpbench": "^0.17",
