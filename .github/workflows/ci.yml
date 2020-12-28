@@ -101,8 +101,6 @@ jobs:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
-                with:
-                    fetch-depth: 0
 
             -
                 name: "Install PHP"
@@ -170,3 +168,34 @@ jobs:
                 name: "Make Docs"
                 run: "make docs"
 
+    phpbench:
+        name: "PHPBench (smoke test)"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: "Run PHPBench"
+                run: "vendor/bin/phpbench run --progress=travis --iterations=1 --revs=1"
