@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Benchmark;
 
+use Phpactor\TestUtils\Workspace;
 use Phpactor\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 
@@ -9,6 +10,8 @@ class BaseBenchCase extends IntegrationTestCase
 {
     protected function runCommand(string $command, string $stdin = null): string
     {
+        $workspace = Workspace::create(__DIR__ . '/../Asserts/Workspace');
+        $workspace->reset();
         chdir($this->workspaceDir());
 
         $process = new Process(__DIR__ . '/../../bin/phpactor ' . $command);
