@@ -219,6 +219,24 @@ List of completors to disable (e.g. ``scf_class`` and ``declared_function``)
 **Default**: ``[]``
 
 
+.. _param_completion_worse.name_completion_priority:
+
+
+``completion_worse.name_completion_priority``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Strategy to use when ordering completion results for classes and functions:
+
+- `proximity`: Classes and functions will be ordered by their proximity to the text document being edited.
+- `none`: No ordering will be applied.
+
+
+**Default**: ``"proximity"``
+
+
 .. _CompletionExtension:
 
 
@@ -368,6 +386,9 @@ WorseReflectionExtension
 
 
 
+If reflection caching should be enabled
+
+
 **Default**: ``true``
 
 
@@ -378,6 +399,9 @@ WorseReflectionExtension
 """""""""""""""""""""""""""""""""""
 
 
+
+
+If caching is enabled, limit the amount of time a cache entry can stay alive
 
 
 **Default**: ``5``
@@ -392,6 +416,11 @@ WorseReflectionExtension
 
 
 
+If source code is passed to a ``Reflector`` then temporarily make it available as a
+source location. Note this should NOT be enabled if the source code can be
+located in another (e.g. when running a Language Server)
+
+
 **Default**: ``true``
 
 
@@ -404,6 +433,9 @@ WorseReflectionExtension
 
 
 
+Cache directory for stubs
+
+
 **Default**: ``"%cache%\/worse-reflection"``
 
 
@@ -414,6 +446,9 @@ WorseReflectionExtension
 """""""""""""""""""""""""""""
 
 
+
+
+Location of the core PHP stubs - these will be scanned and cached on the first request
 
 
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
@@ -889,6 +924,51 @@ Amount of time to wait before analyzing the code again for diagnostics
 **Default**: ``1000``
 
 
+.. _param_language_server.diagnostics_on_update:
+
+
+``language_server.diagnostics_on_update``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Perform diagnostics when the text document is updated
+
+
+**Default**: ``false``
+
+
+.. _param_language_server.diagnostics_on_save:
+
+
+``language_server.diagnostics_on_save``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Perform diagnostics when the text document is saved
+
+
+**Default**: ``true``
+
+
+.. _param_language_server.diagnostic_providers:
+
+
+``language_server.diagnostic_providers``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Specify which diagnostic providers should be active (default to all)
+
+
+**Default**: ``null``
+
+
 .. _LanguageServerCompletionExtension:
 
 
@@ -933,6 +1013,28 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``10``
 
 
+.. _LanguageServerWorseReflectionExtension:
+
+
+LanguageServerWorseReflectionExtension
+--------------------------------------
+
+
+.. _param_language_server_worse_reflection.workspace_index.update_interval:
+
+
+``language_server_worse_reflection.workspace_index.update_interval``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Minimum interval to update the workspace index as documents are updated (in milliseconds)
+
+
+**Default**: ``100``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 
@@ -974,7 +1076,7 @@ IndexerExtension
 List of allowed watchers. The first watcher that supports the current system will be used
 
 
-**Default**: ``["watchman","inotify","find","php"]``
+**Default**: ``["inotify","watchman","find","php"]``
 
 
 .. _param_indexer.index_path:
