@@ -9,6 +9,8 @@ Features:
   - [completion] Basic Doctrine annotation completion support - @elythyr
   - [completion] References are sorted alphabetically - @elythyr
   - [completion] Show warning character if method or class is deprecated
+  - [completion] Sort class names and fucntions according to proximity to current file by default - @dantleech
+
   - [composer] Class map only mode by default (do not register autoloader at all, do not include files)
   - [file-watcher] Experimental support for [watchman](https://facebook.github.io/watchman/)
   - [indexer] CLI command for index search (mainly for debugging)
@@ -31,6 +33,7 @@ Improvements:
 
 Bug fixes:
 
+  - [worse-reflection] Static properties not resolved - @BladeMF
   - [lanaguge-server] Correctly highlight use statements against qualified
     names - @dantleech
   - [language-server] Fix occasional class-not-found error on code transform (due to incorrectly formatted path)
