@@ -3086,12 +3086,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock.git",
-                "reference": "d4682f76e8a7caf6dc07085abe1e30b3c58856a8"
+                "reference": "1a629a2f8c8ab31ee1182a41957ad12425e69bdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/d4682f76e8a7caf6dc07085abe1e30b3c58856a8",
-                "reference": "d4682f76e8a7caf6dc07085abe1e30b3c58856a8",
+                "url": "https://api.github.com/repos/phpactor/docblock/zipball/1a629a2f8c8ab31ee1182a41957ad12425e69bdf",
+                "reference": "1a629a2f8c8ab31ee1182a41957ad12425e69bdf",
                 "shasum": ""
             },
             "require": {
@@ -3131,7 +3131,7 @@
                 "issues": "https://github.com/phpactor/docblock/issues",
                 "source": "https://github.com/phpactor/docblock/tree/master"
             },
-            "time": "2021-01-06T22:58:19+00:00"
+            "time": "2021-01-10T22:07:47+00:00"
         },
         {
             "name": "phpactor/extension-manager-extension",
