@@ -20,5 +20,7 @@ List of currently available code actions:
 +---------------------------------------------+---------------------------------------+
 | :ref:`refactoring_fix_namespace_and_class`  | ``quickfix.fix_namespace_class_name`` |
 +---------------------------------------------+---------------------------------------+
+| :ref:`generation_class_new`                 | ``quickfix.create_class``             |
++---------------------------------------------+---------------------------------------+
 
 .. _Language Server Specification (Code Action Request): https://microsoft.github.io/language-server-protocol/specification#textDocument_codeAction
