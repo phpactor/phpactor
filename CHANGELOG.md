@@ -18,9 +18,12 @@ Features:
   - [indexer] Show memory usage and limit in progress notification.
   - [language-server] Import class/function code action and diagnostics
   - [language-server] Transform code actions and diagnostics (complete constructor, implement contracts, fix class name and add missing properties)
+  - [completion] Keyword completion - @BladeMF
+  - [language-server] Create class code actions - @dantleech
 
 Improvements:
 
+  - [worse-reflection] Improved frame resolution performance by 99.5x - @dantleech
   - [worse-reflection] Fixed mixed up start/end positions in symbol resolver - @BladeMF
   - [language-server] Update classes on workspace update - @BladeMF
   - [language-server] New LSP protocol and general refactoring - @dantleech
@@ -33,6 +36,9 @@ Improvements:
 
 Bug fixes:
 
+  - [scf] Fix support for moving and removing folders - @Lumnn
+  - [indexer] Fix indexing of static properties - @BladeMF
+  - [completion] Fix signature help in nested symbols - @BladeMF
   - [worse-reflection] Static properties not resolved - @BladeMF
   - [lanaguge-server] Correctly highlight use statements against qualified
     names - @dantleech
