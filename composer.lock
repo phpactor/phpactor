@@ -3315,12 +3315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "0e171f53b2909148cbf47a3aece2ec79f0659fa9"
+                "reference": "4509572233959bc7b9d258e96f85d3b0dd3698d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/0e171f53b2909148cbf47a3aece2ec79f0659fa9",
-                "reference": "0e171f53b2909148cbf47a3aece2ec79f0659fa9",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/4509572233959bc7b9d258e96f85d3b0dd3698d4",
+                "reference": "4509572233959bc7b9d258e96f85d3b0dd3698d4",
                 "shasum": ""
             },
             "require": {
@@ -3378,7 +3378,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2021-01-10T09:49:29+00:00"
+            "time": "2021-01-11T08:34:51+00:00"
         },
         {
             "name": "phpactor/language-server",
