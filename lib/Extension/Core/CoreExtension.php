@@ -37,7 +37,7 @@ class CoreExtension implements Extension
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';
 
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_DUMPER => 'indented',
@@ -51,7 +51,7 @@ class CoreExtension implements Extension
         ]);
     }
 
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerConsole($container);
         $this->registerApplicationServices($container);

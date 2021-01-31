@@ -51,7 +51,7 @@
     "require-dev": {
         "dantleech/what-changed": "~0.4",
         "friendsofphp/php-cs-fixer": "^2.17",
-        "phpactor/debug-extension": "^0.1.0@dev",
+        "phpactor/debug-extension": "^0.1.1",
         "phpactor/test-utils": "^1.1.2",
         "phpbench/phpbench": "^1.0.0-alpha3",
         "phpstan/phpstan": "~0.12.0",

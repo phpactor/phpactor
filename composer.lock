@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78e4547a09a2792edf11afdc2fee3de",
+    "content-hash": "6b9dca3e5fa5ba30cf1f835d603092d7",
     "packages": [
         {
             "name": "amphp/amp",
@@ -8510,35 +8510,38 @@
         },
         {
             "name": "phpactor/debug-extension",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/debug-extension.git",
-                "reference": "b2c49bf47fce90112e8c8e0809854a0d824d95fa"
+                "reference": "127bd38651c4dbdbd588158e4bfbd4acba854a06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/debug-extension/zipball/b2c49bf47fce90112e8c8e0809854a0d824d95fa",
-                "reference": "b2c49bf47fce90112e8c8e0809854a0d824d95fa",
+                "url": "https://api.github.com/repos/phpactor/debug-extension/zipball/127bd38651c4dbdbd588158e4bfbd4acba854a06",
+                "reference": "127bd38651c4dbdbd588158e4bfbd4acba854a06",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.3",
                 "phpactor/console-extension": "^0.1.5",
                 "phpactor/container": "^1.3.3",
                 "symfony/debug": "^4.4",
                 "symfony/var-dumper": "^5.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "phpstan/phpstan": "^0.12.25",
+                "ergebnis/composer-normalize": "^2.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.1"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
-                "phpactor.extension_class": "Phpactor\\Extension\\Debug\\DebugExtension",
                 "branch-alias": {
                     "dev-master": "0.1.x-dev"
-                }
+                },
+                "phpactor.extension_class": "Phpactor\\Extension\\Debug\\DebugExtension"
             },
             "autoload": {
                 "psr-4": {
@@ -8563,7 +8566,7 @@
                 "issues": "https://github.com/phpactor/debug-extension/issues",
                 "source": "https://github.com/phpactor/debug-extension/tree/master"
             },
-            "time": "2020-05-23T12:29:16+00:00"
+            "time": "2021-01-24T17:54:24+00:00"
         },
         {
             "name": "phpactor/test-utils",
@@ -9510,9 +9513,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phpactor/debug-extension": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

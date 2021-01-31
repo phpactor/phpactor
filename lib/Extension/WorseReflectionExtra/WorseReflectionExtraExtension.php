@@ -20,11 +20,11 @@ class WorseReflectionExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
