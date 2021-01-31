@@ -23,6 +23,8 @@ Features:
 
 Improvements:
 
+  - [worse-reflection] Support for list foreach
+  - [worse-reflection] Various issues around NULL and exception handling
   - [worse-reflection] Improved frame resolution performance by 99.5x - @dantleech
   - [worse-reflection] Fixed mixed up start/end positions in symbol resolver - @BladeMF
   - [language-server] Update classes on workspace update - @BladeMF
@@ -36,6 +38,9 @@ Improvements:
 
 Bug fixes:
 
+  - [text-document] valid php class names not detected for word-at-offset
+  - [code-tranform] Return types not considered for unresolved names - @dantleech
+  - [completion] Avoid reflection on NULL
   - [scf] Fix support for moving and removing folders - @Lumnn
   - [indexer] Fix indexing of static properties - @BladeMF
   - [completion] Fix signature help in nested symbols - @BladeMF

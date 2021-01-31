@@ -23,7 +23,7 @@ class NavigationExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerPathFinder($container);
         $this->registerNavigators($container);
@@ -33,7 +33,7 @@ class NavigationExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PATH_FINDER_DESTINATIONS => [],

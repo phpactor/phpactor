@@ -17,7 +17,7 @@ class ClassToFileExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $container->register('command.file_info', function (Container $container) {
             return new FileInfoCommand(
@@ -41,7 +41,7 @@ class ClassToFileExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 }
