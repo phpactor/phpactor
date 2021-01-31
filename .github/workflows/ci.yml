@@ -65,6 +65,7 @@ jobs:
                 php-version:
                     - '7.3'
                     - '7.4'
+                    - '8.0'
 
         steps:
             -
@@ -170,7 +171,7 @@ jobs:
                 run: "make docs"
 
     phpbench:
-        name: "PHPBench (smoke test)"
+        name: "PHPBench Regression Test"
 
         runs-on: "ubuntu-latest"
 
@@ -198,5 +199,5 @@ jobs:
                 with:
                     composer-options: "--no-scripts"
             -
-                name: "Run PHPBench"
-                run: "vendor/bin/phpbench run --progress=travis --iterations=1 --revs=1"
+                name: "PHPBench Regression Test"
+                run: ".github/phpbench_regression_test.sh"
