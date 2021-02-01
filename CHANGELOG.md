@@ -20,6 +20,7 @@ Features:
   - [language-server] Transform code actions and diagnostics (complete constructor, implement contracts, fix class name and add missing properties)
   - [completion] Keyword completion - @BladeMF
   - [language-server] Create class code actions - @dantleech
+  - [phpactor] Update extensions after install composer hook - @dantleech
 
 Improvements:
 

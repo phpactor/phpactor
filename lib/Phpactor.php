@@ -139,7 +139,10 @@ class Phpactor
             $extensionNames[] = DebugExtension::class;
         }
 
-        if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
+        if (
+            $input->getFirstArgument() !== 'extension:update' && 
+            file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])
+        ) {
             $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
 
             $installedExtensionNames = array_diff($installedExtensionNames, self::LEGACY_EXTENSIONS);

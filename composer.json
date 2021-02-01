@@ -83,6 +83,7 @@
         "bin/phpactor"
     ],
     "scripts": {
+        "post-install-cmd": "bin/phpactor extension:update",
         "integrate": [
             "vendor/bin/phpstan analyse --level=1",
             "vendor/bin/phpunit",
