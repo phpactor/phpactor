@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\Dumper;
 use Prophecy\PhpUnit\ProphecyTrait;
+use InvalidArgumentException;
 
 class DumperRegistryTest extends TestCase
 {
@@ -14,9 +15,9 @@ class DumperRegistryTest extends TestCase
     /**
      * @testdox It throws exception if dumper not found.
      */
-    public function testNotFound()
+    public function testNotFound(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown dumper "foobar", known dumpers: "dumper1"');
         $registry = $this->create([
             'dumper1' => $this->prophesize(Dumper::class)->reveal(),
@@ -28,7 +29,7 @@ class DumperRegistryTest extends TestCase
     /**
      * @testdox It returns the requested dumper.
      */
-    public function testGetDumper()
+    public function testGetDumper(): void
     {
         $registry = $this->create([
             'foobar' => $dumper = $this->prophesize(Dumper::class)->reveal(),
@@ -40,7 +41,7 @@ class DumperRegistryTest extends TestCase
     /**
      * @testdox It should use default if no argument given.
      */
-    public function testDefault()
+    public function testDefault(): void
     {
         $registry = $this->create([
             'foobar' => $dumper = $this->prophesize(Dumper::class)->reveal(),

@@ -20,7 +20,7 @@ class StatusCommand extends Command
         $this->status = $status;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Information about the current status of Phpactor');
     }

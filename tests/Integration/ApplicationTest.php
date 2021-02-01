@@ -25,15 +25,15 @@ class ApplicationTest extends IntegrationTestCase
         return new Application(__DIR__ . '/../../vendor');
     }
 
-    public function testConfig()
+    public function testConfig(): void
     {
         $this->expectException(InvalidMap::class);
         $this->expectExceptionMessage('Key(s) "foobar_invalid" are not known');
         file_put_contents(
             $this->workspaceDir() . '/.phpactor.yml',
             <<<'EOT'
-foobar_invalid: something
-EOT
+                foobar_invalid: something
+                EOT
         );
 
         chdir($this->workspaceDir());
@@ -48,7 +48,7 @@ EOT
         ]), $output);
     }
 
-    public function testSerializesExceptions()
+    public function testSerializesExceptions(): void
     {
         $output = new BufferedOutput();
 
@@ -64,7 +64,7 @@ EOT
         $this->assertArrayHasKey('error', $out);
     }
 
-    public function testCwd()
+    public function testCwd(): void
     {
         $this->loadProject('Animals');
         $output = new BufferedOutput();

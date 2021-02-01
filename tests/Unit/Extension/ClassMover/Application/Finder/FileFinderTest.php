@@ -33,7 +33,7 @@ class FileFinderTest extends TestCase
         $this->fileList = $this->prophesize(FileList::class);
     }
 
-    public function testReturnsAllPhpFilesIfNoMemberNameGiven()
+    public function testReturnsAllPhpFilesIfNoMemberNameGiven(): void
     {
         $this->setupAllFiles();
         $class = $this->reflectClass('class Foobar {}', 'Foobar');
@@ -41,14 +41,14 @@ class FileFinderTest extends TestCase
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 
-    public function testReturnsAllPhpFilesIfNoClassReflectionGiven()
+    public function testReturnsAllPhpFilesIfNoClassReflectionGiven(): void
     {
         $this->setupAllFiles();
         $files = $this->filesFor(null, null);
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 
-    public function testThrowsExceptionIfClassHasNoMembersByName()
+    public function testThrowsExceptionIfClassHasNoMembersByName(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Class has no member named "foobar"');
@@ -59,7 +59,7 @@ class FileFinderTest extends TestCase
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 
-    public function testReturnsAllPhpFilesFilteredByMemberIfMemberIsPublic()
+    public function testReturnsAllPhpFilesFilteredByMemberIfMemberIsPublic(): void
     {
         $this->setupAllFiles();
         $class = $this->reflectClass('class Foobar { public function abcde() {} }', 'Foobar');
@@ -68,7 +68,7 @@ class FileFinderTest extends TestCase
         $this->assertEquals($this->fileList->reveal(), $files);
     }
 
-    public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate()
+    public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate(): void
     {
         $class = $this->reflectClass(
             SourceCode::fromPathAndString('barfoo', 'trait Barbar {} class Foobar { use Barbar; private function foobar(){} }'),
@@ -78,7 +78,7 @@ class FileFinderTest extends TestCase
         $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo'], $files), $files);
     }
 
-    public function testParentsTraitsAndInterfacesIfMemberIsProtected()
+    public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
     {
         $class = $this->reflectClass(
             SourceCode::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'),
@@ -93,7 +93,7 @@ class FileFinderTest extends TestCase
         return (new FileFinder())->filesFor($this->filesystem->reveal(), $class, $memberName);
     }
 
-    private function setupAllFiles()
+    private function setupAllFiles(): void
     {
         $this->filesystem->fileList()->willReturn($this->fileList->reveal());
         $this->fileList->existing()->willReturn($this->fileList->reveal());

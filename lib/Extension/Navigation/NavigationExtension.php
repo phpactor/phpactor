@@ -41,7 +41,7 @@ class NavigationExtension implements Extension
         ]);
     }
 
-    private function registerPathFinder(ContainerBuilder $container)
+    private function registerPathFinder(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_PATH_FINDER, function (Container $container) {
             return PathFinder::fromDestinations($container->getParameter(self::PATH_FINDER_DESTINATIONS));
@@ -56,7 +56,7 @@ class NavigationExtension implements Extension
         });
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('rpc.handler.navigate', function (Container $container) {
             return new NavigateHandler(
@@ -65,7 +65,7 @@ class NavigationExtension implements Extension
         }, [ 'rpc.handler' => ['name' => NavigateHandler::NAME] ]);
     }
 
-    private function registerNavigators(ContainerBuilder $container)
+    private function registerNavigators(ContainerBuilder $container): void
     {
         $container->register('navigation.navigator.chain', function (Container $container) {
             $navigators = [];

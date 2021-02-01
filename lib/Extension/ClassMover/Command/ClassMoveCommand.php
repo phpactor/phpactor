@@ -12,6 +12,7 @@ use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
+use InvalidArgumentException;
 
 class ClassMoveCommand extends Command
 {
@@ -38,7 +39,7 @@ class ClassMoveCommand extends Command
         $this->prompt = $prompt;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Move class (path or FQN) and update all references to it');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
@@ -76,7 +77,7 @@ class ClassMoveCommand extends Command
                 return 0;
         }
 
-        throw new \InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'Invalid type "%s", must be one of: "%s"',
             $type,
             implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])

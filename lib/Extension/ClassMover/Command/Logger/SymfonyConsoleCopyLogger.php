@@ -17,7 +17,7 @@ class SymfonyConsoleCopyLogger implements ClassCopyLogger
         $this->output = $output;
     }
 
-    public function copying(FilePath $srcPath, FilePath $destPath)
+    public function copying(FilePath $srcPath, FilePath $destPath): void
     {
         $this->output->writeln(sprintf(
             '<info>[COPY]</info> %s <comment>=></> %s',
@@ -26,7 +26,7 @@ class SymfonyConsoleCopyLogger implements ClassCopyLogger
         ));
     }
 
-    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName)
+    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName): void
     {
         if ($references->references()->isEmpty()) {
             return;

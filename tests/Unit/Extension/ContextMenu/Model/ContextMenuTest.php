@@ -8,7 +8,7 @@ use RuntimeException;
 
 class ContextMenuTest extends TestCase
 {
-    public function testCreateFromArray()
+    public function testCreateFromArray(): void
     {
         $menu = ContextMenu::fromArray([
             'actions' => [
@@ -29,7 +29,7 @@ class ContextMenuTest extends TestCase
         self::assertNotNull($menu);
     }
 
-    public function testExceptionIfKeyIsRepeatedInContext()
+    public function testExceptionIfKeyIsRepeatedInContext(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Key "b" in context "foo" mapped by action "action2" is already used by action "action1"');
@@ -53,7 +53,7 @@ class ContextMenuTest extends TestCase
         ]);
     }
 
-    public function testActionDoesNotExist()
+    public function testActionDoesNotExist(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Action "a" used in context "foo" does not exist');

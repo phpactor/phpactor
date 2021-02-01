@@ -36,7 +36,7 @@ class ClassNewCommand extends Command
         $this->classNew = $classNew;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Create new class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
@@ -81,7 +81,7 @@ class ClassNewCommand extends Command
         ];
     }
 
-    private function listGenerators(InputInterface $input, OutputInterface $output)
+    private function listGenerators(InputInterface $input, OutputInterface $output): void
     {
         $dumper = $this->dumperRegistry->get($input->getOption('format'));
         $dumper->dump($output, $this->classNew->availableGenerators());

@@ -42,7 +42,7 @@ class AbstractClassGenerator
         return $this->logger;
     }
 
-    protected function writeFile(string $filePath, string $code, bool $overwrite)
+    protected function writeFile(string $filePath, string $code, bool $overwrite): void
     {
         if (false === $overwrite && file_exists($filePath) && 0 !== filesize($filePath)) {
             throw new Exception\FileAlreadyExists(sprintf('File "%s" already exists and is non-empty', $filePath));

@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ContainerDumpCommandTest extends SystemTestCase
 {
-    public function testConfigDump()
+    public function testConfigDump(): void
     {
         $process = $this->phpactor('container:dump --services --tags --tag=worse_reflection.source_locator');
         $this->assertSuccess($process);

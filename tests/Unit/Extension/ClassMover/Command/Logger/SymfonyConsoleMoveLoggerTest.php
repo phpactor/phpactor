@@ -28,33 +28,33 @@ class SymfonyConsoleMoveLoggerTest extends TestCase
         $this->logger = new SymfonyConsoleMoveLogger($this->output);
     }
 
-    public function testReplacing()
+    public function testReplacing(): void
     {
         $references = new FoundReferences(
             SourceCode::fromString(
                 <<<'EOT'
-<?php
+                    <?php
 
-namespace Acme;
+                    namespace Acme;
 
-class Foobar
-{
-    public function source(): SourceCode
-    {
-        return $this->source;
-    }
+                    class Foobar
+                    {
+                        public function source(): SourceCode
+                        {
+                            return $this->source;
+                        }
 
-    public function targetName(): FullyQualifiedName
-    {
-        return $this->name;
-    }
+                        public function targetName(): FullyQualifiedName
+                        {
+                            return $this->name;
+                        }
 
-    public function references(): NamespacedClassRefList
-    {
-        return $this->references;
-    }
-}
-EOT
+                        public function references(): NamespacedClassRefList
+                        {
+                            return $this->references;
+                        }
+                    }
+                    EOT
             ),
             FullyQualifiedName::fromString('Acme'),
             NamespacedClassReferences::fromNamespaceAndClassRefs(

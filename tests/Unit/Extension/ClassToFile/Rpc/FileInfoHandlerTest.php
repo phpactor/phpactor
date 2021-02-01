@@ -21,12 +21,7 @@ class FileInfoHandlerTest extends HandlerTestCase
         $this->fileInfo = $this->prophesize(FileInfo::class);
     }
 
-    protected function createHandler(): Handler
-    {
-        return new FileInfoHandler($this->fileInfo->reveal());
-    }
-
-    public function testReturnsAResponseWithAFileInfo()
+    public function testReturnsAResponseWithAFileInfo(): void
     {
         $path =  'src/Controller/BlogController.php';
         $result = [
@@ -41,5 +36,10 @@ class FileInfoHandlerTest extends HandlerTestCase
 
         $this->assertInstanceOf(ReturnResponse::class, $response);
         $this->assertEquals($result, $response->parameters()['value']);
+    }
+
+    protected function createHandler(): Handler
+    {
+        return new FileInfoHandler($this->fileInfo->reveal());
     }
 }

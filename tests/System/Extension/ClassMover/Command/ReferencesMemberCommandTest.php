@@ -15,7 +15,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox It should show all references to Badger
      */
-    public function testReferences()
+    public function testReferences(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge');
         $this->assertSuccess($process);
@@ -25,7 +25,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox When non-existing member given, suggest existing members with exception.
      */
-    public function testNonExistingMember()
+    public function testNonExistingMember(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" bad --type="method"');
         $this->assertEquals(255, $process->getExitCode());
@@ -35,7 +35,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Find all members for class
      */
-    public function testFindAllForClass()
+    public function testFindAllForClass(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger"');
         $this->assertSuccess($process);
@@ -44,7 +44,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Find all members
      */
-    public function testFindAll()
+    public function testFindAll(): void
     {
         $process = $this->phpactor('references:member');
         $this->assertSuccess($process);
@@ -53,7 +53,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Replace member
      */
-    public function testReplace()
+    public function testReplace(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge');
         $this->assertSuccess($process);
@@ -65,7 +65,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Replace dry run
      */
-    public function testReplaceDryRun()
+    public function testReplaceDryRun(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge --dry-run');
         $this->assertSuccess($process);
@@ -77,7 +77,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox It can use a different scope
      */
-    public function testReferencesScope()
+    public function testReferencesScope(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --filesystem=composer');
         $this->assertSuccess($process);
@@ -87,7 +87,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox By property
      */
-    public function testByTypeProperty()
+    public function testByTypeProperty(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" carnivorous --type=property');
         $this->assertSuccess($process);
@@ -97,7 +97,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Find member name shared by differnt types
      */
-    public function testDifferentTypees()
+    public function testDifferentTypees(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" carnivorous');
         $this->assertSuccess($process);

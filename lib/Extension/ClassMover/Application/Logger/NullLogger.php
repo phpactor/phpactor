@@ -8,15 +8,15 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 
 class NullLogger implements ClassCopyLogger, ClassMoverLogger
 {
-    public function copying(FilePath $srcPath, FilePath $destPath)
+    public function copying(FilePath $srcPath, FilePath $destPath): void
     {
     }
 
-    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName)
+    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName): void
     {
     }
 
-    public function moving(FilePath $srcPath, FilePath $destPath)
+    public function moving(FilePath $srcPath, FilePath $destPath): void
     {
     }
 }

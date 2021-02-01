@@ -25,7 +25,7 @@ class CacheClearHandlerTest extends HandlerTestCase
         return new CacheClearHandler($this->clearCache->reveal());
     }
 
-    public function testClearCache()
+    public function testClearCache(): void
     {
         $this->clearCache->clearCache()->shouldBeCalled();
         $this->clearCache->cachePath()->willReturn('/path/to');

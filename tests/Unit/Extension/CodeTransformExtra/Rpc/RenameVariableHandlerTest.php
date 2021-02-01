@@ -34,7 +34,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
         return new RenameVariableHandler($this->renameVariable->reveal());
     }
 
-    public function testDemandVariableName()
+    public function testDemandVariableName(): void
     {
         $action = $this->handle(RenameVariableHandler::NAME, [
             RenameVariableHandler::PARAM_SOURCE => self::SOURCE,
@@ -53,7 +53,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
         $this->assertEquals('name', $firstInput->name());
     }
 
-    public function testDemandScope()
+    public function testDemandScope(): void
     {
         $action = $this->handle(RenameVariableHandler::NAME, [
             RenameVariableHandler::PARAM_SOURCE => self::SOURCE,
@@ -72,7 +72,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
         $this->assertEquals('scope', $firstInput->name());
     }
 
-    public function testRenameVariable()
+    public function testRenameVariable(): void
     {
         $this->renameVariable->renameVariable(
             self::SOURCE,

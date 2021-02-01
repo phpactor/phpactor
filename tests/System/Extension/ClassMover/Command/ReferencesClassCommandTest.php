@@ -15,7 +15,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     /**
      * @testdox It should show all references to Badger
      */
-    public function testReferences()
+    public function testReferences(): void
     {
         $process = $this->phpactor('references:class "Animals\Badger"');
         $this->assertSuccess($process);
@@ -25,7 +25,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     /**
      * @testdox It should accept a format
      */
-    public function testReferencesFormatted()
+    public function testReferencesFormatted(): void
     {
         $process = $this->phpactor('references:class "Animals\Badger" --format=json');
         $this->assertSuccess($process);
@@ -35,7 +35,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     /**
      * @testdox It should replace class references
      */
-    public function testReferencesReplace()
+    public function testReferencesReplace(): void
     {
         $process = $this->phpactor('references:class "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
@@ -48,7 +48,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     /**
      * @testdox It should replace class references
      */
-    public function testReferencesReplaceDryRun()
+    public function testReferencesReplaceDryRun(): void
     {
         $process = $this->phpactor('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
         $this->assertSuccess($process);
@@ -61,7 +61,7 @@ class ReferencesClassCommandTest extends SystemTestCase
     /**
      * @testdox It can use a different scope
      */
-    public function testReferencesScope()
+    public function testReferencesScope(): void
     {
         $process = $this->phpactor('references:class "Animals\Badger" --filesystem=simple');
         $this->assertSuccess($process);

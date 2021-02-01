@@ -81,7 +81,7 @@ class CodeTransformExtraExtension implements Extension
         });
     }
 
-    private function registerConsole(ContainerBuilder $container)
+    private function registerConsole(ContainerBuilder $container): void
     {
         $container->register('command.transform', function (Container $container) {
             return new ClassTransformCommand(
@@ -104,7 +104,7 @@ class CodeTransformExtraExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:inflect' ]]);
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('code_transform.rpc.handler.extract_constant', function (Container $container) {
             return new ExtractConstantHandler(

@@ -33,7 +33,7 @@ class ClassSearchCommand extends Command
         $this->dumperRegistry = $dumperRegistry;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Search for class by (short) name and return informations on candidates');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');

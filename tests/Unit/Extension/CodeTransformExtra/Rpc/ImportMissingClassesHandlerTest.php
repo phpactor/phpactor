@@ -47,7 +47,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
         ));
     }
 
-    public function testZeroUnresolvedClasses()
+    public function testZeroUnresolvedClasses(): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[]));
 
@@ -59,7 +59,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
         $this->assertInstanceOf(EchoResponse::class, $response);
     }
 
-    public function testImportsUnresolvedClasses()
+    public function testImportsUnresolvedClasses(): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[
             new NameWithByteOffset(

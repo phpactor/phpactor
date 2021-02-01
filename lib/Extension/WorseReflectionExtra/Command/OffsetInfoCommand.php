@@ -32,7 +32,7 @@ class OffsetInfoCommand extends Command
         $this->dumperRegistry = $dumperRegistry;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Return information about given file at the given offset');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');

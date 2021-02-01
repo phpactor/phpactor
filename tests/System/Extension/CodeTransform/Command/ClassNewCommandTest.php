@@ -14,12 +14,12 @@ class ClassNewCommandTest extends SystemTestCase
         $this->workspace()->put(
             '.phpactor.json',
             <<<EOF
-{
-    "code_transform.class_new.variants": {
-        "foobar": "foobar"
-    }
-}
-EOF
+                {
+                    "code_transform.class_new.variants": {
+                        "foobar": "foobar"
+                    }
+                }
+                EOF
         );
     }
 
@@ -28,7 +28,7 @@ EOF
      *
      * @dataProvider provideNewClass
      */
-    public function testNewClass($command, $expected, $expectedFile)
+    public function testNewClass($command, $expected, $expectedFile): void
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
@@ -42,24 +42,24 @@ EOF
         yield 'New class' => [
             'class:new lib/Badger/Teeth.php --no-interaction --force',
             <<<'EOT'
-src:lib/Badger/Teeth.php
-EOT
+                src:lib/Badger/Teeth.php
+                EOT
             , '/lib/Badger/Teeth.php'
         ];
 
         yield 'New class with variant' => [
             'class:new lib/Badger/Teeth.php --variant=foobar --no-interaction --force',
             <<<'EOT'
-src:lib/Badger/Teeth.php
-EOT
+                src:lib/Badger/Teeth.php
+                EOT
             , '/lib/Badger/Teeth.php'
         ];
 
         yield 'New class from FQN' => [
             'class:new "Animals\\Pigeon" --no-interaction',
             <<<'EOT'
-lib/Pigeon.php
-EOT
+                lib/Pigeon.php
+                EOT
             , '/lib/Pigeon.php'
         ];
     }

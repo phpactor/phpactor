@@ -34,7 +34,7 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
         return new ExtractExpressionHandler($this->extractExpression->reveal());
     }
 
-    public function testDemandMethodName()
+    public function testDemandMethodName(): void
     {
         $action = $this->handle('extract_expression', [
             'source' => self::SOURCE,
@@ -53,7 +53,7 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
         $this->assertEquals('variable_name', $firstInput->name());
     }
 
-    public function testExtractExpression()
+    public function testExtractExpression(): void
     {
         $this->extractExpression->extractExpression(
             self::SOURCE,

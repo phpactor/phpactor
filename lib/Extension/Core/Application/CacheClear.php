@@ -23,7 +23,7 @@ class CacheClear
         $this->filesystem = new Filesystem();
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->filesystem->remove($this->cachePath);
     }

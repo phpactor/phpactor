@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\Core\Console\Prompt;
 
+use RuntimeException;
+
 final class ChainPrompt implements Prompt
 {
     private $prompts;
@@ -23,7 +25,7 @@ final class ChainPrompt implements Prompt
             return $prompter->prompt($prompt, $prefill);
         }
 
-        throw new \RuntimeException(sprintf(
+        throw new RuntimeException(sprintf(
             'Could not prompt for "%s". '.
             'Appropriate prompt implementation for your platform / environment could not be found (tried "%s"). '.
             'Try specifying the command in full',
@@ -42,7 +44,7 @@ final class ChainPrompt implements Prompt
         return 'chain';
     }
 
-    private function addPrompt(Prompt $prompt)
+    private function addPrompt(Prompt $prompt): void
     {
         $this->prompts[$prompt->name()] = $prompt;
     }

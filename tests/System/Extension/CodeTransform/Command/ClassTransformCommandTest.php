@@ -13,12 +13,12 @@ class ClassTransformCommandTest extends SystemTestCase
         file_put_contents(
             $this->workspace()->path('lib/Foobar.php'),
             <<<'EOT'
-<?php
+                <?php
 
-class Foobar implements Countable
-{
-}
-EOT
+                class Foobar implements Countable
+                {
+                }
+                EOT
         );
     }
 
@@ -27,7 +27,7 @@ EOT
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, string $expectedOutput, $error = false)
+    public function testSmokeSuccess($command, string $expectedOutput, $error = false): void
     {
         $process = $this->phpactor($command);
 

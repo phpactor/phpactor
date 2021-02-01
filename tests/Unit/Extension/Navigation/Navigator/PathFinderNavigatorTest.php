@@ -29,7 +29,7 @@ class PathFinderNavigatorTest extends TestCase
         $this->navigator = new PathFinderNavigator($this->pathFinder->reveal());
     }
 
-    public function testDelegatesToPathFinder()
+    public function testDelegatesToPathFinder(): void
     {
         $destinations = ['one' => 'two'];
         $this->pathFinder->destinationsFor(self::TEST_PATH)->willReturn($destinations);

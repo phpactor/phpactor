@@ -48,7 +48,7 @@ class ConfigDumpCommand extends Command
         $this->expanders = $expanders;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Show loaded config files and dump current configuration.');
         $this->addOption('config-only', null, InputOption::VALUE_NONE, 'Do not output configuration file locations');
@@ -65,7 +65,7 @@ class ConfigDumpCommand extends Command
         return 0;
     }
 
-    private function dumpMetaInformation(OutputInterface $output)
+    private function dumpMetaInformation(OutputInterface $output): void
     {
         $output->writeln('<info>Config files:</>');
         $output->write(PHP_EOL);

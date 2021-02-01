@@ -32,14 +32,14 @@ class ChainNavigatorTest extends TestCase
         $this->navigator2 = $this->prophesize(Navigator::class);
     }
 
-    public function testReturnsEmptyArrayWhenNoNavigators()
+    public function testReturnsEmptyArrayWhenNoNavigators(): void
     {
         $navigator = $this->create([]);
         $destinations = $navigator->destinationsFor(self::TEST_PATH);
         $this->assertEquals([], $destinations);
     }
 
-    public function testMergesResultsOfTwoNavigators()
+    public function testMergesResultsOfTwoNavigators(): void
     {
         $navigator = $this->create([
             $this->navigator1->reveal(),

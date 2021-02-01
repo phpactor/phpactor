@@ -139,7 +139,7 @@ class CoreExtension implements Extension
         });
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('core.rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler($container->get('application.cache_clear'));
@@ -154,7 +154,7 @@ class CoreExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ConfigHandler::CONFIG] ]);
     }
 
-    private function registerFilePathExpanders(ContainerBuilder $container)
+    private function registerFilePathExpanders(ContainerBuilder $container): void
     {
         $container->register('core.file_path_resolver.project_config_expander', function (Container $container) {
             $path = $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor';
