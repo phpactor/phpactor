@@ -11,6 +11,8 @@ use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
+use Exception;
+use RuntimeException;
 
 class ClassCopy
 {
@@ -60,12 +62,12 @@ class ClassCopy
         );
     }
 
-    public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath)
+    public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath): void
     {
         $srcPath = Phpactor::normalizePath($srcPath);
 
         if (false === Glob::isDynamic($srcPath) && !file_exists($srcPath)) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'File "%s" does not exist',
                 $srcPath
             ));
@@ -81,13 +83,13 @@ class ClassCopy
 
             try {
                 $this->doCopyFile($logger, $globPath, $globDest);
-            } catch (\Exception $e) {
-                throw new \RuntimeException(sprintf('Could not copy file "%s" to "%s"', $srcPath, $destPath), null, $e);
+            } catch (Exception $e) {
+                throw new RuntimeException(sprintf('Could not copy file "%s" to "%s"', $srcPath, $destPath), null, $e);
             }
         }
     }
 
-    private function doCopyFile(ClassCopyLogger $logger, string $srcPath, string $destPath)
+    private function doCopyFile(ClassCopyLogger $logger, string $srcPath, string $destPath): void
     {
         $destPath = Phpactor::normalizePath($destPath);
 
@@ -99,7 +101,7 @@ class ClassCopy
         $logger->copying($srcPath, $destPath);
     }
 
-    private function updateReferences(ClassCopyLogger $logger, CopyReport $copyReport)
+    private function updateReferences(ClassCopyLogger $logger, CopyReport $copyReport): void
     {
         foreach ($copyReport->srcFiles() as $srcPath) {
             $destPath = $copyReport->destFiles()->current();

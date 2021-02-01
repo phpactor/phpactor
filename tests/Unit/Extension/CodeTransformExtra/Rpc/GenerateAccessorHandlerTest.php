@@ -16,14 +16,14 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class GenerateAccessorHandlerTest extends HandlerTestCase
 {
     const SOURCE = <<<'PHP'
-<?php
+        <?php
 
-class Dummy
-{
-    private $foo;
-    public $bar;
-}
-PHP;
+        class Dummy
+        {
+            private $foo;
+            public $bar;
+        }
+        PHP;
     const PATH = '/path/to';
     const FOO_NAME = 'foo';
     const BAR_NAME = 'bar';
@@ -55,7 +55,7 @@ PHP;
         );
     }
 
-    public function testSuggestsPossibleProperties()
+    public function testSuggestsPossibleProperties(): void
     {
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,
@@ -75,17 +75,17 @@ PHP;
         $this->assertEquals(self::PROPERTIES_CHOICES, $input->choices());
     }
 
-    public function testGeneratesAccessorIfSpecificPropertyIsSelected()
+    public function testGeneratesAccessorIfSpecificPropertyIsSelected(): void
     {
         [ $source, $offset ] = ExtractOffset::fromSource(
             <<<'EOT'
-<?php
+                <?php
 
-class
-{
-    private $<>foo;
-}
-EOT
+                class
+                {
+                    private $<>foo;
+                }
+                EOT
         );
 
         $this->generateAccessor->generate($source, 'foo', $offset)
@@ -102,7 +102,7 @@ EOT
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
     }
 
-    public function testGenerateAccessorFromAPropertyName()
+    public function testGenerateAccessorFromAPropertyName(): void
     {
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
@@ -125,7 +125,7 @@ EOT
         $this->assertSame(self::PATH, $action->path());
     }
 
-    public function testGenerateAccessorsFromMultiplePropertyName()
+    public function testGenerateAccessorsFromMultiplePropertyName(): void
     {
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 

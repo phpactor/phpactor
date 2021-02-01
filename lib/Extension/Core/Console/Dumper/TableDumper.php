@@ -9,7 +9,7 @@ final class TableDumper implements Dumper
 {
     const PADDING = '  ';
 
-    public function dump(OutputInterface $output, array $data)
+    public function dump(OutputInterface $output, array $data): void
     {
         $table = new Table($output);
 

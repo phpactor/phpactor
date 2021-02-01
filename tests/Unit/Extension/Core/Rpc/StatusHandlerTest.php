@@ -38,7 +38,7 @@ class StatusHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testMessageStatus()
+    public function testMessageStatus(): void
     {
         $this->status->check()->willReturn([
             'php_version' => '7.1',

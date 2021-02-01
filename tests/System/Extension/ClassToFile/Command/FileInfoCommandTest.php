@@ -15,7 +15,7 @@ class FileInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the file.
      */
-    public function testProvideInformationForOffset()
+    public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactor('file:info lib/Badger.php');
         $this->assertSuccess($process);
@@ -25,7 +25,7 @@ class FileInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the file as JSON
      */
-    public function testProvideInformationForOffsetAsJson()
+    public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactor('file:info lib/Badger.php --format=json');
         $this->assertSuccess($process);

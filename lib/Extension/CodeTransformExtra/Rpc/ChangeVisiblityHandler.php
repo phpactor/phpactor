@@ -31,7 +31,7 @@ class ChangeVisiblityHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
         $resolver->setRequired([
             self::PARAM_PATH,

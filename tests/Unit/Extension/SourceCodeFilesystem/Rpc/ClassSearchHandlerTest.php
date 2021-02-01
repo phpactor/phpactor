@@ -32,7 +32,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
     /**
      * If not results are found, echo a message
      */
-    public function testNoResults()
+    public function testNoResults(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([]);
@@ -48,7 +48,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
     /**
      * If 1 result is found, return the value.
      */
-    public function testOneResult()
+    public function testOneResult(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([
@@ -70,7 +70,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
     /**
      * Many results, show a choice
      */
-    public function testManyResult()
+    public function testManyResult(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([

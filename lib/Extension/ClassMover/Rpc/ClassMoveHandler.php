@@ -15,12 +15,11 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 
 class ClassMoveHandler extends AbstractHandler
 {
+    const NAME = 'move_class';
     private const PARAM_SOURCE_PATH = 'source_path';
     private const PARAM_DEST_PATH = 'dest_path';
     private const PARAM_CONFIRMED = 'confirmed';
     private const PARAM_ADDITIONAL_MOVE_CONFIRM = 'move_related';
-
-    const NAME = 'move_class';
 
     /**
      * @var ClassMover
@@ -43,7 +42,7 @@ class ClassMoveHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
         $resolver->setDefaults([
             self::PARAM_DEST_PATH => null,

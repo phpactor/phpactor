@@ -14,6 +14,7 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
+use RuntimeException;
 
 class ClassMover
 {
@@ -88,21 +89,21 @@ class ClassMover
         );
     }
 
-    public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath, bool $moveRelatedFiles)
+    public function moveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath, bool $moveRelatedFiles): void
     {
         $srcPath = Phpactor::normalizePath($srcPath);
         foreach (FilesystemHelper::globSourceDestination($srcPath, $destPath) as $globSrc => $globDest) {
             foreach ($this->expandRelatedPaths($globSrc, $globDest, $moveRelatedFiles) as $oldPath => $newPath) {
                 try {
                     $this->doMoveFile($logger, $filesystemName, $oldPath, $newPath);
-                } catch (\Exception $e) {
-                    throw new \RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
+                } catch (Exception $e) {
+                    throw new RuntimeException(sprintf('Could not move file "%s" to "%s"', $srcPath, $destPath), null, $e);
                 }
             }
         }
     }
 
-    private function doMoveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath)
+    private function doMoveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath): void
     {
         $filesystem = $this->filesystemRegistry->get($filesystemName);
         $destPath = Phpactor::normalizePath($destPath);
@@ -136,7 +137,7 @@ class ClassMover
         return $files;
     }
 
-    private function replaceThoseReferences(ClassMoverLogger $logger, Filesystem $filesystem, array $files)
+    private function replaceThoseReferences(ClassMoverLogger $logger, Filesystem $filesystem, array $files): void
     {
         foreach ($files as $paths) {
             list($srcPath, $destPath) = $paths;
@@ -151,7 +152,7 @@ class ClassMover
         }
     }
 
-    private function replaceReferences(ClassMoverLogger $logger, Filesystem $filesystem, string $srcName, string $destName)
+    private function replaceReferences(ClassMoverLogger $logger, Filesystem $filesystem, string $srcName, string $destName): void
     {
         foreach ($filesystem->fileList()->existing()->phpFiles() as $filePath) {
             $references = $this->classMover->findReferences($filesystem->getContents($filePath), $srcName);

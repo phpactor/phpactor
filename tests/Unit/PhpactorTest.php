@@ -11,7 +11,7 @@ class PhpactorTest extends TestCase
      * @testdox It returns true if the subject looks like a file.
      * @dataProvider provideIsFile
      */
-    public function testIsFile(string $example, bool $isFile)
+    public function testIsFile(string $example, bool $isFile): void
     {
         $this->assertEquals($isFile, Phpactor::isFile($example));
     }

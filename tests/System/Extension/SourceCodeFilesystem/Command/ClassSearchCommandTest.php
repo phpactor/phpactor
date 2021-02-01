@@ -15,7 +15,7 @@ class ClassSearchCommandTest extends SystemTestCase
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchName()
+    public function testSearchName(): void
     {
         $process = $this->phpactor('class:search "Badger"');
         $this->assertSuccess($process);
@@ -25,14 +25,14 @@ class ClassSearchCommandTest extends SystemTestCase
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchNameJson()
+    public function testSearchNameJson(): void
     {
         $process = $this->phpactor('class:search "Badger" --format=json');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Badger.php"', $process->getOutput());
     }
 
-    public function testSearchByQualifiedName()
+    public function testSearchByQualifiedName(): void
     {
         $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
         $this->assertSuccess($process);
@@ -42,7 +42,7 @@ class ClassSearchCommandTest extends SystemTestCase
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchNameInternalName()
+    public function testSearchNameInternalName(): void
     {
         $process = $this->phpactor('class:search "DateTime" --format=json');
         $this->assertSuccess($process);

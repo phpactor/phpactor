@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests;
 
-use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -18,28 +17,12 @@ abstract class IntegrationTestCase extends TestCase
         return __DIR__ . '/Assets/Workspace';
     }
 
-    private function cacheDir(string $name)
-    {
-        return __DIR__ . '/Assets/Cache/'.$name;
-    }
-
-    private function cacheWorkspace($name)
-    {
-        $filesystem = new Filesystem();
-        $cacheDir = $this->cacheDir($name);
-        if (file_exists($cacheDir)) {
-            $filesystem->remove($cacheDir);
-        }
-        mkdir($cacheDir, 0777, true);
-        $filesystem->mirror($this->workspaceDir(), $this->cacheDir($name));
-    }
-
     protected function workspace(): Workspace
     {
         return Workspace::create($this->workspaceDir());
     }
 
-    protected function assertSuccess(Process $process)
+    protected function assertSuccess(Process $process): void
     {
         if (true === $process->isSuccessful()) {
             $this->addToAssertionCount(1);
@@ -54,7 +37,7 @@ abstract class IntegrationTestCase extends TestCase
         ));
     }
 
-    protected function assertFailure(Process $process, $message)
+    protected function assertFailure(Process $process, $message): void
     {
         if (true === $process->isSuccessful()) {
             $this->fail('Process was a success');
@@ -67,7 +50,7 @@ abstract class IntegrationTestCase extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    protected function loadProject($name)
+    protected function loadProject($name): void
     {
         $filesystem = new Filesystem();
 
@@ -90,5 +73,21 @@ abstract class IntegrationTestCase extends TestCase
     protected function container(): Container
     {
         return Phpactor::boot(new ArrayInput([]), __DIR__ . '/../vendor');
+    }
+
+    private function cacheDir(string $name)
+    {
+        return __DIR__ . '/Assets/Cache/'.$name;
+    }
+
+    private function cacheWorkspace($name): void
+    {
+        $filesystem = new Filesystem();
+        $cacheDir = $this->cacheDir($name);
+        if (file_exists($cacheDir)) {
+            $filesystem->remove($cacheDir);
+        }
+        mkdir($cacheDir, 0777, true);
+        $filesystem->mirror($this->workspaceDir(), $this->cacheDir($name));
     }
 }

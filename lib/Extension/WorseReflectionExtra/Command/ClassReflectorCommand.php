@@ -31,7 +31,7 @@ class ClassReflectorCommand extends Command
         $this->dumperRegistry = $dumperRegistry;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Reflect a given class (path or FQN)');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');

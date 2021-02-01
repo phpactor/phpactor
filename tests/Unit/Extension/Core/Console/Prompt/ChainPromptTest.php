@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
 use Prophecy\PhpUnit\ProphecyTrait;
+use RuntimeException;
 
 class ChainPromptTest extends TestCase
 {
@@ -36,7 +37,7 @@ class ChainPromptTest extends TestCase
     /**
      * @testdox It delegates to a supporting prompt
      */
-    public function testDelegateToSupporting()
+    public function testDelegateToSupporting(): void
     {
         $this->prompt1->isSupported()->willReturn(false);
         $this->prompt2->isSupported()->willReturn(true);
@@ -50,9 +51,9 @@ class ChainPromptTest extends TestCase
     /**
      * @testdox It throws an exception if no prompts are supported.
      */
-    public function testPromptsNotSupported()
+    public function testPromptsNotSupported(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not prompt');
         $this->prompt1->isSupported()->willReturn(false);
         $this->prompt2->isSupported()->willReturn(false);

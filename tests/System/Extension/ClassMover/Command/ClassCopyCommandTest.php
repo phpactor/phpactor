@@ -17,7 +17,7 @@ class ClassCopyCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = [])
+    public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = []): void
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
@@ -95,7 +95,7 @@ class ClassCopyCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeFailure
      */
-    public function testSmokeFailure($command, $expectedMessage = null)
+    public function testSmokeFailure($command, $expectedMessage = null): void
     {
         $process = $this->phpactor($command);
         $this->assertFailure($process, $expectedMessage);

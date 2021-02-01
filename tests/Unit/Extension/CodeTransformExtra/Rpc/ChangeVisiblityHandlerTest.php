@@ -25,12 +25,7 @@ class ChangeVisiblityHandlerTest extends HandlerTestCase
         $this->changeVisibility = $this->prophesize(ChangeVisiblity::class);
     }
 
-    protected function createHandler(): Handler
-    {
-        return new ChangeVisiblityHandler($this->changeVisibility->reveal());
-    }
-
-    public function testChangeVisiblity()
+    public function testChangeVisiblity(): void
     {
         $expectedSource = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
         $this->changeVisibility->changeVisiblity($expectedSource, self::EXAMPLE_OFFSET)->willReturn($expectedSource);
@@ -41,5 +36,10 @@ class ChangeVisiblityHandlerTest extends HandlerTestCase
             'offset' => self::EXAMPLE_OFFSET,
         ]);
         $this->assertInstanceof(UpdateFileSourceResponse::class, $response);
+    }
+
+    protected function createHandler(): Handler
+    {
+        return new ChangeVisiblityHandler($this->changeVisibility->reveal());
     }
 }

@@ -48,7 +48,7 @@ class ClassMoverExtension implements Extension
         $this->registerRpc($container);
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('class_mover.handler.class_references', function (Container $container) {
             return new ReferencesHandler(
@@ -73,7 +73,7 @@ class ClassMoverExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => [ 'name' => ClassMoveHandler::NAME ] ]);
     }
 
-    private function registerClassMover(ContainerBuilder $container)
+    private function registerClassMover(ContainerBuilder $container): void
     {
         $container->register('class_mover.class_mover', function (Container $container) {
             return new ClassMover(
@@ -101,7 +101,7 @@ class ClassMoverExtension implements Extension
         });
     }
 
-    private function registerApplicationServices(ContainerBuilder $container)
+    private function registerApplicationServices(ContainerBuilder $container): void
     {
         $container->register('application.class_mover', function (Container $container) {
             return new ClassMoverApp(
@@ -140,7 +140,7 @@ class ClassMoverExtension implements Extension
         });
     }
 
-    private function registerConsoleCommands(ContainerBuilder $container)
+    private function registerConsoleCommands(ContainerBuilder $container): void
     {
         $container->register('command.class_move', function (Container $container) {
             return new ClassMoveCommand(

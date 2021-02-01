@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ConfigDumpCommandTest extends SystemTestCase
 {
-    public function testConfigDump()
+    public function testConfigDump(): void
     {
         $process = $this->phpactor('config:dump');
         $this->assertSuccess($process);
@@ -16,7 +16,7 @@ class ConfigDumpCommandTest extends SystemTestCase
     /**
      * @testdox It should dump only configuration
      */
-    public function testConfigDumpOnly()
+    public function testConfigDumpOnly(): void
     {
         $process = $this->phpactor('config:dump --config-only');
         $this->assertSuccess($process);

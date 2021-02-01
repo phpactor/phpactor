@@ -42,7 +42,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testNotConfirmed()
+    public function testNotConfirmed(): void
     {
         /** @var $action InputCallbackAction */
         $action = $this->handle('move_class', [
@@ -55,7 +55,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertStringContainsString('Cancelled', $action->message());
     }
 
-    public function testConfirmChallenge()
+    public function testConfirmChallenge(): void
     {
         /** @var $action InputCallbackAction */
         $action = $this->handle('move_class', [
@@ -75,7 +75,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
     /**
      * @testdox It should request the dest path if none is given.
      */
-    public function testNoDestPath()
+    public function testNoDestPath(): void
     {
         /** @var $action InputCallbackAction */
         $action = $this->handle('move_class', [
@@ -97,7 +97,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         ], $action->callbackAction()->parameters());
     }
 
-    public function testItShouldAskForConfirmation()
+    public function testItShouldAskForConfirmation(): void
     {
         $this->classMover->move(
             Argument::type(ClassMoverLogger::class),
@@ -126,7 +126,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertEquals(self::SOURCE_PATH, $action->path());
     }
 
-    public function testItAskIfRelatedFilesShouldBeMoved()
+    public function testItAskIfRelatedFilesShouldBeMoved(): void
     {
         $this->classMover->getRelatedFiles(self::SOURCE_PATH)->willReturn([
             'foobar.php',
@@ -146,7 +146,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertEquals('move_related', $input->name());
     }
 
-    public function testMovesRelatedFiles()
+    public function testMovesRelatedFiles(): void
     {
         $this->classMover->move(
             Argument::type(ClassMoverLogger::class),

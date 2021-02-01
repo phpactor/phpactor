@@ -9,7 +9,7 @@ class RpcHandlerTest extends IntegrationTestCase
     /**
      * @dataProvider provideName
      */
-    public function testRpcCommandIsAvailable(string $name)
+    public function testRpcCommandIsAvailable(string $name): void
     {
         $registry = $this->container()->get('rpc.handler_registry');
         $registry->get($name);

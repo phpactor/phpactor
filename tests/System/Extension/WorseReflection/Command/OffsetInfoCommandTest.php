@@ -15,7 +15,7 @@ class OffsetInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the thing under the cursor.
      */
-    public function testProvideInformationForOffset()
+    public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactor('offset:info lib/Badger.php 163');
         $this->assertSuccess($process);
@@ -26,7 +26,7 @@ class OffsetInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the thing under the cursor as JSON
      */
-    public function testProvideInformationForOffsetAsJson()
+    public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactor('offset:info lib/Badger.php 137 --format=json');
         $this->assertSuccess($process);

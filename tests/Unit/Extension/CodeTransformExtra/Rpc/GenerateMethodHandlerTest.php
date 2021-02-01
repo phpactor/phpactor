@@ -27,12 +27,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $this->generateMethod = $this->prophesize(GenerateMethod::class);
     }
 
-    protected function createHandler(): Handler
-    {
-        return new GenerateMethodHandler($this->generateMethod->reveal());
-    }
-
-    public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath()
+    public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath(): void
     {
         $handler = $this->createHandler('generate_method');
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
@@ -56,7 +51,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $this->assertEquals(self::EXAMPLE_SOURCE, $response->newSource());
     }
 
-    public function testProvidesGivenSourceIfTransformedPathSameAsGivenPath()
+    public function testProvidesGivenSourceIfTransformedPathSameAsGivenPath(): void
     {
         $handler = $this->createHandler('generate_method');
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
@@ -78,5 +73,10 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $this->assertEquals(self::EXAMPLE_PATH, $response->path());
         $this->assertEquals(self::EXAMPLE_SOURCE, $response->oldSource());
         $this->assertEquals(self::EXAMPLE_TRANSFORMED_SOURCE, $response->newSource());
+    }
+
+    protected function createHandler(): Handler
+    {
+        return new GenerateMethodHandler($this->generateMethod->reveal());
     }
 }

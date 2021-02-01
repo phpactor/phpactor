@@ -7985,12 +7985,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/glob.git",
-                "reference": "06358fafde0f32edb4513f4fd88fe113a40c90ee"
+                "reference": "207f0ffb6d76e76bf045c09b273280daf1d60c49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/glob/zipball/06358fafde0f32edb4513f4fd88fe113a40c90ee",
-                "reference": "06358fafde0f32edb4513f4fd88fe113a40c90ee",
+                "url": "https://api.github.com/repos/webmozarts/glob/zipball/207f0ffb6d76e76bf045c09b273280daf1d60c49",
+                "reference": "207f0ffb6d76e76bf045c09b273280daf1d60c49",
                 "shasum": ""
             },
             "require": {
@@ -7998,9 +7998,10 @@
                 "webmozart/path-util": "^2.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "symfony/filesystem": "^5.1"
+                "phpunit/phpunit": "^9.5",
+                "symfony/filesystem": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8025,9 +8026,9 @@
             "description": "A PHP implementation of Ant's glob.",
             "support": {
                 "issues": "https://github.com/webmozarts/glob/issues",
-                "source": "https://github.com/webmozarts/glob/tree/4.3.0"
+                "source": "https://github.com/webmozarts/glob/tree/4.4.x"
             },
-            "time": "2021-01-21T06:17:15+00:00"
+            "time": "2021-02-01T06:06:23+00:00"
         },
         {
             "name": "webmozart/path-util",
@@ -8868,16 +8869,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.70",
+            "version": "0.12.71",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee"
+                "reference": "d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee",
-                "reference": "07f0ef37f5f876e8cee44cc8ea0ec3fe80d499ee",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5",
+                "reference": "d508fa3b0ecc5fc91ac70c6c7ac2862f968ba2b5",
                 "shasum": ""
             },
             "require": {
@@ -8908,7 +8909,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.70"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.71"
             },
             "funding": [
                 {
@@ -8924,7 +8925,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T17:06:47+00:00"
+            "time": "2021-02-01T18:24:00+00:00"
         },
         {
             "name": "symfony/debug",

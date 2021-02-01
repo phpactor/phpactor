@@ -38,7 +38,7 @@ class StatusTest extends TestCase
         $this->status = new Status($this->registry->reveal(), $this->paths, '/path/to/here', $this->resolver->reveal());
     }
 
-    public function testStatusNoComposerOrGit()
+    public function testStatusNoComposerOrGit(): void
     {
         $this->registry->names()->willReturn(['simple']);
         $diagnostics = $this->status->check();
@@ -47,7 +47,7 @@ class StatusTest extends TestCase
         $this->assertGreaterThanOrEqual(2, $diagnostics['bad']);
     }
 
-    public function testStatusComposerOrGit()
+    public function testStatusComposerOrGit(): void
     {
         $this->registry->names()->willReturn([
             SourceCodeFilesystemExtension::FILESYSTEM_SIMPLE,

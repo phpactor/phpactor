@@ -5,7 +5,6 @@ namespace Phpactor\Tests\Benchmark;
 use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 
-
 /**
  * @BeforeMethods({"setUp"})
  * @Iterations(10)
@@ -18,7 +17,7 @@ class ClassSearchBench extends BaseBenchCase
         $this->loadProject('Symfony');
     }
 
-    public function benchClassSearch()
+    public function benchClassSearch(): void
     {
         $this->runCommand('class:search Request');
     }

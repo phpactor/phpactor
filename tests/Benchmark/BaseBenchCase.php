@@ -2,7 +2,6 @@
 
 namespace Phpactor\Tests\Benchmark;
 
-use Phpactor\TestUtils\Workspace;
 use Phpactor\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 

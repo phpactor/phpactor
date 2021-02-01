@@ -17,7 +17,7 @@ class ClassMoveCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, array $fileMap = [])
+    public function testSmokeSuccess($command, array $fileMap = []): void
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
@@ -80,19 +80,19 @@ class ClassMoveCommandTest extends SystemTestCase
         ];
     }
 
-    public function testOutdatedGitIndex()
+    public function testOutdatedGitIndex(): void
     {
         rename($this->workspaceDir() . '/lib/Badger.php', $this->workspaceDir() . '/lib/Crow.php');
         $process = $this->phpactor('class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php');
         $this->assertSuccess($process);
     }
 
-    public function testMovesRelatedFiles()
+    public function testMovesRelatedFiles(): void
     {
         $this->workspace()->put('.phpactor.json', json_encode([
             'navigator.destinations' => [
-                "source" => "lib/<kernel>.php",
-                "test" => "lib/<kernel>Test.php"
+                'source' => 'lib/<kernel>.php',
+                'test' => 'lib/<kernel>Test.php'
             ]
         ]));
         $this->workspace()->put('lib/BadgerTest.php', '<?php namespace Animals; class BadgerTest {}');
@@ -106,7 +106,7 @@ class ClassMoveCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeFailure
      */
-    public function testSmokeFailure($command, $expectedMessage = null)
+    public function testSmokeFailure($command, $expectedMessage = null): void
     {
         $process = $this->phpactor($command);
         $this->assertFailure($process, $expectedMessage);

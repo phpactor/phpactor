@@ -77,7 +77,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testNoActionsAvailable()
+    public function testNoActionsAvailable(): void
     {
         $this->menu = ContextMenu::fromArray([
             'actions' => [
@@ -112,7 +112,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->assertStringContainsString('No context actions', $action->message());
     }
 
-    public function testReturnMenu()
+    public function testReturnMenu(): void
     {
         $this->menu = ContextMenu::fromArray([
             'actions' => [
@@ -150,7 +150,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->assertEquals(ContextMenuHandler::NAME, $action->callbackAction()->name());
     }
 
-    public function testReturnMenuWithOriginalOffset()
+    public function testReturnMenuWithOriginalOffset(): void
     {
         $this->menu = ContextMenu::fromArray([
             'actions' => [
@@ -187,7 +187,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->assertEquals(self::ORIGINAL_OFFSET, $action->callbackAction()->parameters()['offset']);
     }
 
-    public function testReplaceTokens()
+    public function testReplaceTokens(): void
     {
         $this->container->get(ContextMenuExtension::SERVICE_REQUEST_HANDLER)->willReturn(
             $this->requestHandler->reveal()

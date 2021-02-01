@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use PackageVersions\Versions;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Exception;
 
 class Application extends SymfonyApplication
 {
@@ -51,7 +52,7 @@ class Application extends SymfonyApplication
 
         try {
             return parent::doRun($input, $output);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (
                 $input->hasArgument('command')
                 && ($command = $input->getArgument('command'))
@@ -78,7 +79,7 @@ class Application extends SymfonyApplication
         return $definition;
     }
 
-    private function handleException(OutputInterface $output, string $dumper, \Exception $e)
+    private function handleException(OutputInterface $output, string $dumper, Exception $e)
     {
         $errors = [
             'error' => $this->serializeException($e),
@@ -97,7 +98,7 @@ class Application extends SymfonyApplication
         return 64;
     }
 
-    private function serializeException(\Exception $e)
+    private function serializeException(Exception $e)
     {
         return [
             'class' => get_class($e),
@@ -106,7 +107,7 @@ class Application extends SymfonyApplication
         ];
     }
 
-    private function initialize(InputInterface $input)
+    private function initialize(InputInterface $input): void
     {
         $this->container = Phpactor::boot($input, $this->vendorDir);
 

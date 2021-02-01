@@ -12,7 +12,7 @@ class CacheClearCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    public function testCacheClear()
+    public function testCacheClear(): void
     {
         $process = $this->phpactor('cache:clear');
         $this->assertSuccess($process);

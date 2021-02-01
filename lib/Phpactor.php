@@ -140,7 +140,7 @@ class Phpactor
         }
 
         if (
-            $input->getFirstArgument() !== 'extension:update' && 
+            $input->getFirstArgument() !== 'extension:update' &&
             file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])
         ) {
             $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
