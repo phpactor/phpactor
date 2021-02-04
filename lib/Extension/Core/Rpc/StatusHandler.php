@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Core\Rpc;
 
 use Phpactor\ConfigLoader\Core\PathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
@@ -80,7 +81,7 @@ class StatusHandler implements Handler
 
     private function handleFormattedType(array $diagnostics): EchoResponse
     {
-        return EchoResponse::fromMessage(implode(PHP_EOL, [
+        $info = [
             'Info',
             '----',
             'Version: ' . $diagnostics['phpactor_version'],
@@ -93,7 +94,15 @@ class StatusHandler implements Handler
             'Config files',
             '------------',
             $this->buildConfigFileMessage(),
-        ]));
+        ];
+        if ($diagnostics['phpactor_is_develop']) {
+            $info[] = '';
+            $info[] = 'WARNING';
+            $info[] = '-------';
+            $info[] = 'You are using the develop branch which is no longer maintained';
+            $info[] = 'Switch to master or use the latest tagged version of Phpactor';
+        }
+        return EchoResponse::fromMessage(implode(PHP_EOL, $info));
     }
 
     private function buildSupportMessage(array $diagnostics)
