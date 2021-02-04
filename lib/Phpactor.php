@@ -14,6 +14,7 @@ use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProvider
 use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
@@ -132,6 +133,7 @@ class Phpactor
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
+            LanguageServerExtraExtension::class,
             IndexerExtension::class,
         ];
 

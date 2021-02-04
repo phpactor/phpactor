@@ -27,6 +27,7 @@ use Phpactor\Container\Extension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
+use Symfony\Component\Process\ExecutableFinder;
 
 class CoreExtension implements Extension
 {
@@ -36,6 +37,7 @@ class CoreExtension implements Extension
     const PARAM_DUMPER = 'console_dumper_default';
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';
+    const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
 
     public function configure(Resolver $schema): void
     {
@@ -43,11 +45,13 @@ class CoreExtension implements Extension
             self::PARAM_DUMPER => 'indented',
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
+            self::PARAM_WARN_ON_DEVELOP => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
             self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
+            self::PARAM_WARN_ON_DEVELOP => 'Internal use only: if an warning will be issed when on develop, may be removed in the future',
         ]);
     }
 
@@ -134,7 +138,9 @@ class CoreExtension implements Extension
                 $container->get('source_code_filesystem.registry'),
                 $container->get('config_loader.candidates'),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
-                $container->get(PhpVersionResolver::class)
+                $container->get(PhpVersionResolver::class),
+                null,
+                $container->getParameter(self::PARAM_WARN_ON_DEVELOP)
             );
         });
     }
