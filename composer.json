@@ -85,7 +85,7 @@
     "scripts": {
         "post-install-cmd": "bin/phpactor extension:update",
         "integrate": [
-            "vendor/bin/phpstan analyse --level=1",
+            "vendor/bin/phpstan analyse",
             "vendor/bin/phpunit",
             "vendor/bin/php-cs-fixer fix",
             "config/travis/testdeps",
