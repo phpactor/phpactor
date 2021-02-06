@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassCopyCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -17,7 +17,7 @@ class ClassCopyCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = [])
+    public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = []): void
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
@@ -36,7 +36,7 @@ class ClassCopyCommandTest extends SystemTestCase
         foreach ($contentExpectations as $filePath => $contentExpectation) {
             $path = $this->workspaceDir() . '/' . $filePath;
             $contents = file_get_contents($path);
-            $this->assertContains($contentExpectation, $contents);
+            $this->assertStringContainsString($contentExpectation, $contents);
         }
     }
 
@@ -95,7 +95,7 @@ class ClassCopyCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeFailure
      */
-    public function testSmokeFailure($command, $expectedMessage = null)
+    public function testSmokeFailure($command, $expectedMessage = null): void
     {
         $process = $this->phpactor($command);
         $this->assertFailure($process, $expectedMessage);

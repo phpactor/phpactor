@@ -8,12 +8,12 @@ final class IndentedDumper implements Dumper
 {
     const PADDING = '  ';
 
-    public function dump(OutputInterface $output, array $data)
+    public function dump(OutputInterface $output, array $data): void
     {
         $this->doDump($output, $data);
     }
 
-    private function doDump(OutputInterface $output, array $data, $padding = 0)
+    private function doDump(OutputInterface $output, array $data, $padding = 0): void
     {
         switch ($padding) {
             case 1:

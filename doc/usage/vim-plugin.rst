@@ -21,7 +21,7 @@ or ``~/.config/nvim/init.vim`` when using Neovim):
 
 ::
 
-   Plug 'phpactor/phpactor', {'for': 'php', 'branch': 'master', 'do': 'composer install --no-dev -o'}
+   Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
 
 Reload VIM (or ``:source ~/.vimrc``) then update your plugins:
 
@@ -97,5 +97,8 @@ The following plugins add more functionality to Phpactor
 -  `deoplete-phpactor <https://github.com/kristijanhusak/deoplete-phpactor>`__:
    Integrates with
    `deoplete <https://github.com/Shougo/deoplete.nvim>`__
--  `phpactor-mappings <https://github.com/elythyr/phpactor-mappings>`__:
+-  `coc-phpactor <https://github.com/phpactor/coc-phpactor>`__:
+   Integrates with
+   `CoC <https://github.com/neoclide/coc.nvim>`__
+-  `phpactor-mappings <https://github.com/camilledejoye/phpactor-mappings>`__:
    Provides sensible default key mappings for Phpactor.

@@ -9,9 +9,10 @@ class BaseBenchCase extends IntegrationTestCase
 {
     protected function runCommand(string $command, string $stdin = null): string
     {
-        chdir($this->workspaceDir());
-
-        $process = new Process(__DIR__ . '/../../bin/phpactor ' . $command);
+        if (!file_exists($this->workspaceDir())) {
+            $this->workspace()->reset();
+        }
+        $process = Process::fromShellCommandline(__DIR__ . '/../../bin/phpactor ' . $command);
         $process->setInput($stdin);
         $process->setWorkingDirectory($this->workspaceDir());
         $process->run();

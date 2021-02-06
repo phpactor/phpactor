@@ -49,7 +49,7 @@ class Navigator
         return isset($this->autoCreateConfig[$destinationName]);
     }
 
-    public function createNew(string $path, string $destinationName)
+    public function createNew(string $path, string $destinationName): void
     {
         $destination = $this->destination($path, $destinationName);
         $variant = $this->variant($destinationName);

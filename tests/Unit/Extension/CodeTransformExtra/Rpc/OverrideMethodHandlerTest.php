@@ -23,7 +23,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
      */
     private $overrideMethod;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->addSource('<?php class ParentClass { public function foobar() {}  public function barfoor() {} }')->build();
         $this->overrideMethod = $this->prophesize(OverrideMethod::class);
@@ -37,18 +37,18 @@ class OverrideMethodHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testSuggestsPossibleMethods()
+    public function testSuggestsPossibleMethods(): void
     {
         $action = $this->handle('override_method', [
             'class_name' => 'ChildClass',
             'path' => __FILE__,
             'source' => <<<'EOT'
-<?php
+                <?php
 
-class ChildClass extends ParentClass
-{
-}
-EOT
+                class ChildClass extends ParentClass
+                {
+                }
+                EOT
         ]);
 
         $input = $action->inputs();
@@ -58,15 +58,15 @@ EOT
         $this->assertCount(2, $choices);
     }
 
-    public function testOverrideAMethodGivenAsAString()
+    public function testOverrideAMethodGivenAsAString(): void
     {
         $source = <<<'EOT'
-<?php
+            <?php
 
-class ChildClass extends ParentClass
-{
-}
-EOT
+            class ChildClass extends ParentClass
+            {
+            }
+            EOT
         ;
 
         $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
@@ -82,15 +82,15 @@ EOT
         $this->assertEquals('hello', $action->newSource());
     }
 
-    public function testOverrideMethodsGivenAsArray()
+    public function testOverrideMethodsGivenAsArray(): void
     {
         $source = <<<'EOT'
-<?php
+            <?php
 
-class ChildClass extends ParentClass
-{
-}
-EOT
+            class ChildClass extends ParentClass
+            {
+            }
+            EOT
         ;
 
         $foobarTransformedCode = TransformSourceCode::fromString('foobar was added');

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
 use Webmozart\Glob\Glob;
+use RuntimeException;
 
 class ClassTransformCommand extends Command
 {
@@ -33,7 +34,7 @@ class ClassTransformCommand extends Command
         $this->differ = new Differ();
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Apply a transformation to an existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
@@ -53,7 +54,7 @@ class ClassTransformCommand extends Command
         $pattern = Phpactor::normalizePath($pattern);
 
         if (false === Glob::isDynamic($pattern) && false === file_exists($pattern)) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'File "%s" does not exist',
                 $pattern
             ));

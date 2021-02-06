@@ -24,7 +24,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
      */
     private $extractMethod;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->extractMethod = $this->prophesize(ExtractMethod::class);
     }
@@ -34,7 +34,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
         return new ExtractMethodHandler($this->extractMethod->reveal());
     }
 
-    public function testDemandMethodName()
+    public function testDemandMethodName(): void
     {
         $action = $this->handle('extract_method', [
             'source' => self::SOURCE,
@@ -53,7 +53,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
         $this->assertEquals('method_name', $firstInput->name());
     }
 
-    public function testExtractMethod()
+    public function testExtractMethod(): void
     {
         $this->extractMethod->extractMethod(
             self::SOURCE,

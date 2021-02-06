@@ -21,6 +21,8 @@ use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * TODO: Extract the responsiblities of this class, see
@@ -85,7 +87,7 @@ class ReferencesHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
         $resolver->setDefaults([
             self::PARAMETER_MODE => self::MODE_FIND,
@@ -144,7 +146,7 @@ class ReferencesHandler extends AbstractHandler
                 );
         }
 
-        throw new \InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'Unknown references mode "%s"',
             $arguments['mode']
         ));
@@ -266,6 +268,22 @@ class ReferencesHandler extends AbstractHandler
         string $source = null,
         string $replacement = null
     ) {
+        [$source, $references] = $this->doPerformFindOrReplaceReferences(
+            $symbolContext,
+            $filesystem,
+            $source,
+            $replacement,
+        );
+
+        return [$source, $this->sortReferences($references)];
+    }
+
+    private function doPerformFindOrReplaceReferences(
+        SymbolContext $symbolContext,
+        string $filesystem,
+        string $source = null,
+        string $replacement = null
+    ) {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::CLASS_:
                 return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
@@ -277,10 +295,31 @@ class ReferencesHandler extends AbstractHandler
                 return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
         }
 
-        throw new \RuntimeException(sprintf(
+        throw new RuntimeException(sprintf(
             'Cannot find references for symbol type "%s"',
             $symbolContext->symbol()->symbolType()
         ));
+    }
+
+    private function sortReferences(array $fileReferences): array
+    {
+        // Sort the references for each file
+        array_walk($fileReferences, function (array &$fileReference): void {
+            if (empty($fileReference['references'])) {
+                return; // Do nothing if there is no references
+            }
+
+            usort($fileReference['references'], function (array $first, array $second) {
+                return $first['start'] - $second['start'];
+            });
+        });
+
+        // Sort the list by file
+        usort($fileReferences, function (array $first, array $second) {
+            return strcmp($first['file'], $second['file']);
+        });
+
+        return $fileReferences;
     }
 
     private function echoMessage(string $action, SymbolContext $symbolContext, string $filesystem, array $references): EchoResponse

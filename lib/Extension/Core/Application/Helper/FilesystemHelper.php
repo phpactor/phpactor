@@ -4,6 +4,8 @@ namespace Phpactor\Extension\Core\Application\Helper;
 
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
+use InvalidArgumentException;
+use Generator;
 
 final class FilesystemHelper
 {
@@ -14,7 +16,7 @@ final class FilesystemHelper
         }
 
         if ($filePath !== 'stdin') {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Could not locate file "%s", use "stdin" to read from STDIN',
                 $filePath
             ));
@@ -28,7 +30,7 @@ final class FilesystemHelper
         return $contents;
     }
 
-    public static function globSourceDestination(string $src, string $dest): \Generator
+    public static function globSourceDestination(string $src, string $dest): Generator
     {
         foreach (Glob::glob($src) as $globSrc) {
             $globDest = $dest;

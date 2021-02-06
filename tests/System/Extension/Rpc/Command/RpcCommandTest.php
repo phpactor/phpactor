@@ -10,7 +10,7 @@ class RpcCommandTest extends SystemTestCase
     /**
      * It should execute a command from stdin
      */
-    public function testReadsFromStdin()
+    public function testReadsFromStdin(): void
     {
         $stdin = json_encode([
             'action' => 'echo',
@@ -32,7 +32,7 @@ class RpcCommandTest extends SystemTestCase
         ], $response);
     }
 
-    public function testPrettyPrintsOutput()
+    public function testPrettyPrintsOutput(): void
     {
         $stdin = json_encode([
             'action' => 'echo',
@@ -45,7 +45,7 @@ class RpcCommandTest extends SystemTestCase
         $this->assertSuccess($process);
     }
 
-    public function testReplaysLastRequest()
+    public function testReplaysLastRequest(): void
     {
         // enable the feature
         file_put_contents($this->workspace()->path('.phpactor.yml'), 'rpc.store_replay: true');

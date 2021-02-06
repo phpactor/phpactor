@@ -6,16 +6,16 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class CacheClearCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
     }
 
-    public function testCacheClear()
+    public function testCacheClear(): void
     {
         $process = $this->phpactor('cache:clear');
         $this->assertSuccess($process);
-        $this->assertContains('Cache cleared', $process->getOutput());
+        $this->assertStringContainsString('Cache cleared', $process->getOutput());
     }
 }

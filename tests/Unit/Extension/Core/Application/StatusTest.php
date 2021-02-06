@@ -8,9 +8,12 @@ use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class StatusTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FilesystemRegistry
      */
@@ -27,7 +30,7 @@ class StatusTest extends TestCase
     private $paths;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->registry = $this->prophesize(FilesystemRegistry::class);
         $this->resolver = $this->prophesize(PhpVersionResolver::class);
@@ -35,7 +38,7 @@ class StatusTest extends TestCase
         $this->status = new Status($this->registry->reveal(), $this->paths, '/path/to/here', $this->resolver->reveal());
     }
 
-    public function testStatusNoComposerOrGit()
+    public function testStatusNoComposerOrGit(): void
     {
         $this->registry->names()->willReturn(['simple']);
         $diagnostics = $this->status->check();
@@ -44,7 +47,7 @@ class StatusTest extends TestCase
         $this->assertGreaterThanOrEqual(2, $diagnostics['bad']);
     }
 
-    public function testStatusComposerOrGit()
+    public function testStatusComposerOrGit(): void
     {
         $this->registry->names()->willReturn([
             SourceCodeFilesystemExtension::FILESYSTEM_SIMPLE,

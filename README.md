@@ -3,10 +3,7 @@ Phpactor
 
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
-| Branch       | Status                                                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| master       | [![Build Status: master](https://travis-ci.org/phpactor/phpactor.svg?branch=master)](https://travis-ci.org/phpactor/phpactor)  |
-| develop      | [![Build Status: develop](https://travis-ci.org/phpactor/phpactor.svg?branch=develop)](https://travis-ci.org/phpactor/phpactor) |
+![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=master)
 
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
@@ -51,3 +48,16 @@ Community
 
 - Follow [@phpactor](https://twitter.com/phpactor) for the latest news.
 - Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.
+
+Contributing
+------------
+
+This package is open source and welcomes contributions! Feel free to open a
+pull request on this repository.
+
+Support
+-------
+
+- Create an issue on the main [Phpactor](https://github.com/phpactor/phpactor) repository.
+- Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.
+

@@ -19,20 +19,16 @@ class HoverHandlerTest extends HandlerTestCase
      */
     private $reflector;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->enableContextualSourceLocation()->build();
         $this->formatter = new ObjectFormatter([]);
-    }
-    protected function createHandler(): Handler
-    {
-        return new HoverHandler($this->reflector, $this->formatter);
     }
 
     /**
      * @dataProvider provideHover
      */
-    public function testHover(string $source, string $expectedMessage)
+    public function testHover(string $source, string $expectedMessage): void
     {
         [ $source, $offset ] = ExtractOffset::fromSource($source);
 
@@ -80,7 +76,7 @@ class HoverHandlerTest extends HandlerTestCase
     /**
      * @dataProvider provideHoverWithFormatter
      */
-    public function testHoverWithFormatter(string $source, string $expectedMessage)
+    public function testHoverWithFormatter(string $source, string $expectedMessage): void
     {
         $this->formatter = new ObjectFormatter([
             new MethodFormatter(),
@@ -108,39 +104,43 @@ class HoverHandlerTest extends HandlerTestCase
 
         yield 'method with documentation' => [
             <<<'EOT'
-<?php 
+                <?php 
 
-class Foobar { 
-    /**
-     * this is documentation
-     */
-public function fo<>obar() { } 
-}
-EOT
+                class Foobar { 
+                    /**
+                     * this is documentation
+                     */
+                public function fo<>obar() { } 
+                }
+                EOT
             ,
             <<<'EOT'
-pub foobar()
-EOT
+                pub foobar()
+                EOT
         ];
 
         yield 'class with documentation' => [
             <<<'EOT'
-<?php 
+                <?php 
 
-/**
- * this is documentation
- */
-class F<>oobar {}
-EOT
+                /**
+                 * this is documentation
+                 */
+                class F<>oobar {}
+                EOT
             ,
             <<<'EOT'
-Foobar
-EOT
+                Foobar
+                EOT
         ];
 
         yield 'unknown' => [
             '<?php <> $foo = "bar"',
             '<unknown> <unknown>',
         ];
+    }
+    protected function createHandler(): Handler
+    {
+        return new HoverHandler($this->reflector, $this->formatter);
     }
 }

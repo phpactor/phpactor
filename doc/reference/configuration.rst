@@ -63,6 +63,21 @@ Internal use only - name of the command which was executed
 **Default**: ``null``
 
 
+.. _param_core.warn_on_develop:
+
+
+``core.warn_on_develop``
+""""""""""""""""""""""""
+
+
+
+
+Internal use only: if an warning will be issed when on develop, may be removed in the future
+
+
+**Default**: ``false``
+
+
 .. _ClassToFileExtension:
 
 
@@ -79,7 +94,25 @@ ClassToFileExtension
 
 
 
+Root path of the project (e.g. where composer.json is)
+
+
 **Default**: ``"%project_root%"``
+
+
+.. _param_class_to_file.brute_force_conversion:
+
+
+``class_to_file.brute_force_conversion``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+If composer not found, fallback to scanning all files (very time consuming depending on project size)
+
+
+**Default**: ``true``
 
 
 .. _CodeTransformExtension:
@@ -199,6 +232,24 @@ List of completors to disable (e.g. ``scf_class`` and ``declared_function``)
 
 
 **Default**: ``[]``
+
+
+.. _param_completion_worse.name_completion_priority:
+
+
+``completion_worse.name_completion_priority``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Strategy to use when ordering completion results for classes and functions:
+
+- `proximity`: Classes and functions will be ordered by their proximity to the text document being edited.
+- `none`: No ordering will be applied.
+
+
+**Default**: ``"proximity"``
 
 
 .. _CompletionExtension:
@@ -350,6 +401,9 @@ WorseReflectionExtension
 
 
 
+If reflection caching should be enabled
+
+
 **Default**: ``true``
 
 
@@ -360,6 +414,9 @@ WorseReflectionExtension
 """""""""""""""""""""""""""""""""""
 
 
+
+
+If caching is enabled, limit the amount of time a cache entry can stay alive
 
 
 **Default**: ``5``
@@ -374,6 +431,11 @@ WorseReflectionExtension
 
 
 
+If source code is passed to a ``Reflector`` then temporarily make it available as a
+source location. Note this should NOT be enabled if the source code can be
+located in another (e.g. when running a Language Server)
+
+
 **Default**: ``true``
 
 
@@ -386,6 +448,9 @@ WorseReflectionExtension
 
 
 
+Cache directory for stubs
+
+
 **Default**: ``"%cache%\/worse-reflection"``
 
 
@@ -396,6 +461,9 @@ WorseReflectionExtension
 """""""""""""""""""""""""""""
 
 
+
+
+Location of the core PHP stubs - these will be scanned and cached on the first request
 
 
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
@@ -599,6 +667,21 @@ Immediately de-register the autoloader once it has been included (prevent confli
 **Default**: ``true``
 
 
+.. _param_composer.class_maps_only:
+
+
+``composer.class_maps_only``
+""""""""""""""""""""""""""""
+
+
+
+
+Register the composer class maps only, do not register the autoloader - RECOMMENDED
+
+
+**Default**: ``true``
+
+
 .. _ConsoleExtension:
 
 
@@ -784,19 +867,16 @@ LanguageServerExtension
 -----------------------
 
 
-.. _param_language_server.client_capabilities:
+.. _param_language_server.catch_errors:
 
 
-``language_server.client_capabilities``
-"""""""""""""""""""""""""""""""""""""""
+``language_server.catch_errors``
+""""""""""""""""""""""""""""""""
 
 
 
 
-For internal use only: will contain the capabilities of the connected language server client
-
-
-**Default**: ``[]``
+**Default**: ``true``
 
 
 .. _param_language_server.enable_workspace:
@@ -827,6 +907,81 @@ Phpactor parameters (config) that apply only to the language server session
 
 
 **Default**: ``[]``
+
+
+.. _param_language_server.method_alias_map:
+
+
+``language_server.method_alias_map``
+""""""""""""""""""""""""""""""""""""
+
+
+
+
+Allow method names to be re-mapped. Useful for maintaining backwards compatibility
+
+
+**Default**: ``[]``
+
+
+.. _param_language_server.diagnostic_sleep_time:
+
+
+``language_server.diagnostic_sleep_time``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Amount of time to wait before analyzing the code again for diagnostics
+
+
+**Default**: ``1000``
+
+
+.. _param_language_server.diagnostics_on_update:
+
+
+``language_server.diagnostics_on_update``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Perform diagnostics when the text document is updated
+
+
+**Default**: ``false``
+
+
+.. _param_language_server.diagnostics_on_save:
+
+
+``language_server.diagnostics_on_save``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Perform diagnostics when the text document is saved
+
+
+**Default**: ``true``
+
+
+.. _param_language_server.diagnostic_providers:
+
+
+``language_server.diagnostic_providers``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Specify which diagnostic providers should be active (default to all)
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerCompletionExtension:
@@ -873,6 +1028,50 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``10``
 
 
+.. _LanguageServerWorseReflectionExtension:
+
+
+LanguageServerWorseReflectionExtension
+--------------------------------------
+
+
+.. _param_language_server_worse_reflection.workspace_index.update_interval:
+
+
+``language_server_worse_reflection.workspace_index.update_interval``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Minimum interval to update the workspace index as documents are updated (in milliseconds)
+
+
+**Default**: ``100``
+
+
+.. _LanguageServerCodeTransformExtension:
+
+
+LanguageServerCodeTransformExtension
+------------------------------------
+
+
+.. _param_language_server_code_transform.import_globals:
+
+
+``language_server_code_transform.import_globals``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Show hints for non-imported global classes and functions
+
+
+**Default**: ``false``
+
+
 .. _IndexerExtension:
 
 
@@ -892,7 +1091,7 @@ IndexerExtension
 List of allowed watchers. The first watcher that supports the current system will be used
 
 
-**Default**: ``["inotify","find","php"]``
+**Default**: ``["inotify","watchman","find","php"]``
 
 
 .. _param_indexer.index_path:
@@ -938,6 +1137,21 @@ Glob patterns to exclude while indexing
 
 
 **Default**: ``["\/vendor\/**\/Tests\/**\/*","\/vendor\/**\/tests\/**\/*","\/vendor\/composer\/**\/*"]``
+
+
+.. _param_indexer.stub_paths:
+
+
+``indexer.stub_paths``
+""""""""""""""""""""""
+
+
+
+
+Paths to external folders to index. They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
+
+
+**Default**: ``[]``
 
 
 .. _param_indexer.poll_time:
@@ -1051,6 +1265,18 @@ LanguageServerPhpstanExtension
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_phpstan.level:
+
+
+``phpstan.level``
+"""""""""""""""""
+
+
+
+
+**Default**: ``null``
 
 
 .. _PhpSpecExtension:

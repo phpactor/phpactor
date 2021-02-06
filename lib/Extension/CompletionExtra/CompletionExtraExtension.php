@@ -21,7 +21,7 @@ class CompletionExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
@@ -31,11 +31,11 @@ class CompletionExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('class_mover.handler.hover', function (Container $container) {
             return new HoverHandler(
@@ -45,7 +45,7 @@ class CompletionExtraExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => HoverHandler::NAME] ]);
     }
 
-    private function registerCommands(ContainerBuilder $container)
+    private function registerCommands(ContainerBuilder $container): void
     {
         $container->register('command.complete', function (Container $container) {
             return new CompleteCommand(
@@ -55,7 +55,7 @@ class CompletionExtraExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'complete' ]]);
     }
 
-    private function registerApplicationServices(ContainerBuilder $container)
+    private function registerApplicationServices(ContainerBuilder $container): void
     {
         $container->register('application.complete', function (Container $container) {
             return new Complete(

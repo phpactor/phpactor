@@ -6,19 +6,19 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassTransformCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
         file_put_contents(
             $this->workspace()->path('lib/Foobar.php'),
             <<<'EOT'
-<?php
+                <?php
 
-class Foobar implements Countable
-{
-}
-EOT
+                class Foobar implements Countable
+                {
+                }
+                EOT
         );
     }
 
@@ -27,17 +27,17 @@ EOT
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, string $expectedOutput, $error = false)
+    public function testSmokeSuccess($command, string $expectedOutput, $error = false): void
     {
         $process = $this->phpactor($command);
 
         if ($error) {
-            $this->assertContains($expectedOutput, $process->getErrorOutput());
+            $this->assertStringContainsString($expectedOutput, $process->getErrorOutput());
             return;
         }
 
         $this->assertSuccess($process);
-        $this->assertContains($expectedOutput, $process->getOutput());
+        $this->assertStringContainsString($expectedOutput, $process->getOutput());
     }
 
     public function provideSmokeSuccess()

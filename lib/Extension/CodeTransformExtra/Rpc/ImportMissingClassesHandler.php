@@ -37,7 +37,7 @@ class ImportMissingClassesHandler implements Handler
         $this->handler = $handler;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
         $resolver->setRequired([
             self::PARAM_PATH,

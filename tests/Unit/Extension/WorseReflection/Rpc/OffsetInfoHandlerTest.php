@@ -11,9 +11,9 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class OffsetInfoHandlerTest extends HandlerTestCase
 {
     const SOURCE = <<<'EOT'
-<?php $foo = 1234;
+        <?php $foo = 1234;
 
-EOT
+        EOT
     ;
 
     public function createHandler(): Handler
@@ -23,7 +23,7 @@ EOT
         );
     }
 
-    public function testOffsetInfo()
+    public function testOffsetInfo(): void
     {
         $action = $this->createHandler('offset_info')->handle([
             'offset' => 19,
@@ -31,6 +31,6 @@ EOT
         ]);
 
         $this->assertInstanceOf(InformationResponse::class, $action);
-        $this->assertContains('symbol', $action->information());
+        $this->assertStringContainsString('symbol', $action->information());
     }
 }

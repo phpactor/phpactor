@@ -2,16 +2,19 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Application;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Phpactor\Extension\CompletionExtra\Application\Complete;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteTest extends SystemTestCase
 {
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider provideComplete
      */
-    public function testComplete(string $source, array $expected)
+    public function testComplete(string $source, array $expected): void
     {
         $suggestions = $this->complete($source)['suggestions'];
         usort($suggestions, function ($one, $two) {
@@ -32,17 +35,17 @@ class CompleteTest extends SystemTestCase
         return [
             'Public property' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public $foo;
-}
+                    class Foobar
+                    {
+                        public $foo;
+                    }
 
-$foobar = new Foobar();
-$foobar-><>
+                    $foobar = new Foobar();
+                    $foobar-><>
 
-EOT
+                    EOT
         , [
                     [
                         'type' => 'property',
@@ -53,41 +56,41 @@ EOT
             ],
             'Private property' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    private $foo;
-}
+                    class Foobar
+                    {
+                        private $foo;
+                    }
 
-$foobar = new Foobar();
-$foobar-><>
+                    $foobar = new Foobar();
+                    $foobar-><>
 
-EOT
+                    EOT
         ,
             [ ]
             ],
             'Public property access' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Barar
-{
-    public $bar;
-}
+                    class Barar
+                    {
+                        public $bar;
+                    }
 
-class Foobar
-{
-    /**
-     * @var Barar
-     */
-    public $foo;
-}
+                    class Foobar
+                    {
+                        /**
+                         * @var Barar
+                         */
+                        public $foo;
+                    }
 
-$foobar = new Foobar();
-$foobar->foo-><>
+                    $foobar = new Foobar();
+                    $foobar->foo-><>
 
-EOT
+                    EOT
                , [
                     [
                         'type' => 'property',
@@ -98,19 +101,19 @@ EOT
             ],
             'Public method with parameters' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public function foo(string $zzzbar = 'bar', $def): Barbar
-    {
-    }
-}
+                    class Foobar
+                    {
+                        public function foo(string $zzzbar = 'bar', $def): Barbar
+                        {
+                        }
+                    }
 
-$foobar = new Foobar();
-$foobar-><>
+                    $foobar = new Foobar();
+                    $foobar-><>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'method',
@@ -121,22 +124,22 @@ EOT
             ],
             'Public method multiple return types' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    /**
-     * @return Foobar|Barbar
-     */
-    public function foo()
-    {
-    }
-}
+                    class Foobar
+                    {
+                        /**
+                         * @return Foobar|Barbar
+                         */
+                        public function foo()
+                        {
+                        }
+                    }
 
-$foobar = new Foobar();
-$foobar-><>
+                    $foobar = new Foobar();
+                    $foobar-><>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'method',
@@ -147,35 +150,35 @@ EOT
             ],
             'Private method' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    private function foo(): Barbar
-    {
-    }
-}
+                    class Foobar
+                    {
+                        private function foo(): Barbar
+                        {
+                        }
+                    }
 
-$foobar = new Foobar();
-$foobar-><>
+                    $foobar = new Foobar();
+                    $foobar-><>
 
-EOT
+                    EOT
                 , [
                 ]
             ],
             'Static property' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public static $foo;
-}
+                    class Foobar
+                    {
+                        public static $foo;
+                    }
 
-$foobar = new Foobar();
-$foobar::<>
+                    $foobar = new Foobar();
+                    $foobar::<>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'property',
@@ -191,22 +194,22 @@ EOT
             ],
             'Static property with previous arrow accessor' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public static $foo;
+                    class Foobar
+                    {
+                        public static $foo;
 
-    /**
-     * @var Foobar
-     */
-    public $me;
-}
+                        /**
+                         * @var Foobar
+                         */
+                        public $me;
+                    }
 
-$foobar = new Foobar();
-$foobar->me::<>
+                    $foobar = new Foobar();
+                    $foobar->me::<>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'property',
@@ -222,18 +225,18 @@ EOT
             ],
             'Partially completed' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public static $foobar;
-    public static $barfoo;
-}
+                    class Foobar
+                    {
+                        public static $foobar;
+                        public static $barfoo;
+                    }
 
-$foobar = new Foobar();
-$foobar::f<>
+                    $foobar = new Foobar();
+                    $foobar::f<>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'property',
@@ -244,18 +247,18 @@ EOT
             ],
             'Partially completed' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    const FOOBAR = 'foobar';
-    const BARFOO = 'barfoo';
-}
+                    class Foobar
+                    {
+                        const FOOBAR = 'foobar';
+                        const BARFOO = 'barfoo';
+                    }
 
-$foobar = new Foobar();
-$foobar::<>
+                    $foobar = new Foobar();
+                    $foobar::<>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'constant',
@@ -271,18 +274,18 @@ EOT
             ],
             'Accessor on new line' => [
                 <<<'EOT'
-<?php
+                    <?php
 
-class Foobar
-{
-    public $foobar;
-}
+                    class Foobar
+                    {
+                        public $foobar;
+                    }
 
-$foobar = new Foobar();
-$foobar
-    -><>
+                    $foobar = new Foobar();
+                    $foobar
+                        -><>
 
-EOT
+                    EOT
                 , [
                     [
                         'type' => 'property',

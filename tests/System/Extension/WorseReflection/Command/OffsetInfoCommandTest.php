@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class OffsetInfoCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -15,21 +15,21 @@ class OffsetInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the thing under the cursor.
      */
-    public function testProvideInformationForOffset()
+    public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactor('offset:info lib/Badger.php 163');
         $this->assertSuccess($process);
-        $this->assertContains('type:Animals\Badger\Carnivorous', $process->getOutput());
-        $this->assertContains('Badger/Carnivorous.php', $process->getOutput());
+        $this->assertStringContainsString('type:Animals\Badger\Carnivorous', $process->getOutput());
+        $this->assertStringContainsString('Badger/Carnivorous.php', $process->getOutput());
     }
 
     /**
      * @testdox It provides information about the thing under the cursor as JSON
      */
-    public function testProvideInformationForOffsetAsJson()
+    public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactor('offset:info lib/Badger.php 137 --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"symbol":"__construct', $process->getOutput());
+        $this->assertStringContainsString('{"symbol":"__construct', $process->getOutput());
     }
 }

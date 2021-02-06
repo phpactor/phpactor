@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ReferencesMemberCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -15,27 +15,27 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox It should show all references to Badger
      */
-    public function testReferences()
+    public function testReferences(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge');
         $this->assertSuccess($process);
-        $this->assertContains('$this->⟶badge⟵', $process->getOutput());
+        $this->assertStringContainsString('$this->⟶badge⟵', $process->getOutput());
     }
 
     /**
      * @testdox When non-existing member given, suggest existing members with exception.
      */
-    public function testNonExistingMember()
+    public function testNonExistingMember(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" bad --type="method"');
         $this->assertEquals(255, $process->getExitCode());
-        $this->assertContains('Class has no member named "bad"', $process->getErrorOutput());
+        $this->assertStringContainsString('Class has no member named "bad"', $process->getErrorOutput());
     }
 
     /**
      * @testdox Find all members for class
      */
-    public function testFindAllForClass()
+    public function testFindAllForClass(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger"');
         $this->assertSuccess($process);
@@ -44,7 +44,7 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Find all members
      */
-    public function testFindAll()
+    public function testFindAll(): void
     {
         $process = $this->phpactor('references:member');
         $this->assertSuccess($process);
@@ -53,11 +53,11 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Replace member
      */
-    public function testReplace()
+    public function testReplace(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge');
         $this->assertSuccess($process);
-        $this->assertContains('this->dodge()', file_get_contents(
+        $this->assertStringContainsString('this->dodge()', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));
     }
@@ -65,11 +65,11 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox Replace dry run
      */
-    public function testReplaceDryRun()
+    public function testReplaceDryRun(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --replace=dodge --dry-run');
         $this->assertSuccess($process);
-        $this->assertContains('this->badge()', file_get_contents(
+        $this->assertStringContainsString('this->badge()', file_get_contents(
             $this->workspaceDir() . '/lib/Badger.php'
         ));
     }
@@ -77,31 +77,31 @@ class ReferencesMemberCommandTest extends SystemTestCase
     /**
      * @testdox It can use a different scope
      */
-    public function testReferencesScope()
+    public function testReferencesScope(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" badge --filesystem=composer');
         $this->assertSuccess($process);
-        $this->assertContains('⟶badge⟵', $process->getOutput());
+        $this->assertStringContainsString('⟶badge⟵', $process->getOutput());
     }
 
     /**
      * @testdox By property
      */
-    public function testByTypeProperty()
+    public function testByTypeProperty(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" carnivorous --type=property');
         $this->assertSuccess($process);
-        $this->assertContains('⟶carnivorous⟵', $process->getOutput());
+        $this->assertStringContainsString('⟶carnivorous⟵', $process->getOutput());
     }
 
     /**
      * @testdox Find member name shared by differnt types
      */
-    public function testDifferentTypees()
+    public function testDifferentTypees(): void
     {
         $process = $this->phpactor('references:member "Animals\Badger" carnivorous');
         $this->assertSuccess($process);
-        $this->assertContains('$this->⟶carnivorous⟵ = $carnivorous', $process->getOutput());
-        $this->assertContains('public function ⟶carnivorous⟵(', $process->getOutput());
+        $this->assertStringContainsString('$this->⟶carnivorous⟵ = $carnivorous', $process->getOutput());
+        $this->assertStringContainsString('public function ⟶carnivorous⟵(', $process->getOutput());
     }
 }

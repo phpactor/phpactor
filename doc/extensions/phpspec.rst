@@ -1,7 +1,7 @@
 Phpspec
 =======
 
-.. github-link:: https://github.com/phpactor/phpspec-extension
+.. github-link:: phpactor/phpspec-extension
 
 The PHPSpec extension provides subject-under-test member completion.
 

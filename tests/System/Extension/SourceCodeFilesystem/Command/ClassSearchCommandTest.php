@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class ClassSearchCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -15,37 +15,37 @@ class ClassSearchCommandTest extends SystemTestCase
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchName()
+    public function testSearchName(): void
     {
         $process = $this->phpactor('class:search "Badger"');
         $this->assertSuccess($process);
-        $this->assertContains('Badger.php', $process->getOutput());
+        $this->assertStringContainsString('Badger.php', $process->getOutput());
     }
 
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchNameJson()
+    public function testSearchNameJson(): void
     {
         $process = $this->phpactor('class:search "Badger" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('Badger.php"', $process->getOutput());
+        $this->assertStringContainsString('Badger.php"', $process->getOutput());
     }
 
-    public function testSearchByQualifiedName()
+    public function testSearchByQualifiedName(): void
     {
         $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('Carnivorous.php"', $process->getOutput());
+        $this->assertStringContainsString('Carnivorous.php"', $process->getOutput());
     }
 
     /**
      * @testdox It should return information baesd on a class "short" name.
      */
-    public function testSearchNameInternalName()
+    public function testSearchNameInternalName(): void
     {
         $process = $this->phpactor('class:search "DateTime" --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('DateTime', $process->getOutput());
+        $this->assertStringContainsString('DateTime', $process->getOutput());
     }
 }

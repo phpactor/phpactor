@@ -37,7 +37,7 @@ class ReferencesMemberCommand extends Command
         $this->dumperRegistry = $dumperRegistry;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Find reference to a member');
         $this->addArgument('class', InputArgument::OPTIONAL, 'Class path or FQN');
@@ -123,7 +123,7 @@ class ReferencesMemberCommand extends Command
         return $count;
     }
 
-    private function addReferenceRow(Table $table, string $filePath, array $reference, bool $ansi)
+    private function addReferenceRow(Table $table, string $filePath, array $reference, bool $ansi): void
     {
         $table->addRow([
             Phpactor::relativizePath($filePath),

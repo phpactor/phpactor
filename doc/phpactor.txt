@@ -7,6 +7,7 @@ CONTENTS                                                   *phpactor-contents*
   2. Configuration...........................................|phpactor-config|
   3. Completion..........................................|phpactor-completion|
   4. Commands..............................................|phpactor-commands|
+      1. Window targets..............................|phpactor-window-targets|
   5. Mappings..............................................|phpactor-mappings|
 
 ==============================================================================
@@ -175,25 +176,68 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorClassNew                                          *:PhpactorClassNew*
   Create a new class. You will be offered a choice of templates.
 
-:PhpactorGotoDefinition                              *:PhpactorGotoDefinition*
-  Goto the definition of the class, method or function under the cursor. Open
-  the definition in the current window.
+:PhpactorGotoDefinition [target]                     *:PhpactorGotoDefinition*
+  [target] is `edit` if omitted.
+
+  Goto the definition of the symbol under the cursor. Opens in the [target]
+  window, see |phpactor-window-target| for the list of possible targets.
+  |<mods>| can be provided to the command to change how the window will be
+  opened.
+
+  Examples:
+>
+      " Opens in the current buffer
+      PhpactorGotoDefinition
+
+      " Opens in a vertical split opened on the right side
+      botright PhpactorGotoDefinition vsplit
+      vertical botright PhpactorGotoDefinition split
+
+      " Opens in a new tab
+      PhpactorGotoDefinition tabnew
+<
 
 :PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
+  deprecated, use |:PhpactorGotoDefinition| instead
+
   As with |:PhpactorGotoDefinition| but open in a vertical split.
 
 :PhpactorGotoDefinitionHsplit                  *:PhpactorGotoDefinitionHsplit*
-  As with |:PhpactorGotoDefinition| but open in a horizontal split.
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in an horizontal split.
 
 :PhpactorGotoDefinitionTab                        *:PhpactorGotoDefinitionTab*
-  As with |:PhpactorGotoDefinition| but open in a new tab
+  deprecated, use |:PhpactorGotoDefinition| instead
 
-:PhpactorGotoType                                          *:PhpactorGotoType*
-  Goto type (class) of the symbol under the cursor.
+  As with |:PhpactorGotoDefinition| but open in a new tab.
 
-:PhpactorGotoImplementations                    *:PhpactorGotoImplementations*
-  Load all implementations of the class under the cursor into the quick-fix
-  list.
+:PhpactorGotoType [target]                                 *:PhpactorGotoType*
+
+  Same as |:PhpactorGotoDefinition| but goto the type of the symbol under the
+  cursor.
+
+:PhpactorGotoImplementations [target]           *:PhpactorGotoImplementations*
+
+  Same as |:PhpactorGotoDefinition| but goto the implmentation of the symbol
+  under the cursor.
+
+  If there is more than one result the quickfix strategy will be used and
+  [target] will be ignored, see |g:phpactorQuickfixStrategy|.
+
+==============================================================================
+WINDOW TARGETS                                       *phpactor-window-targets*
+
+
+Phpactor provide a few window targets to use with some commands. See
+|:PhpactorGotoDefinition| for an example of how to use them.
+
+Possible values are:
+  * `e`, `edit`, `ex`
+  * `new`, `vne`, `vnew`
+  * `sp`, `split`, `vs`, `vsplit`
+  * `vie`, `view`, `sv`, `sview`, `splitview`
+  * `tabe`, `tabedit`, `tabnew`
 
 ==============================================================================
 MAPPINGS                                                   *phpactor-mappings*
@@ -211,13 +255,7 @@ are available for you to copy:
     au FileType php nmap <buffer> <Leader>mm :PhpactorContextMenu<CR>
     au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
     au FileType php,cucumber nmap <buffer> <Leader>o
-        \ :PhpactorGotoDefinition<CR>
-    au FileType php,cucumber nmap <buffer> <Leader>Oh
-        \ :PhpactorGotoDefinitionHsplit<CR>
-    au FileType php,cucumber nmap <buffer> <Leader>Ov
-        \ :PhpactorGotoDefinitionVsplit<CR>
-    au FileType php,cucumber nmap <buffer> <Leader>Ot
-        \ :PhpactorGotoDefinitionTab<CR>
+        \ :PhpactorGotoDefinition edit<CR>
     au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
     au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>

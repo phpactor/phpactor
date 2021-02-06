@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Application\Exception;
 
-class FileAlreadyExists extends \Exception
+use Exception;
+
+class FileAlreadyExists extends Exception
 {
 }

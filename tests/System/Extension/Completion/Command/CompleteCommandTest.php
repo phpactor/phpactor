@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -15,11 +15,11 @@ class CompleteCommandTest extends SystemTestCase
     /**
      * @dataProvider provideComplete
      */
-    public function testComplete($command, $expected)
+    public function testComplete($command, $expected): void
     {
         $process = $this->phpactor($command);
         $this->assertSuccess($process);
-        $this->assertContains($expected, trim($process->getOutput()));
+        $this->assertStringContainsString($expected, trim($process->getOutput()));
     }
 
     public function provideComplete()
@@ -28,14 +28,14 @@ class CompleteCommandTest extends SystemTestCase
             'Complete' => [
                 'complete lib/Badger.php 181',
                 <<<'EOT'
-suggestions:
-EOT
+                    suggestions:
+                    EOT
             ],
             'Complete with type' => [
                 'complete lib/Badger.php 181 --type=cucumber',
                 <<<'EOT'
-suggestions:
-EOT
+                    suggestions:
+                    EOT
             ],
         ];
     }

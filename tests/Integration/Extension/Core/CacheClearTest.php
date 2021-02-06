@@ -12,21 +12,21 @@ class CacheClearTest extends IntegrationTestCase
      */
     private $cacheClear;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest(
             <<<'EOT'
-// File: test.text
-Hello World
-// File: folder/test.text
-Hello World
-EOT
+                // File: test.text
+                Hello World
+                // File: folder/test.text
+                Hello World
+                EOT
         );
         $this->cacheClear = new CacheClear($this->workspaceDir());
     }
 
-    public function testCacheClear()
+    public function testCacheClear(): void
     {
         $this->assertTrue($this->workspace()->exists('/test.text'));
         $this->assertTrue($this->workspace()->exists('/folder/test.text'));

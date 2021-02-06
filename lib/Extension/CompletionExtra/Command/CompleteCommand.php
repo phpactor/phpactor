@@ -39,7 +39,7 @@ class CompleteCommand extends Command
         $this->helper = new FilesystemHelper();
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Suggest completions DEPRECATED! Use RPC instead');
         $this->addArgument('path', InputArgument::REQUIRED, 'STDIN, source path or FQN');

@@ -15,22 +15,22 @@ class WorseReflectionNavigatorTest extends IntegrationTestCase
      */
     private $reflector;
 
-    public function testNavigateToParent()
+    public function testNavigateToParent(): void
     {
         $navigator = $this->create(
             <<<'EOT'
-// File:One.php
-<?php
+                // File:One.php
+                <?php
 
-class One
-{
-}
-// File:Two.php
-<?php
-class Two extends One
-{
-}
-EOT
+                class One
+                {
+                }
+                // File:Two.php
+                <?php
+                class Two extends One
+                {
+                }
+                EOT
         );
         $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Two.php');
 
@@ -39,28 +39,28 @@ EOT
         ], $destinations);
     }
 
-    public function testNavigateToInterfaces()
+    public function testNavigateToInterfaces(): void
     {
         $navigator = $this->create(
             <<<'EOT'
-// File:One.php
-<?php
+                // File:One.php
+                <?php
 
-interface One
-{
-}
-// File:Two.php
-<?php
+                interface One
+                {
+                }
+                // File:Two.php
+                <?php
 
-interface Two
-{
-}
-// File:Three.php
-<?php
-class Three implements One, Two
-{
-}
-EOT
+                interface Two
+                {
+                }
+                // File:Three.php
+                <?php
+                class Three implements One, Two
+                {
+                }
+                EOT
         );
         $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Three.php');
 
@@ -70,28 +70,28 @@ EOT
         ], $destinations);
     }
 
-    public function testNavigateFromInterfaceToParents()
+    public function testNavigateFromInterfaceToParents(): void
     {
         $navigator = $this->create(
             <<<'EOT'
-// File:One.php
-<?php
+                // File:One.php
+                <?php
 
-interface One
-{
-}
-// File:Two.php
-<?php
+                interface One
+                {
+                }
+                // File:Two.php
+                <?php
 
-interface Two
-{
-}
-// File:Three.php
-<?php
-interface Three extends One, Two
-{
-}
-EOT
+                interface Two
+                {
+                }
+                // File:Three.php
+                <?php
+                interface Three extends One, Two
+                {
+                }
+                EOT
         );
         $destinations = $navigator->destinationsFor($this->workspaceDir() . '/Three.php');
 

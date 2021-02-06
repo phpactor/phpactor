@@ -15,9 +15,12 @@ use Phpactor\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ImportMissingClassesHandlerTest extends IntegrationTestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_PATH = '/example/path';
     const EXAMPLE_SOURCE = 'example-source';
 
@@ -44,7 +47,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
         ));
     }
 
-    public function testZeroUnresolvedClasses()
+    public function testZeroUnresolvedClasses(): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[]));
 
@@ -56,7 +59,7 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
         $this->assertInstanceOf(EchoResponse::class, $response);
     }
 
-    public function testImportsUnresolvedClasses()
+    public function testImportsUnresolvedClasses(): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new NameWithByteOffsets(...[
             new NameWithByteOffset(

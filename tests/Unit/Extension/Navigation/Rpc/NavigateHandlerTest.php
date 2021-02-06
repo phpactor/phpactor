@@ -27,7 +27,7 @@ class NavigateHandlerTest extends HandlerTestCase
      */
     private $destinations;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->navigator = $this->prophesize(Navigator::class);
         $this->destinations = [
@@ -41,7 +41,7 @@ class NavigateHandlerTest extends HandlerTestCase
         return new NavigateHandler($this->navigator->reveal());
     }
 
-    public function testDestinations()
+    public function testDestinations(): void
     {
         $this->navigator->destinationsFor(self::TEST_PATH)->willReturn($this->destinations);
         $response = $this->handle('navigate', [
@@ -55,7 +55,7 @@ class NavigateHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(ChoiceInput::class, $input);
     }
 
-    public function testCanCreateConfirm()
+    public function testCanCreateConfirm(): void
     {
         $this->navigator->destinationsFor(self::TEST_PATH)->willReturn($this->destinations);
         $this->navigator->canCreateNew(self::TEST_PATH, self::TEST_DEST1)->willReturn(true);
@@ -71,7 +71,7 @@ class NavigateHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(ConfirmInput::class, $input);
     }
 
-    public function testOpenFile()
+    public function testOpenFile(): void
     {
         $this->navigator->destinationsFor(self::TEST_PATH)->willReturn($this->destinations);
         $this->navigator->canCreateNew(self::TEST_PATH, self::TEST_DEST1)->willReturn(false);
