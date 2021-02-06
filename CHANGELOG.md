@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## develop
+## 2021-02-06 (0.17.0)
 
 Features:
 
@@ -32,13 +32,16 @@ Improvements:
   - [language-server] New LSP protocol and general refactoring - @dantleech
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
+  - [language-server] Support for indexing constants
   - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
   - [worse-reflection] Improved inference for property types - @elythyr
   - [worse-reflection] Include virtual members from traits - @scisssssssors
   - [code-tranform] fix invalid missing property diagnostic (#1126) - @elythyr
+  - [code-transform] Improve performance for missing properries - @dantleech
 
 Bug fixes:
 
+  - [code-transform] Catch unhandled exceptions - @dantleech
   - [text-document] valid php class names not detected for word-at-offset
   - [code-tranform] Return types not considered for unresolved names - @dantleech
   - [completion] Avoid reflection on NULL
