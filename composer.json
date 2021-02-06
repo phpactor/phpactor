@@ -77,7 +77,7 @@
             "Phpactor\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "bin": [
         "bin/phpactor"
