@@ -45,7 +45,7 @@ class CoreExtension implements Extension
             self::PARAM_DUMPER => 'indented',
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
-            self::PARAM_WARN_ON_DEVELOP => false,
+            self::PARAM_WARN_ON_DEVELOP => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
