@@ -63,6 +63,21 @@ Internal use only - name of the command which was executed
 **Default**: ``null``
 
 
+.. _param_core.warn_on_develop:
+
+
+``core.warn_on_develop``
+""""""""""""""""""""""""
+
+
+
+
+Internal use only: if an warning will be issed when on develop, may be removed in the future
+
+
+**Default**: ``false``
+
+
 .. _ClassToFileExtension:
 
 
@@ -1262,4 +1277,23 @@ LanguageServerPhpstanExtension
 
 
 **Default**: ``null``
+
+
+.. _PhpSpecExtension:
+
+
+PhpSpecExtension
+----------------
+
+
+.. _param_phpspec.spec_prefix:
+
+
+``phpspec.spec_prefix``
+"""""""""""""""""""""""
+
+
+
+
+**Default**: ``"spec"``
 
