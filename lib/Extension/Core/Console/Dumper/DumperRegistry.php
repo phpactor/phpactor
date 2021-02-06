@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\Core\Console\Dumper;
 
+use InvalidArgumentException;
+
 final class DumperRegistry
 {
     private $default;
@@ -19,7 +21,7 @@ final class DumperRegistry
     {
         $name = $name ?: $this->default;
         if (!isset($this->dumpers[$name])) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Unknown dumper "%s", known dumpers: "%s"',
                 $name,
                 implode('", "', array_keys($this->dumpers))
@@ -29,7 +31,7 @@ final class DumperRegistry
         return $this->dumpers[$name];
     }
 
-    private function add(string $name, Dumper $dumper)
+    private function add(string $name, Dumper $dumper): void
     {
         $this->dumpers[$name] = $dumper;
     }

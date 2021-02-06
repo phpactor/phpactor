@@ -36,18 +36,25 @@ class Status
      */
     private $phpVersionResolver;
 
+    /**
+     * @var bool
+     */
+    private $warnOnDevelop;
+
     public function __construct(
         FilesystemRegistry $registry,
         PathCandidates $paths,
         string $workingDirectory,
         PhpVersionResolver $phpVersionResolver,
-        ExecutableFinder $executableFinder = null
+        ExecutableFinder $executableFinder = null,
+        bool $warnOnDevelop = true
     ) {
         $this->registry = $registry;
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
         $this->paths = $paths;
         $this->workingDirectory = $workingDirectory;
         $this->phpVersionResolver = $phpVersionResolver;
+        $this->warnOnDevelop = $warnOnDevelop;
     }
 
     public function check(): array
@@ -85,15 +92,43 @@ class Status
         }
 
         if ($path = $this->executableFinder->find('git')) {
-            $process = new Process('git log -1 --pretty=format:"%h (%ad) %f" --date=relative', __DIR__ . '/../../../..');
+            $process = new Process(
+                [
+                    'git',
+                    'log',
+                    '-1',
+                    '--pretty=format:"%h (%ad) %f REF(%D)REF',
+                    '--date=relative'
+                ],
+                __DIR__ . '/../../../..'
+            );
             $process->run();
-            if ($process->getExitCode() === 0) {
-                $diagnostics['phpactor_version'] = $process->getOutput();
-            } else {
-                $diagnostics['phpactor_version'] = 'ERROR: ' . $process->getErrorOutput();
-            }
+            $diagnostics = array_merge($diagnostics, $this->versionInfo($process));
         }
 
         return $diagnostics;
+    }
+
+    private function versionInfo(Process $process): array
+    {
+        if ($process->getExitCode() !== 0) {
+            return [
+                'phpactor_version' => 'ERROR: ' . $process->getErrorOutput(),
+                'phpactor_is_develop' => false,
+            ];
+        }
+
+        if (!preg_match('{^(.*)REF(.*?)REF}', $process->getOutput(), $matches)) {
+            return [
+                'phpactor_version' => $process->getOutput(),
+                'phpactor_is_develop' => false,
+            ];
+        }
+
+        return [
+            'phpactor_version' => $matches[1],
+            'phpactor_is_develop' => $this->warnOnDevelop && (false !== strpos($matches[2], 'develop'))
+        ];
+
     }
 }

@@ -1,0 +1,1787 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$dumper of method Phpactor\\\\Application\\:\\:handleException\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Application.php
+
+		-
+			message: "#^Method Phpactor\\\\Application\\:\\:handleException\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Application.php
+
+		-
+			message: "#^Parameter \\#1 \\$e of method Phpactor\\\\Application\\:\\:serializeException\\(\\) expects Exception, Throwable given\\.$#"
+			count: 1
+			path: lib/Application.php
+
+		-
+			message: "#^Method Phpactor\\\\Application\\:\\:serializeException\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Application.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copy\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassCopy.php
+
+		-
+			message: "#^Result of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyFile\\(\\) \\(void\\) is used\\.$#"
+			count: 2
+			path: lib/Extension/ClassMover/Application/ClassCopy.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassCopy.php
+
+		-
+			message: "#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassCopy.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:replaceInSource\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has parameter \\$filePath with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReferenceList\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReferenceList\\(\\) has parameter \\$referenceList with no value type specified in iterable type Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReference\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:line\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:replaceReferencesInCode\\(\\) has parameter \\$list with no value type specified in iterable type Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has parameter \\$memberType with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:getRelatedFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Result of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) \\(void\\) is used\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:directoryMap\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:replaceThoseReferences\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$dest with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$src with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassMover.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:findReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:findOrReplaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$className with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$replace with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$className with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$dryRun with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$filePath with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$replace with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Right side of && is always true\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReferenceList\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReferenceList\\(\\) has parameter \\$referenceList with no value type specified in iterable type Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReference\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:line\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceReferencesInCode\\(\\) has parameter \\$list with no value type specified in iterable type Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/ClassReferences.php
+
+		-
+			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Variable \\$member in PHPDoc tag @var does not match assigned variable \\$private\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:pathsFromReflectionClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:allPhpFiles\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has parameter \\$filePaths with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has parameter \\$filePaths with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has parameter \\$filePaths with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Logger\\\\ClassCopyLogger\\:\\:copying\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Logger/ClassCopyLogger.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Logger\\\\ClassCopyLogger\\:\\:replacing\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Logger/ClassCopyLogger.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Logger\\\\ClassMoverLogger\\:\\:moving\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Logger/ClassMoverLogger.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Logger\\\\ClassMoverLogger\\:\\:replacing\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Application/Logger/ClassMoverLogger.php
+
+		-
+			message: "#^Parameter \\#2 \\$default of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\Prompt\\:\\:prompt\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$src of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copy\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$dest of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copy\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$srcPath of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyFile\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$destPath of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyFile\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$srcName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyClass\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$destName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copyClass\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassCopyCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$default of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\Prompt\\:\\:prompt\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$filesystemName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:move\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$src of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:move\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#4 \\$dest of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:move\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$filesystemName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$srcPath of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#4 \\$destPath of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$filesystemName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$srcName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#4 \\$destName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) expects string, array\\<string\\>\\|string given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ClassMoveCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\Logger\\\\SymfonyConsoleCopyLogger\\:\\:\\$output has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/Logger/SymfonyConsoleCopyLogger.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\Logger\\\\SymfonyConsoleMoveLogger\\:\\:\\$output has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/Logger/SymfonyConsoleMoveLogger.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|string\\|true given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:findOrReplaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:findOrReplaceReferences\\(\\) has parameter \\$class with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:findOrReplaceReferences\\(\\) has parameter \\$dryRun with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:findOrReplaceReferences\\(\\) has parameter \\$filesystem with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:findOrReplaceReferences\\(\\) has parameter \\$replace with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:renderTable\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:renderTable\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesClassCommand\\:\\:addReferenceRow\\(\\) has parameter \\$reference with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesClassCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:execute\\(\\) has parameter \\$bar with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$scope of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$class of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string\\|null, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$memberName of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string\\|null, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#4 \\$memberType of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#5 \\$replace of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#6 \\$dryRun of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects bool, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|string\\|true given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:execute\\(\\) should return int but empty return statement found\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:renderTable\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:renderTable\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:addReferenceRow\\(\\) has parameter \\$reference with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ClassCopyHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ClassCopyHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ClassCopyHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ClassCopyHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ClassMoveHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ClassMoveHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ClassMoveHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ClassMoveHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoicesAndDefault\\(\\) expects array, array\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:findReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:replaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Parameter \\#2 \\$oldSource of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\UpdateFileSourceResponse\\:\\:fromPathOldAndNewSource\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^If condition is always true\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:classReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:memberReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:performFindOrReplaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:doPerformFindOrReplaceReferences\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:sortReferences\\(\\) has parameter \\$fileReferences with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:sortReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:echoMessage\\(\\) has parameter \\$references with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:defaultReplacement\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassToFileExtra\\\\Application\\\\FileInfo\\:\\:infoForFile\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassToFileExtra/Application/FileInfo.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ClassToFileExtra\\\\Command\\\\FileInfoCommand\\:\\:\\$infoForOffset has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassToFileExtra/Command/FileInfoCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ClassToFileExtra\\\\Command\\\\FileInfoCommand\\:\\:\\$dumperRegistry has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassToFileExtra/Command/FileInfoCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassToFileExtra\\\\Rpc\\\\FileInfoHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ClassToFileExtra/Rpc/FileInfoHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ClassToFileExtra\\\\Rpc\\\\FileInfoHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ClassToFileExtra/Rpc/FileInfoHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\AbstractClassGenerator\\:\\:availableGenerators\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/AbstractClassGenerator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\:\\:generateFromExisting\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\:\\:generateNew\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/ClassNew.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\Transformer\\:\\:transform\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\Transformer\\:\\:transform\\(\\) has parameter \\$source with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\Transformer\\:\\:transform\\(\\) has parameter \\$transformations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
+
+		-
+			message: "#^Parameter \\#2 \\$basePath of static method Webmozart\\\\PathUtil\\\\Path\\:\\:makeAbsolute\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
+
+		-
+			message: "#^Parameter \\#1 \\$code of static method Phpactor\\\\CodeTransform\\\\Domain\\\\SourceCode\\:\\:fromStringAndPath\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassInflectCommand\\:\\:process\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$srcPath of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$dest of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$variant of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Parameter \\#4 \\$overwrite of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) expects bool, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassInflectCommand\\:\\:listGenerators\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Command/ClassNewCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassNewCommand\\:\\:process\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassNewCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$src of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassNewCommand\\:\\:generateSourceCode\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassNewCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$variant of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassNewCommand\\:\\:generateSourceCode\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassNewCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$overwrite of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassNew\\:\\:generate\\(\\) expects bool, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassNewCommand.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$transformations has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$path of static method Phpactor\\\\Phpactor\\:\\:normalizePath\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$code of static method Phpactor\\\\CodeTransform\\\\Domain\\\\SourceCode\\:\\:fromStringAndPath\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
+
+		-
+			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoicesAndDefault\\(\\) expects array, array\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:generate\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractConstantHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractConstantHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractConstantHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractConstantHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractExpressionHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractExpressionHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractExpressionHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractExpressionHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractMethodHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractMethodHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ExtractMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:getPropertyContext\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleClass\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withMultiple\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleSingle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleSingle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:determineOriginalSource\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:determineOriginalSource\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/GenerateMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ImportClassHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportClassHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ImportClassHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportClassHandler.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\CodeTransform\\\\Domain\\\\Refactor\\\\ImportClass\\\\NameAlreadyUsedException\\:\\:name\\(\\)\\.$#"
+			count: 2
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportClassHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ImportClassHandler\\:\\:suggestions\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportClassHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ImportMissingClassesHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportMissingClassesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ImportMissingClassesHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/ImportMissingClassesHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withMultiple\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:class\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:class\\(\\) has parameter \\$className with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:class\\(\\) has parameter \\$source with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:parentClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between null and Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass will always evaluate to false\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:methodChoices\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\RenameVariableHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/RenameVariableHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\RenameVariableHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/RenameVariableHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Application\\\\Complete\\:\\:complete\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Application/Complete.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\CompleteCommand\\:\\:\\$complete has unknown class Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete as its type\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\CompleteCommand\\:\\:\\$complete \\(Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete\\) does not accept Phpactor\\\\Extension\\\\CompletionExtra\\\\Application\\\\Complete\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
+
+		-
+			message: "#^Call to method complete\\(\\) on an unknown class Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$filePath of method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\FilesystemHelper\\:\\:contentsFromFileOrStdin\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderMember\\(\\) never returns null so it can be removed from the return typehint\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderFunction\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderVariable\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/ContextMenuExtension.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:resolveAction\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:resolveAction\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:delegateAction\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:delegateAction\\(\\) has parameter \\$symbolMenu with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:actionSelectionAction\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:actionSelectionAction\\(\\) has parameter \\$symbolMenu with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoices\\(\\) expects array, array\\<int\\|string, int\\|string\\>\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$keyMap of method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withKeys\\(\\) expects array, array\\<int\\|string, string\\|null\\>\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:offsetFromSourceAndOffset\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:replaceTokens\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:replaceTokens\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Handler\\\\ContextMenuHandler\\:\\:replaceTokens\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\:\\:\\$parameters type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/Action.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/Action.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/Action.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:\\$actions type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:\\$contexts type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:__construct\\(\\) has parameter \\$actions with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:__construct\\(\\) has parameter \\$contexts with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:fromArray\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:forContext\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:forContext\\(\\) should return array but returns array\\<Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\>\\|false\\.$#"
+			count: 1
+			path: lib/Extension/ContextMenu/Model/ContextMenu.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\CacheClear\\:\\:cachePath\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/CacheClear.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\ClassFileNormalizer\\:\\:classToFile\\(\\) should return string but returns null\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Helper/ClassFileNormalizer.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\FilesystemHelper\\:\\:contentsFromFileOrStdin\\(\\) should return string but returns string\\|false\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Helper/FilesystemHelper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\FilesystemHelper\\:\\:globSourceDestination\\(\\) return type has no value type specified in iterable type Generator\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Helper/FilesystemHelper.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:\\$paths type has no value type specified in iterable type Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Status.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:__construct\\(\\) has parameter \\$paths with no value type specified in iterable type Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Status.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:check\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Status.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) has parameter \\$process with no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Status.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Application/Status.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\CacheClearCommand\\:\\:\\$cache has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/CacheClearCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$paths has unknown class Phpactor\\\\Config\\\\Paths as its type\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$expanders type has no value type specified in iterable type Phpactor\\\\FilePathResolver\\\\Expanders\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:__construct\\(\\) has parameter \\$expanders with no value type specified in iterable type Phpactor\\\\FilePathResolver\\\\Expanders\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:__construct\\(\\) has parameter \\$paths with no value type specified in iterable type Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$paths \\(Phpactor\\\\Config\\\\Paths\\) does not accept Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$messages of method Symfony\\\\Component\\\\Console\\\\Output\\\\OutputInterface\\:\\:writeln\\(\\) expects iterable\\|string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Iterating over an object of an unknown class Phpactor\\\\Config\\\\Paths\\.$#"
+			count: 1
+			path: lib/Extension/Core/Command/ConfigDumpCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\Dumper\\:\\:dump\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/Dumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\Dumper\\:\\:dump\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/Dumper.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:\\$default has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/DumperRegistry.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:\\$dumpers has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/DumperRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:__construct\\(\\) has parameter \\$dumpers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/DumperRegistry.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\IndentedDumper\\:\\:dump\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/IndentedDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\IndentedDumper\\:\\:doDump\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/IndentedDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\IndentedDumper\\:\\:doDump\\(\\) has parameter \\$padding with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/IndentedDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\IndentedDumper\\:\\:formatValue\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/IndentedDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\IndentedDumper\\:\\:formatValue\\(\\) has parameter \\$value with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/IndentedDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\JsonDumper\\:\\:dump\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/JsonDumper.php
+
+		-
+			message: "#^Parameter \\#1 \\$messages of method Symfony\\\\Component\\\\Console\\\\Output\\\\OutputInterface\\:\\:writeln\\(\\) expects iterable\\|string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/JsonDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\TableDumper\\:\\:dump\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/TableDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\TableDumper\\:\\:formatArray\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/TableDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\TableDumper\\:\\:formatArray\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/TableDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\TableDumper\\:\\:formatArray\\(\\) has parameter \\$padding with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Dumper/TableDumper.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Formatter\\\\Highlight\\:\\:highlightAtCol\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Formatter/Highlight.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\PhpactorCommandLoader\\:\\:get\\(\\) has parameter \\$name with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/PhpactorCommandLoader.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\BashPrompt\\:\\:isSupported\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/BashPrompt.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\BashPrompt\\:\\:getBashPath\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/BashPrompt.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\ChainPrompt\\:\\:\\$prompts has no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/ChainPrompt.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\ChainPrompt\\:\\:__construct\\(\\) has parameter \\$prompts with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/ChainPrompt.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\ChainPrompt\\:\\:isSupported\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/ChainPrompt.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\Prompt\\:\\:isSupported\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Console/Prompt/Prompt.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/CacheClearHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/CacheClearHandler.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\ConfigHandler\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/ConfigHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\ConfigHandler\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/ConfigHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\ConfigHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/ConfigHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\ConfigHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/ConfigHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$information of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\InformationResponse\\:\\:fromString\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/ConfigHandler.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:\\$paths type has no value type specified in iterable type Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:__construct\\(\\) has parameter \\$paths with no value type specified in iterable type Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:handleDetailedType\\(\\) has parameter \\$status with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:handleFormattedType\\(\\) has parameter \\$diagnostics with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:buildSupportMessage\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:buildSupportMessage\\(\\) has parameter \\$diagnostics with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:buildConfigFileMessage\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Core/Rpc/StatusHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService\\:\\:services\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServer/Service/OnDevelopWarningService.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService\\:\\:serviceAnnouncements\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
+			count: 1
+			path: lib/Extension/LanguageServer/Service/OnDevelopWarningService.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:\\$autoCreateConfig type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:__construct\\(\\) has parameter \\$autoCreateConfig with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:\\$navigator \\(Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\) does not accept Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\Navigator\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destinationsFor\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:canCreateNew\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destination\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:variant\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Application/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Handler/NavigateHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Handler/NavigateHandler.php
+
+		-
+			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoices\\(\\) expects array, array\\<int\\|string, int\\|string\\>\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Handler/NavigateHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\ChainNavigator\\:\\:__construct\\(\\) has parameter \\$navigators with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/ChainNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\ChainNavigator\\:\\:destinationsFor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/ChainNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\Navigator\\:\\:destinationsFor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/Navigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\PathFinderNavigator\\:\\:destinationsFor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/PathFinderNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\WorseReflectionNavigator\\:\\:destinationsFor\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/WorseReflectionNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\WorseReflectionNavigator\\:\\:forReflectionClass\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/WorseReflectionNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\WorseReflectionNavigator\\:\\:forReflectionClass\\(\\) has parameter \\$destinations with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/WorseReflectionNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\WorseReflectionNavigator\\:\\:forReflectionInterface\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/WorseReflectionNavigator.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\WorseReflectionNavigator\\:\\:forReflectionInterface\\(\\) has parameter \\$destinations with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/Navigation/Navigator/WorseReflectionNavigator.php
+
+		-
+			message: "#^Parameter \\#1 \\$filesystemName of method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:classSearch\\(\\) expects string, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/Command/ClassSearchCommand.php
+
+		-
+			message: "#^Parameter \\#2 \\$name of method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:classSearch\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/Command/ClassSearchCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/Command/ClassSearchCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\Rpc\\\\ClassSearchHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/Rpc/ClassSearchHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\Rpc\\\\ClassSearchHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/Rpc/ClassSearchHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:classSearch\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:fileList\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$files contains unknown class Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\FileList\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Iterating over an object of an unknown class Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\FileList\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:tryAndReflect\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:builtInResults\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:builtInResults\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Parameter \\#3 \\$length of function substr expects int, int\\<0, max\\>\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:resolveShortName\\(\\) has parameter \\$declaredClass with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\ClassSearch\\:\\:convertFqnToRelativePath\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$method ReflectionMethod\\)\\: Unexpected token \"\\$method\", expected type at offset 9$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:isAbstract\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:isStatic\\(\\)\\.$#"
+			count: 2
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:parameters\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$parameter ReflectionParameter\\)\\: Unexpected token \"\\$parameter\", expected type at offset 9$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:returnType\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$constant ReflectionConstant\\)\\: Unexpected token \"\\$constant\", expected type at offset 9$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$property ReflectionProperty\\)\\: Unexpected token \"\\$property\", expected type at offset 9$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$filesystemHelper has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper as its type\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$classFileNormalizer has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer as its type\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$classFileNormalizer \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer\\) does not accept Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\ClassFileNormalizer\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$filesystemHelper \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper\\) does not accept Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\FilesystemHelper\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) has parameter \\$showFrame with no typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Call to method contentsFromFileOrStdin\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$local Variable\\)\\: Unexpected token \"\\$local\", expected type at offset 9$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Call to method classToFile\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer\\.$#"
+			count: 2
+			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
+
+		-
+			message: "#^Parameter \\#1 \\$classOrFile of method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) expects string, array\\<string\\>\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/ClassReflectorCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/ClassReflectorCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\OffsetInfoCommand\\:\\:\\$infoForOffset has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset as its type\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
+
+		-
+			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\OffsetInfoCommand\\:\\:\\$infoForOffset \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset\\) does not accept Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
+
+		-
+			message: "#^Call to method infoForOffset\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, array\\<string\\>\\|bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Rpc\\\\OffsetInfoHandler\\:\\:handle\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Rpc/OffsetInfoHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Rpc\\\\OffsetInfoHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Rpc/OffsetInfoHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$information of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\InformationResponse\\:\\:fromString\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Rpc/OffsetInfoHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Rpc\\\\OffsetInfoHandler\\:\\:serialize\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Rpc/OffsetInfoHandler.php
+
+		-
+			message: "#^Parameter \\#2 \\$needle of function strpos expects int\\|string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Method Phpactor\\\\Phpactor\\:\\:isFile\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Method Phpactor\\\\Phpactor\\:\\:configureExtensionManager\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Method Phpactor\\\\Phpactor\\:\\:configureExtensionManager\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Parameter \\#1 \\$filename of function is_dir expects string, string\\|false given\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+
+		-
+			message: "#^Method Phpactor\\\\Phpactor\\:\\:resolveApplicationRoot\\(\\) should return string but returns string\\|false\\.$#"
+			count: 1
+			path: lib/Phpactor.php
+

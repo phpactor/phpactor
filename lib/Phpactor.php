@@ -10,8 +10,11 @@ use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtensio
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
+use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProviderExtension;
+use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
@@ -60,25 +63,31 @@ class Phpactor
     {
         $config = [];
 
-        $cwd = getcwd();
+        $projectRoot = getcwd();
+
+        if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
+            $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
+        }
 
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
             ->enableYamlDeserializer('yaml')
             ->addXdgCandidate('phpactor', 'phpactor.json', 'json')
             ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml')
-            ->addCandidate($cwd . '/.phpactor.json', 'json')
-            ->addCandidate($cwd . '/.phpactor.yml', 'yaml')
+            ->addCandidate($projectRoot . '/.phpactor.json', 'json')
+            ->addCandidate($projectRoot . '/.phpactor.yml', 'yaml')
             ->loader();
 
         $config = $loader->load();
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
+        $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
+        $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
         $config = self::configureExtensionManager($config, $vendorDir);
         $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
-            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $cwd = $input->getParameterOption([ '--working-dir', '-d' ]);
+            $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $projectRoot;
         }
 
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
@@ -122,6 +131,9 @@ class Phpactor
             LanguageServerHoverExtension::class,
             LanguageServerBridgeExtension::class,
             LanguageServerCodeTransformExtension::class,
+            LanguageServerSymbolProviderExtension::class,
+            LanguageServerSelectionRangeExtension::class,
+            LanguageServerExtraExtension::class,
             IndexerExtension::class,
         ];
 
@@ -129,7 +141,10 @@ class Phpactor
             $extensionNames[] = DebugExtension::class;
         }
 
-        if (file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])) {
+        if (
+            $input->getFirstArgument() !== 'extension:update' &&
+            file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])
+        ) {
             $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
 
             $installedExtensionNames = array_diff($installedExtensionNames, self::LEGACY_EXTENSIONS);
@@ -243,7 +258,14 @@ class Phpactor
     private static function configureLanguageServer(array $config): array
     {
         $config[LanguageServerExtension::PARAM_SESSION_PARAMETERS] = [
+            LanguageServerExtension::PARAM_METHOD_ALIAS_MAP => [
+                'indexer/reindex' => 'phpactor/indexer/reindex',
+                'session/dumpConfig' => 'phpactor/debug/config',
+                'service/running' => 'phpactor/service/running',
+                'system/status' => 'phpactor/stats',
+            ],
             WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION => false,
+            ClassToFileExtension::PARAM_BRUTE_FORCE_CONVERSION => false,
             CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
                 'scf_class',
                 'declared_class',

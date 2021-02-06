@@ -1,6 +1,61 @@
 Changelog
 =========
 
+## 2021-02-06 (0.17.0)
+
+Features:
+
+  - [completion] Support for PHP named parameters - @dantleech
+  - [completion] Basic Doctrine annotation completion support - @elythyr
+  - [completion] References are sorted alphabetically - @elythyr
+  - [completion] Show warning character if method or class is deprecated
+  - [completion] Sort class names and fucntions according to proximity to current file by default - @dantleech
+
+  - [composer] Class map only mode by default (do not register autoloader at all, do not include files)
+  - [file-watcher] Experimental support for [watchman](https://facebook.github.io/watchman/)
+  - [indexer] CLI command for index search (mainly for debugging)
+  - [indexer] PhpStorm stubs are now indexed
+  - [indexer] Show memory usage and limit in progress notification.
+  - [language-server] Import class/function code action and diagnostics
+  - [language-server] Transform code actions and diagnostics (complete constructor, implement contracts, fix class name and add missing properties)
+  - [completion] Keyword completion - @BladeMF
+  - [language-server] Create class code actions - @dantleech
+  - [phpactor] Update extensions after install composer hook - @dantleech
+
+Improvements:
+
+  - [worse-reflection] Support for list foreach
+  - [worse-reflection] Various issues around NULL and exception handling
+  - [worse-reflection] Improved frame resolution performance by 99.5x - @dantleech
+  - [worse-reflection] Fixed mixed up start/end positions in symbol resolver - @BladeMF
+  - [language-server] Update classes on workspace update - @BladeMF
+  - [language-server] New LSP protocol and general refactoring - @dantleech
+  - [language-server] Support document symbols (f.e. showing code outline for document)
+  - [language-server] Support symbol highlighting
+  - [language-server] Support for indexing constants
+  - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
+  - [worse-reflection] Improved inference for property types - @elythyr
+  - [worse-reflection] Include virtual members from traits - @scisssssssors
+  - [code-tranform] fix invalid missing property diagnostic (#1126) - @elythyr
+  - [code-transform] Improve performance for missing properries - @dantleech
+
+Bug fixes:
+
+  - [code-transform] Catch unhandled exceptions - @dantleech
+  - [text-document] valid php class names not detected for word-at-offset
+  - [code-tranform] Return types not considered for unresolved names - @dantleech
+  - [completion] Avoid reflection on NULL
+  - [scf] Fix support for moving and removing folders - @Lumnn
+  - [indexer] Fix indexing of static properties - @BladeMF
+  - [completion] Fix signature help in nested symbols - @BladeMF
+  - [worse-reflection] Static properties not resolved - @BladeMF
+  - [lanaguge-server] Correctly highlight use statements against qualified
+    names - @dantleech
+  - [language-server] Fix occasional class-not-found error on code transform (due to incorrectly formatted path)
+  - [worse-reflection] Do not consider "iterable" as an FQN - @elythyr
+  - [code-transform] Fix trailing line on class import - @elythyr
+  - [code-transform] Fix importing class names in docblocks - @elythyr
+
 ## 2020-06-09 (0.16.1)
 
 Improvements:

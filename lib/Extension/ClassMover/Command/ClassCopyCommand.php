@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleCopyLogger;
 use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
+use InvalidArgumentException;
 
 class ClassCopyCommand extends Command
 {
@@ -36,7 +37,7 @@ class ClassCopyCommand extends Command
         $this->prompt = $prompt;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Copy class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
@@ -70,7 +71,7 @@ class ClassCopyCommand extends Command
                 return 0;
         }
 
-        throw new \InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'Invalid type "%s", must be one of: "%s"',
             $type,
             implode('", "', [ self::TYPE_AUTO, self::TYPE_FILE, self::TYPE_CLASS ])

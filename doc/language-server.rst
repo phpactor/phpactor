@@ -9,3 +9,4 @@ See :ref:`language_server` for getting started instructions.
    lsp/clients
    lsp/running
    lsp/support
+   lsp/code-actions

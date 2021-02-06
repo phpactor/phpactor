@@ -30,7 +30,7 @@ class ClassCopyHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
             self::PARAM_DEST_PATH => null,

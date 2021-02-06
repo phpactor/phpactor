@@ -1,7 +1,7 @@
 PHPUnit
 =======
 
-.. github-link:: https://github.com/phpactor/phpunit-extension
+.. github-link:: phpactor/phpunit-extension
 
 
 The PHPUnit extension provides test class generation and type inference.

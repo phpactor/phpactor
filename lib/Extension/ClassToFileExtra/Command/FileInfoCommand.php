@@ -24,7 +24,7 @@ class FileInfoCommand extends Command
         $this->dumperRegistry = $dumperRegistry;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Return information about given file');
         $this->addArgument('path', InputArgument::REQUIRED, 'Source path or FQN');

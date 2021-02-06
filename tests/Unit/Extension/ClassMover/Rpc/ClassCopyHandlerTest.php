@@ -23,7 +23,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
      */
     private $classCopy;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->classCopy = $this->prophesize(ClassCopy::class);
     }
@@ -39,7 +39,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
     /**
      * @testdox It should request the dest path if none is given.
      */
-    public function testNoDestPath()
+    public function testNoDestPath(): void
     {
         /** @var $action InputCallbackAction */
         $action = $this->handle('copy_class', [
@@ -59,7 +59,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
         ], $action->callbackAction()->parameters());
     }
 
-    public function testCopyClass()
+    public function testCopyClass(): void
     {
         $this->classCopy->copy(
             Argument::type(NullLogger::class),

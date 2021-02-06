@@ -93,31 +93,74 @@ command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
 command! -nargs=0 PhpactorClassNew call phpactor#ClassNew()
 
 ""
-" Goto the definition of the class, method or function under the cursor. Open
-" the definition in the current window.
-command! -nargs=0 PhpactorGotoDefinition call phpactor#GotoDefinition()
-
+" @default target=`edit`
+"
+" Goto the definition of the symbol under the cursor.
+" Opens in the [target] window, see @section(window-target) for
+" the list of possible targets.
+" |<mods>| can be provided to the command to change how the window will be
+" opened.
+"
+" Examples:
+" >
+"     " Opens in the current buffer
+"     PhpactorGotoDefinition
+"
+"     " Opens in a vertical split opened on the right side
+"     botright PhpactorGotoDefinition vsplit
+"     vertical botright PhpactorGotoDefinition split
+"
+"     " Opens in a new tab
+"     PhpactorGotoDefinition tabnew
+" <
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoDefinition call phpactor#GotoDefinition(<q-args>, <q-mods>)
 ""
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
 " As with @command(PhpactorGotoDefinition) but open in a vertical split.
-command! -nargs=0 PhpactorGotoDefinitionVsplit call phpactor#GotoDefinitionVsplit()
+command! -nargs=0 PhpactorGotoDefinitionVsplit
+  \ echoerr 'PhpactorGotoDefinitionVsplit is deprecated, use PhpactorGotoDefinition instead' |
+  \ <mods> PhpactorGotoDefinition vsplit
+""
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
+" As with @command(PhpactorGotoDefinition) but open in an horizontal split.
+command! -nargs=0 PhpactorGotoDefinitionHsplit
+  \ echoerr 'PhpactorGotoDefinitionHsplit is deprecated, use PhpactorGotoDefinition instead' |
+  \ <mods> PhpactorGotoDefinition hsplit
+""
+" deprecated, use @command(PhpactorGotoDefinition) instead
+"
+" As with @command(PhpactorGotoDefinition) but open in a new tab.
+command! -nargs=0 PhpactorGotoDefinitionTab
+  \ echoerr 'PhpactorGotoDefinitionTab is deprecated, use PhpactorGotoDefinition instead' |
+  \ PhpactorGotoDefinition new_tab
 
 ""
-" As with @command(PhpactorGotoDefinition) but open in a horizontal split.
-command! -nargs=0 PhpactorGotoDefinitionHsplit call phpactor#GotoDefinitionHsplit()
+" @usage [target]
+"
+" Same as @command(PhpactorGotoDefinition) but goto the type of the symbol
+" under the cursor.
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType call phpactor#GotoType(<q-args>, <q-mods>)
 
 ""
-" As with @command(PhpactorGotoDefinition) but open in a new tab
-command! -nargs=0 PhpactorGotoDefinitionTab call phpactor#GotoDefinitionTab()
-
-""
-" Goto type (class) of the symbol under the cursor.
-command! -nargs=0 PhpactorGotoType call phpactor#GotoType()
-
-""
-" Load all implementations of the class under the cursor into the quick-fix
-" list.
-command! -nargs=0 PhpactorGotoImplementations call phpactor#GotoImplementations()
+" @usage [target]
+"
+" Same as @command(PhpactorGotoDefinition) but goto the implmentation of the
+" symbol under the cursor.
+"
+" If there is more than one result the quickfix strategy will be used and [target]
+" will be ignored, see @setting(g:phpactorQuickfixStrategy).
+command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoImplementations call phpactor#GotoImplementations(<q-args>, <q-mods>)
 
 " Commands }}}
+
+" Functions {{{
+
+function! s:CompleteWindowTarget(argLead, ...) abort
+    return filter(phpactor#windowTargets(), {k,v -> 0 == stridx(v, a:argLead)})
+endfunction
+
+" }}}
 
 " vim: et ts=4 sw=4 fdm=marker

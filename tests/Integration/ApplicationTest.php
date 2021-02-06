@@ -10,12 +10,12 @@ use Phpactor\Tests\IntegrationTestCase;
 
 class ApplicationTest extends IntegrationTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->workspace()->reset();
     }
@@ -25,15 +25,15 @@ class ApplicationTest extends IntegrationTestCase
         return new Application(__DIR__ . '/../../vendor');
     }
 
-    public function testConfig()
+    public function testConfig(): void
     {
         $this->expectException(InvalidMap::class);
         $this->expectExceptionMessage('Key(s) "foobar_invalid" are not known');
         file_put_contents(
             $this->workspaceDir() . '/.phpactor.yml',
             <<<'EOT'
-foobar_invalid: something
-EOT
+                foobar_invalid: something
+                EOT
         );
 
         chdir($this->workspaceDir());
@@ -48,7 +48,7 @@ EOT
         ]), $output);
     }
 
-    public function testSerializesExceptions()
+    public function testSerializesExceptions(): void
     {
         $output = new BufferedOutput();
 
@@ -64,7 +64,7 @@ EOT
         $this->assertArrayHasKey('error', $out);
     }
 
-    public function testCwd()
+    public function testCwd(): void
     {
         $this->loadProject('Animals');
         $output = new BufferedOutput();
@@ -78,6 +78,6 @@ EOT
         ]), $output);
 
         $this->assertEquals(0, $exitCode);
-        $this->assertContains($this->workspaceDir(), $output->fetch());
+        $this->assertStringContainsString($this->workspaceDir(), $output->fetch());
     }
 }

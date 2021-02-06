@@ -38,22 +38,13 @@ class ImportClassHandlerTest extends HandlerTestCase
      */
     private $classSearch;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->importName = $this->prophesize(ImportName::class);
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
 
-    protected function createHandler(): Handler
-    {
-        return new ImportClassHandler(
-            $this->importName->reveal(),
-            $this->classSearch->reveal(),
-            'composer'
-        );
-    }
-
-    public function testReturnsSuggestionsIfMultipleTargetsFound()
+    public function testReturnsSuggestionsIfMultipleTargetsFound(): void
     {
         $this->classSearch->classSearch('composer', self::TEST_NAME)->willReturn([
             [
@@ -78,7 +69,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->assertCount(2, $input->choices());
     }
 
-    public function testShowsMessageIfNoClassesFound()
+    public function testShowsMessageIfNoClassesFound(): void
     {
         $this->classSearch->classSearch('composer', self::TEST_NAME)->willReturn([]);
 
@@ -91,7 +82,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(EchoResponse::class, $response);
     }
 
-    public function testImportsClassIfOnlyOneSuggestion()
+    public function testImportsClassIfOnlyOneSuggestion(): void
     {
         $this->classSearch->classSearch('composer', self::TEST_NAME)->willReturn([
             [
@@ -115,7 +106,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(CollectionResponse::class, $response);
     }
 
-    public function testAsksForAliasIfClassAlreadyUsed()
+    public function testAsksForAliasIfClassAlreadyUsed(): void
     {
         $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
@@ -139,7 +130,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(TextInput::class, $input);
     }
 
-    public function testUsesGivenAlias()
+    public function testUsesGivenAlias(): void
     {
         $transformed = TextEdits::one(TextEdit::create(0, 0, 'hello'));
         $this->importName->importName(
@@ -160,7 +151,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(CollectionResponse::class, $response);
     }
 
-    public function testShowsMessageIfSelectedClassIsAlreadyImported()
+    public function testShowsMessageIfSelectedClassIsAlreadyImported(): void
     {
         $this->importName->importName(
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
@@ -177,5 +168,14 @@ class ImportClassHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $response);
+    }
+
+    protected function createHandler(): Handler
+    {
+        return new ImportClassHandler(
+            $this->importName->reveal(),
+            $this->classSearch->reveal(),
+            'composer'
+        );
     }
 }

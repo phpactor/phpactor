@@ -17,7 +17,7 @@ class SymfonyConsoleMoveLogger implements ClassMoverLogger
         $this->output = $output;
     }
 
-    public function moving(FilePath $srcPath, FilePath $destPath)
+    public function moving(FilePath $srcPath, FilePath $destPath): void
     {
         $this->output->writeln(sprintf(
             '<info>[MOVE]</info> %s <comment>=></> %s',
@@ -26,7 +26,7 @@ class SymfonyConsoleMoveLogger implements ClassMoverLogger
         ));
     }
 
-    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName)
+    public function replacing(FilePath $path, FoundReferences $references, FullyQualifiedName $replacementName): void
     {
         if ($references->references()->isEmpty()) {
             return;

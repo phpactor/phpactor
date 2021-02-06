@@ -36,7 +36,7 @@ class ExtractMethodHandler extends AbstractHandler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
         $resolver->setDefaults([
             self::PARAM_METHOD_NAME => null,

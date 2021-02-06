@@ -6,7 +6,7 @@ use Phpactor\Tests\System\SystemTestCase;
 
 class FileInfoCommandTest extends SystemTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->workspace()->reset();
         $this->loadProject('Animals');
@@ -15,20 +15,20 @@ class FileInfoCommandTest extends SystemTestCase
     /**
      * @testdox It provides information about the file.
      */
-    public function testProvideInformationForOffset()
+    public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactor('file:info lib/Badger.php');
         $this->assertSuccess($process);
-        $this->assertContains('class:Animals\Badger', $process->getOutput());
+        $this->assertStringContainsString('class:Animals\Badger', $process->getOutput());
     }
 
     /**
      * @testdox It provides information about the file as JSON
      */
-    public function testProvideInformationForOffsetAsJson()
+    public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactor('file:info lib/Badger.php --format=json');
         $this->assertSuccess($process);
-        $this->assertContains('{"class":"Animals', $process->getOutput());
+        $this->assertStringContainsString('{"class":"Animals', $process->getOutput());
     }
 }

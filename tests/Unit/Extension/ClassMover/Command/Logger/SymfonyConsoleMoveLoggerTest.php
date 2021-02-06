@@ -22,39 +22,39 @@ class SymfonyConsoleMoveLoggerTest extends TestCase
     private $output;
     private $logger;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->output = new BufferedOutput();
         $this->logger = new SymfonyConsoleMoveLogger($this->output);
     }
 
-    public function testReplacing()
+    public function testReplacing(): void
     {
         $references = new FoundReferences(
             SourceCode::fromString(
                 <<<'EOT'
-<?php
+                    <?php
 
-namespace Acme;
+                    namespace Acme;
 
-class Foobar
-{
-    public function source(): SourceCode
-    {
-        return $this->source;
-    }
+                    class Foobar
+                    {
+                        public function source(): SourceCode
+                        {
+                            return $this->source;
+                        }
 
-    public function targetName(): FullyQualifiedName
-    {
-        return $this->name;
-    }
+                        public function targetName(): FullyQualifiedName
+                        {
+                            return $this->name;
+                        }
 
-    public function references(): NamespacedClassRefList
-    {
-        return $this->references;
-    }
-}
-EOT
+                        public function references(): NamespacedClassRefList
+                        {
+                            return $this->references;
+                        }
+                    }
+                    EOT
             ),
             FullyQualifiedName::fromString('Acme'),
             NamespacedClassReferences::fromNamespaceAndClassRefs(
@@ -74,6 +74,6 @@ EOT
         $target = FullyQualifiedName::fromString('Hello\World');
         $this->logger->replacing(FilePath::fromString('/path/to/file/Something.php'), $references, $target);
         $output = $this->output->fetch();
-        $this->assertContains('Hello => World', $output);
+        $this->assertStringContainsString('Hello => World', $output);
     }
 }

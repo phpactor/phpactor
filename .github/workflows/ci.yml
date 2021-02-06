@@ -1,0 +1,172 @@
+name: "CI"
+
+on:
+    pull_request:
+    push:
+        branches:
+            - 'master'
+            - 'develop'
+
+env:
+    fail-fast: true
+    TZ: "Europe/Paris"
+
+jobs:
+    vim-tests:
+        name: "VIM Tests (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: Install Dependencies
+                run: |
+                    composer validate --strict
+                    composer install --optimize-autoloader --classmap-authoritative
+                    bin/phpactor --version
+                    sudo add-apt-repository --yes ppa:jonathonf/vim
+                    sudo apt-get update -y
+                    sudo apt-get install vim -fy
+                    git clone https://github.com/junegunn/vader.vim.git
+
+            -
+                name: "Run VIM Tests"
+                run: "config/travis/vim-plugin-test.sh"
+    phpunit:
+        name: "PHPUnit (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: "Run PHPUnit"
+                run: "vendor/bin/phpunit"
+    phpactor-deps-and-exts:
+        name: "Dependencies and Extensions (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+               name: Misc
+               run: |
+                   git config --global user.email "you@example.com"
+                   git config --global user.name "Your Name"
+                   git config --global init.defaultBranch master
+            -
+                name: Test Dependencies
+                run: config/travis/testdeps
+            -
+                name: Test Extensions
+                run: config/travis/testexts
+    docs:
+        name: "Lint Docs (${{ matrix.php-version }})"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '7.3'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: Install Doc Dependencies
+                run: |
+                    wget https://github.com/google/vimdoc/releases/download/v0.6.0/vimdoc_0.6.0-1_all.deb
+                    sudo dpkg -i vimdoc_0.6.0-1_all.deb
+                    sudo apt-get -y install python3-pip python3-setuptools
+                    sudo pip3 install -r requirements.txt
+                    composer install --optimize-autoloader --classmap-authoritative
+
+            -
+                name: "Make Docs"
+                run: "make docs"
+

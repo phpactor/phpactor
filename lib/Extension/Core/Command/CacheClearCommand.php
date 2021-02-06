@@ -17,7 +17,7 @@ class CacheClearCommand extends Command
         $this->cache = $cache;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Clear the cache');
     }

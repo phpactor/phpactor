@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
-<phpunit
-    colors="true"
-    bootstrap="vendor/autoload.php"
-    >
-
-    <testsuites>
-        <testsuite name="PhpActor Test Suite">
-            <directory>./tests</directory>
-            <exclude>tests/Assets</exclude>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory>.</directory>
-            <exclude>
-                <directory>vendor/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <php>
-        <env name="PHPACTOR_ALLOW_XDEBUG" value="1"/>
-    </php>
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage includeUncoveredFiles="true">
+    <include>
+      <directory>.</directory>
+    </include>
+    <exclude>
+      <directory>vendor/</directory>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="PhpActor Test Suite">
+      <directory>./tests</directory>
+      <exclude>tests/Assets</exclude>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="PHPACTOR_ALLOW_XDEBUG" value="1"/>
+  </php>
 </phpunit>

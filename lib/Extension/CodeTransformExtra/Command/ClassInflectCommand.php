@@ -35,7 +35,7 @@ class ClassInflectCommand extends Command
         $this->classInflect = $classInflect;
     }
 
-    public function configure()
+    public function configure(): void
     {
         $this->setDescription('Inflect new class from existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');

@@ -24,7 +24,7 @@ class StatusHandlerTest extends HandlerTestCase
      */
     private $paths;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->status = $this->prophesize(Status::class);
         $this->paths = $this->prophesize(PathCandidates::class);
@@ -38,11 +38,12 @@ class StatusHandlerTest extends HandlerTestCase
         );
     }
 
-    public function testMessageStatus()
+    public function testMessageStatus(): void
     {
         $this->status->check()->willReturn([
             'php_version' => '7.1',
             'phpactor_version' => 'version one',
+            'phpactor_is_develop' => true,
             'cwd' => '/path/to/here',
             'good' => [ 'i am good' ],
             'bad' => [ 'i am bad' ],

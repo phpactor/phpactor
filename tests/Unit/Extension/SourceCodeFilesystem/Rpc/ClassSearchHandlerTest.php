@@ -17,7 +17,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
      */
     private $classSearch;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
@@ -32,7 +32,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
     /**
      * If not results are found, echo a message
      */
-    public function testNoResults()
+    public function testNoResults(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([]);
@@ -42,13 +42,13 @@ class ClassSearchHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
-        $this->assertContains('No classes found', $action->message());
+        $this->assertStringContainsString('No classes found', $action->message());
     }
 
     /**
      * If 1 result is found, return the value.
      */
-    public function testOneResult()
+    public function testOneResult(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([
@@ -70,7 +70,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
     /**
      * Many results, show a choice
      */
-    public function testManyResult()
+    public function testManyResult(): void
     {
         $this->classSearch->classSearch('composer', 'AAA')
             ->willReturn([

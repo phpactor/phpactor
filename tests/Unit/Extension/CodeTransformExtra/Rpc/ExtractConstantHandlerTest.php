@@ -23,7 +23,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
      */
     private $extractConstant;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->extractConstant = $this->prophesize(ExtractConstant::class);
     }
@@ -33,7 +33,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
         return new ExtractConstantHandler($this->extractConstant->reveal());
     }
 
-    public function testDemandConstantName()
+    public function testDemandConstantName(): void
     {
         $action = $this->handle('extract_constant', [
             'source' => self::SOURCE,
@@ -51,7 +51,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
         $this->assertEquals('constant_name', $firstInput->name());
     }
 
-    public function testExtractConstant()
+    public function testExtractConstant(): void
     {
         $this->extractConstant->extractConstant(
             self::SOURCE,

@@ -26,7 +26,7 @@ class CacheClearHandler implements Handler
         return self::NAME;
     }
 
-    public function configure(Resolver $resolver)
+    public function configure(Resolver $resolver): void
     {
     }
 

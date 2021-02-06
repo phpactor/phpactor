@@ -22,7 +22,7 @@ copyright = '2020, Phpactor Community'
 author = 'Phpactor Community'
 
 # The full version, including alpha/beta/rc tags
-release = '15'
+release = '0.17.x'
 
 master_doc = 'contents'
 

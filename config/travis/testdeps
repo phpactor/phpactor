@@ -17,7 +17,7 @@ while read -r dep; do
         ln -s ../../../composer.lock .
     fi
     composer dumpautoload
-    CMD=vendor/bin/phpunit
+    CMD="vendor/bin/phpunit"
 
     if [ "$dep" = "phpactor/extension-manager-extension" ]; then
         CMD=$CMD" --process-isolation"

@@ -79,7 +79,8 @@ A useful primer on RST can be found `here <https://www.sphinx-doc.org/en/master/
 
         ::
           
-            apt-get install python3-sphinx
+            $ apt-get install python3-sphinx
+            $ pip install sphinx-tabs
 
 You can then build the docs with:
 

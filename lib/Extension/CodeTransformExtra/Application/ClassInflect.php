@@ -8,6 +8,7 @@ use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Webmozart\Glob\Glob;
+use RuntimeException;
 
 class ClassInflect extends AbstractClassGenerator
 {
@@ -17,7 +18,7 @@ class ClassInflect extends AbstractClassGenerator
         $newCodes = [];
 
         if (false === Glob::isDynamic($srcPath) && false === file_exists($srcPath)) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'File "%s" does not exist',
                 $srcPath
             ));

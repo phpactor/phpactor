@@ -16,7 +16,7 @@ class ConfigHandlerTest extends HandlerTestCase
         ]);
     }
 
-    public function testStatus()
+    public function testStatus(): void
     {
         $response = $this->handle('config', []);
         $this->assertInstanceOf(InformationResponse::class, $response);

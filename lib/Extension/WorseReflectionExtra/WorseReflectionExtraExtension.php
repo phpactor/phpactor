@@ -20,18 +20,18 @@ class WorseReflectionExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
     }
 
-    private function registerApplicationServices(ContainerBuilder $container)
+    private function registerApplicationServices(ContainerBuilder $container): void
     {
         $container->register('application.offset_info', function (Container $container) {
             return new OffsetInfo(
@@ -47,7 +47,7 @@ class WorseReflectionExtraExtension implements Extension
         });
     }
 
-    private function registerCommands(ContainerBuilder $container)
+    private function registerCommands(ContainerBuilder $container): void
     {
         $container->register('command.offset_info', function (Container $container) {
             return new OffsetInfoCommand(
@@ -63,7 +63,7 @@ class WorseReflectionExtraExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:reflect' ]]);
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('worse_reflection_extra.rpc.handler.offset_info', function (Container $container) {
             return new OffsetInfoHandler($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));

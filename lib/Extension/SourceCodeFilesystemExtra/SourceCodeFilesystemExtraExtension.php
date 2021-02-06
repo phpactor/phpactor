@@ -19,18 +19,18 @@ class SourceCodeFilesystemExtraExtension implements Extension
     /**
      * {@inheritDoc}
      */
-    public function configure(Resolver $schema)
+    public function configure(Resolver $schema): void
     {
     }
 
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
         $this->registerApplicationServices($container);
         $this->registerRpc($container);
     }
 
-    private function registerCommands(ContainerBuilder $container)
+    private function registerCommands(ContainerBuilder $container): void
     {
         $container->register('command.class_search', function (Container $container) {
             return new ClassSearchCommand(
@@ -40,7 +40,7 @@ class SourceCodeFilesystemExtraExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:search' ]]);
     }
 
-    private function registerApplicationServices(ContainerBuilder $container)
+    private function registerApplicationServices(ContainerBuilder $container): void
     {
         $container->register('application.class_search', function (Container $container) {
             return new ClassSearch(
@@ -51,7 +51,7 @@ class SourceCodeFilesystemExtraExtension implements Extension
         });
     }
 
-    private function registerRpc(ContainerBuilder $container)
+    private function registerRpc(ContainerBuilder $container): void
     {
         $container->register('source_code_filesystem.rpc.handler.class_search', function (Container $container) {
             return new ClassSearchHandler(
