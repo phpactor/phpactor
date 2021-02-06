@@ -25,6 +25,7 @@ use Phpactor\Extension\Core\Command\StatusCommand;
 use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
+use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 use Symfony\Component\Process\ExecutableFinder;
@@ -136,7 +137,8 @@ class CoreExtension implements Extension
         $container->register('application.status', function (Container $container) {
             return new Status(
                 $container->get('source_code_filesystem.registry'),
-                $container->get('config_loader.candidates'),
+                // candidates are bootstrapped outside of the extensions and are not loaded in the language server
+                $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
                 $container->get(PhpVersionResolver::class),
                 null,

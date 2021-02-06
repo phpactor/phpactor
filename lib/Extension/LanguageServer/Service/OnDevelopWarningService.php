@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServer\Service;
 
 use Amp\Promise;
+use Phpactor\Extension\Core\Application\Status;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
 use function Amp\call;
@@ -20,10 +21,16 @@ class OnDevelopWarningService implements ServiceProvider
      */
     private $warnOnDevelop;
 
-    public function __construct(ClientApi $client, bool $warnOnDevelop)
+    /**
+     * @var Status
+     */
+    private $status;
+
+    public function __construct(ClientApi $client, Status $status, bool $warnOnDevelop)
     {
         $this->client = $client;
         $this->warnOnDevelop = $warnOnDevelop;
+        $this->status = $status;
     }
 
     /**
@@ -43,6 +50,12 @@ class OnDevelopWarningService implements ServiceProvider
     public function serviceAnnouncements(): Promise
     {
         return call(function () {
+            $status = $this->status->check();
+
+            if (false === $status['phpactor_is_develop']) {
+                return;
+            }
+
             $this->client->window()->showMessage()->warning(<<<'EOT'
 
             Welcome to Phpactor!

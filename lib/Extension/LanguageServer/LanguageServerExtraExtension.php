@@ -20,6 +20,7 @@ class LanguageServerExtraExtension implements Extension
         $container->register(OnDevelopWarningService::class, function (Container $container) {
             return new OnDevelopWarningService(
                 $container->get(ClientApi::class),
+                $container->get('application.status'),
                 $container->getParameter(CoreExtension::PARAM_WARN_ON_DEVELOP)
             );
         }, [
