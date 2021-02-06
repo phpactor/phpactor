@@ -3,9 +3,8 @@ Phpactor
 
 ![phpactor2sm](https://user-images.githubusercontent.com/530801/27995098-82e72c4c-64c0-11e7-96d2-f549c711ca8b.png)
 
-| Branch       | Status                                                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| master       | ![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=master)                                               |
+![CI](https://github.com/phpactor/phpactor/workflows/CI/badge.svg?branch=master)
+
 This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
