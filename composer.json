@@ -20,7 +20,7 @@
         "phpactor/composer-autoloader-extension": "^0.2.3",
         "phpactor/config-loader": "^0.1.2",
         "phpactor/console-extension": "^0.1.6",
-        "phpactor/container": "^1.3.4",
+        "phpactor/container": "^2.0.0",
         "phpactor/docblock": "^0.3.4",
         "phpactor/extension-manager-extension": "^0.8.4",
         "phpactor/file-path-resolver": "^0.8.3",
