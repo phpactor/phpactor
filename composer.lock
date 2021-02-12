@@ -8116,16 +8116,16 @@
         },
         {
             "name": "dantleech/what-changed",
-            "version": "0.4.1",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/what-changed.git",
-                "reference": "453706b3f35d8980c380858cc8af9cd3853e820a"
+                "reference": "d7912c3f98f0a279cb5cfc711df94e2398e6ab38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/453706b3f35d8980c380858cc8af9cd3853e820a",
-                "reference": "453706b3f35d8980c380858cc8af9cd3853e820a",
+                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/d7912c3f98f0a279cb5cfc711df94e2398e6ab38",
+                "reference": "d7912c3f98f0a279cb5cfc711df94e2398e6ab38",
                 "shasum": ""
             },
             "require": {
@@ -8133,7 +8133,7 @@
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.3"
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
                 "composer/composer": "^1.4|^2.0",
@@ -8168,9 +8168,9 @@
             "description": "Report changes in your dependencies",
             "support": {
                 "issues": "https://github.com/dantleech/what-changed/issues",
-                "source": "https://github.com/dantleech/what-changed/tree/0.4.1"
+                "source": "https://github.com/dantleech/what-changed/tree/0.4.2"
             },
-            "time": "2020-11-23T08:11:47+00:00"
+            "time": "2021-02-06T18:05:30+00:00"
         },
         {
             "name": "doctrine/annotations",
