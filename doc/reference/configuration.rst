@@ -75,7 +75,22 @@ Internal use only - name of the command which was executed
 Internal use only: if an warning will be issed when on develop, may be removed in the future
 
 
-**Default**: ``false``
+**Default**: ``true``
+
+
+.. _param_core.min_memory_limit:
+
+
+``core.min_memory_limit``
+"""""""""""""""""""""""""
+
+
+
+
+Ensure that PHP has a memory_limit of at least this amount in bytes
+
+
+**Default**: ``1610612736``
 
 
 .. _ClassToFileExtension:

@@ -190,6 +190,10 @@ class Phpactor
             $extension->load($container);
         }
 
+        if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {
+            self::updateMinMemory($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT]);
+        }
+
         return $container->build($config);
     }
     /**
@@ -287,5 +291,34 @@ class Phpactor
         }
 
         throw new RuntimeException(sprintf('Could not resolve application root, tried "%s"', implode('", "', $paths)));
+    }
+
+    /**
+     * Update the PHP memory limit according to the configured minimum
+     * (borrowed from Composer)
+     */
+    private static function updateMinMemory(int $minimumMemoryLimit): void
+    {
+        $memoryInBytes = function ($value) {
+            $unit = strtolower(substr($value, -1, 1));
+            $value = (int) $value;
+            switch($unit) {
+                case 'g':
+                    $value *= 1024;
+                    // no break (cumulative multiplier)
+                case 'm':
+                    $value *= 1024;
+                    // no break (cumulative multiplier)
+                case 'k':
+                    $value *= 1024;
+            }
+
+            return $value;
+        };
+
+        $memoryLimit = trim((string)ini_get('memory_limit'));
+        if ($memoryLimit != -1 && $memoryInBytes($memoryLimit) < $minimumMemoryLimit) {
+            @ini_set('memory_limit', (string)$minimumMemoryLimit);
+        }
     }
 }
