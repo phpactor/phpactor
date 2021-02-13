@@ -39,6 +39,7 @@ class CoreExtension implements Extension
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';
     const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
+    const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
 
     public function configure(Resolver $schema): void
     {
@@ -47,12 +48,14 @@ class CoreExtension implements Extension
             self::PARAM_XDEBUG_DISABLE => true,
             self::PARAM_COMMAND => null,
             self::PARAM_WARN_ON_DEVELOP => true,
+            self::PARAM_MIN_MEMORY_LIMIT => 1610612736,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
             self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
             self::PARAM_WARN_ON_DEVELOP => 'Internal use only: if an warning will be issed when on develop, may be removed in the future',
+            self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
         ]);
     }
 
