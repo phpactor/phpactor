@@ -11,9 +11,9 @@ Refactoring
 Fixes
 =====
 
-.. _refactoring_add_missing_assignements:
+.. _refactoring_add_missing_properties:
 
-Add Missing Assignments
+Add Missing Properties
 -----------------------
 
 Automatically add any missing properties to a class.
@@ -24,7 +24,7 @@ Automatically add any missing properties to a class.
 
        .. code-block::
 
-           $ phpactor class:transform path/to/Class.php --transform=add_missing_assignments
+           $ phpactor class:transform path/to/Class.php --transform=add_missing_properties
 
    .. tab:: VIM Context Menu
 
