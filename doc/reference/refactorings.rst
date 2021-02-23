@@ -11,7 +11,7 @@ Refactoring
 Fixes
 =====
 
-.. _refactoring_add_missing_assignments:
+.. _refactoring_add_missing_properties:
 
 Add Missing Properties
 -----------------------
