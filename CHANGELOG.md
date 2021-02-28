@@ -1,6 +1,17 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - [completion] Support Attribute Completion
+
+Bug fixes:
+
+  - [worse-reflection] Unhandled exception thrown when variable name is "NULL"
+  - [language-server] Unhandled exception when function not found on hover
+
 ## 2021-02-06 (0.17.0)
 
 Features:
