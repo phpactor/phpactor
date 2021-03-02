@@ -32,6 +32,14 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertStringContainsString('Badger.php"', $process->getOutput());
     }
 
+    /** @testdox It should not return non-PHP files in results. */
+    public function testSearchNameOnlyPhp()
+    {
+        $process = $this->phpactor('class:search "Badger"');
+        $this->assertSuccess($process);
+        $this->assertStringNotContainsString('Badger.php.html', $process->getOutput());
+    }
+
     public function testSearchByQualifiedName(): void
     {
         $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
