@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d37cd15970cabbd5fe0ba35b7cf1673d",
+    "content-hash": "55fd3c6e293b324c139ec34f98b7fd26",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4111,16 +4111,16 @@
         },
         {
             "name": "phpactor/source-code-filesystem",
-            "version": "0.1.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/source-code-filesystem.git",
-                "reference": "6ca0c64462b59c6d47f12fef5d4013229e346f68"
+                "reference": "860f83fd8df18be4cdbb5e3a1a3ae562afc3b923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/6ca0c64462b59c6d47f12fef5d4013229e346f68",
-                "reference": "6ca0c64462b59c6d47f12fef5d4013229e346f68",
+                "url": "https://api.github.com/repos/phpactor/source-code-filesystem/zipball/860f83fd8df18be4cdbb5e3a1a3ae562afc3b923",
+                "reference": "860f83fd8df18be4cdbb5e3a1a3ae562afc3b923",
                 "shasum": ""
             },
             "require": {
@@ -4138,6 +4138,7 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4161,9 +4162,9 @@
             ],
             "description": "Filesystem library for working with source code files",
             "support": {
-                "source": "https://github.com/phpactor/source-code-filesystem/tree/0.1.6"
+                "source": "https://github.com/phpactor/source-code-filesystem/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-03-07T16:35:13+00:00"
         },
         {
             "name": "phpactor/source-code-filesystem-extension",
