@@ -9,6 +9,7 @@ Features:
 
 Bug fixes:
 
+  - [language-server] Diagnostics do not tolerate NULL document version on save #1220
   - [worse-reflection] Unhandled exception thrown when variable name is "NULL"
   - [language-server] Unhandled exception when function not found on hover
 
