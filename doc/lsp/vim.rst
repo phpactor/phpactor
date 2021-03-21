@@ -96,6 +96,29 @@ Client Guides
         See `coc-phpactor <https://github.com/phpactor/coc-phpactor>`_ for more
         information.
 
+    .. tab:: Neovim LSP
+
+        At time of writing (2021-03-21) you will need a nightly build of
+        Neovim.
+
+        Ensure you have installed `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package: This contains common LSP configurations, including one for Phpactor.
+
+        For example: include it in your ``.vimrc`` with Plug:
+
+        ::
+
+            Plug 'neovim/nvim-lspconfig'
+
+        Then enable it in your ``.vimrc.``:
+
+        ::
+
+            lua << EOF
+            require'lspconfig'.phpactor.setup{}
+            EOF
+
+        Please refer to the `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings (also see `:help lsp`).
+
     .. tab:: Autozimu
 
         Install Phpactor with :ref:`installation_global` then:

@@ -8,4 +8,5 @@ Clients
 
    vim
    sublime
+   vscode
 
