@@ -9,13 +9,13 @@ This project aims to provide heavy-lifting *refactoring* and *introspection*
 tools which can be used standalone or as the backend for a text editor to
 provide intelligent code completion.
 
-- Accurate code [completion](https://phpactor.readthedocs.io/en/develop/reference/completion.html) including class name auto-import.
-- [Various](https://phpactor.readthedocs.io/en/develop/reference/refactorings.html) refactoring,fixes and code generation options.
-- Provides a [Language Server](https://phpactor.readthedocs.io/en/develop/usage/language-server.html)
-- Native [VIM plugin](https://phpactor.readthedocs.io/en/develop/usage/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
-- [Navigation](https://phpactor.readthedocs.io/en/develop/reference/navigation.html) (jump to
+- Accurate code [completion](https://phpactor.readthedocs.io/en/master/reference/completion.html) including class name auto-import.
+- [Various](https://phpactor.readthedocs.io/en/master/reference/refactorings.html) refactoring,fixes and code generation options.
+- Provides a [Language Server](https://phpactor.readthedocs.io/en/master/usage/language-server.html)
+- Native [VIM plugin](https://phpactor.readthedocs.io/en/master/usage/vim-plugin.html) ([emacs](https://github.com/emacs-php/phpactor.el) plugin is in development).
+- [Navigation](https://phpactor.readthedocs.io/en/master/reference/navigation.html) (jump to
   definition, related classes, references etc).
-- [More](https://phpactor.readthedocs.io/en/develop).
+- [More](https://phpactor.readthedocs.io/en/master).
 
 Installation
 ------------
@@ -23,7 +23,7 @@ Installation
 Phpactor is a general tool, it is not intended that it be installed as a project dependency.
 
 See
-[Installation](https://phpactor.readthedocs.io/en/develop/usage/standalone.html)
+[Installation](https://phpactor.readthedocs.io/en/master/usage/standalone.html)
 for installation instructions.
 
 Requirements
@@ -41,7 +41,7 @@ a lesser extent, with [GiT](https://git-scm.org).
 Documentation
 -------------
 
-Full documentation can be found on [Read the Docs](https://phpactor.readthedocs.io/en/develop)
+Full documentation can be found on [Read the Docs](https://phpactor.readthedocs.io/en/master)
 
 Community
 ---------
