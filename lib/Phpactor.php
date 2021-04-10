@@ -7,6 +7,7 @@ use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
@@ -134,6 +135,7 @@ class Phpactor
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
             LanguageServerExtraExtension::class,
+            LanguageServerDiagnosticsExtension::class,
             IndexerExtension::class,
         ];
 
