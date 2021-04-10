@@ -3441,12 +3441,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "5852be58367bc695e9fed5228c01f7c429952f6e"
+                "reference": "f6528f177728ee508a17cfb86d4b229c6b765a31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/5852be58367bc695e9fed5228c01f7c429952f6e",
-                "reference": "5852be58367bc695e9fed5228c01f7c429952f6e",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f6528f177728ee508a17cfb86d4b229c6b765a31",
+                "reference": "f6528f177728ee508a17cfb86d4b229c6b765a31",
                 "shasum": ""
             },
             "require": {
@@ -3465,7 +3465,7 @@
                 "phpactor/logging-extension": "^0.3.4",
                 "phpactor/phly-event-dispatcher": "^2.0.0",
                 "phpactor/reference-finder-extension": "^0.1.7",
-                "phpactor/text-document": "^1.2.3",
+                "phpactor/text-document": "^1.2.4",
                 "phpactor/worse-reflection": "^0.4.4",
                 "phpactor/worse-reflection-extension": "^0.2.4"
             },
@@ -3514,7 +3514,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-10T10:32:23+00:00"
+            "time": "2021-04-10T11:58:29+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -4239,16 +4239,16 @@
         },
         {
             "name": "phpactor/text-document",
-            "version": "1.2.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
-                "reference": "3a6b82e332643748957a35cb41f9e5ca22259ddf"
+                "reference": "327990092b8e3bb16dd381638fe890224395a300"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/text-document/zipball/3a6b82e332643748957a35cb41f9e5ca22259ddf",
-                "reference": "3a6b82e332643748957a35cb41f9e5ca22259ddf",
+                "url": "https://api.github.com/repos/phpactor/text-document/zipball/327990092b8e3bb16dd381638fe890224395a300",
+                "reference": "327990092b8e3bb16dd381638fe890224395a300",
                 "shasum": ""
             },
             "require": {
@@ -4263,6 +4263,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4287,9 +4288,9 @@
             "description": "Collection of value objects for representing and referencing text documents",
             "support": {
                 "issues": "https://github.com/phpactor/text-document/issues",
-                "source": "https://github.com/phpactor/text-document/tree/1.2.3"
+                "source": "https://github.com/phpactor/text-document/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-04-10T11:45:27+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
