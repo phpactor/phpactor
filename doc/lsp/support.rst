@@ -57,4 +57,4 @@ See the `Language Server Specification`_ for details.
 .. [#code] See :doc:`/lsp/code-actions`.
 .. [#references] For class like references, functions and member accesses (static and object instances)
 .. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
-.. [#diagnostics] For code actions and also via. plugins, for example PHPStan https://github.com/phpactor/language-server-phpstan-extension
+.. [#diagnostics] Basic PHP linting in addition to diagositcs for code actions and also via. plugins, for example PHPStan https://github.com/phpactor/language-server-phpstan-extension

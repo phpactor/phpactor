@@ -5,7 +5,8 @@ Changelog
 
 Features:
 
-  - [language-server] Basic support for workspace symbols
+  - [language-server] Basic support for workspace symbols.
+  - [language-server] Added basic PHP linting by default.
 
 Bug fixes:
 
