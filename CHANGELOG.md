@@ -1,6 +1,16 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - [language-server] Basic support for workspace symbols
+
+Bug fixes:
+
+  - [worse-reflection] Property context class not propagated
+
 ## 2021-03-21 (0.17.1)
 
 Features:

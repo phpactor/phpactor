@@ -24,6 +24,8 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Document Highlight      | ✔ | Symbol highlighting                 |
 +-------------------------+---+-------------------------------------+
+| Workspace Symbols       | ✔ | Classes, functions and constants    |
++-------------------------+---+-------------------------------------+
 | Document Symbol         | ✔ | For structural elements             |
 +-------------------------+---+-------------------------------------+
 | Selection Range         | ✔ |                                     |
