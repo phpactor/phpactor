@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [language-server] Rename class members and variables - @BladeMF, @dantleech
   - [language-server] Basic support for workspace symbols.
   - [language-server] Added basic PHP linting by default.
 
