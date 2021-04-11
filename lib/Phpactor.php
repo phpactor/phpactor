@@ -11,6 +11,8 @@ use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtens
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
+use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
+use Phpactor\Extension\LanguageServerRename\LanguageServerRenameWorseExtension;
 use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProviderExtension;
 use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
@@ -136,6 +138,8 @@ class Phpactor
             LanguageServerSelectionRangeExtension::class,
             LanguageServerExtraExtension::class,
             LanguageServerDiagnosticsExtension::class,
+            LanguageServerRenameExtension::class,
+            LanguageServerRenameWorseExtension::class,
             IndexerExtension::class,
         ];
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6037754fe0ea561b79320fe18d3b1d5",
+    "content-hash": "5cf0f0b0d60e1367af9115d86b4486fe",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3441,12 +3441,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "f6528f177728ee508a17cfb86d4b229c6b765a31"
+                "reference": "1e8f8f08efb034136b05acb19fc1b981e4d07557"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f6528f177728ee508a17cfb86d4b229c6b765a31",
-                "reference": "f6528f177728ee508a17cfb86d4b229c6b765a31",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/1e8f8f08efb034136b05acb19fc1b981e4d07557",
+                "reference": "1e8f8f08efb034136b05acb19fc1b981e4d07557",
                 "shasum": ""
             },
             "require": {
@@ -3464,8 +3464,11 @@
                 "phpactor/language-server-extension": "^0.5.0",
                 "phpactor/logging-extension": "^0.3.4",
                 "phpactor/phly-event-dispatcher": "^2.0.0",
+                "phpactor/reference-finder": "^0.1.6",
                 "phpactor/reference-finder-extension": "^0.1.7",
                 "phpactor/text-document": "^1.2.4",
+                "phpactor/worse-reference-finder-extension": "^0.1.6",
+                "phpactor/worse-reference-finders": "^0.2.6",
                 "phpactor/worse-reflection": "^0.4.4",
                 "phpactor/worse-reflection-extension": "^0.2.4"
             },
@@ -3514,7 +3517,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-10T11:58:29+00:00"
+            "time": "2021-04-11T21:49:20+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -3900,16 +3903,16 @@
         },
         {
             "name": "phpactor/reference-finder",
-            "version": "0.1.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder.git",
-                "reference": "67106214f0d648954b2c3a6952282e6a4d6a9e00"
+                "reference": "754f5b12ce42c3e98cf7b331222b7b0f8158c85f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/67106214f0d648954b2c3a6952282e6a4d6a9e00",
-                "reference": "67106214f0d648954b2c3a6952282e6a4d6a9e00",
+                "url": "https://api.github.com/repos/phpactor/reference-finder/zipball/754f5b12ce42c3e98cf7b331222b7b0f8158c85f",
+                "reference": "754f5b12ce42c3e98cf7b331222b7b0f8158c85f",
                 "shasum": ""
             },
             "require": {
@@ -3926,6 +3929,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3950,9 +3954,9 @@
             "description": "Base library for finding definitions",
             "support": {
                 "issues": "https://github.com/phpactor/reference-finder/issues",
-                "source": "https://github.com/phpactor/reference-finder/tree/0.1.5"
+                "source": "https://github.com/phpactor/reference-finder/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-04-11T12:11:29+00:00"
         },
         {
             "name": "phpactor/reference-finder-extension",
@@ -4294,16 +4298,16 @@
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
-            "version": "0.1.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
-                "reference": "c867f1626e392eeadfb40164fe568163c50ff355"
+                "reference": "6f111040022a60c833bad64c009c104d04288bc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/c867f1626e392eeadfb40164fe568163c50ff355",
-                "reference": "c867f1626e392eeadfb40164fe568163c50ff355",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/6f111040022a60c833bad64c009c104d04288bc0",
+                "reference": "6f111040022a60c833bad64c009c104d04288bc0",
                 "shasum": ""
             },
             "require": {
@@ -4311,7 +4315,7 @@
                 "phpactor/container": "^2.0.0",
                 "phpactor/reference-finder-extension": "^0.1.7",
                 "phpactor/source-code-filesystem-extension": "^0.1.5",
-                "phpactor/worse-reference-finders": "^0.2.5",
+                "phpactor/worse-reference-finders": "^0.2.6",
                 "phpactor/worse-reflection-extension": "^0.2.4"
             },
             "require-dev": {
@@ -4321,6 +4325,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -4346,22 +4351,22 @@
             "description": "Worse reflection implementations for reference finding",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reference-finder-extension/issues",
-                "source": "https://github.com/phpactor/worse-reference-finder-extension/tree/0.1.5"
+                "source": "https://github.com/phpactor/worse-reference-finder-extension/tree/master"
             },
-            "time": "2021-02-06T14:39:09+00:00"
+            "time": "2021-04-11T20:34:55+00:00"
         },
         {
             "name": "phpactor/worse-reference-finders",
-            "version": "0.2.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "f0dd857ed8779e7f587e613e1ea3e3ad26fac647"
+                "reference": "93651efd423209139ee741ebafe3f4f598930f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/f0dd857ed8779e7f587e613e1ea3e3ad26fac647",
-                "reference": "f0dd857ed8779e7f587e613e1ea3e3ad26fac647",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/93651efd423209139ee741ebafe3f4f598930f74",
+                "reference": "93651efd423209139ee741ebafe3f4f598930f74",
                 "shasum": ""
             },
             "require": {
@@ -4378,8 +4383,10 @@
                 "phpactor/test-utils": "~1.1.3",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "~0.12.0",
-                "phpunit/phpunit": "^9.0"
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4404,9 +4411,9 @@
             "description": "Worse Reflection reference finder implementations",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reference-finder/issues",
-                "source": "https://github.com/phpactor/worse-reference-finder/tree/0.2.5"
+                "source": "https://github.com/phpactor/worse-reference-finder/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-04-11T20:56:00+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
