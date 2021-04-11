@@ -44,7 +44,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Range Formatting        | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
-| Rename                  | ✘ | Supported by RPC [#rpc]_ [#rename]_ |
+| Rename                  | ✔ | Variables and members [#rename]_    |
 +-------------------------+---+-------------------------------------+
 | Folding/Selection Range | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
@@ -56,5 +56,5 @@ See the `Language Server Specification`_ for details.
 .. [#rpc] Available through RPC (i.e. non-LSP client) LSP support should be added soon.
 .. [#code] See :doc:`/lsp/code-actions`.
 .. [#references] For class like references, functions and member accesses (static and object instances)
-.. [#rename] RPC supports :ref:`refactoring_rename_variable`, :ref:`refactoring_rename_class`, :ref:`refactoring_rename_member`,
+.. [#rename] Native LSP support for renaming variables and class members, with support planned for renaming classes and namespaces. RPC fills the gap: :ref:`refactoring_rename_class`
 .. [#diagnostics] Basic PHP linting in addition to diagositcs for code actions and also via. plugins, for example PHPStan https://github.com/phpactor/language-server-phpstan-extension
