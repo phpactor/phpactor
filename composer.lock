@@ -1563,24 +1563,23 @@
         },
         {
             "name": "jetbrains/phpstorm-stubs",
-            "version": "v2020.2",
+            "version": "v2021.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "55746ac77eecd0cd757b52151b9df9002da554af"
+                "reference": "ec9e109d9416203870109e464f8c8931474d404e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/55746ac77eecd0cd757b52151b9df9002da554af",
-                "reference": "55746ac77eecd0cd757b52151b9df9002da554af",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/ec9e109d9416203870109e464f8c8931474d404e",
+                "reference": "ec9e109d9416203870109e464f8c8931474d404e",
                 "shasum": ""
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "nikic/php-parser": "^4",
-                "php": "^7.4",
-                "phpdocumentor/reflection-docblock": "dev-master",
-                "phpunit/phpunit": "^9"
+                "nikic/php-parser": "@stable",
+                "php": "^8.0",
+                "phpdocumentor/reflection-docblock": "@stable",
+                "phpunit/phpunit": "@stable"
             },
             "type": "library",
             "autoload": {
@@ -1605,9 +1604,9 @@
                 "type"
             ],
             "support": {
-                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/v2020.2"
+                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/v2021.1"
             },
-            "time": "2020-09-16T15:54:07+00:00"
+            "time": "2021-03-03T10:43:38+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -3441,12 +3440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "ea97f4bb6dfe3b4082c6b12167880ea14ece5579"
+                "reference": "0b9d4a1a72e026f3133118e73da6deddade87fcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/ea97f4bb6dfe3b4082c6b12167880ea14ece5579",
-                "reference": "ea97f4bb6dfe3b4082c6b12167880ea14ece5579",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/0b9d4a1a72e026f3133118e73da6deddade87fcc",
+                "reference": "0b9d4a1a72e026f3133118e73da6deddade87fcc",
                 "shasum": ""
             },
             "require": {
@@ -3517,7 +3516,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-11T22:08:25+00:00"
+            "time": "2021-04-13T13:08:32+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -8724,12 +8723,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "0eeced19df3d3a0eaeaefe6982cb858917512b1b"
+                "reference": "38848affa8c520f6b62173080119c8236f501cbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/0eeced19df3d3a0eaeaefe6982cb858917512b1b",
-                "reference": "0eeced19df3d3a0eaeaefe6982cb858917512b1b",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/38848affa8c520f6b62173080119c8236f501cbc",
+                "reference": "38848affa8c520f6b62173080119c8236f501cbc",
                 "shasum": ""
             },
             "require": {
@@ -8799,7 +8798,7 @@
                 "issues": "https://github.com/phpbench/phpbench/issues",
                 "source": "https://github.com/phpbench/phpbench/tree/master"
             },
-            "time": "2021-04-06T15:32:51+00:00"
+            "time": "2021-04-13T06:53:55+00:00"
         },
         {
             "name": "phpspec/prophecy-phpunit",
