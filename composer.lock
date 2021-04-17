@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cf0f0b0d60e1367af9115d86b4486fe",
+    "content-hash": "c66ce3c3f4a1761295166d22b0ec7839",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2561,16 +2561,16 @@
         },
         {
             "name": "phpactor/completion",
-            "version": "0.4.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "2347168e27a13e88418ea4dd44fc57778c2e8b93"
+                "reference": "8738fb5a555c210fd9913ef2682b9fbe23d29e4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/2347168e27a13e88418ea4dd44fc57778c2e8b93",
-                "reference": "2347168e27a13e88418ea4dd44fc57778c2e8b93",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/8738fb5a555c210fd9913ef2682b9fbe23d29e4b",
+                "reference": "8738fb5a555c210fd9913ef2682b9fbe23d29e4b",
                 "shasum": ""
             },
             "require": {
@@ -2587,12 +2587,13 @@
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^2.17",
                 "phpactor/test-utils": "~1.1.3",
-                "phpbench/phpbench": "dev-master",
+                "phpbench/phpbench": "^1.0.0@alpha",
                 "phpspec/prophecy-phpunit": "dev-master",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "~9.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2616,9 +2617,9 @@
             ],
             "description": "Completion library for Worse Reflection",
             "support": {
-                "source": "https://github.com/phpactor/completion/tree/0.4.4"
+                "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2021-02-28T09:43:36+00:00"
+            "time": "2021-04-16T07:23:36+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -3243,12 +3244,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "4e4e1abd3cccdfb7820c472353f2371465416c10"
+                "reference": "bca3ea5e08ed36f9e7c04c5e1be553fa1c4d4d15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/4e4e1abd3cccdfb7820c472353f2371465416c10",
-                "reference": "4e4e1abd3cccdfb7820c472353f2371465416c10",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/bca3ea5e08ed36f9e7c04c5e1be553fa1c4d4d15",
+                "reference": "bca3ea5e08ed36f9e7c04c5e1be553fa1c4d4d15",
                 "shasum": ""
             },
             "require": {
@@ -3306,7 +3307,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2021-04-10T10:22:37+00:00"
+            "time": "2021-04-17T11:54:17+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -3440,12 +3441,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "0b9d4a1a72e026f3133118e73da6deddade87fcc"
+                "reference": "f7f3ccd054c4d955447b2c9797f580f6150832b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/0b9d4a1a72e026f3133118e73da6deddade87fcc",
-                "reference": "0b9d4a1a72e026f3133118e73da6deddade87fcc",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f7f3ccd054c4d955447b2c9797f580f6150832b6",
+                "reference": "f7f3ccd054c4d955447b2c9797f580f6150832b6",
                 "shasum": ""
             },
             "require": {
@@ -3468,8 +3469,8 @@
                 "phpactor/text-document": "^1.2.4",
                 "phpactor/worse-reference-finder-extension": "^0.1.6",
                 "phpactor/worse-reference-finders": "^0.2.6",
-                "phpactor/worse-reflection": "^0.4.4",
-                "phpactor/worse-reflection-extension": "^0.2.4"
+                "phpactor/worse-reflection": "^0.4.6",
+                "phpactor/worse-reflection-extension": "^0.2.5"
             },
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
@@ -3516,7 +3517,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-13T13:08:32+00:00"
+            "time": "2021-04-17T12:47:43+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -4301,12 +4302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
-                "reference": "6f111040022a60c833bad64c009c104d04288bc0"
+                "reference": "3b8b676634848e45c69bdcc8d4bed3ec851a01fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/6f111040022a60c833bad64c009c104d04288bc0",
-                "reference": "6f111040022a60c833bad64c009c104d04288bc0",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder-extension/zipball/3b8b676634848e45c69bdcc8d4bed3ec851a01fc",
+                "reference": "3b8b676634848e45c69bdcc8d4bed3ec851a01fc",
                 "shasum": ""
             },
             "require": {
@@ -4315,7 +4316,7 @@
                 "phpactor/reference-finder-extension": "^0.1.7",
                 "phpactor/source-code-filesystem-extension": "^0.1.5",
                 "phpactor/worse-reference-finders": "^0.2.6",
-                "phpactor/worse-reflection-extension": "^0.2.4"
+                "phpactor/worse-reflection-extension": "^0.2.5"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -4352,7 +4353,7 @@
                 "issues": "https://github.com/phpactor/worse-reference-finder-extension/issues",
                 "source": "https://github.com/phpactor/worse-reference-finder-extension/tree/master"
             },
-            "time": "2021-04-11T20:34:55+00:00"
+            "time": "2021-04-17T12:44:52+00:00"
         },
         {
             "name": "phpactor/worse-reference-finders",
@@ -4360,12 +4361,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "93651efd423209139ee741ebafe3f4f598930f74"
+                "reference": "d33b2fb5b59fda5cf217b9f2541fce140c6ea71f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/93651efd423209139ee741ebafe3f4f598930f74",
-                "reference": "93651efd423209139ee741ebafe3f4f598930f74",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/d33b2fb5b59fda5cf217b9f2541fce140c6ea71f",
+                "reference": "d33b2fb5b59fda5cf217b9f2541fce140c6ea71f",
                 "shasum": ""
             },
             "require": {
@@ -4374,7 +4375,7 @@
                 "phpactor/reference-finder": "~0.1.5",
                 "phpactor/source-code-filesystem": "~0.1.6",
                 "phpactor/text-document": "^1.2.3",
-                "phpactor/worse-reflection": "~0.4.4"
+                "phpactor/worse-reflection": "~0.4.6"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -4412,7 +4413,7 @@
                 "issues": "https://github.com/phpactor/worse-reference-finder/issues",
                 "source": "https://github.com/phpactor/worse-reference-finder/tree/master"
             },
-            "time": "2021-04-11T20:56:00+00:00"
+            "time": "2021-04-17T12:43:17+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
@@ -4420,12 +4421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "a815e176766353cff7c1f727b1adb9d5905c56fc"
+                "reference": "faf4362c6140aeb8cfebc67c7cf96acdc984323c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/a815e176766353cff7c1f727b1adb9d5905c56fc",
-                "reference": "a815e176766353cff7c1f727b1adb9d5905c56fc",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/faf4362c6140aeb8cfebc67c7cf96acdc984323c",
+                "reference": "faf4362c6140aeb8cfebc67c7cf96acdc984323c",
                 "shasum": ""
             },
             "require": {
@@ -4475,20 +4476,20 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2021-04-02T08:27:28+00:00"
+            "time": "2021-04-17T12:31:59+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
-            "version": "0.2.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
-                "reference": "8a4adba3a1453eadd4b55400fb2b0341d4ba99ab"
+                "reference": "7e626bb0ebcbb38bb52d3ffa71d59724feff83a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/8a4adba3a1453eadd4b55400fb2b0341d4ba99ab",
-                "reference": "8a4adba3a1453eadd4b55400fb2b0341d4ba99ab",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection-extension/zipball/7e626bb0ebcbb38bb52d3ffa71d59724feff83a4",
+                "reference": "7e626bb0ebcbb38bb52d3ffa71d59724feff83a4",
                 "shasum": ""
             },
             "require": {
@@ -4498,7 +4499,7 @@
                 "phpactor/container": "^2.0.0",
                 "phpactor/file-path-resolver-extension": "^0.3.4",
                 "phpactor/logging-extension": "^0.3.4",
-                "phpactor/worse-reflection": "^0.4.4"
+                "phpactor/worse-reflection": "^0.4.6"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -4507,6 +4508,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -4532,9 +4534,9 @@
             "description": "Worse Reflection",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection-extension/issues",
-                "source": "https://github.com/phpactor/worse-reflection-extension/tree/0.2.4"
+                "source": "https://github.com/phpactor/worse-reflection-extension/tree/master"
             },
-            "time": "2021-02-06T14:39:09+00:00"
+            "time": "2021-04-17T12:40:05+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -8723,12 +8725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "38848affa8c520f6b62173080119c8236f501cbc"
+                "reference": "d3262826d103a4e3ae728e21fc79b05f0fb8f0fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/38848affa8c520f6b62173080119c8236f501cbc",
-                "reference": "38848affa8c520f6b62173080119c8236f501cbc",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/d3262826d103a4e3ae728e21fc79b05f0fb8f0fd",
+                "reference": "d3262826d103a4e3ae728e21fc79b05f0fb8f0fd",
                 "shasum": ""
             },
             "require": {
@@ -8796,9 +8798,9 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/master"
+                "source": "https://github.com/phpbench/phpbench/tree/1.0.0-beta1"
             },
-            "time": "2021-04-13T06:53:55+00:00"
+            "time": "2021-04-13T15:31:36+00:00"
         },
         {
             "name": "phpspec/prophecy-phpunit",
