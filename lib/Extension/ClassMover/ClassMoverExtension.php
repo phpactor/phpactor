@@ -96,7 +96,7 @@ class ClassMoverExtension implements Extension
         $container->register('application.class_mover', function (Container $container) {
             return new ClassMoverApp(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('class_mover.class_mover'),
+                $container->get(ClassMover::class),
                 $container->get('source_code_filesystem.registry'),
                 $container->get(NavigationExtension::SERVICE_PATH_FINDER)
             );
@@ -105,7 +105,7 @@ class ClassMoverExtension implements Extension
         $container->register('application.class_copy', function (Container $container) {
             return new ClassCopy(
                 $container->get('application.helper.class_file_normalizer'),
-                $container->get('class_mover.class_mover'),
+                $container->get(ClassMover::class),
                 $container->get('source_code_filesystem.registry')->get('git')
             );
         });
