@@ -8,7 +8,7 @@
         "composer/xdebug-handler": "^1.1",
         "dantleech/invoke": "^1.0.1",
         "monolog/monolog": "^1.0",
-        "phpactor/class-mover": "^0.1.4",
+        "phpactor/class-mover": "^0.2.0",
         "phpactor/class-to-file": "^0.4.0",
         "phpactor/class-to-file-extension": "^0.2.2",
         "phpactor/code-transform": "^0.4.0",

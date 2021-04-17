@@ -155,7 +155,8 @@ class ClassMover
     private function replaceReferences(ClassMoverLogger $logger, Filesystem $filesystem, string $srcName, string $destName): void
     {
         foreach ($filesystem->fileList()->existing()->phpFiles() as $filePath) {
-            $references = $this->classMover->findReferences($filesystem->getContents($filePath), $srcName);
+            $source = $filesystem->getContents($filePath);
+            $references = $this->classMover->findReferences($source, $srcName);
 
             if ($references->references()->isEmpty()) {
                 continue;
@@ -163,12 +164,12 @@ class ClassMover
 
             $logger->replacing($filePath, $references, FullyQualifiedName::fromString($destName));
 
-            $source = $this->classMover->replaceReferences(
+            $edits = $this->classMover->replaceReferences(
                 $references,
                 $destName
             );
 
-            $filesystem->writeContents($filePath, (string) $source);
+            $filesystem->writeContents($filePath, $edits->apply($source));
         }
     }
 
