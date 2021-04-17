@@ -2,6 +2,7 @@
 
 namespace Phpactor;
 
+use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
@@ -104,6 +105,7 @@ class Phpactor
             ClassToFileExtraExtension::class,
             ClassToFileExtension::class,
             ClassMoverExtension::class,
+            MainClassMoverExtension::class,
             CodeTransformExtension::class,
             CodeTransformExtraExtension::class,
             CompletionExtraExtension::class,

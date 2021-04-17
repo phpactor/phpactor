@@ -109,14 +109,15 @@ class ClassCopy
             $srcClassName = $this->classFileNormalizer->fileToClass($srcPath->path());
             $destClassName = $this->classFileNormalizer->fileToClass($destPath->path());
 
-            $references = $this->classMover->findReferences($this->filesystem->getContents($srcPath), $srcClassName);
+            $source = $this->filesystem->getContents($srcPath);
+            $references = $this->classMover->findReferences($source, $srcClassName);
             $logger->replacing($destPath, $references, FullyQualifiedName::fromString($destClassName));
-            $source = $this->classMover->replaceReferences(
+            $edits = $this->classMover->replaceReferences(
                 $references,
                 $destClassName
             );
 
-            $this->filesystem->writeContents($destPath, (string) $source);
+            $this->filesystem->writeContents($destPath, (string) $edits->apply($source));
             $copyReport->destFiles()->next();
         }
     }

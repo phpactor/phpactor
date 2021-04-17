@@ -10,6 +10,7 @@ Bug fixes:
 Features:
 
   - [language-server] Ensure workspace is indexed before finding references - @dantleech
+  - [language-server] Support for renaming class names (short only) - @dantleech
   - [language-server] Rename class members and variables - @BladeMF, @dantleech
   - [language-server] Basic support for workspace symbols.
   - [language-server] Added basic PHP linting by default.

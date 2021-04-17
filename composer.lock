@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c66ce3c3f4a1761295166d22b0ec7839",
+    "content-hash": "3347ae2bbda676c7a7ee7a0507ac8dcf",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2217,21 +2217,25 @@
         },
         {
             "name": "phpactor/class-mover",
-            "version": "0.1.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
-                "reference": "374ee3d36137ad9dc3ecee5fd5f4043b029bdaf6"
+                "reference": "47166e1fb095ff178dacb7a1b765b5c6e59f42e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/374ee3d36137ad9dc3ecee5fd5f4043b029bdaf6",
-                "reference": "374ee3d36137ad9dc3ecee5fd5f4043b029bdaf6",
+                "url": "https://api.github.com/repos/phpactor/class-mover/zipball/47166e1fb095ff178dacb7a1b765b5c6e59f42e5",
+                "reference": "47166e1fb095ff178dacb7a1b765b5c6e59f42e5",
                 "shasum": ""
             },
             "require": {
                 "microsoft/tolerant-php-parser": "@dev",
                 "php": "^7.3 || ^8.0",
+                "phpactor/code-builder": "^0.4.1",
+                "phpactor/code-transform-extension": "^0.2.1",
+                "phpactor/container": "^2.0",
+                "phpactor/text-document": "^1.2",
                 "phpactor/worse-reflection": "~0.4.4",
                 "psr/log": "~1.0",
                 "symfony/filesystem": "^4.2 || ^5.0"
@@ -2244,10 +2248,11 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/console": "^4.3 || ^5.1"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -2267,9 +2272,9 @@
             ],
             "description": "Library for moving classes",
             "support": {
-                "source": "https://github.com/phpactor/class-mover/tree/0.1.4"
+                "source": "https://github.com/phpactor/class-mover/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-04-17T16:51:54+00:00"
         },
         {
             "name": "phpactor/class-to-file",
@@ -3441,17 +3446,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "f7f3ccd054c4d955447b2c9797f580f6150832b6"
+                "reference": "941fad521088e9e0e855de69c828ff5be9e3ded1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/f7f3ccd054c4d955447b2c9797f580f6150832b6",
-                "reference": "f7f3ccd054c4d955447b2c9797f580f6150832b6",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/941fad521088e9e0e855de69c828ff5be9e3ded1",
+                "reference": "941fad521088e9e0e855de69c828ff5be9e3ded1",
                 "shasum": ""
             },
             "require": {
                 "dantleech/object-renderer": "^0.1.1",
                 "php": "^7.3 || ^8.0",
+                "phpactor/class-mover": "^0.2.0",
                 "phpactor/code-transform": "^0.4.0",
                 "phpactor/code-transform-extension": "^0.2.1",
                 "phpactor/completion": "~0.4.3",
@@ -3517,7 +3523,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-17T12:47:43+00:00"
+            "time": "2021-04-17T16:57:18+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
