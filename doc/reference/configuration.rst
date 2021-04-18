@@ -999,6 +999,33 @@ Specify which diagnostic providers should be active (default to all)
 **Default**: ``null``
 
 
+.. _param_language_server,file_events:
+
+
+``language_server,file_events``
+"""""""""""""""""""""""""""""""
+
+
+
+
+Register to recieve file events
+
+
+**Default**: ``true``
+
+
+.. _param_language_server.file_event_globs:
+
+
+``language_server.file_event_globs``
+""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``["**\/*.php"]``
+
+
 .. _LanguageServerCompletionExtension:
 
 
@@ -1242,73 +1269,4 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
-
-
-.. _BehatExtension:
-
-
-BehatExtension
---------------
-
-
-.. _param_behat.config_path:
-
-
-``behat.config_path``
-"""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/behat.yml"``
-
-
-.. _LanguageServerPhpstanExtension:
-
-
-LanguageServerPhpstanExtension
-------------------------------
-
-
-.. _param_language_server_phpstan.bin:
-
-
-``language_server_phpstan.bin``
-"""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
-
-
-.. _param_phpstan.level:
-
-
-``phpstan.level``
-"""""""""""""""""
-
-
-
-
-**Default**: ``null``
-
-
-.. _PhpSpecExtension:
-
-
-PhpSpecExtension
-----------------
-
-
-.. _param_phpspec.spec_prefix:
-
-
-``phpspec.spec_prefix``
-"""""""""""""""""""""""
-
-
-
-
-**Default**: ``"spec"``
 

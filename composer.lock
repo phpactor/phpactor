@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3347ae2bbda676c7a7ee7a0507ac8dcf",
+    "content-hash": "775fe551fee8474db161e7a241d24931",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2570,12 +2570,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "8738fb5a555c210fd9913ef2682b9fbe23d29e4b"
+                "reference": "9c3aacc59f8c8ee7834d6a57bdb8885d9c9acd56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/8738fb5a555c210fd9913ef2682b9fbe23d29e4b",
-                "reference": "8738fb5a555c210fd9913ef2682b9fbe23d29e4b",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/9c3aacc59f8c8ee7834d6a57bdb8885d9c9acd56",
+                "reference": "9c3aacc59f8c8ee7834d6a57bdb8885d9c9acd56",
                 "shasum": ""
             },
             "require": {
@@ -2624,11 +2624,11 @@
             "support": {
                 "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2021-04-16T07:23:36+00:00"
+            "time": "2021-04-18T09:16:04+00:00"
         },
         {
             "name": "phpactor/completion-extension",
-            "version": "0.2.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-extension.git",
@@ -2653,6 +2653,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -2740,21 +2741,21 @@
         },
         {
             "name": "phpactor/completion-worse-extension",
-            "version": "0.2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "c120c643fe74567fa374bcb2c1210022e30ab1c4"
+                "reference": "24ba3e6c60c0957e82064cc35d1a55618ff6cf3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/c120c643fe74567fa374bcb2c1210022e30ab1c4",
-                "reference": "c120c643fe74567fa374bcb2c1210022e30ab1c4",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/24ba3e6c60c0957e82064cc35d1a55618ff6cf3c",
+                "reference": "24ba3e6c60c0957e82064cc35d1a55618ff6cf3c",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3 || ^8.0",
-                "phpactor/completion": "~0.4.3",
+                "phpactor/completion": "~0.4.5",
                 "phpactor/completion-extension": "^0.2.4",
                 "phpactor/reference-finder-extension": "^0.1.7",
                 "phpactor/source-code-filesystem-extension": "^0.1.5",
@@ -2767,6 +2768,7 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
+            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -2792,9 +2794,9 @@
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
             "support": {
                 "issues": "https://github.com/phpactor/completion-worse-extension/issues",
-                "source": "https://github.com/phpactor/completion-worse-extension/tree/0.2.2"
+                "source": "https://github.com/phpactor/completion-worse-extension/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-04-18T10:41:46+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
@@ -3316,16 +3318,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "d00472c50711f91091e6c93df89b435ecf386d6e"
+                "reference": "85fcf27be6ab2db16b942fd67a46e3ea4b188277"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/d00472c50711f91091e6c93df89b435ecf386d6e",
-                "reference": "d00472c50711f91091e6c93df89b435ecf386d6e",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/85fcf27be6ab2db16b942fd67a46e3ea4b188277",
+                "reference": "85fcf27be6ab2db16b942fd67a46e3ea4b188277",
                 "shasum": ""
             },
             "require": {
@@ -3354,7 +3356,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -3375,22 +3377,22 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/1.0.2"
+                "source": "https://github.com/phpactor/language-server/tree/1.1.0"
             },
-            "time": "2021-03-21T09:36:06+00:00"
+            "time": "2021-04-18T12:28:38+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
-            "version": "0.5.0",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "06b2fb00e89ecdc1ae2bb8d81928e1d0d7b72a15"
+                "reference": "8aff3e4b413d1598c431aeadf2a33c457e31ba6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/06b2fb00e89ecdc1ae2bb8d81928e1d0d7b72a15",
-                "reference": "06b2fb00e89ecdc1ae2bb8d81928e1d0d7b72a15",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/8aff3e4b413d1598c431aeadf2a33c457e31ba6f",
+                "reference": "8aff3e4b413d1598c431aeadf2a33c457e31ba6f",
                 "shasum": ""
             },
             "require": {
@@ -3398,7 +3400,7 @@
                 "phpactor/console-extension": "^0.1.6",
                 "phpactor/container": "^2.0.0",
                 "phpactor/file-path-resolver-extension": "^0.3.4",
-                "phpactor/language-server": "^1.0.0",
+                "phpactor/language-server": "^1.1.0",
                 "phpactor/logging-extension": "^0.3.4",
                 "phpactor/phly-event-dispatcher": "^2.0.0",
                 "phpactor/text-document": "^1.2.3"
@@ -3436,9 +3438,9 @@
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
             "support": {
-                "source": "https://github.com/phpactor/language-server-extension/tree/0.5.0"
+                "source": "https://github.com/phpactor/language-server-extension/tree/0.6.1"
             },
-            "time": "2021-02-06T14:38:57+00:00"
+            "time": "2021-04-18T13:22:57+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
@@ -3446,12 +3448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "941fad521088e9e0e855de69c828ff5be9e3ded1"
+                "reference": "cdcb48e5daa112d6b921ee10b1d6975860c2b318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/941fad521088e9e0e855de69c828ff5be9e3ded1",
-                "reference": "941fad521088e9e0e855de69c828ff5be9e3ded1",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/cdcb48e5daa112d6b921ee10b1d6975860c2b318",
+                "reference": "cdcb48e5daa112d6b921ee10b1d6975860c2b318",
                 "shasum": ""
             },
             "require": {
@@ -3467,7 +3469,7 @@
                 "phpactor/container": "^2.0.0",
                 "phpactor/file-path-resolver-extension": "^0.3.4",
                 "phpactor/indexer-extension": "^0.3.1",
-                "phpactor/language-server-extension": "^0.5.0",
+                "phpactor/language-server-extension": "^0.6.0",
                 "phpactor/logging-extension": "^0.3.4",
                 "phpactor/phly-event-dispatcher": "^2.0.0",
                 "phpactor/reference-finder": "^0.1.6",
@@ -3523,7 +3525,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-17T16:57:18+00:00"
+            "time": "2021-04-18T15:26:36+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
