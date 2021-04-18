@@ -54,6 +54,7 @@ use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use function sprintf;
 
 class Phpactor
 {
@@ -190,6 +191,9 @@ class Phpactor
         }
         $masterSchema->setDefaults([
             PhpactorContainer::PARAM_EXTENSION_CLASSES => $extensionNames,
+
+            // enable the LSP watchern
+            IndexerExtension::PARAM_ENABLED_WATCHERS => ['lsp', 'inotify', 'find', 'php']
         ]);
         $config = $masterSchema->resolve($config);
 

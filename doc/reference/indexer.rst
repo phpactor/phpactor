@@ -61,6 +61,28 @@ File watchers are used to keep the index up-to-date.
 Several watching systems can be used, by default Phpactor will choose the
 first supported one:
 
+lsp
+~~~
+
+**Any platform**
+
+This watcher depends on file events from the LSP client (e.g. VSCode).
+
+inotifywait
+~~~~~~~~~~~
+
+**Linux** only, react immediately to file changes.
+
+Installation
+
+.. tabs::
+
+    .. tab:: Debian/Ubuntu
+       
+        .. code-block:: bash
+
+            apt install inotify-tools
+
 watchman
 ~~~~~~~~
 
@@ -83,21 +105,6 @@ Installation:
         .. code-block:: bash
 
             brew install watchman
-
-inotifywait
-~~~~~~~~~~~
-
-**Linux** only, react immediately to file changes.
-
-Installation
-
-.. tabs::
-
-    .. tab:: Debian/Ubuntu
-       
-        .. code-block:: bash
-
-            apt install inotify-tools
 
 find
 ~~~~
