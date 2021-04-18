@@ -3448,12 +3448,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "0a0c6e9e2dc05b11e614a30fd88edb49e0d5b262"
+                "reference": "cdcb48e5daa112d6b921ee10b1d6975860c2b318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/0a0c6e9e2dc05b11e614a30fd88edb49e0d5b262",
-                "reference": "0a0c6e9e2dc05b11e614a30fd88edb49e0d5b262",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/cdcb48e5daa112d6b921ee10b1d6975860c2b318",
+                "reference": "cdcb48e5daa112d6b921ee10b1d6975860c2b318",
                 "shasum": ""
             },
             "require": {
@@ -3525,7 +3525,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-04-18T15:18:26+00:00"
+            "time": "2021-04-18T15:26:36+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",

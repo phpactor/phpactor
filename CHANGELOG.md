@@ -9,6 +9,7 @@ Bug fixes:
 
 Features:
 
+  - [language-server] Ability to use client file events where available - @dantleech
   - [completion] Support snippets for built-in functions - @weeman1337
   - [language-server] Ensure workspace is indexed before finding references - @dantleech
   - [language-server] Support for renaming class names (short only) - @dantleech
