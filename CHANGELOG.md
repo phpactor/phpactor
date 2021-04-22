@@ -3,10 +3,6 @@ Changelog
 
 ## master
 
-Bug fixes:
-
-  - [completion] Tests fail due to jetbrain stubs changes - @weeman1337
-
 Features:
 
   - [language-server] Ability to use client file events where available - @dantleech
@@ -17,9 +13,16 @@ Features:
   - [language-server] Basic support for workspace symbols.
   - [language-server] Added basic PHP linting by default.
 
+Improvements:
+
+  - [completion] Improve diagnostic message for #1245 - @dantleech
+
 Bug fixes:
 
+  - [completion] Tests fail due to jetbrain stubs changes - @weeman1337
+  - [worse-reference-finder] Do not know how to create class from type "NULL" #1246 - @dantleech
   - [worse-reflection] Property context class not propagated
+
 
 ## 2021-03-21 (0.17.1)
 
