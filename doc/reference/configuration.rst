@@ -267,6 +267,36 @@ Strategy to use when ordering completion results for classes and functions:
 **Default**: ``"proximity"``
 
 
+.. _param_completion_worse.snippets:
+
+
+``completion_worse.snippets``
+"""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable completion snippets
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.experimantal:
+
+
+``completion_worse.experimantal``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+Enable experimental functionality
+
+
+**Default**: ``false``
+
+
 .. _CompletionExtension:
 
 
