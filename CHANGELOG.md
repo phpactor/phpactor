@@ -6,7 +6,10 @@ Changelog
 Features:
 
   - [language-server] Ability to use client file events where available - @dantleech
-  - [completion] Support snippets for built-in functions - @weeman1337
+  - [completion] Experimental support snippets for built-in functions - @weeman1337
+  - [completion] Experimental support snippets for class constructos - @weeman1337
+  - [completion] Added `experimental` flag
+  - [completion] Added flag to enable / disable snippets entirely
   - [language-server] Ensure workspace is indexed before finding references - @dantleech
   - [language-server] Support for renaming class names (short only) - @dantleech
   - [language-server] Rename class members and variables - @BladeMF, @dantleech

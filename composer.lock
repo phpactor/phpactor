@@ -2745,12 +2745,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
-                "reference": "e2856a05c16bbc31e931c5584f538fe315fa2205"
+                "reference": "e1aceb0834b2bcd4543a09798d2cff124e648424"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/e2856a05c16bbc31e931c5584f538fe315fa2205",
-                "reference": "e2856a05c16bbc31e931c5584f538fe315fa2205",
+                "url": "https://api.github.com/repos/phpactor/completion-worse-extension/zipball/e1aceb0834b2bcd4543a09798d2cff124e648424",
+                "reference": "e1aceb0834b2bcd4543a09798d2cff124e648424",
                 "shasum": ""
             },
             "require": {
@@ -2796,7 +2796,7 @@
                 "issues": "https://github.com/phpactor/completion-worse-extension/issues",
                 "source": "https://github.com/phpactor/completion-worse-extension/tree/master"
             },
-            "time": "2021-04-22T20:29:46+00:00"
+            "time": "2021-04-24T08:15:35+00:00"
         },
         {
             "name": "phpactor/composer-autoloader-extension",
