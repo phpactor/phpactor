@@ -8,6 +8,11 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\TextDocument\TextEdit;
+use Phpactor\TextDocument\TextEdits;
+use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
 {
@@ -31,12 +36,17 @@ class GenerateMethodHandlerTest extends HandlerTestCase
     {
         $handler = $this->createHandler('generate_method');
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
-        $transformedSource = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, __FILE__);
+        $thisFileContents = file_get_contents(__FILE__);
 
         $this->generateMethod->generateMethod(
             $source,
             self::EXAMPLE_OFFSET
-        )->willReturn($transformedSource);
+        )->willReturn(new TextDocumentEdits(
+            TextDocumentUri::fromString(__FILE__),
+            TextEdits::fromTextEdits([
+                TextEdit::create(strlen($thisFileContents) - 1, 1, substr($thisFileContents, -1) ."1")
+            ])
+        ));
 
         $response = $handler->handle([
             GenerateMethodHandler::PARAM_PATH => self::EXAMPLE_PATH,
@@ -47,20 +57,24 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $response);
         assert($response instanceof UpdateFileSourceResponse);
         $this->assertEquals(__FILE__, $response->path());
-        $this->assertEquals(file_get_contents(__FILE__), $response->oldSource());
-        $this->assertEquals(self::EXAMPLE_SOURCE, $response->newSource());
+        $this->assertEquals($thisFileContents, $response->oldSource());
+        $this->assertEquals($thisFileContents."1", $response->newSource());
     }
 
     public function testProvidesGivenSourceIfTransformedPathSameAsGivenPath(): void
     {
         $handler = $this->createHandler('generate_method');
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
-        $transformedSource = SourceCode::fromStringAndPath(self::EXAMPLE_TRANSFORMED_SOURCE, self::EXAMPLE_PATH);
 
         $this->generateMethod->generateMethod(
             $source,
             self::EXAMPLE_OFFSET
-        )->willReturn($transformedSource);
+        )->willReturn(new TextDocumentEdits(
+            TextDocumentUri::fromString("file://". self::EXAMPLE_PATH),
+            TextEdits::fromTextEdits([
+                TextEdit::create(19, 0, " 1")
+            ])
+        ));
 
         $response = $handler->handle([
             GenerateMethodHandler::PARAM_PATH => self::EXAMPLE_PATH,

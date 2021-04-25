@@ -7,6 +7,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class GenerateMethodHandler extends AbstractHandler
 {
@@ -41,7 +42,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $sourceCode = $this->generateMethod->generateMethod(
+        $textDocumentEdits = $this->generateMethod->generateMethod(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
@@ -49,20 +50,20 @@ class GenerateMethodHandler extends AbstractHandler
             $arguments[self::PARAM_OFFSET]
         );
 
-        $originalSource = $this->determineOriginalSource($sourceCode, $arguments);
-
+        $originalSource = $this->determineOriginalSource($textDocumentEdits->uri(), $arguments);
+        
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $sourceCode->path(),
+            $textDocumentEdits->uri()->path(),
             $originalSource,
-            (string) $sourceCode
+            $textDocumentEdits->textEdits()->apply((string)$originalSource)
         );
     }
 
-    private function determineOriginalSource(SourceCode $sourceCode, array $arguments)
+    private function determineOriginalSource(TextDocumentUri $uri, array $arguments)
     {
-        $originalSource = $sourceCode->path() === $arguments[self::PARAM_PATH] ?
+        $originalSource = $uri->path() === $arguments[self::PARAM_PATH] ?
             $arguments[self::PARAM_SOURCE] :
-            file_get_contents($sourceCode->path());
+            file_get_contents($uri->path());
 
         return $originalSource;
     }

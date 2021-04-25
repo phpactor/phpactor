@@ -22,3 +22,5 @@ __pycache__
 /doc/_ext/__pycache__
 .phpunit.result.cache
 .php_cs.cache
+
+/.vscode
