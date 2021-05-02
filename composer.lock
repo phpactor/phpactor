@@ -8751,7 +8751,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/master"
+                "source": "https://github.com/phpbench/phpbench/tree/1.0.0-beta2"
             },
             "time": "2021-05-02T20:13:42+00:00"
         },
