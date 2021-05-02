@@ -12,6 +12,7 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
@@ -21,9 +22,8 @@ class GenerateMethodHandlerTest extends HandlerTestCase
     const EXAMPLE_OFFSET = 1234;
     const EXAMPLE_PATH = '/path/to/1';
 
-
     /**
-     * @var GenerateMethod
+     * @var ObjectProphecy
      */
     private $generateMethod;
 
@@ -34,18 +34,17 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath(): void
     {
-        $handler = $this->createHandler('generate_method');
+        $handler = $this->createHandler();
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
         $thisFileContents = file_get_contents(__FILE__);
 
+        // @phpstan-ignore-next-line
         $this->generateMethod->generateMethod(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
             TextDocumentUri::fromString(__FILE__),
-            TextEdits::fromTextEdits([
-                TextEdit::create(strlen($thisFileContents) - 1, 1, substr($thisFileContents, -1) ."1")
-            ])
+            TextEdits::one(TextEdit::create(strlen($thisFileContents) - 1, 1, substr($thisFileContents, -1) ."1"))
         ));
 
         $response = $handler->handle([
@@ -63,17 +62,16 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     public function testProvidesGivenSourceIfTransformedPathSameAsGivenPath(): void
     {
-        $handler = $this->createHandler('generate_method');
+        $handler = $this->createHandler();
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
 
+        // @phpstan-ignore-next-line
         $this->generateMethod->generateMethod(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
             TextDocumentUri::fromString("file://". self::EXAMPLE_PATH),
-            TextEdits::fromTextEdits([
-                TextEdit::create(19, 0, " 1")
-            ])
+            TextEdits::one(TextEdit::create(19, 0, " 1"))
         ));
 
         $response = $handler->handle([
@@ -91,6 +89,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     protected function createHandler(): Handler
     {
+        // @phpstan-ignore-next-line
         return new GenerateMethodHandler($this->generateMethod->reveal());
     }
 }
