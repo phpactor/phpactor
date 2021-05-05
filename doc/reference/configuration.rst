@@ -1122,6 +1122,28 @@ Minimum interval to update the workspace index as documents are updated (in mill
 **Default**: ``100``
 
 
+.. _LanguageServerHoverExtension:
+
+
+LanguageServerHoverExtension
+----------------------------
+
+
+.. _param_language_server_hover.template_paths:
+
+
+``language_server_hover.template_paths``
+""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Paths in which to look for templates for hover information.
+
+
+**Default**: ``["%project_config%\/templates\/markdown","%config%\/templates\/markdown"]``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 
