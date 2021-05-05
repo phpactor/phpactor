@@ -3389,12 +3389,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
-                "reference": "5536b5b19c179f01fc9dacee52e035999c4aeafc"
+                "reference": "0e603fd6ef43816686b5261cbf7364d1fdbb219a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/5536b5b19c179f01fc9dacee52e035999c4aeafc",
-                "reference": "5536b5b19c179f01fc9dacee52e035999c4aeafc",
+                "url": "https://api.github.com/repos/phpactor/language-server-extension/zipball/0e603fd6ef43816686b5261cbf7364d1fdbb219a",
+                "reference": "0e603fd6ef43816686b5261cbf7364d1fdbb219a",
                 "shasum": ""
             },
             "require": {
@@ -3442,7 +3442,7 @@
             "support": {
                 "source": "https://github.com/phpactor/language-server-extension/tree/0.6.3"
             },
-            "time": "2021-05-05T19:43:37+00:00"
+            "time": "2021-05-05T20:07:30+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
