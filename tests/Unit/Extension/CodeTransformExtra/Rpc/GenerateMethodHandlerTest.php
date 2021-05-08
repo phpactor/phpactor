@@ -44,7 +44,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
             TextDocumentUri::fromString(__FILE__),
-            TextEdits::one(TextEdit::create(strlen($thisFileContents) - 1, 1, substr($thisFileContents, -1) ."1"))
+            TextEdits::one(TextEdit::create(strlen($thisFileContents) - 1, 1, substr($thisFileContents, -1) .'1'))
         ));
 
         $response = $handler->handle([
@@ -57,7 +57,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         assert($response instanceof UpdateFileSourceResponse);
         $this->assertEquals(__FILE__, $response->path());
         $this->assertEquals($thisFileContents, $response->oldSource());
-        $this->assertEquals($thisFileContents."1", $response->newSource());
+        $this->assertEquals($thisFileContents.'1', $response->newSource());
     }
 
     public function testProvidesGivenSourceIfTransformedPathSameAsGivenPath(): void
@@ -70,8 +70,8 @@ class GenerateMethodHandlerTest extends HandlerTestCase
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
-            TextDocumentUri::fromString("file://". self::EXAMPLE_PATH),
-            TextEdits::one(TextEdit::create(19, 0, " 1"))
+            TextDocumentUri::fromString('file://'. self::EXAMPLE_PATH),
+            TextEdits::one(TextEdit::create(19, 0, ' 1'))
         ));
 
         $response = $handler->handle([
