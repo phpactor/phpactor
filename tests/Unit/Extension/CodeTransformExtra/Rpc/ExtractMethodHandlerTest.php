@@ -10,6 +10,11 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractMethodHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\TextDocument\TextEdit;
+use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractMethodHandlerTest extends HandlerTestCase
 {
@@ -20,7 +25,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
     const METHOD_NAME = 'FOOBAR';
 
     /**
-     * @var ExtractMethod
+     * @var ObjectProphecy
      */
     private $extractMethod;
 
@@ -60,7 +65,12 @@ class ExtractMethodHandlerTest extends HandlerTestCase
             self::OFFSET_START,
             self::OFFSET_END,
             self::METHOD_NAME
-        )->willReturn(SourceCode::fromStringAndPath('asd', '/path'));
+        )
+        // ->willReturn(SourceCode::fromStringAndPath('asd', '/path'))
+        ->willReturn(new TextDocumentEdits(
+            TextDocumentUri::fromString('file://'. self::PATH),
+            TextEdits::one(TextEdit::create(6, 10, 'newMethod()'))
+        ));
 
         $action = $this->handle('extract_method', [
             'source' => self::SOURCE,
@@ -71,5 +81,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
+        assert($action instanceof UpdateFileSourceResponse);
+        self::assertEquals('<?php newMethod();', $action->newSource());
     }
 }
