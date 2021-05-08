@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5d4cb54704190ea4f21e40325dbc283",
+    "content-hash": "2f9e109372300601b5c0029ea29d1079",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2571,12 +2571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "da907bf0f84f08903468bff9e52871fce9d0f76d"
+                "reference": "683d8478719bb85efcdc5f58c20adb54e061b9e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/da907bf0f84f08903468bff9e52871fce9d0f76d",
-                "reference": "da907bf0f84f08903468bff9e52871fce9d0f76d",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/683d8478719bb85efcdc5f58c20adb54e061b9e1",
+                "reference": "683d8478719bb85efcdc5f58c20adb54e061b9e1",
                 "shasum": ""
             },
             "require": {
@@ -2625,7 +2625,7 @@
             "support": {
                 "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2021-05-05T19:07:49+00:00"
+            "time": "2021-05-07T21:41:31+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -3451,12 +3451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "2a08a6176b050ac8414b44ba5a16219f4223548d"
+                "reference": "1ca1b27aba5ee38d96c4d308f595db164fd6c307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/2a08a6176b050ac8414b44ba5a16219f4223548d",
-                "reference": "2a08a6176b050ac8414b44ba5a16219f4223548d",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/1ca1b27aba5ee38d96c4d308f595db164fd6c307",
+                "reference": "1ca1b27aba5ee38d96c4d308f595db164fd6c307",
                 "shasum": ""
             },
             "require": {
@@ -3530,7 +3530,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-05-07T17:31:27+00:00"
+            "time": "2021-05-08T07:31:16+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",

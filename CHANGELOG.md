@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [language-server] Initial support for method generation - @BladeMF
   - [langauge-server] Support for renaming files (LSP 3.16) - @dantleech
   - [language-server] Ability to use client file events where available - @dantleech
   - [completion] Experimental support snippets for built-in functions - @weeman1337
@@ -25,6 +26,7 @@ Improvements:
 
 Bug fixes:
 
+  - [completion] Fix snippet method completion #1172 - @BladeMF
   - [worse-reflection] Fix PHP8.0 deprecation warnings - @gregoire
   - [completion] Tests fail due to jetbrain stubs changes - @weeman1337
   - [worse-reference-finder] Do not know how to create class from type "NULL" #1246 - @dantleech

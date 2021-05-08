@@ -7,7 +7,6 @@ use Phpactor\Extension\Core\Application\Status;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
 use function Amp\call;
-use function Amp\delay;
 
 class OnDevelopWarningService implements ServiceProvider
 {
@@ -49,20 +48,21 @@ class OnDevelopWarningService implements ServiceProvider
 
     public function serviceAnnouncements(): Promise
     {
-        return call(function () {
+        return call(function (): void {
             $status = $this->status->check();
 
             if (false === $status['phpactor_is_develop']) {
                 return;
             }
 
-            $this->client->window()->showMessage()->warning(<<<'EOT'
+            $this->client->window()->showMessage()->warning(
+                <<<'EOT'
 
-            Welcome to Phpactor!
+                    Welcome to Phpactor!
 
-            You are using the develop branch which is no longer maintained
-            Switch to master or use the latest tagged version of Phpactor
-            EOT
+                    You are using the develop branch which is no longer maintained
+                    Switch to master or use the latest tagged version of Phpactor
+                    EOT
             );
         });
     }

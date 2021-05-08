@@ -6,7 +6,6 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
-use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberFinder;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberReplacer;

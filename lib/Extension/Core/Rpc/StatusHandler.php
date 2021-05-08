@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Core\Rpc;
 
 use Phpactor\ConfigLoader\Core\PathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
-use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
