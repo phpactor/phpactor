@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5d4cb54704190ea4f21e40325dbc283",
+    "content-hash": "2f9e109372300601b5c0029ea29d1079",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2446,16 +2446,16 @@
         },
         {
             "name": "phpactor/code-transform",
-            "version": "0.4.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "d6ebbc1472682dbe1e0b5b6e4bc8c6b9d46caccd"
+                "reference": "b1bed05271838ffebd01461a63d671c78ce68794"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/d6ebbc1472682dbe1e0b5b6e4bc8c6b9d46caccd",
-                "reference": "d6ebbc1472682dbe1e0b5b6e4bc8c6b9d46caccd",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/b1bed05271838ffebd01461a63d671c78ce68794",
+                "reference": "b1bed05271838ffebd01461a63d671c78ce68794",
                 "shasum": ""
             },
             "require": {
@@ -2463,7 +2463,7 @@
                 "phpactor/class-to-file": "~0.4.0",
                 "phpactor/code-builder": "^0.4.1",
                 "phpactor/name-specification": "^0.1",
-                "phpactor/text-document": "^1.2.3",
+                "phpactor/text-document": "^1.2.4",
                 "phpactor/worse-reflection": "^0.4.4",
                 "webmozart/path-util": "~2.3"
             },
@@ -2476,6 +2476,7 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2500,9 +2501,9 @@
             "description": "Applies introspective transformations on source code",
             "support": {
                 "issues": "https://github.com/phpactor/code-transform/issues",
-                "source": "https://github.com/phpactor/code-transform/tree/0.4.0"
+                "source": "https://github.com/phpactor/code-transform/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-05-03T07:13:58+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -2570,12 +2571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion.git",
-                "reference": "da907bf0f84f08903468bff9e52871fce9d0f76d"
+                "reference": "683d8478719bb85efcdc5f58c20adb54e061b9e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/completion/zipball/da907bf0f84f08903468bff9e52871fce9d0f76d",
-                "reference": "da907bf0f84f08903468bff9e52871fce9d0f76d",
+                "url": "https://api.github.com/repos/phpactor/completion/zipball/683d8478719bb85efcdc5f58c20adb54e061b9e1",
+                "reference": "683d8478719bb85efcdc5f58c20adb54e061b9e1",
                 "shasum": ""
             },
             "require": {
@@ -2624,7 +2625,7 @@
             "support": {
                 "source": "https://github.com/phpactor/completion/tree/master"
             },
-            "time": "2021-05-05T19:07:49+00:00"
+            "time": "2021-05-07T21:41:31+00:00"
         },
         {
             "name": "phpactor/completion-extension",
@@ -3450,19 +3451,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "3683c6ac328af41cbf56969de3cd72446c793844"
+                "reference": "1ca1b27aba5ee38d96c4d308f595db164fd6c307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/3683c6ac328af41cbf56969de3cd72446c793844",
-                "reference": "3683c6ac328af41cbf56969de3cd72446c793844",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/1ca1b27aba5ee38d96c4d308f595db164fd6c307",
+                "reference": "1ca1b27aba5ee38d96c4d308f595db164fd6c307",
                 "shasum": ""
             },
             "require": {
                 "dantleech/object-renderer": "^0.1.1",
                 "php": "^7.3 || ^8.0",
                 "phpactor/class-mover": "^0.2.0",
-                "phpactor/code-transform": "^0.4.0",
+                "phpactor/code-transform": "^0.4.1",
                 "phpactor/code-transform-extension": "^0.2.1",
                 "phpactor/completion": "~0.4.3",
                 "phpactor/completion-extension": "^0.2.4",
@@ -3529,7 +3530,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-05-01T21:36:37+00:00"
+            "time": "2021-05-08T07:31:16+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",

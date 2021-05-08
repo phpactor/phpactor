@@ -28,7 +28,6 @@ use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
-use Symfony\Component\Process\ExecutableFinder;
 
 class CoreExtension implements Extension
 {

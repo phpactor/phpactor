@@ -5,7 +5,6 @@ namespace Phpactor\Extension\ClassMover\Application;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassReplacer;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;

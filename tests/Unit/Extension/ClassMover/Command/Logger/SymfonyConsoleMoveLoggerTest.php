@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
-use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\ClassMover\FoundReferences;
 use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
