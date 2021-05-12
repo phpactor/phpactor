@@ -3,4 +3,5 @@ parameters:
     paths:
         - lib
 includes:
+    - vendor/jangregor/phpstan-prophecy/extension.neon
     - phpstan-baseline.neon

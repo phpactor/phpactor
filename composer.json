@@ -60,7 +60,8 @@
         "symfony/process": "^2.7 || ^3.0 || ^4.0",
         "symfony/var-dumper": "^5.0",
         "sebastian/diff": "^4.0",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "jangregor/phpstan-prophecy": "^0.8.1"
     },
     "config": {
         "platform": {

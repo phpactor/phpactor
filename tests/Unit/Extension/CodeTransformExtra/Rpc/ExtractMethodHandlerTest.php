@@ -25,7 +25,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
     const METHOD_NAME = 'FOOBAR';
 
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<ExtractMethod>
      */
     private $extractMethod;
 
@@ -66,7 +66,6 @@ class ExtractMethodHandlerTest extends HandlerTestCase
             self::OFFSET_END,
             self::METHOD_NAME
         )
-        // ->willReturn(SourceCode::fromStringAndPath('asd', '/path'))
         ->willReturn(new TextDocumentEdits(
             TextDocumentUri::fromString('file://'. self::PATH),
             TextEdits::one(TextEdit::create(6, 10, 'newMethod()'))
