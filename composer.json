@@ -60,7 +60,8 @@
         "symfony/var-dumper": "^5.0",
         "sebastian/diff": "^4.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "dms/phpunit-arraysubset-asserts": "^0.2.1"
+        "dms/phpunit-arraysubset-asserts": "^0.2.1",
+        "jangregor/phpstan-prophecy": "^0.8.1"
     },
     "config": {
         "platform": {
