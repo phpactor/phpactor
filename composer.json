@@ -45,8 +45,7 @@
         "symfony/filesystem": "^4.2 || ^5.0",
         "symfony/yaml": "^4.3 || ^5.1",
         "thecodingmachine/safe": "~1.1.0",
-        "webmozart/glob": "^4.4",
-        "dms/phpunit-arraysubset-asserts": "^0.2.1"
+        "webmozart/glob": "^4.4"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
@@ -60,7 +59,8 @@
         "symfony/process": "^2.7 || ^3.0 || ^4.0",
         "symfony/var-dumper": "^5.0",
         "sebastian/diff": "^4.0",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "dms/phpunit-arraysubset-asserts": "^0.2.1"
     },
     "config": {
         "platform": {
