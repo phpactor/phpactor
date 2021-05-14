@@ -71,7 +71,7 @@ class ExtractMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = SourceCode::fromString($arguments[self::PARAM_SOURCE]);
+        $sourceCode = SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]);
         $textDocumentEdits = $this->extractMethod->extractMethod(
             $sourceCode,
             $arguments[self::PARAM_OFFSET_START],
