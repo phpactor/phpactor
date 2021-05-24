@@ -71,8 +71,9 @@ class ExtractMethodHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->extractMethod->extractMethod(
-            SourceCode::fromString($arguments[self::PARAM_SOURCE]),
+        $sourceCode = SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]);
+        $textDocumentEdits = $this->extractMethod->extractMethod(
+            $sourceCode,
             $arguments[self::PARAM_OFFSET_START],
             $arguments[self::PARAM_OFFSET_END],
             $arguments[self::PARAM_METHOD_NAME]
@@ -81,7 +82,7 @@ class ExtractMethodHandler extends AbstractHandler
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $arguments[self::PARAM_PATH],
             $arguments[self::PARAM_SOURCE],
-            (string) $sourceCode
+            $textDocumentEdits->textEdits()->apply((string)$sourceCode)
         );
     }
 }
