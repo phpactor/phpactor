@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
@@ -66,7 +67,7 @@ class ExtractExpressionHandler extends AbstractHandler
             return $this->createInputCallback($arguments);
         }
 
-        $sourceCode = $this->extractExpression->extractExpression(
+        $textEdits = $this->extractExpression->extractExpression(
             SourceCode::fromString($arguments[self::PARAM_SOURCE]),
             $arguments[self::PARAM_OFFSET_START],
             $arguments[self::PARAM_OFFSET_END],
@@ -76,7 +77,7 @@ class ExtractExpressionHandler extends AbstractHandler
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $arguments[self::PARAM_PATH],
             $arguments[self::PARAM_SOURCE],
-            (string) $sourceCode
+            $textEdits->apply($arguments[self::PARAM_SOURCE])
         );
     }
 }

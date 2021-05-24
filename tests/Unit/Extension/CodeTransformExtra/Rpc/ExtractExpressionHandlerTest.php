@@ -10,17 +10,20 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TextDocument\TextEdit;
+use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractExpressionHandlerTest extends HandlerTestCase
 {
-    const SOURCE = '<?php echo "foo";';
+    const SOURCE = '<?php "foo";';
     const PATH = '/path/to';
     const OFFSET_START = 1234;
     const OFFSET_END = 1234;
     const VARIABLE_NAME = 'FOOBAR';
 
     /**
-     * @var ExtractExpression
+     * @var ObjectProphecy<ExtractExpression>
      */
     private $extractExpression;
 
@@ -44,6 +47,7 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
+        assert($action instanceof InputCallbackResponse);
         $inputs = $action->inputs();
         $this->assertCount(1, $inputs);
         $firstInput = reset($inputs);
@@ -60,7 +64,9 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
             self::OFFSET_START,
             self::OFFSET_END,
             self::VARIABLE_NAME
-        )->willReturn(SourceCode::fromStringAndPath('asd', '/path'));
+        )
+        ->shouldBeCalled()
+        ->willReturn(TextEdits::one(TextEdit::create(6, 5, '$newVar = "foo"')));
 
         $action = $this->handle('extract_expression', [
             'source' => self::SOURCE,
@@ -70,6 +76,8 @@ class ExtractExpressionHandlerTest extends HandlerTestCase
             'variable_name' => self::VARIABLE_NAME,
         ]);
 
-        $this->assertInstanceof(UpdateFileSourceResponse::class, $action);
+        $this->assertInstanceOf(UpdateFileSourceResponse::class, $action);
+        assert($action instanceof UpdateFileSourceResponse);
+        self::assertEquals('<?php $newVar = "foo";', $action->newSource());
     }
 }
