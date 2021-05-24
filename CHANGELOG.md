@@ -5,6 +5,8 @@ Changelog
 
 Features:
 
+  - [language-server] Import all names refactoring - @dantleech
+  - [language-server] Extract method generation - @BladeMF
   - [language-server] Initial support for method generation - @BladeMF
   - [langauge-server] Support for renaming files (LSP 3.16) - @dantleech
   - [language-server] Ability to use client file events where available - @dantleech
@@ -26,6 +28,7 @@ Improvements:
 
 Bug fixes:
 
+  - [worse-reflection] Fix variable detection in closures - @BladeMF
   - [completion] Fix snippet method completion #1172 - @BladeMF
   - [worse-reflection] Fix PHP8.0 deprecation warnings - @gregoire
   - [completion] Tests fail due to jetbrain stubs changes - @weeman1337

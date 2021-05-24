@@ -921,16 +921,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.1",
+            "version": "1.11.99.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6"
+                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
-                "reference": "7413f0b55a051e89485c5cb9f765fe24bb02a7b6",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/c6522afe5540d5fc46675043d3ed5a45a740b27c",
+                "reference": "c6522afe5540d5fc46675043d3ed5a45a740b27c",
                 "shasum": ""
             },
             "require": {
@@ -974,7 +974,7 @@
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "support": {
                 "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.1"
+                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.2"
             },
             "funding": [
                 {
@@ -990,7 +990,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-11T10:22:58+00:00"
+            "time": "2021-05-24T07:46:03+00:00"
         },
         {
             "name": "composer/semver",
@@ -2111,12 +2111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "f1f349c1bcd63b2e691e53240b1c25b002f039ca"
+                "reference": "8b6c66cc5ca6d1eecaceafd4031ba12a5d733050"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/f1f349c1bcd63b2e691e53240b1c25b002f039ca",
-                "reference": "f1f349c1bcd63b2e691e53240b1c25b002f039ca",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/8b6c66cc5ca6d1eecaceafd4031ba12a5d733050",
+                "reference": "8b6c66cc5ca6d1eecaceafd4031ba12a5d733050",
                 "shasum": ""
             },
             "require": {
@@ -2164,7 +2164,7 @@
                 "issues": "https://github.com/phpactor/code-transform/issues",
                 "source": "https://github.com/phpactor/code-transform/tree/master"
             },
-            "time": "2021-05-21T17:20:11+00:00"
+            "time": "2021-05-24T07:55:34+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
