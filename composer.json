@@ -33,7 +33,7 @@
         "phpactor/reference-finder": "^0.1.5",
         "phpactor/reference-finder-extension": "^0.1.7",
         "phpactor/reference-finder-rpc-extension": "^0.1.5",
-        "phpactor/rpc-extension": "^0.2.3",
+        "phpactor/rpc-extension": "^0.2.4",
         "phpactor/source-code-filesystem": "^0.1.6",
         "phpactor/source-code-filesystem-extension": "^0.1.5",
         "phpactor/text-document": "^1.2.4",
