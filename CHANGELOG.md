@@ -25,7 +25,7 @@ Improvements:
   - [completion] Improve diagnostic message for #1245 - @dantleech
   - [language-server] Allow hover template paths to be customized - @BladeMF
   - [language-server] Show warning in client if extra config keys present - @dantleech
-  - [worse-reflection] Enable exception caching (e.g. to avoid repeating "not found" work)
+  - [code-transform] Improved performance for unresolvable class name finder - @dantleech
   - [language-server] Do not show "class not found" diagnostics by default - @dantleech
 
 Bug fixes:

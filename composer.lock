@@ -2111,12 +2111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "5a9c17fcf480a39f1a2b9eb71818fb56c7ee3a6c"
+                "reference": "2b0c3080b08b5da340bd5e305638cc2b22c02743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5a9c17fcf480a39f1a2b9eb71818fb56c7ee3a6c",
-                "reference": "5a9c17fcf480a39f1a2b9eb71818fb56c7ee3a6c",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/2b0c3080b08b5da340bd5e305638cc2b22c02743",
+                "reference": "2b0c3080b08b5da340bd5e305638cc2b22c02743",
                 "shasum": ""
             },
             "require": {
@@ -2165,7 +2165,7 @@
                 "issues": "https://github.com/phpactor/code-transform/issues",
                 "source": "https://github.com/phpactor/code-transform/tree/master"
             },
-            "time": "2021-05-24T14:21:58+00:00"
+            "time": "2021-05-28T21:47:56+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -4103,12 +4103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "b71204c744cbc089ee8428bc5c381fc5cae0c575"
+                "reference": "05909171023c13002dcbbdd1cbf7a825162ebd26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/b71204c744cbc089ee8428bc5c381fc5cae0c575",
-                "reference": "b71204c744cbc089ee8428bc5c381fc5cae0c575",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/05909171023c13002dcbbdd1cbf7a825162ebd26",
+                "reference": "05909171023c13002dcbbdd1cbf7a825162ebd26",
                 "shasum": ""
             },
             "require": {
@@ -4158,7 +4158,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2021-05-24T14:34:37+00:00"
+            "time": "2021-05-28T21:39:13+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
