@@ -22,5 +22,9 @@ List of currently available code actions:
 +---------------------------------------------+---------------------------------------+
 | :ref:`generation_class_new`                 | ``quickfix.create_class``             |
 +---------------------------------------------+---------------------------------------+
+| :ref:`generation_method`                    | ``quickfix.generate_method``          |
++---------------------------------------------+---------------------------------------+
+| :ref:`extract_method`                       | ``quickfix.extract_method``           |
++---------------------------------------------+---------------------------------------+
 
 .. _Language Server Specification (Code Action Request): https://microsoft.github.io/language-server-protocol/specification#textDocument_codeAction
