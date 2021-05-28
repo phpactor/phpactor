@@ -1166,6 +1166,21 @@ Show hints for non-imported global classes and functions
 **Default**: ``false``
 
 
+.. _param_language_server_code_transform.import_name.report_non_existing_names:
+
+
+``language_server_code_transform.import_name.report_non_existing_names``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Show an error if a diagnostic name cannot be resolved - can produce false positives
+
+
+**Default**: ``false``
+
+
 .. _IndexerExtension:
 
 
@@ -1321,4 +1336,3 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
-
