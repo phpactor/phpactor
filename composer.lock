@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b54b1c0515c0840a0ae72a36bfa6552d",
+    "content-hash": "5d065ef02d6df98bcd0a4ef451e0905f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1939,16 +1939,16 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.4.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "7846f05e49c662a326754987d85dc651e5bb5665"
+                "reference": "fa9ed96dec151e59fbd9d0583f5d08b9f02070f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/7846f05e49c662a326754987d85dc651e5bb5665",
-                "reference": "7846f05e49c662a326754987d85dc651e5bb5665",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/fa9ed96dec151e59fbd9d0583f5d08b9f02070f7",
+                "reference": "fa9ed96dec151e59fbd9d0583f5d08b9f02070f7",
                 "shasum": ""
             },
             "require": {
@@ -1964,6 +1964,7 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/filesystem": "^4.2 || ^5.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1987,9 +1988,9 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/0.4.0"
+                "source": "https://github.com/phpactor/class-to-file/tree/master"
             },
-            "time": "2021-02-06T14:38:53+00:00"
+            "time": "2021-06-05T10:19:27+00:00"
         },
         {
             "name": "phpactor/class-to-file-extension",
@@ -9610,5 +9611,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
