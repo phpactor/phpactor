@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - [language-server] Import all names refactoring - @dantleech
+  - [language-server] Extract expression - @BladeMF
   - [language-server] Extract method generation - @BladeMF
   - [language-server] Initial support for method generation - @BladeMF
   - [langauge-server] Support for renaming files (LSP 3.16) - @dantleech
