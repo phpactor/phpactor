@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97337942381e1d1eae3eb79568c903be",
+    "content-hash": "b54b1c0515c0840a0ae72a36bfa6552d",
     "packages": [
         {
             "name": "amphp/amp",
@@ -7162,16 +7162,16 @@
         },
         {
             "name": "phpbench/phpbench",
-            "version": "dev-master",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "15f11746e816c1d1298385ababab89ce1337c357"
+                "reference": "26505debe1f1e7ed25f86eba7d65de5bd5b514ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/15f11746e816c1d1298385ababab89ce1337c357",
-                "reference": "15f11746e816c1d1298385ababab89ce1337c357",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/26505debe1f1e7ed25f86eba7d65de5bd5b514ba",
+                "reference": "26505debe1f1e7ed25f86eba7d65de5bd5b514ba",
                 "shasum": ""
             },
             "require": {
@@ -7207,14 +7207,13 @@
             "suggest": {
                 "ext-xdebug": "For Xdebug profiling extension."
             },
-            "default-branch": true,
             "bin": [
                 "bin/phpbench"
             ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.0-dev"
                 }
             },
             "autoload": {
@@ -7237,7 +7236,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/master"
+                "source": "https://github.com/phpbench/phpbench/tree/1.0.2"
             },
             "funding": [
                 {
@@ -7245,7 +7244,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-02T20:30:17+00:00"
+            "time": "2021-05-28T20:43:12+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -9601,9 +9600,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phpbench/phpbench": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

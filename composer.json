@@ -52,7 +52,7 @@
         "friendsofphp/php-cs-fixer": "^2.17",
         "phpactor/debug-extension": "^0.1.1",
         "phpactor/test-utils": "^1.1.3",
-        "phpbench/phpbench": "dev-master",
+        "phpbench/phpbench": "^1.0.0",
         "phpstan/phpstan": "~0.12.0",
         "phpunit/phpunit": "^9.0",
         "symfony/debug": "^4.0",
