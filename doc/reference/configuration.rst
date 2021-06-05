@@ -1336,3 +1336,72 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
+
+
+.. _BehatExtension:
+
+
+BehatExtension
+--------------
+
+
+.. _param_behat.config_path:
+
+
+``behat.config_path``
+"""""""""""""""""""""
+
+
+
+
+Path to the main behat.yml (including the filename behat.yml)
+
+
+**Default**: ``"%project_root%\/behat.yml"``
+
+
+.. _param_behat.symfony.di_xml_path:
+
+
+``behat.symfony.di_xml_path``
+"""""""""""""""""""""""""""""
+
+
+
+
+If using Symfony, set this path to the XML container dump to find contexts which are defined as services
+
+
+**Default**: ``null``
+
+
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_phpstan.level:
+
+
+``phpstan.level``
+"""""""""""""""""
+
+
+
+
+**Default**: ``null``
+

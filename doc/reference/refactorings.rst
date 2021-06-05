@@ -314,6 +314,8 @@ accessors </vim-plugin.html#fzf-multi-selection>`__
 Note the accessor template can be customized see
 `Templates <templates.md>`__.
 
+.. _generation_method:
+
 Generate Method
 ---------------
 
@@ -1161,6 +1163,8 @@ After:
        }
    }
 
+.. _generation_extract_expression:
+
 Extract Expression
 ------------------
 
@@ -1239,6 +1243,8 @@ After (using ``$winningCombination`` as a variable name):
    if ($winningCombination == 6) {
        echo 'You win!';
    }
+
+.. _generation_extract_method:
 
 Extract Method
 --------------
