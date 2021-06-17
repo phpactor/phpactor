@@ -157,7 +157,11 @@ class ImportClassHandlerTest extends HandlerTestCase
             SourceCode::fromStringAndPath(self::TEST_SOURCE, self::TEST_PATH),
             ByteOffset::fromInt(self::TEST_OFFSET),
             NameImport::forClass(self::TEST_NAME)
-        )->willThrow(new NameAlreadyImportedException(NameImport::forClass(self::TEST_NAME), self::TEST_NAME));
+        )->willThrow(new NameAlreadyImportedException(
+            NameImport::forClass(self::TEST_NAME),
+            self::TEST_NAME,
+            'ExistingFqn'
+        ));
 
         /** @var EchoResponse $response */
         $response = $this->handle('import_class', [
