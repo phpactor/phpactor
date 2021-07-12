@@ -27,10 +27,13 @@ Improvements:
   - [language-server] Allow hover template paths to be customized - @BladeMF
   - [language-server] Show warning in client if extra config keys present - @dantleech
   - [code-transform] Improved performance for unresolvable class name finder - @dantleech
+  - [code-transform] Improved information in name-not-found exception -
+    @weeman1337
   - [language-server] Do not show "class not found" diagnostics by default - @dantleech
 
 Bug fixes:
 
+  - [worse-reflection] Fix handling of non-decimal integers - @Slamdunk
   - [worse-reflection] Fix variable detection in closures - @BladeMF
   - [completion] Fix snippet method completion #1172 - @BladeMF
   - [worse-reflection] Fix PHP8.0 deprecation warnings - @gregoire
