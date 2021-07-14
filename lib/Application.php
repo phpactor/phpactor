@@ -3,6 +3,7 @@
 namespace Phpactor;
 
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
+use Phpactor\LanguageServer\Core\Server\Exception\ShutdownServer;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,6 +53,8 @@ class Application extends SymfonyApplication
 
         try {
             return parent::doRun($input, $output);
+        } catch (ShutdownServer $e) {
+            return 0;
         } catch (Exception $e) {
             if (
                 $input->hasArgument('command')
