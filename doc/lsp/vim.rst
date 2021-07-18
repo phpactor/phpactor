@@ -116,6 +116,8 @@ Client Guides
             require'lspconfig'.phpactor.setup{}
             EOF
 
+        Ensure phpactor is in your ``$PATH``
+
         Please refer to the `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings (also see `:help lsp`).
 
     .. tab:: Autozimu
