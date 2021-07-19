@@ -98,8 +98,7 @@ Client Guides
 
     .. tab:: Neovim LSP
 
-        At time of writing (2021-03-21) you will need a nightly build of
-        Neovim.
+        You will need Neovim 0.5.0 or higher.
 
         Ensure you have installed `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package: This contains common LSP configurations, including one for Phpactor.
 
@@ -116,6 +115,8 @@ Client Guides
             lua << EOF
             require'lspconfig'.phpactor.setup{}
             EOF
+
+        Ensure phpactor is in your ``$PATH``
 
         Please refer to the `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings (also see `:help lsp`).
 
