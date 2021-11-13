@@ -17,7 +17,7 @@ Select one of the following to get started:
 
         Use the :doc:`vim-plugin`, optionally supplement with :ref:`CoC <lsp_client_vim_coc>`:
 
-    .. tab:: Sublme Text
+    .. tab:: Sublime Text
 
         Use :ref:`client_rpc_sublime` optionally supplement with
         :ref:`Sublime LSP <lsp_client_sublime>`:
