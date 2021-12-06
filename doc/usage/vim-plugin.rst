@@ -11,7 +11,7 @@ Installation
 **Prerequisites**:
 
 -  `Composer <https://getcomposer.org/download>`__
--  PHP 7.2
+-  PHP 7.3
 -  `VIM 8 <https://github.com/vim/vim>`__ or
    `Neovim <https://github.com/neovim/neovim>`__
 
