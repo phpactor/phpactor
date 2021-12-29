@@ -1,2 +1,3 @@
-Sphinx==4.3.2
+Sphinx==2.4.3
 sphinx-tabs==1.1.13
+docutils==0.17
