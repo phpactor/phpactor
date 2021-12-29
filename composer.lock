@@ -2942,12 +2942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
-                "reference": "f4a5a90b32c63e18f1963a1d902279feded51185"
+                "reference": "ed0c5fc34ba4d2999b16eec13461723851be3161"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/f4a5a90b32c63e18f1963a1d902279feded51185",
-                "reference": "f4a5a90b32c63e18f1963a1d902279feded51185",
+                "url": "https://api.github.com/repos/phpactor/indexer-extension/zipball/ed0c5fc34ba4d2999b16eec13461723851be3161",
+                "reference": "ed0c5fc34ba4d2999b16eec13461723851be3161",
                 "shasum": ""
             },
             "require": {
@@ -3005,7 +3005,7 @@
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
                 "source": "https://github.com/phpactor/indexer-extension/tree/master"
             },
-            "time": "2021-12-29T18:06:10+00:00"
+            "time": "2021-12-29T22:18:08+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -3141,12 +3141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
-                "reference": "d01f1839e7d5d21280231b0b756f462216ab25c3"
+                "reference": "27de0848ea21ec76eb7c01b26bd6517925b88c52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/d01f1839e7d5d21280231b0b756f462216ab25c3",
-                "reference": "d01f1839e7d5d21280231b0b756f462216ab25c3",
+                "url": "https://api.github.com/repos/phpactor/language-server-phpactor-extensions/zipball/27de0848ea21ec76eb7c01b26bd6517925b88c52",
+                "reference": "27de0848ea21ec76eb7c01b26bd6517925b88c52",
                 "shasum": ""
             },
             "require": {
@@ -3221,7 +3221,7 @@
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
                 "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
             },
-            "time": "2021-12-29T18:19:06+00:00"
+            "time": "2021-12-29T22:01:29+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
