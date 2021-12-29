@@ -30,6 +30,7 @@ Improvements:
   - [code-transform] Improved information in name-not-found exception -
     @weeman1337
   - [language-server] Do not show "class not found" diagnostics by default - @dantleech
+  - [worse-reflection, etc] Update to latest tolerant parser lib to support PHP 8.1 syntax
 
 Bug fixes:
 
