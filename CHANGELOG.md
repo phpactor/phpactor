@@ -42,7 +42,6 @@ Bug fixes:
   - [worse-reference-finder] Do not know how to create class from type "NULL" #1246 - @dantleech
   - [worse-reflection] Property context class not propagated
 
-
 ## 2021-03-21 (0.17.1)
 
 Features:
