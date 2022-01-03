@@ -1902,7 +1902,7 @@
         },
         {
             "name": "phpactor/class-mover",
-            "version": "dev-master",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-mover.git",
@@ -1933,7 +1933,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/console": "^4.3 || ^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1957,13 +1956,13 @@
             ],
             "description": "Library for moving classes",
             "support": {
-                "source": "https://github.com/phpactor/class-mover/tree/master"
+                "source": "https://github.com/phpactor/class-mover/tree/0.2.0"
             },
             "time": "2021-12-28T20:44:06+00:00"
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "dev-master",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
@@ -1988,7 +1987,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/filesystem": "^4.2 || ^5.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2012,7 +2010,7 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/master"
+                "source": "https://github.com/phpactor/class-to-file/tree/0.4.1"
             },
             "time": "2021-06-05T10:19:27+00:00"
         },
@@ -2074,7 +2072,7 @@
         },
         {
             "name": "phpactor/code-builder",
-            "version": "dev-master",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-builder.git",
@@ -2102,7 +2100,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2127,13 +2124,13 @@
             "description": "Generating and modifying source code",
             "support": {
                 "issues": "https://github.com/phpactor/code-builder/issues",
-                "source": "https://github.com/phpactor/code-builder/tree/master"
+                "source": "https://github.com/phpactor/code-builder/tree/0.4.3"
             },
             "time": "2021-12-28T20:24:46+00:00"
         },
         {
             "name": "phpactor/code-transform",
-            "version": "dev-master",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
@@ -2164,7 +2161,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2189,13 +2185,13 @@
             "description": "Applies introspective transformations on source code",
             "support": {
                 "issues": "https://github.com/phpactor/code-transform/issues",
-                "source": "https://github.com/phpactor/code-transform/tree/master"
+                "source": "https://github.com/phpactor/code-transform/tree/0.4.2"
             },
             "time": "2021-12-28T20:35:39+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
-            "version": "dev-master",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform-extension.git",
@@ -2224,7 +2220,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -2250,7 +2245,7 @@
             "description": "Code transform base package",
             "support": {
                 "issues": "https://github.com/phpactor/code-transform-extension/issues",
-                "source": "https://github.com/phpactor/code-transform-extension/tree/master"
+                "source": "https://github.com/phpactor/code-transform-extension/tree/0.2.2"
             },
             "time": "2021-05-08T09:37:43+00:00"
         },
@@ -2312,7 +2307,7 @@
             ],
             "description": "Completion library for Worse Reflection",
             "support": {
-                "source": "https://github.com/phpactor/completion/tree/master"
+                "source": "https://github.com/phpactor/completion/tree/0.4.5"
             },
             "time": "2021-12-28T21:09:41+00:00"
         },
@@ -2431,7 +2426,7 @@
         },
         {
             "name": "phpactor/completion-worse-extension",
-            "version": "dev-master",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/completion-worse-extension.git",
@@ -2458,7 +2453,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -2484,7 +2478,7 @@
             "description": "Collection of completors based on Worse Reflection and the Tolerant PHP Parser",
             "support": {
                 "issues": "https://github.com/phpactor/completion-worse-extension/issues",
-                "source": "https://github.com/phpactor/completion-worse-extension/tree/master"
+                "source": "https://github.com/phpactor/completion-worse-extension/tree/0.2.3"
             },
             "time": "2021-04-24T08:15:35+00:00"
         },
@@ -2764,7 +2758,7 @@
         },
         {
             "name": "phpactor/extension-manager-extension",
-            "version": "dev-master",
+            "version": "0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/extension-manager-extension.git",
@@ -2793,7 +2787,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -2819,7 +2812,7 @@
             "description": "Install, remove and otherwise manage extensions",
             "support": {
                 "issues": "https://github.com/phpactor/extension-manager-extension/issues",
-                "source": "https://github.com/phpactor/extension-manager-extension/tree/master"
+                "source": "https://github.com/phpactor/extension-manager-extension/tree/0.8.5"
             },
             "time": "2021-05-05T19:56:14+00:00"
         },
@@ -2938,7 +2931,7 @@
         },
         {
             "name": "phpactor/indexer-extension",
-            "version": "dev-master",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/indexer-extension.git",
@@ -2977,7 +2970,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -3003,13 +2995,13 @@
             "description": "Indexer and related integrations",
             "support": {
                 "issues": "https://github.com/phpactor/indexer-extension/issues",
-                "source": "https://github.com/phpactor/indexer-extension/tree/master"
+                "source": "https://github.com/phpactor/indexer-extension/tree/0.3.2"
             },
             "time": "2021-12-29T22:18:08+00:00"
         },
         {
             "name": "phpactor/language-server",
-            "version": "dev-master",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
@@ -3044,7 +3036,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3069,13 +3060,13 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/master"
+                "source": "https://github.com/phpactor/language-server/tree/1.1.1"
             },
             "time": "2021-09-20T11:37:12+00:00"
         },
         {
             "name": "phpactor/language-server-extension",
-            "version": "dev-master",
+            "version": "0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-extension.git",
@@ -3106,7 +3097,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -3131,13 +3121,13 @@
             ],
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
             "support": {
-                "source": "https://github.com/phpactor/language-server-extension/tree/master"
+                "source": "https://github.com/phpactor/language-server-extension/tree/0.6.4"
             },
             "time": "2021-10-27T20:48:08+00:00"
         },
         {
             "name": "phpactor/language-server-phpactor-extensions",
-            "version": "dev-master",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-phpactor-extensions.git",
@@ -3188,7 +3178,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -3219,13 +3208,13 @@
             "description": "Provides an (experimental) LSP compatible Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-phpactor-extensions/issues",
-                "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/master"
+                "source": "https://github.com/phpactor/language-server-phpactor-extensions/tree/0.5.2"
             },
             "time": "2021-12-29T22:01:29+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "dev-master",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
@@ -3247,7 +3236,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3272,7 +3260,7 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/master"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/0.2.1"
             },
             "time": "2021-10-27T20:52:30+00:00"
         },
@@ -3608,7 +3596,7 @@
         },
         {
             "name": "phpactor/reference-finder",
-            "version": "dev-master",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/reference-finder.git",
@@ -3634,7 +3622,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3659,7 +3646,7 @@
             "description": "Base library for finding definitions",
             "support": {
                 "issues": "https://github.com/phpactor/reference-finder/issues",
-                "source": "https://github.com/phpactor/reference-finder/tree/master"
+                "source": "https://github.com/phpactor/reference-finder/tree/0.1.6"
             },
             "time": "2021-04-11T12:11:29+00:00"
         },
@@ -3777,7 +3764,7 @@
         },
         {
             "name": "phpactor/rpc-extension",
-            "version": "dev-master",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/rpc-extension.git",
@@ -3808,7 +3795,6 @@
                 "phpstan/phpstan-phpunit": "^0.12.19",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -3834,7 +3820,7 @@
             "description": "RPC Extension",
             "support": {
                 "issues": "https://github.com/phpactor/rpc-extension/issues",
-                "source": "https://github.com/phpactor/rpc-extension/tree/master"
+                "source": "https://github.com/phpactor/rpc-extension/tree/0.2.4"
             },
             "time": "2021-05-17T06:30:18+00:00"
         },
@@ -3954,7 +3940,7 @@
         },
         {
             "name": "phpactor/text-document",
-            "version": "dev-master",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/text-document.git",
@@ -3979,7 +3965,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4004,13 +3989,13 @@
             "description": "Collection of value objects for representing and referencing text documents",
             "support": {
                 "issues": "https://github.com/phpactor/text-document/issues",
-                "source": "https://github.com/phpactor/text-document/tree/master"
+                "source": "https://github.com/phpactor/text-document/tree/1.2.4"
             },
             "time": "2021-05-24T07:37:55+00:00"
         },
         {
             "name": "phpactor/worse-reference-finder-extension",
-            "version": "dev-master",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder-extension.git",
@@ -4037,7 +4022,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -4063,13 +4047,13 @@
             "description": "Worse reflection implementations for reference finding",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reference-finder-extension/issues",
-                "source": "https://github.com/phpactor/worse-reference-finder-extension/tree/master"
+                "source": "https://github.com/phpactor/worse-reference-finder-extension/tree/0.1.6"
             },
             "time": "2021-04-17T12:44:52+00:00"
         },
         {
             "name": "phpactor/worse-reference-finders",
-            "version": "dev-master",
+            "version": "0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
@@ -4098,7 +4082,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4123,13 +4106,13 @@
             "description": "Worse Reflection reference finder implementations",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reference-finder/issues",
-                "source": "https://github.com/phpactor/worse-reference-finder/tree/master"
+                "source": "https://github.com/phpactor/worse-reference-finder/tree/0.2.6"
             },
             "time": "2021-12-29T20:09:35+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "dev-master",
+            "version": "0.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
@@ -4161,7 +4144,6 @@
                 "symfony/filesystem": "^4.3 || ^5.0",
                 "symfony/var-dumper": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4186,13 +4168,13 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/master"
+                "source": "https://github.com/phpactor/worse-reflection/tree/0.4.7"
             },
             "time": "2022-01-03T18:55:05+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",
-            "version": "dev-master",
+            "version": "0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection-extension.git",
@@ -4220,7 +4202,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "type": "phpactor-extension",
             "extra": {
                 "branch-alias": {
@@ -4246,7 +4227,7 @@
             "description": "Worse Reflection",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection-extension/issues",
-                "source": "https://github.com/phpactor/worse-reflection-extension/tree/master"
+                "source": "https://github.com/phpactor/worse-reflection-extension/tree/0.2.5"
             },
             "time": "2021-04-17T12:40:05+00:00"
         },
