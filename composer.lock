@@ -2130,16 +2130,16 @@
         },
         {
             "name": "phpactor/code-transform",
-            "version": "0.4.2",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/code-transform.git",
-                "reference": "b894d34800138b0e10cfefc876bd68441300f6a7"
+                "reference": "5d8795f079a29049202df9c7a51bc70c79b9a2ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/b894d34800138b0e10cfefc876bd68441300f6a7",
-                "reference": "b894d34800138b0e10cfefc876bd68441300f6a7",
+                "url": "https://api.github.com/repos/phpactor/code-transform/zipball/5d8795f079a29049202df9c7a51bc70c79b9a2ab",
+                "reference": "5d8795f079a29049202df9c7a51bc70c79b9a2ab",
                 "shasum": ""
             },
             "require": {
@@ -2185,9 +2185,9 @@
             "description": "Applies introspective transformations on source code",
             "support": {
                 "issues": "https://github.com/phpactor/code-transform/issues",
-                "source": "https://github.com/phpactor/code-transform/tree/0.4.2"
+                "source": "https://github.com/phpactor/code-transform/tree/0.4.3"
             },
-            "time": "2021-12-28T20:35:39+00:00"
+            "time": "2022-01-03T19:33:36+00:00"
         },
         {
             "name": "phpactor/code-transform-extension",
@@ -6353,16 +6353,16 @@
     "packages-dev": [
         {
             "name": "dantleech/what-changed",
-            "version": "0.4.2",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/what-changed.git",
-                "reference": "d7912c3f98f0a279cb5cfc711df94e2398e6ab38"
+                "reference": "02c32b1e03b8964a459847065c985f1b9423b558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/d7912c3f98f0a279cb5cfc711df94e2398e6ab38",
-                "reference": "d7912c3f98f0a279cb5cfc711df94e2398e6ab38",
+                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/02c32b1e03b8964a459847065c985f1b9423b558",
+                "reference": "02c32b1e03b8964a459847065c985f1b9423b558",
                 "shasum": ""
             },
             "require": {
@@ -6376,8 +6376,9 @@
                 "composer/composer": "^1.4|^2.0",
                 "friendsofphp/php-cs-fixer": "^2.16",
                 "phpactor/test-utils": "^1.0",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "^7.5",
+                "phpunit/phpunit": "^9.0",
                 "symfony/process": "^4.2"
             },
             "type": "composer-plugin",
@@ -6405,9 +6406,9 @@
             "description": "Report changes in your dependencies",
             "support": {
                 "issues": "https://github.com/dantleech/what-changed/issues",
-                "source": "https://github.com/dantleech/what-changed/tree/0.4.2"
+                "source": "https://github.com/dantleech/what-changed/tree/0.4.3"
             },
-            "time": "2021-02-06T18:05:30+00:00"
+            "time": "2022-01-03T19:46:24+00:00"
         },
         {
             "name": "dms/phpunit-arraysubset-asserts",
