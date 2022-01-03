@@ -30,6 +30,7 @@ Improvements:
   - [code-transform] Improved information in name-not-found exception -
     @weeman1337
   - [language-server] Do not show "class not found" diagnostics by default - @dantleech
+  - [worse-reflection, etc] Update to latest tolerant parser lib to support PHP 8.1 syntax
 
 Bug fixes:
 
@@ -40,7 +41,6 @@ Bug fixes:
   - [completion] Tests fail due to jetbrain stubs changes - @weeman1337
   - [worse-reference-finder] Do not know how to create class from type "NULL" #1246 - @dantleech
   - [worse-reflection] Property context class not propagated
-
 
 ## 2021-03-21 (0.17.1)
 
