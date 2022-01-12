@@ -67,7 +67,7 @@ Documentation
 Phpactor Documentation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Phpactor uses `Sphinx <https://www.sphinx-doc.org>`_ (RST) for doucmentation.
+Phpactor uses `Sphinx <https://www.sphinx-doc.org>`_ (RST) for documentation.
 
 Docs are located in the ``docs``.
 
