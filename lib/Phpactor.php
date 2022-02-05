@@ -230,7 +230,7 @@ class Phpactor
 
     public static function relativizePath(string $path): string
     {
-        if (0 === strpos($path, getcwd())) {
+        if (0 === strpos($path, (string)getcwd())) {
             return substr($path, strlen(getcwd()) + 1);
         }
 
