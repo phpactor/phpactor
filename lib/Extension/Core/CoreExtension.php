@@ -8,6 +8,8 @@ use Phpactor\Extension\Core\Command\DebugContainerCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Debug\Command\InitConfigCommand;
+use Phpactor\Extension\Debug\Model\ConfigInitializer;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
@@ -48,6 +50,7 @@ class CoreExtension implements Extension
             self::PARAM_COMMAND => null,
             self::PARAM_WARN_ON_DEVELOP => true,
             self::PARAM_MIN_MEMORY_LIMIT => 1610612736,
+            '$schema' => '',
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
@@ -76,6 +79,15 @@ class CoreExtension implements Extension
                 $container->get(FilePathResolverExtension::SERVICE_EXPANDERS)
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
+
+        $container->register('command.config_initialize', function (Container $container) {
+            return new InitConfigCommand(
+                new ConfigInitializer(
+                    realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
+                    $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
+                )
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:initialize']]);
 
         $container->register('command.debug_container', function (Container $container) {
             return new DebugContainerCommand(
