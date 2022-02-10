@@ -6,7 +6,7 @@
         "php": "^7.3 || ^8.0",
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^1.1",
-        "dantleech/invoke": "^1.0.1",
+        "dantleech/invoke": "^2.0",
         "monolog/monolog": "^1.0",
         "phpactor/class-mover": "^0.2.0",
         "phpactor/class-to-file": "^0.4.1",
@@ -78,7 +78,7 @@
             "Phpactor\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "bin": [
         "bin/phpactor"
