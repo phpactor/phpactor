@@ -10,6 +10,8 @@ Features:
     include JSON schema location)
   - [completion] Enum support
   - [reference-finder] Enum support
+  - [php8.1] Disable deprecation warnings unless `PHPACTOR_DEPRECATIONS`
+    provided.
 
 ## 2022-01-03 (0.18.0)
 
