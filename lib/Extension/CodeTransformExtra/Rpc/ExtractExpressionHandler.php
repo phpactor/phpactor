@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
-use Phpactor\Extension\Rpc\Response;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
