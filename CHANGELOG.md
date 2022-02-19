@@ -8,8 +8,8 @@ Features:
   - [config] JSON schema support
   - [cli] `phpactor config:init` command to create or update config (to
     include JSON schema location)
-  - [completion] Enum support
-  - [reference-finder] Enum support
+  - [completion] Enum support (requires 8.1 PHP runtime)
+  - [reference-finder] Enum support (requires 8.1 PHP runtime)
   - [php8.1] Disable deprecation warnings unless `PHPACTOR_DEPRECATIONS`
     provided.
 
