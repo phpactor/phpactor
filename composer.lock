@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "deaa6e904bba03a5e8d955430bf4fefb",
+    "content-hash": "2e7eb98e9801021de19895cb31bdf3d6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4113,16 +4113,16 @@
         },
         {
             "name": "phpactor/worse-reference-finders",
-            "version": "0.2.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reference-finder.git",
-                "reference": "b873f659fa426fefd5b09cac1994be5735e275ac"
+                "reference": "2bef52b079818d921526c041fcb7ed70efad65d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/b873f659fa426fefd5b09cac1994be5735e275ac",
-                "reference": "b873f659fa426fefd5b09cac1994be5735e275ac",
+                "url": "https://api.github.com/repos/phpactor/worse-reference-finder/zipball/2bef52b079818d921526c041fcb7ed70efad65d7",
+                "reference": "2bef52b079818d921526c041fcb7ed70efad65d7",
                 "shasum": ""
             },
             "require": {
@@ -4131,7 +4131,7 @@
                 "phpactor/reference-finder": "~0.1.5",
                 "phpactor/source-code-filesystem": "~0.1.6",
                 "phpactor/text-document": "^1.2.3",
-                "phpactor/worse-reflection": "~0.4.7"
+                "phpactor/worse-reflection": "~0.4.9"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -4142,6 +4142,7 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4166,22 +4167,22 @@
             "description": "Worse Reflection reference finder implementations",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reference-finder/issues",
-                "source": "https://github.com/phpactor/worse-reference-finder/tree/0.2.6"
+                "source": "https://github.com/phpactor/worse-reference-finder/tree/master"
             },
-            "time": "2021-12-29T20:09:35+00:00"
+            "time": "2022-02-19T12:04:51+00:00"
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "0.4.8",
+            "version": "0.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "034a69d00ed729989584e8e38b3f5d27d5066bfd"
+                "reference": "0f19203ddb5791d8446fd0c3d334ac96e92573c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/034a69d00ed729989584e8e38b3f5d27d5066bfd",
-                "reference": "034a69d00ed729989584e8e38b3f5d27d5066bfd",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/0f19203ddb5791d8446fd0c3d334ac96e92573c4",
+                "reference": "0f19203ddb5791d8446fd0c3d334ac96e92573c4",
                 "shasum": ""
             },
             "require": {
@@ -4228,9 +4229,9 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/0.4.8"
+                "source": "https://github.com/phpactor/worse-reflection/tree/0.4.9"
             },
-            "time": "2022-02-17T23:12:19+00:00"
+            "time": "2022-02-19T11:51:27+00:00"
         },
         {
             "name": "phpactor/worse-reflection-extension",

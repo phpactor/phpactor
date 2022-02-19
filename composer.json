@@ -38,7 +38,7 @@
         "phpactor/source-code-filesystem-extension": "^0.1.5",
         "phpactor/text-document": "^1.2.4",
         "phpactor/worse-reference-finder-extension": "^0.1.6",
-        "phpactor/worse-reference-finders": "^0.2.6",
+        "phpactor/worse-reference-finders": "^0.2.7",
         "phpactor/worse-reflection": "^0.4.7",
         "phpactor/worse-reflection-extension": "^0.2.4",
         "symfony/console": "^5.0",
