@@ -8,6 +8,8 @@ Features:
   - [config] JSON schema support
   - [cli] `phpactor config:init` command to create or update config (to
     include JSON schema location)
+  - [completion] Enum support
+  - [reference-finder] Enum support
 
 ## 2022-01-03 (0.18.0)
 
