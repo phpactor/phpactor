@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\WorseReferenceFinder;
 
-use Microsoft\PhpParser\Parser;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;

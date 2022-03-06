@@ -26,11 +26,6 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
         $this->workspace()->reset();
     }
 
-    protected function workspace(): Workspace
-    {
-        return Workspace::create(__DIR__ . '/../Workspace');
-    }
-
     public function testDefinition(): void
     {
         $tester = $this->createTester();
@@ -71,6 +66,11 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
         ]);
         $tester->assertSuccess($response);
         $this->assertIsArray($response->result, 'Returned empty references');
+    }
+
+    protected function workspace(): Workspace
+    {
+        return Workspace::create(__DIR__ . '/../Workspace');
     }
 
     private function createTester(): LanguageServerTester
