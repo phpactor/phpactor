@@ -51,7 +51,6 @@ class FileRenamerTest extends IntegrationTestCase
     {
         foreach ($textDocuments as $textDocument) {
             assert($textDocument instanceof TextDocument);
-            /** @phpstan-ignore-next-line */
             file_put_contents($textDocument->uri()->path(), $textDocument->__toString());
         }
 

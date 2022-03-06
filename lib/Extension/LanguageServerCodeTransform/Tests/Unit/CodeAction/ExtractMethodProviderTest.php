@@ -39,7 +39,6 @@ class ExtractMethodProviderTest extends TestCase
         $textDocumentItem = new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE);
         $range = ProtocolFactory::range(0, 0, 0, 5);
 
-        // @phpstan-ignore-next-line
         $this->extractMethod
             ->canExtractMethod(
                 SourceCode::fromStringAndPath($textDocumentItem->text, $textDocumentItem->uri),

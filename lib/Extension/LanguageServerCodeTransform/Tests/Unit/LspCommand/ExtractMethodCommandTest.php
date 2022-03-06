@@ -37,7 +37,6 @@ class ExtractMethodCommandTest extends TestCase
         );
 
         $extractMethod = $this->prophesize(ExtractMethod::class);
-        // @phpstan-ignore-next-line
         $extractMethod->extractMethod(Argument::type(SourceCode::class), 0, self::EXAMPLE_OFFSET, ExtractMethodCommand::DEFAULT_METHOD_NAME)
             ->shouldBeCalled()
             ->willReturn($textEdits);
@@ -65,7 +64,6 @@ class ExtractMethodCommandTest extends TestCase
     public function testFailedCall(Exception $exception): void
     {
         $extractMethod = $this->prophesize(ExtractMethod::class);
-        // @phpstan-ignore-next-line
         $extractMethod->extractMethod(Argument::type(SourceCode::class), 0, self::EXAMPLE_OFFSET, ExtractMethodCommand::DEFAULT_METHOD_NAME)
              ->shouldBeCalled()
              ->willThrow($exception);

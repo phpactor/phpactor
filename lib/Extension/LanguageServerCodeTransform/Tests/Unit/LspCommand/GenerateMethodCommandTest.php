@@ -69,7 +69,6 @@ class GenerateMethodCommandTest extends TestCase
     public function testFailedCall(Exception $exception): void
     {
         $generateMethod = $this->prophesize(GenerateMethod::class);
-        // @phpstan-ignore-next-line
         $generateMethod->generateMethod(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
             ->shouldBeCalled()
             ->willThrow($exception);
