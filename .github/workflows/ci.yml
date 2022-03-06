@@ -88,47 +88,6 @@ jobs:
             -
                 name: "Run PHPUnit"
                 run: "vendor/bin/phpunit"
-    phpactor-deps-and-exts:
-        name: "Dependencies and Extensions (${{ matrix.php-version }})"
-
-        runs-on: "ubuntu-latest"
-
-        strategy:
-            matrix:
-                php-version:
-                    - '7.3'
-
-        steps:
-            -
-                name: "Checkout code"
-                uses: "actions/checkout@v2"
-
-            -
-                name: "Install PHP"
-                uses: "shivammathur/setup-php@v2"
-                with:
-                    coverage: "none"
-                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
-                    php-version: "${{ matrix.php-version }}"
-                    tools: composer:v2
-
-            -
-                name: "Composer install"
-                uses: "ramsey/composer-install@v1"
-                with:
-                    composer-options: "--no-scripts"
-            -
-               name: Misc
-               run: |
-                   git config --global user.email "you@example.com"
-                   git config --global user.name "Your Name"
-                   git config --global init.defaultBranch master
-            -
-                name: Test Dependencies
-                run: config/travis/testdeps
-            -
-                name: Test Extensions
-                run: config/travis/testexts
     docs:
         name: "Lint Docs (${{ matrix.php-version }})"
 

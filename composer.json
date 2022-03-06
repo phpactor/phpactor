@@ -36,7 +36,6 @@
         "symfony/debug": "^4.0",
         "symfony/process": "^2.7 || ^3.0 || ^4.0",
         "sebastian/diff": "^4.0",
-        "ergebnis/composer-normalize": "^2.0",
         "friendsofphp/php-cs-fixer": "^2.17",
         "phpstan/phpstan": "~0.12.0",
         "phpunit/phpunit": "^9.0",
