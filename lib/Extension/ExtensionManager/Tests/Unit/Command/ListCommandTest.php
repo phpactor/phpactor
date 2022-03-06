@@ -7,10 +7,13 @@ use Phpactor\Extension\ExtensionManager\Command\ListCommand;
 use Phpactor\Extension\ExtensionManager\Model\Extension;
 use Phpactor\Extension\ExtensionManager\Model\Extensions;
 use Phpactor\Extension\ExtensionManager\Service\ExtensionLister;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class ListCommandTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var CommandTester
      */

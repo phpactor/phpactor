@@ -6,9 +6,12 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Expander;
 use Phpactor\FilePathResolver\Expanders;
 use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TokenExpandingFilterTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIdentity(): void
     {
         $this->assertEquals('/foo', $this->create()->apply('/foo'));

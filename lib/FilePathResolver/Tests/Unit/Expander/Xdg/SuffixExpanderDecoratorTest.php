@@ -5,9 +5,12 @@ namespace Phpactor\FilePathResolver\Tests\Unit\Expander\Xdg;
 use Phpactor\FilePathResolver\Expander;
 use Phpactor\FilePathResolver\Expander\Xdg\SuffixExpanderDecorator;
 use Phpactor\FilePathResolver\Tests\Unit\Expander\ExpanderTestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class SuffixExpanderDecoratorTest extends ExpanderTestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

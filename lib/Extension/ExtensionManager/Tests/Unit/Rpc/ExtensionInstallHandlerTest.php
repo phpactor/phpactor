@@ -10,9 +10,12 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ErrorResponse;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ExtensionInstallHandlerTest extends TestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_EXTENSION_NAME = 'foo_extension';
 
     /**

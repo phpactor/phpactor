@@ -12,10 +12,13 @@ use Phpactor\Extension\ExtensionManager\Model\ExtensionState;
 use Phpactor\Extension\ExtensionManager\Model\Installer;
 use Phpactor\Extension\ExtensionManager\Service\RemoverService;
 use Phpactor\Extension\ExtensionManager\Tests\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 
 class RemoverServiceTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

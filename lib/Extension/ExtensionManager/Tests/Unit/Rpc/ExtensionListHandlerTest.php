@@ -9,9 +9,12 @@ use Phpactor\Extension\ExtensionManager\Model\ExtensionState;
 use Phpactor\Extension\ExtensionManager\Model\Extensions;
 use Phpactor\Extension\ExtensionManager\Rpc\ExtensionListHandler;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ExtensionListHandlerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testListsExtensions(): void
     {
         $repository = $this->prophesize(ExtensionRepository::class);

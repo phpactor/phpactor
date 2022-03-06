@@ -14,11 +14,14 @@ use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use stdClass;
 
 class CompletionExtensionTest extends TestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_SUGGESTION = 'example_suggestion';
     const EXAMPLE_SOURCE = 'asd';
     const EXAMPLE_OFFSET = 1234;

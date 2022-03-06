@@ -6,9 +6,12 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Filter;
 use Phpactor\FilePathResolver\FilteringPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class FilteringPathResolverTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testIdentity(): void
     {
         $resolver = new FilteringPathResolver();

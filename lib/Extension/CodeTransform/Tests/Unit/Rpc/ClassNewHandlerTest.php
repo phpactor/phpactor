@@ -13,10 +13,13 @@ use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassNewHandlerTest extends AbstractClassGenerateHandlerTest
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

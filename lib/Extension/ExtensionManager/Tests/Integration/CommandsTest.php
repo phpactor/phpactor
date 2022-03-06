@@ -3,10 +3,14 @@
 namespace Phpactor\Extension\ExtensionManager\Tests\Integration;
 
 use Phpactor\Extension\Console\ConsoleExtension;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
+/**
+ * @group slow
+ */
 class CommandsTest extends IntegrationTestCase
 {
     /**

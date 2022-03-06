@@ -5,9 +5,12 @@ namespace Phpactor\FilePathResolver\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\CachingPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class CachingPathResolverTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

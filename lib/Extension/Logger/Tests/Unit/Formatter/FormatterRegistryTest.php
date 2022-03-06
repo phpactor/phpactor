@@ -5,11 +5,14 @@ namespace Phpactor\Extension\Logger\Tests\Unit\Formatter;
 use Monolog\Formatter\FormatterInterface;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Logger\Formatter\FormatterRegistry;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 class FormatterRegistryTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testThrowsExceptionIfFormatterNotFound(): void
     {
         $this->expectException(RuntimeException::class);

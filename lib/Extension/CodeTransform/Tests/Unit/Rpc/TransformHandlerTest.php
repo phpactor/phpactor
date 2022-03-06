@@ -12,10 +12,13 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class TransformHandlerTest extends TestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_NEW_PATH = '/path/to/new.php';
     const EXAMPLE_SOURCE_CODE = '<?php';
 

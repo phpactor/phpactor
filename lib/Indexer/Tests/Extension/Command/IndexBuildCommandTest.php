@@ -12,7 +12,7 @@ class IndexBuildCommandTest extends IntegrationTestCase
         $this->initProject();
 
         $process = new Process([
-            __DIR__ . '/../../../bin/console',
+            __DIR__ . '/../../bin/console',
             'index:build',
         ], $this->workspace()->path());
         $process->mustRun();

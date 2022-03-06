@@ -1,0 +1,46 @@
+#!/usr/bin/env php
+<?php
+
+use Acme\Extension\StupidCompletion\StupidCompletionExtension;
+use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Indexer\Extension\IndexerExtension;
+use Symfony\Component\Console\Application;
+
+require __DIR__ . '/../../../../vendor/autoload.php';
+
+$container = PhpactorContainer::fromExtensions([
+    ConsoleExtension::class,
+    IndexerExtension::class,
+    FilePathResolverExtension::class,
+    LoggingExtension::class,
+    SourceCodeFilesystemExtension::class,
+    WorseReflectionExtension::class,
+    ClassToFileExtension::class,
+    ComposerAutoloaderExtension::class,
+    ReferenceFinderExtension::class,
+], [
+    FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../',
+    IndexerExtension::PARAM_INDEX_PATH => __DIR__ . '/../cache',
+    IndexerExtension::PARAM_EXCLUDE_PATTERNS => ['cache'],
+    IndexerExtension::PARAM_ENABLED_WATCHERS => ['watchman', 'find'],
+    WorseReflectionExtension::PARAM_ENABLE_CACHE => true,
+    LoggingExtension::PARAM_ENABLED => false,
+    LoggingExtension::PARAM_LEVEL => 'debug',
+    LoggingExtension::PARAM_PATH=> 'php://stdout',
+]);
+
+$application = new Application();
+$application->setCommandLoader(
+    $container->get(ConsoleExtension::SERVICE_COMMAND_LOADER)
+);
+$application->run();

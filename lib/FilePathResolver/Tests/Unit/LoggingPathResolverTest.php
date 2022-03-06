@@ -5,10 +5,13 @@ namespace Phpactor\FilePathResolver\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\LoggingPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;
 
 class LoggingPathResolverTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testLogsResolvedPath(): void
     {
         $innerResolver = $this->prophesize(PathResolver::class);

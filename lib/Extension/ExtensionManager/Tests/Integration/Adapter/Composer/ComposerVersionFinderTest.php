@@ -6,6 +6,9 @@ use Phpactor\Extension\ExtensionManager\Model\VersionFinder;
 use Phpactor\Extension\ExtensionManager\Tests\Integration\IntegrationTestCase;
 use RuntimeException;
 
+/**
+ * @group slow
+ */
 class ComposerVersionFinderTest extends IntegrationTestCase
 {
     /**

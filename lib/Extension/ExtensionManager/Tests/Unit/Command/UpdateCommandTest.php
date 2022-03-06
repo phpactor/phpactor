@@ -5,10 +5,12 @@ namespace Phpactor\Extension\ExtensionManager\Tests\Unit\Command;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ExtensionManager\Command\UpdateCommand;
 use Phpactor\Extension\ExtensionManager\Service\InstallerService;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class UpdateCommandTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var ObjectProphecy
      */

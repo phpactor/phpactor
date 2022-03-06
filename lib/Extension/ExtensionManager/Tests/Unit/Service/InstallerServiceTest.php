@@ -12,9 +12,12 @@ use Phpactor\Extension\ExtensionManager\Model\VersionFinder;
 use Phpactor\Extension\ExtensionManager\Service\InstallerService;
 use Phpactor\Extension\ExtensionManager\Service\ProgressLogger;
 use Phpactor\Extension\ExtensionManager\Tests\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class InstallerServiceTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */

@@ -16,7 +16,7 @@ class IndexQueryCommandTest extends IntegrationTestCase
         $this->initProject();
 
         $process = new Process([
-            __DIR__ . '/../../../bin/console',
+            __DIR__ . '/../../bin/console',
             'index:query',
             $query
         ], $this->workspace()->path());

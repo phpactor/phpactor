@@ -7,10 +7,13 @@ use Phpactor\Extension\ExtensionManager\Model\Extension;
 use Phpactor\Extension\ExtensionManager\Model\ExtensionFileGenerator;
 use Phpactor\Extension\ExtensionManager\Model\Extensions;
 use Phpactor\Extension\ExtensionManager\Tests\Integration\IntegrationTestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtensionFileGeneratorTest extends IntegrationTestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_CLASS_NAME_1 = 'Foo\\Bar';
     const EXAMPLE_CLASS_NAME_2 = 'Foo\\Baz';
 

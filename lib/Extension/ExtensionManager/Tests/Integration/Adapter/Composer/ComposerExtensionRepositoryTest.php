@@ -7,6 +7,9 @@ use Phpactor\Extension\ExtensionManager\Service\InstallerService;
 use Phpactor\Extension\ExtensionManager\Tests\Integration\IntegrationTestCase;
 use RuntimeException;
 
+/**
+ * @group slow
+ */
 class ComposerExtensionRepositoryTest extends IntegrationTestCase
 {
     private $repository;

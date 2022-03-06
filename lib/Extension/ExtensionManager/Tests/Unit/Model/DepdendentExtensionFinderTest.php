@@ -7,9 +7,12 @@ use Phpactor\Extension\ExtensionManager\Model\DependentExtensionFinder;
 use Phpactor\Extension\ExtensionManager\Model\Extension;
 use Phpactor\Extension\ExtensionManager\Model\ExtensionRepository;
 use Phpactor\Extension\ExtensionManager\Model\Extensions;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DepdendentExtensionFinderTest extends TestCase
 {
+    use ProphecyTrait;
+
     const EXAMPLE_PACKAGE = 'example-package';
 
     /**

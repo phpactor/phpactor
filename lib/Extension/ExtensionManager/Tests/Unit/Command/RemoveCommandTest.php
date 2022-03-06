@@ -8,11 +8,14 @@ use Phpactor\Extension\ExtensionManager\Model\Extension;
 use Phpactor\Extension\ExtensionManager\Model\ExtensionState;
 use Phpactor\Extension\ExtensionManager\Model\Extensions;
 use Phpactor\Extension\ExtensionManager\Service\RemoverService;
+use Prophecy\PhpUnit\ProphecyTrait;
 use RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class RemoveCommandTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy
      */
