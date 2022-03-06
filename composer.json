@@ -43,6 +43,12 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-phpunit": "^0.12.19"
     },
+    "replace": {
+        "phpactor/file-path-resolver": "*",
+        "phpactor/file-path-resolver-extension": "*",
+        "phpactor/console-extension": "*",
+        "phpactor/language-server-extension": "*"
+    },
     "config": {
         "platform": {
             "php": "7.3.0"
