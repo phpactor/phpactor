@@ -4,7 +4,6 @@
 /tests/Assets/Cache
 /cache
 /extensions
-/phpbench.json
 /phpactor.schema.json
 /**/Tests/Workspace
 

@@ -1,8 +1,0 @@
-{
-    "runner.annotation_import_use": true,
-    "runner.path": "tests/Benchmark",
-    "runner.bootstrap": "vendor/autoload.php",
-    "core.extensions": [
-        "PhpBench\\Extensions\\XDebug\\XDebugExtension"
-    ]
-}

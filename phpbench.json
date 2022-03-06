@@ -1,0 +1,13 @@
+{
+    "$schema": "vendor/phpbench/phpbench/phpbench.schema.json",
+    "runner.file_pattern": "*Bench.php",
+    "runner.annotation_import_use": false,
+    "runner.path": [
+        "lib/**/Tests/Benchmark",
+        "tests/Benchmark"
+    ],
+    "runner.bootstrap": "vendor/autoload.php",
+    "core.extensions": [
+        "PhpBench\\Extensions\\XDebug\\XDebugExtension"
+    ]
+}
