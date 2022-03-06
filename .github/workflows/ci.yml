@@ -89,7 +89,7 @@ jobs:
                 name: "Run PHPUnit"
                 run: "vendor/bin/phpunit"
     phpstan:
-        name: "PHPUnit (${{ matrix.php-version }})"
+        name: "PHPStan (${{ matrix.php-version }})"
 
         runs-on: "ubuntu-latest"
 
@@ -120,7 +120,7 @@ jobs:
                 name: "Run PHPUnit"
                 run: "vendor/bin/phpstan analyse"
     php-cs-fixer:
-        name: "PHPUnit (${{ matrix.php-version }})"
+        name: "PHP-CS-Fixer (${{ matrix.php-version }})"
 
         runs-on: "ubuntu-latest"
 
