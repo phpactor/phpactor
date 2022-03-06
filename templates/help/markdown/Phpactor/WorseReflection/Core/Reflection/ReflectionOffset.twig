@@ -1,0 +1,9 @@
+{{ render(object.symbolContext) }}
+{% if object.frame.locals.count %}
+
+Frame: 
+
+{% for variable in object.frame.locals %}
+  {{ render(variable) }}
+{% endfor -%}
+{% endif %}

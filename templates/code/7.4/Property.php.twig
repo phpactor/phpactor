@@ -1,0 +1,5 @@
+{{ prototype.visibility }}
+{%- if prototype.type.notNone %}
+ {{ prototype.type.nullable ? '?' : '' }}{{ prototype.type }} 
+{%- endif %}
+ ${{ prototype.name}}{% if prototype.defaultValue.notNone %} = {{ prototype.defaultValue.export }}{% endif %};

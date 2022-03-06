@@ -1,0 +1,6 @@
+{% if object.deprecation.isDefined %}{{ render(object.deprecation) }}{% endif %}
+trait {{ object.name.short }}
+{% for method in object.methods.byVisibilities(["public"]) -%}
+{{ '    ' ~ render(method) }}
+{% endfor -%}
+

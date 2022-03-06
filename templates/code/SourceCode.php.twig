@@ -1,0 +1,27 @@
+<?php
+{% if prototype.namespace|length %}
+
+namespace {{ prototype.namespace }};
+{% endif %}
+{% if prototype.useStatements|length %}
+
+{% for useStatement in prototype.useStatements %}
+{% if useStatement.hasAlias %}
+use {{ useStatement.name }} as {{ useStatement.alias }};
+{% else %}
+use {{ useStatement.name }};
+{% endif %}
+{% endfor %}
+{% endif %}
+{% for interface in prototype.interfaces %}
+
+{{ generator.render(interface, variant)|raw }}
+{% endfor %}
+{% for trait in prototype.traits %}
+
+{{ generator.render(trait, variant)|raw }}
+{% endfor %}
+{% for class in prototype.classes %}
+
+{{ generator.render(class, variant)|raw }}
+{% endfor %}

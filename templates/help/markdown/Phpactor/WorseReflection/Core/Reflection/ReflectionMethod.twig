@@ -1,0 +1,18 @@
+{% if object.deprecation.isDefined %}{{ render(object.deprecation) }}    {% endif %}
+{%- if object.declaringClass.isClass -%}
+    {%- if object.deprecation.isDefined %}⚠ {% endif -%}
+    {%- if object.declaringClass.parent -%}
+        {%- set parent = object.class.parent -%}
+        {%- if parent.methods.has(object.name) -%}Ⓒ {% endif -%}
+    {%- endif -%}
+    {%- for interface in object.declaringClass.interfaces|slice(0,1) -%}
+        {%- if interface.methods.has(object.name) -%}ⓘ {% endif -%}
+    {%- endfor -%}
+{%- endif -%}
+{% if object.isVirtual %}[virtual] {% endif -%}
+    {% if object.isAbstract -%}abstract {% endif -%}
+{{- object.visibility ~ ' ' -}} 
+{%- if object.isStatic %}static {% endif %}
+function {{ object.name }}({{ render(object.parameters) }})
+{%- if object.inferredTypes.count %}: {{ render(object.inferredTypes) }}{% endif -%}
+

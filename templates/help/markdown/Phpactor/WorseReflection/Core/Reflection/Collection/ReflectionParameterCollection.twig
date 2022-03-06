@@ -1,0 +1,3 @@
+{%- for parameter in object -%}
+{% if parameter.inferredTypes.count %}{{- render(parameter.inferredTypes) }} {% endif %}${{- parameter.name -}}{% if not loop.last %}, {% endif %}
+{%- endfor -%}
