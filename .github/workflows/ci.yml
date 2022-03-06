@@ -118,7 +118,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHPStan"
-                run: "vendor/bin/phpstan analyse --debug"
+                run: "vendor/bin/phpstan analyse"
     php-cs-fixer:
         name: "PHP-CS-Fixer (${{ matrix.php-version }})"
 
