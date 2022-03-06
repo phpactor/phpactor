@@ -61,14 +61,4 @@ class IntegrationTestCase extends TestCase
     {
         return Workspace::create(__DIR__ . '/Workspace');
     }
-
-    protected function createTester(): ServerTester
-    {
-        $container = $this->container();
-        
-        $builder = $container->get(LanguageServerExtension::SERVICE_LANGUAGE_SERVER_BUILDER);
-        $this->assertInstanceOf(LanguageServerBuilder::class, $builder);
-
-        return $builder->buildServerTester();
-    }
 }

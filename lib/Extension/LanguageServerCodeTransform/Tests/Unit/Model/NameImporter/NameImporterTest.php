@@ -220,7 +220,7 @@ class NameImporterTest extends TestCase
 
         self::assertTrue($result->isSuccess());
         self::assertEquals($import, $result->getNameImport());
-        self::assertSame(null, $result->getTextEdits());
+        self::assertNull($result->getTextEdits());
         self::assertNull($result->getError());
     }
 
