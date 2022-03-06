@@ -1,0 +1,39 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        <>$new = true;<>
+    }
+
+    public function no()
+    {
+        $new = 1234;
+    }
+}
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $this->newMethod();
+    }
+
+    public function no()
+    {
+        $new = 1234;
+    }
+
+    private function newMethod()
+    {
+        $new = true;
+    }
+}

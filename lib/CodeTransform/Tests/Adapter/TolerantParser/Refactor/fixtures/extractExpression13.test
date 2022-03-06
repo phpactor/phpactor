@@ -1,0 +1,29 @@
+// File: source
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        $bar = 
+            ($fo<>o ? 
+                '1' : 
+                '2'<>). 
+            ' times';
+    }
+}
+// File: expected
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        $foobar = $foo ? 
+                '1' : 
+                '2';
+        $bar = 
+            ($foobar). 
+            ' times';
+    }
+}

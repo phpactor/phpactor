@@ -1,0 +1,19 @@
+// File: source
+<?php
+
+class generateMethod
+{
+    pr<>ivate $method;
+}
+// File: expected
+<?php
+
+class generateMethod
+{
+    private $method;
+
+    public function method()
+    {
+        return $this->method;
+    }
+}

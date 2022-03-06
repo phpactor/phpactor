@@ -1,0 +1,53 @@
+// File: Carcar.php
+<?php namespace Carcar;
+
+class Carcar {}
+// File: Barfoo.php
+<?php
+
+use Carcar\Carcar;
+
+class Foobar
+{
+    public function carcar(): Carcar
+    {
+    }
+}
+// File: source
+<?php
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $bar = new Foobar();
+        $car = $bar->carcar();
+
+        <>$car;<>
+
+        return $bar;
+    }
+}
+// File: expected
+<?php
+
+use Carcar\Carcar;
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $bar = new Foobar();
+        $car = $bar->carcar();
+
+        $this->newMethod($car);
+
+        return $bar;
+    }
+
+    private function newMethod(Carcar $car)
+    {
+        $car;
+    }
+}
+

@@ -1,0 +1,9 @@
+// File: source
+<?php
+
+$foobar[] = n<>ew stdClass($a);
+// File: expected
+<?php
+
+$foobar = new stdClass($a);
+$foobar[] = $foobar;

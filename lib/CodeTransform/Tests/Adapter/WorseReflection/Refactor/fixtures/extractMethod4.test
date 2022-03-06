@@ -1,0 +1,37 @@
+// File: source
+<?php
+
+namespace Hello;
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        <>$this->foobar();<>
+    }
+
+    private function foobar()
+    {
+    }
+}
+// File: expected
+<?php
+
+namespace Hello;
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        $this->newMethod();
+    }
+
+    private function foobar()
+    {
+    }
+
+    private function newMethod()
+    {
+        $this->foobar();
+    }
+}

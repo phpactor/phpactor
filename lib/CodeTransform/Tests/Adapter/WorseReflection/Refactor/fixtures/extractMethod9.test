@@ -1,0 +1,17 @@
+// File: source
+<?php
+
+class extractMethod
+{
+    public function someMethod(string $hello)
+    {
+        <>
+        $foo = 'hello';
+        <>
+    }
+
+    public function newMethod()
+    {
+    }
+}
+// File: expected

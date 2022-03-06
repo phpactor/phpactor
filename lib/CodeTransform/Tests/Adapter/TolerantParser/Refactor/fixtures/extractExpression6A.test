@@ -1,0 +1,9 @@
+// File: source
+<?php
+
+<>$obj<>->method();
+// File: expected
+<?php
+
+$foobar = $obj;
+$foobar->method();

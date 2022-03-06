@@ -1,0 +1,6 @@
+``
+
+```php
+<?php class Foobar
+
+```

@@ -1,0 +1,22 @@
+// File: source
+<?php
+
+class extractMethod3
+{
+    public function bigMethod()
+    {
+        $foo['12<>34'];
+    }
+}
+// File: expected
+<?php
+
+class extractMethod3
+{
+    const HELLO_WORLD = '1234';
+
+    public function bigMethod()
+    {
+        $foo[self::HELLO_WORLD];
+    }
+}

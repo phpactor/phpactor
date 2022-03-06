@@ -1,0 +1,1 @@
+public Foobar|string $foobar;

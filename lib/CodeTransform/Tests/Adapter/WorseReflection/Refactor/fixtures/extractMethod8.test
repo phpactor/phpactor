@@ -1,0 +1,54 @@
+// File: source
+<?php
+
+class extractMethod
+{
+    public function someMethod(string $hello)
+    {
+        <>
+        $new = false;
+        if ($hello) {
+            $new = true;
+        }
+        $foo = 'hello';
+        <>
+
+        if ($foo) {
+            return $new;
+        }
+
+        echo $hello;
+        $this->foobar;
+
+        return $new;
+    }
+}
+// File: expected
+<?php
+
+class extractMethod
+{
+    public function someMethod(string $hello)
+    {
+        list($foo, $new) = $this->newMethod($hello);
+
+        if ($foo) {
+            return $new;
+        }
+
+        echo $hello;
+        $this->foobar;
+
+        return $new;
+    }
+
+    private function newMethod(string $hello): array
+    {
+        $new = false;
+        if ($hello) {
+            $new = true;
+        }
+        $foo = 'hello';
+        return [$foo, $new];
+    }
+}

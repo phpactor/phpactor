@@ -1,0 +1,11 @@
+// File: source
+<?php
+
+if ('h<>ello' . $bar<> === null) {
+}
+// File: expected
+<?php
+
+$foobar = 'hello' . $bar;
+if ($foobar === null) {
+}

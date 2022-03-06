@@ -1,0 +1,1 @@
+[virtual] public string $foobar;

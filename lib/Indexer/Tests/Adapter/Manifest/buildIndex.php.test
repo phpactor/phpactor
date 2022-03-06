@@ -1,0 +1,48 @@
+// File: composer.json
+{
+"autoload": {
+    "psr-4": {
+        "": "project"
+    }
+}
+}
+// File: project/Index.php
+<?php
+interface Index
+{
+}
+// File: project/InMemoryIndex.php
+<?php
+class InMemoryIndex implements Index
+{
+}
+// File: project/DbalIndex.php
+<?php
+class DbalIndex implements Index
+{
+}
+// File: project/AbstractClass.php
+<?php
+abstract class AbstractClass {}
+// File: project/AbstractClassImplementation1.php
+<?php
+class AbstractClassImplementation1 extends AbstractClass {}
+
+// File: project/AbstractClassImplementation2.php
+<?php
+class AbstractClassImplementation2 extends AbstractClass {}
+// File: project/Exception/RuntimeException.php
+<?php
+namespace Exception;
+use RuntimeException as BaseRuntimeException;
+class RuntimeException extends BaseRuntimeException {}
+// File: project/NameNotCorrespondToClass.php
+<?php
+class ClassWithWrongName {}
+// File: project/functions.php
+<?php
+namespace Hello;
+function world(): string
+{
+    return 'hello';
+}

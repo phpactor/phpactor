@@ -1,0 +1,9 @@
+// File: source
+<?php
+
+Assert::assertEquals($result, <>[ 'one' => 'two', 'three' => 'four' ]);
+// File: expected
+<?php
+
+$foobar = [ 'one' => 'two', 'three' => 'four' ];
+Assert::assertEquals($result, $foobar);

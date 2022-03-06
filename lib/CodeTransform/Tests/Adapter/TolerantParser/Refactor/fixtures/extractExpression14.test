@@ -1,0 +1,24 @@
+// File: source
+<?php
+
+class Foobar
+{
+    <>
+    public function hello()
+    {
+        if ('hello' . $bar === null) {
+        }
+    }
+}
+// File: expected
+<?php
+
+class Foobar
+{
+    
+    public function hello()
+    {
+        if ('hello' . $bar === null) {
+        }
+    }
+}

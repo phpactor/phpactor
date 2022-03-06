@@ -1,0 +1,48 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $foobar = 'hello';
+        <>$new = true;
+        if ($foobar !== 'hello') {
+            $new = false;
+            $bar = 'hahaha';
+        }<>
+
+        $new = $bar;
+
+        return [ $new, $bar ];
+    }
+}
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $foobar = 'hello';
+        list($new, $bar) = $this->newMethod($foobar);
+
+        $new = $bar;
+
+        return [ $new, $bar ];
+    }
+
+    private function newMethod(string $foobar): array
+    {
+        $new = true;
+                if ($foobar !== 'hello') {
+                    $new = false;
+                    $bar = 'hahaha';
+                }
+        return [$new, $bar];
+    }
+}

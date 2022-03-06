@@ -1,0 +1,32 @@
+// File: source
+
+<?php
+
+class anotherClass
+{
+}
+
+class generateMethod
+{
+    public function name()
+    {
+        anotherClass::so<>meMethod('foobar');
+    }
+}
+// File: expected
+<?php
+
+class anotherClass
+{
+    public static function someMethod(string $string)
+    {
+    }
+}
+
+class generateMethod
+{
+    public function name()
+    {
+        anotherClass::someMethod('foobar');
+    }
+}

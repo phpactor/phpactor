@@ -6,6 +6,7 @@
 /extensions
 /phpbench.json
 /phpactor.schema.json
+/**/Tests/Workspace
 
 # File frequently used for testing
 /lib/Test.php

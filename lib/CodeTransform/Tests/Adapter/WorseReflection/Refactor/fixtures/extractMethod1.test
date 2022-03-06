@@ -1,0 +1,26 @@
+// File: source
+<?php
+
+class extractMethod1
+{
+    public function bigMethod()
+    {
+        <>$foobar = 'hello';<>
+    }
+}
+// File: expected
+<?php
+
+class extractMethod1
+{
+    public function bigMethod()
+    {
+        $this->newMethod();
+    }
+
+    private function newMethod()
+    {
+        $foobar = 'hello';
+    }
+}
+

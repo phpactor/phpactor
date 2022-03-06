@@ -1,0 +1,12 @@
+// File: source
+<?php
+
+use function Acme\foobar;
+
+foob<>ar('');
+// File: expected
+<?php
+
+use function Acme\foobar;
+
+foobar('');

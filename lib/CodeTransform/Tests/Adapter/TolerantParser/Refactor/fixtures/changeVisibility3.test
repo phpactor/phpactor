@@ -1,0 +1,14 @@
+// File: source
+<?php
+
+class Foo {
+    protec<>ted $hello;
+}
+// File: expected
+<?php
+
+class Foo {
+    private $hello;
+}
+
+

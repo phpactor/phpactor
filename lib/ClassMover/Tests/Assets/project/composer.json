@@ -1,0 +1,14 @@
+{
+    "name": "acme/test",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        }
+    },
+    "autoload-dev": {
+    }
+}

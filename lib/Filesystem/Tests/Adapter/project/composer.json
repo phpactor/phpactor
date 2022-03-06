@@ -1,0 +1,17 @@
+{
+    "name": "acme/test",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        },
+        "classmap": [
+            "legacy"
+        ]
+    },
+    "autoload-dev": {
+    }
+}

@@ -1,0 +1,49 @@
+// File: source
+
+<?php
+
+class anotherClass
+{
+    public function someMethod(): string
+    {
+    }
+}
+
+class generateMethod
+{
+    /**
+     * @var anotherClass
+     */
+    private $anotherClass;
+
+    public function name()
+    {
+        $this->b<>arfoo($this->anotherClass->someMethod());
+    }
+}
+// File: expected
+<?php
+
+class anotherClass
+{
+    public function someMethod(): string
+    {
+    }
+}
+
+class generateMethod
+{
+    /**
+     * @var anotherClass
+     */
+    private $anotherClass;
+
+    public function name()
+    {
+        $this->barfoo($this->anotherClass->someMethod());
+    }
+
+    private function barfoo(string $string)
+    {
+    }
+}

@@ -1,0 +1,40 @@
+// File: source
+
+<?php
+
+interface anotherClass
+{
+}
+
+class generateMethod
+{
+    /**
+     * @var anotherClass
+     */
+    private $anotherClass;
+
+    public function name()
+    {
+        $this->anotherClass->so<>meMethod('foobar');
+    }
+}
+// File: expected
+<?php
+
+interface anotherClass
+{
+    public function someMethod(string $string);
+}
+
+class generateMethod
+{
+    /**
+     * @var anotherClass
+     */
+    private $anotherClass;
+
+    public function name()
+    {
+        $this->anotherClass->someMethod('foobar');
+    }
+}

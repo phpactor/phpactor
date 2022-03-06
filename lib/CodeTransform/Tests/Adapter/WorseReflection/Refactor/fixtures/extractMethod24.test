@@ -1,0 +1,12 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        $a = function() {
+            <>$expression1 = 1;
+        };
+        $expression2 = 2;<>
+    }
+}
+// File: expected

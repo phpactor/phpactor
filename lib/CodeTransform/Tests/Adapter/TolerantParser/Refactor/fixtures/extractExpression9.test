@@ -1,0 +1,15 @@
+// File: source
+<?php
+
+$files = new ArrayFileIterator([
+    <>new SplFileInfo('path/one'),
+    new SplFileInfo('path/two'),
+]);
+// File: expected
+<?php
+
+$foobar = new SplFileInfo('path/one');
+$files = new ArrayFileIterator([
+    $foobar,
+    new SplFileInfo('path/two'),
+]);

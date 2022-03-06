@@ -1,0 +1,20 @@
+// File: PathTo/FileOne.php
+<?php
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}
+// File: expected
+<?php
+
+namespace PathTo;
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}

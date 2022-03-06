@@ -1,0 +1,12 @@
+<?php
+
+new Foobar1();
+new Foobar2();
+new Foobar3();
+new Foobar4();
+new Foobar5();
+new Foobar6();
+new Foobar7();
+new Foobar8();
+new Foobar9();
+new Foobar10();

@@ -1,0 +1,15 @@
+// File: source
+<?php
+
+class Foo {
+    protected $hel<>lo;
+}
+// File: expected
+<?php
+
+class Foo {
+    private $hello;
+}
+
+
+

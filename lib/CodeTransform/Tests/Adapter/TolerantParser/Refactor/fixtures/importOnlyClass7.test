@@ -1,0 +1,21 @@
+// File: source
+<?php
+
+use Zed\Foobar
+
+Zoo::create();
+
+function (Foobar $foobar) {
+    F<>oobar::create();
+}
+// File: expected
+<?php
+
+use Barfoo\Foobar as Barfoo;
+use Zed\Foobar
+
+Zoo::create();
+
+function (Foobar $foobar) {
+    Foobar::create();
+}

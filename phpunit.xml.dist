@@ -13,6 +13,9 @@
     <testsuite name="PhpActor Test Suite">
       <directory>./tests</directory>
       <exclude>tests/Assets</exclude>
+      <directory>./src/*/Tests/</directory>
+      <directory>./src/Extension/*/Tests/</directory>
+      <exclude>./src/*/Tests/Workspace</exclude>
     </testsuite>
   </testsuites>
   <php>

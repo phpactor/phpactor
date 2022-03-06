@@ -1,0 +1,22 @@
+// File: PathTo/FileOne.php
+<?php
+
+namespace IncorrectNamespaceDotCom;
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}
+// File: expected
+<?php
+
+namespace PathTo;
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}

@@ -1,0 +1,48 @@
+// File: source
+<?php
+
+class extractMethod
+{
+    public function someMethod()
+    {
+        <>
+        $new = false;
+        if (true) {
+            $new = true;
+        }
+        $foo = 'hello';
+        <>
+
+        if ($foo) {
+            return $new;
+        }
+
+        return $new;
+    }
+}
+// File: expected
+<?php
+
+class extractMethod
+{
+    public function someMethod()
+    {
+        list($foo, $new) = $this->newMethod();
+
+        if ($foo) {
+            return $new;
+        }
+
+        return $new;
+    }
+
+    private function newMethod(): array
+    {
+        $new = false;
+        if (true) {
+            $new = true;
+        }
+        $foo = 'hello';
+        return [$foo, $new];
+    }
+}
