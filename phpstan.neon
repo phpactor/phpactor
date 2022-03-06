@@ -8,6 +8,7 @@ parameters:
         - lib/Extension/*/Tests/Workspace
         - lib/Extension/LanguageServerIndexer/Tests/Workspace
         - lib/Extension/*/Tests/Example
+        - lib/Extension/ExtensionManager
     parallel:
         maximumNumberOfProcesses: 4
 
