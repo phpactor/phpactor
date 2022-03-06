@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\PhpVersionResolver\Model;
+namespace Phpactor\Extension\Php\Tests\Unit\Model;
 
 use Generator;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;

@@ -76,7 +76,7 @@ class CodeTransformExtension implements Extension
     public const PARAM_GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
 
-    private const APP_TEMPLATE_PATH = '%application_root%/vendor/phpactor/code-builder/templates';
+    private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
 
     private const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
 

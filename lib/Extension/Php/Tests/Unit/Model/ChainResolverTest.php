@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Tests\Unit\Extension\PhpVersionResolver\Model;
+namespace Phpactor\Extension\Php\Tests\Unit\Model;
 
 use Phpactor\Extension\Php\Model\ChainResolver;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
