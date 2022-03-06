@@ -30,7 +30,7 @@ $container = PhpactorContainer::fromExtensions([
     ReferenceFinderExtension::class,
 ], [
     FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../',
-    IndexerExtension::PARAM_INDEX_PATH => __DIR__ . '/../cache',
+    IndexerExtension::PARAM_INDEX_PATH => __DIR__ . '/../Workspace/cache',
     IndexerExtension::PARAM_EXCLUDE_PATTERNS => ['cache'],
     IndexerExtension::PARAM_ENABLED_WATCHERS => ['watchman', 'find'],
     WorseReflectionExtension::PARAM_ENABLE_CACHE => true,
