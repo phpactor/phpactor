@@ -5041,11 +5041,6 @@ parameters:
 			path: lib/Extension/Core/Application/Status.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) has parameter \\$process with no value type specified in iterable type Symfony\\\\Component\\\\Process\\\\Process\\.$#"
-			count: 1
-			path: lib/Extension/Core/Application/Status.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Application/Status.php
@@ -6257,11 +6252,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/IntegrationTestCase.php
-
-		-
-			message: "#^Return typehint of method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\IntegrationTestCase\\:\\:createTester\\(\\) has invalid type Phpactor\\\\LanguageServer\\\\Test\\\\ServerTester\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/IntegrationTestCase.php
 
@@ -7936,11 +7926,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Unit/Registry/ActiveHandlerRegistryTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\:\\:message\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$request of method Phpactor\\\\Extension\\\\Rpc\\\\RequestHandler\\\\ExceptionCatchingHandler\\:\\:handle\\(\\) expects Phpactor\\\\Extension\\\\Rpc\\\\Request, object given\\.$#"
 			count: 2
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
@@ -9329,11 +9314,6 @@ parameters:
 			message: "#^Yield can be used only with these return types\\: Generator, Iterator, Traversable, iterable\\.$#"
 			count: 3
 			path: lib/Indexer/Tests/Extension/Command/IndexSearchCommandTest.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\:\\:message\\(\\)\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Extension/IndexerExtensionTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, string, mixed, mixed\\> given\\.$#"
