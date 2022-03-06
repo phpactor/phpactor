@@ -18,8 +18,6 @@ use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
-use Phpactor\LanguageServer\LanguageServerBuilder;
-use Phpactor\LanguageServer\Test\ServerTester;
 use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase
