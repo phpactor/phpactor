@@ -32,7 +32,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ByteOffset::fromInt(3)
         );
 
-        $this->assertEquals(realpath(__DIR__ . '/../../lib/WorseReferenceFinderExtension.php'), $location->uri()->path());
+        $this->assertEquals(realpath(__DIR__ . '/../../WorseReferenceFinderExtension.php'), $location->uri()->path());
     }
 
     public function testLocateType(): void
@@ -84,7 +84,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ComposerAutoloaderExtension::class,
             LoggingExtension::class,
         ], [
-            'file_path_resolver.application_root' => __DIR__ . '/../..',
+            'file_path_resolver.application_root' => __DIR__ . '/../../../../../',
         ]);
         return $container;
     }

@@ -16,10 +16,21 @@ use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\TestUtils\Workspace;
 use function Safe\file_get_contents;
 
 class LanguageServerReferenceFinderExtensionTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        $this->workspace()->reset();
+    }
+
+    protected function workspace(): Workspace
+    {
+        return Workspace::create(__DIR__ . '/../Workspace');
+    }
+
     public function testDefinition(): void
     {
         $tester = $this->createTester();
