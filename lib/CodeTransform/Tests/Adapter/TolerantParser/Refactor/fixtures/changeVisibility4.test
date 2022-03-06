@@ -1,0 +1,15 @@
+// File: source
+<?php
+
+class Foo {
+    priva<>te const hello = 'bar';
+}
+// File: expected
+<?php
+
+class Foo {
+    public const hello = 'bar';
+}
+
+
+

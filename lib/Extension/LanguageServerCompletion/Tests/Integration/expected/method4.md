@@ -1,0 +1,1 @@
+abstract public static function foo()

@@ -1,0 +1,30 @@
+// File: source
+
+<?php
+
+namespace Acme;
+
+class generateMethod
+{
+    /**
+     * @var Type1[]
+     */
+    private $method;
+<>}
+// File: expected
+<?php
+
+namespace Acme;
+
+class generateMethod
+{
+    /**
+     * @var Type1[]
+     */
+    private $method;
+
+    public function method(): array
+    {
+        return $this->method;
+    }
+}

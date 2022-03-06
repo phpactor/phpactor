@@ -1,0 +1,19 @@
+// File: source
+<?php
+
+use DateTime;
+use Foo;
+use Bar;
+
+/** @var Foo<>Bar $foobar */
+$foobar = $container->get('fooboar');
+// File: expected
+<?php
+
+use Barfoo\Foobar;
+use DateTime;
+use Foo;
+use Bar;
+
+/** @var FooBar $foobar */
+$foobar = $container->get('fooboar');

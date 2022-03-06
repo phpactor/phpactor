@@ -1,0 +1,31 @@
+// File: source
+
+<?php
+
+class ParentClass
+{
+    protected function barbar(stdClass $stdClass): stdClass
+    {
+    }
+}
+
+class ChildClass extends ParentClass
+{
+}
+// File: expected
+<?php
+
+class ParentClass
+{
+    protected function barbar(stdClass $stdClass): stdClass
+    {
+    }
+}
+
+class ChildClass extends ParentClass
+{
+    protected function barbar(stdClass $stdClass): stdClass
+    {
+    }
+}
+

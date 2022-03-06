@@ -1,0 +1,12 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        {
+            <>$b = 4;
+        }
+        $c = 5;<>
+    }
+}
+// File: expected

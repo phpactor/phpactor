@@ -1,0 +1,35 @@
+// File: source
+<?php
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $bar = 'hahaha';
+
+<>        $bar = 'goodbye';
+        <>
+
+        return $bar;
+    }
+}
+// File: expected
+<?php
+
+class PhpactorRocks
+{
+    public function hello()
+    {
+        $bar = 'hahaha';
+
+        $bar = $this->newMethod($bar);
+
+        return $bar;
+    }
+
+    private function newMethod(string $bar): string
+    {
+        $bar = 'goodbye';
+        return $bar;
+    }
+}

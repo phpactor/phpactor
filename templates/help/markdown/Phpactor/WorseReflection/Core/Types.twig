@@ -1,0 +1,1 @@
+{%- for type in object %}{{ render(type) }}{% if not loop.last %}|{% endif %}{% endfor -%}

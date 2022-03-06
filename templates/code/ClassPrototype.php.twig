@@ -1,0 +1,26 @@
+class {{ prototype.name }}{% if prototype.extendsClass.notNone %} extends {{ prototype.extendsClass }}{% endif %}
+{% if prototype.implementsInterfaces|length %}
+ implements {% for interface in prototype.implementsInterfaces %}{{ interface }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+
+{
+{% for constant in prototype.constants %}
+{{ generator.render(constant, variant)|indent(1)|raw }}
+{% endfor %}
+{% for property in prototype.properties %}
+{% if loop.first and prototype.constants|length %}
+
+{% endif %}
+{{ generator.render(property, variant)|indent(1)|raw }}
+{% if not loop.last %}
+
+{% endif %}
+{% endfor %}
+{% for method in prototype.methods %}
+{% if prototype.properties|length or not loop.first %}
+
+{% endif %}
+{{ generator.render(method, variant)|indent(1)|raw }}
+{{ generator.render(method.body)|indent(1)|raw }}
+{% endfor %}
+}

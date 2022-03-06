@@ -1,0 +1,10 @@
+// File: source
+<?php
+
+F<>oobar::create();
+// File: expected
+<?php
+
+use Barfoo\Foobar as Barfoo;
+
+Foobar::create();

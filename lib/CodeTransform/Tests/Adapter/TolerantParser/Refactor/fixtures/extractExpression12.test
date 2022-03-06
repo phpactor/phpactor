@@ -1,0 +1,22 @@
+// File: source
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        $bar = 'y<>es';
+        $bar = 'hel<>lo' . $bar;
+    }
+}
+// File: expected
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        $bar = 'yes';
+        $bar = 'hello' . $bar;
+    }
+}

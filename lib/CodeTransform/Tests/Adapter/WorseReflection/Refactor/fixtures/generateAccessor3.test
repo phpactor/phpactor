@@ -1,0 +1,26 @@
+// File: source
+
+<?php
+
+class generateMethod
+{<>
+    /**
+     * @var Type1
+     */
+    private $method;
+}
+// File: expected
+<?php
+
+class generateMethod
+{
+    /**
+     * @var Type1
+     */
+    private $method;
+
+    public function method(): Type1
+    {
+        return $this->method;
+    }
+}

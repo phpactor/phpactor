@@ -1,0 +1,33 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        <>
+        $f = function() {
+            $e = 3;
+            return $e;
+        }
+        <>
+        $e = 2;
+        return $e;
+    }
+}
+// File: expected
+<?php
+
+class One {
+    public function hello() {
+        $this->newMethod();
+        $e = 2;
+        return $e;
+    }
+
+    private function newMethod()
+    {
+        $f = function() {
+            $e = 3;
+            return $e;
+        }
+    }
+}

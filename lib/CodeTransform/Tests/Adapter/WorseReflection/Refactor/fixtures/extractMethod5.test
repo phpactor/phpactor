@@ -1,0 +1,41 @@
+// File: source
+<?php
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        $foobar = 'yes';
+
+        <>
+        if ($foobar) {
+            return 'yes';
+        }
+
+        return $foobar;
+        <>
+
+    }
+}
+// File: expected
+<?php
+
+class extractMethod
+{
+    public function bigMethod()
+    {
+        $foobar = 'yes';
+
+        return $this->newMethod($foobar);
+
+    }
+
+    private function newMethod(string $foobar)
+    {
+        if ($foobar) {
+            return 'yes';
+        }
+        
+        return $foobar;
+    }
+}

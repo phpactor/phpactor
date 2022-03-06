@@ -1,0 +1,52 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        <>
+        try {
+            $someOne = true;
+        } catch (Exception $e) {
+            throw new Exception("inner", 0, $e);
+            $a = 5;
+        }
+        <>
+        
+        try {
+            $someTwo = true;
+        } catch (Exception $e) {
+            throw new Exception("inner", 0, $e);
+            $a = 6;
+        }
+
+        return $a;
+    }
+}
+// File: expected
+<?php
+
+class One {
+    public function hello() {
+        $a = $this->newMethod();
+        
+        try {
+            $someTwo = true;
+        } catch (Exception $e) {
+            throw new Exception("inner", 0, $e);
+            $a = 6;
+        }
+
+        return $a;
+    }
+
+    private function newMethod(): int
+    {
+        try {
+            $someOne = true;
+        } catch (Exception $e) {
+            throw new Exception("inner", 0, $e);
+            $a = 5;
+        }
+        return $a;
+    }
+}

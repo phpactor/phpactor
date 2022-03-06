@@ -1,0 +1,10 @@
+// File: FileOne.php
+<?php
+
+class WrongClassName {
+}
+// File: expected
+<?php
+
+class FileOne {
+}

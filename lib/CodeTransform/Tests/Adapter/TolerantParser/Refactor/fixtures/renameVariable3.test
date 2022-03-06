@@ -1,0 +1,47 @@
+// File: source
+
+<?php
+
+$foo;
+
+class MyClass
+{
+    public function thisIsSparta()
+    {
+        $f<>oo = some_thing();
+
+        if ($foo == $bar) {
+            return $bar;
+        }
+
+        return $foo;
+    }
+
+    public function thisIsNothing()
+    {
+        $foo;
+    }
+}
+// File: expected
+<?php
+
+$foo;
+
+class MyClass
+{
+    public function thisIsSparta()
+    {
+        $newName = some_thing();
+
+        if ($newName == $bar) {
+            return $bar;
+        }
+
+        return $newName;
+    }
+
+    public function thisIsNothing()
+    {
+        $foo;
+    }
+}

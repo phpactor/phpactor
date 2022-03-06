@@ -2,6 +2,12 @@ parameters:
     level: 7
     paths:
         - lib
+    excludePaths:
+        - */lib/*Tests/Workspace/*
+        - */lib/*Tests/Example/*
+        - */lib/Extension/*/Tests/Workspace/*
+        - */lib/Extension/*/Tests/Example/*
+        - lib/Extension/LanguageServer
+
 includes:
-    - vendor/jangregor/phpstan-prophecy/extension.neon
     - phpstan-baseline.neon

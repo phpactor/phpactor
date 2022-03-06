@@ -11,7 +11,7 @@ abstract class SystemTestCase extends IntegrationTestCase
     {
         chdir($this->workspaceDir());
         $bin = __DIR__ . '/../../bin/phpactor --verbose ';
-        $process = new Process(sprintf(
+        $process = Process::fromShellCommandline(sprintf(
             '%s %s',
             $bin,
             $args

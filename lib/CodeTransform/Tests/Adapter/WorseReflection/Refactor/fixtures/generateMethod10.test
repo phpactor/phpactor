@@ -1,0 +1,30 @@
+// File: source
+
+<?php
+
+namespace Foobar;
+
+class generateStaticMethod
+{
+    public function name()
+    {
+        self::fo<>obar();
+    }
+}
+// File: expected
+<?php
+
+namespace Foobar;
+
+class generateStaticMethod
+{
+    public function name()
+    {
+        self::foobar();
+    }
+
+    private static function foobar()
+    {
+    }
+}
+

@@ -1,0 +1,21 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        return new Foobar(<>new Barfoo()<>);
+    }
+}
+// File: expected
+<?php
+
+class One {
+    public function hello() {
+        return new Foobar($this->newMethod());
+    }
+
+    private function newMethod(): Barfoo
+    {
+        return new Barfoo();
+    }
+}

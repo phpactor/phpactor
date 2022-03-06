@@ -1,0 +1,34 @@
+// File: source
+<?php
+
+class extractMethod5
+{
+    public function bigMethod()
+    {
+        36<>00;
+    }
+
+    public function smallMethod()
+    {
+        36001;
+        3600;
+    }
+}
+// File: expected
+<?php
+
+class extractMethod5
+{
+    const HOUR = 3600;
+
+    public function bigMethod()
+    {
+        self::HOUR;
+    }
+
+    public function smallMethod()
+    {
+        36001;
+        self::HOUR;
+    }
+}

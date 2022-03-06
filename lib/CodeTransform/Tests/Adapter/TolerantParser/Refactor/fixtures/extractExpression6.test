@@ -1,0 +1,8 @@
+// File: source
+<?php
+
+<>[ 'one' => 'two', 'three' => 'four' ];
+// File: expected
+<?php
+
+$foobar = [ 'one' => 'two', 'three' => 'four' ];

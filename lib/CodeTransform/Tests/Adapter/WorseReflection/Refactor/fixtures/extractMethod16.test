@@ -1,0 +1,26 @@
+// File: source
+<?php
+
+class One {
+    public function hello() {
+        <>$car = 'hello';<>
+
+        return $car;
+    }
+}
+// File: expected
+<?php
+
+class One {
+    public function hello() {
+        $car = $this->newMethod();
+
+        return $car;
+    }
+
+    private function newMethod(): string
+    {
+        $car = 'hello';
+        return $car;
+    }
+}

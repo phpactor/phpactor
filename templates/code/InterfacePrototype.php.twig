@@ -1,0 +1,12 @@
+interface {{ prototype.name }}
+{% if prototype.extendsInterfaces|length %}
+ implements {% for interface in prototype.extendsInterfaces %}{{ interface }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+{
+{% for method in prototype.methods %}
+{{ generator.render(method, variant)|indent(1)|raw }};
+{% if not loop.last %}
+
+{% endif %}
+{% endfor %}
+}

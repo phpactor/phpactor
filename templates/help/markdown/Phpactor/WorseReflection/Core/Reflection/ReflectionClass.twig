@@ -1,0 +1,15 @@
+{% if object.deprecation.isDefined %}{{ render(object.deprecation) }}{% endif %}
+{% if object.isFinal %}final {% endif %}class {{ object.name.short }}{% if object.parent %} extends {{ object.parent.name.short }}{% endif -%}
+{% if object.interfaces.count %} implements {% for interface in object.interfaces -%}
+    {{ interface.name.short }}{% if not loop.last %}, {% endif %}
+    {%- endfor %}{% endif %}
+
+{% for member in object.methods.byVisibilities(["public"]) -%}
+{{ '    ' ~ render(member) }}
+{% endfor -%}
+{% for member in object.constants.byVisibilities(["public"]) -%}
+{{ '    ' ~ render(member) }}
+{% endfor -%}
+{% for member in object.properties.byVisibilities(["public"]) -%}
+{{ '    ' ~ render(member) }}
+{% endfor -%}

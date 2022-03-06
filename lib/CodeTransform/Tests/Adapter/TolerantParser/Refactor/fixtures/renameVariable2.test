@@ -1,0 +1,10 @@
+// File: source
+<?php
+
+$fo<>o;
+$foo;
+// File: expected
+<?php
+
+$newName;
+$newName;

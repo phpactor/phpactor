@@ -1,0 +1,11 @@
+{% if object.deprecation.isDefined %}{{ render(object.deprecation) }}{% endif %}
+interface {{ object.name.short }}{% if object.parents.count %} extends {% for interface in object.parents -%}
+    {{ interface.name.short }}{% if not loop.last %}, {% endif %}
+    {%- endfor %}{% endif %}
+
+{% for constant in object.constants -%}
+{{ '    ' ~ render(constant) }}
+{% endfor -%}
+{% for method in object.methods -%}
+{{ '    ' ~ render(method) }}
+{% endfor -%}

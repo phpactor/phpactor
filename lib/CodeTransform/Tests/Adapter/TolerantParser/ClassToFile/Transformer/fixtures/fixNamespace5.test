@@ -1,0 +1,14 @@
+// File: Phpactor/Test/Foobar/FileOne.php
+<?php
+
+namespace Hello;
+
+class WrongClassName {
+}
+// File: expected
+<?php
+
+namespace Phpactor\Test\Foobar;
+
+class FileOne {
+}

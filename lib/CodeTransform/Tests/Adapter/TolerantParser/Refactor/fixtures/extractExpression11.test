@@ -1,0 +1,32 @@
+// File: source
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        if ('he<>llo' . $bar === null) {
+        }
+    }
+
+    public function bye()
+    {
+        <>
+    }
+}
+// File: expected
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        if ('hello' . $bar === null) {
+        }
+    }
+
+    public function bye()
+    {
+        
+    }
+}

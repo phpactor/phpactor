@@ -1,0 +1,43 @@
+// File: source
+<?php
+
+use Acme\Foobar;
+
+class extractMethod
+{
+    public function bigMethod(Foobar $foobar)
+    {
+        $barfoo = 'yes';
+
+        <>
+        if ($foobar) {
+            return $barfoo;
+        }
+
+        return 'no';
+        <>
+    }
+}
+// File: expected
+<?php
+
+use Acme\Foobar;
+
+class extractMethod
+{
+    public function bigMethod(Foobar $foobar)
+    {
+        $barfoo = 'yes';
+
+        return $this->newMethod($foobar, $barfoo);
+    }
+
+    private function newMethod(Foobar $foobar, string $barfoo)
+    {
+        if ($foobar) {
+            return $barfoo;
+        }
+        
+        return 'no';
+    }
+}

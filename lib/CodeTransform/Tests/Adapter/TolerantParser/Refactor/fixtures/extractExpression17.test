@@ -1,0 +1,21 @@
+// File: source
+<?php
+
+class Class2
+{
+    public function method()
+    {
+        <>$someclass->someMethod()<>;
+    }
+}
+// File: expected
+<?php
+
+class Class2
+{
+    public function method()
+    {
+        $foobar = $someclass->someMethod();
+
+    }
+}

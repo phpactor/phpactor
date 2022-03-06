@@ -1,0 +1,26 @@
+// File: source
+<?php
+
+namespace Name_Space;
+
+class extractMethod4
+{
+    public function bigMethod()
+    {
+        'hel<>lo';
+    }
+}
+// File: expected
+<?php
+
+namespace Name_Space;
+
+class extractMethod4
+{
+    const HELLO_WORLD = 'hello';
+
+    public function bigMethod()
+    {
+        self::HELLO_WORLD;
+    }
+}

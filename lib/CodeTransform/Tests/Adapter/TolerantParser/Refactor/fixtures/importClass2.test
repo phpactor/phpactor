@@ -1,0 +1,14 @@
+// File: source
+<?php
+
+namespace B<>arbar;
+
+new Foobar();
+// File: expected
+<?php
+
+namespace Barbar;
+
+use Barfoo\Foobar;
+
+new Foobar();

@@ -1,0 +1,18 @@
+// File: FileOne.php
+<?php
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}
+// File: expected
+<?php
+
+class FileOne
+{
+    public function bigMethod()
+    {
+    }
+}

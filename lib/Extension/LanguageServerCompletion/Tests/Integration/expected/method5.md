@@ -1,0 +1,1 @@
+[virtual] public function foobar(): string

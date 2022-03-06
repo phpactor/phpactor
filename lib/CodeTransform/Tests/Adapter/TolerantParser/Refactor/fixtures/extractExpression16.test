@@ -1,0 +1,12 @@
+// File: source
+<?php
+
+function f<>(){
+
+}
+// File: expected
+<?php
+
+function f(){
+
+}

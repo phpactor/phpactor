@@ -1,0 +1,17 @@
+// File: source
+<?php
+
+Zoo::create();
+
+function (Foobar $foobar) {
+    F<>oobar::create();
+}
+// File: expected
+<?php
+
+Zoo::create();
+
+function (Foobar $foobar) {
+    Foobar::create();
+}
+

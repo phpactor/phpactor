@@ -1,0 +1,21 @@
+// File: source
+
+<?php
+
+class MyClass
+{
+    public function thisIsSparta($foo)
+    {
+        $f<>oo = some_thing();
+    }
+}
+// File: expected
+<?php
+
+class MyClass
+{
+    public function thisIsSparta($newName)
+    {
+        $newName = some_thing();
+    }
+}

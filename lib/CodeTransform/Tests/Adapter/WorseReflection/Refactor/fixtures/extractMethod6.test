@@ -1,0 +1,38 @@
+// File: source
+<?php
+
+class extractMethod
+{
+    public function someMethod()
+    {
+        <>
+        $new = false;
+        if (true) {
+            $new = true;
+        }
+        <>
+
+        return $new;
+    }
+}
+// File: expected
+<?php
+
+class extractMethod
+{
+    public function someMethod()
+    {
+        $new = $this->newMethod();
+
+        return $new;
+    }
+
+    private function newMethod(): bool
+    {
+        $new = false;
+        if (true) {
+            $new = true;
+        }
+        return $new;
+    }
+}
