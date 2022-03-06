@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Navigation\Navigator;
 
-use Phpactor\ClassFileConverter\Exception\NoMatchingSourceException;
-use Phpactor\ClassFileConverter\PathFinder;
+use Phpactor\PathFinder\Exception\NoMatchingSourceException;
+use Phpactor\PathFinder\PathFinder;
 
 class PathFinderNavigator implements Navigator
 {

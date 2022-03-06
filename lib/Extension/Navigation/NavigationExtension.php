@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Navigation;
 
-use Phpactor\ClassFileConverter\PathFinder;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -13,6 +12,7 @@ use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Handler\NavigateHandler;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
 use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
+use Phpactor\PathFinder\PathFinder;
 
 class NavigationExtension implements Extension
 {
