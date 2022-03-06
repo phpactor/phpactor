@@ -10,5 +10,4 @@ parameters:
         - lib/Extension/*/Tests/Example
 
 includes:
-    - vendor/jangregor/phpstan-prophecy/extension.neon
     - phpstan-baseline.neon
