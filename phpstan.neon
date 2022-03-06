@@ -3,6 +3,7 @@ parameters:
     paths:
         - lib
     excludePaths:
+        - lib/Indexer/Tests/Workspace
         - lib/*/Tests/Workspace
         - lib/*/Tests/Example
         - lib/Extension/*/Tests/Workspace
