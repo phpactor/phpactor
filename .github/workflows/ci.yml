@@ -180,7 +180,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHPBench"
-                run: "vendor/bin/phpbench run"
+                run: "vendor/bin/phpbench run --progress=plain"
     docs:
         name: "Lint Docs (${{ matrix.php-version }})"
 
