@@ -5,6 +5,7 @@ namespace Phpactor\ClassMover\Domain\Reference;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use IteratorAggregate;
 use ArrayIterator;
+use Traversable;
 
 final class NamespacedClassReferences implements IteratorAggregate
 {
@@ -41,7 +42,7 @@ final class NamespacedClassReferences implements IteratorAggregate
         return empty($this->classRefs);
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->classRefs);
     }

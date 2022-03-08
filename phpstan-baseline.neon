@@ -1401,7 +1401,7 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:getIterator\\(\\) return type has no value type specified in iterable type Traversable\\<mixed, mixed\\>\\.$#"
+			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
@@ -6521,11 +6521,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandlerTest.php
 
 		-
-			message: "#^Parameter \\#2 \\$code of class Exception constructor expects int, null given\\.$#"
-			count: 2
-			path: lib/Extension/Rpc/Tests/Unit/Response/ErrorResponseTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$handler of class Phpactor\\\\Extension\\\\Rpc\\\\Test\\\\HandlerTester constructor expects Phpactor\\\\Extension\\\\Rpc\\\\Handler, Prophecy\\\\Prophecy\\\\ObjectProphecy given\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/Test/HandlerTesterTest.php
@@ -7849,11 +7844,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/Tests/DefinitionLocatorTestCase.php
-
-		-
-			message: "#^Parameter \\#3 \\$limit of function preg_split expects int, null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\Tests\\\\Unit\\\\WorsePlainTextDefinitionLocatorTest\\:\\:provideGotoWord\\(\\) has no return typehint specified\\.$#"

@@ -36,11 +36,11 @@ class IndexerFunctionSourceLocator implements SourceCodeLocator
 
         $filePath = $record->filePath();
 
-        if (!file_exists($filePath)) {
+        if (null === $filePath || !file_exists($filePath)) {
             throw new SourceNotFound(sprintf(
                 'Function "%s" is indexed, but it does not exist at path "%s"!',
                 $name->full(),
-                $filePath
+                $filePath ?? ''
             ));
         }
 

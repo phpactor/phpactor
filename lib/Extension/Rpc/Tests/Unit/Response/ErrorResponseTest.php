@@ -19,8 +19,8 @@ class ErrorResponseTest extends TestCase
     public function testFromExceptionWithPrevious(): void
     {
         $exception1 = new Exception('One');
-        $exception2 = new Exception('Two', null, $exception1);
-        $exception3 = new Exception('Three', null, $exception2);
+        $exception2 = new Exception('Two', 0, $exception1);
+        $exception3 = new Exception('Three', 0, $exception2);
         $response = ErrorResponse::fromException($exception3);
 
         $this->assertEquals('Three', $response->message());

@@ -181,7 +181,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
     private static function offsetsFromSource(string $source, ?string $uri): array
     {
         $textDocumentUri = $uri !== null ? TextDocumentUri::fromString($uri) : null;
-        $results = preg_split('/(<>|<sr>)/u', $source, null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $results = preg_split('/(<>|<sr>)/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         
         $referenceLocations = [];
         $selectionOffset = null;

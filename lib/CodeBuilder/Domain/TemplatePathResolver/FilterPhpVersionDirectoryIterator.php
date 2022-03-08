@@ -25,7 +25,7 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
     /**
      * {@inheritDoc}
      */
-    public function accept()
+    public function accept(): bool
     {
         $file = $this->current();
         if (!$file instanceof SplFileInfo) {

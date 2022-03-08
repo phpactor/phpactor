@@ -16,6 +16,9 @@ final class Placeholder
 
     private static function protect(?string $text = null): string
     {
+        if (null === $text) {
+            return '';
+        }
         // Important to escape the backslash first!
         return str_replace(['\\', '$', '}'], ['\\\\', '\$', '\}'], $text);
     }

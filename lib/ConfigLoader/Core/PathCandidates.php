@@ -3,6 +3,7 @@
 namespace Phpactor\ConfigLoader\Core;
 
 use IteratorAggregate;
+use Traversable;
 
 class PathCandidates implements IteratorAggregate
 {
@@ -21,7 +22,7 @@ class PathCandidates implements IteratorAggregate
     /**
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         foreach ($this->candidates as $candidate) {
             yield $candidate;

@@ -5,6 +5,8 @@ Changelog
 
 Features:
 
+  - [php] Bump min. PHP version to 7.4
+  - [php] Fix PHP 8.1 deprecations
   - [config] JSON schema support
   - [cli] `phpactor config:init` command to create or update config (to
     include JSON schema location)

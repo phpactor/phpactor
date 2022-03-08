@@ -5,7 +5,9 @@ namespace Phpactor\Filesystem\Domain;
 use CallbackFilterIterator;
 use Iterator;
 use RegexIterator;
+use ReturnTypeWillChange;
 use SplFileInfo;
+use Traversable;
 use Webmozart\Glob\Glob;
 use ArrayIterator;
 use Closure;
@@ -44,7 +46,7 @@ class FileList implements Iterator
     /**
      * @return Iterator<SplFileInfo>
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return $this->iterator;
     }
@@ -132,6 +134,7 @@ class FileList implements Iterator
         $this->iterator->rewind();
     }
 
+    #[ReturnTypeWillChange]
     public function current()
     {
         $current = $this->iterator->current();
@@ -139,6 +142,7 @@ class FileList implements Iterator
         return FilePath::fromSplFileInfo($current);
     }
 
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->key++;
@@ -149,7 +153,7 @@ class FileList implements Iterator
         $this->iterator->next();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->iterator->valid();
     }

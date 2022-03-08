@@ -6,6 +6,7 @@ use Countable;
 use IteratorAggregate;
 use ArrayIterator;
 use InvalidArgumentException;
+use Traversable;
 
 /**
  * @template T
@@ -44,7 +45,7 @@ abstract class AbstractCollection implements IteratorAggregate, Countable
         return new static($elements);
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->elements);
     }

@@ -4,6 +4,7 @@ namespace Phpactor\Filesystem\Iterator;
 
 use ArrayIterator;
 use Iterator;
+use ReturnTypeWillChange;
 
 /**
  * Custom implementation of AppendIterator as a work-around for PHP bug in 7.1.0 / 7.2/BETA:
@@ -50,7 +51,7 @@ class AppendIterator implements Iterator
      * @return bool true on success or false on failure.
      * @since 5.1.0
      */
-    public function valid()
+    public function valid(): bool
     {
         if (false === isset($this->iterators[$this->index])) {
             return false;
@@ -65,6 +66,7 @@ class AppendIterator implements Iterator
      * @return mixed The current key if it is valid or null otherwise.
      * @since 5.1.0
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->iterators[$this->index]->key();
@@ -76,6 +78,7 @@ class AppendIterator implements Iterator
      * @return mixed The current value if it is valid or &null; otherwise.
      * @since 5.1.0
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->iterators[$this->index]->current();
