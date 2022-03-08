@@ -5,6 +5,7 @@ namespace Phpactor\ClassMover\Domain\Reference;
 use IteratorAggregate;
 use Countable;
 use ArrayIterator;
+use Traversable;
 
 final class MemberReferences implements IteratorAggregate, Countable
 {
@@ -22,7 +23,7 @@ final class MemberReferences implements IteratorAggregate, Countable
         return new self($methodReferences);
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->methodReferences);
     }
@@ -44,7 +45,7 @@ final class MemberReferences implements IteratorAggregate, Countable
     /**
      * {@inheritDoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->methodReferences);
     }

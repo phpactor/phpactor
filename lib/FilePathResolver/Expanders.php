@@ -5,6 +5,7 @@ namespace Phpactor\FilePathResolver;
 use ArrayIterator;
 use IteratorAggregate;
 use Phpactor\FilePathResolver\Exception\UnknownToken;
+use Traversable;
 
 class Expanders implements IteratorAggregate
 {
@@ -42,7 +43,7 @@ class Expanders implements IteratorAggregate
     /**
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->expanders);
     }

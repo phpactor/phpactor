@@ -58,7 +58,7 @@ class ValidatingSearchIndex implements SearchIndex
                 return;
             }
 
-            if (!file_exists($record->filePath())) {
+            if (!file_exists($record->filePath() ?? '')) {
                 $this->innerIndex->remove($record);
 
                 $this->logger->debug(sprintf(

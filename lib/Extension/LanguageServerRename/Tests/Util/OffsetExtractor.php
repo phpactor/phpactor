@@ -45,7 +45,7 @@ final class OffsetExtractor
             array_keys($this->rangeOpenMarkers),
             array_keys($this->rangeCloseMarkers),
         );
-        $results = preg_split('/('. implode('|', $markers) .')/u', $source, null, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $results = preg_split('/('. implode('|', $markers) .')/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         
         if (!is_array($results)) {
             return $this;

@@ -33,7 +33,7 @@ class TolerantExtractExpression implements ExtractExpression
         return $this->getExtractedExpression($source, $offsetStart, $offsetEnd) !== null;
     }
 
-    public function extractExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd = null, string $variableName): TextEdits
+    public function extractExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd, string $variableName): TextEdits
     {
         $expression = $this->getExtractedExpression($source, $offsetStart, $offsetEnd);
         if ($expression === null) {

@@ -5,6 +5,7 @@ namespace Phpactor\Extension\ExtensionManager\Model;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 class Extensions implements IteratorAggregate, Countable
 {
@@ -34,7 +35,7 @@ class Extensions implements IteratorAggregate, Countable
     /**
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->extensions);
     }
@@ -42,7 +43,7 @@ class Extensions implements IteratorAggregate, Countable
     /**
      * {@inheritDoc}
      */
-    public function count()
+    public function count(): int
     {
         return count($this->extensions);
     }

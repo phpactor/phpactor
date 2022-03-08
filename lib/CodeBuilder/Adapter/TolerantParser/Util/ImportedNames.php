@@ -5,6 +5,7 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Util;
 use ArrayIterator;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node;
+use Traversable;
 
 class ImportedNames implements IteratorAggregate
 {
@@ -21,7 +22,7 @@ class ImportedNames implements IteratorAggregate
     /**
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->classNamesFromNode());
     }
