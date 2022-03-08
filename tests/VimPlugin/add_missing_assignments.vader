@@ -21,14 +21,8 @@ Expect php (assignments to be added):
   
   class Foobar
   {
-      /**
-       * @var Phpactor
-       */
-      private $phpactor;
-      /**
-       * @var string
-       */
-      private $foobar;
+      private Phpactor $phpactor;
+      private string $foobar;
 
       public function foobar()
       {
