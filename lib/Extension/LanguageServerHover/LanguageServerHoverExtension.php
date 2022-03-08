@@ -54,7 +54,7 @@ class LanguageServerHoverExtension implements Extension
         $container->register(self::SERVICE_MARKDOWN_RENDERER, function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $templatePaths = $container->getParameter(self::PARAM_TEMPLATE_PATHS);
-            $templatePaths[] = __DIR__ . '/../../templates/markdown';
+            $templatePaths[] = __DIR__ . '/../../../templates/help/markdown';
 
             $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
                 return $resolver->resolve($path);
