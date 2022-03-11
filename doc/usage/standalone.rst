@@ -27,7 +27,7 @@ time of writing this isn’t a good idea as the chances are good that it
 will conflict with other libraries.
 
 Arch Linux (AUR)
-------------
+----------------
 
 Also available in the AUR:
 
