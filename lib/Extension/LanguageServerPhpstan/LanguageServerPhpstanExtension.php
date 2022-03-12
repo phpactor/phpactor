@@ -17,8 +17,9 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpstanExtension implements Extension
 {
+    public const PARAM_PHPSTAN_ENABLED = 'language_server_phpstan.enabled';
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
-    public const PARAM_LEVEL = 'phpstan.level';
+    public const PARAM_LEVEL = 'language_server_phpstan.level';
 
     /**
      * {@inheritDoc}
@@ -26,6 +27,10 @@ class LanguageServerPhpstanExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpstanDiagnosticProvider::class, function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_PHPSTAN_ENABLED)) {
+                return null;
+            }
+
             return new PhpstanDiagnosticProvider(
                 $container->get(Linter::class)
             );
@@ -57,6 +62,7 @@ class LanguageServerPhpstanExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
+            self::PARAM_PHPSTAN_ENABLED => false,
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
             self::PARAM_LEVEL => null,
         ]);

@@ -13,6 +13,7 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
      * @var Linter
      */
     private $linter;
+    private $supported = null;
 
     public function __construct(Linter $linter)
     {
@@ -24,6 +25,10 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
      */
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
-        return $this->linter->lint($textDocument->uri, $textDocument->text);
+        try {
+            return $this->linter->lint($textDocument->uri, $textDocument->text);
+        } catch (\Exception $e) {
+            dump($e);
+        }
     }
 }

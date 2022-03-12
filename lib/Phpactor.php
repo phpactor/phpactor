@@ -166,7 +166,7 @@ class Phpactor
         $container = new PhpactorContainer();
 
         $container->register('config_loader.candidates', function () use ($loader) {
-            return $loader->candidates();
+           return $loader->candidates();
         });
 
         $masterSchema = new Resolver();

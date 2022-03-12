@@ -93,6 +93,21 @@ Ensure that PHP has a memory_limit of at least this amount in bytes
 **Default**: ``1610612736``
 
 
+.. _param_$schema:
+
+
+``$schema``
+"""""""""""
+
+
+
+
+Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update
+
+
+**Default**: ``""``
+
+
 .. _ClassToFileExtension:
 
 
@@ -1122,6 +1137,25 @@ Minimum interval to update the workspace index as documents are updated (in mill
 **Default**: ``100``
 
 
+.. _LanguageServerIndexerExtension:
+
+
+LanguageServerIndexerExtension
+------------------------------
+
+
+.. _param_language_server_indexer.workspace_symbol_search_limit:
+
+
+``language_server_indexer.workspace_symbol_search_limit``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``250``
+
+
 .. _LanguageServerHoverExtension:
 
 
@@ -1179,6 +1213,49 @@ Show an error if a diagnostic name cannot be resolved - can produce false positi
 
 
 **Default**: ``false``
+
+
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.enabled:
+
+
+``language_server_phpstan.enabled``
+"""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_language_server_phpstan.level:
+
+
+``language_server_phpstan.level``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``null``
 
 
 .. _IndexerExtension:
@@ -1336,72 +1413,4 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
-
-
-.. _BehatExtension:
-
-
-BehatExtension
---------------
-
-
-.. _param_behat.config_path:
-
-
-``behat.config_path``
-"""""""""""""""""""""
-
-
-
-
-Path to the main behat.yml (including the filename behat.yml)
-
-
-**Default**: ``"%project_root%\/behat.yml"``
-
-
-.. _param_behat.symfony.di_xml_path:
-
-
-``behat.symfony.di_xml_path``
-"""""""""""""""""""""""""""""
-
-
-
-
-If using Symfony, set this path to the XML container dump to find contexts which are defined as services
-
-
-**Default**: ``null``
-
-
-.. _LanguageServerPhpstanExtension:
-
-
-LanguageServerPhpstanExtension
-------------------------------
-
-
-.. _param_language_server_phpstan.bin:
-
-
-``language_server_phpstan.bin``
-"""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
-
-
-.. _param_phpstan.level:
-
-
-``phpstan.level``
-"""""""""""""""""
-
-
-
-
-**Default**: ``null``
 
