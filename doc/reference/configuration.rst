@@ -1164,6 +1164,40 @@ Override the PHPStan level
 **Default**: ``null``
 
 
+.. _LanguageServerPsalmExtension:
+
+
+LanguageServerPsalmExtension
+----------------------------
+
+
+.. _param_language_server_psalm.bin:
+
+
+``language_server_psalm.bin``
+"""""""""""""""""""""""""""""
+
+
+
+
+Path to pslam if different from vendor/bin/psalm
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _param_language_server_psalm.enabled:
+
+
+``language_server_psalm.enabled``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
 .. _IndexerExtension:
 
 

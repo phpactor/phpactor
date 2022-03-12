@@ -12,6 +12,7 @@ use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtensio
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
+use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameWorseExtension;
@@ -147,6 +148,7 @@ class Phpactor
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
             LanguageServerPhpstanExtension::class,
+            LanguageServerPsalmExtension::class,
             IndexerExtension::class,
         ];
 
