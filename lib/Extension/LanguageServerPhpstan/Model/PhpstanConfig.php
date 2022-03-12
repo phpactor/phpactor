@@ -14,7 +14,7 @@ final class PhpstanConfig
      */
     private $level;
 
-    public function __construct(string $phpstanBin, ?string $level)
+    public function __construct(string $phpstanBin, ?string $level = null)
     {
         $this->phpstanBin = $phpstanBin;
         $this->level = $level;
