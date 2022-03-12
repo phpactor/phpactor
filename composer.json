@@ -15,7 +15,6 @@
         "webmozart/path-util": "^2.3",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/console": "^5.0",
-        "composer/composer": "^1.7",
         "dantleech/invoke": "^2.0",
         "phpactor/amp-fswatch": "^0.2.0",
         "thecodingmachine/safe": "^1.0",
