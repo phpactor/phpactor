@@ -184,11 +184,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Complete Constructor (private)'
             );
         }, [
-            // complete constructor diagnostics (and the subsequent action) are
-            // not very accurate. better to disable it than show false
-            // positives all the time, the code action is still available
-            //
-            // LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -199,11 +194,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Complete Constructor (public)'
             );
         }, [
-            // complete constructor diagnostics (and the subsequent action) are
-            // not very accurate. better to disable it than show false
-            // positives all the time, the code action is still available
-            //
-            // LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
