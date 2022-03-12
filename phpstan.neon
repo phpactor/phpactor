@@ -8,6 +8,8 @@ parameters:
         - */lib/Extension/*/Tests/Workspace/*
         - */lib/Extension/*/Tests/Example/*
         - lib/Extension/LanguageServer
+        - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
+        - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
 
 includes:
     - phpstan-baseline.neon

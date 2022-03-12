@@ -40,7 +40,8 @@
         "dms/phpunit-arraysubset-asserts": "dev-master",
         "psr/log": "^1.1",
         "phpstan/phpstan-phpunit": "^1.0",
-        "jangregor/phpstan-prophecy": "^1.0"
+        "jangregor/phpstan-prophecy": "^1.0",
+        "phpstan/extension-installer": "^1.1"
     },
     "replace": {
         "phpactor/class-mover": "0.2.0",
