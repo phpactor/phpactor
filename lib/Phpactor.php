@@ -22,6 +22,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
@@ -76,6 +77,8 @@ class Phpactor
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
+
+        $commandName = $input->getFirstArgument();
 
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
@@ -176,7 +179,9 @@ class Phpactor
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
-                $output->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                if ($output instanceof ConsoleOutputInterface) {
+                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                }
                 continue;
             }
 
@@ -211,7 +216,13 @@ class Phpactor
         }
 
         foreach ($masterSchema->errors()->errors() as $error) {
-            $output->writeln(sprintf('<error>%s...</>', substr((string)$error, 0, 100)));
+            // do not polute STDERR for RPC, for some reason the VIM plugin reads also
+            // STDERR and possibly other RPC clients too
+            if ($commandName !== 'rpc') {
+                if ($output instanceof ConsoleOutputInterface) {
+                    $output->getErrorOutput()->writeln(sprintf('<error>%s...</>', substr((string)$error, 0, 100)));
+                }
+            }
         }
 
         return $container->build($config);
