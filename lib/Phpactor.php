@@ -22,6 +22,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
+use Symfony\Component\Console\Output\OutputInterface;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
@@ -66,7 +67,7 @@ class Phpactor
         '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
     ];
 
-    public static function boot(InputInterface $input, string $vendorDir): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
     {
         $config = [];
 
@@ -166,7 +167,7 @@ class Phpactor
         $container = new PhpactorContainer();
 
         $container->register('config_loader.candidates', function () use ($loader) {
-           return $loader->candidates();
+            return $loader->candidates();
         });
 
         $masterSchema = new Resolver(true);
@@ -175,7 +176,7 @@ class Phpactor
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
-                fwrite(STDERR, sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL);
+                $output->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
                 continue;
             }
 
@@ -210,7 +211,7 @@ class Phpactor
         }
 
         foreach ($masterSchema->errors()->errors() as $error) {
-            fwrite(STDERR, '>> ' . substr((string)$error, 0, 100).'...'.PHP_EOL);
+            $output->writeln(sprintf('<error>%s...</>', substr((string)$error, 0, 100)));
         }
 
         return $container->build($config);

@@ -3,7 +3,6 @@
 namespace Phpactor\Tests\Integration;
 
 use Phpactor\Application;
-use Phpactor\MapResolver\InvalidMap;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Phpactor\Tests\IntegrationTestCase;
@@ -17,7 +16,6 @@ class ApplicationTest extends IntegrationTestCase
 
     public function tearDown(): void
     {
-        $this->workspace()->reset();
     }
 
     public function application(): Application
@@ -25,10 +23,8 @@ class ApplicationTest extends IntegrationTestCase
         return new Application(__DIR__ . '/../../vendor');
     }
 
-    public function testConfig(): void
+    public function testToleratesInvalidConfig(): void
     {
-        $this->expectException(InvalidMap::class);
-        $this->expectExceptionMessage('Key(s) "foobar_invalid" are not known');
         file_put_contents(
             $this->workspaceDir() . '/.phpactor.yml',
             <<<'EOT'
@@ -46,6 +42,7 @@ class ApplicationTest extends IntegrationTestCase
             'name' => 'asd',
             '--format' => 'json',
         ]), $output);
+        self::assertStringContainsString('foobar_invalid', $output->fetch());
     }
 
     public function testSerializesExceptions(): void

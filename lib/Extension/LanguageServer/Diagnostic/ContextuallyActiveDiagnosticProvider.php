@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServer\Diagnostic;
 
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 
 class ContextuallyActiveDiagnosticProvider implements DiagnosticsProvider

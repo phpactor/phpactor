@@ -36,7 +36,7 @@ class Application extends SymfonyApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $this->initialize($input);
+        $this->initialize($input, $output);
         $this->setCatchExceptions(false);
 
         if ($output->isVerbose()) {
@@ -107,9 +107,9 @@ class Application extends SymfonyApplication
         ];
     }
 
-    private function initialize(InputInterface $input): void
+    private function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->container = Phpactor::boot($input, $this->vendorDir);
+        $this->container = Phpactor::boot($input, $output, $this->vendorDir);
 
         $this->setCommandLoader($this->container->get(ConsoleExtension::SERVICE_COMMAND_LOADER));
     }

@@ -6,6 +6,7 @@ use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
+use Exception;
 
 class PhpstanDiagnosticProvider implements DiagnosticsProvider
 {
@@ -27,7 +28,7 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
     {
         try {
             return $this->linter->lint($textDocument->uri, $textDocument->text);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dump($e);
         }
     }

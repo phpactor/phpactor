@@ -10,8 +10,6 @@ use Phpactor\Extension\Core\Command\DebugContainerCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Core\Command\ConfigCommand;
-use Phpactor\Extension\Debug\Model\ConfigInitializer;
 use Phpactor\Extension\Debug\Model\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;

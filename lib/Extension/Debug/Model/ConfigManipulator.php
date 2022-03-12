@@ -44,16 +44,6 @@ final class ConfigManipulator
         return self::ACTION_UPDATED;
     }
 
-    private function createConfig(): string
-    {
-        return <<<EOT
-            {
-                "\$schema": "{$this->schemaPath}"
-            }
-            EOT
-        ;
-    }
-
     /**
      * @param mixed $value
      */
@@ -64,7 +54,24 @@ final class ConfigManipulator
         $this->writeConfig($json);
     }
 
-    private function openConfig(): \stdClass
+    public function delete(string $key): void
+    {
+        $json = $this->openConfig();
+        unset($json->{$key});
+        $this->writeConfig($json);
+    }
+
+    private function createConfig(): string
+    {
+        return <<<EOT
+            {
+                "\$schema": "{$this->schemaPath}"
+            }
+            EOT
+        ;
+    }
+
+    private function openConfig(): stdClass
     {
         if (!file_exists($this->configPath)) {
             if (false === file_put_contents($this->configPath, $this->createConfig())) {
@@ -94,15 +101,11 @@ final class ConfigManipulator
         return $json;
     }
 
-    private function writeConfig($json): void
+    /**
+     * @param mixed $value
+     */
+    private function writeConfig($value): void
     {
-        file_put_contents($this->configPath, json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
-    }
-
-    public function delete(string $key): void
-    {
-        $json = $this->openConfig();
-        unset($json->{$key});
-        $this->writeConfig($json);
+        file_put_contents($this->configPath, json_encode($value, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 }
