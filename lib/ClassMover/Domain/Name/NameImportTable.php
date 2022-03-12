@@ -3,6 +3,7 @@
 namespace Phpactor\ClassMover\Domain\Name;
 
 use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
+use RuntimeException;
 
 class NameImportTable
 {
@@ -33,14 +34,20 @@ class NameImportTable
         return false;
     }
 
-    public function getImportedNameRefFor(QualifiedName $name): ImportedNameReference
+    public function getImportedNameRefFor(QualifiedName $name): ?ImportedNameReference
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
             if ($importedNameRef->importedName()->qualifies($name)) {
                 return $importedNameRef;
             }
         }
+
+        throw new RuntimeException(sprintf(
+            'Could not find name in import table "%s"',
+            (string)$name
+        ));
     }
+
 
     public function resolveClassName(QualifiedName $name)
     {

@@ -5,12 +5,14 @@ namespace Phpactor;
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Debug\DebugExtension;
+use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
+use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameWorseExtension;
@@ -21,6 +23,8 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
@@ -35,7 +39,6 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtens
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReferenceFinder\WorseReferenceFinderExtension;
-use Phpactor\Extension\ExtensionManager\ExtensionManagerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
@@ -65,7 +68,7 @@ class Phpactor
         '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
     ];
 
-    public static function boot(InputInterface $input, string $vendorDir): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
     {
         $config = [];
 
@@ -74,6 +77,8 @@ class Phpactor
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
+
+        $commandName = $input->getFirstArgument();
 
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
@@ -89,7 +94,6 @@ class Phpactor
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
         $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
-        $config = self::configureExtensionManager($config, $vendorDir);
         $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
@@ -125,7 +129,6 @@ class Phpactor
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
-            ExtensionManagerExtension::class,
             WorseReferenceFinderExtension::class,
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
@@ -144,21 +147,13 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            LanguageServerPhpstanExtension::class,
+            LanguageServerPsalmExtension::class,
             IndexerExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
             $extensionNames[] = DebugExtension::class;
-        }
-
-        if (
-            $input->getFirstArgument() !== 'extension:update' &&
-            file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])
-        ) {
-            $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
-
-            $installedExtensionNames = array_diff($installedExtensionNames, self::LEGACY_EXTENSIONS);
-            $extensionNames = array_merge($extensionNames, $installedExtensionNames);
         }
 
         $container = new PhpactorContainer();
@@ -167,13 +162,15 @@ class Phpactor
             return $loader->candidates();
         });
 
-        $masterSchema = new Resolver();
+        $masterSchema = new Resolver(true);
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
-                echo sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL;
+                if ($output instanceof ConsoleOutputInterface) {
+                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                }
                 continue;
             }
 
@@ -205,6 +202,16 @@ class Phpactor
 
         if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {
             self::updateMinMemory($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT]);
+        }
+
+        foreach ($masterSchema->errors()->errors() as $error) {
+            // do not polute STDERR for RPC, for some reason the VIM plugin reads also
+            // STDERR and possibly other RPC clients too
+            if ($commandName !== 'rpc') {
+                if ($output instanceof ConsoleOutputInterface) {
+                    $output->getErrorOutput()->writeln(sprintf('<error>%s...</>', substr((string)$error, 0, 100)));
+                }
+            }
         }
 
         return $container->build($config);
@@ -247,22 +254,6 @@ class Phpactor
         }
 
         return file_exists($string);
-    }
-
-    private static function configureExtensionManager(array $config, string $vendorDir): array
-    {
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../extensions';
-        $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionsFile = $extensionDir. '/extensions.php';
-        $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = $vendorDir;
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
-
-        $autoloadFile = $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] . '/autoload.php';
-
-        if (file_exists($autoloadFile)) {
-            require($autoloadFile);
-        }
-
-        return $config;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests;
 
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
@@ -72,7 +73,7 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function container(): Container
     {
-        return Phpactor::boot(new ArrayInput([]), __DIR__ . '/../vendor');
+        return Phpactor::boot(new ArrayInput([]), new BufferedOutput(), __DIR__ . '/../vendor');
     }
 
     private function cacheDir(string $name)

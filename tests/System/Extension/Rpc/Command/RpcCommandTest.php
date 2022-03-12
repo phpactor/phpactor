@@ -21,6 +21,7 @@ class RpcCommandTest extends SystemTestCase
 
         $process = $this->phpactor('rpc', $stdin);
         $this->assertSuccess($process);
+
         $response = json_decode($process->getOutput(), true);
 
         $this->assertEquals([

@@ -93,6 +93,21 @@ Ensure that PHP has a memory_limit of at least this amount in bytes
 **Default**: ``1610612736``
 
 
+.. _param_$schema:
+
+
+``$schema``
+"""""""""""
+
+
+
+
+Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update
+
+
+**Default**: ``""``
+
+
 .. _ClassToFileExtension:
 
 
@@ -758,109 +773,6 @@ ConsoleExtension
 **Default**: ``null``
 
 
-.. _ExtensionManagerExtension:
-
-
-ExtensionManagerExtension
--------------------------
-
-
-.. _param_extension_manager.extension_vendor_dir:
-
-
-``extension_manager.extension_vendor_dir``
-""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%application_root%\/extensions"``
-
-
-.. _param_extension_manager.vendor_dir:
-
-
-``extension_manager.vendor_dir``
-""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%application_root%\/vendor"``
-
-
-.. _param_extension_manager.config_path:
-
-
-``extension_manager.config_path``
-"""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%application_root%\/extensions.json"``
-
-
-.. _param_extension_manager.extension_list_path:
-
-
-``extension_manager.extension_list_path``
-"""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%application_root%\/extensions\/extensions.php"``
-
-
-.. _param_extension_manager.root_package_name:
-
-
-``extension_manager.root_package_name``
-"""""""""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"phpactor-extensions"``
-
-
-.. _param_extension_manager.minimum_stability:
-
-
-``extension_manager.minimum_stability``
-"""""""""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"stable"``
-
-
-.. _param_extension_manager.repositories:
-
-
-``extension_manager.repositories``
-""""""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``[]``
-
-
-.. _param_extension_manager.quiet:
-
-
-``extension_manager.quiet``
-"""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``false``
-
-
 .. _WorseReferenceFinderExtension:
 
 
@@ -1122,6 +1034,25 @@ Minimum interval to update the workspace index as documents are updated (in mill
 **Default**: ``100``
 
 
+.. _LanguageServerIndexerExtension:
+
+
+LanguageServerIndexerExtension
+------------------------------
+
+
+.. _param_language_server_indexer.workspace_symbol_search_limit:
+
+
+``language_server_indexer.workspace_symbol_search_limit``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``250``
+
+
 .. _LanguageServerHoverExtension:
 
 
@@ -1176,6 +1107,92 @@ Show hints for non-imported global classes and functions
 
 
 Show an error if a diagnostic name cannot be resolved - can produce false positives
+
+
+**Default**: ``false``
+
+
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.enabled:
+
+
+``language_server_phpstan.enabled``
+"""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable PHPStan diagnostics
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+
+
+Path to the PHPStan executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_language_server_phpstan.level:
+
+
+``language_server_phpstan.level``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+Override the PHPStan level
+
+
+**Default**: ``null``
+
+
+.. _LanguageServerPsalmExtension:
+
+
+LanguageServerPsalmExtension
+----------------------------
+
+
+.. _param_language_server_psalm.bin:
+
+
+``language_server_psalm.bin``
+"""""""""""""""""""""""""""""
+
+
+
+
+Path to pslam if different from vendor/bin/psalm
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _param_language_server_psalm.enabled:
+
+
+``language_server_psalm.enabled``
+"""""""""""""""""""""""""""""""""
+
+
 
 
 **Default**: ``false``
@@ -1336,72 +1353,4 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
-
-
-.. _BehatExtension:
-
-
-BehatExtension
---------------
-
-
-.. _param_behat.config_path:
-
-
-``behat.config_path``
-"""""""""""""""""""""
-
-
-
-
-Path to the main behat.yml (including the filename behat.yml)
-
-
-**Default**: ``"%project_root%\/behat.yml"``
-
-
-.. _param_behat.symfony.di_xml_path:
-
-
-``behat.symfony.di_xml_path``
-"""""""""""""""""""""""""""""
-
-
-
-
-If using Symfony, set this path to the XML container dump to find contexts which are defined as services
-
-
-**Default**: ``null``
-
-
-.. _LanguageServerPhpstanExtension:
-
-
-LanguageServerPhpstanExtension
-------------------------------
-
-
-.. _param_language_server_phpstan.bin:
-
-
-``language_server_phpstan.bin``
-"""""""""""""""""""""""""""""""
-
-
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
-
-
-.. _param_phpstan.level:
-
-
-``phpstan.level``
-"""""""""""""""""
-
-
-
-
-**Default**: ``null``
 

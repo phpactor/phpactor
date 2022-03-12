@@ -383,7 +383,13 @@ class LanguageServerExtension implements Extension
             $providers = [];
             foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
                 Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
-                $providers[$attrs['name'] ?? $serviceId] = $container->get($serviceId);
+                $provider = $container->get($serviceId);
+
+                if (null === $provider) {
+                    continue;
+                }
+
+                $providers[$attrs['name'] ?? $serviceId] = $provider;
             }
 
             $enabled = $container->getParameter(self::PARAM_DIAGNOSTIC_PROVIDERS);
