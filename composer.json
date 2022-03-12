@@ -31,7 +31,7 @@
         "dantleech/what-changed": "~0.4",
         "symfony/process": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.17",
-        "phpstan/phpstan": "~0.12.0",
+        "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpactor/test-utils": "~1.1.3",
@@ -39,9 +39,8 @@
         "phpbench/phpbench": "^1.1",
         "dms/phpunit-arraysubset-asserts": "dev-master",
         "psr/log": "^1.1",
-        "jangregor/phpstan-prophecy": "^0.8.1",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-phpunit": "^0.12.19"
+        "phpstan/phpstan-phpunit": "^1.0",
+        "jangregor/phpstan-prophecy": "^1.0"
     },
     "replace": {
         "phpactor/class-mover": "0.2.0",
@@ -98,7 +97,7 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor config:json-schema phpactor.schema.json"
+            "bin/phpactor config:development:json-schema phpactor.schema.json"
         ],
         "integrate": [
             "vendor/bin/phpstan analyse",
