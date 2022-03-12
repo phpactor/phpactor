@@ -6,7 +6,6 @@ use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
-use Phpactor\TextDocument\TextDocumentUri;
 use Psalm\Config;
 use RuntimeException;
 

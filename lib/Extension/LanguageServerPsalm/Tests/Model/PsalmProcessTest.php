@@ -35,15 +35,15 @@ class PsalmProcessTest extends IntegrationTestCase
         $this->workspace()->put(
             'composer.json',
             <<<'EOT'
-{
-    "name": "test/project",
-    "autoload": {
-        "psr-4": {
-            "Phpactor\\Extension\\LanguageServerPsalm\\": "/"
-        }
-    }
-}
-EOT
+                {
+                    "name": "test/project",
+                    "autoload": {
+                        "psr-4": {
+                            "Phpactor\\Extension\\LanguageServerPsalm\\": "/"
+                        }
+                    }
+                }
+                EOT
         );
         (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
 
