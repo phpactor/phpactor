@@ -5,6 +5,8 @@ Changelog
 
 Features:
 
+  - [extension] Removed the extension manager
+  - [extension] PHPStan extension is now part of the monolith.
   - [lsp] Code action to complete constructor with _public_ properties
   - [php] Bump min. PHP version to 7.4
   - [php] Fix PHP 8.1 deprecations
