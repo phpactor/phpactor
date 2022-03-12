@@ -177,11 +177,26 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => []
         ]);
 
-        $container->register(TransformerCodeActionPovider::class.'complete_constructor', function (Container $container) {
+        $container->register(TransformerCodeActionPovider::class.'complete_constructor_private', function (Container $container) {
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
                 'complete_constructor',
-                'Complete Constructor'
+                'Complete Constructor (private)'
+            );
+        }, [
+            // complete constructor diagnostics (and the subsequent action) are
+            // not very accurate. better to disable it than show false
+            // positives all the time, the code action is still available
+            //
+            // LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(TransformerCodeActionPovider::class.'complete_constructor_public', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'complete_constructor_public',
+                'Complete Constructor (public)'
             );
         }, [
             // complete constructor diagnostics (and the subsequent action) are

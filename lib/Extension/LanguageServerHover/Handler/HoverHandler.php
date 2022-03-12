@@ -116,6 +116,8 @@ class HoverHandler implements Handler, CanRegisterCapabilities
     private function renderSymbolContext(SymbolContext $symbolContext): ?string
     {
         switch ($symbolContext->symbol()->symbolType()) {
+            case Symbol::VARIABLE:
+                return $this->renderVariable($symbolContext);
             case Symbol::METHOD:
             case Symbol::PROPERTY:
             case Symbol::CONSTANT:
