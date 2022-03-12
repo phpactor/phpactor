@@ -1,5 +1,5 @@
 Drupal 8
---------
+========
 
 Bootstrapping
 ~~~~~~~~~~~~~
@@ -10,15 +10,6 @@ kernel to have a fully useful autoloader *or* 2) to use a different
 mechanism to add the modules to the Composer autoloader.
 
 Depending on your setup option 1 or 2 will be preferable.
-
-In both cases deregister the autoloader in ``.phpactor.yml``:
-
-.. code:: yaml
-
-   # Bootstrapping Drupal creates lots of implicit global
-   # dependencies, so we will just keep the Drupal autoloader
-   # registered and hope for the best.
-   composer.autoload_deregister: false
 
 Option 1: Bootstrap Drupal on the fly to generate the autoloader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

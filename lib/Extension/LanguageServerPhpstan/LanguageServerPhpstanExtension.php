@@ -66,5 +66,10 @@ class LanguageServerPhpstanExtension implements Extension
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
             self::PARAM_LEVEL => null,
         ]);
+        $schema->setDescriptions([
+            self::PARAM_PHPSTAN_ENABLED => 'Enable PHPStan diagnostics',
+            self::PARAM_PHPSTAN_BIN => 'Path to the PHPStan executable',
+            self::PARAM_LEVEL => 'Override the PHPStan level',
+        ]);
     }
 }

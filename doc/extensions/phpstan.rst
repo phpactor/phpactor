@@ -1,12 +1,10 @@
 Phpstan (LSP)
 =============
 
-.. github-link:: phpactor/language-server-phpstan-extension
+The PHPStan extension 
 
-The `Phpstan <https://phpstan.org/>`_ extension provides :ref:`language_server` diagnostics.
-
-Installing
-----------
+Enable
+------
 
 
 .. code:: bash

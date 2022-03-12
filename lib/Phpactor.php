@@ -169,13 +169,13 @@ class Phpactor
            return $loader->candidates();
         });
 
-        $masterSchema = new Resolver();
+        $masterSchema = new Resolver(true);
         $extensions = [];
         foreach ($extensionNames as $extensionClass) {
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
-                echo sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL;
+                fwrite(STDERR, sprintf('Extension "%s" does not exist', $extensionClass). PHP_EOL);
                 continue;
             }
 
@@ -207,6 +207,10 @@ class Phpactor
 
         if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {
             self::updateMinMemory($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT]);
+        }
+
+        foreach ($masterSchema->errors()->errors() as $error) {
+            fwrite(STDERR, '>> ' . substr((string)$error, 0, 100).'...'.PHP_EOL);
         }
 
         return $container->build($config);

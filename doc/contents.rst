@@ -6,7 +6,7 @@ Contents
 
    usage
    reference
-   extensions
+   integrations
    other
 
 .. toctree::
@@ -15,4 +15,4 @@ Contents
    index
    vim
    adr
-   integrations/drupal8
+   extensions

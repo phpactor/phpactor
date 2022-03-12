@@ -1231,6 +1231,9 @@ LanguageServerPhpstanExtension
 
 
 
+Enable PHPStan diagnostics
+
+
 **Default**: ``false``
 
 
@@ -1243,6 +1246,9 @@ LanguageServerPhpstanExtension
 
 
 
+Path to the PHPStan executable
+
+
 **Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
 
 
@@ -1253,6 +1259,9 @@ LanguageServerPhpstanExtension
 """""""""""""""""""""""""""""""""
 
 
+
+
+Override the PHPStan level
 
 
 **Default**: ``null``
