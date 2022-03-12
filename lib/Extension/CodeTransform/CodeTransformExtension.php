@@ -366,12 +366,21 @@ class CodeTransformExtension implements Extension
 
     private function registerTransformerImplementations(ContainerBuilder $container): void
     {
-        $container->register('code_transform.transformer.complete_constructor', function (Container $container) {
+        $container->register('code_transform.transformer.complete_constructor_private', function (Container $container) {
             return new CompleteConstructor(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(Updater::class)
+                $container->get(Updater::class),
+                'private',
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor' ]]);
+
+        $container->register('code_transform.transformer.complete_constructor_public', function (Container $container) {
+            return new CompleteConstructor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                'public',
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor_public' ]]);
 
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(
