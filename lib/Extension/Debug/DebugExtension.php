@@ -8,7 +8,6 @@ use Phpactor\Container\Extension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\Command\DocumentExtensionsCommand;
-use Phpactor\Extension\Core\Command\ConfigJsonSchemaCommand;
 use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
 use Phpactor\MapResolver\Resolver;
