@@ -57,7 +57,6 @@
         "phpactor/config-loader": "0.1.2",
         "phpactor/console-extension": "0.1.6",
         "phpactor/debug-extension": "*",
-        "phpactor/extension-manager-extension": "0.8.5",
         "phpactor/file-path-resolver": "0.8.3",
         "phpactor/file-path-resolver-extension": "0.3.4",
         "phpactor/indexer-extension": "0.3.3",
@@ -99,8 +98,7 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor development:config-json-schema phpactor.schema.json",
-            "bin/phpactor extension:update"
+            "bin/phpactor development:config-json-schema phpactor.schema.json"
         ],
         "integrate": [
             "vendor/bin/phpstan analyse",

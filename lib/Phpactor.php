@@ -38,7 +38,6 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilesystemExtraExtens
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReferenceFinder\WorseReferenceFinderExtension;
-use Phpactor\Extension\ExtensionManager\ExtensionManagerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
@@ -94,7 +93,6 @@ class Phpactor
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
         $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
-        $config = self::configureExtensionManager($config, $vendorDir);
         $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
@@ -130,7 +128,6 @@ class Phpactor
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,
             ConsoleExtension::class,
-            ExtensionManagerExtension::class,
             WorseReferenceFinderExtension::class,
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
@@ -155,16 +152,6 @@ class Phpactor
 
         if (class_exists(DebugExtension::class)) {
             $extensionNames[] = DebugExtension::class;
-        }
-
-        if (
-            $input->getFirstArgument() !== 'extension:update' &&
-            file_exists($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE])
-        ) {
-            $installedExtensionNames = require($config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE]);
-
-            $installedExtensionNames = array_diff($installedExtensionNames, self::LEGACY_EXTENSIONS);
-            $extensionNames = array_merge($extensionNames, $installedExtensionNames);
         }
 
         $container = new PhpactorContainer();
@@ -265,22 +252,6 @@ class Phpactor
         }
 
         return file_exists($string);
-    }
-
-    private static function configureExtensionManager(array $config, string $vendorDir): array
-    {
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] = $extensionDir = __DIR__ . '/../extensions';
-        $config[ExtensionManagerExtension::PARAM_INSTALLED_EXTENSIONS_FILE] = $extensionsFile = $extensionDir. '/extensions.php';
-        $config[ExtensionManagerExtension::PARAM_VENDOR_DIR] = $vendorDir;
-        $config[ExtensionManagerExtension::PARAM_EXTENSION_CONFIG_FILE] = $extensionDir .'/extensions.json';
-
-        $autoloadFile = $config[ExtensionManagerExtension::PARAM_EXTENSION_VENDOR_DIR] . '/autoload.php';
-
-        if (file_exists($autoloadFile)) {
-            require($autoloadFile);
-        }
-
-        return $config;
     }
 
     /**
