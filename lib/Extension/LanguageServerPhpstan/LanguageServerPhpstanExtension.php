@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LangaugeServerPhpstan;
+namespace Phpactor\Extension\LanguageServerPhpstan;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;

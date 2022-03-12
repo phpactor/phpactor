@@ -5,6 +5,7 @@ namespace Phpactor;
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
 use Phpactor\Extension\Debug\DebugExtension;
+use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
@@ -144,6 +145,7 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            LanguageServerPhpstanExtension::class,
             IndexerExtension::class,
         ];
 
