@@ -105,7 +105,8 @@
         "integrate": [
             "vendor/bin/phpstan analyse",
             "vendor/bin/phpunit",
-            "vendor/bin/php-cs-fixer fix"
+            "vendor/bin/php-cs-fixer fix",
+            "make docs"
         ]
     }
 }
