@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "658b803c6d6527ae951cb3feb60476f1",
+    "content-hash": "9f553a05fe436b2cbdbfe8cbf4c9ce6b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -5478,16 +5478,16 @@
         },
         {
             "name": "phpbench/phpbench",
-            "version": "dev-master",
+            "version": "1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "e9b519f7831499390fcfa7828d039d9468677da3"
+                "reference": "a38af132cf317fd13c199cf73501153b82c279b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/e9b519f7831499390fcfa7828d039d9468677da3",
-                "reference": "e9b519f7831499390fcfa7828d039d9468677da3",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/a38af132cf317fd13c199cf73501153b82c279b5",
+                "reference": "a38af132cf317fd13c199cf73501153b82c279b5",
                 "shasum": ""
             },
             "require": {
@@ -5523,7 +5523,6 @@
             "suggest": {
                 "ext-xdebug": "For Xdebug profiling extension."
             },
-            "default-branch": true,
             "bin": [
                 "bin/phpbench"
             ],
@@ -5555,7 +5554,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/master"
+                "source": "https://github.com/phpbench/phpbench/tree/1.2.5"
             },
             "funding": [
                 {
@@ -5563,7 +5562,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-06T21:34:10+00:00"
+            "time": "2022-03-06T17:10:14+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -7881,7 +7880,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpbench/phpbench": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
