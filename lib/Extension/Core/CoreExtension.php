@@ -4,12 +4,15 @@ namespace Phpactor\Extension\Core;
 
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Command\ConfigInitCommand;
+use Phpactor\Extension\Core\Command\ConfigSetCommand;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Debug\Command\InitConfigCommand;
+use Phpactor\Extension\Core\Command\ConfigCommand;
 use Phpactor\Extension\Debug\Model\ConfigInitializer;
+use Phpactor\Extension\Debug\Model\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
@@ -83,13 +86,21 @@ class CoreExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
 
         $container->register('command.config_initialize', function (Container $container) {
-            return new InitConfigCommand(
-                new ConfigInitializer(
+            return new ConfigInitCommand(
+                new ConfigManipulator(
                     realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
                     $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
                 )
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:initialize']]);
+        $container->register('command.config_set', function (Container $container) {
+            return new ConfigSetCommand(
+                new ConfigManipulator(
+                    realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
+                    $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
+                )
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:set']]);
 
         $container->register('command.debug_container', function (Container $container) {
             return new DebugContainerCommand(

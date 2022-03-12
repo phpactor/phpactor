@@ -3,12 +3,13 @@
 namespace Phpactor\Extension\Debug\Model;
 
 use RuntimeException;
+use stdClass;
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
 use function json_encode;
 
-final class ConfigInitializer
+final class ConfigManipulator
 {
     public const ACTION_CREATED = 'created';
     public const ACTION_UPDATED = 'updated';
@@ -36,35 +37,9 @@ final class ConfigInitializer
 
     public function initialize(): string
     {
-        if (!file_exists($this->configPath)) {
-            if (false === file_put_contents($this->configPath, $this->createConfig())) {
-                throw new RuntimeException(sprintf(
-                    'Could not write Phpactor config file to "%s"',
-                    $this->configPath
-                ));
-            }
-            return self::ACTION_CREATED;
-        }
-
-        $config = file_get_contents($this->configPath);
-        if (false === $config) {
-            throw new RuntimeException(sprintf(
-                'Could not read config file "%s"',
-                $this->configPath
-            ));
-        }
-
-        $json = json_decode($config);
-        if (null === $json) {
-            throw new RuntimeException(sprintf(
-                'Could not decode JSON file "%s"',
-                $this->configPath
-            ));
-        }
-
+        $json = $this->openConfig();
         $json->{'$schema'} = $this->schemaPath;
-
-        file_put_contents($this->configPath, json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+        $this->writeConfig($json);
 
         return self::ACTION_UPDATED;
     }
@@ -77,5 +52,57 @@ final class ConfigInitializer
             }
             EOT
         ;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function set(string $key, $value): void
+    {
+        $json = $this->openConfig();
+        $json->{$key} = $value;
+        $this->writeConfig($json);
+    }
+
+    private function openConfig(): \stdClass
+    {
+        if (!file_exists($this->configPath)) {
+            if (false === file_put_contents($this->configPath, $this->createConfig())) {
+                throw new RuntimeException(sprintf(
+                    'Could not write Phpactor config file to "%s"',
+                    $this->configPath
+                ));
+            }
+        }
+        
+        $config = file_get_contents($this->configPath);
+        if (false === $config) {
+            throw new RuntimeException(sprintf(
+                'Could not read config file "%s"',
+                $this->configPath
+            ));
+        }
+        
+        $json = json_decode($config);
+        if (null === $json) {
+            throw new RuntimeException(sprintf(
+                'Could not decode JSON file "%s"',
+                $this->configPath
+            ));
+        }
+
+        return $json;
+    }
+
+    private function writeConfig($json): void
+    {
+        file_put_contents($this->configPath, json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+    }
+
+    public function delete(string $key): void
+    {
+        $json = $this->openConfig();
+        unset($json->{$key});
+        $this->writeConfig($json);
     }
 }

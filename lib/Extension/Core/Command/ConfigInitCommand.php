@@ -1,20 +1,17 @@
 <?php
 
-namespace Phpactor\Extension\Debug\Command;
+namespace Phpactor\Extension\Core\Command;
 
-use Phpactor\Extension\Debug\Model\ConfigInitializer;
+use Phpactor\Extension\Debug\Model\ConfigManipulator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitConfigCommand extends Command
+class ConfigInitCommand extends Command
 {
-    /**
-     * @var ConfigInitializer
-     */
-    private $initializer;
+    private ConfigManipulator $initializer;
 
-    public function __construct(ConfigInitializer $initializer)
+    public function __construct(ConfigManipulator $initializer)
     {
         parent::__construct();
         $this->initializer = $initializer;
@@ -29,16 +26,16 @@ class InitConfigCommand extends Command
     {
         $output->writeln('<comment>// This command will create or update a JSON configuration file</>');
         $output->writeln('<comment>// The YAML config format is not supported by this tool</>');
-        $output->writeln('');
 
+        $created = !file_exists($this->initializer->configPath());
         $action = $this->initializer->initialize();
 
-        if ($action === ConfigInitializer::ACTION_CREATED) {
+        if ($created) {
             $output->writeln(sprintf('Created %s', $this->initializer->configPath()));
             return 0;
         }
 
-        $output->writeln(sprintf('Updated %s', $this->initializer->configPath()));
+        $output->writeln(sprintf('<info>Updated:</> %s', $this->initializer->configPath()));
 
         return 0;
     }

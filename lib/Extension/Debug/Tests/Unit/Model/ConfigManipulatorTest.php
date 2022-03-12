@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\Debug\Tests\Unit\Model;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Debug\Model\ConfigInitializer;
+use Phpactor\Extension\Debug\Model\ConfigManipulator;
 use Phpactor\TestUtils\Workspace;
 
-class ConfigInitializerTest extends TestCase
+class ConfigManipulatorTest extends TestCase
 {
     /**
      * @var Workspace
@@ -23,7 +23,7 @@ class ConfigInitializerTest extends TestCase
     {
         self::assertFileDoesNotExist($this->workspace->path('.phpactor.json'));
 
-        (new ConfigInitializer(
+        (new ConfigManipulator(
             'path/to/json.schema',
             $this->workspace->path('.phpactor.json')
         ))->initialize();
