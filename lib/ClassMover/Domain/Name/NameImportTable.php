@@ -43,7 +43,8 @@ class NameImportTable
         }
 
         throw new RuntimeException(sprintf(
-            'Could not find name in import table "%s"', (string)$name
+            'Could not find name in import table "%s"',
+            (string)$name
         ));
     }
 
