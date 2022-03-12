@@ -56,6 +56,8 @@ class PsalmProcessTest extends IntegrationTestCase
         );
 
         $diagnostics = wait($linter->analyse($this->workspace()->path('src/test.php')));
+        usort($diagnostics, fn (Diagnostic $a, Diagnostic $b) => strcasecmp($a->message, $b->message));
+        usort($expectedDiagnostics, fn (Diagnostic $a, Diagnostic $b) => strcasecmp($a->message, $b->message));
 
         self::assertEquals($expectedDiagnostics, $diagnostics);
     }

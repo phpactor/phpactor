@@ -104,9 +104,9 @@
             "bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
+            "vendor/bin/php-cs-fixer fix",
             "vendor/bin/phpstan analyse",
             "vendor/bin/phpunit",
-            "vendor/bin/php-cs-fixer fix",
             "make docs"
         ]
     }
