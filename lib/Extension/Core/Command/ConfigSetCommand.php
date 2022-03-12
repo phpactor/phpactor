@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\Core\Command;
 
 use JsonException;
-use Phpactor\Extension\Debug\Model\ConfigManipulator;
+use Phpactor\Extension\Core\Model\ConfigManipulator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

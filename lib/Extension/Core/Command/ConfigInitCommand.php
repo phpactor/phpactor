@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Core\Command;
 
-use Phpactor\Extension\Debug\Model\ConfigManipulator;
+use Phpactor\Extension\Core\Model\ConfigManipulator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

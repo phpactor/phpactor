@@ -5,12 +5,14 @@ namespace Phpactor\Extension\Core;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Command\ConfigInitCommand;
+use Phpactor\Extension\Core\Command\ConfigJsonSchemaCommand;
 use Phpactor\Extension\Core\Command\ConfigSetCommand;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
+use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Debug\Model\ConfigManipulator;
+use Phpactor\Extension\Core\Model\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
@@ -91,6 +93,17 @@ class CoreExtension implements Extension
                 )
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:initialize']]);
+
+        $container->register(ConfigJsonSchemaCommand::class, function (Container $container) {
+            return new ConfigJsonSchemaCommand(
+                $container->get(JsonSchemaBuilder::class)
+            );
+        }, [
+            ConsoleExtension::TAG_COMMAND => [
+                'name' => 'config:json-schema'
+            ]
+        ]);
+
         $container->register('command.config_set', function (Container $container) {
             return new ConfigSetCommand(
                 new ConfigManipulator(

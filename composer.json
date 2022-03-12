@@ -98,7 +98,7 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor development:config-json-schema phpactor.schema.json"
+            "bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
             "vendor/bin/phpstan analyse",
