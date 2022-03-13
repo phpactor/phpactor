@@ -4,6 +4,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use InvalidArgumentException;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PrototypeSourceCode;
+use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Type;
 use RuntimeException;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -41,7 +42,7 @@ class WorseGenerateAccessor implements GenerateAccessor
     /**
      * @param string[] $propertyNames
      */
-    public function generate(SourceCode $sourceCode, array $propertyNames, int $offset): SourceCode
+    public function generate(SourceCode $sourceCode, array $propertyNames, int $offset): TextEdits
     {
         $class = $this->class((string) $sourceCode, $offset);
         $allProperties = $class->properties();
@@ -51,10 +52,10 @@ class WorseGenerateAccessor implements GenerateAccessor
         $prototype = $this->buildPrototype($class, $properties);
         $sourceCode = $this->sourceFromClassName($sourceCode, $class->name());
 
-        return $sourceCode->withSource((string) $this->updater->textEditsFor(
+        return $this->updater->textEditsFor(
             $prototype,
             Code::fromString((string) $sourceCode)
-        )->apply(Code::fromString((string) $sourceCode)));
+        );
     }
 
     private function formatName(string $name): string
