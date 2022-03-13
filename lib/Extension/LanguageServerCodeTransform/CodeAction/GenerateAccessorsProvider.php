@@ -72,7 +72,7 @@ class GenerateAccessorsProvider implements CodeActionProvider
 
             return [
                 CodeAction::fromArray([
-                    'title' => sprintf('Generate accessors'),
+                    'title' => sprintf('Generate %s accessor(s)', count($propertyNames)),
                     'kind' => self::KIND,
                     'command' => new Command(
                         sprintf('Generate %s accessor(s)', count($propertyNames)),
