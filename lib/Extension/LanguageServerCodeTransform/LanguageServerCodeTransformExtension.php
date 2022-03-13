@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\Container\Container;
@@ -18,6 +19,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateClassProvide
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
@@ -25,6 +27,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
@@ -138,6 +141,17 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_COMMAND => [
                 'name' => ExtractConstantCommand::NAME
+            ],
+        ]);
+        $container->register(GenerateAccessorsCommand::class, function (Container $container) {
+            return new GenerateAccessorsCommand(
+                $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get(GenerateAccessor::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => GenerateAccessorsCommand::NAME
             ],
         ]);
 
@@ -269,6 +283,13 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ExtractConstantProvider::class, function (Container $container) {
             return new ExtractConstantProvider(
                 $container->get(ExtractConstant::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+        $container->register(GenerateAccessorsProvider::class, function (Container $container) {
+            return new GenerateAccessorsProvider(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
