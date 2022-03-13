@@ -17,7 +17,12 @@ class WorseExtractConstantTest extends WorseTestCase
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
         $extractConstant = new WorseExtractConstant($this->reflectorForWorkspace($source), $this->updater());
-        $transformed = $extractConstant->extractConstant(SourceCode::fromString($source), $offset, $name);
+        $textDocumentEdits = $extractConstant->extractConstant(SourceCode::fromStringAndPath($source, 'file:///source'), $offset, $name);
+        $sourceCode = SourceCode::fromStringAndPath($source, 'file:///source');
+        $transformed = SourceCode::fromStringAndPath(
+            (string) $textDocumentEdits->textEdits()->apply($sourceCode),
+            $textDocumentEdits->uri()->path()
+        );
 
         $this->assertEquals(trim($expected), trim($transformed));
     }
