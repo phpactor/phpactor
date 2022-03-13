@@ -45,6 +45,10 @@ class GenerateAccessorsProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
     {
         return call(function () use ($range, $textDocument) {
+            // CoC will select the entire docyment if no range selected
+            if ($range->start->line === 0 && $range->start->character === 0) {
+                return [];
+            }
             $startOffset = PositionConverter::positionToByteOffset($range->start, $textDocument->text)->toInt();
             $endOffset = PositionConverter::positionToByteOffset($range->end, $textDocument->text)->toInt();
 
