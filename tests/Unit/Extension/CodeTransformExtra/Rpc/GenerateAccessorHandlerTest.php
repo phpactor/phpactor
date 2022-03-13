@@ -84,7 +84,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
                 EOT
         );
 
-        $this->generateAccessor->generate($source, 'foo', $offset)
+        $this->generateAccessor->generate($source, ['foo'], $offset)
              ->willReturn(SourceCode::fromStringAndPath('new source', self::PATH))
              ->shouldBeCalledTimes(1);
 
@@ -103,7 +103,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
 
-        $this->generateAccessor->generate($oldSource, self::FOO_NAME, self::CURSOR_OFFSET)
+        $this->generateAccessor->generate($oldSource, [self::FOO_NAME], self::CURSOR_OFFSET)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 
@@ -126,12 +126,12 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
         $temporarySource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generate($oldSource, self::FOO_NAME, self::CURSOR_OFFSET)
+        $this->generateAccessor->generate($oldSource, [self::FOO_NAME], self::CURSOR_OFFSET)
              ->willReturn($temporarySource)
              ->shouldBeCalledTimes(1);
 
         $newSource = SourceCode::fromStringAndPath((string) $temporarySource, self::PATH);
-        $this->generateAccessor->generate($temporarySource, self::BAR_NAME, self::CURSOR_OFFSET)
+        $this->generateAccessor->generate($temporarySource, [self::BAR_NAME], self::CURSOR_OFFSET)
              ->willReturn($newSource)
              ->shouldBeCalledTimes(1);
 

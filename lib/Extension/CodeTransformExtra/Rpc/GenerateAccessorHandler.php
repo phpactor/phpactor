@@ -93,7 +93,7 @@ class GenerateAccessorHandler extends AbstractHandler
         foreach ((array) $arguments[self::PARAM_NAMES] as $propertyName) {
             $newSource = $this->generateAccessor->generate(
                 $newSource,
-                $propertyName,
+                [$propertyName],
                 $arguments[self::PARAM_OFFSET]
             );
         }
@@ -148,7 +148,7 @@ class GenerateAccessorHandler extends AbstractHandler
     {
         $newSource = $this->generateAccessor->generate(
             SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),
-            $context->symbol()->name(),
+            [$context->symbol()->name()],
             $arguments[self::PARAM_OFFSET]
         );
 
