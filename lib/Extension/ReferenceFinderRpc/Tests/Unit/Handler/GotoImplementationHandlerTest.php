@@ -49,12 +49,21 @@ class GotoImplementationHandlerTest extends TestCase
         $this->assertInstanceOf(FileReferencesResponse::class, $response);
     }
 
+    /**
+     * @param Location[] $locations
+     */
     public function create(array $locations): HandlerTester
     {
         $locator = new class($locations) implements ClassImplementationFinder {
-            private $locations;
+            /**
+             * @var Location[]
+             */
+            private array $locations;
 
-            public function __construct($locations)
+            /**
+             * @param Location[] $locations
+             */
+            public function __construct(array $locations)
             {
                 $this->locations = $locations;
             }

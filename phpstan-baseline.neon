@@ -4271,21 +4271,6 @@ parameters:
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoTypeHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Tests\\\\Unit\\\\Handler\\\\GotoImplementationHandlerTest\\:\\:create\\(\\) has parameter \\$locations with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: "#^Method class@anonymous/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest\\.php\\:56\\:\\:__construct\\(\\) has parameter \\$locations with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: "#^Property class@anonymous/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest\\.php\\:56\\:\\:\\$locations has no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Command\\\\RpcCommand\\:\\:__construct\\(\\) has parameter \\$inputStream with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Command/RpcCommand.php
