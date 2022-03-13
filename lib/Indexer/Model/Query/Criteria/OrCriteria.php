@@ -10,7 +10,7 @@ class OrCriteria extends Criteria
     /**
      * @var array<Criteria>
      */
-    private $criterias;
+    private array $criterias;
 
     public function __construct(Criteria ...$criterias)
     {

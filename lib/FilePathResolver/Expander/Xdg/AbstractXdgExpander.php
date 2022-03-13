@@ -7,15 +7,9 @@ use XdgBaseDir\Xdg;
 
 abstract class AbstractXdgExpander implements Expander
 {
-    /**
-     * @var Xdg
-     */
-    protected $xdg;
+    protected Xdg $xdg;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     public function __construct(string $name, Xdg $xdg = null)
     {

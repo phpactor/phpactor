@@ -12,16 +12,11 @@ use Phpactor\MapResolver\Resolver;
 
 class CompletionRpcExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function configure(Resolver $schema): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('completion_rpc.handler', function (Container $container) {

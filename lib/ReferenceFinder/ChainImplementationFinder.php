@@ -11,7 +11,7 @@ final class ChainImplementationFinder implements ClassImplementationFinder
     /**
      * @var ClassImplementationFinder[]
      */
-    private $finders = [];
+    private array $finders = [];
 
     public function __construct(array $finders)
     {

@@ -6,25 +6,13 @@ use Phpactor\Indexer\IndexAgent;
 
 class RealIndexAgent implements IndexAgent, TestIndexAgent
 {
-    /**
-     * @var QueryClient
-     */
-    private $query;
+    private QueryClient $query;
 
-    /**
-     * @var SearchClient
-     */
-    private $search;
+    private SearchClient $search;
 
-    /**
-     * @var Indexer
-     */
-    private $indexer;
+    private Indexer $indexer;
 
-    /**
-     * @var Index
-     */
-    private $index;
+    private Index $index;
 
     public function __construct(Index $index, QueryClient $query, SearchClient $search, Indexer $indexer)
     {

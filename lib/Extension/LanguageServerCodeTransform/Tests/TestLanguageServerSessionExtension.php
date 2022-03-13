@@ -11,10 +11,7 @@ use Phpactor\MapResolver\Resolver;
 
 class TestLanguageServerSessionExtension implements Extension
 {
-    /**
-     * @var LanguageServerSessionExtension
-     */
-    private $sessionExtension;
+    private LanguageServerSessionExtension $sessionExtension;
 
     public function __construct()
     {
@@ -24,17 +21,14 @@ class TestLanguageServerSessionExtension implements Extension
             ProtocolFactory::initializeParams()
         );
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function load(ContainerBuilder $container): void
     {
         $this->sessionExtension->load($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $this->sessionExtension->configure($schema);

@@ -26,7 +26,6 @@ class KeywordCompletor implements TolerantCompletor
     public const STRING_LITERAL = 'string_literal';
     public const VARIABLE = 'variable';
     public const AFTER_ANONYMOUS_FUNC_PARAMS = 'after_anonymous_func_params';
-
     public const SPECIAL_SCOPES = [
         self::MEMBER_ACCESS => [ ],
         self::STRING_LITERAL => [ ],
@@ -55,9 +54,9 @@ class KeywordCompletor implements TolerantCompletor
     ];
 
     /**
-     * @var string[]
+     * @var null|string[]
      */
-    private $allKeywords = null;
+    private ?array $allKeywords = null;
     
     public function initKeywords(): void
     {
@@ -68,9 +67,7 @@ class KeywordCompletor implements TolerantCompletor
             );
         }
     }
-    /**
-    * {@inheritDoc}
-    */
+    
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $this->initKeywords();

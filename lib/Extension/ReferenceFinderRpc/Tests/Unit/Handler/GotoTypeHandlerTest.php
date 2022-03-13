@@ -16,7 +16,6 @@ class GotoTypeHandlerTest extends TestCase
     const EXAMPLE_OFFSET = 1234;
     const EXAMPLE_PATH = '/some/path.php';
 
-
     public function testGotoType(): void
     {
         $location = $this->create()->handle('goto_definition', [

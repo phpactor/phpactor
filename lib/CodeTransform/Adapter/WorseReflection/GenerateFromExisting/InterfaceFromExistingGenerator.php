@@ -15,15 +15,9 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 final class InterfaceFromExistingGenerator implements GenerateFromExisting
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var Renderer
-     */
-    private $renderer;
+    private Renderer $renderer;
 
     public function __construct(Reflector $reflector, Renderer $renderer)
     {
@@ -31,9 +25,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
         $this->renderer = $renderer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function generateFromExisting(ClassName $existingClass, ClassName $targetName): SourceCode
     {
         $existingClass = $this->reflector->reflectClass(ReflectionClassName::fromString((string) $existingClass));

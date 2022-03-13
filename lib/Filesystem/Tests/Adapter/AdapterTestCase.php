@@ -50,7 +50,6 @@ abstract class AdapterTestCase extends IntegrationTestCase
         $this->assertFalse(file_exists($srcLocation->path()));
     }
 
-
     public function testMoveDirectory(): void
     {
         $srcLocation = $this->filesystem()->createPath('src/Hello');

@@ -25,16 +25,13 @@ class WorseReflectionExtension implements Extension
     const TAG_SOURCE_LOCATOR = 'worse_reflection.source_locator';
     const TAG_FRAME_WALKER = 'worse_reflection.frame_walker';
     const TAG_MEMBER_PROVIDER = 'worse_reflection.member_provider';
-
     const PARAM_ENABLE_CACHE = 'worse_reflection.enable_cache';
     const PARAM_STUB_DIR = 'worse_reflection.stub_dir';
     const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

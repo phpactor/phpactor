@@ -6,10 +6,7 @@ use Phpactor\ConfigLoader\Core\Exception\DeserializerNotFound;
 
 class Deserializers
 {
-    /**
-     * @var array
-     */
-    private $deserializerMap = [];
+    private array $deserializerMap = [];
 
     public function __construct(array $deserializerMap)
     {

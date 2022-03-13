@@ -11,6 +11,7 @@ class ImplementsInterfaces extends Collection
             return $acc;
         }));
     }
+
     public static function fromTypes(array $types)
     {
         return new static(array_reduce($types, function ($acc, $type) {

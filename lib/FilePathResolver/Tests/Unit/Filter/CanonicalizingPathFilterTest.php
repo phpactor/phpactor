@@ -11,6 +11,7 @@ class CanonicalizingPathFilterTest extends FilterTestCase
     {
         $this->assertEquals('/bar', $this->apply('/foo/bar/../../bar'));
     }
+
     protected function createFilter(): Filter
     {
         return new CanonicalizingPathFilter();

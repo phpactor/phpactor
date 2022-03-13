@@ -11,6 +11,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class RenameVariableHandlerTest extends HandlerTestCase
 {
@@ -19,10 +20,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
     const OFFSET = 1234;
     const VARIABLE_NAME = 'FOOBAR';
 
-    /**
-     * @var RenameVariable
-     */
-    private $renameVariable;
+    private ObjectProphecy $renameVariable;
 
     public function setUp(): void
     {

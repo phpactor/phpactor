@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseDeclaredClassCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -39,6 +38,7 @@ class WorseDeclaredClassCompletorTest extends TolerantCompletorTestCase
             ]
         ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()

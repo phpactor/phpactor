@@ -10,9 +10,6 @@ use Phpactor\MapResolver\Resolver;
 
 class SomeExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register('some_definition_locator', function (Container $container) {
@@ -27,9 +24,7 @@ class SomeExtension implements Extension
         }, [ ReferenceFinderExtension::TAG_IMPLEMENTATION_FINDER=> []]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

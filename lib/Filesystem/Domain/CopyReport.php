@@ -5,6 +5,7 @@ namespace Phpactor\Filesystem\Domain;
 final class CopyReport
 {
     private $srcFiles;
+
     private $destFiles;
 
     private function __construct(FileList $srcFiles, FileList $destFiles)

@@ -29,9 +29,7 @@ class SourceCodeFilesystemExtension implements Extension
     const SERVICE_FILESYSTEM_COMPOSER = 'source_code_filesystem.composer';
     const PARAM_PROJECT_ROOT = 'source_code_filesystem.project_root';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

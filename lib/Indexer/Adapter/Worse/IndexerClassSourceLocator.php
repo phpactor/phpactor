@@ -11,19 +11,14 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class IndexerClassSourceLocator implements SourceCodeLocator
 {
-    /**
-     * @var IndexAccess
-     */
-    private $index;
+    private IndexAccess $index;
 
     public function __construct(IndexAccess $index)
     {
         $this->index = $index;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locate(Name $name): SourceCode
     {
         if (empty($name->__toString())) {

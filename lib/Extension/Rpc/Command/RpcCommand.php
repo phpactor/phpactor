@@ -14,20 +14,11 @@ use InvalidArgumentException;
 
 class RpcCommand extends Command
 {
-    /**
-     * @var RequestHandler
-     */
-    private $handler;
+    private RequestHandler $handler;
 
-    /**
-     * @var bool
-     */
-    private $storeReplay;
+    private bool $storeReplay;
 
-    /**
-     * @var string
-     */
-    private $replayPath;
+    private string $replayPath;
 
     /**
      * @var resource

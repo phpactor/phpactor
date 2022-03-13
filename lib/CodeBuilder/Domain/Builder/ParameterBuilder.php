@@ -9,30 +9,15 @@ use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class ParameterBuilder extends AbstractBuilder
 {
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?Type $type = null;
 
-    /**
-     * @var Type
-     */
-    protected $type;
+    protected ?DefaultValue $defaultValue = null;
 
-    /**
-     * @var DefaultValue
-     */
-    protected $defaultValue;
+    protected bool $byReference = false;
 
-    /**
-     * @var bool
-     */
-    protected $byReference = false;
-    /**
-     * @var SourceCodeBuilder
-     */
-    private $parent;
+    private MethodBuilder $parent;
 
     public function __construct(MethodBuilder $parent, string $name)
     {

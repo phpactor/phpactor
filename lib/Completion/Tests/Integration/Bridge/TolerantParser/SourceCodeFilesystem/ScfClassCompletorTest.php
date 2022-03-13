@@ -15,7 +15,6 @@ use Phpactor\TextDocument\TextDocument;
 
 class ScfClassCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -151,7 +150,6 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-
     /**
      * @dataProvider provideImportClass
      */
@@ -212,6 +210,7 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
             ],
         ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $filesystem = new SimpleFilesystem(FilePath::fromString(__DIR__ . '/files'));

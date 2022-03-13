@@ -13,16 +13,10 @@ final class ConfigManipulator
 {
     public const ACTION_CREATED = 'created';
     public const ACTION_UPDATED = 'updated';
-    /**
-     * @var string
-     */
-    private $schemaPath;
 
-    /**
-     * @var string
-     */
-    private $configPath;
+    private string $schemaPath;
 
+    private string $configPath;
 
     public function __construct(string $schemaPath, string $configPath)
     {

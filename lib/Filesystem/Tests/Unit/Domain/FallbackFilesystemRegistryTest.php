@@ -17,10 +17,7 @@ class FallbackFilesystemRegistryTest extends TestCase
      */
     private $innerRegistry;
 
-    /**
-     * @var FallbackFilesystemRegistry
-     */
-    private $registry;
+    private FallbackFilesystemRegistry $registry;
 
     public function setUp(): void
     {

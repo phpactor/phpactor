@@ -17,10 +17,7 @@ class IndexQueryCommand extends Command
 {
     const ARG_IDENITIFIER = 'identifier';
 
-    /**
-     * @var QueryClient
-     */
-    private $query;
+    private QueryClient $query;
 
     public function __construct(QueryClient $query)
     {

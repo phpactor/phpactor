@@ -12,16 +12,14 @@ use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassCopyHandlerTest extends HandlerTestCase
 {
     const SOURCE_PATH = 'souce_path';
     const DEST_PATH = 'souce_path';
 
-    /**
-     * @var ClassCopy
-     */
-    private $classCopy;
+    private ObjectProphecy $classCopy;
 
     public function setUp(): void
     {
@@ -34,7 +32,6 @@ class ClassCopyHandlerTest extends HandlerTestCase
             $this->classCopy->reveal()
         );
     }
-
 
     /**
      * @testdox It should request the dest path if none is given.

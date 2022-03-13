@@ -12,15 +12,9 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassReflectorCommand extends Command
 {
-    /**
-     * @var ClassReflector
-     */
-    private $reflector;
+    private ClassReflector $reflector;
 
-    /**
-     * @var DumperRegistry
-     */
-    private $dumperRegistry;
+    private DumperRegistry $dumperRegistry;
 
     public function __construct(
         ClassReflector $reflector,

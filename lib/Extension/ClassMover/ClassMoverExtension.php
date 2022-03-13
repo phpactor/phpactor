@@ -30,16 +30,11 @@ use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 
 class ClassMoverExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function configure(Resolver $schema): void
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerClassMover($container);

@@ -14,9 +14,6 @@ use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 
 class ClassToFileExtraExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register('command.file_info', function (Container $container) {
@@ -38,9 +35,7 @@ class ClassToFileExtraExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => FileInfoHandler::NAME] ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

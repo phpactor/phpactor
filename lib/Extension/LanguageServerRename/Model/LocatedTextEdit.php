@@ -7,14 +7,9 @@ use Phpactor\TextDocument\TextEdit;
 
 final class LocatedTextEdit
 {
-    /**
-     * @var TextDocumentUri
-     */
-    private $documentUri;
-    /**
-     * @var TextEdit
-     */
-    private $textEdit;
+    private TextDocumentUri $documentUri;
+
+    private TextEdit $textEdit;
 
     public function __construct(TextDocumentUri $documentUri, TextEdit $textEdit)
     {

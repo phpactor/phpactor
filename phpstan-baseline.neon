@@ -876,22 +876,12 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Util/NodeHelper.php
 
 		-
-			message: "#^Cannot call method indent\\(\\) on int\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigExtension\\:\\:indent\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
 
 		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigExtension\\:\\:\\$generator is never read, only written\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigExtension\\:\\:\\$textFormat \\(int\\) does not accept Phpactor\\\\CodeBuilder\\\\Util\\\\TextFormat\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
 
@@ -976,11 +966,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
 
 		-
-			message: "#^Parameter \\#5 \\$extendsClass of class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype constructor expects Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\|null, string given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ClassLikeBuilder.php
@@ -1021,16 +1006,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:end\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:\\$parent \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:build\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
@@ -1051,16 +1026,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:end\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:\\$parent \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
@@ -1071,22 +1036,7 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:end\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:\\$parent \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/SourceCodeBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\:\\:\\$namespace \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\NamespaceName\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\QualifiedName\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/SourceCodeBuilder.php
 
@@ -1119,11 +1069,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassLikePrototype\\:\\:name\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/ClassLikePrototype.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\:\\:\\$extendsclasss is unused\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ClassPrototype.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Classes\\:\\:fromClasses\\(\\) has no return type specified\\.$#"
@@ -1436,11 +1381,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/ReturnType.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\SourceCode\\:\\:\\$namespace \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\NamespaceName\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\QualifiedName\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/SourceCode.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Traits\\:\\:fromTraits\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Traits.php
@@ -1567,11 +1507,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\GeneratorTestCase\\:\\:provideRender\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/GeneratorTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$namespace of class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\SourceCode constructor expects Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\NamespaceName\\|null, Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\QualifiedName given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/GeneratorTestCase.php
 
@@ -1731,11 +1666,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/MethodTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$namespace of class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\SourceCode constructor expects Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\NamespaceName\\|null, Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\QualifiedName given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/SourceCodeTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Prototype\\\\TypeTest\\:\\:provideNamespace\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/TypeTest.php
@@ -1776,11 +1706,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\TextDocument\\\\TextEdits\\:\\:willReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$builder has no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
@@ -1792,11 +1717,6 @@ parameters:
 
 		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$prototype has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$updater \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Updater\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Updater\\>\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
 
@@ -2621,82 +2541,12 @@ parameters:
 			path: lib/Completion/Tests/Unit/Adapter/WorseReflection/Formatter/WorseTypeFormatterTest.php
 
 		-
-			message: "#^Call to method complete\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\.$#"
-			count: 4
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Call to method couldComplete\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Call to method qualifier\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\.$#"
-			count: 6
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$completor1 \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$completor1 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor1 \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor1 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor2 \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor2 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifier1 \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifier\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifier1 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifier2 \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifier\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifier2 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ObjectProphecy as its type\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
 
@@ -2811,16 +2661,6 @@ parameters:
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
 
 		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$document \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\TextDocument\\) does not accept Phpactor\\\\TextDocument\\\\TextDocument\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$document has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\TextDocument as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
 			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$help \\(Phpactor\\\\Completion\\\\Core\\\\SignatureHelper\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\>\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
@@ -2919,41 +2759,6 @@ parameters:
 			message: "#^Method Phpactor\\\\ConfigLoader\\\\Tests\\\\Integration\\\\ConfigLoaderTest\\:\\:createConfig\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Tests/Integration/ConfigLoaderTest.php
-
-		-
-			message: "#^Call to method deserialize\\(\\) on an unknown class Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 5
-			path: lib/ConfigLoader/Tests/Unit/Core/ConfigLoaderTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/ConfigLoader/Tests/Unit/Core/ConfigLoaderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ConfigLoaderTest\\:\\:\\$deserializer \\(Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ConfigLoader\\\\Core\\\\Deserializer\\>\\.$#"
-			count: 1
-			path: lib/ConfigLoader/Tests/Unit/Core/ConfigLoaderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ConfigLoaderTest\\:\\:\\$deserializer has unknown class Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/ConfigLoader/Tests/Unit/Core/ConfigLoaderTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/ConfigLoader/Tests/Unit/Core/DeserializersTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\DeserializersTest\\:\\:\\$deserializer \\(Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ConfigLoader\\\\Core\\\\Deserializer\\>\\.$#"
-			count: 1
-			path: lib/ConfigLoader/Tests/Unit/Core/DeserializersTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\DeserializersTest\\:\\:\\$deserializer has unknown class Phpactor\\\\ConfigLoader\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/ConfigLoader/Tests/Unit/Core/DeserializersTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copy\\(\\) has no return type specified\\.$#"
@@ -3826,21 +3631,6 @@ parameters:
 			path: lib/Extension/CompletionExtra/Application/Complete.php
 
 		-
-			message: "#^Call to method complete\\(\\) on an unknown class Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\CompleteCommand\\:\\:\\$complete \\(Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete\\) does not accept Phpactor\\\\Extension\\\\CompletionExtra\\\\Application\\\\Complete\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\CompleteCommand\\:\\:\\$complete has unknown class Phpactor\\\\Extension\\\\CompletionExtra\\\\Command\\\\Autocomplete as its type\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Command/CompleteCommand.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
@@ -4076,11 +3866,6 @@ parameters:
 			path: lib/Extension/Core/Command/CacheClearCommand.php
 
 		-
-			message: "#^Iterating over an object of an unknown class Phpactor\\\\Config\\\\Paths\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigDumpCommand.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Command/ConfigDumpCommand.php
@@ -4092,16 +3877,6 @@ parameters:
 
 		-
 			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigDumpCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$paths \\(Phpactor\\\\Config\\\\Paths\\) does not accept Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigDumpCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$paths has unknown class Phpactor\\\\Config\\\\Paths as its type\\.$#"
 			count: 1
 			path: lib/Extension/Core/Command/ConfigDumpCommand.php
 
@@ -4391,11 +4166,6 @@ parameters:
 			path: lib/Extension/Navigation/Application/Navigator.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:\\$navigator \\(Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\) does not accept Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\Navigator\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
@@ -4499,21 +4269,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoTypeHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoTypeHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Tests\\\\Unit\\\\Handler\\\\GotoImplementationHandlerTest\\:\\:create\\(\\) has parameter \\$locations with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: "#^Method class@anonymous/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest\\.php\\:56\\:\\:__construct\\(\\) has parameter \\$locations with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: "#^Property class@anonymous/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest\\.php\\:56\\:\\:\\$locations has no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoImplementationHandlerTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Command\\\\RpcCommand\\:\\:__construct\\(\\) has parameter \\$inputStream with no type specified\\.$#"
@@ -5136,36 +4891,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$request of method Phpactor\\\\Extension\\\\Rpc\\\\RequestHandler\\\\ExceptionCatchingHandler\\:\\:handle\\(\\) expects Phpactor\\\\Extension\\\\Rpc\\\\Request, object given\\.$#"
-			count: 2
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$innerHandler with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$logger with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$loggingHandler \\(Phpactor\\\\Extension\\\\Rpc\\\\RequestHandler\\\\ExceptionCatchingHandler\\) does not accept Phpactor\\\\Extension\\\\Rpc\\\\RequestHandler\\\\LoggingHandler\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$request with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$response with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandlerTest\\:\\:\\$handler with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandlerTest.php
@@ -5174,21 +4899,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandlerTest\\:\\:\\$handlerRegistry with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$handler of class Phpactor\\\\Extension\\\\Rpc\\\\Test\\\\HandlerTester constructor expects Phpactor\\\\Extension\\\\Rpc\\\\Handler, Prophecy\\\\Prophecy\\\\ObjectProphecy given\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/Test/HandlerTesterTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Test\\\\HandlerTesterTest\\:\\:\\$handler \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\) does not accept Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\EchoHandler\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/Test/HandlerTesterTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Test\\\\HandlerTesterTest\\:\\:\\$handler with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/Test/HandlerTesterTest.php
 
 		-
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Test\\\\HandlerTesterTest\\:\\:\\$response is unused\\.$#"
@@ -5326,16 +5036,6 @@ parameters:
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
 		-
-			message: "#^Call to method classToFile\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer\\.$#"
-			count: 2
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Call to method contentsFromFileOrStdin\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) has parameter \\$showFrame with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
@@ -5349,41 +5049,6 @@ parameters:
 			message: "#^PHPDoc tag @var has invalid value \\(\\$local Variable\\)\\: Unexpected token \"\\$local\", expected type at offset 9$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$classFileNormalizer \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer\\) does not accept Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\ClassFileNormalizer\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$classFileNormalizer has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\ClassFileNormalizer as its type\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$filesystemHelper \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper\\) does not accept Phpactor\\\\Extension\\\\Core\\\\Application\\\\Helper\\\\FilesystemHelper\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:\\$filesystemHelper has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\Helper\\\\FilesystemHelper as its type\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Call to method infoForOffset\\(\\) on an unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\OffsetInfoCommand\\:\\:\\$infoForOffset \\(Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset\\) does not accept Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\OffsetInfoCommand\\:\\:\\$infoForOffset has unknown class Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Command\\\\FileInfoAtOffset as its type\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Rpc\\\\OffsetInfoHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
@@ -5439,61 +5104,6 @@ parameters:
 			message: "#^Method Phpactor\\\\FilePathResolver\\\\FilteringPathResolver\\:\\:__construct\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/FilePathResolver/FilteringPathResolver.php
-
-		-
-			message: "#^Call to method resolve\\(\\) on an unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/CachingPathResolverTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/CachingPathResolverTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\CachingPathResolverTest\\:\\:\\$resolver \\(Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\FilePathResolver\\\\PathResolver\\>\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/CachingPathResolverTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\CachingPathResolverTest\\:\\:\\$resolver has unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/CachingPathResolverTest.php
-
-		-
-			message: "#^Call to method replacementValue\\(\\) on an unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/SuffixExpanderDecoratorTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/SuffixExpanderDecoratorTest.php
-
-		-
-			message: "#^Call to method tokenName\\(\\) on an unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/SuffixExpanderDecoratorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\SuffixExpanderDecoratorTest\\:\\:\\$expander \\(Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\FilePathResolver\\\\Expander\\>\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/SuffixExpanderDecoratorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\SuffixExpanderDecoratorTest\\:\\:\\$expander has unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/SuffixExpanderDecoratorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\XdgExpanderTest\\:\\:\\$xdg \\(Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<XdgBaseDir\\\\Xdg\\>\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/XdgExpanderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\XdgExpanderTest\\:\\:\\$xdg has unknown class Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Expander\\\\Xdg\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Expander/Xdg/XdgExpanderTest.php
 
 		-
 			message: "#^Method Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Filter\\\\TokenExpandingFilterTest\\:\\:create\\(\\) has parameter \\$expanders with no value type specified in iterable type array\\.$#"
@@ -6021,22 +5631,12 @@ parameters:
 			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:reveal\\(\\)\\.$#"
-			count: 4
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has parameter \\$filesystems with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:\\$filesystem \\(Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\>\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
@@ -6091,32 +5691,7 @@ parameters:
 			path: lib/Indexer/Tests/Adapter/IndexBuilderTestCase.php
 
 		-
-			message: "#^Call to method flush\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\SearchIndex\\.$#"
-			count: 3
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Call to method search\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\SearchIndex\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Call to method write\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\SearchIndex\\.$#"
-			count: 7
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\FileSearchIndexTest\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\FileSearchIndexTest\\:\\:\\$index \\(Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\SearchIndex\\) does not accept Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\FileSearchIndex\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\FileSearchIndexTest\\:\\:\\$index has unknown class Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\SearchIndex as its type\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
 
@@ -6146,36 +5721,6 @@ parameters:
 			path: lib/Indexer/Tests/IntegrationTestCase.php
 
 		-
-			message: "#^Call to method isFresh\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\FilesystemFileListProviderTest\\:\\:\\$filesystem \\(Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy\\) does not accept Phpactor\\\\Filesystem\\\\Adapter\\\\Simple\\\\SimpleFilesystem\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\FilesystemFileListProviderTest\\:\\:\\$filesystem has unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\FilesystemFileListProviderTest\\:\\:\\$index \\(Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Indexer\\\\Model\\\\Index\\>\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\FilesystemFileListProviderTest\\:\\:\\$index has unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\Filesystem\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\TestUtils\\\\Workspace\\:\\:path\\(\\) invoked with 2 parameters, 0\\-1 required\\.$#"
 			count: 2
 			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
@@ -6184,31 +5729,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\ReferenceFinder\\\\Util\\\\ContainerTypeResolverTest\\:\\:testResolve\\(\\) has parameter \\$manifest with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/Unit/Adapter/ReferenceFinder/Util/ContainerTypeResolverTest.php
-
-		-
-			message: "#^Call to method flush\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/FilteredSearchIndexTest.php
-
-		-
-			message: "#^Call to method search\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/FilteredSearchIndexTest.php
-
-		-
-			message: "#^Call to method write\\(\\) on an unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/FilteredSearchIndexTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\FilteredSearchIndexTest\\:\\:\\$innerIndex \\(Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Indexer\\\\Model\\\\SearchIndex\\>\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/FilteredSearchIndexTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\FilteredSearchIndexTest\\:\\:\\$innerIndex has unknown class Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Model\\\\SearchIndex\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/FilteredSearchIndexTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Name\\\\FullyQualifiedName\\:\\:fromArray\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
@@ -6377,21 +5897,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainDefinitionLocationProviderTest\\:\\:createLocation\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainDefinitionLocationProviderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$document of method Phpactor\\\\ReferenceFinder\\\\ChainDefinitionLocationProvider\\:\\:locateDefinition\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocument, Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\TextDocument given\\.$#"
-			count: 3
-			path: lib/ReferenceFinder/Tests/Unit/ChainDefinitionLocationProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainDefinitionLocationProviderTest\\:\\:\\$document \\(Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\TextDocument\\) does not accept Phpactor\\\\TextDocument\\\\TextDocument\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainDefinitionLocationProviderTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainDefinitionLocationProviderTest\\:\\:\\$document has unknown class Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\TextDocument as its type\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/Tests/Unit/ChainDefinitionLocationProviderTest.php
 

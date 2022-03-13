@@ -27,9 +27,7 @@ class LanguageServerIndexerExtension implements Extension
 {
     public const WORKSPACE_SYMBOL_SEARCH_LIMIT = 'language_server_indexer.workspace_symbol_search_limit';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerSessionHandler($container);

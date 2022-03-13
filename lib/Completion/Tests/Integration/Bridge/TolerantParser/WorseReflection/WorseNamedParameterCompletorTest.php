@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -112,6 +111,7 @@ class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
         yield 'variable with space' => [ '<?php $foo <>' ];
         yield 'static variable' => ['<?php Foobar::$<>'];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

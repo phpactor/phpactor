@@ -39,20 +39,11 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 
 class WorseTolerantMemberFinder implements MemberFinder
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(Reflector $reflector = null, Parser $parser = null, LoggerInterface $logger = null)
     {

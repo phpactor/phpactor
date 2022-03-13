@@ -10,19 +10,14 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class WorkspaceSourceLocator implements SourceCodeLocator
 {
-    /**
-     * @var WorkspaceIndex
-     */
-    private $index;
+    private WorkspaceIndex $index;
 
     public function __construct(WorkspaceIndex $index)
     {
         $this->index = $index;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locate(Name $name): SourceCode
     {
         if (null === $document = $this->index->documentForName($name)) {

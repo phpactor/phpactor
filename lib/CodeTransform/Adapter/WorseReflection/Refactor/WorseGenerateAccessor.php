@@ -17,25 +17,13 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 
 class WorseGenerateAccessor implements GenerateAccessor
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var Updater
-     */
-    private $updater;
+    private Updater $updater;
 
-    /**
-     * @var string
-     */
-    private $prefix;
+    private string $prefix;
 
-    /**
-     * @var bool
-     */
-    private $upperCaseFirst;
+    private bool $upperCaseFirst;
 
     public function __construct(
         Reflector $reflector,

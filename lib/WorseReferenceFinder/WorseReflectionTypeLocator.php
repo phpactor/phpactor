@@ -18,19 +18,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {
         $this->reflector = $reflector;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
     {
         if (false === $document->language()->isPhp()) {

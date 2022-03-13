@@ -7,10 +7,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class StartCommandTest extends LanguageServerTestCase
 {
-    /**
-     * @var CommandTester
-     */
-    private $tester;
+    private CommandTester $tester;
 
     protected function setUp(): void
     {

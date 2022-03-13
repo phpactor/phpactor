@@ -9,20 +9,14 @@ namespace Phpactor\Completion\Core;
  */
 class SignatureInformation
 {
-    /**
-     * @var string
-     */
-    private $label;
+    private string $label;
 
     /**
      * @var ParameterInformation[]
      */
-    private $parameters = [];
+    private array $parameters = [];
 
-    /**
-     * @var string|null
-     */
-    private $documentation;
+    private ?string $documentation;
 
     public function __construct(string $label, array $parameters, string $documentation = null)
     {

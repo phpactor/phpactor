@@ -13,7 +13,7 @@ class CollectionResponse implements Response
     /**
      * @var Response[]
      */
-    private $actions;
+    private array $actions;
 
     private function __construct(array $actions)
     {

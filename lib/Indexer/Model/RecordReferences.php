@@ -15,12 +15,9 @@ class RecordReferences implements IteratorAggregate
     /**
      * @var array<RecordReference>
      */
-    private $references = [];
+    private array $references = [];
 
-    /**
-     * @var FileRecord
-     */
-    private $file;
+    private FileRecord $file;
 
     /**
      * @param array<RecordReference> $references

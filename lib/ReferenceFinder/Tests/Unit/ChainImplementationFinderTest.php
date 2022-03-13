@@ -29,15 +29,9 @@ class ChainImplementationFinderTest extends TestCase
      */
     private $locator2;
 
-    /**
-     * @var TextDocument
-     */
-    private $document;
+    private TextDocument $document;
 
-    /**
-     * @var ByteOffset
-     */
-    private $offset;
+    private ByteOffset $offset;
 
     public function setUp(): void
     {

@@ -20,22 +20,16 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
     /**
      * @var Deferred<FilesChanged>
      */
-    private $deferred;
+    private Deferred $deferred;
 
-    /**
-     * @var ClientCapabilities|null
-     */
-    private $clientCapabilities;
+    private ?ClientCapabilities $clientCapabilities;
 
     /**
      * @var FileEvent[]
      */
-    private $queue = [];
+    private array $queue = [];
 
-    /**
-     * @var bool
-     */
-    private $running = false;
+    private bool $running = false;
 
     public function __construct(?ClientCapabilities $clientCapabilities)
     {
@@ -43,17 +37,13 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
         $this->clientCapabilities = $clientCapabilities;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function watch(): Promise
     {
         return new Success($this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function isSupported(): Promise
     {
         if (!$this->clientCapabilities) {
@@ -65,17 +55,13 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function describe(): string
     {
         return 'LSP file events';
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof FilesChanged) {
@@ -101,9 +87,7 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function wait(): Promise
     {
         return call(function () {

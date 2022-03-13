@@ -28,15 +28,9 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
     public function __construct(Reflector $reflector, Parser $parser = null)
     {

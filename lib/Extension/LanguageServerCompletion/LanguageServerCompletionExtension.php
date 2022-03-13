@@ -18,9 +18,7 @@ class LanguageServerCompletionExtension implements Extension
 {
     private const PARAM_TRIM_LEADING_DOLLAR = 'language_server_completion.trim_leading_dollar';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -31,9 +29,7 @@ class LanguageServerCompletionExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerHandlers($container);

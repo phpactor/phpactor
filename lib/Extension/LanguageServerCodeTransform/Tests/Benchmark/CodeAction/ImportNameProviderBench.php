@@ -14,15 +14,9 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
  */
 class ImportNameProviderBench extends IntegrationTestCase
 {
-    /**
-     * @var LanguageServerTester
-     */
-    private $tester;
+    private LanguageServerTester $tester;
 
-    /**
-     * @var ImportNameProvider
-     */
-    private $provider;
+    private ImportNameProvider $provider;
 
     public function setUp(): void
     {

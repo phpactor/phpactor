@@ -16,25 +16,19 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportMissingClassesHandlerTest extends IntegrationTestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_PATH = '/example/path';
     const EXAMPLE_SOURCE = 'example-source';
 
-
     private $requestHandler;
-    /**
-     * @var ObjectProphecy
-     */
-    private $finder;
 
-    /**
-     * @var HandlerTester
-     */
-    private $tester;
+    private ObjectProphecy $finder;
+
+    private HandlerTester $tester;
 
     protected function setUp(): void
     {

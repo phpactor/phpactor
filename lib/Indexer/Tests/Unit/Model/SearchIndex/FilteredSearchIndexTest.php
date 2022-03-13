@@ -9,19 +9,18 @@ use Phpactor\Indexer\Model\SearchIndex;
 use Phpactor\Indexer\Model\SearchIndex\FilteredSearchIndex;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class FilteredSearchIndexTest extends IntegrationTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-    /**
-     * @var ObjectProphecy
-     */
-    private $innerIndex;
 
     /**
-     * @var FilteredSearchIndex
+     * @var ObjectProphecy<SearchIndex>
      */
-    private $index;
+    private ObjectProphecy $innerIndex;
+
+    private FilteredSearchIndex $index;
 
     protected function setUp(): void
     {

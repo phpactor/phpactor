@@ -18,15 +18,9 @@ class ClassCopyCommand extends Command
     const TYPE_CLASS = 'class';
     const TYPE_FILE = 'file';
 
-    /**
-     * @var ClassCopy
-     */
-    private $copier;
+    private ClassCopy $copier;
 
-    /**
-     * @var Prompt
-     */
-    private $prompt;
+    private Prompt $prompt;
 
     public function __construct(
         ClassCopy $copier,

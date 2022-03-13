@@ -8,10 +8,7 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameBeginsWith extends Criteria
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     public function __construct(string $name)
     {

@@ -22,25 +22,16 @@ use Psr\Log\NullLogger;
 
 final class TolerantIndexBuilder implements IndexBuilder
 {
-    /**
-     * @var Index
-     */
-    private $index;
+    private Index $index;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
     /**
      * @var TolerantIndexer[]
      */
-    private $indexers;
+    private array $indexers;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * @param TolerantIndexer[] $indexers

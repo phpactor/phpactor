@@ -9,20 +9,11 @@ class UseStatement
     const TYPE_CLASS = 'class';
     const TYPE_FUNCTION = 'function';
 
-    /**
-     * @var Type
-     */
-    private $className;
+    private Type $className;
 
-    /**
-     * @var string
-     */
-    private $alias;
+    private ?string $alias;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private ?string $type;
 
     public function __construct(Type $className, string $alias = null, string $type = self::TYPE_CLASS)
     {

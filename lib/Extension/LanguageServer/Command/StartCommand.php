@@ -13,15 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class StartCommand extends Command
 {
     public const NAME = 'language-server';
-
     private const OPT_ADDRESS = 'address';
     private const OPT_NO_LOOP = 'no-loop';
 
-
-    /**
-     * @var LanguageServerBuilder
-     */
-    private $languageServerBuilder;
+    private LanguageServerBuilder $languageServerBuilder;
 
     public function __construct(LanguageServerBuilder $languageServerBuilder)
     {

@@ -18,10 +18,7 @@ class GotoTypeHandler implements Handler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    /**
-     * @var TypeLocator
-     */
-    private $locator;
+    private TypeLocator $locator;
 
     public function __construct(
         TypeLocator $locator

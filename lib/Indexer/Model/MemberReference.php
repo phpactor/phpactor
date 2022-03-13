@@ -6,20 +6,11 @@ use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 
 class MemberReference
 {
-    /**
-     * @var string
-     */
-    private $type;
+    private ?string $type;
 
-    /**
-     * @var FullyQualifiedName|null
-     */
-    private $name;
+    private ?FullyQualifiedName $name;
 
-    /**
-     * @var string
-     */
-    private $memberName;
+    private ?string $memberName;
 
     public function __construct(string $type, ?FullyQualifiedName $name, string $memberName)
     {

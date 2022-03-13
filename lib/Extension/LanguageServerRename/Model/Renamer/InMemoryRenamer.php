@@ -11,15 +11,12 @@ use Phpactor\TextDocument\TextDocument;
 
 class InMemoryRenamer implements Renamer
 {
-    /**
-     * @var ByteOffsetRange
-     */
-    private $range;
+    private ?ByteOffsetRange $range;
 
     /**
      * @var LocatedTextEdit[]
      */
-    private $results;
+    private array $results;
 
     /**
      * @param LocatedTextEdit[] $results
@@ -34,10 +31,7 @@ class InMemoryRenamer implements Renamer
     {
         return $this->range;
     }
-
-    /**
-     * {@inheritDoc}
-     */
+    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         yield from $this->results;

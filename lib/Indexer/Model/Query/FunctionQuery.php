@@ -12,10 +12,7 @@ use Phpactor\TextDocument\Location;
 
 class FunctionQuery implements IndexQuery
 {
-    /**
-     * @var Index
-     */
-    private $index;
+    private Index $index;
 
     public function __construct(Index $index)
     {

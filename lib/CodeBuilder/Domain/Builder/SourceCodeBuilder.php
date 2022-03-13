@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use InvalidArgumentException;
+use Phpactor\CodeBuilder\Domain\Prototype\QualifiedName;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
 use Phpactor\CodeBuilder\Domain\Prototype\Classes;
@@ -14,30 +15,27 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 class SourceCodeBuilder extends AbstractBuilder
 {
-    /**
-     * @var NamespaceName
-     */
-    protected $namespace;
+    protected ?QualifiedName $namespace = null;
 
     /**
      * @var UseStatement[]
      */
-    protected $useStatements = [];
+    protected array $useStatements = [];
 
     /**
      * @var ClassBuilder[]
      */
-    protected $classes = [];
+    protected array $classes = [];
 
     /**
      * @var InterfaceBuilder[]
      */
-    protected $interfaces = [];
+    protected array $interfaces = [];
 
     /**
      * @var TraitBuilder[]
      */
-    protected $traits = [];
+    protected array $traits = [];
 
     public static function create(): SourceCodeBuilder
     {

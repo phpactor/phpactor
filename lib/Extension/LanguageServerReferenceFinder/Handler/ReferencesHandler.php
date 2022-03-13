@@ -25,35 +25,17 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var ReferenceFinder
-     */
-    private $finder;
+    private ReferenceFinder $finder;
 
-    /**
-     * @var DefinitionLocator
-     */
-    private $definitionLocator;
+    private DefinitionLocator $definitionLocator;
 
-    /**
-     * @var float
-     */
-    private $timeoutSeconds;
+    private float $timeoutSeconds;
 
-    /**
-     * @var LocationConverter
-     */
-    private $locationConverter;
+    private LocationConverter $locationConverter;
 
-    /**
-     * @var ClientApi
-     */
-    private $clientApi;
+    private ClientApi $clientApi;
 
     public function __construct(
         Workspace $workspace,
@@ -71,9 +53,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         $this->clientApi = $clientApi;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function methods(): array
     {
         return [

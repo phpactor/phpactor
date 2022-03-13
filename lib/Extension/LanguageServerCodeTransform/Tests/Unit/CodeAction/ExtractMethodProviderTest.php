@@ -19,18 +19,16 @@ use Generator;
 class ExtractMethodProviderTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SOURCE = 'foobar';
     const EXAMPLE_FILE = 'file:///somefile.php';
-    /**
-     * @var ObjectProphecy
-     */
-    private $extractMethod;
+
+    private ObjectProphecy $extractMethod;
 
     public function setUp(): void
     {
         $this->extractMethod = $this->prophesize(ExtractMethod::class);
     }
+
     /**
      * @dataProvider provideActionsData
      */

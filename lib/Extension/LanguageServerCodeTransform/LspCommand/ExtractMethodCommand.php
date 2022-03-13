@@ -19,18 +19,11 @@ class ExtractMethodCommand implements Command
     public const NAME  = 'extract_method';
     public const DEFAULT_METHOD_NAME  = 'newMethod';
 
-    /**
-     * @var ExtractMethod
-     */
-    private $extractMethod;
-    /**
-     * @var ClientApi
-     */
-    private $clientApi;
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private ExtractMethod $extractMethod;
+
+    private ClientApi $clientApi;
+
+    private Workspace $workspace;
 
     public function __construct(
         ClientApi $clientApi,
@@ -41,6 +34,7 @@ class ExtractMethodCommand implements Command
         $this->clientApi = $clientApi;
         $this->workspace = $workspace;
     }
+
     /**
      * @return Promise<ApplyWorkspaceEditResponse|null>
      */

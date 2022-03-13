@@ -8,10 +8,7 @@ use IteratorAggregate;
 
 class Names implements Countable, IteratorAggregate
 {
-    /**
-     * @var array
-     */
-    private $names;
+    private array $names;
 
     private function __construct(Name ...$names)
     {
@@ -23,9 +20,7 @@ class Names implements Countable, IteratorAggregate
         return new self(...$array);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function count(): int
     {
         return count($this->names);

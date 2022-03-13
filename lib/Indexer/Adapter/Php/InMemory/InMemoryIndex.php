@@ -8,20 +8,14 @@ use SplFileInfo;
 
 class InMemoryIndex implements Index
 {
-    /**
-     * @var int|null
-     */
-    private $lastUpdate;
+    private ?int $lastUpdate;
 
-    /**
-     * @var InMemorySearchIndex
-     */
-    private $searchIndex;
+    private InMemorySearchIndex $searchIndex;
 
     /**
      * @var array<Record>
      */
-    private $index;
+    private array $index;
 
     /**
      * @param array<Record> $index

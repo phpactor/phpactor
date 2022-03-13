@@ -10,25 +10,22 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
     use HasPathTrait;
-
     public const RECORD_TYPE = 'class';
 
     /**
      * @var array<string>
      */
-    private $implementations = [];
+    private array $implementations = [];
 
     /**
      * @var array<string>
      */
-    private $implements = [];
+    private array $implements = [];
 
     /**
      * Type of "class": class, interface or trait
-     *
-     * @var string
      */
-    private $type;
+    private string $type;
 
     public static function fromName(string $name): self
     {
@@ -97,9 +94,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

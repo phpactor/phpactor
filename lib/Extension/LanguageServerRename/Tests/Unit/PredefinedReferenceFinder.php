@@ -10,10 +10,7 @@ use Generator;
 
 class PredefinedReferenceFinder implements ReferenceFinder
 {
-    /**
-     * @var array
-     */
-    private $locations;
+    private array $locations;
 
     public function __construct(PotentialLocation ...$locations)
     {

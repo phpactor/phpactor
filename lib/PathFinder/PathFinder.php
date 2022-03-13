@@ -7,15 +7,12 @@ use Webmozart\PathUtil\Path;
 
 class PathFinder
 {
-    /**
-     * @var string
-     */
-    private $basePath;
+    private string $basePath;
 
     /**
      * @var array<string,Pattern>
      */
-    private $destinations = [];
+    private array $destinations = [];
 
     /**
      * @param array<string, Pattern> $destinations

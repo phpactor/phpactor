@@ -8,7 +8,6 @@ use Phpactor\TextDocument\TextDocumentUri;
 interface UriToNameConverter
 {
     /**
-     * @return string
      * @throws CouldNotConvertUriToClass
      */
     public function convert(TextDocumentUri $uri): string;

@@ -8,6 +8,7 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\ChangeVisiblityHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ChangeVisiblityHandlerTest extends HandlerTestCase
 {
@@ -15,10 +16,7 @@ class ChangeVisiblityHandlerTest extends HandlerTestCase
     const EXAMPLE_PATH = '/path/to';
     const EXAMPLE_OFFSET = 12;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $changeVisibility;
+    private ObjectProphecy $changeVisibility;
 
     public function setUp(): void
     {

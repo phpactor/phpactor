@@ -7,15 +7,9 @@ use RuntimeException;
 
 class ContextMenu
 {
-    /**
-     * @var array
-     */
-    private $actions = [];
+    private array $actions = [];
 
-    /**
-     * @var array
-     */
-    private $contexts = [];
+    private array $contexts = [];
 
     public function __construct(array $actions, array $contexts)
     {

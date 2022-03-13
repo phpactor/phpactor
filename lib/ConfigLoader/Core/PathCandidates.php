@@ -10,7 +10,7 @@ class PathCandidates implements IteratorAggregate
     /**
      * @var PathCandidate[]
      */
-    private $candidates = [];
+    private array $candidates = [];
 
     public function __construct(array $candidates)
     {
@@ -19,9 +19,7 @@ class PathCandidates implements IteratorAggregate
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getIterator(): Traversable
     {
         foreach ($this->candidates as $candidate) {

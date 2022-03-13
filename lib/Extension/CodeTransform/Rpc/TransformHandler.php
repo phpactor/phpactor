@@ -18,10 +18,7 @@ class TransformHandler implements Handler
     const PARAM_PATH = 'path';
     const PARAM_SOURCE = 'source';
 
-    /**
-     * @var CodeTransform
-     */
-    private $codeTransform;
+    private CodeTransform $codeTransform;
 
     public function __construct(CodeTransform $codeTransform)
     {

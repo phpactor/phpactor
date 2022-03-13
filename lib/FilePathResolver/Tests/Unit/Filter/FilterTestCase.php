@@ -12,5 +12,6 @@ abstract class FilterTestCase extends TestCase
     {
         return (new FilteringPathResolver([ $this->createFilter() ]))->resolve($path);
     }
+
     abstract protected function createFilter(): Filter;
 }

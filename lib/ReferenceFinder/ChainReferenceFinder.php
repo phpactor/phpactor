@@ -11,7 +11,7 @@ final class ChainReferenceFinder implements ReferenceFinder
     /**
      * @var ReferenceFinder[]
      */
-    private $finders = [];
+    private array $finders = [];
 
     public function __construct(array $finders)
     {

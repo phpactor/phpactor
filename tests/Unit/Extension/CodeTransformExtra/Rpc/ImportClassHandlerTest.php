@@ -19,6 +19,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedExcept
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportClassHandlerTest extends HandlerTestCase
 {
@@ -28,15 +29,9 @@ class ImportClassHandlerTest extends HandlerTestCase
     const TEST_SOURCE = '<?php Foo';
     const TEST_ALIAS = 'Alias';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $importName;
+    private ObjectProphecy $importName;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $classSearch;
+    private ObjectProphecy $classSearch;
 
     public function setUp(): void
     {

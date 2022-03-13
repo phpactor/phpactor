@@ -22,10 +22,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
     const EXAMPLE_OFFSET = 1234;
     const EXAMPLE_PATH = '/path/to/1';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $generateMethod;
+    private ObjectProphecy $generateMethod;
 
     public function setUp(): void
     {

@@ -13,9 +13,7 @@ class SomeTypeLocator implements TypeLocator
     const EXAMPLE_OFFSET = 1;
     const EXAMPLE_PATH = '/foobar';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
     {
         return new Location(

@@ -10,7 +10,6 @@ class Suggestion
      * Completion types based on the language server protocol:
      * https://github.com/Microsoft/language-server-protocol/blob/gh-pages/specification.md#completion-request-leftwards_arrow_with_hook
      */
-
     const TYPE_METHOD = 'method';
     const TYPE_FUNCTION = 'function';
     const TYPE_CONSTRUCTOR = 'constructor';
@@ -29,55 +28,27 @@ class Suggestion
     const TYPE_FILE = 'file';
     const TYPE_REFERENCE = 'reference';
     const TYPE_CONSTANT = 'constant';
-
     const PRIORITY_HIGH = 64;
     const PRIORITY_MEDIUM = 127;
     const PRIORITY_LOW = 255;
 
-    /**
-     * @var string|null
-     */
-    private $type;
+    private ?string $type;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var string|null
-     */
-    private $shortDescription;
+    private ?string $shortDescription;
 
-    /**
-     * @var string
-     */
-    private $label;
+    private string $label;
 
-    /**
-     * @var Range|null
-     */
-    private $range;
+    private ?Range $range;
 
-    /**
-     * @var string|null
-     */
-    private $documentation;
+    private ?string $documentation;
 
-    /**
-     * @var string|null
-     */
-    private $snippet;
+    private ?string $snippet;
 
-    /**
-     * @var string|null
-     */
-    private $nameImport;
+    private ?string $nameImport;
 
-    /**
-     * @var int|null
-     */
-    private $priority;
+    private ?int $priority;
 
     private function __construct(
         string $name,
@@ -197,7 +168,6 @@ class Suggestion
     {
         return $this->nameImport;
     }
-
 
     public function label(): string
     {

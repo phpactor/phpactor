@@ -4,15 +4,9 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
 final class PhpstanConfig
 {
-    /**
-     * @var string
-     */
-    private $phpstanBin;
+    private string $phpstanBin;
 
-    /**
-     * @var string|null
-     */
-    private $level;
+    private ?string $level;
 
     public function __construct(string $phpstanBin, ?string $level = null)
     {

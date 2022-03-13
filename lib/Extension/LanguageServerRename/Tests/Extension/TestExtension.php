@@ -14,9 +14,6 @@ use Phpactor\TextDocument\ByteOffsetRange;
 
 class TestExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register(InMemoryRenamer::class, function (Container $container) {
@@ -35,9 +32,7 @@ class TestExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

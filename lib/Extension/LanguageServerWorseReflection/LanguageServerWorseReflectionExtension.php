@@ -17,9 +17,7 @@ class LanguageServerWorseReflectionExtension implements Extension
 {
     const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerSourceLocator($container);

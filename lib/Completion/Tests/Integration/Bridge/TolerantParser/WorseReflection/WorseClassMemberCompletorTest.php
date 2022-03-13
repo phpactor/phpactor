@@ -13,7 +13,6 @@ use Generator;
 
 class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -754,6 +753,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
         yield 'statement with previous member access' => [ '<?php if ($foobar && $this->foobar) { echo<>' ];
         yield 'variable with previous static member access' => [ '<?php Hello::hello(); $foo<>' ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()

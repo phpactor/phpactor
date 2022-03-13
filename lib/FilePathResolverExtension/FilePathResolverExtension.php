@@ -26,19 +26,15 @@ class FilePathResolverExtension implements Extension
 {
     const SERVICE_FILE_PATH_RESOLVER = 'file_path_resolver.resolver';
     const SERVICE_EXPANDERS = 'file_path_resolver.expanders';
-
     const TAG_FILTER = 'file_path_resolver.filter';
     const TAG_EXPANDER = 'file_path_resolver.expander';
-
     const PARAM_PROJECT_ROOT = 'file_path_resolver.project_root';
     const PARAM_APP_NAME = 'file_path_resolver.app_name';
     const PARAM_ENABLE_CACHE = 'file_path_resolver.enable_cache';
     const PARAM_ENABLE_LOGGING = 'file_path_resolver.enable_logging';
     const PARAM_APPLICATION_ROOT = 'file_path_resolver.application_root';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -50,9 +46,7 @@ class FilePathResolverExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerPathResolver($container);

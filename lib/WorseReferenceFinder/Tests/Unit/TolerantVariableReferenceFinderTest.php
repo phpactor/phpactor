@@ -177,6 +177,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
                 'class C1 { public $pr<>op1; function M1() { $this->prop1 = 5; $var4 = $this->prop1; } }',
         ];
     }
+
     /** @return mixed[] */
     private static function offsetsFromSource(string $source, ?string $uri): array
     {

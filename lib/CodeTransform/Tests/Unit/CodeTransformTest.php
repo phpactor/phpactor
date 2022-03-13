@@ -15,6 +15,7 @@ use Phpactor\CodeTransform\Domain\Transformers;
 class CodeTransformTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @testdox It should apply the given transformers to source code.
      */

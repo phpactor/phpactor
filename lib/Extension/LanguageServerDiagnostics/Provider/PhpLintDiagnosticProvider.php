@@ -12,16 +12,9 @@ use function Amp\call;
 
 class PhpLintDiagnosticProvider implements DiagnosticsProvider
 {
-    /**
-     * @var TextDocumentLocator
-     */
-    private $locator;
+    private TextDocumentLocator $locator;
 
-    /**
-     * @var PhpLinter
-     */
-    private $linter;
-
+    private PhpLinter $linter;
 
     public function __construct(PhpLinter $linter, TextDocumentLocator $locator)
     {
@@ -29,9 +22,7 @@ class PhpLintDiagnosticProvider implements DiagnosticsProvider
         $this->linter = $linter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return call(function () use ($textDocument) {

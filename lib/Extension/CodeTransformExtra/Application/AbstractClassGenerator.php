@@ -10,20 +10,11 @@ use Psr\Log\NullLogger;
 
 class AbstractClassGenerator
 {
-    /**
-     * @var ClassFileNormalizer
-     */
-    protected $normalizer;
+    protected ClassFileNormalizer $normalizer;
 
-    /**
-     * @var Generators
-     */
-    protected $generators;
+    protected Generators $generators;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(ClassFileNormalizer $normalizer, Generators $generators, LoggerInterface $logger = null)
     {

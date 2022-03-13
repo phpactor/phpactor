@@ -23,45 +23,24 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantUpdater implements Updater
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var Renderer
-     */
-    private $renderer;
+    private Renderer $renderer;
 
     /**
      * @var TextEdit[]
      */
-    private $edits = [];
+    private array $edits = [];
 
-    /**
-     * @var TextFormat
-     */
-    private $textFormat;
+    private TextFormat $textFormat;
 
-    /**
-     * @var ClassUpdater
-     */
-    private $classUpdater;
+    private ClassUpdater $classUpdater;
 
-    /**
-     * @var InterfaceUpdater
-     */
-    private $interfaceUpdater;
+    private InterfaceUpdater $interfaceUpdater;
 
-    /**
-     * @var TraitUpdater
-     */
-    private $traitUpdater;
+    private TraitUpdater $traitUpdater;
 
-    /**
-     * @var UseStatementUpdater
-     */
-    private $useStatementUpdater;
+    private UseStatementUpdater $useStatementUpdater;
 
     public function __construct(
         Renderer $renderer,

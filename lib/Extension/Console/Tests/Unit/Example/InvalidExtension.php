@@ -9,9 +9,6 @@ use Phpactor\MapResolver\Resolver;
 
 class InvalidExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.command.test', function () {
@@ -19,9 +16,7 @@ class InvalidExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [] ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

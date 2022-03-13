@@ -15,10 +15,7 @@ use SebastianBergmann\Diff\Differ as BergmannDiffer;
  */
 class TextEditBuilder
 {
-    /**
-     * @var BergmannDiffer
-     */
-    private $differ;
+    private BergmannDiffer $differ;
 
     public function __construct(BergmannDiffer $differ = null)
     {

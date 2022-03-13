@@ -20,12 +20,9 @@ use RuntimeException;
 class RpcExtension implements Extension
 {
     const TAG_RPC_HANDLER = 'rpc.handler';
-
     public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('rpc.command.rpc', function (Container $container) {
@@ -65,9 +62,7 @@ class RpcExtension implements Extension
         $this->registerHandlers($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

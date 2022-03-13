@@ -9,15 +9,9 @@ use Phpactor\Indexer\Model\SearchClient;
 
 class HydratingSearchClient implements SearchClient
 {
-    /**
-     * @var SearchClient
-     */
-    private $innerClient;
+    private SearchClient $innerClient;
 
-    /**
-     * @var Index
-     */
-    private $index;
+    private Index $index;
 
     public function __construct(Index $index, SearchClient $innerClient)
     {
@@ -25,9 +19,7 @@ class HydratingSearchClient implements SearchClient
         $this->index = $index;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function search(Criteria $criteria): Generator
     {
         foreach ($this->innerClient->search($criteria) as $record) {

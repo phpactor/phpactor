@@ -4,20 +4,11 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class TextInput implements Input
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $label;
+    private string $label;
 
-    /**
-     * @var string|null
-     */
-    private $default;
+    private ?string $default;
 
     /*
      * @var string

@@ -4,30 +4,15 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class ChoiceInput implements Input
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $label;
+    private string $label;
 
-    /**
-     * @var string|null
-     */
-    private $default;
+    private ?string $default;
 
-    /**
-     * @var array
-     */
-    private $choices;
+    private array $choices;
 
-    /**
-     * @var array
-     */
-    private $keyMap;
+    private array $keyMap;
 
     private function __construct(
         string $name,

@@ -34,12 +34,12 @@ class ReferencesHandlerTest extends TestCase
     /**
      * @var ObjectProphecy<ReferenceFinder>
      */
-    private $finder;
+    private ObjectProphecy $finder;
 
     /**
      * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator;
+    private ObjectProphecy $locator;
 
     protected function setUp(): void
     {

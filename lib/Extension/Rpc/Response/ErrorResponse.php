@@ -7,15 +7,9 @@ use Exception;
 
 class ErrorResponse implements Response
 {
-    /**
-     * @var string
-     */
-    private $message;
+    private string $message;
 
-    /**
-     * @var string
-     */
-    private $details;
+    private string $details;
 
     private function __construct(string $message, string $details)
     {

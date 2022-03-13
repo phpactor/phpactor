@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;
 
 class ChainPromptTest extends TestCase
@@ -13,14 +14,16 @@ class ChainPromptTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var Prompt
+     * @var ObjectProphecy<Prompt>
      */
-    private $prompt1;
-
+    private ObjectProphecy $prompt1;
+    
     /**
-     * @var Prompt
+     * @var ObjectProphecy<Prompt>
      */
-    private $prompt2;
+    private ObjectProphecy $prompt2;
+
+    private ChainPrompt $chainPrompt;
 
     public function setUp(): void
     {

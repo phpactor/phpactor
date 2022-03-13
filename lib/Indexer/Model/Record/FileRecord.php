@@ -32,9 +32,7 @@ class FileRecord implements HasPath, Record
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

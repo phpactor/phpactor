@@ -8,20 +8,11 @@ use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 
 class Navigator
 {
-    /**
-     * @var Navigator
-     */
-    private $navigator;
+    private NavigatorInterface $navigator;
 
-    /**
-     * @var ClassNew
-     */
-    private $classNew;
+    private ClassNew $classNew;
 
-    /**
-     * @var array
-     */
-    private $autoCreateConfig;
+    private array $autoCreateConfig;
 
     public function __construct(
         NavigatorInterface $navigator,

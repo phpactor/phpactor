@@ -14,6 +14,9 @@ use Phpactor\Extension\LanguageServerPsalm\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 use function Amp\Promise\wait;
 
+/**
+ * @group slow
+ */
 class PsalmProcessTest extends IntegrationTestCase
 {
     protected function setUp(): void
@@ -48,6 +51,7 @@ class PsalmProcessTest extends IntegrationTestCase
         (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
 
         (new Process([$psalmBin, '--init'], $this->workspace()->path()))->mustRun();
+        (new Process([$psalmBin, '--clear-cache'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),

@@ -18,15 +18,9 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    /**
-     * @var ClassReflector
-     */
-    private $reflector;
+    private ClassReflector $reflector;
 
-    /**
-     * @var ObjectFormatter
-     */
-    private $formatter;
+    private ObjectFormatter $formatter;
 
     public function __construct(ClassReflector $reflector, ObjectFormatter $formatter)
     {
@@ -34,9 +28,7 @@ class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifia
         $this->formatter = $formatter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $classes = get_declared_classes();

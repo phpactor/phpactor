@@ -70,7 +70,6 @@ class LanguageServerExtension implements Extension
     public const TAG_CODE_ACTION_PROVIDER = 'language_server.code_action_provider';
     public const TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER = 'language_server.code_action_diagnostics_provider';
     public const TAG_DIAGNOSTICS_PROVIDER = 'language_server.diagnostics_provider';
-
     public const PARAM_SESSION_PARAMETERS = 'language_server.session_parameters';
     public const PARAM_CLIENT_CAPABILITIES = 'language_server.client_capabilities';
     public const PARAM_ENABLE_WORKPACE = 'language_server.enable_workspace';
@@ -83,9 +82,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -115,9 +112,7 @@ class LanguageServerExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerServer($container);

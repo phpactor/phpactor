@@ -13,9 +13,6 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LanguageServerDiagnosticsExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpLintDiagnosticProvider::class, function (Container $container) {
@@ -30,9 +27,7 @@ class LanguageServerDiagnosticsExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

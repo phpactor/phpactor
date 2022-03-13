@@ -9,7 +9,6 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 
 class TwigGeneratorTest extends GeneratorTestCase
 {
-
     /**
      * @testdox It should fallback to the default templates if variant template
      *          does not exist.
@@ -20,6 +19,7 @@ class TwigGeneratorTest extends GeneratorTestCase
         $source = $this->renderer()->render($builder->build(), 'unknown');
         $this->assertEquals('<?php', (string) $source);
     }
+
     protected function renderer(): Renderer
     {
         static $generator;

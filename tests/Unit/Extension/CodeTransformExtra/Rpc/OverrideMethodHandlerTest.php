@@ -9,19 +9,15 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class OverrideMethodHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $overrideMethod;
+    private ObjectProphecy $overrideMethod;
 
     public function setUp(): void
     {

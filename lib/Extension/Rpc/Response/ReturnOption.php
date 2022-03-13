@@ -4,10 +4,7 @@ namespace Phpactor\Extension\Rpc\Response;
 
 class ReturnOption
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     /**
      * @var mixed

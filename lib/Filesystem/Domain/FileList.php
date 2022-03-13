@@ -15,6 +15,7 @@ use Closure;
 class FileList implements Iterator
 {
     private $iterator;
+
     private $key = 0;
 
     private function __construct(Iterator $iterator)

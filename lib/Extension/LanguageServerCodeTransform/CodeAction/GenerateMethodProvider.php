@@ -23,35 +23,28 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.generate_method';
 
-    /**
-     * @var MissingMethodFinder
-     */
-    private $missingMethodFinder;
+    private MissingMethodFinder $missingMethodFinder;
 
     public function __construct(MissingMethodFinder $missingMethodFinder)
     {
         $this->missingMethodFinder = $missingMethodFinder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function kinds(): array
     {
         return [
              self::KIND
          ];
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return new Success($this->getDiagnostics($textDocument));
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
     {
         return call(function () use ($textDocument) {
@@ -79,6 +72,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             }, $diagnostics);
         });
     }
+
     /**
      * @return array<Diagnostic>
      */

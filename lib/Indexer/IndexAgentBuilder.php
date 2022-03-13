@@ -38,48 +38,36 @@ use Psr\Log\NullLogger;
 
 final class IndexAgentBuilder
 {
-    /**
-     * @var string
-     */
-    private $indexRoot;
+    private string $indexRoot;
 
-    /**
-     * @var RecordReferenceEnhancer
-     */
-    private $enhancer;
+    private RecordReferenceEnhancer $enhancer;
 
     /**
      * @var array<string>
      */
-    private $includePatterns = [
+    private array $includePatterns = [
         '/**/*.php',
     ];
 
     /**
      * @var array<string>
      */
-    private $stubPaths = [];
+    private array $stubPaths = [];
 
     /**
      * @var array<string>
      */
-    private $excludePatterns = [
+    private array $excludePatterns = [
     ];
 
-    /**
-     * @var string
-     */
-    private $projectRoot;
+    private string $projectRoot;
 
     /**
      * @var array<TolerantIndexer>|null
      */
-    private $indexers = null;
+    private ?array $indexers = null;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     private function __construct(string $indexRoot, string $projectRoot)
     {

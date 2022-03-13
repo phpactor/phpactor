@@ -35,42 +35,24 @@ class NameImporterTest extends TestCase
     /**
      * @var ObjectProphecy<RefactorImportName>
      */
-    private $importNameProphecy;
+    private ObjectProphecy $importNameProphecy;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var TextDocumentItem
-     */
-    private $document;
+    private TextDocumentItem $document;
 
     /**
      * @var array<LspTextEdit>
      */
-    private $lspTextEdits;
+    private array $lspTextEdits;
 
-    /**
-     * @var TextEdits
-     */
-    private $textEdits;
+    private TextEdits $textEdits;
 
-    /**
-     * @var SourceCode
-     */
-    private $sourceCode;
+    private SourceCode $sourceCode;
 
-    /**
-     * @var ByteOffset
-     */
-    private $byteOffset;
+    private ByteOffset $byteOffset;
 
-    /**
-     * @var NameImporter
-     */
-    private $subject;
+    private NameImporter $subject;
 
     protected function setUp(): void
     {

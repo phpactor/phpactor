@@ -11,28 +11,19 @@ use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class MarkdownObjectRendererTest extends IntegrationTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectRenderer
-     */
-    private $renderer;
+    private ObjectRenderer $renderer;
 
-    /**
-     * @var TemporarySourceLocator
-     */
-    private $locator;
+    private SourceCodeLocator $locator;
 
     protected function setUp(): void
     {

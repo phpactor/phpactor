@@ -10,15 +10,9 @@ use Phpactor\CodeBuilder\Domain\Renderer;
 
 class ClassGenerator implements GenerateNew
 {
-    /**
-     * @var Renderer
-     */
-    private $renderer;
+    private Renderer $renderer;
 
-    /**
-     * @var string|null
-     */
-    private $variant;
+    private ?string $variant;
 
     public function __construct(Renderer $renderer, string $variant = null)
     {
@@ -26,9 +20,7 @@ class ClassGenerator implements GenerateNew
         $this->renderer = $renderer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function generateNew(ClassName $targetName): SourceCode
     {
         $builder = SourceCodeBuilder::create();

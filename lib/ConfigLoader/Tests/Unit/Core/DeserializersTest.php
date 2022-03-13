@@ -7,15 +7,16 @@ use Phpactor\ConfigLoader\Core\Deserializer;
 use Phpactor\ConfigLoader\Core\Deserializers;
 use Phpactor\ConfigLoader\Core\Exception\DeserializerNotFound;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class DeserializersTest extends TestCase
 {
     use ProphecyTrait;
-
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<Deserializer>
      */
-    private $deserializer;
+    private ObjectProphecy $deserializer;
 
     public function setUp(): void
     {

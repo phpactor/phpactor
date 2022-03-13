@@ -9,14 +9,9 @@ use Phpactor\TextDocument\TextDocument;
 
 class DefinitionAndReferenceFinder implements ReferenceFinder
 {
-    /**
-     * @var DefinitionLocator
-     */
-    private $locator;
-    /**
-     * @var ReferenceFinder
-     */
-    private $referenceFinder;
+    private DefinitionLocator $locator;
+
+    private ReferenceFinder $referenceFinder;
 
     public function __construct(DefinitionLocator $locator, ReferenceFinder $referenceFinder)
     {
@@ -24,9 +19,7 @@ class DefinitionAndReferenceFinder implements ReferenceFinder
         $this->referenceFinder = $referenceFinder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         try {

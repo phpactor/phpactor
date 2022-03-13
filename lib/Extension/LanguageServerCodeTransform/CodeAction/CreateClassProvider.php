@@ -22,15 +22,9 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.create_class';
 
-    /**
-     * @var Generators
-     */
-    private $generators;
+    private Generators $generators;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
     public function __construct(Generators $generators, Parser $parser)
     {
@@ -38,9 +32,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         $this->parser = $parser;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function kinds(): array
     {
         return [
@@ -48,9 +40,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return new Success($this->getDiagnostics($textDocument));

@@ -6,7 +6,6 @@ use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
 
 class JsonDumperTest extends DumperTestCase
 {
-
     /**
      * @testdox It dumps data to JSON
      */
@@ -15,6 +14,7 @@ class JsonDumperTest extends DumperTestCase
         $output = $this->dump(['hello' => 'test']);
         $this->assertEquals('{"hello":"test"}'.PHP_EOL, $output);
     }
+
     protected function dumper()
     {
         return new JsonDumper();

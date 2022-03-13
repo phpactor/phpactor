@@ -494,7 +494,6 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-
     /**
      * @dataProvider provideClasses
      * @dataProvider provideMethodParameters
@@ -1803,7 +1802,6 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
     }
-
 
     abstract protected function updater(): Updater;
 

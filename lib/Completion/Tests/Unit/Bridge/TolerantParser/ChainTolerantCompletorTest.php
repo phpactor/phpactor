@@ -14,31 +14,34 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ChainTolerantCompletorTest extends TestCase
 {
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<TolerantCompletor>
      */
-    private $completor1;
+    private ObjectProphecy $completor1;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<TolerantCompletor&TolerantQualifiable>
      */
-    private $qualifiableCompletor1;
+    private ObjectProphecy $qualifiableCompletor1;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<TolerantQualifier>
      */
-    private $qualifier1;
-
+    private ObjectProphecy $qualifier1;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<TolerantCompletor&TolerantQualifiable>
      */
-    private $qualifiableCompletor2;
-
+    private ObjectProphecy $qualifiableCompletor2;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<TolerantQualifier>
      */
-    private $qualifier2;
+    private ObjectProphecy $qualifier2;
 
     protected function setUp(): void
     {

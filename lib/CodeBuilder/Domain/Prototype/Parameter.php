@@ -4,25 +4,13 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Parameter extends Prototype
 {
-    /**
-     * @var bool
-     */
-    private $byReference;
+    private bool $byReference;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var Type
-     */
-    private $type;
+    private Type $type;
 
-    /**
-     * @var DefaultValue
-     */
-    private $defaultValue;
+    private DefaultValue $defaultValue;
 
     public function __construct(
         string $name,

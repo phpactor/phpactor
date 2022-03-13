@@ -18,6 +18,7 @@ class UseStatements extends Collection
 
         return new self($items);
     }
+
     protected function singularName(): string
     {
         return 'use statement';

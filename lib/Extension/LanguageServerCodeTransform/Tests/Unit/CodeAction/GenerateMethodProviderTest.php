@@ -24,14 +24,13 @@ use function Amp\Promise\wait;
 class GenerateMethodProviderTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SOURCE = 'foobar';
     const EXAMPLE_FILE = 'file:///somefile.php';
 
     /**
      * @var ObjectProphecy<MissingMethodFinder>
      */
-    private $finder;
+    private ObjectProphecy $finder;
 
     protected function setUp(): void
     {

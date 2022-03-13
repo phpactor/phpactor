@@ -17,6 +17,7 @@ use RecursiveIteratorIterator;
 class ComposerFileListProvider implements FileListProvider
 {
     private $classLoader;
+
     private $path;
 
     public function __construct(FilePath $path, ClassLoader $classLoader)

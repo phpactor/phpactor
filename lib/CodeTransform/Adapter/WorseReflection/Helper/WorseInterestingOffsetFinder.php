@@ -11,15 +11,9 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 
 class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
-    /**
-     * @var SourceCodeReflector
-     */
-    private $reflector;
+    private SourceCodeReflector $reflector;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
     public function __construct(SourceCodeReflector $reflector, Parser $parser = null)
     {

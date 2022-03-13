@@ -16,9 +16,7 @@ class ContextMenuExtension implements Extension
 {
     const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('rpc.handler.context_menu', function (Container $container) {
@@ -32,9 +30,7 @@ class ContextMenuExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ContextMenuHandler::NAME] ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

@@ -18,24 +18,21 @@ class ExtractMethodProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.extract.method';
 
-    /**
-     * @var ExtractMethod
-     */
-    private $extractMethod;
+    private ExtractMethod $extractMethod;
 
     public function __construct(ExtractMethod $extractMethod)
     {
         $this->extractMethod = $extractMethod;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function kinds(): array
     {
         return [
             self::KIND
         ];
     }
+
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
     {
         return call(function () use ($textDocument, $range) {

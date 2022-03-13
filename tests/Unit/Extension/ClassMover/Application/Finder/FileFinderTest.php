@@ -12,20 +12,16 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;
 
 class FileFinderTest extends TestCase
 {
     use ProphecyTrait;
-    /**
-     * @var ObjectProphecy
-     */
-    private $filesystem;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $fileList;
+    private ObjectProphecy $filesystem;
+
+    private ObjectProphecy $fileList;
 
     public function setUp(): void
     {

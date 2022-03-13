@@ -10,7 +10,6 @@ use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Name\Name;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ImportMissingClassesHandler implements Handler
@@ -19,15 +18,9 @@ class ImportMissingClassesHandler implements Handler
     public const PARAM_SOURCE = 'source';
     public const PARAM_PATH = 'path';
 
-    /**
-     * @var UnresolvableClassNameFinder
-     */
-    private $unresolvableClassNameFinder;
+    private UnresolvableClassNameFinder $unresolvableClassNameFinder;
 
-    /**
-     * @var RequestHandler
-     */
-    private $handler;
+    private RequestHandler $handler;
 
     public function __construct(
         RequestHandler $handler,

@@ -18,12 +18,9 @@ use Phpactor\MapResolver\Resolver;
 class LanguageServerHoverExtension implements Extension
 {
     public const PARAM_TEMPLATE_PATHS = 'language_server_hover.template_paths';
-    
     private const SERVICE_MARKDOWN_RENDERER = 'language_server_completion.object_renderer.markdown';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -38,9 +35,7 @@ class LanguageServerHoverExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('language_server_completion.handler.hover', function (Container $container) {

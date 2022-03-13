@@ -14,12 +14,9 @@ class Edits
     /**
      * @var array<TextEdit>
      */
-    private $edits = [];
+    private array $edits = [];
 
-    /**
-     * @var TextFormat
-     */
-    private $format;
+    private TextFormat $format;
 
     public function __construct(TextFormat $format = null)
     {

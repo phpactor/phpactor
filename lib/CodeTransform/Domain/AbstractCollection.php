@@ -17,7 +17,7 @@ abstract class AbstractCollection implements IteratorAggregate, Countable
     /**
      * @var array<string, T>
      */
-    private $elements = [];
+    private array $elements = [];
 
     /**
      * @param T[] $elements

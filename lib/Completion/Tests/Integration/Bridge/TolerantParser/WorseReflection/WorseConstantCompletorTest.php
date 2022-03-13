@@ -11,7 +11,6 @@ use Phpactor\TextDocument\TextDocument;
 
 class WorseConstantCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -57,6 +56,7 @@ class WorseConstantCompletorTest extends TolerantCompletorTestCase
     {
         yield 'non member access' => [ '<?php $hello<>' ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         return new WorseConstantCompletor($this->formatter());

@@ -24,15 +24,9 @@ abstract class AbstractClassGenerateHandlerTest extends TestCase
     const EXAMPLE_CLASS_1 = 'exampleClassName1';
     const EXAMPLE_CLASS_2 = 'exampleClassName2';
 
-    /**
-     * @var ObjectProphecy
-     */
-    protected $fileToClass;
+    protected ObjectProphecy $fileToClass;
 
-    /**
-     * @var Workspace
-     */
-    protected $workspace;
+    protected Workspace $workspace;
 
     public function setUp(): void
     {

@@ -101,7 +101,7 @@ class Phpactor
         }
 
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
-            $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
+            $xdebug = new XdebugHandler('PHPACTOR');
             $xdebug->check();
             unset($xdebug);
         }
@@ -216,16 +216,13 @@ class Phpactor
 
         return $container->build($config);
     }
+
     /**
      * If the path is relative we need to use the current working path
      * because otherwise it will be the script path, which is wrong in the
      * context of a PHAR.
      *
      * @deprecated Use webmozart Path instead.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public static function normalizePath(string $path): string
     {

@@ -6,15 +6,9 @@ use Phpactor\FilePathResolver\Expander;
 
 class ValueExpander implements Expander
 {
-    /**
-     * @var string
-     */
-    private $tokenName;
+    private string $tokenName;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
     public function __construct(string $tokenName, string $value)
     {

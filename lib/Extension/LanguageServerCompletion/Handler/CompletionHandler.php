@@ -30,35 +30,17 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var TypedCompletorRegistry
-     */
-    private $registry;
+    private TypedCompletorRegistry $registry;
 
-    /**
-     * @var bool
-     */
-    private $provideTextEdit;
+    private bool $provideTextEdit;
 
-    /**
-     * @var SuggestionNameFormatter
-     */
-    private $suggestionNameFormatter;
+    private SuggestionNameFormatter $suggestionNameFormatter;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var bool
-     */
-    private $supportSnippets;
+    private bool $supportSnippets;
 
-    /**
-     * @var NameImporter
-     */
-    private $nameImporter;
+    private NameImporter $nameImporter;
 
     public function __construct(
         Workspace $workspace,

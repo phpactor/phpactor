@@ -16,7 +16,6 @@ use Phpactor\Container\PhpactorContainer;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use Phpactor\Container\Container;
-use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\TestIndexAgent;

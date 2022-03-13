@@ -20,20 +20,11 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 
 class WorseExtractConstant implements ExtractConstant
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var Updater
-     */
-    private $updater;
+    private Updater $updater;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
     public function __construct(Reflector $reflector, Updater $updater, Parser $parser = null)
     {

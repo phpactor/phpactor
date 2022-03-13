@@ -12,50 +12,26 @@ use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 
 class MethodBuilder extends AbstractBuilder implements NamedBuilder
 {
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected ?Visibility $visibility = null;
 
-    /**
-     * @var Visibility
-     */
-    protected $visibility;
-
-    /**
-     * @var ReturnType
-     */
-    protected $returnType;
+    protected ?ReturnType $returnType = null;
 
     /**
      * @var ParameterBuilder[]
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
-    /**
-     * @var Docblock
-     */
-    protected $docblock;
+    protected ?Docblock $docblock = null;
 
-    /**
-     * @var bool
-     */
-    protected $static = false;
+    protected bool $static = false;
 
-    /**
-     * @var bool
-     */
-    protected $abstract = false;
+    protected bool $abstract = false;
 
-    /**
-     * @var MethodBodyBuilder
-     */
-    protected $bodyBuilder;
-    /**
-     * @var SourceCodeBuilder
-     */
-    private $parent;
+    protected MethodBodyBuilder $bodyBuilder;
+
+    private ClassLikeBuilder $parent;
 
     public function __construct(ClassLikeBuilder $parent, string $name)
     {
@@ -128,7 +104,7 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
 
         return new Method(
             $this->name,
-            $this->visibility,
+            $this->visibility ?? Visibility::public(),
             Parameters::fromParameters(array_map(function (ParameterBuilder $builder) {
                 return $builder->build();
             }, $this->parameters)),

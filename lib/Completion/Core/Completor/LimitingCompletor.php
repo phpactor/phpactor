@@ -10,15 +10,9 @@ use RuntimeException;
 
 class LimitingCompletor implements Completor
 {
-    /**
-     * @var Completor
-     */
-    private $innerCompletor;
+    private Completor $innerCompletor;
 
-    /**
-     * @var int
-     */
-    private $limit;
+    private int $limit;
 
     public function __construct(Completor $innerCompletor, int $limit = 32)
     {
@@ -33,9 +27,7 @@ class LimitingCompletor implements Completor
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $count = 0;

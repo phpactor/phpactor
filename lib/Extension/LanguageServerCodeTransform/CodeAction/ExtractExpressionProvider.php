@@ -18,27 +18,22 @@ class ExtractExpressionProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.extract.expression';
 
-    /**
-     * @var ExtractExpression
-     */
-    private $extractExpression;
+    private ExtractExpression $extractExpression;
 
     public function __construct(ExtractExpression $extractExpression)
     {
         $this->extractExpression = $extractExpression;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function kinds(): array
     {
         return [
             self::KIND
         ];
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
     {
         return call(function () use ($textDocument, $range) {

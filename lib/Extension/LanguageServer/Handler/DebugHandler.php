@@ -16,20 +16,11 @@ class DebugHandler implements Handler
     const METHOD_DEBUG_CONFIG = 'phpactor/debug/config';
     const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
 
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
-    /**
-     * @var ClientApi
-     */
-    private $client;
+    private ClientApi $client;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
     public function __construct(Container $container, ClientApi $client, Workspace $workspace)
     {
@@ -38,9 +29,7 @@ class DebugHandler implements Handler
         $this->workspace = $workspace;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function methods(): array
     {
         return [

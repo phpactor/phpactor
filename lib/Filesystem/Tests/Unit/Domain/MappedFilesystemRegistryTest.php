@@ -7,15 +7,16 @@ use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Prophecy\PhpUnit\ProphecyTrait;
 use InvalidArgumentException;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class MappedFilesystemRegistryTest extends TestCase
 {
     use ProphecyTrait;
-
+    
     /**
-     * @var Filesystem
+     * @var ObjectProphecy<Filesystem>
      */
-    private $filesystem;
+    private ObjectProphecy $filesystem;
 
     public function setUp(): void
     {

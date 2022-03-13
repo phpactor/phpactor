@@ -20,20 +20,11 @@ use function Amp\call;
 
 class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionProvider
 {
-    /**
-     * @var string
-     */
-    private $title;
+    private string $title;
 
-    /**
-     * @var Transformers
-     */
-    private $transformers;
+    private Transformers $transformers;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     public function __construct(Transformers $transformers, string $name, string $title)
     {
@@ -42,9 +33,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         $this->name = $name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function kinds(): array
     {
         return [
@@ -52,9 +41,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return new Success($this->getDiagnostics($textDocument));

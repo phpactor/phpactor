@@ -19,10 +19,7 @@ use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 
 class PhpactorDispatcherFactory implements DispatcherFactory
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     public function __construct(Container $container)
     {

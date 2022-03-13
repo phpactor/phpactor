@@ -9,15 +9,9 @@ use Phpactor\TextDocument\TextDocument;
 
 class DedupeCompletor implements Completor
 {
-    /**
-     * @var Completor
-     */
-    private $innerCompletor;
+    private Completor $innerCompletor;
 
-    /**
-     * @var bool
-     */
-    private $matchShortDescription;
+    private bool $matchShortDescription;
 
     public function __construct(Completor $innerCompletor, bool $matchShortDescription = false)
     {
@@ -25,9 +19,7 @@ class DedupeCompletor implements Completor
         $this->matchShortDescription = $matchShortDescription;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $seen = [];

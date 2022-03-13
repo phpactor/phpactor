@@ -49,10 +49,7 @@ class TransformCommandTest extends TestCase
 
 class TestTransformer implements Transformer
 {
-    /**
-     * @var SourceCode
-     */
-    public $code;
+    public SourceCode $code;
 
     public function transform(SourceCode $code): TextEdits
     {
@@ -60,9 +57,7 @@ class TestTransformer implements Transformer
         return TextEdits::none();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function diagnostics(SourceCode $code): Diagnostics
     {
         return Diagnostics::none();

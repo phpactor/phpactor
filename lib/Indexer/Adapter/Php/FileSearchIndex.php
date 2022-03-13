@@ -17,42 +17,27 @@ class FileSearchIndex implements SearchIndex
      * Flush to the filesystem after BATCH_SIZE updates
      */
     private const BATCH_SIZE = 10000;
-
     private const DELIMITER = "\t";
 
-    /**
-     * @var bool
-     */
-    private $initialized = false;
+    private bool $initialized = false;
 
     /**
      * @var array<array{string,string}>
      */
     private $subjects = [];
 
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * @var int
-     */
-    private $counter = 0;
+    private int $counter = 0;
 
-    /**
-     * @var bool
-     */
-    private $dirty = false;
+    private bool $dirty = false;
 
     public function __construct(string $path)
     {
         $this->path = $path;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function search(Criteria $criteria): Generator
     {
         $this->open();

@@ -17,7 +17,7 @@ class Highlights implements IteratorAggregate, Countable
     /**
      * @var array<DocumentHighlight>
      */
-    private $highlights;
+    private array $highlights;
 
     public function __construct(DocumentHighlight ...$highlights)
     {
@@ -60,9 +60,7 @@ class Highlights implements IteratorAggregate, Countable
         return new self(...iterator_to_array($iterator));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function count(): int
     {
         return count($this->highlights);

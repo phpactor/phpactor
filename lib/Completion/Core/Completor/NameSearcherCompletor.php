@@ -14,15 +14,9 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 abstract class NameSearcherCompletor
 {
-    /**
-     * @var NameSearcher
-     */
-    protected $nameSearcher;
+    protected NameSearcher $nameSearcher;
 
-    /**
-     * @var DocumentPrioritizer
-     */
-    private $prioritizer;
+    private DocumentPrioritizer $prioritizer;
 
     public function __construct(NameSearcher $nameSearcher, DocumentPrioritizer $prioritizer = null)
     {

@@ -40,18 +40,14 @@ class LanguageServerCodeTransformExtension implements Extension
     public const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     public const PARAM_REPORT_NON_EXISTING_NAMES = 'language_server_code_transform.import_name.report_non_existing_names';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
         $this->registerCodeActions($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

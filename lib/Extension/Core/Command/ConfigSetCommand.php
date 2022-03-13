@@ -15,7 +15,6 @@ class ConfigSetCommand extends Command
     const ARG_VALUE = 'value';
     const OPT_DELETE = 'delete';
 
-
     private ConfigManipulator $manipulator;
 
     public function __construct(ConfigManipulator $manipulator)

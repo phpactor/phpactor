@@ -23,6 +23,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
         $this->assertEmpty($array);
         $this->assertTrue($suggestions->getReturn());
     }
+
     abstract protected function createCompletor(string $source): Completor;
 
     protected function assertComplete(string $source, array $expected, bool $isComplete = true): void

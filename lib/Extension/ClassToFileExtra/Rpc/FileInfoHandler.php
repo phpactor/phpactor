@@ -12,10 +12,7 @@ class FileInfoHandler extends AbstractHandler
     const NAME = 'file_info';
     const PARAM_PATH = 'path';
 
-    /**
-     * @var FileInfo
-     */
-    private $fileInfo;
+    private FileInfo $fileInfo;
 
     public function __construct(FileInfo $fileInfo)
     {

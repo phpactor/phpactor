@@ -10,6 +10,7 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 class MethodBuilderTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     public function testExceptionOnAddNonParameterBuilder(): void
     {
         $this->expectException(InvalidBuilderException::class);

@@ -18,9 +18,7 @@ class ConsoleExtension implements Extension
     const SERVICE_OUTPUT = 'console.output';
     const SERVICE_INPUT = 'console.input';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_COMMAND_LOADER, function (Container $container) {
@@ -51,9 +49,7 @@ class ConsoleExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

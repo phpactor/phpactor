@@ -9,10 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DocumentExtensionsCommand extends Command
 {
-    /**
-     * @var ExtensionDocumentor
-     */
-    private $documentor;
+    private ExtensionDocumentor $documentor;
 
     public function __construct(ExtensionDocumentor $documentor)
     {

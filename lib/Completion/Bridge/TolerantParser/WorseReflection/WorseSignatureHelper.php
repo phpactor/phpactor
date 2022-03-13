@@ -28,20 +28,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseSignatureHelper implements SignatureHelper
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var ObjectFormatter
-     */
-    private $formatter;
+    private ObjectFormatter $formatter;
 
     public function __construct(Reflector $reflector, ObjectFormatter $formatter, ?Parser $parser = null)
     {

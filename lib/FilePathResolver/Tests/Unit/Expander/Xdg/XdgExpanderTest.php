@@ -9,21 +9,19 @@ use Phpactor\FilePathResolver\Expander\Xdg\XdgDataExpander;
 use Phpactor\FilePathResolver\Expanders;
 use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use XdgBaseDir\Xdg;
 
 class XdgExpanderTest extends TestCase
 {
     use ProphecyTrait;
 
+    private TokenExpandingFilter $expander;
+    
     /**
-     * @var TokenExpandingFilter
+     * @var ObjectProphecy<Xdg>
      */
-    private $expander;
-
-    /**
-     * @var ObjectProphecy
-     */
-    private $xdg;
+    private ObjectProphecy $xdg;
 
     public function setUp(): void
     {

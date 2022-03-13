@@ -13,7 +13,6 @@ class SourceCodeTest extends TestCase
     const OTHER_SOURCE = 'other source';
     const OTHER_PATH = '/other/path.php';
 
-
     public function testPath(): void
     {
         $source = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);

@@ -6,7 +6,6 @@ use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
-use Phpactor\LanguageServerProtocol\SignatureHelp;
 use Phpactor\LanguageServerProtocol\SignatureHelpOptions;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\Completion\Core\Exception\CouldNotHelpWithSignature;
@@ -19,15 +18,9 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class SignatureHelpHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var SignatureHelper
-     */
-    private $helper;
+    private SignatureHelper $helper;
 
     public function __construct(Workspace $workspace, SignatureHelper $helper)
     {
@@ -35,9 +28,7 @@ class SignatureHelpHandler implements Handler, CanRegisterCapabilities
         $this->helper = $helper;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function methods(): array
     {
         return [

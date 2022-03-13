@@ -17,21 +17,11 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 
 class WorseLocalVariableCompletor implements TolerantCompletor
 {
-    /**
-     * @var ObjectFormatter
-     */
-    private $informationFormatter;
+    private ObjectFormatter $informationFormatter;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var VariableCompletionHelper
-     */
-    private $variableCompletionHelper;
-
+    private VariableCompletionHelper $variableCompletionHelper;
 
     public function __construct(Reflector $reflector, ObjectFormatter $typeFormatter = null, VariableCompletionHelper $variableCompletionHelper = null)
     {

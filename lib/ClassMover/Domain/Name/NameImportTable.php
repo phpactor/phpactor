@@ -8,6 +8,7 @@ use RuntimeException;
 class NameImportTable
 {
     private $namespace;
+
     private $importedNameRefs = [];
 
     private function __construct(Namespace_ $namespace, array $importedNamespaceNames)
@@ -47,7 +48,6 @@ class NameImportTable
             (string)$name
         ));
     }
-
 
     public function resolveClassName(QualifiedName $name)
     {

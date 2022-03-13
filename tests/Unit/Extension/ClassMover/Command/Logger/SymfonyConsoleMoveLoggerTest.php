@@ -20,6 +20,7 @@ use Phpactor\ClassMover\Domain\Reference\Position;
 class SymfonyConsoleMoveLoggerTest extends TestCase
 {
     private $output;
+
     private $logger;
 
     public function setUp(): void

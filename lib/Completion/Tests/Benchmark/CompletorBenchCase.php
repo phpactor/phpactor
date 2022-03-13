@@ -10,12 +10,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 abstract class CompletorBenchCase
 {
     private $source;
+
     private $offset;
 
-    /**
-     * @var CouldComplete
-     */
-    private $completor;
+    private CouldComplete $completor;
 
     public function setUp($params): void
     {

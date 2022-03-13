@@ -16,20 +16,11 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var DefinitionLocator
-     */
-    private $definitionLocator;
+    private DefinitionLocator $definitionLocator;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var LocationConverter
-     */
-    private $locationConverter;
+    private LocationConverter $locationConverter;
 
     public function __construct(Workspace $workspace, DefinitionLocator $definitionLocator, LocationConverter $locationConverter)
     {

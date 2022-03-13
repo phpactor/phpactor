@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Rpc\Tests\Unit\RequestHandler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\RequestHandler;
-use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -17,31 +16,28 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class LoggingHandlerTest extends TestCase
 {
     use ProphecyTrait;
-
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<RequestHandler>
      */
-    private $innerHandler;
+    private ObjectProphecy $innerHandler;
 
+    private LoggingHandler $loggingHandler;
+    
     /**
-     * @var ExceptionCatchingHandler
+     * @var ObjectProphecy<Response>
      */
-    private $loggingHandler;
-
+    private ObjectProphecy $response;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<Request>
      */
-    private $response;
-
+    private ObjectProphecy $request;
+    
     /**
-     * @var ObjectProphecy
+     * @var ObjectProphecy<LoggerInterface>
      */
-    private $request;
-
-    /**
-     * @var ObjectProphecy
-     */
-    private $logger;
+    private ObjectProphecy $logger;
 
     public function setUp(): void
     {

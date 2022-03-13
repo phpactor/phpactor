@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class WorseInterestingOffsetFinderTest extends WorseTestCase
 {
-
     /**
      * @dataProvider provideFindSomethingInterestingWhen
      */

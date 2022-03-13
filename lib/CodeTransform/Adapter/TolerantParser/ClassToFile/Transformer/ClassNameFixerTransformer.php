@@ -24,15 +24,9 @@ use RuntimeException;
 
 class ClassNameFixerTransformer implements Transformer
 {
-    /**
-     * @var FileToClass
-     */
-    private $fileToClass;
+    private FileToClass $fileToClass;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
     public function __construct(FileToClass $fileToClass, Parser $parser = null)
     {
@@ -60,9 +54,7 @@ class ClassNameFixerTransformer implements Transformer
         return TextEdits::fromTextEdits($edits);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function diagnostics(SourceCode $code): Diagnostics
     {
         $rootNode = $this->parser->parseSourceFile((string) $code);
@@ -103,9 +95,7 @@ class ClassNameFixerTransformer implements Transformer
         return new Diagnostics($diagnostics);
     }
 
-    /**
-     * @return TextEdit|null
-     */
+    
     private function fixClassName(SourceFileNode $rootNode, string $correctClassName): ?TextEdit
     {
         $classLike = $rootNode->getFirstDescendantNode(ClassLike::class);

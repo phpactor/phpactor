@@ -11,7 +11,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorseMissingMethodFinderTest extends WorseTestCase
 {
-
     /**
      * @dataProvider provideFindMissingMethods
      */

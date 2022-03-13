@@ -27,15 +27,9 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantImportName implements ImportName
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var Updater
-     */
-    private $updater;
+    private Updater $updater;
 
     public function __construct(Updater $updater, Parser $parser = null)
     {
@@ -102,9 +96,7 @@ class TolerantImportName implements ImportName
     }
 
     /**
-     * @param NameImport $nameImport
      * @param array<ResolvedName> $imports
-     * @return array|null
      */
     private function findExistingImport(NameImport $nameImport, array $imports): ?array
     {
@@ -162,7 +154,6 @@ class TolerantImportName implements ImportName
 
         return false;
     }
-
 
     private function updateReferences(Node $node, NameImport $nameImport, TextEdits $edits): TextEdits
     {

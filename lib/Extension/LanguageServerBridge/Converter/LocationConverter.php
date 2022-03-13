@@ -12,10 +12,7 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LocationConverter
 {
-    /**
-     * @var TextDocumentLocator
-     */
-    private $locator;
+    private TextDocumentLocator $locator;
 
     public function __construct(TextDocumentLocator $locator)
     {

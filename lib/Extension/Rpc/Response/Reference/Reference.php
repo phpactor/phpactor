@@ -4,30 +4,15 @@ namespace Phpactor\Extension\Rpc\Response\Reference;
 
 class Reference
 {
-    /**
-     * @var int
-     */
-    private $start;
+    private int $start;
 
-    /**
-     * @var int
-     */
-    private $end;
+    private int $end;
 
-    /**
-     * @var int
-     */
-    private $lineNumber;
+    private int $lineNumber;
 
-    /**
-     * @var int|null
-     */
-    private $colNo;
+    private ?int $colNo;
 
-    /**
-     * @var string
-     */
-    private $line;
+    private string $line;
 
     private function __construct(int $start, int $end, int $lineNumber, int $colNo = null, string $line = '')
     {

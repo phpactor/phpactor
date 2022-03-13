@@ -17,16 +17,14 @@ use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\CloseFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
     const SOURCE_PATH = 'souce_path';
     const DEST_PATH = 'dest_path';
 
-    /**
-     * @var ClassMover
-     */
-    private $classMover;
+    private ObjectProphecy $classMover;
 
     public function setUp(): void
     {
@@ -70,7 +68,6 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
     }
-
 
     /**
      * @testdox It should request the dest path if none is given.

@@ -100,9 +100,6 @@ class LoggingExtensionTest extends TestCase
 
 class ExampleExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register('json_formatter', function (Container $container) {
@@ -110,9 +107,7 @@ class ExampleExtension implements Extension
         }, [ LoggingExtension::TAG_FORMATTER => ['alias'=> 'json2']]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

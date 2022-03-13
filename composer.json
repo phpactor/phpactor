@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "composer/package-versions-deprecated": "^1.0",
-        "composer/xdebug-handler": "^1.1",
+        "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",
         "phpactor/worse-reflection": "^0.4.10",
         "phpactor/text-document": "^1.2.3",
@@ -29,7 +29,7 @@
     "require-dev": {
         "dantleech/what-changed": "~0.4",
         "symfony/process": "^5.0",
-        "friendsofphp/php-cs-fixer": "^2.17",
+        "friendsofphp/php-cs-fixer": "^3.1",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",

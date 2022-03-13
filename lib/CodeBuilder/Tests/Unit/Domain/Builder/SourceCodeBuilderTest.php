@@ -125,7 +125,6 @@ class SourceCodeBuilderTest extends TestCase
         $this->assertEquals(UseStatement::TYPE_FUNCTION, $code->useStatements()->first()->type());
     }
 
-
     public function testClassBuilder(): void
     {
         $builder = $this->builder();

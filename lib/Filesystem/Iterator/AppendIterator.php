@@ -15,6 +15,7 @@ use ReturnTypeWillChange;
 class AppendIterator implements Iterator
 {
     private $iterators = [];
+
     private $index = 0;
 
     /**
@@ -23,7 +24,6 @@ class AppendIterator implements Iterator
      * @param Iterator $iterator <p>
      * The iterator to append.
      * </p>
-     * @return void
      * @since 5.1.0
      */
     public function append(Iterator $iterator): void
@@ -34,7 +34,6 @@ class AppendIterator implements Iterator
     /**
      * Rewinds the Iterator
      * @link http://php.net/manual/en/appenditerator.rewind.php
-     * @return void
      * @since 5.1.0
      */
     public function rewind(): void
@@ -87,7 +86,6 @@ class AppendIterator implements Iterator
     /**
      * Moves to the next element
      * @link http://php.net/manual/en/appenditerator.next.php
-     * @return void
      * @since 5.1.0
      */
     public function next(): void

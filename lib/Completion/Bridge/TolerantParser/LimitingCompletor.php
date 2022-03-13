@@ -15,10 +15,7 @@ class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
      */
     private $completor;
 
-    /**
-     * @var int
-     */
-    private $limit;
+    private int $limit;
 
     public function __construct(TolerantCompletor $completor, int $limit = 50)
     {
@@ -26,9 +23,7 @@ class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
         $this->limit = $limit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         /** @var TolerantCompletor $completor */

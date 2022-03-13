@@ -5,6 +5,7 @@ namespace Acme\Foobar\Reflection;
 final class ReflectionDefaultValue
 {
     private $value;
+
     private $undefined = false;
 
     private function __construct($value = null)

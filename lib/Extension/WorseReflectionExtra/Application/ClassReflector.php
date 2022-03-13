@@ -16,15 +16,9 @@ class ClassReflector
 {
     const FOOBAR = 'foo';
 
-    /**
-     * @var ClassFileNormalizer
-     */
-    private $classFileNormalizer;
+    private ClassFileNormalizer $classFileNormalizer;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
     // rename compositetransformer => classToFileConverter
     public function __construct(

@@ -38,7 +38,6 @@ class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
     const APP_VERSION = '0.2.0';
-
     const PARAM_DUMPER = 'console_dumper_default';
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';

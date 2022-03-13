@@ -7,7 +7,7 @@ class ChainNavigator implements Navigator
     /**
      * @var Navigator[]
      */
-    private $navigators;
+    private array $navigators;
 
     public function __construct(array $navigators)
     {

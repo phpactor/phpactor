@@ -17,6 +17,7 @@ class InterfaceMethodUpdater extends AbstractMethodUpdater
     {
         return $renderer->render($method) . ';';
     }
+
     protected function memberDeclarations(ClassLike $classNode)
     {
         return $classNode->interfaceMembers->interfaceMemberDeclarations;

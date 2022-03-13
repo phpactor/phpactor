@@ -11,10 +11,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class FileInfoHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var ObjectProphecy
-     */
-    private $fileInfo;
+    private ObjectProphecy $fileInfo;
 
     public function setUp(): void
     {

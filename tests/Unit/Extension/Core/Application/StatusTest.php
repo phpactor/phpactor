@@ -9,26 +9,17 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Status;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class StatusTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var FilesystemRegistry
-     */
-    private $registry;
+    private ObjectProphecy $registry;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $resolver;
+    private ObjectProphecy $resolver;
 
-    /**
-     * @var PathCandidates
-     */
-    private $paths;
-
+    private PathCandidates $paths;
 
     public function setUp(): void
     {

@@ -24,15 +24,9 @@ class GenerateAccessorHandler extends AbstractHandler
     const PARAM_PATH = 'path';
     const PARAM_OFFSET = 'offset';
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
-    /**
-     * @var GenerateAccessor
-     */
-    private $generateAccessor;
+    private GenerateAccessor $generateAccessor;
 
     public function __construct(
         Reflector $reflector,

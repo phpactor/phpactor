@@ -7,9 +7,6 @@ use Psr\Log\LogLevel;
 
 class PrettyFormatter implements FormatterInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function format(array $record)
     {
         $message = sprintf(
@@ -23,9 +20,7 @@ class PrettyFormatter implements FormatterInterface
         return $message.$json."\n";
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function formatBatch(array $records): void
     {
     }

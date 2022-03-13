@@ -17,20 +17,11 @@ class TransformCommand implements Command
 {
     public const NAME  = 'transform';
 
-    /**
-     * @var Transformers
-     */
-    private $transformers;
+    private Transformers $transformers;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    private Workspace $workspace;
 
-    /**
-     * @var ClientApi
-     */
-    private $clientApi;
+    private ClientApi $clientApi;
 
     public function __construct(
         ClientApi $clientApi,

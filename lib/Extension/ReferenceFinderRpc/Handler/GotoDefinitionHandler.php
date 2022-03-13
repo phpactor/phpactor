@@ -18,10 +18,7 @@ class GotoDefinitionHandler implements Handler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    /**
-     * @var DefinitionLocator
-     */
-    private $locator;
+    private DefinitionLocator $locator;
 
     public function __construct(
         DefinitionLocator $locator

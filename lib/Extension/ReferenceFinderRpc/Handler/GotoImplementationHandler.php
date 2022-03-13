@@ -27,10 +27,7 @@ class GotoImplementationHandler extends AbstractHandler
     const PARAM_TARGET = 'target';
     const PARAM_SELECTED_PATH = 'selected_path';
 
-    /**
-     * @var ClassImplementationFinder
-     */
-    private $finder;
+    private ClassImplementationFinder $finder;
 
     public function __construct(
         ClassImplementationFinder $finder

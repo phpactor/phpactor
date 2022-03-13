@@ -26,7 +26,7 @@ class ExtractMethodHandlerTest extends HandlerTestCase
     /**
      * @var ObjectProphecy<ExtractMethod>
      */
-    private $extractMethod;
+    private ObjectProphecy $extractMethod;
 
     public function setUp(): void
     {

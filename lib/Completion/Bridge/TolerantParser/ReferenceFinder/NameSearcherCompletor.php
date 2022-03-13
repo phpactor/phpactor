@@ -17,10 +17,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class NameSearcherCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
 {
-    /**
-     * @var ObjectFormatter
-     */
-    private $snippetFormatter;
+    private ObjectFormatter $snippetFormatter;
 
     public function __construct(
         NameSearcher $nameSearcher,
@@ -32,9 +29,7 @@ class NameSearcherCompletor extends CoreNameSearcherCompletor implements Toleran
         $this->snippetFormatter = $snippetFormatter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $suggestions = $this->completeName($node, $source->uri(), $node);

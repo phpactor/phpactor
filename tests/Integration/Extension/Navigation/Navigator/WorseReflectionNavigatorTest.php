@@ -10,10 +10,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseReflectionNavigatorTest extends IntegrationTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
     public function testNavigateToParent(): void
     {
@@ -100,6 +97,7 @@ class WorseReflectionNavigatorTest extends IntegrationTestCase
             'interface:Two' => $this->workspaceDir() . '/Two.php',
         ], $destinations);
     }
+
     private function create(string $manifest): WorseReflectionNavigator
     {
         $workspace = $this->workspace()->create($this->workspaceDir());

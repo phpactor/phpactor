@@ -15,11 +15,8 @@
 # docs
 /doc/_build
 
-# php-cs-fixer
-/.php_cs.cache
-./.php_cs
+/.php-cs-fixer.cache
 /build
 __pycache__
 /doc/_ext/__pycache__
 .phpunit.result.cache
-.php_cs.cache

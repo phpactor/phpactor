@@ -11,10 +11,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class PsalmLinter implements Linter
 {
-    /**
-     * @var PsalmProcess
-     */
-    private $process;
+    private PsalmProcess $process;
 
     public function __construct(PsalmProcess $process)
     {

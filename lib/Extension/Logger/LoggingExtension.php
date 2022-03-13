@@ -27,7 +27,6 @@ class LoggingExtension implements Extension
     public const PARAM_PATH = 'logging.path';
     public const SERVICE_LOGGER = 'logging.logger';
     public const TAG_FORMATTER = 'logging.formatter';
-
     private const SERVICE_FORMATTER_REGISTRY = 'logging.formatter_registry';
 
     public function configure(Resolver $schema): void

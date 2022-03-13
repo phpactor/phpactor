@@ -58,9 +58,7 @@ class IndexerExtension implements Extension
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
-
     const TAG_WATCHER = 'indexer.watcher';
-
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
     private const INDEXER_TOLERANT = 'tolerant';
@@ -68,9 +66,7 @@ class IndexerExtension implements Extension
     private const SERVICE_FILESYSTEM = 'indexer.filesystem';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -105,9 +101,7 @@ class IndexerExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);

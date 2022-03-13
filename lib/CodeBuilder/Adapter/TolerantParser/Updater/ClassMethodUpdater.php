@@ -19,6 +19,7 @@ class ClassMethodUpdater extends AbstractMethodUpdater
             PHP_EOL .
             $renderer->render($method->body());
     }
+
     protected function memberDeclarations(ClassLike $classNode)
     {
         return $classNode->classMembers->classMemberDeclarations;

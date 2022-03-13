@@ -16,9 +16,6 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\
 
 class SourceCodeFilesystemExtraExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function configure(Resolver $schema): void
     {
     }

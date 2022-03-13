@@ -55,6 +55,7 @@ class IntegrationTestCase extends TestCase
 
         return $container;
     }
+
     protected function workspace(): Workspace
     {
         return Workspace::create(__DIR__ . '/Workspace');

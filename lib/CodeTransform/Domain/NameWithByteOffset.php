@@ -10,25 +10,16 @@ final class NameWithByteOffset
 {
     public const TYPE_CLASS = 'class';
     public const TYPE_FUNCTION = 'function';
-
     private const VALID_TYPES = [
         self::TYPE_CLASS,
         self::TYPE_FUNCTION
     ];
 
-    /**
-     * @var Name
-     */
-    private $name;
-    /**
-     * @var ByteOffset
-     */
-    private $byteOffset;
+    private Name $name;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private ByteOffset $byteOffset;
+
+    private string $type;
 
     public function __construct(Name $name, ByteOffset $byteOffset, string $type = self::TYPE_CLASS)
     {

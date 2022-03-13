@@ -14,9 +14,6 @@ use Phpactor\MapResolver\Resolver;
 
 class DebugExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
     public function load(ContainerBuilder $container): void
     {
         $container->register(ExtensionDocumentor::class, function (Container $container) {
@@ -42,9 +39,7 @@ class DebugExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

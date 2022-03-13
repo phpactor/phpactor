@@ -9,13 +9,11 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var ObjectProphecy
-     */
-    private $classSearch;
+    private ObjectProphecy $classSearch;
 
     public function setUp(): void
     {

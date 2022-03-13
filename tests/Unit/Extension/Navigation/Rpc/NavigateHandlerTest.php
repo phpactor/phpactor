@@ -17,15 +17,9 @@ class NavigateHandlerTest extends HandlerTestCase
     const TEST_PATH = 'path/to/file.php';
     const TEST_DEST1 = 'dest1';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $navigator;
+    private ObjectProphecy $navigator;
 
-    /**
-     * @var array
-     */
-    private $destinations;
+    private array $destinations;
 
     public function setUp(): void
     {

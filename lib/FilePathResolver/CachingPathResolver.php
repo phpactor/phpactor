@@ -4,15 +4,9 @@ namespace Phpactor\FilePathResolver;
 
 class CachingPathResolver implements PathResolver
 {
-    /**
-     * @var PathResolver
-     */
-    private $innerPathResolver;
+    private PathResolver $innerPathResolver;
 
-    /**
-     * @var array
-     */
-    private $cache = [];
+    private array $cache = [];
 
     public function __construct(PathResolver $innerPathResolver)
     {

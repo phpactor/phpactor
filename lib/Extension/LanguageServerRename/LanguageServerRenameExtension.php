@@ -19,10 +19,8 @@ use Phpactor\TextDocument\TextDocumentLocator;
 class LanguageServerRenameExtension implements Extension
 {
     public const TAG_RENAMER = 'language_server_rename.renamer';
-    /**
 
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(Renamer::class, function (Container $container) {
@@ -59,9 +57,7 @@ class LanguageServerRenameExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

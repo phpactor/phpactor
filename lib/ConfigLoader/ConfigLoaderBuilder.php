@@ -17,12 +17,12 @@ class ConfigLoaderBuilder
     /**
      * @var Deserializer[]
      */
-    private $serializers = [];
+    private array $serializers = [];
 
     /**
      * @var PathCandidate[]
      */
-    private $candidates = [];
+    private array $candidates = [];
 
     public static function create(): self
     {

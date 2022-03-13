@@ -9,10 +9,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class NameSearchResultFunctionSnippetFormatter implements Formatter
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {
@@ -25,11 +22,7 @@ class NameSearchResultFunctionSnippetFormatter implements Formatter
             && $object->type()->isFunction();
     }
 
-    /**
-     * @param ObjectFormatter $formatter
-     * @param object $nameSearchResult
-     * @return string
-     */
+    
     public function format(ObjectFormatter $formatter, object $nameSearchResult): string
     {
         assert($nameSearchResult instanceof NameSearchResult);

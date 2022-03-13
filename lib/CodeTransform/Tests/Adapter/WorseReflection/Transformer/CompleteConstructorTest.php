@@ -43,7 +43,6 @@ class CompleteConstructorTest extends WorseTestCase
         ];
     }
 
-
     /**
      * @dataProvider provideCompleteConstructor
      */
