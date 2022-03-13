@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
+use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
@@ -23,30 +23,29 @@ class ExtractConstantCommand implements Command
 
     private Workspace $workspace;
 
-    private ExtractExpression $extractExpression;
+    private ExtractConstant $extractConstant;
 
     public function __construct(
         ClientApi $clientApi,
         Workspace $workspace,
-        ExtractExpression $extractExpression
+        ExtractConstant $extractConstant
     ) {
         $this->clientApi = $clientApi;
         $this->workspace = $workspace;
-        $this->extractExpression = $extractExpression;
+        $this->extractConstant = $extractConstant;
     }
 
     /**
      * @return Promise<?ApplyWorkspaceEditResponse>
      */
-    public function __invoke(string $uri, int $startOffset, int $endOffset): Promise
+    public function __invoke(string $uri, int $offset): Promise
     {
         $textDocument = $this->workspace->get($uri);
         
         try {
-            $textEdits = $this->extractExpression->extractExpression(
+            $textEdits = $this->extractConstant->extractConstant(
                 SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
-                $startOffset,
-                $endOffset,
+                $offset,
                 self::DEFAULT_VARIABLE_NAME
             );
         } catch (TransformException $error) {
