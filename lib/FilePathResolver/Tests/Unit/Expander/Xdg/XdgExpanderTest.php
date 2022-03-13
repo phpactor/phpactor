@@ -18,6 +18,9 @@ class XdgExpanderTest extends TestCase
     
     private TokenExpandingFilter $expander;
     
+    /**
+     * @var ObjectProphecy<Xdg>
+     */
     private ObjectProphecy $xdg;
 
     public function setUp(): void

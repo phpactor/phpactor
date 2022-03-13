@@ -12,6 +12,9 @@ class SuffixExpanderDecoratorTest extends ExpanderTestCase
 {
     use ProphecyTrait;
     
+    /**
+     * @var ObjectProphecy<Expander>
+     */
     private ObjectProphecy $expander;
 
     public function setUp(): void

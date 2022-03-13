@@ -15,6 +15,9 @@ class SourceBuilderTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
     
+    /**
+     * @var ObjectProphecy<Updater>
+     */
     private ObjectProphecy $updater;
 
     private $builder;

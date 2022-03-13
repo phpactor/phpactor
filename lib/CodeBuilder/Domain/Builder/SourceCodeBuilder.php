@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use InvalidArgumentException;
+use Phpactor\CodeBuilder\Domain\Prototype\QualifiedName;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
 use Phpactor\CodeBuilder\Domain\Prototype\Classes;
@@ -14,7 +15,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 class SourceCodeBuilder extends AbstractBuilder
 {
-    protected ?NamespaceName $namespace = null;
+    protected ?QualifiedName $namespace = null;
 
     /**
      * @var UseStatement[]

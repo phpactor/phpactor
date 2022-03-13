@@ -4,23 +4,18 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class SourceCode extends Prototype
 {
-    
-    private NamespaceName $namespace;
-
+    private QualifiedName $namespace;
     
     private UseStatements $useStatements;
-
     
     private Classes $classes;
-
     
     private Interfaces $interfaces;
-
     
     private Traits $traits;
 
     public function __construct(
-        NamespaceName $namespace = null,
+        QualifiedName $namespace = null,
         UseStatements $useStatements = null,
         Classes $classes = null,
         Interfaces $interfaces = null,
@@ -35,7 +30,7 @@ class SourceCode extends Prototype
         $this->traits = $traits ?: Traits::empty();
     }
 
-    public function namespace(): NamespaceName
+    public function namespace(): QualifiedName
     {
         return $this->namespace;
     }

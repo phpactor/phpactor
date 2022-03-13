@@ -13,6 +13,9 @@ class DeserializersTest extends TestCase
 {
     use ProphecyTrait;
     
+    /**
+     * @var ObjectProphecy<Deserializer>
+     */
     private ObjectProphecy $deserializer;
 
     public function setUp(): void

@@ -17,6 +17,9 @@ class FilesystemFileListProviderTest extends IntegrationTestCase
 
     private SimpleFilesystem $filesystem;
 
+    /**
+     * @var ObjectProphecy<Index>
+     */
     private ObjectProphecy $index;
 
     protected function setUp(): void

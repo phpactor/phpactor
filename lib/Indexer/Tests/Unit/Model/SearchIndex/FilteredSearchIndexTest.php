@@ -14,7 +14,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 class FilteredSearchIndexTest extends IntegrationTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-    
+
+    /**
+     * @var ObjectProphecy<SearchIndex>
+     */
     private ObjectProphecy $innerIndex;
     
     private FilteredSearchIndex $index;

@@ -101,7 +101,7 @@ class Phpactor
         }
 
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
-            $xdebug = new XdebugHandler('PHPACTOR', '--ansi');
+            $xdebug = new XdebugHandler('PHPACTOR');
             $xdebug->check();
             unset($xdebug);
         }

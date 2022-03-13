@@ -8,9 +8,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 trait FullyQualifiedReferenceTrait
 {
-    
     private string $fqn;
-
     
     private int $start;
 
@@ -21,6 +19,9 @@ trait FullyQualifiedReferenceTrait
 
     public function __wakeup(): void
     {
+        /**
+         * @phpstan-ignore-next-line
+         */
         if (null === $this->fqn) {
             throw new CorruptedRecord(sprintf(
                 'Record was corrupted'
