@@ -32,7 +32,7 @@ class WorseGenerateAccessorTest extends WorseTestCase
             SourceCode::fromString($source),
             [$propertyName],
             $offset
-        );
+        )->apply($source);
 
         $this->assertEquals(trim($expected), trim($transformed));
     }

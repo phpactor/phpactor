@@ -87,7 +87,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
                 EOT
         );
 
-        $edits = TextEdits::fromTextEdits([TextEdit::create(ByteOffset::fromInt(0), 0,  'foobar')]);
+        $edits = TextEdits::fromTextEdits([TextEdit::create(ByteOffset::fromInt(0), 0, 'foobar')]);
         $this->generateAccessor->generate($source, ['foo'], $offset)
              ->willReturn($edits)
              ->shouldBeCalledTimes(1);

@@ -48,7 +48,7 @@ class GenerateAccessorProviderTest extends TestCase
             '<?php class Foo { <>private $foo;<> }',
             [
                 CodeAction::fromArray([
-                    'title' =>  'Generate accessors',
+                    'title' =>  'Generate 1 accessor(s)',
                     'kind' => GenerateAccessorsProvider::KIND,
                     'command' => new Command(
                         'Generate 1 accessor(s)',
