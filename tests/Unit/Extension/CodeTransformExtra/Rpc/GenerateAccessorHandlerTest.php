@@ -11,6 +11,9 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\TextEdit;
+use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -84,8 +87,9 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
                 EOT
         );
 
+        $edits = TextEdits::fromTextEdits([TextEdit::create(ByteOffset::fromInt(0), 0,  'foobar')]);
         $this->generateAccessor->generate($source, ['foo'], $offset)
-             ->willReturn(SourceCode::fromStringAndPath('new source', self::PATH))
+             ->willReturn($edits)
              ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
@@ -103,8 +107,16 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $newSource = SourceCode::fromStringAndPath('asd', self::PATH);
 
+        $edits = TextEdits::fromTextEdits([
+            TextEdit::create(
+                0,
+                mb_strlen(self::SOURCE),
+                'asd'
+            )
+        ]);
+
         $this->generateAccessor->generate($oldSource, [self::FOO_NAME], self::CURSOR_OFFSET)
-             ->willReturn($newSource)
+             ->willReturn($edits)
              ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
@@ -126,14 +138,22 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
         $oldSource = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
         $temporarySource = SourceCode::fromStringAndPath('asd', self::PATH);
-        $this->generateAccessor->generate($oldSource, [self::FOO_NAME], self::CURSOR_OFFSET)
-             ->willReturn($temporarySource)
+
+        $edits = TextEdits::fromTextEdits([
+            TextEdit::create(
+                0,
+                mb_strlen(self::SOURCE),
+                'asd'
+            )
+        ]);
+        $this->generateAccessor->generate($oldSource, [
+            self::FOO_NAME,
+            self::BAR_NAME
+        ], self::CURSOR_OFFSET)
+             ->willReturn($edits)
              ->shouldBeCalledTimes(1);
 
         $newSource = SourceCode::fromStringAndPath((string) $temporarySource, self::PATH);
-        $this->generateAccessor->generate($temporarySource, [self::BAR_NAME], self::CURSOR_OFFSET)
-             ->willReturn($newSource)
-             ->shouldBeCalledTimes(1);
 
         $action = $this->handle(self::GENERATE_ACCESSOR_ACTION, [
             'source' => self::SOURCE,

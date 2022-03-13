@@ -4,28 +4,16 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
-use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
-use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
-use Phpactor\LanguageServerProtocol\Diagnostic;
-use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use function Amp\Promise\wait;
 
 class GenerateAccessorProviderTest extends TestCase

@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
@@ -20,7 +19,9 @@ class GenerateAccessorsCommand implements Command
     public const NAME  = 'generate_accessors';
 
     private GenerateAccessor $generateAccessor;
+
     private ClientApi $clientApi;
+
     private Workspace $workspace;
 
     public function __construct(
@@ -57,4 +58,3 @@ class GenerateAccessorsCommand implements Command
         ]), 'Generate accessors');
     }
 }
-

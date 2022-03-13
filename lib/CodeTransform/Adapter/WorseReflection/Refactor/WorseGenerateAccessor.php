@@ -5,7 +5,6 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use InvalidArgumentException;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PrototypeSourceCode;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type;
 use RuntimeException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;

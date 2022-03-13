@@ -4,27 +4,19 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
-use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
-use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
-use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\WorseReflection\Core\Exception\AccessorsCallNotFound;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessors;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\TextDocument\TextDocumentEdits;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Exception;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class GenerateAccessorsCommandTest extends TestCase
