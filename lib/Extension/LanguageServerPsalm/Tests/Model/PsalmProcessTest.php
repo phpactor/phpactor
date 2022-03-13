@@ -51,6 +51,7 @@ class PsalmProcessTest extends IntegrationTestCase
         (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
 
         (new Process([$psalmBin, '--init'], $this->workspace()->path()))->mustRun();
+        (new Process([$psalmBin, '--clear-cache'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
