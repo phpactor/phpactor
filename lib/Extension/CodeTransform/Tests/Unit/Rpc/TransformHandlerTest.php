@@ -20,22 +20,17 @@ class TransformHandlerTest extends TestCase
     use ProphecyTrait;
 
     const EXAMPLE_NEW_PATH = '/path/to/new.php';
+
     const EXAMPLE_SOURCE_CODE = '<?php';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $codeTransform;
+    
+    private ObjectProphecy $codeTransform;
 
-    /**
-     * @var HandlerTester
-     */
-    private $tester;
+    
+    private HandlerTester $tester;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $transformer;
+    
+    private ObjectProphecy $transformer;
 
     public function setUp(): void
     {

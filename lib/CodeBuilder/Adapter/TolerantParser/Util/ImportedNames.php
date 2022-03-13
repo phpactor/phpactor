@@ -9,19 +9,15 @@ use Traversable;
 
 class ImportedNames implements IteratorAggregate
 {
-    /**
-     * @var array
-     */
-    private $table;
+    
+    private array $table;
 
     public function __construct(Node $node)
     {
         $this->buildTable($node);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->classNamesFromNode());

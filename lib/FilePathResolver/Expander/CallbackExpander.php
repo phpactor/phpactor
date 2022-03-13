@@ -8,15 +8,11 @@ use RuntimeException;
 
 class CallbackExpander implements Expander
 {
-    /**
-     * @var string
-     */
-    private $tokenName;
+    
+    private string $tokenName;
 
-    /**
-     * @var Closure
-     */
-    private $callback;
+    
+    private Closure $callback;
 
     public function __construct(string $tokenName, Closure $callback)
     {

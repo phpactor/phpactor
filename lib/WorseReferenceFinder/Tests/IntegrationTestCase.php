@@ -10,10 +10,8 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 abstract class IntegrationTestCase extends TestCase
 {
-    /**
-     * @var Workspace
-     */
-    protected $workspace;
+    
+    protected Workspace $workspace;
 
     public function setUp(): void
     {

@@ -17,6 +17,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest(file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
     }
+
     /**
      * @dataProvider provideIndexesClassLike
      * @dataProvider provideIndexesReferences
@@ -421,7 +422,6 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
 
         self::assertInstanceOf(Record::class, $function);
     }
-
 
     public function testChildClassImplementations(): void
     {

@@ -4,18 +4,14 @@ namespace Phpactor\Extension\ContextMenu\Model;
 
 class Action
 {
-    /**
-     * @var string
-     */
-    private $action;
-    /**
-     * @var string|null
-     */
-    private $key;
-    /**
-     * @var array
-     */
-    private $parameters;
+    
+    private string $action;
+
+    
+    private ?string $key;
+
+    
+    private array $parameters;
 
     public function __construct(string $action, ?string $key = null, array $parameters = [])
     {

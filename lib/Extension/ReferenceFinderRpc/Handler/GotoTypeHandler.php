@@ -12,16 +12,19 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class GotoTypeHandler implements Handler
 {
     const NAME = 'goto_definition';
+
     const PARAM_OFFSET = 'offset';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_PATH = 'path';
+
     const PARAM_LANGUAGE = 'language';
+
     const PARAM_TARGET = 'target';
 
-    /**
-     * @var TypeLocator
-     */
-    private $locator;
+    
+    private TypeLocator $locator;
 
     public function __construct(
         TypeLocator $locator

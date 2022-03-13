@@ -14,6 +14,7 @@ use Psr\Log\LoggerInterface;
 class FileRepositoryTest extends IntegrationTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     public function testResetRemovesTheIndex(): void
     {
         $repo = $this->createFileRepository();

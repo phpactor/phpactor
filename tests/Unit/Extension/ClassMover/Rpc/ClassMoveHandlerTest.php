@@ -21,12 +21,11 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class ClassMoveHandlerTest extends HandlerTestCase
 {
     const SOURCE_PATH = 'souce_path';
+
     const DEST_PATH = 'dest_path';
 
-    /**
-     * @var ClassMover
-     */
-    private $classMover;
+    
+    private ClassMover $classMover;
 
     public function setUp(): void
     {
@@ -70,7 +69,6 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->assertInstanceOf(Request::class, $action->callbackAction());
         $this->assertEquals('move_class', $action->callbackAction()->name());
     }
-
 
     /**
      * @testdox It should request the dest path if none is given.

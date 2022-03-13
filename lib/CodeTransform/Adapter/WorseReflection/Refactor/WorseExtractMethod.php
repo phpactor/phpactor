@@ -31,25 +31,17 @@ use function prev;
 
 class WorseExtractMethod implements ExtractMethod
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Updater
-     */
-    private $updater;
+    
+    private Updater $updater;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
-    /**
-     * @var BuilderFactory
-     */
-    private $factory;
+    
+    private BuilderFactory $factory;
 
     public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater, Parser $parser = null)
     {

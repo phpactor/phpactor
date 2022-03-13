@@ -16,25 +16,17 @@ class ImportAllUnresolvedNamesCommand implements Command
 {
     public const NAME = 'import_all_unresolved_names';
 
-    /**
-     * @var CandidateFinder
-     */
-    private $candidateFinder;
+    
+    private CandidateFinder $candidateFinder;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    
+    private Workspace $workspace;
 
-    /**
-     * @var ClientApi
-     */
-    private $client;
+    
+    private ClientApi $client;
 
-    /**
-     * @var ImportNameCommand
-     */
-    private $importName;
+    
+    private ImportNameCommand $importName;
 
     public function __construct(
         CandidateFinder $candidateFinder,

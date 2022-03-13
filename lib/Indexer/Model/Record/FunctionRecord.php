@@ -17,9 +17,7 @@ final class FunctionRecord implements HasFileReferences, HasPath, Record, HasFul
         return new self($name);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

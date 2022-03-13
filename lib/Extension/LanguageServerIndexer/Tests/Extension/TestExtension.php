@@ -13,9 +13,7 @@ use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.watcher.will_die', function (Container $container) {
@@ -27,9 +25,7 @@ class TestExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

@@ -28,15 +28,11 @@ class ChainDefinitionLocationProviderTest extends TestCase
      */
     private $locator2;
 
-    /**
-     * @var TextDocument
-     */
-    private $document;
+    
+    private TextDocument $document;
 
-    /**
-     * @var ByteOffset
-     */
-    private $offset;
+    
+    private ByteOffset $offset;
 
     public function setUp(): void
     {
@@ -89,7 +85,6 @@ class ChainDefinitionLocationProviderTest extends TestCase
         $this->locator1->locateDefinition($this->document, $this->offset)->willThrow(new UnsupportedDocument('Not supported'));
         $locator->locateDefinition($this->document, $this->offset);
     }
-
 
     private function createLocation()
     {

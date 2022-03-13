@@ -14,15 +14,11 @@ use function Safe\file_get_contents;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    /**
-     * @var SourceCodeReflector
-     */
-    private $reflector;
+    
+    private SourceCodeReflector $reflector;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
     public function __construct(SourceCodeReflector $reflector, LoggerInterface $logger)
     {

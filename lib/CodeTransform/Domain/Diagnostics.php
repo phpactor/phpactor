@@ -11,6 +11,7 @@ class Diagnostics extends AbstractCollection
     {
         return new self([]);
     }
+
     protected function type(): string
     {
         return Diagnostic::class;

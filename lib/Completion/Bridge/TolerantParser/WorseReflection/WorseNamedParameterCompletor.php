@@ -24,24 +24,19 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseNamedParameterCompletor implements TolerantCompletor
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectFormatter
-     */
-    private $formatter;
+    
+    private ObjectFormatter $formatter;
 
     public function __construct(Reflector $reflector, ObjectFormatter $formatter)
     {
         $this->reflector = $reflector;
         $this->formatter = $formatter;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (null === $creation = NodeQuery::firstAncestorOrSelfInVia(

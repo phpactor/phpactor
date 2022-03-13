@@ -12,15 +12,11 @@ class ChainPromptTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var Prompt
-     */
-    private $prompt1;
+    
+    private Prompt $prompt1;
 
-    /**
-     * @var Prompt
-     */
-    private $prompt2;
+    
+    private Prompt $prompt2;
 
     public function setUp(): void
     {

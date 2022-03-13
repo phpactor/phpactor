@@ -7,6 +7,7 @@ use InvalidArgumentException;
 final class DumperRegistry
 {
     private $default;
+
     private $dumpers = [];
 
     public function __construct(array $dumpers, string $default)

@@ -10,25 +10,19 @@ use Throwable;
 
 class NameImporterResult
 {
-    /**
-     * @var bool
-     */
-    private $success;
+    
+    private bool $success;
 
-    /**
-     * @var Throwable|null
-     */
-    private $error;
+    
+    private ?Throwable $error;
 
     /**
      * @var array<LspTextEdit>|null
      */
-    private $textEdits;
+    private ?array $textEdits;
 
-    /**
-     * @var NameImport
-     */
-    private $nameImport;
+    
+    private NameImport $nameImport;
 
     private function __construct(
         bool $success,
@@ -83,9 +77,7 @@ class NameImporterResult
     }
 
     /**
-     * @param NameImport $nameImport
      * @param array<LspTextEdit>|null $textEdits
-     * @return NameImporterResult
      */
     public static function createResult(
         NameImport $nameImport,

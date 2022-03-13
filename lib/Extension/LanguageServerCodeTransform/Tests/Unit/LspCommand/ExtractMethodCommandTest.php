@@ -26,7 +26,9 @@ class ExtractMethodCommandTest extends TestCase
     use ProphecyTrait;
 
     const EXAMPLE_SOURCE = '<?php ';
+
     const EXAMPLE_URI = 'file:///file.php';
+
     const EXAMPLE_OFFSET = 5;
 
     public function testSuccessfulCall(): void
@@ -58,6 +60,7 @@ class ExtractMethodCommandTest extends TestCase
             'label' => 'Extract method'
         ], $applyEdit->params);
     }
+
     /**
      * @dataProvider provideExceptions
      */
@@ -85,9 +88,8 @@ class ExtractMethodCommandTest extends TestCase
             TransformException::class => [ new TransformException('Error message!') ],
         ];
     }
-    /**
-     * @return array
-     */
+
+    
     private function createTester(ObjectProphecy $extractMethod): array
     {
         $builder = LanguageServerTesterBuilder::createBare()

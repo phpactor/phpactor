@@ -9,10 +9,8 @@ use Phpactor\Extension\Core\Application\Status;
 
 class StatusCommand extends Command
 {
-    /**
-     * @var Status
-     */
-    private $status;
+    
+    private Status $status;
 
     public function __construct(Status $status)
     {

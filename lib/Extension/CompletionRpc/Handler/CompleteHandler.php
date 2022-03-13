@@ -14,14 +14,15 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class CompleteHandler implements Handler
 {
     const NAME = 'complete';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_OFFSET = 'offset';
+
     const PARAM_TYPE = 'type';
 
-    /**
-     * @var TypedCompletorRegistry
-     */
-    private $registry;
+    
+    private TypedCompletorRegistry $registry;
 
     public function __construct(TypedCompletorRegistry $registry)
     {

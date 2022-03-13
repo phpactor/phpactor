@@ -21,15 +21,11 @@ use function Amp\delay;
 
 class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
 {
-    /**
-     * @var CandidateFinder
-     */
-    private $finder;
+    
+    private CandidateFinder $finder;
 
-    /**
-     * @var bool
-     */
-    private $reportNonExistingClasses;
+    
+    private bool $reportNonExistingClasses;
 
     public function __construct(CandidateFinder $finder, bool $reportNonExistingClasses = true)
     {
@@ -54,9 +50,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function kinds(): array
     {
         return [
@@ -64,9 +58,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         return call(function () use ($textDocument) {

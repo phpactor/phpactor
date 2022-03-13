@@ -11,10 +11,8 @@ class CachingPathResolverTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $resolver;
+    
+    private ObjectProphecy $resolver;
 
     public function setUp(): void
     {

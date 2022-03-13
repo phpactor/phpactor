@@ -14,6 +14,7 @@ use RuntimeException;
 class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @dataProvider provideImplementations
      */

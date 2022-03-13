@@ -18,12 +18,12 @@ use Phpactor\MapResolver\Resolver;
 class LanguageServerPhpstanExtension implements Extension
 {
     public const PARAM_PHPSTAN_ENABLED = 'language_server_phpstan.enabled';
+
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
+
     public const PARAM_LEVEL = 'language_server_phpstan.level';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpstanDiagnosticProvider::class, function (Container $container) {
@@ -56,9 +56,7 @@ class LanguageServerPhpstanExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

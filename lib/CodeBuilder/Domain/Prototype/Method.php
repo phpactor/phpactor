@@ -5,47 +5,34 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 final class Method extends Prototype
 {
     const IS_STATIC = 1;
+
     const IS_ABSTRACT = 2;
 
-    /**
-     * @var string
-     */
-    private $name;
+    
+    private string $name;
 
-    /**
-     * @var Visibility
-     */
-    private $visibility;
+    
+    private Visibility $visibility;
 
-    /**
-     * @var Parameters
-     */
-    private $parameters;
+    
+    private Parameters $parameters;
 
-    /**
-     * @var ReturnType
-     */
-    private $returnType;
+    
+    private ReturnType $returnType;
 
     /*
      * @var Docblock
      */
     private $docblock;
 
-    /**
-     * @var bool
-     */
-    private $isStatic;
+    
+    private bool $isStatic;
 
-    /**
-     * @var bool
-     */
-    private $isAbstract;
+    
+    private bool $isAbstract;
 
-    /**
-     * @var MethodBody
-     */
-    private $methodBody;
+    
+    private MethodBody $methodBody;
 
     public function __construct(
         string $name,

@@ -10,9 +10,7 @@ use Phpactor\MapResolver\Resolver;
 
 class TestIndexerExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(Indexer::class, function () {
@@ -23,9 +21,7 @@ class TestIndexerExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

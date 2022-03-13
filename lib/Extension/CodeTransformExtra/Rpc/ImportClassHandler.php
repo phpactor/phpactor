@@ -22,28 +22,27 @@ use Phpactor\TextDocument\Util\WordAtOffset;
 class ImportClassHandler extends AbstractHandler
 {
     const PARAM_NAME = 'name';
+
     const PARAM_OFFSET = 'offset';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_PATH = 'path';
+
     const PARAM_ALIAS = 'alias';
+
     const PARAM_QUALIFIED_NAME = 'qualified_name';
+
     const NAME = 'import_class';
 
-    /**
+    
+    private ImportName $nameImport;
 
-     * @var ImportName
-     */
-    private $nameImport;
+    
+    private ClassSearch $classSearch;
 
-    /**
-     * @var ClassSearch
-     */
-    private $classSearch;
-
-    /**
-     * @var string
-     */
-    private $filesystem;
+    
+    private string $filesystem;
 
     public function __construct(
         ImportName $nameImport,

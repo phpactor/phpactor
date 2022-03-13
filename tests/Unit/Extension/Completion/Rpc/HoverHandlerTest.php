@@ -14,10 +14,8 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class HoverHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
     public function setUp(): void
     {
@@ -139,6 +137,7 @@ class HoverHandlerTest extends HandlerTestCase
             '<unknown> <unknown>',
         ];
     }
+
     protected function createHandler(): Handler
     {
         return new HoverHandler($this->reflector, $this->formatter);

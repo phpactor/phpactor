@@ -7,7 +7,9 @@ use InvalidArgumentException;
 final class Visibility
 {
     const PUBLIC = 'public';
+
     const PROTECTED = 'protected';
+
     const PRIVATE = 'private';
 
     const VISIBILITIES = [
@@ -16,10 +18,8 @@ final class Visibility
         self::PRIVATE
     ];
 
-    /**
-     * @var string
-     */
-    private $visibility;
+    
+    private string $visibility;
 
     private function __construct(string $visibility)
     {

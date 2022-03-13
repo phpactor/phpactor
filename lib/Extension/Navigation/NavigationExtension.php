@@ -17,12 +17,12 @@ use Phpactor\PathFinder\PathFinder;
 class NavigationExtension implements Extension
 {
     const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
+
     const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
+
     const SERVICE_PATH_FINDER = 'navigation.path_finder';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerPathFinder($container);
@@ -30,9 +30,7 @@ class NavigationExtension implements Extension
         $this->registerRpc($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

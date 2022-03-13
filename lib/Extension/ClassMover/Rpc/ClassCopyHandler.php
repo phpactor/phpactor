@@ -12,13 +12,13 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class ClassCopyHandler extends AbstractHandler
 {
     const NAME = 'copy_class';
+
     const PARAM_SOURCE_PATH = 'source_path';
+
     const PARAM_DEST_PATH = 'dest_path';
 
-    /**
-     * @var ClassCopy
-     */
-    private $classCopy;
+    
+    private ClassCopy $classCopy;
 
     public function __construct(ClassCopy $classCopy)
     {

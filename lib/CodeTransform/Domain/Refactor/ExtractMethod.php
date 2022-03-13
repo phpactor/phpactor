@@ -8,5 +8,6 @@ use Phpactor\TextDocument\TextDocumentEdits;
 interface ExtractMethod
 {
     public function canExtractMethod(SourceCode $source, int $offsetStart, int $offsetEnd): bool;
+
     public function extractMethod(SourceCode $source, int $offsetStart, int $offsetEnd, string $name): TextDocumentEdits;
 }

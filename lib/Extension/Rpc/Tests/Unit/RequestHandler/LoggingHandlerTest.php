@@ -18,30 +18,20 @@ class LoggingHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $innerHandler;
+    
+    private ObjectProphecy $innerHandler;
 
-    /**
-     * @var ExceptionCatchingHandler
-     */
-    private $loggingHandler;
+    
+    private ExceptionCatchingHandler $loggingHandler;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $response;
+    
+    private ObjectProphecy $response;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $request;
+    
+    private ObjectProphecy $request;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $logger;
+    
+    private ObjectProphecy $logger;
 
     public function setUp(): void
     {

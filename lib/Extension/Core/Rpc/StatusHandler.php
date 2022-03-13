@@ -17,17 +17,14 @@ class StatusHandler implements Handler
     const PARAM_TYPE = 'type';
 
     const TYPE_FORMATTED = 'formatted';
+
     const TYPE_DETAILED = 'detailed';
 
-    /**
-     * @var Status
-     */
-    private $status;
+    
+    private Status $status;
 
-    /**
-     * @var PathCandidates
-     */
-    private $paths;
+    
+    private PathCandidates $paths;
 
     public function __construct(Status $status, PathCandidates $paths)
     {

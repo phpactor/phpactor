@@ -13,25 +13,23 @@ use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class ClassBuilder extends ClassLikeBuilder
 {
-
     /**
      * @var PropertyBuilder[]
      */
-    protected $properties = [];
+    protected array $properties = [];
 
     /**
      * @var Type[]
      */
-    protected $interfaces = [];
+    protected array $interfaces = [];
 
     /**
      * @var ConstantBuilder[]
      */
-    protected $constants = [];
-    /**
-     * @var string
-     */
-    private $extends;
+    protected array $constants = [];
+
+    
+    private string $extends;
 
     public static function childNames(): array
     {

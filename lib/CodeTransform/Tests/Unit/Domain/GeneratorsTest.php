@@ -9,6 +9,7 @@ use Phpactor\CodeTransform\Domain\Generators;
 class GeneratorsTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @testdox It can retrieve and iterate generators.
      */

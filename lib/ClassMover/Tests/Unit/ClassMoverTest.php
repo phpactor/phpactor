@@ -17,7 +17,9 @@ class ClassMoverTest extends TestCase
     use ProphecyTrait;
 
     private $mover;
+
     private $finder;
+
     private $replacer;
 
     public function setUp(): void

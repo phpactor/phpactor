@@ -7,6 +7,7 @@ use Phpactor\ClassMover\Domain\Name\Namespace_;
 final class NamespaceReference
 {
     private $position;
+
     private $namespace;
 
     public function __toString()

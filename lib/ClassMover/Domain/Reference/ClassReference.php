@@ -8,9 +8,13 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 final class ClassReference
 {
     private $position;
+
     private $fullName;
+
     private $name;
+
     private $isClassDeclaration;
+
     private $importedNameRef;
 
     public function __toString()

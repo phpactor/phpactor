@@ -23,39 +23,30 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class ContextMenuHandlerTest extends HandlerTestCase
 {
     const VARIABLE_ACTION = 'do_something';
+
     const SOURCE = '<?php $hello = "world"; echo $hello;';
+
     const FOUND_OFFSET = 10;
+
     const ORIGINAL_OFFSET = 8;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Container
-     */
-    private $container;
+    
+    private Container $container;
 
-    /**
-     * @var array
-     */
-    private $menu = [];
+    
+    private array $menu = [];
 
-    /**
-     * @var RequestHandler
-     */
-    private $requestHandler;
+    
+    private RequestHandler $requestHandler;
 
-    /**
-     * @var ClassFileNormalizer
-     */
-    private $classFileNormalizer;
+    
+    private ClassFileNormalizer $classFileNormalizer;
 
-    /**
-     * @var InterestingOffsetFinder
-     */
-    private $offsetFinder;
+    
+    private InterestingOffsetFinder $offsetFinder;
 
     public function setUp(): void
     {

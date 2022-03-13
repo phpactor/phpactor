@@ -9,7 +9,9 @@ use Phpactor\TextDocument\TextDocument;
 final class FoundReferences
 {
     private $source;
+
     private $name;
+
     private $references;
 
     public function __construct(TextDocument $source, FullyQualifiedName $name, NamespacedClassReferences $list)

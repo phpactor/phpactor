@@ -17,28 +17,20 @@ use Prophecy\Argument;
 
 class ChainTolerantCompletorTest extends TestCase
 {
-    /**
-     * @var ObjectProphecy
-     */
-    private $completor1;
-    /**
-     * @var ObjectProphecy
-     */
-    private $qualifiableCompletor1;
-    /**
-     * @var ObjectProphecy
-     */
-    private $qualifier1;
+    
+    private ObjectProphecy $completor1;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $qualifiableCompletor2;
+    
+    private ObjectProphecy $qualifiableCompletor1;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $qualifier2;
+    
+    private ObjectProphecy $qualifier1;
+
+    
+    private ObjectProphecy $qualifiableCompletor2;
+
+    
+    private ObjectProphecy $qualifier2;
 
     protected function setUp(): void
     {

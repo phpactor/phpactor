@@ -13,7 +13,7 @@ class InterfaceBuilder extends ClassLikeBuilder
     /**
      * @var Type[]
      */
-    protected $extends = [];
+    protected array $extends = [];
 
     public static function childNames(): array
     {

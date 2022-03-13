@@ -15,12 +15,10 @@ final class ChainTypeLocator implements TypeLocator
     /**
      * @var TypeLocator[]
      */
-    private $locators = [];
+    private array $locators = [];
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
     public function __construct(array $locators, LoggerInterface $logger = null)
     {

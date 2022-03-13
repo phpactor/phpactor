@@ -10,20 +10,14 @@ use function Amp\call;
 
 class OnDevelopWarningService implements ServiceProvider
 {
-    /**
-     * @var ClientApi
-     */
-    private $client;
+    
+    private ClientApi $client;
 
-    /**
-     * @var bool
-     */
-    private $warnOnDevelop;
+    
+    private bool $warnOnDevelop;
 
-    /**
-     * @var Status
-     */
-    private $status;
+    
+    private Status $status;
 
     public function __construct(ClientApi $client, Status $status, bool $warnOnDevelop)
     {
@@ -32,9 +26,7 @@ class OnDevelopWarningService implements ServiceProvider
         $this->status = $status;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function services(): array
     {
         if (false === $this->warnOnDevelop) {

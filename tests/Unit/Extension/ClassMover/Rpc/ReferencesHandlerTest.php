@@ -26,30 +26,20 @@ class ReferencesHandlerTest extends HandlerTestCase
 {
     const TEST_PATH = 'test_file.php';
 
-    /**
-     * @var ClassReferences
-     */
-    private $classReferences;
+    
+    private ClassReferences $classReferences;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ClassMemberReferences
-     */
-    private $classMemberReferences;
+    
+    private ClassMemberReferences $classMemberReferences;
 
-    /**
-     * @var ArrayLogger
-     */
-    private $logger;
+    
+    private ArrayLogger $logger;
 
-    /**
-     * @var FilesystemRegistry
-     */
-    private $filesystemRegistry;
+    
+    private FilesystemRegistry $filesystemRegistry;
 
     public function setUp(): void
     {

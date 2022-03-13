@@ -19,10 +19,8 @@ class ClassInflectHandlerTest extends AbstractClassGenerateHandlerTest
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $generator;
+    
+    private ObjectProphecy $generator;
 
     public function setUp(): void
     {

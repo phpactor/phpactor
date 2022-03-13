@@ -18,13 +18,14 @@ class ComposerAutoloaderExtension implements Extension
     const SERVICE_AUTOLOADERS = 'composer.class_loaders';
 
     const PARAM_AUTOLOADER_PATH = 'composer.autoloader_path';
+
     const PARAM_AUTOLOAD_DEREGISTER = 'composer.autoload_deregister';
+
     const PARAM_COMPOSER_ENABLE = 'composer.enable';
+
     const PARAM_CLASS_MAPS_ONLY = 'composer.class_maps_only';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $resolver): void
     {
         $resolver->setDefaults([
@@ -41,9 +42,7 @@ class ComposerAutoloaderExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_AUTOLOADERS, function (Container $container) {

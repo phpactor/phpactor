@@ -12,9 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConfigSetCommand extends Command
 {
     const ARG_KEY = 'key';
-    const ARG_VALUE = 'value';
-    const OPT_DELETE = 'delete';
 
+    const ARG_VALUE = 'value';
+
+    const OPT_DELETE = 'delete';
 
     private ConfigManipulator $manipulator;
 

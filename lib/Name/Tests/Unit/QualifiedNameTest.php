@@ -14,6 +14,7 @@ class QualifiedNameTest extends AbstractQualifiedNameTestCase
             $this->createFromString('Foobar\\Barfoo')->toFullyQualifiedName()
         );
     }
+
     protected function createFromArray(array $parts)
     {
         return QualifiedName::fromArray($parts);

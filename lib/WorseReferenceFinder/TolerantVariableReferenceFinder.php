@@ -28,24 +28,19 @@ use Exception;
 
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
-    /**
-     * @var bool
-     */
-    private $includeDefinition;
+    
+    private bool $includeDefinition;
 
     public function __construct(Parser $parser, bool $includeDefinition = false)
     {
         $this->parser = $parser;
         $this->includeDefinition = $includeDefinition;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         $sourceNode = $this->sourceNode($document->__toString());
@@ -141,6 +136,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         }
         return false;
     }
+
     /**
      * @return Generator<PotentialLocation>
      */

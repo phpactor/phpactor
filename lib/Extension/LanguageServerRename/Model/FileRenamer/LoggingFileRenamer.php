@@ -10,15 +10,11 @@ use function Amp\call;
 
 class LoggingFileRenamer implements FileRenamer
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
-    /**
-     * @var FileRenamer
-     */
-    private $innerRenamer;
+    
+    private FileRenamer $innerRenamer;
 
     public function __construct(FileRenamer $innerRenamer, LoggerInterface $logger)
     {
@@ -26,9 +22,7 @@ class LoggingFileRenamer implements FileRenamer
         $this->innerRenamer = $innerRenamer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
     {
         return call(function () use ($from, $to) {

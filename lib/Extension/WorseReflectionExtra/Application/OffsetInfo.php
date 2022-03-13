@@ -12,20 +12,14 @@ use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 
 final class OffsetInfo
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Helper\FilesystemHelper
-     */
-    private $filesystemHelper;
+    
+    private Helper\FilesystemHelper $filesystemHelper;
 
-    /**
-     * @var Helper\ClassFileNormalizer
-     */
-    private $classFileNormalizer;
+    
+    private Helper\ClassFileNormalizer $classFileNormalizer;
 
     public function __construct(
         Reflector $reflector,

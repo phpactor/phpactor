@@ -12,7 +12,7 @@ class Expanders implements IteratorAggregate
     /**
      * @var Expander[]
      */
-    private $expanders = [];
+    private array $expanders = [];
 
     public function __construct(array $expanders)
     {
@@ -40,9 +40,7 @@ class Expanders implements IteratorAggregate
         return $this->expanders[$tokenName];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->expanders);

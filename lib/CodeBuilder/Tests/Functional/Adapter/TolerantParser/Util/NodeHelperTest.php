@@ -9,10 +9,8 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class NodeHelperTest extends TestCase
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
     protected function setUp(): void
     {

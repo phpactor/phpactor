@@ -23,9 +23,7 @@ use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.handler', function (Container $container) {
@@ -47,12 +45,14 @@ class TestExtension implements Extension
 
         $container->register('test.service', function (Container $container) {
             return new class($container->get(ClientApi::class)) implements ServiceProvider {
-                /** @var ClientApi */
-                private $api;
+                
+                private ClientApi $api;
+
                 public function __construct(ClientApi $api)
                 {
                     $this->api = $api;
                 }
+
                 public function services(): array
                 {
                     return ['test'];
@@ -102,9 +102,7 @@ class TestExtension implements Extension
                     ]);
                 }
 
-                /**
-                 * {@inheritDoc}
-                 */
+                
                 public function kinds(): array
                 {
                     return ['example'];
@@ -113,9 +111,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

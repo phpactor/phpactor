@@ -5,7 +5,6 @@ namespace Phpactor\Filesystem\Domain;
 use RuntimeException;
 use SplFileInfo;
 use Webmozart\PathUtil\Path;
-use \sprintf;
 use InvalidArgumentException;
 
 final class FilePath

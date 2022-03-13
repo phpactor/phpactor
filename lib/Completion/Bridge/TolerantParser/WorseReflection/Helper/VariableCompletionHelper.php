@@ -14,10 +14,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class VariableCompletionHelper
 {
-    /**
-     * @var Reflector
-     */
-    protected $reflector;
+    
+    protected Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {

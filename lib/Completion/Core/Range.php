@@ -6,15 +6,11 @@ use Phpactor\TextDocument\ByteOffset;
 
 class Range
 {
-    /**
-     * @var ByteOffset
-     */
-    private $byteStart;
+    
+    private ByteOffset $byteStart;
 
-    /**
-     * @var ByteOffset
-     */
-    private $byteEnd;
+    
+    private ByteOffset $byteEnd;
 
     public function __construct(ByteOffset $byteStart, ByteOffset $byteEnd)
     {

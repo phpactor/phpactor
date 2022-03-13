@@ -14,21 +14,14 @@ class StatusTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var FilesystemRegistry
-     */
-    private $registry;
+    
+    private FilesystemRegistry $registry;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $resolver;
+    
+    private ObjectProphecy $resolver;
 
-    /**
-     * @var PathCandidates
-     */
-    private $paths;
-
+    
+    private PathCandidates $paths;
 
     public function setUp(): void
     {

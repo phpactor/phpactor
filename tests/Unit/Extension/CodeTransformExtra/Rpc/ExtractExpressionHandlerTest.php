@@ -16,15 +16,19 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ExtractExpressionHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php "foo";';
+
     const PATH = '/path/to';
+
     const OFFSET_START = 1234;
+
     const OFFSET_END = 1234;
+
     const VARIABLE_NAME = 'FOOBAR';
 
     /**
      * @var ObjectProphecy<ExtractExpression>
      */
-    private $extractExpression;
+    private ObjectProphecy $extractExpression;
 
     public function setUp(): void
     {

@@ -64,25 +64,30 @@ use RuntimeException;
 class CodeTransformExtension implements Extension
 {
     public const TAG_FROM_EXISTING_GENERATOR = 'code_transform.from_existing_generator';
+
     public const TAG_TRANSFORMER = 'code_transform.transformer';
+
     public const TAG_NEW_CLASS_GENERATOR = 'code_transform.new_class_generator';
 
     public const SERVICE_CLASS_GENERATORS = 'code_transform.new_class_generators';
+
     public const SERVICE_CLASS_INFLECTORS = 'code_transform.from_existing_generators';
 
     public const PARAM_NEW_CLASS_VARIANTS = 'code_transform.class_new.variants';
+
     public const PARAM_TEMPLATE_PATHS = 'code_transform.template_paths';
+
     public const PARAM_INDENTATION = 'code_transform.indentation';
+
     public const PARAM_GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
+
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
 
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
 
     private const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

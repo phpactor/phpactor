@@ -14,13 +14,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleExtension implements Extension
 {
     const TAG_COMMAND = 'console.command';
+
     const SERVICE_COMMAND_LOADER = 'console.command_loader';
+
     const SERVICE_OUTPUT = 'console.output';
+
     const SERVICE_INPUT = 'console.input';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_COMMAND_LOADER, function (Container $container) {
@@ -51,9 +52,7 @@ class ConsoleExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

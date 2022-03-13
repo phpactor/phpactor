@@ -10,10 +10,9 @@ use Exception;
 
 class PhpstanDiagnosticProvider implements DiagnosticsProvider
 {
-    /**
-     * @var Linter
-     */
-    private $linter;
+    
+    private Linter $linter;
+
     private $supported = null;
 
     public function __construct(Linter $linter)
@@ -21,9 +20,7 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
         $this->linter = $linter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         try {

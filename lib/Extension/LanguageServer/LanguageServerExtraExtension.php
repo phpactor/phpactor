@@ -12,9 +12,7 @@ use Phpactor\Extension\LanguageServer\Service\OnDevelopWarningService;
 
 class LanguageServerExtraExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(OnDevelopWarningService::class, function (Container $container) {
@@ -28,9 +26,7 @@ class LanguageServerExtraExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

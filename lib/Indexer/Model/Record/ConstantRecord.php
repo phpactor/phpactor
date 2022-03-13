@@ -16,9 +16,7 @@ final class ConstantRecord implements HasPath, Record, HasFullyQualifiedName
         return new self($name);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

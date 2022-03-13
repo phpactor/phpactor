@@ -7,10 +7,8 @@ use Phpactor\Extension\Core\Application\CacheClear;
 
 class CacheClearTest extends IntegrationTestCase
 {
-    /**
-     * @var CacheClear
-     */
-    private $cacheClear;
+    
+    private CacheClear $cacheClear;
 
     public function setUp(): void
     {

@@ -7,25 +7,18 @@ use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class FilesystemFileListProviderTest extends IntegrationTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-    /**
-     * @var FilesystemFileListProvider
-     */
-    private $provider;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $filesystem;
+    
+    private FilesystemFileListProvider $provider;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $index;
+    private SimpleFilesystem $filesystem;
 
+    private ObjectProphecy $index;
 
     protected function setUp(): void
     {

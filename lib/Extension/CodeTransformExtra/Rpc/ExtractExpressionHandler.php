@@ -12,19 +12,21 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class ExtractExpressionHandler extends AbstractHandler
 {
     const NAME = 'extract_expression';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_PATH = 'path';
 
     const PARAM_VARIABLE_NAME = 'variable_name';
+
     const PARAM_OFFSET_START = 'offset_start';
+
     const PARAM_OFFSET_END = 'offset_end';
 
     const INPUT_LABEL_NAME = 'Variable name: ';
 
-    /**
-     * @var ExtractExpression
-     */
-    private $extractExpression;
+    
+    private ExtractExpression $extractExpression;
 
     public function __construct(ExtractExpression $extractExpression)
     {

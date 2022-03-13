@@ -18,7 +18,7 @@ class FileList implements IteratorAggregate, Countable
      *
      * @var array<string, SplFileInfo>
      */
-    private $splFileInfos;
+    private array $splFileInfos;
 
     /**
      * @param iterable<SplFileInfo> $splFileInfos

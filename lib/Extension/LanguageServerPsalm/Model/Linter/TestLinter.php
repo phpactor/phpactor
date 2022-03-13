@@ -12,12 +12,10 @@ class TestLinter implements Linter
     /**
      * @var array<Diagnostic>
      */
-    private $diagnostics;
+    private array $diagnostics;
 
-    /**
-     * @var int
-     */
-    private $delay;
+    
+    private int $delay;
 
     /**
      * @param array<Diagnostic> $diagnostics

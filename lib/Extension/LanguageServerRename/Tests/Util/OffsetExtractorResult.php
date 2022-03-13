@@ -12,17 +12,15 @@ final class OffsetExtractorResult
     /**
      * @var array<string,ByteOffset[]>
      */
-    private $offsets = [];
+    private array $offsets = [];
 
     /**
      * @var array<string,ByteOffsetRange[]>
      */
-    private $ranges = [];
+    private array $ranges = [];
 
-    /**
-     * @var string
-     */
-    private $source;
+    
+    private string $source;
 
     public function __construct(string $source, array $offsetResults, array $rangeResults)
     {

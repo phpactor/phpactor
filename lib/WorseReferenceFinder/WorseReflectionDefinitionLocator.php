@@ -22,15 +22,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Cache
-     */
-    private $cache;
+    
+    private Cache $cache;
 
     public function __construct(Reflector $reflector, Cache $cache)
     {
@@ -38,9 +34,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $this->cache = $cache;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
     {
         if (false === $document->language()->isPhp()) {

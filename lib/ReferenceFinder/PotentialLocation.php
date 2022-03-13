@@ -7,18 +7,16 @@ use Phpactor\TextDocument\Location;
 final class PotentialLocation
 {
     private const CONFIDENCE_SURELY = 'surely';
+
     private const CONFIDENCE_NOT = 'not';
+
     private const CONFIDENCE_MAYBE = 'maybe';
 
-    /**
-     * @var Location
-     */
-    private $location;
+    
+    private Location $location;
 
-    /**
-     * @var string
-     */
-    private $confidence;
+    
+    private string $confidence;
 
     public function __construct(Location $location, string $confidence)
     {

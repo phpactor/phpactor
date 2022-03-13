@@ -15,9 +15,10 @@ use Phpactor\TextDocument\TextDocument;
 class GotoImplementationHandlerTest extends TestCase
 {
     const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
 
+    const EXAMPLE_OFFSET = 1234;
+
+    const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoSingleImplementation(): void
     {
@@ -50,15 +51,16 @@ class GotoImplementationHandlerTest extends TestCase
         $this->assertInstanceOf(FileReferencesResponse::class, $response);
     }
 
-
     public function create(array $locations): HandlerTester
     {
         $locator = new class($locations) implements ClassImplementationFinder {
             private $locations;
+
             public function __construct($locations)
             {
                 $this->locations = $locations;
             }
+
             public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations
             {
                 return new Locations($this->locations);

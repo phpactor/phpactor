@@ -13,11 +13,12 @@ use Phpactor\TextDocument\TextEdits;
 class SourceBuilderTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-    /**
-     * @var Updater
-     */
-    private $updater;
+
+    
+    private Updater $updater;
+
     private $builder;
+
     private $generator;
 
     private $prototype;

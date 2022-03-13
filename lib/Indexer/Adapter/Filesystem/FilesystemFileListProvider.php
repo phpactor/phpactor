@@ -14,17 +14,15 @@ class FilesystemFileListProvider implements FileListProvider
     /**
      * @var array<string>
      */
-    private $excludePatterns;
+    private array $excludePatterns;
 
     /**
      * @var array<string>
      */
-    private $includePatterns;
+    private array $includePatterns;
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    
+    private Filesystem $filesystem;
 
     /**
      * @param array<string> $excludePatterns

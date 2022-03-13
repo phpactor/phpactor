@@ -13,10 +13,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class IndexedNameSearcher implements NameSearcher
 {
-    /**
-     * @var SearchClient
-     */
-    private $client;
+    
+    private SearchClient $client;
 
     public function __construct(SearchClient $client)
     {

@@ -29,17 +29,18 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ReferencesHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
+
     const EXAMPLE_TEXT = 'hello';
 
     /**
      * @var ObjectProphecy<ReferenceFinder>
      */
-    private $finder;
+    private ObjectProphecy $finder;
 
     /**
      * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator;
+    private ObjectProphecy $locator;
 
     protected function setUp(): void
     {

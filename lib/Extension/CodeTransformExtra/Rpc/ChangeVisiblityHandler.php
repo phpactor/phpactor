@@ -13,13 +13,13 @@ class ChangeVisiblityHandler implements Handler
     const NAME = 'change_visibility';
 
     const PARAM_PATH = 'path';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_OFFSET = 'offset';
 
-    /**
-     * @var ChangeVisiblity
-     */
-    private $changeVisiblity;
+    
+    private ChangeVisiblity $changeVisiblity;
 
     public function __construct(ChangeVisiblity $changeVisiblity)
     {

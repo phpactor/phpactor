@@ -9,7 +9,7 @@ class ObjectFormatter
     /**
      * @var Formatter[]
      */
-    private $formatters = [];
+    private array $formatters = [];
 
     /**
      * @param Formatter[] $formatters

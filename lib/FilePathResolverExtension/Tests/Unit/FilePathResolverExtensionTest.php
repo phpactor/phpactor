@@ -82,7 +82,6 @@ class FilePathResolverExtensionTest extends TestCase
         ];
     }
 
-
     public function createResolver(array $config): PathResolver
     {
         $container = PhpactorContainer::fromExtensions([

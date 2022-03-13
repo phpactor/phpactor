@@ -14,11 +14,8 @@ class ConfigLoaderTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $deserializer;
-
+    
+    private ObjectProphecy $deserializer;
 
     public function setUp(): void
     {

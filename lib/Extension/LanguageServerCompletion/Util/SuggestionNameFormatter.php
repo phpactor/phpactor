@@ -6,10 +6,8 @@ use Phpactor\Completion\Core\Suggestion;
 
 class SuggestionNameFormatter
 {
-    /**
-     * @var bool
-     */
-    private $trimLeadingDollar;
+    
+    private bool $trimLeadingDollar;
 
     public function __construct(bool $trimLeadingDollar = false)
     {

@@ -22,24 +22,17 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseGenerateMethod implements GenerateMethod
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Updater
-     */
-    private $updater;
+    
+    private Updater $updater;
 
-    /** @var int
-     */
-    private $methodSuffixIndex = 0;
+    
+    private int $methodSuffixIndex = 0;
 
-    /**
-     * @var BuilderFactory
-     */
-    private $factory;
+    
+    private BuilderFactory $factory;
 
     public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater)
     {

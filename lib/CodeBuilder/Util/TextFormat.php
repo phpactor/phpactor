@@ -6,15 +6,11 @@ use RuntimeException;
 
 class TextFormat
 {
-    /**
-     * @var string
-     */
-    private $indentation;
+    
+    private string $indentation;
 
-    /**
-     * @var string
-     */
-    private $newLineChar;
+    
+    private string $newLineChar;
 
     public function __construct(string $indentation = '    ', string $newLineChar = "\n")
     {

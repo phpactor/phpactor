@@ -13,9 +13,10 @@ use Phpactor\TextDocument\TextDocument;
 class GotoTypeHandlerTest extends TestCase
 {
     const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
 
+    const EXAMPLE_OFFSET = 1234;
+
+    const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoType(): void
     {

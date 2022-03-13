@@ -17,9 +17,7 @@ class PhpExtension implements Extension
 {
     const PARAM_VERSION = 'php.version';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpVersionResolver::class, function (Container $container) {
@@ -34,9 +32,7 @@ class PhpExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

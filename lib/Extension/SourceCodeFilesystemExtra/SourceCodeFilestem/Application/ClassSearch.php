@@ -11,20 +11,14 @@ use SplFileInfo;
 
 class ClassSearch
 {
-    /**
-     * @var FileToClass
-     */
-    private $fileToClass;
+    
+    private FileToClass $fileToClass;
 
-    /**
-     * @var FilesystemRegistry
-     */
-    private $filesystemRegistry;
+    
+    private FilesystemRegistry $filesystemRegistry;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
     public function __construct(FilesystemRegistry $filesystemRegistry, FileToClass $fileToClass, Reflector $reflector)
     {

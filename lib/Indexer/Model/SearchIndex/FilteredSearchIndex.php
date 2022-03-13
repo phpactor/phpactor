@@ -9,16 +9,13 @@ use Phpactor\Indexer\Model\SearchIndex;
 
 class FilteredSearchIndex implements SearchIndex
 {
-    /**
-     * @var SearchIndex
-     */
-    private $innerIndex;
+    
+    private SearchIndex $innerIndex;
 
     /**
      * @var array<string>
      */
-    private $recordTypes;
-
+    private array $recordTypes;
 
     /**
      * @param array<string> $recordTypes
@@ -29,9 +26,7 @@ class FilteredSearchIndex implements SearchIndex
         $this->recordTypes = $recordTypes;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function search(Criteria $criteria): Generator
     {
         return $this->innerIndex->search($criteria);

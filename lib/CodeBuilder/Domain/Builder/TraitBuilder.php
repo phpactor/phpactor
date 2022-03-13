@@ -13,12 +13,12 @@ class TraitBuilder extends ClassLikeBuilder
     /**
      * @var PropertyBuilder[]
      */
-    protected $properties = [];
+    protected array $properties = [];
 
     /**
      * @var ConstantBuilder[]
      */
-    protected $constants = [];
+    protected array $constants = [];
 
     public static function childNames(): array
     {

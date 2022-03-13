@@ -4,10 +4,8 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class Constant extends Prototype
 {
-    /**
-     * @var string
-     */
-    private $name;
+    
+    private string $name;
 
     private $value;
 

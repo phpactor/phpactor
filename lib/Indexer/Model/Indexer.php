@@ -7,25 +7,17 @@ use Phpactor\TextDocument\TextDocument;
 
 class Indexer
 {
-    /**
-     * @var IndexBuilder
-     */
-    private $builder;
+    
+    private IndexBuilder $builder;
 
-    /**
-     * @var Index
-     */
-    private $index;
+    
+    private Index $index;
 
-    /**
-     * @var FileListProvider
-     */
-    private $provider;
+    
+    private FileListProvider $provider;
 
-    /**
-     * @var DirtyDocumentTracker
-     */
-    private $dirtyDocumentTracker;
+    
+    private DirtyDocumentTracker $dirtyDocumentTracker;
 
     public function __construct(IndexBuilder $builder, Index $index, FileListProvider $provider, ?DirtyDocumentTracker $dirtyDocumentTracker = null)
     {

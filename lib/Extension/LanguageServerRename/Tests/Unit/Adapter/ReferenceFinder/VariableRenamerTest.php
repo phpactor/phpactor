@@ -87,6 +87,7 @@ class VariableRenamerTest extends TestCase
             '<?php class Class1 { public $prop1, $pr<>op2; } }'
         ];
     }
+
     /** @dataProvider provideRename */
     public function testRename(string $source): void
     {

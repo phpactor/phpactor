@@ -12,15 +12,13 @@ use Phpactor\TextDocument\TextDocument;
 
 class ChainTolerantCompletor implements Completor
 {
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
     /**
      * @var TolerantCompletor[]
      */
-    private $tolerantCompletors = [];
+    private array $tolerantCompletors = [];
 
     /**
      * @param TolerantCompletor[] $tolerantCompletors

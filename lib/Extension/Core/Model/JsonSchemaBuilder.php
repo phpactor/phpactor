@@ -12,13 +12,10 @@ class JsonSchemaBuilder
     /**
      * @var class-string[]
      */
-    private $extensions;
+    private array $extensions;
 
-    /**
-     * @var string
-     */
-    private $title;
-
+    
+    private string $title;
 
     /**
      * @param class-string[] $extensions

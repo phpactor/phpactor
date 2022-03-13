@@ -14,25 +14,17 @@ use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command
 {
-    /**
-     * @var array
-     */
-    private $config;
+    
+    private array $config;
 
-    /**
-     * @var DumperRegistry
-     */
-    private $registry;
+    
+    private DumperRegistry $registry;
 
-    /**
-     * @var Paths
-     */
-    private $paths;
+    
+    private Paths $paths;
 
-    /**
-     * @var Expanders
-     */
-    private $expanders;
+    
+    private Expanders $expanders;
 
     public function __construct(
         array $config,

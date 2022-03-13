@@ -15,15 +15,11 @@ class XdgExpanderTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var TokenExpandingFilter
-     */
-    private $expander;
+    
+    private TokenExpandingFilter $expander;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $xdg;
+    
+    private ObjectProphecy $xdg;
 
     public function setUp(): void
     {

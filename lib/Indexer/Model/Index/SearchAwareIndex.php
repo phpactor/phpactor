@@ -9,15 +9,11 @@ use SplFileInfo;
 
 class SearchAwareIndex implements Index
 {
-    /**
-     * @var Index
-     */
-    private $innerIndex;
+    
+    private Index $innerIndex;
 
-    /**
-     * @var SearchIndex
-     */
-    private $search;
+    
+    private SearchIndex $search;
 
     public function __construct(Index $innerIndex, SearchIndex $search)
     {
@@ -57,9 +53,7 @@ class SearchAwareIndex implements Index
         $this->search->flush();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function get(Record $record): Record
     {
         return $this->innerIndex->get($record);

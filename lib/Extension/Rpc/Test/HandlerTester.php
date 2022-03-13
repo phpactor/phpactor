@@ -9,10 +9,8 @@ use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 
 class HandlerTester
 {
-    /**
-     * @var Handler
-     */
-    private $handler;
+    
+    private Handler $handler;
 
     public function __construct(Handler $handler)
     {

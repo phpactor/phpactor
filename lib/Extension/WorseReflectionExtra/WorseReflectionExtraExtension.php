@@ -17,9 +17,7 @@ use Phpactor\MapResolver\Resolver;
 
 class WorseReflectionExtraExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

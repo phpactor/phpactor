@@ -11,7 +11,7 @@ class ExtensionDocumentor
     /**
      * @var array<string>
      */
-    private $extensionFqns;
+    private array $extensionFqns;
 
     /**
      * @param array<string> $extensionFqns

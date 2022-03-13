@@ -7,20 +7,14 @@ use Psr\Log\LoggerInterface;
 
 class LoggingPathResolver implements PathResolver
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
-    /**
-     * @var PathResolver
-     */
-    private $pathResolver;
+    
+    private PathResolver $pathResolver;
 
-    /**
-     * @var string
-     */
-    private $level;
+    
+    private string $level;
 
     public function __construct(PathResolver $pathResolver, LoggerInterface $logger, string $level = LogLevel::DEBUG)
     {

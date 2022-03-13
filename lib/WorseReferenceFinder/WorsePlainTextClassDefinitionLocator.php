@@ -19,20 +19,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var array
-     */
-    private $breakingChars;
+    
+    private array $breakingChars;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
     public function __construct(Reflector $reflector, array $breakingChars = [])
     {
@@ -44,9 +38,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
         $this->parser = new Parser();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
     {
         $word = $this->extractWord($document, $byteOffset);

@@ -25,25 +25,17 @@ use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
-    /**
-     * @var ReferenceFinder
-     */
-    private $referenceFinder;
+    
+    private ReferenceFinder $referenceFinder;
 
-    /**
-     * @var TextDocumentLocator
-     */
-    private $locator;
+    
+    private TextDocumentLocator $locator;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
-    /**
-     * @var ClassMover
-     */
-    private $classMover;
+    
+    private ClassMover $classMover;
 
     public function __construct(
         ReferenceFinder $referenceFinder,
@@ -80,9 +72,7 @@ final class ClassRenamer implements Renamer
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());

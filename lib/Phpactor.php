@@ -216,16 +216,13 @@ class Phpactor
 
         return $container->build($config);
     }
+
     /**
      * If the path is relative we need to use the current working path
      * because otherwise it will be the script path, which is wrong in the
      * context of a PHAR.
      *
      * @deprecated Use webmozart Path instead.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public static function normalizePath(string $path): string
     {

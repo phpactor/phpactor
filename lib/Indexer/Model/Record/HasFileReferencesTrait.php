@@ -7,7 +7,7 @@ trait HasFileReferencesTrait
     /**
      * @var array<string,bool>
      */
-    private $references = [];
+    private array $references = [];
 
     public function addReference(string $path): self
     {

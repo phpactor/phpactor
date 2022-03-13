@@ -29,6 +29,7 @@ use Phpactor\TextDocument\TextDocument;
 class CompletionHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
+
     const EXAMPLE_TEXT = 'hello';
 
     public function testHandleNoSuggestions(): void
@@ -400,8 +401,6 @@ class CompletionHandlerTest extends TestCase
     /**
      * @param array<Suggestion> $suggestions
      * @param array<string|null> $aliases
-     * @param array $importNameTextEdits
-     * @return NameImporter
      */
     private function createNameImporter(
         array $suggestions,
@@ -438,7 +437,9 @@ class CompletionHandlerTest extends TestCase
     {
         return new class($suggestions, $isIncomplete) implements Completor {
             private $suggestions;
+
             private $isIncomplete;
+
             public function __construct(array $suggestions, bool $isIncomplete)
             {
                 $this->suggestions = $suggestions;

@@ -7,18 +7,14 @@ class ParameterInformation
     /**
      * The label of this signature. Will be shown in
      * the UI.
-     *
-     * @var string
      */
-    private $label;
+    private string $label;
 
     /**
      * The human-readable doc-comment of this signature. Will be shown
      * in the UI but can be omitted.
-     *
-     * @var string|null
      */
-    private $documentation;
+    private ?string $documentation;
 
     public function __construct(string $label, string $documentation = null)
     {

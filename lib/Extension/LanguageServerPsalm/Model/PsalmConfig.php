@@ -4,10 +4,8 @@ namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 final class PsalmConfig
 {
-    /**
-     * @var string
-     */
-    private $phpstanBin;
+    
+    private string $phpstanBin;
 
     public function __construct(string $phpstanBin)
     {

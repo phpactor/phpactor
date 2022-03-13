@@ -10,30 +10,20 @@ use Psr\Log\LoggerInterface;
 
 class PhpstanProcess
 {
-    /**
-     * @var DiagnosticsParser
-     */
-    private $parser;
+    
+    private DiagnosticsParser $parser;
 
-    /**
-     * @var string
-     */
-    private $cwd;
+    
+    private string $cwd;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
-    /**
-     * @var string
-     */
-    private $phpstanBin;
+    
+    private string $phpstanBin;
 
-    /**
-     * @var PhpstanConfig
-     */
-    private $config;
+    
+    private PhpstanConfig $config;
 
     public function __construct(
         string $cwd,

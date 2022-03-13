@@ -13,6 +13,7 @@ use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 class FileInfoCommand extends Command
 {
     private $infoForOffset;
+
     private $dumperRegistry;
 
     public function __construct(

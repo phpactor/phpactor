@@ -7,15 +7,11 @@ use Webmozart\PathUtil\Path;
 
 final class SourceCode
 {
-    /**
-     * @var string
-     */
-    private $code;
+    
+    private string $code;
 
-    /**
-     * @var string|null
-     */
-    private $path;
+    
+    private ?string $path;
 
     private function __construct(string $code, string $path = null)
     {

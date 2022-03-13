@@ -53,6 +53,7 @@ class GitFilesystemTest extends AdapterTestCase
         self::assertFileDoesNotExist($this->workspacePath() . '/Test.php');
         self::assertFileExists($this->workspacePath() . '/NotExisting/Foobar.php');
     }
+
     /**
      * It should fallback to simple filesystem if file is not under VC.
      */

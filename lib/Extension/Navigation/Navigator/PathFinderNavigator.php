@@ -7,10 +7,8 @@ use Phpactor\PathFinder\PathFinder;
 
 class PathFinderNavigator implements Navigator
 {
-    /**
-     * @var PathFinder
-     */
-    private $pathFinder;
+    
+    private PathFinder $pathFinder;
 
     public function __construct(PathFinder $pathFinder)
     {

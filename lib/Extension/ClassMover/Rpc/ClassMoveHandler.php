@@ -16,20 +16,20 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class ClassMoveHandler extends AbstractHandler
 {
     const NAME = 'move_class';
+
     private const PARAM_SOURCE_PATH = 'source_path';
+
     private const PARAM_DEST_PATH = 'dest_path';
+
     private const PARAM_CONFIRMED = 'confirmed';
+
     private const PARAM_ADDITIONAL_MOVE_CONFIRM = 'move_related';
 
-    /**
-     * @var ClassMover
-     */
-    private $classMove;
+    
+    private ClassMover $classMove;
 
-    /**
-     * @var string
-     */
-    private $defaultFilesystem;
+    
+    private string $defaultFilesystem;
 
     public function __construct(ClassMover $classMove, string $defaultFilesystem)
     {

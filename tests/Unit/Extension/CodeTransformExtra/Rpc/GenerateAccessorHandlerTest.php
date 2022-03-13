@@ -24,22 +24,24 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
             public $bar;
         }
         PHP;
+
     const PATH = '/path/to';
+
     const FOO_NAME = 'foo';
+
     const BAR_NAME = 'bar';
+
     const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
+
     const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
+
     const CURSOR_OFFSET = 57;
 
-    /**
-     * @var GenerateAccessor
-     */
-    private $generateAccessor;
+    
+    private GenerateAccessor $generateAccessor;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
     public function setUp(): void
     {

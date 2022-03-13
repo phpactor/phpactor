@@ -6,7 +6,6 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
-use Phpactor\Completion\Bridge\TolerantParser\Qualifier\Qualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
@@ -17,15 +16,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseClassAliasCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ClassQualifier
-     */
-    private $qualifier;
+    
+    private ClassQualifier $qualifier;
 
     public function __construct(Reflector $reflector, ?ClassQualifier $qualifier = null)
     {

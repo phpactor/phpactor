@@ -12,7 +12,6 @@ use Generator;
 
 class WorseFunctionCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -61,6 +60,7 @@ class WorseFunctionCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter type' => [ '<?php function barfoo() {}; class Hello { function barbar(bar<>)' ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

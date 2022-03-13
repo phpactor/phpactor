@@ -14,9 +14,7 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSymbolProviderExtension implements Extension
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(DocumentSymbolProviderHandler::class, function (Container $container) {
@@ -32,9 +30,7 @@ class LanguageServerSymbolProviderExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

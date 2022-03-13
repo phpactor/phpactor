@@ -14,15 +14,11 @@ use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ClassSearchCommand extends Command
 {
-    /**
-     * @var ClassSearch
-     */
-    private $search;
+    
+    private ClassSearch $search;
 
-    /**
-     * @var DumperRegistry
-     */
-    private $dumperRegistry;
+    
+    private DumperRegistry $dumperRegistry;
 
     public function __construct(
         ClassSearch $search,

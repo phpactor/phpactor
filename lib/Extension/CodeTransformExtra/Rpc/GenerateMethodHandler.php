@@ -12,14 +12,15 @@ use Phpactor\TextDocument\TextDocumentUri;
 class GenerateMethodHandler extends AbstractHandler
 {
     const NAME = 'generate_method';
+
     const PARAM_OFFSET = 'offset';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_PATH = 'path';
 
-    /**
-     * @var GenerateMethod
-     */
-    private $generateMethod;
+    
+    private GenerateMethod $generateMethod;
 
     public function __construct(GenerateMethod $generateMethod)
     {

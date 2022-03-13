@@ -16,30 +16,20 @@ use Phpactor\WorseReflection\Reflector;
 
 class ClassMemberReferences
 {
-    /**
-     * @var FilesystemRegistry
-     */
-    private $filesystemRegistry;
+    
+    private FilesystemRegistry $filesystemRegistry;
 
-    /**
-     * @var MemberFinder
-     */
-    private $memberFinder;
+    
+    private MemberFinder $memberFinder;
 
-    /**
-     * @var ClassFileNormalizer
-     */
-    private $classFileNormalizer;
+    
+    private ClassFileNormalizer $classFileNormalizer;
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var MemberReplacer
-     */
-    private $memberReplacer;
+    
+    private MemberReplacer $memberReplacer;
 
     public function __construct(
         ClassFileNormalizer $classFileNormalizer,

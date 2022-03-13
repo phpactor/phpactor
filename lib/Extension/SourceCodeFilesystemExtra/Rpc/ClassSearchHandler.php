@@ -14,18 +14,14 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 class ClassSearchHandler implements Handler
 {
     const NAME = 'class_search';
+
     const SHORT_NAME = 'short_name';
 
+    
+    private ClassSearch $classSearch;
 
-    /**
-     * @var ClassSearch
-     */
-    private $classSearch;
-
-    /**
-     * @var string
-     */
-    private $defaultFilesystem;
+    
+    private string $defaultFilesystem;
 
     public function __construct(
         ClassSearch $classSearch,

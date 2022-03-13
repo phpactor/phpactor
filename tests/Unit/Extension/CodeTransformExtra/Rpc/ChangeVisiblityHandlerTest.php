@@ -12,13 +12,13 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class ChangeVisiblityHandlerTest extends HandlerTestCase
 {
     const EXAMPLE_SOURCE = '<?php hello';
+
     const EXAMPLE_PATH = '/path/to';
+
     const EXAMPLE_OFFSET = 12;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $changeVisibility;
+    
+    private ObjectProphecy $changeVisibility;
 
     public function setUp(): void
     {

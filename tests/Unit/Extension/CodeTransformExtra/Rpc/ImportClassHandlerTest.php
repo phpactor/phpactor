@@ -23,20 +23,20 @@ use Phpactor\TextDocument\TextEdits;
 class ImportClassHandlerTest extends HandlerTestCase
 {
     const TEST_NAME = 'Foo';
+
     const TEST_OFFSET = 7;
+
     const TEST_PATH = '/path/to';
+
     const TEST_SOURCE = '<?php Foo';
+
     const TEST_ALIAS = 'Alias';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $importName;
+    
+    private ObjectProphecy $importName;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $classSearch;
+    
+    private ObjectProphecy $classSearch;
 
     public function setUp(): void
     {

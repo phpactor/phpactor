@@ -12,14 +12,11 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 final class LocatedTextEditConverter
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
-    /**
-     * @var TextDocumentLocator
-     */
-    private $locator;
+    
+    private Workspace $workspace;
+
+    
+    private TextDocumentLocator $locator;
 
     public function __construct(Workspace $workspace, TextDocumentLocator $locator)
     {

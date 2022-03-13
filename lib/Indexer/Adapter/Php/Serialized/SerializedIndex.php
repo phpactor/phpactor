@@ -9,10 +9,8 @@ use SplFileInfo;
 
 class SerializedIndex implements Index
 {
-    /**
-     * @var FileRepository
-     */
-    private $repository;
+    
+    private FileRepository $repository;
 
     public function __construct(FileRepository $repository)
     {

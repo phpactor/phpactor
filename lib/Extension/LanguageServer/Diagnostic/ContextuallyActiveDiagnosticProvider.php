@@ -15,9 +15,7 @@ class ContextuallyActiveDiagnosticProvider implements DiagnosticsProvider
         $this->providers = $providers;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function provideDiagnostics(TextDocumentItem $textDocument): Promise
     {
         $providers = yield $this->filterProviders($this->providers);

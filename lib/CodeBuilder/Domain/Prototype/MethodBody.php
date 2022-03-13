@@ -4,10 +4,8 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class MethodBody extends Prototype
 {
-    /**
-     * @var Lines
-     */
-    private $lines;
+    
+    private Lines $lines;
 
     public function __construct(Lines $lines = null)
     {

@@ -8,6 +8,7 @@ class Lines extends Collection
     {
         return implode(PHP_EOL, $this->items);
     }
+
     public static function fromLines(array $lines)
     {
         return new self($lines);

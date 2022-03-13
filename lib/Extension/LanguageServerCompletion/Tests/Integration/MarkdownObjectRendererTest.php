@@ -19,20 +19,14 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class MarkdownObjectRendererTest extends IntegrationTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectRenderer
-     */
-    private $renderer;
+    
+    private ObjectRenderer $renderer;
 
-    /**
-     * @var TemporarySourceLocator
-     */
-    private $locator;
+    
+    private TemporarySourceLocator $locator;
 
     protected function setUp(): void
     {

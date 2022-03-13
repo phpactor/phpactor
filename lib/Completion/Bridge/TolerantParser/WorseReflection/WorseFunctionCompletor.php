@@ -20,20 +20,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseFunctionCompletor implements TolerantCompletor
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectFormatter
-     */
-    private $formatter;
+    
+    private ObjectFormatter $formatter;
 
-    /**
-     * @var ObjectFormatter
-     */
-    private $snippetFormatter;
+    
+    private ObjectFormatter $snippetFormatter;
 
     public function __construct(
         Reflector $reflector,

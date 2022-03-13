@@ -7,17 +7,13 @@ class SignatureHelp
     /**
      * @var SignatureInformation[]
      */
-    private $signatures;
+    private array $signatures;
 
-    /**
-     * @var int
-     */
-    private $activeSignature;
+    
+    private int $activeSignature;
 
-    /**
-     * @var int|null
-     */
-    private $activeParameter;
+    
+    private ?int $activeParameter;
 
     public function __construct(
         array $signatures,

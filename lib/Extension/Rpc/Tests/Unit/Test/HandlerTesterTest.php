@@ -13,15 +13,11 @@ class HandlerTesterTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $handler;
+    
+    private ObjectProphecy $handler;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $response;
+    
+    private ObjectProphecy $response;
 
     public function setUp(): void
     {

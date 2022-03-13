@@ -17,25 +17,17 @@ use Phpactor\WorseReflection\Reflector;
 
 class IndexedReferenceFinder implements ReferenceFinder
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var QueryClient
-     */
-    private $query;
+    
+    private QueryClient $query;
 
-    /**
-     * @var ContainerTypeResolver
-     */
-    private $containerTypeResolver;
+    
+    private ContainerTypeResolver $containerTypeResolver;
 
-    /**
-     * @var bool
-     */
-    private $deepReferences;
+    
+    private bool $deepReferences;
 
     public function __construct(QueryClient $query, Reflector $reflector, ?ContainerTypeResolver $containerTypeResolver = null, bool $deepReferences = true)
     {

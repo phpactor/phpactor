@@ -24,7 +24,9 @@ class ExtractExpressionCommandTest extends TestCase
     use ProphecyTrait;
 
     const EXAMPLE_SOURCE = '<?php ';
+
     const EXAMPLE_URI = 'file:///file.php';
+
     const EXAMPLE_OFFSET = 5;
 
     public function testSuccessfulCall(): void
@@ -53,6 +55,7 @@ class ExtractExpressionCommandTest extends TestCase
             'label' => 'Extract expression'
         ], $applyEdit->params);
     }
+
     /**
      * @dataProvider provideExceptions
      */
@@ -80,9 +83,9 @@ class ExtractExpressionCommandTest extends TestCase
             TransformException::class => [ new TransformException('Error message!') ],
         ];
     }
+
     /**
      * @param ObjectProphecy<ExtractExpression> $extractExpression
-     * @return array
      */
     private function createTester(ObjectProphecy $extractExpression): array
     {

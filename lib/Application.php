@@ -18,15 +18,11 @@ use Exception;
 
 class Application extends SymfonyApplication
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    
+    private Container $container;
 
-    /**
-     * @var string
-     */
-    private $vendorDir;
+    
+    private string $vendorDir;
 
     public function __construct(string $vendorDir)
     {

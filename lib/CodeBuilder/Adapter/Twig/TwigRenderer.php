@@ -12,6 +12,7 @@ use Twig\Error\LoaderError;
 final class TwigRenderer implements Renderer
 {
     private $twig;
+
     private $templateNameResolver;
 
     public function __construct(

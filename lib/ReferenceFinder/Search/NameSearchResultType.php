@@ -7,13 +7,13 @@ use RuntimeException;
 final class NameSearchResultType
 {
     public const TYPE_CLASS = 'class';
+
     public const TYPE_FUNCTION = 'function';
+
     public const TYPE_CONSTANT = 'constant';
 
-    /**
-     * @var string
-     */
-    private $type;
+    
+    private string $type;
 
     public function __construct(string $type)
     {

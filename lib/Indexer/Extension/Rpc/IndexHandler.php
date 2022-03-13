@@ -15,19 +15,16 @@ use Phpactor\Indexer\Model\Indexer;
 class IndexHandler implements Handler
 {
     const NAME = 'index';
+
     const PARAM_WATCH = 'watch';
+
     const PARAM_INTERVAL = 'interval';
 
-    /**
-     * @var Indexer
-     */
-    private $indexer;
+    
+    private Indexer $indexer;
 
-    /**
-     * @var Watcher
-     */
-    private $watcher;
-
+    
+    private Watcher $watcher;
 
     public function __construct(Indexer $indexer, Watcher $watcher)
     {

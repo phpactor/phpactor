@@ -19,15 +19,11 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSessionExtension implements Extension
 {
-    /**
-     * @var MessageTransmitter
-     */
-    private $transmitter;
+    
+    private MessageTransmitter $transmitter;
 
-    /**
-     * @var InitializeParams
-     */
-    private $initializeParams;
+    
+    private InitializeParams $initializeParams;
 
     public function __construct(
         MessageTransmitter $transmitter,
@@ -37,9 +33,7 @@ class LanguageServerSessionExtension implements Extension
         $this->initializeParams = $initializeParams;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(ClientCapabilities::class, function (Container $container) {
@@ -74,9 +68,7 @@ class LanguageServerSessionExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

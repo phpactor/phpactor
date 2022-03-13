@@ -12,10 +12,8 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var ObjectProphecy
-     */
-    private $classSearch;
+    
+    private ObjectProphecy $classSearch;
 
     public function setUp(): void
     {

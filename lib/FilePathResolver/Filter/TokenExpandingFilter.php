@@ -7,10 +7,8 @@ use Phpactor\FilePathResolver\Filter;
 
 class TokenExpandingFilter implements Filter
 {
-    /**
-     * @var Expanders
-     */
-    private $expanders;
+    
+    private Expanders $expanders;
 
     public function __construct(Expanders $expanders)
     {

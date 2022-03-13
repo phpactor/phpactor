@@ -10,8 +10,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 class DefinitionLocationTest extends TestCase
 {
     const EXAMPLE_URI = '/path/to.php';
-    const EXAMPLE_OFFSET = 1234;
 
+    const EXAMPLE_OFFSET = 1234;
 
     public function testValues(): void
     {

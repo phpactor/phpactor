@@ -8,10 +8,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class TestDefinitionLocator implements DefinitionLocator
 {
-    /**
-     * @var DefinitionLocation
-     */
-    private $location;
+    
+    private DefinitionLocation $location;
 
     public function __construct(?DefinitionLocation $location)
     {
@@ -23,9 +21,7 @@ class TestDefinitionLocator implements DefinitionLocator
         return new self($location);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
     {
         if (null === $this->location) {

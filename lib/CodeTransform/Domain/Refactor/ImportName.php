@@ -13,10 +13,6 @@ interface ImportName
 
     /**
      * Implementers must provide text edits for the import only without updating references.
-     *
-     * @param SourceCode $source
-     * @param NameImport $nameImport
-     * @return TextEdits
      */
     public function importNameOnly(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits;
 }

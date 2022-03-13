@@ -17,24 +17,19 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseMissingMethodFinder implements MissingMethodFinder
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    
+    private Parser $parser;
 
     public function __construct(Reflector $reflector, Parser $parser)
     {
         $this->reflector = $reflector;
         $this->parser = $parser;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function find(TextDocument $sourceCode): array
     {
         $node = $this->parser->parseSourceFile($sourceCode->__toString());

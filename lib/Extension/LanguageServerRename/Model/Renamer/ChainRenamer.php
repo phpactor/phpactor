@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocument;
 class ChainRenamer implements Renamer
 {
     /** @var Renamer[] */
-    private $renamers;
+    private array $renamers;
 
     public function __construct(array $renamers)
     {
@@ -27,9 +27,8 @@ class ChainRenamer implements Renamer
         }
         return null;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         foreach ($this->renamers as $renamer) {

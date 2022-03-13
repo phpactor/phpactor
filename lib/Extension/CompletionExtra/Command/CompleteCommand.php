@@ -14,20 +14,14 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class CompleteCommand extends Command
 {
-    /**
-     * @var Autocomplete
-     */
-    private $complete;
+    
+    private Autocomplete $complete;
 
-    /**
-     * @var DumperRegistry
-     */
-    private $dumperRegistry;
+    
+    private DumperRegistry $dumperRegistry;
 
-    /**
-     * @var FilesystemHelper
-     */
-    private $helper;
+    
+    private FilesystemHelper $helper;
 
     public function __construct(
         Complete $complete,

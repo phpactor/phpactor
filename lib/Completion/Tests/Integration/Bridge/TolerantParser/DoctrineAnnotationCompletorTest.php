@@ -16,7 +16,6 @@ use Prophecy\Argument;
 
 class DoctrineAnnotationCompletorTest extends CompletorTestCase
 {
-
     /**
      * @dataProvider provideComplete
      */
@@ -148,6 +147,7 @@ class DoctrineAnnotationCompletorTest extends CompletorTestCase
             , []
         ];
     }
+
     protected function createCompletor(string $source): Completor
     {
         $source = TextDocumentBuilder::create($source)->uri('file:///tmp/test')->build();

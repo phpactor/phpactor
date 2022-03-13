@@ -10,7 +10,7 @@ final class LocatedTextEditsMap
     /**
      * @var array<string,TextEdits>
      */
-    private $map;
+    private array $map;
 
     public function __construct(array $map)
     {

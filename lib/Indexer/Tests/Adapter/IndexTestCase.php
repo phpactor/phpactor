@@ -12,6 +12,7 @@ abstract class IndexTestCase extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest(file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
     }
+
     public function testBuild(): void
     {
         $agent = $this->indexAgent();

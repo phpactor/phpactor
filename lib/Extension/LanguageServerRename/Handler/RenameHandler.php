@@ -27,25 +27,17 @@ use function Amp\delay;
 
 class RenameHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var Renamer
-     */
-    private $renamer;
+    
+    private Renamer $renamer;
 
-    /**
-     * @var ClientApi
-     */
-    private $clientApi;
+    
+    private ClientApi $clientApi;
 
-    /**
-     * @var LocatedTextEditConverter
-     */
-    private $converter;
+    
+    private LocatedTextEditConverter $converter;
 
-    /**
-     * @var TextDocumentLocator
-     */
-    private $documentLocator;
+    
+    private TextDocumentLocator $documentLocator;
 
     public function __construct(
         LocatedTextEditConverter $converter,
@@ -58,9 +50,8 @@ class RenameHandler implements Handler, CanRegisterCapabilities
         $this->converter = $converter;
         $this->documentLocator = $documentLocator;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    
     public function methods(): array
     {
         return [
@@ -104,6 +95,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
             return $this->resultToWorkspaceEdit($locatedEdits);
         });
     }
+
     /**
      * @return Promise<Range>
      */

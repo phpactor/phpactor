@@ -4,14 +4,11 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class ConfirmInput implements Input
 {
-    /**
-     * @var string
-     */
-    private $name;
-    /**
-     * @var string
-     */
-    private $label;
+    
+    private string $name;
+
+    
+    private string $label;
 
     private function __construct(string $name, string $label)
     {

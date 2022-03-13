@@ -12,10 +12,8 @@ use function Amp\delay;
 
 class IndexerHandlerTest extends IntegrationTestCase
 {
-    /**
-     * @var LanguageServerTester
-     */
-    private $tester;
+    
+    private LanguageServerTester $tester;
 
     protected function setUp(): void
     {

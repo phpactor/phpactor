@@ -18,14 +18,15 @@ use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
     const PARAM_CURRENT_PATH = 'current_path';
+
     const PARAM_NEW_PATH = 'new_path';
+
     const PARAM_VARIANT = 'variant';
+
     const PARAM_OVERWRITE = 'overwrite';
 
-    /**
-     * @var AbstractClassGenerator
-     */
-    protected $classGenerator;
+    
+    protected AbstractClassGenerator $classGenerator;
 
     public function __construct(AbstractClassGenerator $classGenerator)
     {

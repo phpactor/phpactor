@@ -19,6 +19,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class GotoImplementationHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test.php';
+
     const EXAMPLE_TEXT = 'hello';
 
     /**

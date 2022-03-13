@@ -633,5 +633,6 @@ abstract class GeneratorTestCase extends TestCase
 
         $this->assertEquals($expected, (string) $code);
     }
+
     abstract protected function renderer(): Renderer;
 }

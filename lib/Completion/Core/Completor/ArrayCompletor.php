@@ -10,10 +10,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class ArrayCompletor implements Completor
 {
-    /**
-     * @var array
-     */
-    private $suggestions;
+    
+    private array $suggestions;
 
     /**
      * @param Suggestion[] $suggestions
@@ -23,9 +21,7 @@ class ArrayCompletor implements Completor
         $this->suggestions = $suggestions;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         yield from $this->suggestions;

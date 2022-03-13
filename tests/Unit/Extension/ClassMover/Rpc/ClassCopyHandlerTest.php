@@ -16,12 +16,11 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class ClassCopyHandlerTest extends HandlerTestCase
 {
     const SOURCE_PATH = 'souce_path';
+
     const DEST_PATH = 'souce_path';
 
-    /**
-     * @var ClassCopy
-     */
-    private $classCopy;
+    
+    private ClassCopy $classCopy;
 
     public function setUp(): void
     {
@@ -34,7 +33,6 @@ class ClassCopyHandlerTest extends HandlerTestCase
             $this->classCopy->reveal()
         );
     }
-
 
     /**
      * @testdox It should request the dest path if none is given.

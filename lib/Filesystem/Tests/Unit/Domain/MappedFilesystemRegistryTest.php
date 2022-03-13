@@ -12,10 +12,8 @@ class MappedFilesystemRegistryTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    
+    private Filesystem $filesystem;
 
     public function setUp(): void
     {

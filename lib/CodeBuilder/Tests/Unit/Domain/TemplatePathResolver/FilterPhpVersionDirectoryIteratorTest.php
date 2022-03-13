@@ -11,6 +11,7 @@ use SplFileInfo;
 class FilterPhpVersionDirectoryIteratorTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @dataProvider provideDirectoriesToFilter
      */

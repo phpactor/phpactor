@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Token;
 class NodeHelper
 {
     /**
-     * @param Node $node
      * @param QualifiedName|Token $type
      */
     public static function resolvedShortName(Node $node, $type = null): string

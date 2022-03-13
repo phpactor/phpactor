@@ -8,8 +8,11 @@ use RuntimeException;
 class OpenFileResponse implements Response
 {
     const TARGET_FOCUSED_WINDOW = 'focused_window';
+
     const TARGET_VERTICAL_SPLIT = 'vsplit';
+
     const TARGET_HORIZONTAL_SPLIT = 'hsplit';
+
     const TARGET_NEW_TAB = 'new_tab';
 
     const VALID_TARGETS = [
@@ -19,25 +22,17 @@ class OpenFileResponse implements Response
         self::TARGET_NEW_TAB
     ];
 
-    /**
-     * @var string
-     */
-    private $path;
+    
+    private string $path;
 
-    /**
-     * @var int
-     */
-    private $offset;
+    
+    private int $offset;
 
-    /**
-     * @var bool
-     */
-    private $forceReload;
+    
+    private bool $forceReload;
 
-    /**
-     * @var string
-     */
-    private $target;
+    
+    private string $target;
 
     private function __construct(string $path, int $offset = 0, bool $forceReload = false, string $target = self::TARGET_FOCUSED_WINDOW)
     {

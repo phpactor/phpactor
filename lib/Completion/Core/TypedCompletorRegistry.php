@@ -7,7 +7,7 @@ class TypedCompletorRegistry
     /**
      * @var array<string, Completor>
      */
-    private $completors;
+    private array $completors;
 
     /**
      * Map should be from language ID to completor for that language

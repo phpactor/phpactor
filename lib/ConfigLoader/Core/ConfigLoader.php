@@ -6,15 +6,11 @@ use RuntimeException;
 
 class ConfigLoader
 {
-    /**
-     * @var Deserializers
-     */
-    private $deserializers;
+    
+    private Deserializers $deserializers;
 
-    /**
-     * @var PathCandidates
-     */
-    private $candidates;
+    
+    private PathCandidates $candidates;
 
     public function __construct(Deserializers $deserializers, PathCandidates $candidates)
     {

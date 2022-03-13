@@ -17,15 +17,11 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class HighlightHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    
+    private Workspace $workspace;
 
-    /**
-     * @var Highlighter
-     */
-    private $highlighter;
+    
+    private Highlighter $highlighter;
 
     public function __construct(Workspace $workspace, Highlighter $highlighter)
     {
@@ -33,9 +29,7 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
         $this->highlighter = $highlighter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function methods(): array
     {
         return [

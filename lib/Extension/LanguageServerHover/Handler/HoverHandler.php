@@ -28,20 +28,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class HoverHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectRenderer
-     */
-    private $renderer;
+    
+    private ObjectRenderer $renderer;
 
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    
+    private Workspace $workspace;
 
     public function __construct(Workspace $workspace, Reflector $reflector, ObjectRenderer $renderer)
     {

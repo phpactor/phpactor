@@ -19,13 +19,14 @@ use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 class ClassToFileExtension implements Extension
 {
     const SERVICE_CONVERTER = 'class_to_file.converter';
+
     const PARAM_CLASS_LOADERS = 'composer.class_loaders';
+
     const PARAM_PROJECT_ROOT = 'class_to_file.project_root';
+
     const PARAM_BRUTE_FORCE_CONVERSION = 'class_to_file.brute_force_conversion';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -38,9 +39,7 @@ class ClassToFileExtension implements Extension
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_CONVERTER, function (Container $container) {

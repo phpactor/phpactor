@@ -21,16 +21,19 @@ class ExtractExpressionProviderTest extends TestCase
     use ProphecyTrait;
 
     const EXAMPLE_SOURCE = 'foobar';
+
     const EXAMPLE_FILE = 'file:///somefile.php';
+
     /**
      * @var ObjectProphecy<ExtractExpression>
      */
-    private $extractExpression;
+    private ObjectProphecy $extractExpression;
 
     public function setUp(): void
     {
         $this->extractExpression = $this->prophesize(ExtractExpression::class);
     }
+
     /**
      * @dataProvider provideActionsData
      */

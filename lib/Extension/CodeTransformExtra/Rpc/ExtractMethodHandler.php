@@ -12,19 +12,21 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class ExtractMethodHandler extends AbstractHandler
 {
     const NAME = 'extract_method';
+
     const PARAM_SOURCE = 'source';
+
     const PARAM_PATH = 'path';
 
     const PARAM_METHOD_NAME = 'method_name';
+
     const PARAM_OFFSET_START = 'offset_start';
+
     const PARAM_OFFSET_END = 'offset_end';
 
     const INPUT_LABEL_NAME = 'Method name: ';
 
-    /**
-     * @var ExtractMethod
-     */
-    private $extractMethod;
+    
+    private ExtractMethod $extractMethod;
 
     public function __construct(ExtractMethod $extractMethod)
     {

@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseParameterCompletorTest extends TolerantCompletorTestCase
 {
-
     /**
      * @dataProvider provideCompleteMethodParameter
      */
@@ -324,7 +323,6 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
-
     public function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
@@ -332,6 +330,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         yield 'statement with previous member access' => [ '<?php if ($foobar && $this->foobar) { echo<>' ];
         yield 'variable with previous static member access' => [ '<?php Hello::hello(); $foo<>' ];
     }
+
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

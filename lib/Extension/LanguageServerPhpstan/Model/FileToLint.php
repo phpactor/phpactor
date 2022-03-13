@@ -4,20 +4,14 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
 class FileToLint
 {
-    /**
-     * @var string
-     */
-    private $uri;
+    
+    private string $uri;
 
-    /**
-     * @var string|null
-     */
-    private $contents;
+    
+    private ?string $contents;
 
-    /**
-     * @var int|null
-     */
-    private $version;
+    
+    private ?int $version;
 
     public function __construct(string $uri, ?string $contents = null, ?int $version = null)
     {

@@ -19,20 +19,20 @@ use Webmozart\PathUtil\Path;
 abstract class AbstractClassGenerateHandlerTest extends TestCase
 {
     const EXAMPLE_PATH = '/path/to.php';
+
     const EXAMPLE_NEW_PATH = '/new/path.php';
+
     const EXAMPLE_VARIANT = 'one';
+
     const EXAMPLE_CLASS_1 = 'exampleClassName1';
+
     const EXAMPLE_CLASS_2 = 'exampleClassName2';
 
-    /**
-     * @var ObjectProphecy
-     */
-    protected $fileToClass;
+    
+    protected ObjectProphecy $fileToClass;
 
-    /**
-     * @var Workspace
-     */
-    protected $workspace;
+    
+    protected Workspace $workspace;
 
     public function setUp(): void
     {

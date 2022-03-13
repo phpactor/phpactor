@@ -13,15 +13,11 @@ class PathFinderNavigatorTest extends TestCase
 
     const TEST_PATH = '/test/path';
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $pathFinder;
+    
+    private ObjectProphecy $pathFinder;
 
-    /**
-     * @var PathFinderNavigator
-     */
-    private $navigator;
+    
+    private PathFinderNavigator $navigator;
 
     public function setUp(): void
     {

@@ -13,15 +13,13 @@ use SplFileInfo;
 
 class DirtyFileListProvider implements FileListProvider, DirtyDocumentTracker
 {
-    /**
-     * @var string
-     */
-    private $dirtyPath;
+    
+    private string $dirtyPath;
 
     /**
      * @var array<string, bool>
      */
-    private $seen = [];
+    private array $seen = [];
 
     public function __construct(string $dirtyPath)
     {

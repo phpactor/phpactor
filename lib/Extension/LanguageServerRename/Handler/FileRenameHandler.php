@@ -20,15 +20,11 @@ use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
-    /**
-     * @var FileRenamer
-     */
-    private $renamer;
+    
+    private FileRenamer $renamer;
 
-    /**
-     * @var LocatedTextEditConverter
-     */
-    private $converter;
+    
+    private LocatedTextEditConverter $converter;
 
     public function __construct(FileRenamer $renamer, LocatedTextEditConverter $converter)
     {
@@ -36,9 +32,7 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
         $this->converter = $converter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function methods(): array
     {
         return [

@@ -14,19 +14,14 @@ use Psr\Log\NullLogger;
 
 class ValidatingSearchIndexTest extends IntegrationTestCase
 {
-    /**
-     * @var InMemorySearchIndex
-     */
-    private $innerSearchIndex;
-    /**
-     * @var InMemoryIndex
-     */
-    private $index;
+    
+    private InMemorySearchIndex $innerSearchIndex;
 
-    /**
-     * @var ValidatingSearchIndex
-     */
-    private $searchIndex;
+    
+    private InMemoryIndex $index;
+
+    
+    private ValidatingSearchIndex $searchIndex;
 
     protected function setUp(): void
     {

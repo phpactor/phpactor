@@ -6,20 +6,14 @@ use Phpactor\ClassMover\Domain\Name\ImportedName;
 
 final class ImportedNameReference
 {
-    /**
-     * @var Position|null
-     */
-    private $position;
+    
+    private ?Position $position;
 
-    /**
-     * @var ImportedName|null
-     */
-    private $importedName;
+    
+    private ?ImportedName $importedName;
 
-    /**
-     * @var bool
-     */
-    private $exists;
+    
+    private bool $exists;
 
     private function __construct(Position $position = null, ImportedName $importedName = null)
     {

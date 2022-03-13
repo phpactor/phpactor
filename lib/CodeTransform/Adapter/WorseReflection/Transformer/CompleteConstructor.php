@@ -85,9 +85,7 @@ class CompleteConstructor implements Transformer
         return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function diagnostics(SourceCode $source): Diagnostics
     {
         $diagnostics = [];

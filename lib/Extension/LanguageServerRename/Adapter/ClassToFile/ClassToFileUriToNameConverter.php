@@ -11,19 +11,15 @@ use RuntimeException;
 
 class ClassToFileUriToNameConverter implements UriToNameConverter
 {
-    /**
-     * @var FileToClass
-     */
-    private $fileToClass;
+    
+    private FileToClass $fileToClass;
 
     public function __construct(FileToClass $fileToClass)
     {
         $this->fileToClass = $fileToClass;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function convert(TextDocumentUri $uri): string
     {
         try {

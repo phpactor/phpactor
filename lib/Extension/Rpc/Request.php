@@ -7,17 +7,14 @@ use InvalidArgumentException;
 class Request
 {
     const KEY_ACTION = 'action';
+
     const KEY_PARAMETERS = 'parameters';
 
-    /**
-     * @var string
-     */
-    private $name;
+    
+    private string $name;
 
-    /**
-     * @var array
-     */
-    private $parameters;
+    
+    private array $parameters;
 
     private function __construct(string $name, array $parameters)
     {

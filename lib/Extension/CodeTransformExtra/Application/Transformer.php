@@ -9,15 +9,11 @@ use Webmozart\PathUtil\Path;
 
 class Transformer
 {
-    /**
-     * @var CodeTransform
-     */
-    private $transform;
+    
+    private CodeTransform $transform;
 
-    /**
-     * @var FilesystemHelper
-     */
-    private $filesystemHelper;
+    
+    private FilesystemHelper $filesystemHelper;
 
     public function __construct(
         CodeTransform $transform

@@ -4,23 +4,17 @@ namespace Phpactor\Indexer\Model;
 
 class RecordReference
 {
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $identifier;
-    /**
-     * @var int
-     */
-    private $offset;
+    
+    private string $type;
 
-    /**
-     * @var string|null
-     */
-    private $contaninerType;
+    
+    private string $identifier;
+
+    
+    private int $offset;
+
+    
+    private ?string $contaninerType;
 
     public function __construct(string $type, string $identifier, int $offset, ?string $contaninerType = null)
     {

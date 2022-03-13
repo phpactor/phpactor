@@ -14,18 +14,14 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorkspaceUpdateReferenceFinder implements ReferenceFinder
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
-    /**
-     * @var Indexer
-     */
-    private $indexer;
-    /**
-     * @var ReferenceFinder
-     */
-    private $innerReferenceFinder;
+    
+    private Workspace $workspace;
+
+    
+    private Indexer $indexer;
+
+    
+    private ReferenceFinder $innerReferenceFinder;
 
     public function __construct(Workspace $workspace, Indexer $indexer, ReferenceFinder $innerReferenceFinder)
     {
@@ -34,9 +30,7 @@ class WorkspaceUpdateReferenceFinder implements ReferenceFinder
         $this->innerReferenceFinder = $innerReferenceFinder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         $this->indexWorkspace();

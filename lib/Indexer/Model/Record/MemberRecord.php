@@ -11,26 +11,23 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     use HasFileReferencesTrait;
 
     public const RECORD_TYPE = 'member';
+
     public const TYPE_METHOD = 'method';
+
     public const TYPE_CONSTANT = 'constant';
+
     public const TYPE_PROPERTY = 'property';
 
     private const ID_DELIMITER = '#';
 
-    /**
-     * @var string
-     */
-    private $type;
+    
+    private string $type;
 
-    /**
-     * @var string
-     */
-    private $memberName;
+    
+    private string $memberName;
 
-    /**
-     * @var string
-     */
-    private $containerType;
+    
+    private ?string $containerType;
 
     public function __construct(string $type, string $memberName, string $containerType = null)
     {
@@ -55,9 +52,7 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
         return new self($memberReference->type(), $memberReference->memberName(), $memberReference->containerType());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

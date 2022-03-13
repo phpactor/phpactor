@@ -10,20 +10,16 @@ class Pattern
 {
     const TOKEN_REGEX = '{<([a-z-]+?)>}';
 
-    /**
-     * @var string
-     */
-    private $regex;
+    
+    private string $regex;
 
     /**
      * @var array<string>
      */
-    private $tokenNames;
+    private array $tokenNames;
 
-    /**
-     * @var string
-     */
-    private $pattern;
+    
+    private string $pattern;
 
     /**
      * @param array<string> $tokenNames

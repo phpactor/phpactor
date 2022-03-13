@@ -16,10 +16,8 @@ use function Amp\delay;
 
 class PsalmDiagnosticProviderTest extends TestCase
 {
-    /**
-     * @var LanguageServerTester
-     */
-    private $tester;
+    
+    private LanguageServerTester $tester;
 
     protected function setUp(): void
     {

@@ -12,19 +12,15 @@ use function assert;
 
 class TolerantVariableDefintionLocator implements DefinitionLocator
 {
-    /**
-     * @var TolerantVariableReferenceFinder
-     */
-    private $finder;
+    
+    private TolerantVariableReferenceFinder $finder;
 
     public function __construct(TolerantVariableReferenceFinder $finder)
     {
         $this->finder = $finder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
     {
         foreach ($this->finder->findReferences($document, $byteOffset) as $reference) {

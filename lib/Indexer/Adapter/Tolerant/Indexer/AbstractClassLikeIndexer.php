@@ -19,6 +19,7 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
     public function beforeParse(Index $index, TextDocument $document): void
     {
     }
+
     protected function removeImplementations(Index $index, ClassRecord $record): void
     {
         foreach ($record->implements() as $implementedClass) {

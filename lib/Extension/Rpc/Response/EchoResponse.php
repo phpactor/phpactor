@@ -6,10 +6,8 @@ use Phpactor\Extension\Rpc\Response;
 
 class EchoResponse implements Response
 {
-    /**
-     * @var string
-     */
-    private $message;
+    
+    private string $message;
 
     private function __construct(string $message)
     {

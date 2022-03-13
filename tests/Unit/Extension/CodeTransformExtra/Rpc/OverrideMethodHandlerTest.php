@@ -13,15 +13,11 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OverrideMethodHandlerTest extends HandlerTestCase
 {
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var ObjectProphecy
-     */
-    private $overrideMethod;
+    
+    private ObjectProphecy $overrideMethod;
 
     public function setUp(): void
     {

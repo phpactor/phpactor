@@ -8,15 +8,11 @@ use Phpactor\TextDocument\ByteOffset;
 
 trait FullyQualifiedReferenceTrait
 {
-    /**
-     * @var string
-     */
-    private $fqn;
+    
+    private string $fqn;
 
-    /**
-     * @var int
-     */
-    private $start;
+    
+    private int $start;
 
     public function __construct(string $fqn)
     {

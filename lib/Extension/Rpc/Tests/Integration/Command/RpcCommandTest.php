@@ -13,16 +13,15 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class RpcCommandTest extends TestCase
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    
+    private Workspace $workspace;
 
     public function setUp(): void
     {
         $this->workspace = Workspace::create(__DIR__ . '/../../Workspace');
         $this->workspace->reset();
     }
+
     /**
      * It should execute a command from stdin
      */

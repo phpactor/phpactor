@@ -14,14 +14,15 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class ExtractConstantHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php echo "foo";';
+
     const PATH = '/path/to';
+
     const OFFSET = 1234;
+
     const CONSTANT_NAME = 'FOOBAR';
 
-    /**
-     * @var ExtractConstant
-     */
-    private $extractConstant;
+    
+    private ExtractConstant $extractConstant;
 
     public function setUp(): void
     {

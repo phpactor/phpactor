@@ -6,10 +6,8 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 
 class NameAlreadyInNamespaceException extends TransformException
 {
-    /**
-     * @var string
-     */
-    private $name;
+    
+    private string $name;
 
     public function __construct(NameImport $nameImport)
     {

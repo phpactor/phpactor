@@ -8,10 +8,8 @@ use Phpactor\Indexer\Model\Record\ConstantRecord;
 
 class ConstantQuery implements IndexQuery
 {
-    /**
-     * @var Index
-     */
-    private $index;
+    
+    private Index $index;
 
     public function __construct(Index $index)
     {

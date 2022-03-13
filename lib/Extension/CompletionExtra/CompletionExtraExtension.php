@@ -18,9 +18,7 @@ class CompletionExtraExtension implements Extension
 {
     const CLASS_COMPLETOR_LIMIT = 'completion.completor.class.limit';
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
@@ -28,9 +26,7 @@ class CompletionExtraExtension implements Extension
         $this->registerRpc($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
     }

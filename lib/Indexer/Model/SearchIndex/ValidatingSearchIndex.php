@@ -12,20 +12,14 @@ use Psr\Log\LoggerInterface;
 
 class ValidatingSearchIndex implements SearchIndex
 {
-    /**
-     * @var SearchIndex
-     */
-    private $innerIndex;
+    
+    private SearchIndex $innerIndex;
 
-    /**
-     * @var IndexAccess
-     */
-    private $index;
+    
+    private IndexAccess $index;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    
+    private LoggerInterface $logger;
 
     public function __construct(SearchIndex $innerIndex, IndexAccess $index, LoggerInterface $logger)
     {
@@ -34,9 +28,7 @@ class ValidatingSearchIndex implements SearchIndex
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function search(Criteria $criteria): Generator
     {
         foreach ($this->innerIndex->search($criteria) as $result) {

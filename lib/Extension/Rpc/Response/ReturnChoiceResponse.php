@@ -11,10 +11,8 @@ use Phpactor\Extension\Rpc\Response;
  */
 class ReturnChoiceResponse implements Response
 {
-    /**
-     * @var array
-     */
-    private $options = [];
+    
+    private array $options = [];
 
     private function __construct($options)
     {

@@ -9,16 +9,14 @@ class ChainResolver implements PhpVersionResolver
     /**
      * @var PhpVersionResolver[]
      */
-    private $versionResolvers;
+    private array $versionResolvers;
 
     public function __construct(PhpVersionResolver ...$versionResolvers)
     {
         $this->versionResolvers = $versionResolvers;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function resolve(): ?string
     {
         foreach ($this->versionResolvers as $versionResolver) {

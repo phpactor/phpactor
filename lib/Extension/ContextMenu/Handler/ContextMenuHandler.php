@@ -24,35 +24,29 @@ use Phpactor\Container\Container;
 class ContextMenuHandler implements Handler
 {
     const NAME = 'context_menu';
+
     const PARAMETER_SOURCE = 'source';
+
     const PARAMETER_OFFSET = 'offset';
+
     const PARAMETER_ACTION = 'action';
+
     const PARAMETER_CURRENT_PATH = 'current_path';
 
-    /**
-     * @var Reflector
-     */
-    private $reflector;
+    
+    private Reflector $reflector;
 
-    /**
-     * @var InterestingOffsetFinder
-     */
-    private $offsetFinder;
+    
+    private InterestingOffsetFinder $offsetFinder;
 
-    /**
-     * @var ContextMenu
-     */
-    private $menu;
+    
+    private ContextMenu $menu;
 
-    /**
-     * @var Container
-     */
-    private $container;
+    
+    private Container $container;
 
-    /**
-     * @var ClassFileNormalizer
-     */
-    private $classFileNormalizer;
+    
+    private ClassFileNormalizer $classFileNormalizer;
 
     public function __construct(
         Reflector $reflector,

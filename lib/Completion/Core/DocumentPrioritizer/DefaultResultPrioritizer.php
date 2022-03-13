@@ -7,10 +7,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class DefaultResultPrioritizer implements DocumentPrioritizer
 {
-    /**
-     * @var int
-     */
-    private $priority;
+    
+    private int $priority;
 
     public function __construct(int $priority = Suggestion::PRIORITY_LOW)
     {

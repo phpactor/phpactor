@@ -21,9 +21,7 @@ abstract class Collection implements IteratorAggregate, Countable
         return new static([]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->items);
@@ -42,9 +40,7 @@ abstract class Collection implements IteratorAggregate, Countable
         return reset($this->items);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function count(): int
     {
         return count($this->items);

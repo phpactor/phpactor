@@ -20,23 +20,18 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 class GenerateMethodCommand implements Command
 {
     public const NAME  = 'generate_method';
-    /**
-     * @var ClientApi
-     */
-    private $clientApi;
-    /**
-     * @var GenerateMethod
-     */
-    private $generateMethod;
-    /**
-     * @var Workspace
-     */
-    private $workspace;
 
-    /**
-     * @var TextDocumentLocator
-     */
-    private $locator;
+    
+    private ClientApi $clientApi;
+
+    
+    private GenerateMethod $generateMethod;
+
+    
+    private Workspace $workspace;
+
+    
+    private TextDocumentLocator $locator;
 
     public function __construct(
         ClientApi $clientApi,
@@ -49,6 +44,7 @@ class GenerateMethodCommand implements Command
         $this->workspace = $workspace;
         $this->locator = $locator;
     }
+
     /**
      * @return Promise<?ApplyWorkspaceEditResponse>
      */

@@ -8,15 +8,11 @@ use Phpactor\Extension\Rpc\Response\Input\Input;
 
 class InputCallbackResponse implements Response
 {
-    /**
-     * @var Request
-     */
-    private $callbackAction;
+    
+    private Request $callbackAction;
 
-    /**
-     * @var array
-     */
-    private $inputs = [];
+    
+    private array $inputs = [];
 
     private function __construct(Request $callbackAction, array $inputs)
     {

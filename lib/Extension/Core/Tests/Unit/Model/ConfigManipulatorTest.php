@@ -8,10 +8,8 @@ use Phpactor\TestUtils\Workspace;
 
 class ConfigManipulatorTest extends TestCase
 {
-    /**
-     * @var Workspace
-     */
-    private $workspace;
+    
+    private Workspace $workspace;
 
     public function setUp(): void
     {

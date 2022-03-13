@@ -11,7 +11,7 @@ class ChainCompletor implements Completor
     /**
      * @var Completor[]
      */
-    private $completors;
+    private array $completors;
 
     /**
      * @param Completor[] $completors

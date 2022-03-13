@@ -11,6 +11,7 @@ use SplFileInfo;
 class FileRecord implements HasPath, Record
 {
     use HasPathTrait;
+
     public const RECORD_TYPE = 'file';
 
     /**
@@ -32,9 +33,7 @@ class FileRecord implements HasPath, Record
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function recordType(): string
     {
         return self::RECORD_TYPE;

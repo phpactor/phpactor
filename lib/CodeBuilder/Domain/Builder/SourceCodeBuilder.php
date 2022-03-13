@@ -14,30 +14,28 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 class SourceCodeBuilder extends AbstractBuilder
 {
-    /**
-     * @var NamespaceName
-     */
-    protected $namespace;
+    
+    protected ?NamespaceName $namespace = null;
 
     /**
      * @var UseStatement[]
      */
-    protected $useStatements = [];
+    protected array $useStatements = [];
 
     /**
      * @var ClassBuilder[]
      */
-    protected $classes = [];
+    protected array $classes = [];
 
     /**
      * @var InterfaceBuilder[]
      */
-    protected $interfaces = [];
+    protected array $interfaces = [];
 
     /**
      * @var TraitBuilder[]
      */
-    protected $traits = [];
+    protected array $traits = [];
 
     public static function create(): SourceCodeBuilder
     {
