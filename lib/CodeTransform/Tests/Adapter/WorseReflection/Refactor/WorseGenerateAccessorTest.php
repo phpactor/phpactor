@@ -30,7 +30,7 @@ class WorseGenerateAccessorTest extends WorseTestCase
         );
         $transformed = $generateAccessor->generate(
             SourceCode::fromString($source),
-            $propertyName,
+            [$propertyName],
             $offset
         );
 
@@ -89,6 +89,6 @@ class WorseGenerateAccessorTest extends WorseTestCase
         $source = '<?php class Foo { private $foo; }';
 
         $generateAccessor = new WorseGenerateAccessor($this->reflectorForWorkspace(''), $this->updater());
-        $generateAccessor->generate(SourceCode::fromString($source), 'bar', 0);
+        $generateAccessor->generate(SourceCode::fromString($source), ['bar'], 0);
     }
 }

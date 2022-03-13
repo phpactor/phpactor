@@ -4,6 +4,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use InvalidArgumentException;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PrototypeSourceCode;
+use Phpactor\WorseReflection\Core\Type;
 use RuntimeException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -37,14 +38,18 @@ class WorseGenerateAccessor implements GenerateAccessor
         $this->upperCaseFirst = ($prefix && $upperCaseFirst === null) || $upperCaseFirst;
     }
 
-    public function generate(SourceCode $sourceCode, string $propertyName, int $offset): SourceCode
+    /**
+     * @param string[] $propertyNames
+     */
+    public function generate(SourceCode $sourceCode, array $propertyNames, int $offset): SourceCode
     {
-        $property = $this->class((string) $sourceCode, $offset)
-             ->properties()
-             ->get($propertyName);
+        $class = $this->class((string) $sourceCode, $offset);
+        $allProperties = $class->properties();
 
-        $prototype = $this->buildPrototype($property);
-        $sourceCode = $this->sourceFromClassName($sourceCode, $property->class()->name());
+        $properties = array_map(fn (string $name) => $allProperties->get($name), $propertyNames);
+
+        $prototype = $this->buildPrototype($class, $properties);
+        $sourceCode = $this->sourceFromClassName($sourceCode, $class->name());
 
         return $sourceCode->withSource((string) $this->updater->textEditsFor(
             $prototype,
@@ -61,21 +66,26 @@ class WorseGenerateAccessor implements GenerateAccessor
         return $this->prefix . $name;
     }
 
-    private function buildPrototype(ReflectionProperty $property): PrototypeSourceCode
+    /**
+     * @param ReflectionProperty[] $properties
+     */
+    private function buildPrototype(ReflectionClass $class, array $properties): PrototypeSourceCode
     {
         $builder = SourceCodeBuilder::create();
-        $className = $property->class()->name();
+        $className = $class->name();
 
         $builder->namespace($className->namespace());
-        $method = $builder
-            ->class($className->short())
-            ->method($this->formatName($property->name()));
-        $method->body()->line(sprintf('return $this->%s;', $property->name()));
 
-        $type = $property->inferredTypes()->best();
-        if ($type->isDefined()) {
-            $className = $type->className();
-            $method->returnType($className ? $className->short() : $type->primitive());
+        foreach ($properties as $reflectionProperty) {
+            $method = $builder
+                ->class($className->short())
+                ->method($this->formatName($reflectionProperty->name()));
+            $method->body()->line(sprintf('return $this->%s;', $reflectionProperty->name()));
+
+            $type = $reflectionProperty->inferredTypes()->best();
+            if ($type->isDefined()) {
+                $method->returnType($type->short());
+            }
         }
 
         return $builder->build();
