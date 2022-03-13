@@ -244,7 +244,7 @@ After:
        }
    }
 
-.. _generation_generate_accessors
+.. _generation_generate_accessors:
 
 Generate Accessors
 ------------------
@@ -1086,7 +1086,7 @@ After moving to ``src/Writer.php``:
    {
    }
 
-.. _generation_extract_constant
+.. _generation_extract_constant:
 
 Extract Constant
 ----------------
