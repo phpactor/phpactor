@@ -155,5 +155,8 @@ class MemberRenamerTest extends TestCase
         yield 'constant and definition' => [
             '<?php class Foobar { <r>const {{FOO}}="bar"; function bar() { return self::{{<r>F<>OO}}; } }'
         ];
+        yield 'definition and constant' => [
+            '<?php class Foobar { <r>const {{F<>OO}}="bar"; function bar() { return self::{{<r>FOO}}; } }'
+        ];
     }
 }

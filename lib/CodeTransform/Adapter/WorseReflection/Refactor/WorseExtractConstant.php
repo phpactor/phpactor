@@ -3,6 +3,8 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
+use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
@@ -33,18 +35,30 @@ class WorseExtractConstant implements ExtractConstant
         $this->parser = $parser ?: new Parser();
     }
 
-    public function extractConstant(SourceCode $sourceCode, int $offset, string $constantName): SourceCode
+    public function extractConstant(SourceCode $sourceCode, int $offset, string $constantName): TextDocumentEdits
     {
         $symbolInformation = $this->reflector
             ->reflectOffset($sourceCode->__toString(), $offset)
             ->symbolContext();
 
-        $sourceCode = $this->replaceValues($sourceCode, $offset, $constantName);
-
-        return $this->addConstant($sourceCode, $symbolInformation, $constantName);
+        $textEdits = $this->addConstant($sourceCode, $symbolInformation, $constantName);
+        $textEdits = $textEdits->merge($this->replaceValues($sourceCode, $offset, $constantName));
+        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->path()), $textEdits);
     }
 
-    private function addConstant(SourceCode $sourceCode, SymbolContext $symbolInformation, string $constantName): SourceCode
+    public function canExtractConstant(SourceCode $source, int $offset): bool
+    {
+        $node = $this->parser->parseSourceFile($source->__toString());
+        $targetNode = $node->getDescendantNodeAtPosition($offset);
+        try {
+            $this->getComparableValue($targetNode);
+        } catch (TransformException $e) {
+            return false;
+        }
+        return true;
+    }
+
+    private function addConstant(string $sourceCode, SymbolContext $symbolInformation, string $constantName): TextEdits
     {
         $symbol = $symbolInformation->symbol();
 
@@ -52,7 +66,7 @@ class WorseExtractConstant implements ExtractConstant
         $containerType = $symbolInformation->containerType();
 
         if (!$containerType) {
-            throw new TransformException(sprintf('Could not find container class'));
+            throw new TransformException(sprintf('Node does not belong to a class'));
         }
 
         $className = $containerType->className();
@@ -67,10 +81,10 @@ class WorseExtractConstant implements ExtractConstant
                 ->constant($constantName, $symbolInformation->value())
             ->end();
 
-        return $sourceCode->withSource($this->updater->textEditsFor($builder->build(), Code::fromString($sourceCode))->apply($sourceCode));
+        return $this->updater->textEditsFor($builder->build(), Code::fromString($sourceCode));
     }
 
-    private function replaceValues(SourceCode $sourceCode, int $offset, string $constantName): SourceCode
+    private function replaceValues(SourceCode $sourceCode, int $offset, string $constantName): TextEdits
     {
         $node = $this->parser->parseSourceFile($sourceCode->__toString());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
@@ -96,7 +110,7 @@ class WorseExtractConstant implements ExtractConstant
             }
         }
 
-        return $sourceCode->withSource(TextEdits::fromTextEdits($textEdits)->apply($sourceCode->__toString()));
+        return TextEdits::fromTextEdits($textEdits);
     }
 
     private function getComparableValue(Node $node): string

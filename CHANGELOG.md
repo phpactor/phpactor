@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [lsp] Added extract constant code action
   - [extension] Removed the extension manager.
   - [extension] PHPStan and Psalm extensions are now included by default.
   - [lsp] Code action to complete constructor with _public_ properties
