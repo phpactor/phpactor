@@ -1,6 +1,9 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
     ->in('lib')
     ->in('tests')
     ->exclude([
@@ -11,11 +14,19 @@ $finder = PhpCsFixer\Finder::create()
     ])
 ;
 
-return PhpCsFixer\Config::create()
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'no_unused_imports' => true,
+        'phpdoc_to_property_type' => true,
+        'no_superfluous_phpdoc_tags' => [
+            'remove_inheritdoc' => true,
+            'allow_mixed' => true,
+        ],
+        'class_attributes_separation' => true,
+        'no_empty_phpdoc' => true,
+        'phpdoc_trim' => true,
         'array_syntax' => ['syntax' => 'short'],
         'void_return' => true,
         'ordered_class_elements' => true,
