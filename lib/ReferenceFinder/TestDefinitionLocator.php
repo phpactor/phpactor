@@ -9,7 +9,7 @@ use Phpactor\TextDocument\TextDocument;
 class TestDefinitionLocator implements DefinitionLocator
 {
     
-    private DefinitionLocation $location;
+    private ?DefinitionLocation $location;
 
     public function __construct(?DefinitionLocation $location)
     {

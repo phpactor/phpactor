@@ -22,7 +22,7 @@ class LoggingHandlerTest extends TestCase
     private ObjectProphecy $innerHandler;
 
     
-    private ExceptionCatchingHandler $loggingHandler;
+    private LoggingHandler $loggingHandler;
 
     
     private ObjectProphecy $response;

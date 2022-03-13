@@ -20,6 +20,7 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;
 
 class ReferencesHandlerTest extends HandlerTestCase
@@ -27,19 +28,19 @@ class ReferencesHandlerTest extends HandlerTestCase
     const TEST_PATH = 'test_file.php';
 
     
-    private ClassReferences $classReferences;
+    private ObjectProphecy $classReferences;
 
     
     private Reflector $reflector;
 
     
-    private ClassMemberReferences $classMemberReferences;
+    private ObjectProphecy $classMemberReferences;
 
     
     private ArrayLogger $logger;
 
     
-    private FilesystemRegistry $filesystemRegistry;
+    private ObjectProphecy $filesystemRegistry;
 
     public function setUp(): void
     {

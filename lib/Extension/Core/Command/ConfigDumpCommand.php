@@ -21,7 +21,7 @@ class ConfigDumpCommand extends Command
     private DumperRegistry $registry;
 
     
-    private Paths $paths;
+    private PathCandidates $paths;
 
     
     private Expanders $expanders;

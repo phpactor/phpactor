@@ -17,6 +17,7 @@ use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\CloseFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
@@ -25,7 +26,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
     const DEST_PATH = 'dest_path';
 
     
-    private ClassMover $classMover;
+    private ObjectProphecy $classMover;
 
     public function setUp(): void
     {

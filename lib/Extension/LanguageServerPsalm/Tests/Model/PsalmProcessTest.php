@@ -14,6 +14,9 @@ use Phpactor\Extension\LanguageServerPsalm\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 use function Amp\Promise\wait;
 
+/**
+ * @group slow
+ */
 class PsalmProcessTest extends IntegrationTestCase
 {
     protected function setUp(): void

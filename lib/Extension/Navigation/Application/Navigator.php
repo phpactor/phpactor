@@ -9,7 +9,7 @@ use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 class Navigator
 {
     
-    private Navigator $navigator;
+    private NavigatorInterface $navigator;
 
     
     private ClassNew $classNew;

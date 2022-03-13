@@ -12,7 +12,7 @@ use Phpactor\TextDocument\TextDocument;
 class InMemoryRenamer implements Renamer
 {
     
-    private ByteOffsetRange $range;
+    private ?ByteOffsetRange $range;
 
     /**
      * @var LocatedTextEdit[]

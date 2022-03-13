@@ -12,6 +12,7 @@ use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassCopyHandlerTest extends HandlerTestCase
 {
@@ -19,8 +20,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
 
     const DEST_PATH = 'souce_path';
 
-    
-    private ClassCopy $classCopy;
+    private ObjectProphecy $classCopy;
 
     public function setUp(): void
     {

@@ -17,6 +17,7 @@ use Phpactor\Name\FullyQualifiedName;
 use Phpactor\TextDocument\ByteOffset;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use function Amp\Promise\wait;
 
 class ImportAllUnresolvedNamesCommandTest extends TestCase
@@ -28,10 +29,9 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
     const EXAMPLE_CANDIDATE = 'Foobar';
 
     
-    private CandidateFinder $candidateFinder;
+    private ObjectProphecy $candidateFinder;
 
-    
-    private CommandDispatcher $importName;
+    private ObjectProphecy $importName;
 
     public function setUp(): void
     {

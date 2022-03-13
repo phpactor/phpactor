@@ -10,6 +10,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractConstantHandler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractConstantHandlerTest extends HandlerTestCase
 {
@@ -22,7 +23,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
     const CONSTANT_NAME = 'FOOBAR';
 
     
-    private ExtractConstant $extractConstant;
+    private ObjectProphecy $extractConstant;
 
     public function setUp(): void
     {

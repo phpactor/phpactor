@@ -9,6 +9,7 @@ use Phpactor\FilePathResolver\Expander\Xdg\XdgDataExpander;
 use Phpactor\FilePathResolver\Expanders;
 use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use XdgBaseDir\Xdg;
 
 class XdgExpanderTest extends TestCase

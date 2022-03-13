@@ -11,7 +11,9 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class GenerateAccessorHandlerTest extends HandlerTestCase
 {
@@ -38,7 +40,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
     const CURSOR_OFFSET = 57;
 
     
-    private GenerateAccessor $generateAccessor;
+    private ObjectProphecy $generateAccessor;
 
     
     private Reflector $reflector;

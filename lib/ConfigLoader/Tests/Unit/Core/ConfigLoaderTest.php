@@ -9,6 +9,7 @@ use Phpactor\ConfigLoader\Core\Deserializers;
 use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\ConfigLoader\Tests\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ConfigLoaderTest extends TestCase
 {

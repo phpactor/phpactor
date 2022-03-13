@@ -14,6 +14,7 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ChainTolerantCompletorTest extends TestCase
 {

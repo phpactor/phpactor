@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
 use Phpactor\PathFinder\PathFinder;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class PathFinderNavigatorTest extends TestCase
 {

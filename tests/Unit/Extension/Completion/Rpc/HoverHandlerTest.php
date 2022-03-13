@@ -10,6 +10,7 @@ use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class HoverHandlerTest extends HandlerTestCase

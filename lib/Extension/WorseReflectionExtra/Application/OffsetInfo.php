@@ -16,10 +16,10 @@ final class OffsetInfo
     private Reflector $reflector;
 
     
-    private Helper\FilesystemHelper $filesystemHelper;
+    private FilesystemHelper $filesystemHelper;
 
     
-    private Helper\ClassFileNormalizer $classFileNormalizer;
+    private ClassFileNormalizer $classFileNormalizer;
 
     public function __construct(
         Reflector $reflector,

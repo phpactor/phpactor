@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\CachingPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class CachingPathResolverTest extends TestCase
 {

@@ -11,6 +11,7 @@ use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Type;
@@ -26,7 +27,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     private ObjectRenderer $renderer;
 
     
-    private TemporarySourceLocator $locator;
+    private SourceCodeLocator $locator;
 
     protected function setUp(): void
     {

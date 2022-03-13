@@ -15,7 +15,7 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class CompleteCommand extends Command
 {
     
-    private Autocomplete $complete;
+    private Complete $complete;
 
     
     private DumperRegistry $dumperRegistry;

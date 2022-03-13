@@ -19,6 +19,7 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {
@@ -34,19 +35,19 @@ class ContextMenuHandlerTest extends HandlerTestCase
     private Reflector $reflector;
 
     
-    private Container $container;
+    private ObjectProphecy $container;
 
     
-    private array $menu = [];
+    private ?ContextMenu $menu = null;
 
     
-    private RequestHandler $requestHandler;
+    private ObjectProphecy $requestHandler;
 
     
-    private ClassFileNormalizer $classFileNormalizer;
+    private ObjectProphecy $classFileNormalizer;
 
     
-    private InterestingOffsetFinder $offsetFinder;
+    private ObjectProphecy $offsetFinder;
 
     public function setUp(): void
     {

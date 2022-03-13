@@ -14,7 +14,7 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class OffsetInfoCommand extends Command
 {
     
-    private FileInfoAtOffset $infoForOffset;
+    private OffsetInfo $infoForOffset;
 
     
     private DumperRegistry $dumperRegistry;

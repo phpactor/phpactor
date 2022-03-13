@@ -19,6 +19,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedExcept
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportClassHandlerTest extends HandlerTestCase
 {

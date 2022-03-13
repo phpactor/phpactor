@@ -22,7 +22,7 @@ class NameImporterResult
     private ?array $textEdits;
 
     
-    private NameImport $nameImport;
+    private ?NameImport $nameImport;
 
     private function __construct(
         bool $success,
