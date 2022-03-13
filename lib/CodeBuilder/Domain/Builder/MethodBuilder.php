@@ -16,10 +16,10 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
     protected string $name;
 
     
-    protected Visibility $visibility;
+    protected ?Visibility $visibility = null;
 
     
-    protected ReturnType $returnType;
+    protected ?ReturnType $returnType = null;
 
     /**
      * @var ParameterBuilder[]
@@ -27,7 +27,7 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
     protected array $parameters = [];
 
     
-    protected Docblock $docblock;
+    protected ?Docblock $docblock = null;
 
     
     protected bool $static = false;
@@ -39,7 +39,7 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
     protected MethodBodyBuilder $bodyBuilder;
 
     
-    private SourceCodeBuilder $parent;
+    private ClassLikeBuilder $parent;
 
     public function __construct(ClassLikeBuilder $parent, string $name)
     {
@@ -112,7 +112,7 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
 
         return new Method(
             $this->name,
-            $this->visibility,
+            $this->visibility ?? Visibility::public(),
             Parameters::fromParameters(array_map(function (ParameterBuilder $builder) {
                 return $builder->build();
             }, $this->parameters)),

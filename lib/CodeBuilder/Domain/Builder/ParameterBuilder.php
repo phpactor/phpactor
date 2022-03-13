@@ -13,16 +13,16 @@ class ParameterBuilder extends AbstractBuilder
     protected string $name;
 
     
-    protected Type $type;
+    protected ?Type $type = null;
 
     
-    protected DefaultValue $defaultValue;
+    protected ?DefaultValue $defaultValue = null;
 
     
     protected bool $byReference = false;
 
     
-    private SourceCodeBuilder $parent;
+    private MethodBuilder $parent;
 
     public function __construct(MethodBuilder $parent, string $name)
     {

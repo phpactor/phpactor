@@ -9,13 +9,14 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Prototype;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\TextDocument\TextEdits;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class SourceBuilderTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
 
     
-    private Updater $updater;
+    private ObjectProphecy $updater;
 
     private $builder;
 

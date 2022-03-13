@@ -14,16 +14,16 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
     protected string $name;
 
     
-    protected Visibility $visibility;
+    protected ?Visibility $visibility = null;
 
     
-    protected Type $type;
+    protected ?Type $type = null;
 
     
-    protected DefaultValue $defaultValue;
+    protected ?DefaultValue $defaultValue = null;
 
     
-    private SourceCodeBuilder $parent;
+    private ClassLikeBuilder $parent;
 
     public function __construct(ClassLikeBuilder $parent, string $name)
     {

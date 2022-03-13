@@ -29,7 +29,7 @@ class ClassBuilder extends ClassLikeBuilder
     protected array $constants = [];
 
     
-    private string $extends;
+    private ?ExtendsClass $extends = null;
 
     public static function childNames(): array
     {
