@@ -44,6 +44,11 @@ class WorseExtractConstant implements ExtractConstant
         return $this->addConstant($sourceCode, $symbolInformation, $constantName);
     }
 
+    public function canExtractConstant(SourceCode $source, int $offset): bool
+    {
+        return true;
+    }
+
     private function addConstant(SourceCode $sourceCode, SymbolContext $symbolInformation, string $constantName): SourceCode
     {
         $symbol = $symbolInformation->symbol();
