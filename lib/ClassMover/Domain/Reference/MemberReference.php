@@ -7,12 +7,9 @@ use Phpactor\ClassMover\Domain\Model\Class_;
 
 class MemberReference
 {
-    
     private MemberName $method;
-
     
     private Position $position;
-
     
     private ?Class_ $class;
 

@@ -72,7 +72,6 @@ class KeywordCompletor implements TolerantCompletor
             );
         }
     }
-
     
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {

@@ -4,7 +4,6 @@ namespace Phpactor\Indexer\Model\Record;
 
 trait HasPathTrait
 {
-    
     protected ?string $filePath = null;
 
     public function setFilePath(string $filePath): self

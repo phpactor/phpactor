@@ -19,13 +19,10 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     public const TYPE_PROPERTY = 'property';
 
     private const ID_DELIMITER = '#';
-
     
     private string $type;
-
     
     private string $memberName;
-
     
     private ?string $containerType;
 
@@ -51,7 +48,6 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     {
         return new self($memberReference->type(), $memberReference->memberName(), $memberReference->containerType());
     }
-
     
     public function recordType(): string
     {

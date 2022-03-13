@@ -8,7 +8,6 @@ use Phpactor\CodeBuilder\Util\TextFormat;
 
 class TwigExtension extends AbstractExtension
 {
-    
     private TwigRenderer $generator;
 
     private TextFormat $textFormat;

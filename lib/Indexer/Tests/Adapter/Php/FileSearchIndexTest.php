@@ -9,7 +9,6 @@ use Phpactor\Indexer\Tests\IntegrationTestCase;
 
 class FileSearchIndexTest extends IntegrationTestCase
 {
-    
     private FileSearchIndex $index;
 
     protected function setUp(): void

@@ -18,13 +18,10 @@ final class ClassMemberQuery
         self::TYPE_METHOD,
         self::TYPE_PROPERTY
     ];
-
     
     private ?Class_ $class;
-
     
     private ?MemberName $memberName;
-
     
     private ?string $type;
 

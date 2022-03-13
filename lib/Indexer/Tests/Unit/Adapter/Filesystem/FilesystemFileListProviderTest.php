@@ -12,7 +12,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class FilesystemFileListProviderTest extends IntegrationTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-
     
     private FilesystemFileListProvider $provider;
 

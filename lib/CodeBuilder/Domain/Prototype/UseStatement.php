@@ -9,13 +9,10 @@ class UseStatement
     const TYPE_CLASS = 'class';
 
     const TYPE_FUNCTION = 'function';
-
     
     private Type $className;
-
     
     private ?string $alias;
-
     
     private ?string $type;
 

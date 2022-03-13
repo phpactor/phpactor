@@ -14,7 +14,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 class SourceCodeBuilder extends AbstractBuilder
 {
-    
     protected ?NamespaceName $namespace = null;
 
     /**
