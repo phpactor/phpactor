@@ -41,8 +41,8 @@ class WorseExtractConstant implements ExtractConstant
             ->reflectOffset($sourceCode->__toString(), $offset)
             ->symbolContext();
 
-        $textEdits = $this->replaceValues($sourceCode, $offset, $constantName);
-        $textEdits = $textEdits->merge($this->addConstant($textEdits, $sourceCode, $symbolInformation, $constantName));
+        $textEdits = $this->addConstant($sourceCode, $symbolInformation, $constantName);
+        $textEdits = $textEdits->merge($this->replaceValues($sourceCode, $offset, $constantName));
         return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->path()), $textEdits);
     }
 
@@ -58,7 +58,7 @@ class WorseExtractConstant implements ExtractConstant
         return true;
     }
 
-    private function addConstant(TextEdits $textEdits, string $sourceCode, SymbolContext $symbolInformation, string $constantName): TextEdits
+    private function addConstant(string $sourceCode, SymbolContext $symbolInformation, string $constantName): TextEdits
     {
         $symbol = $symbolInformation->symbol();
 
@@ -66,7 +66,7 @@ class WorseExtractConstant implements ExtractConstant
         $containerType = $symbolInformation->containerType();
 
         if (!$containerType) {
-            throw new TransformException(sprintf('Could not find container class'));
+            throw new TransformException(sprintf('Node does not belong to a class'));
         }
 
         $className = $containerType->className();
