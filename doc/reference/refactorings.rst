@@ -244,12 +244,18 @@ After:
        }
    }
 
+.. _generation_generate_accessors
+
 Generate Accessors
 ------------------
 
 Generate accessors for a class.
 
 .. tabs::
+
+   .. tab:: Language Server
+
+       Select a range and request code actions
 
    .. tab:: VIM Context Menu
 
@@ -1080,12 +1086,18 @@ After moving to ``src/Writer.php``:
    {
    }
 
+.. _generation_extract_constant
+
 Extract Constant
 ----------------
 
 Extract a constant from a scalar value.
 
 .. tabs::
+
+   .. tab:: Language Server
+
+       Select a range and request code actions
 
    .. tab:: VIM Context Menu
 
