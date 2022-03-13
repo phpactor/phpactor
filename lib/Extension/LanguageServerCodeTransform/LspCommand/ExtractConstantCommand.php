@@ -17,7 +17,7 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 class ExtractConstantCommand implements Command
 {
     public const NAME  = 'extract_constant';
-    public const DEFAULT_VARIABLE_NAME  = 'newVariable';
+    public const DEFAULT_VARIABLE_NAME  = 'NEW_CONSTANT';
 
     private ClientApi $clientApi;
 

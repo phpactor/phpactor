@@ -48,6 +48,13 @@ class WorseExtractConstant implements ExtractConstant
 
     public function canExtractConstant(SourceCode $source, int $offset): bool
     {
+        $node = $this->parser->parseSourceFile($source->__toString());
+        $targetNode = $node->getDescendantNodeAtPosition($offset);
+        try {
+            $this->getComparableValue($targetNode);
+        } catch (TransformException $e) {
+            return false;
+        }
         return true;
     }
 
