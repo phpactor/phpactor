@@ -18,6 +18,10 @@ Features:
   - [php8.1] Disable deprecation warnings unless `PHPACTOR_DEPRECATIONS`
     provided.
 
+Improvements:
+
+  - [cs] Updated CS and converted property docblock types to actual types
+
 ## 2022-01-03 (0.18.0)
 
 Features:
