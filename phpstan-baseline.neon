@@ -2346,11 +2346,6 @@ parameters:
 			path: lib/Completion/Core/Suggestion.php
 
 		-
-			message: "#^Call to method complete\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CouldComplete\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CompletorBenchCase\\:\\:benchComplete\\(\\) has parameter \\$params with no type specified\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
@@ -2367,16 +2362,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$source of static method Phpactor\\\\TestUtils\\\\ExtractOffset\\:\\:fromSource\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CompletorBenchCase\\:\\:\\$completor \\(Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CouldComplete\\) does not accept Phpactor\\\\Completion\\\\Core\\\\Completor\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CompletorBenchCase\\:\\:\\$completor has unknown class Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CouldComplete as its type\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
 
