@@ -57,7 +57,7 @@ class WorseExtractMethod implements ExtractMethod
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
         $startNode = $node->getDescendantNodeAtPosition($offsetStart);
 
-        if (!$startNode->getFirstAncestor(MethodDeclaration::class, FunctionLike::class)) {
+        if (!$startNode->getFirstAncestor(MethodDeclaration::class)) {
             return false;
         }
 
