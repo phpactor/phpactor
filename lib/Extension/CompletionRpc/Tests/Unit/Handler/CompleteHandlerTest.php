@@ -18,7 +18,6 @@ class CompleteHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
-    
     private ObjectProphecy $completor;
 
     public function setUp(): void

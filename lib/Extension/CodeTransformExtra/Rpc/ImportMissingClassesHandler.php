@@ -15,15 +15,11 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class ImportMissingClassesHandler implements Handler
 {
     public const NAME = 'import_missing_classes';
-
     public const PARAM_SOURCE = 'source';
-
     public const PARAM_PATH = 'path';
 
-    
     private UnresolvableClassNameFinder $unresolvableClassNameFinder;
 
-    
     private RequestHandler $handler;
 
     public function __construct(

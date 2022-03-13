@@ -19,7 +19,7 @@ class FilteredSearchIndexTest extends IntegrationTestCase
      * @var ObjectProphecy<SearchIndex>
      */
     private ObjectProphecy $innerIndex;
-    
+
     private FilteredSearchIndex $index;
 
     protected function setUp(): void

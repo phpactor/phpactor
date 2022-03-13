@@ -4,7 +4,6 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class UpdatePolicy
 {
-    
     private bool $doUpdate;
 
     public function __construct(bool $doUpdate)

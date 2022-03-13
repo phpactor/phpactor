@@ -13,7 +13,6 @@ class MethodBodyBuilder
      */
     protected array $lines = [];
 
-    
     private MethodBuilder $parent;
 
     public function __construct(MethodBuilder $parent)

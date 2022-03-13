@@ -25,16 +25,12 @@ use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
-    
     private ReferenceFinder $referenceFinder;
 
-    
     private TextDocumentLocator $locator;
 
-    
     private Parser $parser;
 
-    
     private ClassMover $classMover;
 
     public function __construct(

@@ -10,7 +10,6 @@ use Exception;
 
 class PhpstanDiagnosticProvider implements DiagnosticsProvider
 {
-    
     private Linter $linter;
 
     private $supported = null;

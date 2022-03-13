@@ -15,7 +15,6 @@ class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
      */
     private $completor;
 
-    
     private int $limit;
 
     public function __construct(TolerantCompletor $completor, int $limit = 50)

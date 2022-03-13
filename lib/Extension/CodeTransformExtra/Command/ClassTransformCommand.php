@@ -16,10 +16,8 @@ use RuntimeException;
 
 class ClassTransformCommand extends Command
 {
-    
     private Transformer $transformer;
 
-    
     private Differ $differ;
 
     public function __construct(

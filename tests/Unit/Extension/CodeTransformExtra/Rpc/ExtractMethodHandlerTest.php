@@ -18,13 +18,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ExtractMethodHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php echo "foo";';
-
     const PATH = '/path/to';
-
     const OFFSET_START = 1234;
-
     const OFFSET_END = 1234;
-
     const METHOD_NAME = 'FOOBAR';
 
     /**

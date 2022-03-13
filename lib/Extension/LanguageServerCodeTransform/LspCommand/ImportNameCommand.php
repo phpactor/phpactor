@@ -14,13 +14,10 @@ class ImportNameCommand implements Command
 {
     public const NAME = 'name_import';
 
-    
     private Workspace $workspace;
 
-    
     private ClientApi $client;
 
-    
     private NameImporter $nameImporter;
 
     public function __construct(

@@ -29,10 +29,8 @@ class ChainTypeLocatorTest extends TestCase
      */
     private $locator2;
 
-    
     private TextDocument $document;
 
-    
     private ByteOffset $offset;
 
     public function setUp(): void

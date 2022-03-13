@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Cache\NullCache;
 class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
 {
     const EXAMPLE_SOURCE = 'foobar';
-
     const EXAMPLE_OFFSET = 1234;
 
     public function testExceptionOnNonPhpFile(): void

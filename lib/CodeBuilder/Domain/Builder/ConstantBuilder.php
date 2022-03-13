@@ -8,7 +8,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\Value;
 
 class ConstantBuilder extends AbstractBuilder implements NamedBuilder
 {
-    
     protected string $name;
 
     /**
@@ -16,7 +15,6 @@ class ConstantBuilder extends AbstractBuilder implements NamedBuilder
      */
     protected $value;
 
-    
     private ClassBuilder $parent;
 
     public function __construct(ClassLikeBuilder $parent, string $name, $value)

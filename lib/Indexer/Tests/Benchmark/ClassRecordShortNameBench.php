@@ -11,7 +11,6 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
  */
 class ClassRecordShortNameBench
 {
-    
     private ClassRecord $record;
 
     public function createClassRecord(): void

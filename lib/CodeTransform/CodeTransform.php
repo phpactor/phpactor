@@ -7,7 +7,6 @@ use Phpactor\CodeTransform\Domain\Transformers;
 
 class CodeTransform
 {
-    
     private Transformers $transformers;
 
     private function __construct(Transformers $transformers)

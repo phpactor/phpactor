@@ -16,7 +16,6 @@ use Phpactor\TextDocument\TextDocumentLocator\ChainDocumentLocator;
 
 class LanguageServerBridgeExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
     }

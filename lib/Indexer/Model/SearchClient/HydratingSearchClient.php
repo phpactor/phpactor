@@ -9,10 +9,8 @@ use Phpactor\Indexer\Model\SearchClient;
 
 class HydratingSearchClient implements SearchClient
 {
-    
     private SearchClient $innerClient;
 
-    
     private Index $index;
 
     public function __construct(Index $index, SearchClient $innerClient)

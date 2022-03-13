@@ -11,72 +11,43 @@ class Suggestion
      * https://github.com/Microsoft/language-server-protocol/blob/gh-pages/specification.md#completion-request-leftwards_arrow_with_hook
      */
     const TYPE_METHOD = 'method';
-
     const TYPE_FUNCTION = 'function';
-
     const TYPE_CONSTRUCTOR = 'constructor';
-
     const TYPE_FIELD = 'field';
-
     const TYPE_VARIABLE = 'variable';
-
     const TYPE_CLASS = 'class';
-
     const TYPE_INTERFACE = 'interface';
-
     const TYPE_MODULE = 'module';
-
     const TYPE_PROPERTY = 'property';
-
     const TYPE_UNIT = 'unit';
-
     const TYPE_VALUE = 'value';
-
     const TYPE_ENUM = 'enum';
-
     const TYPE_KEYWORD = 'keyword';
-
     const TYPE_SNIPPET = 'snippet';
-
     const TYPE_COLOR = 'color';
-
     const TYPE_FILE = 'file';
-
     const TYPE_REFERENCE = 'reference';
-
     const TYPE_CONSTANT = 'constant';
-
     const PRIORITY_HIGH = 64;
-
     const PRIORITY_MEDIUM = 127;
-
     const PRIORITY_LOW = 255;
 
-    
     private ?string $type;
 
-    
     private string $name;
 
-    
     private ?string $shortDescription;
 
-    
     private string $label;
 
-    
     private ?Range $range;
 
-    
     private ?string $documentation;
 
-    
     private ?string $snippet;
 
-    
     private ?string $nameImport;
 
-    
     private ?int $priority;
 
     private function __construct(

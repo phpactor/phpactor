@@ -15,13 +15,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ExtractConstantHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php echo "foo";';
-
     const PATH = '/path/to';
-
     const OFFSET = 1234;
-
     const CONSTANT_NAME = 'FOOBAR';
-    
+
     private ObjectProphecy $extractConstant;
 
     public function setUp(): void

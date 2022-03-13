@@ -18,7 +18,6 @@ class ExtractExpressionProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.extract.expression';
 
-    
     private ExtractExpression $extractExpression;
 
     public function __construct(ExtractExpression $extractExpression)

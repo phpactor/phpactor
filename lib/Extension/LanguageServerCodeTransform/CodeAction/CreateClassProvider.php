@@ -22,10 +22,8 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.create_class';
 
-    
     private Generators $generators;
 
-    
     private Parser $parser;
 
     public function __construct(Generators $generators, Parser $parser)

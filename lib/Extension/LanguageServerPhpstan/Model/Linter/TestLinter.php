@@ -14,7 +14,6 @@ class TestLinter implements Linter
      */
     private array $diagnostics;
 
-    
     private int $delay;
 
     /**

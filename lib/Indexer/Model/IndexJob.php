@@ -8,10 +8,8 @@ use SplFileInfo;
 
 class IndexJob
 {
-    
     private IndexBuilder $indexBuilder;
 
-    
     private FileList $fileList;
 
     public function __construct(IndexBuilder $indexBuilder, FileList $fileList)

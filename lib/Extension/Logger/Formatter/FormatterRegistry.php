@@ -8,10 +8,8 @@ use RuntimeException;
 
 class FormatterRegistry
 {
-    
     private ContainerInterface $container;
 
-    
     private array $serviceMap;
 
     public function __construct(ContainerInterface $container, array $serviceMap)

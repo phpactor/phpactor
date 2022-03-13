@@ -26,7 +26,6 @@ use Phpactor\LanguageServerProtocol\SymbolKind;
 
 class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
 {
-    
     private Parser $parser;
 
     public function __construct(Parser $parser)

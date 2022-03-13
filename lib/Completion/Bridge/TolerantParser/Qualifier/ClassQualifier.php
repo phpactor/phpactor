@@ -15,7 +15,6 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
  */
 class ClassQualifier implements TolerantQualifier
 {
-    
     private int $minimumLength;
 
     public function __construct(int $minimumLength = 3)

@@ -52,7 +52,6 @@ class CreateClassCommandTest extends TestCase
 class TestGenerator implements GenerateNew
 {
     public const EXAMPLE_TEXT = 'hello';
-
     public const EXAMPLE_PATH = '/path';
 
     

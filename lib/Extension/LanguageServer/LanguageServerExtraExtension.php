@@ -12,7 +12,6 @@ use Phpactor\Extension\LanguageServer\Service\OnDevelopWarningService;
 
 class LanguageServerExtraExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(OnDevelopWarningService::class, function (Container $container) {

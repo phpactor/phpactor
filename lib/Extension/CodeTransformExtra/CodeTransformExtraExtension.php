@@ -41,7 +41,6 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
 
 class CodeTransformExtraExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

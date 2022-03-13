@@ -28,10 +28,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
 {
-    
     private Parser $parser;
 
-    
     private Reflector $reflector;
 
     public function __construct(Reflector $reflector, Parser $parser = null)

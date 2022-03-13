@@ -12,7 +12,6 @@ use Phpactor\TextDocument\TextDocument;
 
 class ChainTolerantCompletor implements Completor
 {
-    
     private Parser $parser;
 
     /**

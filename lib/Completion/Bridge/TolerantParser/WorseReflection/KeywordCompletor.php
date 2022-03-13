@@ -22,15 +22,10 @@ use Phpactor\TextDocument\TextDocument;
 class KeywordCompletor implements TolerantCompletor
 {
     public const MEMBER_ACCESS = 'member_access';
-
     public const CLASS_MEMBERS = 'class_members';
-
     public const STRING_LITERAL = 'string_literal';
-
     public const VARIABLE = 'variable';
-
     public const AFTER_ANONYMOUS_FUNC_PARAMS = 'after_anonymous_func_params';
-
     public const SPECIAL_SCOPES = [
         self::MEMBER_ACCESS => [ ],
         self::STRING_LITERAL => [ ],

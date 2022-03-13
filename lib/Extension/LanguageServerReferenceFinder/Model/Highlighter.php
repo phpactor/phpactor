@@ -26,7 +26,6 @@ use Phpactor\TextDocument\ByteOffset;
 
 class Highlighter
 {
-    
     private Parser $parser;
 
     public function __construct(Parser $parser)

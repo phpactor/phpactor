@@ -8,13 +8,10 @@ use function memory_get_usage;
 
 final class MemoryUsage
 {
-    
     private ?int $memoryLimit;
 
-    
     private int $memoryUsage;
 
-    
     private int $precision;
 
     private function __construct(?int $memoryLimit, int $memoryUsage, int $precision = 0)

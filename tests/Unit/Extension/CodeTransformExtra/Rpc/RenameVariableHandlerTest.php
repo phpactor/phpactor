@@ -16,13 +16,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 class RenameVariableHandlerTest extends HandlerTestCase
 {
     const SOURCE = '<?php echo "foo";';
-
     const PATH = '/path/to';
-
     const OFFSET = 1234;
-
     const VARIABLE_NAME = 'FOOBAR';
-    
+
     private ObjectProphecy $renameVariable;
 
     public function setUp(): void

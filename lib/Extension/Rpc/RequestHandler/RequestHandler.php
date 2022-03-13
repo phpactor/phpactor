@@ -10,7 +10,6 @@ use Phpactor\Extension\Rpc\Response;
 
 class RequestHandler implements CoreRequestHandler
 {
-    
     private HandlerRegistry $registry;
 
     public function __construct(HandlerRegistry $registry)

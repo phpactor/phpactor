@@ -9,7 +9,6 @@ use Traversable;
 
 class ImportedNames implements IteratorAggregate
 {
-    
     private array $table;
 
     public function __construct(Node $node)

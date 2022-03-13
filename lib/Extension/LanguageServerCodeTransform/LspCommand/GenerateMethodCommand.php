@@ -21,16 +21,12 @@ class GenerateMethodCommand implements Command
 {
     public const NAME  = 'generate_method';
 
-    
     private ClientApi $clientApi;
 
-    
     private GenerateMethod $generateMethod;
 
-    
     private Workspace $workspace;
 
-    
     private TextDocumentLocator $locator;
 
     public function __construct(

@@ -10,7 +10,6 @@ use Phpactor\MapResolver\Resolver;
 
 class TestIndexerExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(Indexer::class, function () {

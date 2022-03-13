@@ -10,10 +10,8 @@ use RuntimeException;
 
 class LimitingCompletor implements Completor
 {
-    
     private Completor $innerCompletor;
 
-    
     private int $limit;
 
     public function __construct(Completor $innerCompletor, int $limit = 32)

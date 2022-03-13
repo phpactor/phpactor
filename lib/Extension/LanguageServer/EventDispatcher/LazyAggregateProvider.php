@@ -10,9 +10,9 @@ use RuntimeException;
 class LazyAggregateProvider implements ListenerProviderInterface
 {
     private ContainerInterface $container;
-    
+
     private array $serviceIds;
-    
+
     private ?ListenerProviderAggregate $aggregateProvider = null;
 
     public function __construct(ContainerInterface $container, array $serviceIds)

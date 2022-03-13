@@ -18,7 +18,6 @@ use Phpactor\MapResolver\Resolver;
 class LanguageServerPsalmExtension implements Extension
 {
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
-
     public const PARAM_ENABLED = 'language_server_psalm.enabled';
 
     

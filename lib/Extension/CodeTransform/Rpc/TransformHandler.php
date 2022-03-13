@@ -14,14 +14,10 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 class TransformHandler implements Handler
 {
     const NAME = 'transform';
-
     const PARAM_NAME = 'transform';
-
     const PARAM_PATH = 'path';
-
     const PARAM_SOURCE = 'source';
 
-    
     private CodeTransform $codeTransform;
 
     public function __construct(CodeTransform $codeTransform)

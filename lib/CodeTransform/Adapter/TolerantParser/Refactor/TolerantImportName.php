@@ -27,10 +27,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantImportName implements ImportName
 {
-    
     private Parser $parser;
 
-    
     private Updater $updater;
 
     public function __construct(Updater $updater, Parser $parser = null)

@@ -7,7 +7,6 @@ use Webmozart\PathUtil\Path;
 
 class PathFinder
 {
-    
     private string $basePath;
 
     /**

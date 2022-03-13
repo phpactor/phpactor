@@ -13,7 +13,6 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSelectionRangeExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(SelectionRangeHandler::class, function (Container $container) {

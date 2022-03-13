@@ -7,20 +7,14 @@ use Phpactor\TextDocument\ByteOffsetRange;
 class Diagnostic
 {
     public const ERROR = 1;
-
     public const WARNING = 2;
-
     public const INFORMATION = 3;
-
     public const HINT = 4;
 
-    
     private string $message;
 
-    
     private int $severity;
 
-    
     private ByteOffsetRange $range;
 
     public function __construct(

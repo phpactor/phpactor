@@ -12,7 +12,6 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 
 class WorkspaceSymbolHandler implements Handler, CanRegisterCapabilities
 {
-    
     private WorkspaceSymbolProvider $provider;
 
     public function __construct(WorkspaceSymbolProvider $provider)

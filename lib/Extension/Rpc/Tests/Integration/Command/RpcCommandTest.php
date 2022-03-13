@@ -13,7 +13,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class RpcCommandTest extends TestCase
 {
-    
     private Workspace $workspace;
 
     public function setUp(): void

@@ -14,10 +14,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class ClassMover
 {
-    
     private ClassFinder $finder;
 
-    
     private ClassReplacer $replacer;
 
     public function __construct(ClassFinder $finder = null, ClassReplacer $replacer = null)

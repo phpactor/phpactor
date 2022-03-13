@@ -14,7 +14,6 @@ class JsonSchemaBuilder
      */
     private array $extensions;
 
-    
     private string $title;
 
     /**

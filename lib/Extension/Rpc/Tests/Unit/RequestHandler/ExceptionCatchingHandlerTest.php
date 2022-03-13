@@ -16,16 +16,12 @@ class ExceptionCatchingHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
-    
     private ObjectProphecy $innerHandler;
 
-    
     private ExceptionCatchingHandler $exceptionHandler;
 
-    
     private ObjectProphecy $response;
 
-    
     private ObjectProphecy $request;
 
     public function setUp(): void

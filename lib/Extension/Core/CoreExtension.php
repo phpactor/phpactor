@@ -37,19 +37,12 @@ use Phpactor\Container\ContainerBuilder;
 class CoreExtension implements Extension
 {
     const APP_NAME = 'phpactor';
-
     const APP_VERSION = '0.2.0';
-
     const PARAM_DUMPER = 'console_dumper_default';
-
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
-
     const PARAM_COMMAND = 'command';
-
     const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
-
     const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
-
     const PARAM_SCHEMA = '$schema';
 
     public function configure(Resolver $schema): void

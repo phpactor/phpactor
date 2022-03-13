@@ -14,11 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleExtension implements Extension
 {
     const TAG_COMMAND = 'console.command';
-
     const SERVICE_COMMAND_LOADER = 'console.command_loader';
-
     const SERVICE_OUTPUT = 'console.output';
-
     const SERVICE_INPUT = 'console.input';
 
     

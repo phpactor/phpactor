@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class SuggestionNameFormatterTest extends TestCase
 {
-    
     private SuggestionNameFormatter $formatter;
 
     protected function setUp(): void

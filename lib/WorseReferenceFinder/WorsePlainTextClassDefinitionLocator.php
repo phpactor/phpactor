@@ -19,13 +19,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    
     private Reflector $reflector;
 
-    
     private array $breakingChars;
 
-    
     private Parser $parser;
 
     public function __construct(Reflector $reflector, array $breakingChars = [])

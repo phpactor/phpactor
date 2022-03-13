@@ -15,7 +15,7 @@ use XdgBaseDir\Xdg;
 class XdgExpanderTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     private TokenExpandingFilter $expander;
     
     /**

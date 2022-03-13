@@ -9,11 +9,8 @@ use RuntimeException;
 class SourceCodeTest extends TestCase
 {
     const PATH = '/bar';
-
     const SOURCE = 'asd';
-
     const OTHER_SOURCE = 'other source';
-
     const OTHER_PATH = '/other/path.php';
 
     public function testPath(): void

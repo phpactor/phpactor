@@ -14,13 +14,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorkspaceUpdateReferenceFinder implements ReferenceFinder
 {
-    
     private Workspace $workspace;
 
-    
     private Indexer $indexer;
 
-    
     private ReferenceFinder $innerReferenceFinder;
 
     public function __construct(Workspace $workspace, Indexer $indexer, ReferenceFinder $innerReferenceFinder)

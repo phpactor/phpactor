@@ -23,10 +23,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantUpdater implements Updater
 {
-    
     private Parser $parser;
 
-    
     private Renderer $renderer;
 
     /**
@@ -34,19 +32,14 @@ class TolerantUpdater implements Updater
      */
     private array $edits = [];
 
-    
     private TextFormat $textFormat;
 
-    
     private ClassUpdater $classUpdater;
 
-    
     private InterfaceUpdater $interfaceUpdater;
 
-    
     private TraitUpdater $traitUpdater;
 
-    
     private UseStatementUpdater $useStatementUpdater;
 
     public function __construct(

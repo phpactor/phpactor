@@ -7,10 +7,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class LocatedTextEdits
 {
-    
     private TextEdits $textEdits;
 
-    
     private TextDocumentUri $documentUri;
 
     public function __construct(TextEdits $textEdits, TextDocumentUri $documentUri)

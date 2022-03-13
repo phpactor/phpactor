@@ -14,7 +14,6 @@ class ChainSignatureHelper implements SignatureHelper
      */
     private array $helpers = [];
 
-    
     private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger, array $helpers)

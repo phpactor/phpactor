@@ -8,7 +8,6 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ExactShortName extends Criteria
 {
-    
     private string $name;
 
     public function __construct(string $name)

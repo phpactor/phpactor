@@ -49,7 +49,6 @@ class TransformCommandTest extends TestCase
 
 class TestTransformer implements Transformer
 {
-    
     public SourceCode $code;
 
     public function transform(SourceCode $code): TextEdits

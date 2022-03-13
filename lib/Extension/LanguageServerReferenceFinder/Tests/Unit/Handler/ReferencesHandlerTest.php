@@ -29,7 +29,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ReferencesHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
-
     const EXAMPLE_TEXT = 'hello';
 
     /**

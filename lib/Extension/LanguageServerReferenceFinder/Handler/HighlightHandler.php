@@ -17,10 +17,8 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class HighlightHandler implements Handler, CanRegisterCapabilities
 {
-    
     private Workspace $workspace;
 
-    
     private Highlighter $highlighter;
 
     public function __construct(Workspace $workspace, Highlighter $highlighter)

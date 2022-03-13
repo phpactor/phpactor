@@ -24,23 +24,20 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ContextMenuHandlerTest extends HandlerTestCase
 {
     const VARIABLE_ACTION = 'do_something';
-
     const SOURCE = '<?php $hello = "world"; echo $hello;';
-
     const FOUND_OFFSET = 10;
-
     const ORIGINAL_OFFSET = 8;
-    
+
     private Reflector $reflector;
-    
+
     private ObjectProphecy $container;
-    
+
     private ?ContextMenu $menu = null;
-    
+
     private ObjectProphecy $requestHandler;
-    
+
     private ObjectProphecy $classFileNormalizer;
-    
+
     private ObjectProphecy $offsetFinder;
 
     public function setUp(): void

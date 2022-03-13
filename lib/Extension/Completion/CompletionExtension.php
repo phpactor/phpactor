@@ -17,27 +17,16 @@ use Phpactor\Container\Container;
 class CompletionExtension implements Extension
 {
     public const TAG_COMPLETOR = 'completion.completor';
-
     public const TAG_SHORT_DESC_FORMATTER = 'completion.short_desc.formatter';
-
     public const TAG_SIGNATURE_HELPER = 'language_server_completion.handler.signature_help';
-
     public const TAG_SNIPPET_FORMATTER = 'completion.snippet.formatter';
-
     public const SERVICE_REGISTRY = 'completion.registry';
-
     public const SERVICE_SHORT_DESC_FORMATTER = 'completion.short_desc.formatter';
-
     public const SERVICE_SIGNATURE_HELPER = 'completion.handler.signature_helper';
-
     public const SERVICE_SNIPPET_FORMATTER = 'completion.snippet.formatter';
-
     public const KEY_COMPLETOR_TYPES = 'types';
-
     public const PARAM_DEDUPE = 'completion.dedupe';
-
     public const PARAM_DEDUPE_MATCH_SHORT_DESCRIPTION = 'completion.dedupe_match_short_description';
-
     public const PARAM_LIMIT = 'completion.limit';
 
     

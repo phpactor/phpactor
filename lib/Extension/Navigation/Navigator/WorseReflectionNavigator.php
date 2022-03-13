@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionNavigator implements Navigator
 {
-    
     private Reflector $reflector;
 
     public function __construct(Reflector $reflector)

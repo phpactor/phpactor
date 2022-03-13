@@ -21,15 +21,13 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ImportMissingClassesHandlerTest extends IntegrationTestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_PATH = '/example/path';
-
     const EXAMPLE_SOURCE = 'example-source';
 
     private $requestHandler;
-    
+
     private ObjectProphecy $finder;
-    
+
     private HandlerTester $tester;
 
     protected function setUp(): void

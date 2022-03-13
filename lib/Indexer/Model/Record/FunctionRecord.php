@@ -9,7 +9,6 @@ final class FunctionRecord implements HasFileReferences, HasPath, Record, HasFul
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
     use HasPathTrait;
-
     public const RECORD_TYPE = 'function';
 
     public static function fromName(string $name): self

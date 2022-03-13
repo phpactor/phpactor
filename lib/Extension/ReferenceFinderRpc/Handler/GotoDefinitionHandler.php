@@ -12,18 +12,12 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class GotoDefinitionHandler implements Handler
 {
     const NAME = 'goto_definition';
-
     const PARAM_OFFSET = 'offset';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_PATH = 'path';
-
     const PARAM_LANGUAGE = 'language';
-
     const PARAM_TARGET = 'target';
 
-    
     private DefinitionLocator $locator;
 
     public function __construct(

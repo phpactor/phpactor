@@ -10,10 +10,8 @@ use Phpactor\CodeBuilder\Domain\Renderer;
 
 class ClassGenerator implements GenerateNew
 {
-    
     private Renderer $renderer;
 
-    
     private ?string $variant;
 
     public function __construct(Renderer $renderer, string $variant = null)

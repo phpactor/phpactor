@@ -17,7 +17,6 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class NameSearcherCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
 {
-    
     private ObjectFormatter $snippetFormatter;
 
     public function __construct(

@@ -52,23 +52,14 @@ use RuntimeException;
 class CompletionWorseExtension implements Extension
 {
     public const TAG_TOLERANT_COMPLETOR = 'completion_worse.tolerant_completor';
-
     public const PARAM_DISABLED_COMPLETORS = 'completion_worse.disabled_completors';
-
     public const PARAM_CLASS_COMPLETOR_LIMIT = 'completion_worse.completor.class.limit';
-
     public const PARAM_NAME_COMPLETION_PRIORITY = 'completion_worse.name_completion_priority';
-
     public const SERVICE_COMPLETOR_MAP = 'completion_worse.completor_map';
-
     public const SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS = 'completion_worse.snippet.formatters';
-
     public const NAME_SEARCH_STRATEGY_PROXIMITY = 'proximity';
-
     public const NAME_SEARCH_STRATEGY_NONE = 'none';
-
     public const PARAM_EXPERIMENTAL = 'completion_worse.experimantal';
-
     public const PARAM_SNIPPETS = 'completion_worse.snippets';
 
     

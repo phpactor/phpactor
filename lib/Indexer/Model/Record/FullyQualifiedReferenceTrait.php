@@ -9,7 +9,7 @@ use Phpactor\TextDocument\ByteOffset;
 trait FullyQualifiedReferenceTrait
 {
     private string $fqn;
-    
+
     private int $start;
 
     public function __construct(string $fqn)

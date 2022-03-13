@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class ContainerTypeResolver
 {
-    
     private ClassReflector $reflector;
 
     public function __construct(ClassReflector $reflector)

@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Position;
 
 class TestExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.framewalker', function (Container $container) {

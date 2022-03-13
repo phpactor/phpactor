@@ -29,7 +29,6 @@ use Phpactor\TextDocument\TextDocument;
 class CompletionHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
-
     const EXAMPLE_TEXT = 'hello';
 
     public function testHandleNoSuggestions(): void

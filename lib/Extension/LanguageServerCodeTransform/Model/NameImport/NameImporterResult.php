@@ -11,14 +11,14 @@ use Throwable;
 class NameImporterResult
 {
     private bool $success;
-    
+
     private ?Throwable $error;
 
     /**
      * @var array<LspTextEdit>|null
      */
     private ?array $textEdits;
-    
+
     private ?NameImport $nameImport;
 
     private function __construct(

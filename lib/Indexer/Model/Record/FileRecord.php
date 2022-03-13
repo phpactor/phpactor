@@ -11,7 +11,6 @@ use SplFileInfo;
 class FileRecord implements HasPath, Record
 {
     use HasPathTrait;
-
     public const RECORD_TYPE = 'file';
 
     /**

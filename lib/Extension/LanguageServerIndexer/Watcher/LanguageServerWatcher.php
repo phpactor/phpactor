@@ -22,7 +22,6 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
      */
     private Deferred $deferred;
 
-    
     private ?ClientCapabilities $clientCapabilities;
 
     /**
@@ -30,7 +29,6 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
      */
     private array $queue = [];
 
-    
     private bool $running = false;
 
     public function __construct(?ClientCapabilities $clientCapabilities)

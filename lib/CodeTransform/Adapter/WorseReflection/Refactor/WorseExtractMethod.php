@@ -31,16 +31,12 @@ use function prev;
 
 class WorseExtractMethod implements ExtractMethod
 {
-    
     private Reflector $reflector;
 
-    
     private Updater $updater;
 
-    
     private Parser $parser;
 
-    
     private BuilderFactory $factory;
 
     public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater, Parser $parser = null)

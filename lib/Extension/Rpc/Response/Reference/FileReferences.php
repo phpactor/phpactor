@@ -4,10 +4,8 @@ namespace Phpactor\Extension\Rpc\Response\Reference;
 
 class FileReferences
 {
-    
     private string $filePath;
 
-    
     private array $references = [];
 
     private function __construct(string $filePath, array $references)

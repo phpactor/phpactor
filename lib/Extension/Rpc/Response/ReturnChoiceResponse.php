@@ -11,7 +11,6 @@ use Phpactor\Extension\Rpc\Response;
  */
 class ReturnChoiceResponse implements Response
 {
-    
     private array $options = [];
 
     private function __construct($options)

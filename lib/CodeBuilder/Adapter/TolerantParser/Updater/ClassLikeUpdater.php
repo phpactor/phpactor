@@ -15,10 +15,8 @@ use InvalidArgumentException;
 
 abstract class ClassLikeUpdater
 {
-    
     protected Renderer $renderer;
 
-    
     protected ClassMethodUpdater $methodUpdater;
 
     public function __construct(Renderer $renderer)

@@ -5,13 +5,13 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 class SourceCode extends Prototype
 {
     private QualifiedName $namespace;
-    
+
     private UseStatements $useStatements;
-    
+
     private Classes $classes;
-    
+
     private Interfaces $interfaces;
-    
+
     private Traits $traits;
 
     public function __construct(

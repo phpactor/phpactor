@@ -7,16 +7,12 @@ use Phpactor\Name\FullyQualifiedName;
 class NameImport
 {
     private const TYPE_CLASS = 'class';
-
     private const TYPE_FUNCTION = 'function';
 
-    
     private string $type;
 
-    
     private FullyQualifiedName $name;
 
-    
     private ?string $alias;
 
     private function __construct(string $type, FullyQualifiedName $name, ?string $alias = null)

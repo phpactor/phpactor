@@ -7,7 +7,6 @@ use Phpactor\Indexer\Model\Record\FunctionRecord;
 
 class InMemoryRepository
 {
-    
     public int $lastUpdate = 0;
 
     /**

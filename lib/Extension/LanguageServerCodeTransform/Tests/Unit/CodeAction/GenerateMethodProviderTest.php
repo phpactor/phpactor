@@ -24,9 +24,7 @@ use function Amp\Promise\wait;
 class GenerateMethodProviderTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SOURCE = 'foobar';
-
     const EXAMPLE_FILE = 'file:///somefile.php';
 
     /**

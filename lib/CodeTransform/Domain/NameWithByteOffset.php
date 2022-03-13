@@ -9,21 +9,16 @@ use RuntimeException;
 final class NameWithByteOffset
 {
     public const TYPE_CLASS = 'class';
-
     public const TYPE_FUNCTION = 'function';
-
     private const VALID_TYPES = [
         self::TYPE_CLASS,
         self::TYPE_FUNCTION
     ];
 
-    
     private Name $name;
 
-    
     private ByteOffset $byteOffset;
 
-    
     private string $type;
 
     public function __construct(Name $name, ByteOffset $byteOffset, string $type = self::TYPE_CLASS)

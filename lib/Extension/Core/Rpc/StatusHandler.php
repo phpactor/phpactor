@@ -13,17 +13,12 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 class StatusHandler implements Handler
 {
     const NAME = 'status';
-
     const PARAM_TYPE = 'type';
-
     const TYPE_FORMATTED = 'formatted';
-
     const TYPE_DETAILED = 'detailed';
 
-    
     private Status $status;
 
-    
     private PathCandidates $paths;
 
     public function __construct(Status $status, PathCandidates $paths)

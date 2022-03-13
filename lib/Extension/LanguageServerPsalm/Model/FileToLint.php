@@ -4,13 +4,10 @@ namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 class FileToLint
 {
-    
     private string $uri;
 
-    
     private ?string $contents;
 
-    
     private ?int $version;
 
     public function __construct(string $uri, ?string $contents = null, ?int $version = null)

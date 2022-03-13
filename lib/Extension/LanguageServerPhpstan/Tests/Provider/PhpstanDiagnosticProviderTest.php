@@ -16,7 +16,6 @@ use function Amp\delay;
 
 class PhpstanDiagnosticProviderTest extends TestCase
 {
-    
     private LanguageServerTester $tester;
 
     protected function setUp(): void

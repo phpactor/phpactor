@@ -14,13 +14,10 @@ use Psr\Log\NullLogger;
 
 class ValidatingSearchIndexTest extends IntegrationTestCase
 {
-    
     private InMemorySearchIndex $innerSearchIndex;
 
-    
     private InMemoryIndex $index;
 
-    
     private ValidatingSearchIndex $searchIndex;
 
     protected function setUp(): void

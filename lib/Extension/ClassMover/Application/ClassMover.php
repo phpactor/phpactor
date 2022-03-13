@@ -18,16 +18,12 @@ use RuntimeException;
 
 class ClassMover
 {
-    
     private ClassFileNormalizer $classFileNormalizer;
 
-    
     private ClassMoverFacade $classMover;
 
-    
     private FilesystemRegistry $filesystemRegistry;
 
-    
     private PathFinder $pathFinder;
 
     public function __construct(

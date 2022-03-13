@@ -61,45 +61,25 @@ use Webmozart\Assert\Assert;
 class LanguageServerExtension implements Extension
 {
     public const SERVICE_LANGUAGE_SERVER_BUILDER = 'language_server.builder';
-
     public const SERVICE_EVENT_EMITTER = 'language_server.event_emitter';
-
     public const SERVICE_SESSION_WORKSPACE = 'language_server.session.workspace';
-
     public const TAG_METHOD_HANDLER = 'language_server.session_handler';
-
     public const TAG_COMMAND = 'language_server.command';
-
     public const TAG_SERVICE_PROVIDER = 'language_server.service_provider';
-
     public const TAG_LISTENER_PROVIDER = 'language_server.listener_provider';
-
     public const TAG_CODE_ACTION_PROVIDER = 'language_server.code_action_provider';
-
     public const TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER = 'language_server.code_action_diagnostics_provider';
-
     public const TAG_DIAGNOSTICS_PROVIDER = 'language_server.diagnostics_provider';
-
     public const PARAM_SESSION_PARAMETERS = 'language_server.session_parameters';
-
     public const PARAM_CLIENT_CAPABILITIES = 'language_server.client_capabilities';
-
     public const PARAM_ENABLE_WORKPACE = 'language_server.enable_workspace';
-
     public const PARAM_CATCH_ERRORS = 'language_server.catch_errors';
-
     public const PARAM_METHOD_ALIAS_MAP = 'language_server.method_alias_map';
-
     public const PARAM_DIAGNOSTIC_SLEEP_TIME = 'language_server.diagnostic_sleep_time';
-
     public const PARAM_DIAGNOSTIC_ON_UPDATE = 'language_server.diagnostics_on_update';
-
     public const PARAM_DIAGNOSTIC_ON_SAVE = 'language_server.diagnostics_on_save';
-
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
-
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
-
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
 
     

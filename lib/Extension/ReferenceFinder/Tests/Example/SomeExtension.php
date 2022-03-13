@@ -10,7 +10,6 @@ use Phpactor\MapResolver\Resolver;
 
 class SomeExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('some_definition_locator', function (Container $container) {

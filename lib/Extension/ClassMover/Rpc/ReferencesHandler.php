@@ -31,38 +31,24 @@ use RuntimeException;
 class ReferencesHandler extends AbstractHandler
 {
     const NAME = 'references';
-
     const PARAMETER_OFFSET = 'offset';
-
     const PARAMETER_SOURCE = 'source';
-
     const PARAMETER_MODE = 'mode';
-
     const PARAMETER_PATH = 'path';
-
     const PARAMETER_FILESYSTEM = 'filesystem';
-
     const MODE_FIND = 'find';
-
     const MODE_REPLACE = 'replace';
-
     const PARAMETER_REPLACEMENT = 'replacement';
-
     const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
-    
     private ClassReferences $classReferences;
 
-    
     private string $defaultFilesystem;
 
-    
     private ClassMemberReferences $classMemberReferences;
 
-    
     private Reflector $reflector;
 
-    
     private FilesystemRegistry $registry;
 
     public function __construct(

@@ -9,7 +9,6 @@ use Phpactor\Indexer\Model\SearchIndex;
 
 class FilteredSearchIndex implements SearchIndex
 {
-    
     private SearchIndex $innerIndex;
 
     /**

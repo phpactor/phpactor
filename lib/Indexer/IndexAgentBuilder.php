@@ -38,10 +38,8 @@ use Psr\Log\NullLogger;
 
 final class IndexAgentBuilder
 {
-    
     private string $indexRoot;
 
-    
     private RecordReferenceEnhancer $enhancer;
 
     /**
@@ -62,7 +60,6 @@ final class IndexAgentBuilder
     private array $excludePatterns = [
     ];
 
-    
     private string $projectRoot;
 
     /**
@@ -70,7 +67,6 @@ final class IndexAgentBuilder
      */
     private ?array $indexers = null;
 
-    
     private LoggerInterface $logger;
 
     private function __construct(string $indexRoot, string $projectRoot)

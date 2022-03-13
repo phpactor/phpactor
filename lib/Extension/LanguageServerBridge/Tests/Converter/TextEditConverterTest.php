@@ -15,10 +15,8 @@ use Phpactor\LanguageServerProtocol\TextEdit as LspTextEdit;
 
 class TextEditConverterTest extends IntegrationTestCase
 {
-    
     private Workspace $workspace;
 
-    
     private TextEditConverter $converter;
 
     protected function setUp(): void

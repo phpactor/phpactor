@@ -17,10 +17,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassNewCommand extends Command
 {
-    
     private DumperRegistry $dumperRegistry;
 
-    
     private ClassNew $classNew;
 
     public function __construct(

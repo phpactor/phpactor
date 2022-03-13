@@ -28,11 +28,8 @@ use RuntimeException;
 class NameImporterTest extends TestCase
 {
     const EXAMPLE_CONTENT = 'hello this is some text';
-
     const EXAMPLE_PATH = '/foobar.php';
-
     const EXAMPLE_OFFSET = 12;
-
     const EXAMPLE_PATH_URI = 'file:///foobar.php';
 
     /**
@@ -40,10 +37,8 @@ class NameImporterTest extends TestCase
      */
     private ObjectProphecy $importNameProphecy;
 
-    
     private Workspace $workspace;
 
-    
     private TextDocumentItem $document;
 
     /**
@@ -51,16 +46,12 @@ class NameImporterTest extends TestCase
      */
     private array $lspTextEdits;
 
-    
     private TextEdits $textEdits;
 
-    
     private SourceCode $sourceCode;
 
-    
     private ByteOffset $byteOffset;
 
-    
     private NameImporter $subject;
 
     protected function setUp(): void

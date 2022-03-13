@@ -20,7 +20,6 @@ class ClassNewHandlerTest extends AbstractClassGenerateHandlerTest
 {
     use ProphecyTrait;
 
-    
     private ObjectProphecy $generator;
 
     public function setUp(): void

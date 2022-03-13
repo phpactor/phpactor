@@ -18,18 +18,13 @@ use Webmozart\PathUtil\Path;
 class IndexBuildCommand extends Command
 {
     const ARG_SUB_PATH = 'sub-path';
-
     const OPT_RESET = 'reset';
-
     const OPT_WATCH = 'watch';
 
-    
     private Indexer $indexer;
 
-    
     private Watcher $watcher;
 
-    
     private MemoryUsage $usage;
 
     public function __construct(Indexer $indexer, Watcher $watcher)

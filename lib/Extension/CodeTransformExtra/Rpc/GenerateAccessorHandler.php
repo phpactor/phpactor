@@ -19,19 +19,13 @@ use Phpactor\WorseReflection\Reflector;
 class GenerateAccessorHandler extends AbstractHandler
 {
     const NAME = 'generate_accessor';
-
     const PARAM_NAMES = 'names';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_PATH = 'path';
-
     const PARAM_OFFSET = 'offset';
 
-    
     private Reflector $reflector;
 
-    
     private GenerateAccessor $generateAccessor;
 
     public function __construct(

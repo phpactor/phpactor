@@ -17,15 +17,11 @@ use RuntimeException;
 class HoverHandler implements Handler
 {
     const PARAM_SOURCE = 'source';
-
     const PARAM_OFFSET = 'offset';
-
     const NAME = 'hover';
 
-    
     private Reflector $reflector;
 
-    
     private ObjectFormatter $formatter;
 
     public function __construct(Reflector $reflector, ObjectFormatter $formatter)

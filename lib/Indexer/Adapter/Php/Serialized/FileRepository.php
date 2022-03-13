@@ -19,13 +19,10 @@ class FileRepository
      */
     private const BATCH_SIZE = 10000;
 
-    
     private string $path;
 
-    
     private int $lastUpdate;
 
-    
     private LoggerInterface $logger;
 
     /**
@@ -33,10 +30,8 @@ class FileRepository
      */
     private array $buffer = [];
 
-    
     private int $counter = 0;
 
-    
     private RecordSerializer $serializer;
 
     public function __construct(string $path, RecordSerializer $serializer, ?LoggerInterface $logger = null)

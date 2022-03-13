@@ -8,9 +8,7 @@ use InvalidArgumentException;
 final class ClassMemberQuery
 {
     const TYPE_CONSTANT = 'constant';
-
     const TYPE_METHOD = 'method';
-
     const TYPE_PROPERTY = 'property';
 
     private $validTypes = [
@@ -18,11 +16,11 @@ final class ClassMemberQuery
         self::TYPE_METHOD,
         self::TYPE_PROPERTY
     ];
-    
+
     private ?Class_ $class;
-    
+
     private ?MemberName $memberName;
-    
+
     private ?string $type;
 
     private function __construct(Class_ $class = null, MemberName $memberName = null, string $type = null)

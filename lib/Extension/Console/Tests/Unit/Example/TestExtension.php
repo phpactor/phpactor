@@ -9,7 +9,6 @@ use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.command.test', function () {

@@ -12,20 +12,13 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class ExtractConstantHandler extends AbstractHandler
 {
     const NAME = 'extract_constant';
-
     const PARAM_CONSTANT_NAME = 'constant_name';
-
     const PARAM_OFFSET = 'offset';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_PATH = 'path';
-
     const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
-
     const INPUT_LABEL_NAME = 'Constant name: ';
 
-    
     private ExtractConstant $extractConstant;
 
     public function __construct(ExtractConstant $extractConstant)

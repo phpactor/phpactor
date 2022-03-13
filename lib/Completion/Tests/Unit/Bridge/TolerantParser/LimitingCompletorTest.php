@@ -17,13 +17,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 class LimitingCompletorTest extends TestCase
 {
     const EXAMPLE_SOURCE = '<?php';
-
     const EXAMPLE_OFFSET = 15;
 
-    
     private ObjectProphecy $innerCompletor;
 
-    
     private ObjectProphecy $node;
 
     protected function setUp(): void

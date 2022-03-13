@@ -16,7 +16,6 @@ use Phpactor\Indexer\Model\SearchClient;
  */
 class SearchBench
 {
-    
     private SearchClient $search;
 
     public function createBareFileSearch(): void

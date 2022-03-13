@@ -14,13 +14,10 @@ use InvalidArgumentException;
 
 class RpcCommand extends Command
 {
-    
     private RequestHandler $handler;
 
-    
     private bool $storeReplay;
 
-    
     private string $replayPath;
 
     /**

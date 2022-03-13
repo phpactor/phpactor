@@ -17,13 +17,10 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
 {
-    
     private TypeLocator $typeLocator;
 
-    
     private Workspace $workspace;
 
-    
     private LocationConverter $locationConverter;
 
     public function __construct(Workspace $workspace, TypeLocator $typeLocator, LocationConverter $locationConverter)

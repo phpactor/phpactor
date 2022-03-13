@@ -13,9 +13,9 @@ use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 final class OffsetInfo
 {
     private Reflector $reflector;
-    
+
     private FilesystemHelper $filesystemHelper;
-    
+
     private ClassFileNormalizer $classFileNormalizer;
 
     public function __construct(

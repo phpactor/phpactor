@@ -4,16 +4,12 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 abstract class ClassLikePrototype extends Prototype
 {
-    
     private string $name;
 
-    
     private Methods $methods;
 
-    
     private Properties $properties;
 
-    
     private Constants $constants;
 
     public function __construct(

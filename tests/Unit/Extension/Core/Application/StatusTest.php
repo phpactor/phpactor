@@ -14,11 +14,11 @@ use Prophecy\Prophecy\ObjectProphecy;
 class StatusTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     private ObjectProphecy $registry;
-    
+
     private ObjectProphecy $resolver;
-    
+
     private PathCandidates $paths;
 
     public function setUp(): void

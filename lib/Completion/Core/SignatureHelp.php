@@ -9,10 +9,8 @@ class SignatureHelp
      */
     private array $signatures;
 
-    
     private int $activeSignature;
 
-    
     private ?int $activeParameter;
 
     public function __construct(

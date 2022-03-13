@@ -17,16 +17,12 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 class ExtractExpressionCommand implements Command
 {
     public const NAME  = 'extract_expression';
-
     public const DEFAULT_VARIABLE_NAME  = 'newVariable';
-    
-    
+
     private ClientApi $clientApi;
 
-    
     private Workspace $workspace;
 
-    
     private ExtractExpression $extractExpression;
 
     public function __construct(

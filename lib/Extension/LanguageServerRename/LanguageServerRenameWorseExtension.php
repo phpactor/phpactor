@@ -29,7 +29,6 @@ use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 class LanguageServerRenameWorseExtension implements Extension
 {
     public const TAG_RENAMER = 'language_server_rename.renamer';
-
     public const PARAM_FILE_RENAME_LISTENER = 'language_server_rename.file_rename_listener';
 
     

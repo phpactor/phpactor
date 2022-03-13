@@ -20,7 +20,6 @@ use RuntimeException;
 class RpcExtension implements Extension
 {
     const TAG_RPC_HANDLER = 'rpc.handler';
-
     public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
     

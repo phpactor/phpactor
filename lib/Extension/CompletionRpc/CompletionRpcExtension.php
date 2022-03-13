@@ -12,7 +12,6 @@ use Phpactor\MapResolver\Resolver;
 
 class CompletionRpcExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
     }

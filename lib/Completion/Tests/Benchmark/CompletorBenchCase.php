@@ -13,7 +13,6 @@ abstract class CompletorBenchCase
 
     private $offset;
 
-    
     private CouldComplete $completor;
 
     public function setUp($params): void

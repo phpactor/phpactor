@@ -17,10 +17,8 @@ class FileSearchIndex implements SearchIndex
      * Flush to the filesystem after BATCH_SIZE updates
      */
     private const BATCH_SIZE = 10000;
-
     private const DELIMITER = "\t";
 
-    
     private bool $initialized = false;
 
     /**
@@ -28,13 +26,10 @@ class FileSearchIndex implements SearchIndex
      */
     private $subjects = [];
 
-    
     private string $path;
 
-    
     private int $counter = 0;
 
-    
     private bool $dirty = false;
 
     public function __construct(string $path)

@@ -11,22 +11,16 @@ use Symfony\Component\Process\Process;
 
 class Status
 {
-    
     private FilesystemRegistry $registry;
 
-    
     private ExecutableFinder $executableFinder;
 
-    
     private PathCandidates $paths;
 
-    
     private string $workingDirectory;
 
-    
     private PhpVersionResolver $phpVersionResolver;
 
-    
     private bool $warnOnDevelop;
 
     public function __construct(

@@ -16,7 +16,6 @@ use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\
 
 class SourceCodeFilesystemExtraExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
     }

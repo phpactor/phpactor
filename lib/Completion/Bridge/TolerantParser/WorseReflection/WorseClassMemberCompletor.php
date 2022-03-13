@@ -28,13 +28,10 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    
     private Reflector $reflector;
 
-    
     private ObjectFormatter $formatter;
 
-    
     private ObjectFormatter $snippetFormatter;
 
     public function __construct(

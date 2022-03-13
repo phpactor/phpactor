@@ -13,7 +13,6 @@ use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
  */
 class TokenExpanderBench
 {
-    
     private TokenExpandingFilter $tokenExpander;
 
     public function setUp(): void

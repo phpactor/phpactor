@@ -19,16 +19,12 @@ use Phpactor\ConfigLoader\Tests\TestCase;
  */
 class ConfigLoaderBench extends TestCase
 {
-    
     private string $config1;
 
-    
     private string $config2;
 
-    
     private string $config1yaml;
 
-    
     private string $config2yaml;
 
     public function setUp(): void

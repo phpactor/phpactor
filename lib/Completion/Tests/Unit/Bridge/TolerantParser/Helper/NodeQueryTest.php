@@ -15,7 +15,6 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class NodeQueryTest extends TestCase
 {
-    
     private Parser $parser;
 
     protected function setUp(): void

@@ -10,7 +10,6 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
     use HasPathTrait;
-
     public const RECORD_TYPE = 'class';
 
     /**

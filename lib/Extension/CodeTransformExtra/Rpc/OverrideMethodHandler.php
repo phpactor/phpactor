@@ -17,19 +17,13 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class OverrideMethodHandler extends AbstractHandler
 {
     const NAME = 'override_method';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_CLASS_NAME = 'class_name';
-
     const PARAM_METHOD_NAME = 'method_name';
-
     const PARAM_PATH = 'path';
 
-    
     private Reflector $reflector;
 
-    
     private OverrideMethod $overrideMethod;
 
     public function __construct(

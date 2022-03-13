@@ -18,18 +18,13 @@ use Prophecy\Prophecy\ObjectProphecy;
 class TransformHandlerTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_NEW_PATH = '/path/to/new.php';
-
     const EXAMPLE_SOURCE_CODE = '<?php';
 
-    
     private ObjectProphecy $codeTransform;
 
-    
     private HandlerTester $tester;
 
-    
     private ObjectProphecy $transformer;
 
     public function setUp(): void

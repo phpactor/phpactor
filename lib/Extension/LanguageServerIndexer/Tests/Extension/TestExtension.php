@@ -13,7 +13,6 @@ use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.watcher.will_die', function (Container $container) {

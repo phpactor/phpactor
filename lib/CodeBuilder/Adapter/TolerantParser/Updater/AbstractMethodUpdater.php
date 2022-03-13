@@ -21,7 +21,6 @@ use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 
 abstract class AbstractMethodUpdater
 {
-    
     private Renderer $renderer;
 
     public function __construct(Renderer $renderer)

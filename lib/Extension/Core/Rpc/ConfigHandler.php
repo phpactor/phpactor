@@ -10,7 +10,6 @@ class ConfigHandler implements Handler
 {
     const CONFIG = 'config';
 
-    
     private array $config;
 
     public function __construct(array $config)

@@ -14,10 +14,8 @@ use function Safe\file_get_contents;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    
     private SourceCodeReflector $reflector;
 
-    
     private LoggerInterface $logger;
 
     public function __construct(SourceCodeReflector $reflector, LoggerInterface $logger)

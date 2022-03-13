@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 final class WorseUnresolvableClassNameFinderBench
 {
-    
     private WorseUnresolvableClassNameFinder $finder;
 
     public function __construct()

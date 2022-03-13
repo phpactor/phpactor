@@ -14,16 +14,12 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 class DebugHandler implements Handler
 {
     const METHOD_DEBUG_CONFIG = 'phpactor/debug/config';
-
     const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
 
-    
     private Container $container;
 
-    
     private ClientApi $client;
 
-    
     private Workspace $workspace;
 
     public function __construct(Container $container, ClientApi $client, Workspace $workspace)

@@ -23,13 +23,10 @@ use Phpactor\TextDocument\TextEdit;
 class RenameHandlerTest extends IntegrationTestCase
 {
     const EXAMPLE_FILE = 'file:///Foobar.php';
-
     const EXAMPLE_NEW_NAME = 'foobar';
 
-    
     private LanguageServerTester $tester;
 
-    
     private InMemoryRenamer $renamer;
 
     public function testRegistersCapabilities(): void

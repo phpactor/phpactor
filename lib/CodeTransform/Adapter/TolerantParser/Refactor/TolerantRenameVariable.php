@@ -19,7 +19,6 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantRenameVariable implements RenameVariable
 {
-    
     private Parser $parser;
 
     public function __construct(Parser $parser = null)

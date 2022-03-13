@@ -20,20 +20,14 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ImportNameCommandTest extends TestCase
 {
     const EXAMPLE_CONTENT = 'hello this is some text';
-
     const EXAMPLE_PATH = '/foobar.php';
-
     const EXAMPLE_OFFSET = 12;
-
     const EXAMPLE_PATH_URI = 'file:///foobar.php';
 
-    
     private Workspace $workspace;
 
-    
     private TestRpcClient $rpcClient;
 
-    
     private ImportNameCommand $command;
 
     /**

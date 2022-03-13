@@ -13,7 +13,6 @@ use Phpactor\Container\Container;
 
 class ClassMoverExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
     }

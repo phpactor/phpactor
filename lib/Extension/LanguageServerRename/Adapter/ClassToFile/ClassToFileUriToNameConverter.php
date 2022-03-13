@@ -11,7 +11,6 @@ use RuntimeException;
 
 class ClassToFileUriToNameConverter implements UriToNameConverter
 {
-    
     private FileToClass $fileToClass;
 
     public function __construct(FileToClass $fileToClass)

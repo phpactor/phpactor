@@ -11,7 +11,6 @@ use Phpactor\TextDocument\TextDocumentUri;
 class SomeTypeLocator implements TypeLocator
 {
     const EXAMPLE_OFFSET = 1;
-
     const EXAMPLE_PATH = '/foobar';
 
     

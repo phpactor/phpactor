@@ -17,16 +17,12 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 
 class WorseGenerateAccessor implements GenerateAccessor
 {
-    
     private Reflector $reflector;
 
-    
     private Updater $updater;
 
-    
     private string $prefix;
 
-    
     private bool $upperCaseFirst;
 
     public function __construct(

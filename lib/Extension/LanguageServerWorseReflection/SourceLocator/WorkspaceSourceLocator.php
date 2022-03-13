@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class WorkspaceSourceLocator implements SourceCodeLocator
 {
-    
     private WorkspaceIndex $index;
 
     public function __construct(WorkspaceIndex $index)

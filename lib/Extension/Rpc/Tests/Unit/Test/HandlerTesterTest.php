@@ -13,9 +13,9 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class HandlerTesterTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     private Handler $handler;
-    
+
     private ObjectProphecy $response;
 
     public function setUp(): void

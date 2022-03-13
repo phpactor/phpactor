@@ -23,7 +23,6 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.generate_method';
 
-    
     private MissingMethodFinder $missingMethodFinder;
 
     public function __construct(MissingMethodFinder $missingMethodFinder)

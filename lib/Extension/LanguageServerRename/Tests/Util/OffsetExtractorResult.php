@@ -19,7 +19,6 @@ final class OffsetExtractorResult
      */
     private array $ranges = [];
 
-    
     private string $source;
 
     public function __construct(string $source, array $offsetResults, array $rangeResults)

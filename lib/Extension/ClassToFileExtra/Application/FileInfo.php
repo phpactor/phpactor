@@ -8,10 +8,8 @@ use Phpactor\ClassFileConverter\Domain\FileToClass;
 
 class FileInfo
 {
-    
     private FileToClass $classToFileConverter;
 
-    
     private Filesystem $filesystem;
 
     public function __construct(

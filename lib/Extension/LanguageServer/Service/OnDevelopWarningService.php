@@ -10,13 +10,10 @@ use function Amp\call;
 
 class OnDevelopWarningService implements ServiceProvider
 {
-    
     private ClientApi $client;
 
-    
     private bool $warnOnDevelop;
 
-    
     private Status $status;
 
     public function __construct(ClientApi $client, Status $status, bool $warnOnDevelop)

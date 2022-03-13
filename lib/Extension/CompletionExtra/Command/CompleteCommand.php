@@ -15,9 +15,9 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 class CompleteCommand extends Command
 {
     private Complete $complete;
-    
+
     private DumperRegistry $dumperRegistry;
-    
+
     private FilesystemHelper $helper;
 
     public function __construct(

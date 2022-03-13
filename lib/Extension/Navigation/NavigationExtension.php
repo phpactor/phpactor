@@ -17,9 +17,7 @@ use Phpactor\PathFinder\PathFinder;
 class NavigationExtension implements Extension
 {
     const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
-
     const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
-
     const SERVICE_PATH_FINDER = 'navigation.path_finder';
 
     

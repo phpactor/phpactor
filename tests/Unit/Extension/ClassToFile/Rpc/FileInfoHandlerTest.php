@@ -11,7 +11,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class FileInfoHandlerTest extends HandlerTestCase
 {
-    
     private ObjectProphecy $fileInfo;
 
     public function setUp(): void

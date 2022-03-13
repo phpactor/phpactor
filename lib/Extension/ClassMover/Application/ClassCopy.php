@@ -16,13 +16,10 @@ use RuntimeException;
 
 class ClassCopy
 {
-    
     private ClassFileNormalizer $classFileNormalizer;
 
-    
     private ClassMoverFacade $classMover;
 
-    
     private Filesystem $filesystem;
 
     // rename compositetransformer => classToFileConverter

@@ -11,25 +11,18 @@ use Phpactor\Indexer\Model\RecordReferenceEnhancer\NullRecordReferenceEnhancer;
 
 class QueryClient
 {
-    
     private ClassQuery $classQuery;
 
-    
     private FunctionQuery $functionQuery;
 
-    
     private FileQuery $fileQuery;
 
-    
     private MemberQuery $memberQuery;
 
-    
     private Index $index;
 
-    
     private ?RecordReferenceEnhancer $enhancer;
 
-    
     private ConstantQuery $constantQuery;
 
     public function __construct(Index $index, ?RecordReferenceEnhancer $enhancer = null)

@@ -17,16 +17,12 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class CandidateFinder
 {
-    
     private UnresolvableClassNameFinder $finder;
 
-    
     private SearchClient $client;
 
-    
     private bool $importGlobals;
 
-    
     private FunctionReflector $functionReflector;
 
     public function __construct(UnresolvableClassNameFinder $finder, FunctionReflector $functionReflector, SearchClient $client, bool $importGlobals = false)

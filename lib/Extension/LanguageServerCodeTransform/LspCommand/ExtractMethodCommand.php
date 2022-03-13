@@ -17,16 +17,12 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 class ExtractMethodCommand implements Command
 {
     public const NAME  = 'extract_method';
-
     public const DEFAULT_METHOD_NAME  = 'newMethod';
 
-    
     private ExtractMethod $extractMethod;
 
-    
     private ClientApi $clientApi;
 
-    
     private Workspace $workspace;
 
     public function __construct(

@@ -22,11 +22,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ExtractExpressionCommandTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SOURCE = '<?php ';
-
     const EXAMPLE_URI = 'file:///file.php';
-
     const EXAMPLE_OFFSET = 5;
 
     public function testSuccessfulCall(): void

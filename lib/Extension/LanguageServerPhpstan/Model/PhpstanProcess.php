@@ -10,19 +10,14 @@ use Psr\Log\LoggerInterface;
 
 class PhpstanProcess
 {
-    
     private DiagnosticsParser $parser;
 
-    
     private string $cwd;
 
-    
     private LoggerInterface $logger;
 
-    
     private string $phpstanBin;
 
-    
     private PhpstanConfig $config;
 
     public function __construct(

@@ -13,7 +13,6 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LanguageServerDiagnosticsExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpLintDiagnosticProvider::class, function (Container $container) {

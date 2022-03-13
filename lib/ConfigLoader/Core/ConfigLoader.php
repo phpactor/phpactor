@@ -6,10 +6,8 @@ use RuntimeException;
 
 class ConfigLoader
 {
-    
     private Deserializers $deserializers;
 
-    
     private PathCandidates $candidates;
 
     public function __construct(Deserializers $deserializers, PathCandidates $candidates)

@@ -20,13 +20,10 @@ use function Amp\call;
 
 class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionProvider
 {
-    
     private string $title;
 
-    
     private Transformers $transformers;
 
-    
     private string $name;
 
     public function __construct(Transformers $transformers, string $name, string $title)

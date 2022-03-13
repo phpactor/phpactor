@@ -8,10 +8,8 @@ use RuntimeException;
 
 class CallbackExpander implements Expander
 {
-    
     private string $tokenName;
 
-    
     private Closure $callback;
 
     public function __construct(string $tokenName, Closure $callback)

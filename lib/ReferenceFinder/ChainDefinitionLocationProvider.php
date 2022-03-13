@@ -16,7 +16,6 @@ final class ChainDefinitionLocationProvider implements DefinitionLocator
      */
     private array $providers = [];
 
-    
     private LoggerInterface $logger;
 
     public function __construct(array $providers, LoggerInterface $logger = null)

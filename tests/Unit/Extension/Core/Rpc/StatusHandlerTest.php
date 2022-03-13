@@ -19,7 +19,6 @@ class StatusHandlerTest extends HandlerTestCase
      */
     private $status;
 
-    
     private ObjectProphecy $paths;
 
     public function setUp(): void

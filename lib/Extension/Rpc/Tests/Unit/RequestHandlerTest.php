@@ -17,13 +17,10 @@ class RequestHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
-    
     private ObjectProphecy $handlerRegistry;
 
-    
     private ObjectProphecy $handler;
 
-    
     private RequestHandler $requestHandler;
 
     public function setUp(): void

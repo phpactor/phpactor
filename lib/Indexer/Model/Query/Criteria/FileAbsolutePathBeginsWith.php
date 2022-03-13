@@ -8,7 +8,6 @@ use Phpactor\Indexer\Model\Record\HasPath;
 
 class FileAbsolutePathBeginsWith extends Criteria
 {
-    
     private string $prefix;
 
     public function __construct(string $prefix)

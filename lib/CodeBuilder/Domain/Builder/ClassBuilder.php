@@ -27,7 +27,7 @@ class ClassBuilder extends ClassLikeBuilder
      * @var ConstantBuilder[]
      */
     protected array $constants = [];
-    
+
     private ?ExtendsClass $extends = null;
 
     public static function childNames(): array

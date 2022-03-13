@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class IndexerFunctionSourceLocator implements SourceCodeLocator
 {
-    
     private IndexAccess $index;
 
     public function __construct(IndexAccess $index)

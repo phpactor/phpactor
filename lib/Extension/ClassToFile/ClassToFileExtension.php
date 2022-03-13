@@ -19,11 +19,8 @@ use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 class ClassToFileExtension implements Extension
 {
     const SERVICE_CONVERTER = 'class_to_file.converter';
-
     const PARAM_CLASS_LOADERS = 'composer.class_loaders';
-
     const PARAM_PROJECT_ROOT = 'class_to_file.project_root';
-
     const PARAM_BRUTE_FORCE_CONVERSION = 'class_to_file.brute_force_conversion';
 
     

@@ -17,7 +17,6 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantClassReplacer implements ClassReplacer
 {
-    
     private Updater $updater;
 
     public function __construct(Updater $updater)

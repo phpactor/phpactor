@@ -21,7 +21,7 @@ class LoggingHandlerTest extends TestCase
      * @var ObjectProphecy<RequestHandler>
      */
     private ObjectProphecy $innerHandler;
-    
+
     private LoggingHandler $loggingHandler;
     
     /**

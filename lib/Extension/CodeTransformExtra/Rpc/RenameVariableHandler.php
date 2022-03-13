@@ -13,22 +13,14 @@ use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 class RenameVariableHandler extends AbstractHandler
 {
     const NAME = 'rename_variable';
-
     const PARAM_OFFSET = 'offset';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_NAME = 'name';
-
     const PARAM_NAME_SUGGESTION = 'name_suggestion';
-
     const PARAM_PATH = 'path';
-
     const INPUT_LABEL = 'New name: ';
-
     const PARAM_SCOPE = 'scope';
 
-    
     private RenameVariable $renameVariable;
 
     public function __construct(RenameVariable $renameVariable)

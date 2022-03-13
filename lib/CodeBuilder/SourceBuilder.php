@@ -9,10 +9,8 @@ use Phpactor\CodeBuilder\Domain\Code;
 
 class SourceBuilder
 {
-    
     private Renderer $generator;
 
-    
     private Updater $updater;
 
     public function __construct(

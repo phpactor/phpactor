@@ -10,10 +10,8 @@ use Phpactor\MapResolver\Resolver;
 class FileInfoHandler extends AbstractHandler
 {
     const NAME = 'file_info';
-
     const PARAM_PATH = 'path';
 
-    
     private FileInfo $fileInfo;
 
     public function __construct(FileInfo $fileInfo)

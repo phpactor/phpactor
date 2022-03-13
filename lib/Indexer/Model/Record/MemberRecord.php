@@ -9,21 +9,16 @@ use RuntimeException;
 class MemberRecord implements HasFileReferences, Record, HasShortName
 {
     use HasFileReferencesTrait;
-
     public const RECORD_TYPE = 'member';
-
     public const TYPE_METHOD = 'method';
-
     public const TYPE_CONSTANT = 'constant';
-
     public const TYPE_PROPERTY = 'property';
-
     private const ID_DELIMITER = '#';
-    
+
     private string $type;
-    
+
     private string $memberName;
-    
+
     private ?string $containerType;
 
     public function __construct(string $type, string $memberName, string $containerType = null)

@@ -6,7 +6,6 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 
 class ClassIsCurrentClassException extends TransformException
 {
-    
     private string $name;
 
     public function __construct(NameImport $nameImport)

@@ -16,10 +16,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseClassAliasCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    
     private Reflector $reflector;
 
-    
     private ClassQualifier $qualifier;
 
     public function __construct(Reflector $reflector, ?ClassQualifier $qualifier = null)

@@ -14,7 +14,6 @@ use Phpactor\MapResolver\Resolver;
 
 class DebugExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(ExtensionDocumentor::class, function (Container $container) {

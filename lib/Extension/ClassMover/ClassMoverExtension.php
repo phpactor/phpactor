@@ -30,7 +30,6 @@ use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 
 class ClassMoverExtension implements Extension
 {
-    
     public function configure(Resolver $schema): void
     {
     }

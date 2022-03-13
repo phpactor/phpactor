@@ -17,7 +17,6 @@ class RecordReferences implements IteratorAggregate
      */
     private array $references = [];
 
-    
     private FileRecord $file;
 
     /**

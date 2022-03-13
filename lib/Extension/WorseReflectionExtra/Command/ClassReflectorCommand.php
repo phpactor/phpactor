@@ -12,10 +12,8 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassReflectorCommand extends Command
 {
-    
     private ClassReflector $reflector;
 
-    
     private DumperRegistry $dumperRegistry;
 
     public function __construct(

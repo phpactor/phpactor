@@ -7,16 +7,12 @@ use Phpactor\TextDocument\TextDocument;
 
 class Indexer
 {
-    
     private IndexBuilder $builder;
 
-    
     private Index $index;
 
-    
     private FileListProvider $provider;
 
-    
     private DirtyDocumentTracker $dirtyDocumentTracker;
 
     public function __construct(IndexBuilder $builder, Index $index, FileListProvider $provider, ?DirtyDocumentTracker $dirtyDocumentTracker = null)

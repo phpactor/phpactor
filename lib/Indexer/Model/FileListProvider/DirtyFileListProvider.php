@@ -13,7 +13,6 @@ use SplFileInfo;
 
 class DirtyFileListProvider implements FileListProvider, DirtyDocumentTracker
 {
-    
     private string $dirtyPath;
 
     /**

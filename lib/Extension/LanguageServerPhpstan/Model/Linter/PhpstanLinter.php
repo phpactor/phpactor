@@ -13,7 +13,6 @@ use function Safe\file_put_contents;
 
 class PhpstanLinter implements Linter
 {
-    
     private PhpstanProcess $process;
 
     public function __construct(PhpstanProcess $process)

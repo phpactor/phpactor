@@ -8,10 +8,8 @@ use Webmozart\PathUtil\Path;
 
 class AbsolutePathCandidate implements PathCandidate
 {
-    
     private string $absolutePath;
 
-    
     private string $loader;
 
     public function __construct(string $absolutePath, string $loader)

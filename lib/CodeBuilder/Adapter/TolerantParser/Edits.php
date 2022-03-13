@@ -16,7 +16,6 @@ class Edits
      */
     private array $edits = [];
 
-    
     private TextFormat $format;
 
     public function __construct(TextFormat $format = null)

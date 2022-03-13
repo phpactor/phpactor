@@ -15,13 +15,10 @@ use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 class NavigateHandlerTest extends HandlerTestCase
 {
     const TEST_PATH = 'path/to/file.php';
-
     const TEST_DEST1 = 'dest1';
 
-    
     private ObjectProphecy $navigator;
 
-    
     private array $destinations;
 
     public function setUp(): void

@@ -9,7 +9,6 @@ namespace Phpactor\Completion\Core;
  */
 class SignatureInformation
 {
-    
     private string $label;
 
     /**
@@ -17,7 +16,6 @@ class SignatureInformation
      */
     private array $parameters = [];
 
-    
     private ?string $documentation;
 
     public function __construct(string $label, array $parameters, string $documentation = null)

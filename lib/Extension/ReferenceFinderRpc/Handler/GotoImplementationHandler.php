@@ -20,20 +20,13 @@ use RuntimeException;
 class GotoImplementationHandler extends AbstractHandler
 {
     const NAME = 'goto_implementation';
-
     const PARAM_OFFSET = 'offset';
-
     const PARAM_SOURCE = 'source';
-
     const PARAM_PATH = 'path';
-
     const PARAM_LANGUAGE = 'language';
-
     const PARAM_TARGET = 'target';
-
     const PARAM_SELECTED_PATH = 'selected_path';
 
-    
     private ClassImplementationFinder $finder;
 
     public function __construct(

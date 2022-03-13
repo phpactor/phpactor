@@ -50,35 +50,20 @@ use Webmozart\PathUtil\Path;
 class IndexerExtension implements Extension
 {
     public const PARAM_INDEX_PATH = 'indexer.index_path';
-
     public const PARAM_INDEXER_POLL_TIME = 'indexer.poll_time';
-
     public const PARAM_ENABLED_WATCHERS = 'indexer.enabled_watchers';
-
     public const PARAM_INCLUDE_PATTERNS = 'indexer.include_patterns';
-
     public const PARAM_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
-
     public const PARAM_INDEXER_BUFFER_TIME = 'indexer.buffer_time';
-
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
-
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
-
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
-
     const TAG_WATCHER = 'indexer.watcher';
-
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
-
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
-
     private const INDEXER_TOLERANT = 'tolerant';
-
     private const INDEXER_WORSE = 'worse';
-
     private const SERVICE_FILESYSTEM = 'indexer.filesystem';
-
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
 
     

@@ -4,13 +4,10 @@ namespace Phpactor\Extension\LanguageServerHover\Renderer;
 
 class HoverInformation
 {
-    
     private string $name;
 
-    
     private string $docs;
 
-    
     private object $object;
 
     public function __construct(string $name, string $docs, object $object)

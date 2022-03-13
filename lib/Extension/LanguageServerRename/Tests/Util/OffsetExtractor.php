@@ -7,13 +7,10 @@ use Phpactor\TextDocument\ByteOffsetRange;
 
 final class OffsetExtractor
 {
-    
     private array $points = [];
 
-    
     private array $rangeOpenMarkers = [];
 
-    
     private array $rangeCloseMarkers = [];
 
     public static function create(): OffsetExtractor

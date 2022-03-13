@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextDocument;
 
 class ArrayCompletor implements Completor
 {
-    
     private array $suggestions;
 
     /**

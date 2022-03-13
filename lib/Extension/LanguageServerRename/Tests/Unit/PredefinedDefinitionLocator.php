@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextDocument;
 
 class PredefinedDefinitionLocator implements DefinitionLocator
 {
-    
     private ?DefinitionLocation $location;
 
     public function __construct(?DefinitionLocation $locationr)

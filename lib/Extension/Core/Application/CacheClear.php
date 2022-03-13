@@ -7,10 +7,8 @@ use Webmozart\PathUtil\Path;
 
 class CacheClear
 {
-    
     private string $cachePath;
 
-    
     private Filesystem $filesystem;
 
     public function __construct(string $cachePath)

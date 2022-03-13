@@ -7,7 +7,6 @@ use Phpactor\TestUtils\Workspace;
 
 class TestCase extends PhpunitTestCase
 {
-    
     protected Workspace $workspace;
 
     public function setUp(): void

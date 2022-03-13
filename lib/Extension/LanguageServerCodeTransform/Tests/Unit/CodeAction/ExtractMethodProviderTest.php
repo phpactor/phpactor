@@ -19,12 +19,9 @@ use Generator;
 class ExtractMethodProviderTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SOURCE = 'foobar';
-
     const EXAMPLE_FILE = 'file:///somefile.php';
 
-    
     private ObjectProphecy $extractMethod;
 
     public function setUp(): void

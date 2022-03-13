@@ -18,13 +18,10 @@ use Phpactor\TextDocument\TextEdit as PhpactorTextEdit;
 
 abstract class AbstractReferenceRenamer implements Renamer
 {
-    
     private ReferenceFinder $referenceFinder;
 
-    
     private TextDocumentLocator $locator;
 
-    
     private Parser $parser;
 
     public function __construct(

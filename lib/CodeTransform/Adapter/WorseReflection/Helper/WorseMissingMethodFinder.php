@@ -17,10 +17,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseMissingMethodFinder implements MissingMethodFinder
 {
-    
     private Reflector $reflector;
 
-    
     private Parser $parser;
 
     public function __construct(Reflector $reflector, Parser $parser)

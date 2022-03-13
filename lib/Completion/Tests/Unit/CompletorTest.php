@@ -14,7 +14,6 @@ use Phpactor\Completion\Core\Suggestion;
 class CompletorTest extends TestCase
 {
     const EXAMPLE_SOURCE = 'test source';
-
     const EXAMPLE_OFFSET = 1234;
 
     /**

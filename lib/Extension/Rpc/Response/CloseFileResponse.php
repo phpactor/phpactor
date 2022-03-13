@@ -6,7 +6,6 @@ use Phpactor\Extension\Rpc\Response;
 
 class CloseFileResponse implements Response
 {
-    
     private string $path;
 
     private function __construct(string $path)

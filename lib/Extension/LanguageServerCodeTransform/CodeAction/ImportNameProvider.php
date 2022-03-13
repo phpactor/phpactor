@@ -21,10 +21,8 @@ use function Amp\delay;
 
 class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
 {
-    
     private CandidateFinder $finder;
 
-    
     private bool $reportNonExistingClasses;
 
     public function __construct(CandidateFinder $finder, bool $reportNonExistingClasses = true)

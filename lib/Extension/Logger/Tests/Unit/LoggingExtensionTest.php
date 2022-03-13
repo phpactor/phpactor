@@ -100,7 +100,6 @@ class LoggingExtensionTest extends TestCase
 
 class ExampleExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('json_formatter', function (Container $container) {

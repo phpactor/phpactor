@@ -10,16 +10,12 @@ use Psr\Log\LoggerInterface;
 
 class PsalmProcess
 {
-    
     private DiagnosticsParser $parser;
 
-    
     private string $cwd;
 
-    
     private LoggerInterface $logger;
 
-    
     private PsalmConfig $config;
 
     public function __construct(

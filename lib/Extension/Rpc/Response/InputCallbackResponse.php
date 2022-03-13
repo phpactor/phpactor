@@ -8,10 +8,8 @@ use Phpactor\Extension\Rpc\Response\Input\Input;
 
 class InputCallbackResponse implements Response
 {
-    
     private Request $callbackAction;
 
-    
     private array $inputs = [];
 
     private function __construct(Request $callbackAction, array $inputs)

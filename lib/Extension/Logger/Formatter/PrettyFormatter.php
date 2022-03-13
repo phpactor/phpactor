@@ -7,7 +7,6 @@ use Psr\Log\LogLevel;
 
 class PrettyFormatter implements FormatterInterface
 {
-    
     public function format(array $record)
     {
         $message = sprintf(

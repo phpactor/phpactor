@@ -9,7 +9,6 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class ReindexListener implements ListenerProviderInterface
 {
-    
     private ServiceManager $manager;
 
     public function __construct(ServiceManager $manager)

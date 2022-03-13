@@ -14,7 +14,6 @@ use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 
 class ClassToFileExtraExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('command.file_info', function (Container $container) {

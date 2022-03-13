@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigJsonSchemaCommand extends Command
 {
-    
     private JsonSchemaBuilder $builder;
 
     public function __construct(JsonSchemaBuilder $builder)

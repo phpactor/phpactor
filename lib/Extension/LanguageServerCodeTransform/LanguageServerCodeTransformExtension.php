@@ -38,7 +38,6 @@ use Phpactor\TextDocument\TextDocumentLocator;
 class LanguageServerCodeTransformExtension implements Extension
 {
     public const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
-
     public const PARAM_REPORT_NON_EXISTING_NAMES = 'language_server_code_transform.import_name.report_non_existing_names';
 
     

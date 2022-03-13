@@ -16,7 +16,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class OverrideMethodHandlerTest extends HandlerTestCase
 {
     private Reflector $reflector;
-    
+
     private ObjectProphecy $overrideMethod;
 
     public function setUp(): void

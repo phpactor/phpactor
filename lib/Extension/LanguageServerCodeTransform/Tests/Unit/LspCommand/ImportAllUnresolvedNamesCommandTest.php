@@ -22,11 +22,9 @@ use function Amp\Promise\wait;
 class ImportAllUnresolvedNamesCommandTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_URI = 'file:///foobar';
-
     const EXAMPLE_CANDIDATE = 'Foobar';
-    
+
     private ObjectProphecy $candidateFinder;
 
     private ObjectProphecy $importName;

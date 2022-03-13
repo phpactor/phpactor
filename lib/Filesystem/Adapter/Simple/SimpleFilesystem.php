@@ -15,13 +15,10 @@ use RecursiveIteratorIterator;
 
 class SimpleFilesystem implements Filesystem
 {
-    
     private FilePath $path;
 
-    
     private FileListProvider $fileListProvider;
 
-    
     private SymfonyFilesystem $filesystem;
 
     /**

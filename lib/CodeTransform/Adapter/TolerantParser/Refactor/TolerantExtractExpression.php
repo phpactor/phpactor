@@ -18,7 +18,6 @@ use function preg_match;
 
 class TolerantExtractExpression implements ExtractExpression
 {
-    
     private Parser $parser;
 
     public function __construct(Parser $parser = null)

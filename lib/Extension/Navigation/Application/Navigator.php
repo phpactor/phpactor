@@ -9,9 +9,9 @@ use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 class Navigator
 {
     private NavigatorInterface $navigator;
-    
+
     private ClassNew $classNew;
-    
+
     private array $autoCreateConfig;
 
     public function __construct(

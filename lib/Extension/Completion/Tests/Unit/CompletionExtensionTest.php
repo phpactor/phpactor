@@ -21,20 +21,14 @@ use stdClass;
 class CompletionExtensionTest extends TestCase
 {
     use ProphecyTrait;
-
     const EXAMPLE_SUGGESTION = 'example_suggestion';
-
     const EXAMPLE_SOURCE = 'asd';
-
     const EXAMPLE_OFFSET = 1234;
 
-    
     private ObjectProphecy $completor1;
 
-    
     private ObjectProphecy $formatter1;
 
-    
     private ObjectProphecy $signatureHelper1;
 
     public function setUp(): void

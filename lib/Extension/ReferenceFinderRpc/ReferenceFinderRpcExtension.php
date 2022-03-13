@@ -14,7 +14,6 @@ use Phpactor\MapResolver\Resolver;
 
 class ReferenceFinderRpcExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('reference_finder_rpc.handler.goto_definition', function (Container $container) {

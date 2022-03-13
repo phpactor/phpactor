@@ -21,7 +21,6 @@ class FilesystemFileListProvider implements FileListProvider
      */
     private array $includePatterns;
 
-    
     private Filesystem $filesystem;
 
     /**

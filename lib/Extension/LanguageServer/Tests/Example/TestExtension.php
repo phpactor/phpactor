@@ -23,7 +23,6 @@ use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
 {
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.handler', function (Container $container) {
@@ -45,7 +44,6 @@ class TestExtension implements Extension
 
         $container->register('test.service', function (Container $container) {
             return new class($container->get(ClientApi::class)) implements ServiceProvider {
-                
                 private ClientApi $api;
 
                 public function __construct(ClientApi $api)
