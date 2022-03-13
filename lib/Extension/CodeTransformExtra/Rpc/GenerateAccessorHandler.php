@@ -90,18 +90,16 @@ class GenerateAccessorHandler extends AbstractHandler
         $originalSource = $arguments[self::PARAM_SOURCE];
         $newSource = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
 
-        foreach ((array) $arguments[self::PARAM_NAMES] as $propertyName) {
-            $newSource = $this->generateAccessor->generate(
-                $newSource,
-                $propertyName,
-                $arguments[self::PARAM_OFFSET]
-            );
-        }
+        $edits = $this->generateAccessor->generate(
+            $newSource,
+            (array)$arguments[self::PARAM_NAMES],
+            $arguments[self::PARAM_OFFSET]
+        );
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $newSource->path(),
+            $arguments[self::PARAM_PATH],
             $originalSource,
-            (string) $newSource
+            $edits->apply($originalSource)
         );
     }
 
@@ -148,12 +146,12 @@ class GenerateAccessorHandler extends AbstractHandler
     {
         $newSource = $this->generateAccessor->generate(
             SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),
-            $context->symbol()->name(),
+            [$context->symbol()->name()],
             $arguments[self::PARAM_OFFSET]
-        );
+        )->apply($arguments[self::PARAM_SOURCE]);
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $newSource->path(),
+            $arguments[self::PARAM_PATH],
             $arguments[self::PARAM_SOURCE],
             (string) $newSource
         );

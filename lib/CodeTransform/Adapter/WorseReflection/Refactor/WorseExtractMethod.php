@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\CatchClause;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
@@ -55,6 +56,10 @@ class WorseExtractMethod implements ExtractMethod
         $node = $this->parser->parseSourceFile($source->__toString());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
         $startNode = $node->getDescendantNodeAtPosition($offsetStart);
+
+        if (!$startNode->getFirstAncestor(MethodDeclaration::class)) {
+            return false;
+        }
 
         if (
             $endNode instanceof CompoundStatementNode &&
