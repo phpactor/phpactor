@@ -14,7 +14,7 @@ class MemberReference
     private Position $position;
 
     
-    private Class_ $class;
+    private ?Class_ $class;
 
     private function __construct(MemberName $method, Position $position, Class_ $class = null)
     {
