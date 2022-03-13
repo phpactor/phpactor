@@ -54,7 +54,7 @@ class ExtractConstantCommand implements Command
         }
  
         return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
-            $uri => TextEditConverter::toLspTextEdits($textEdits, $textDocument->text)
+            $uri => TextEditConverter::toLspTextEdits($textEdits->textEdits(), $textDocument->text)
         ]), 'Extract constant');
     }
 }

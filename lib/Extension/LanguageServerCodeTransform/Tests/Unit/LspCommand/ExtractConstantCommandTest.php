@@ -13,6 +13,8 @@ use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Prophecy\Argument;
@@ -28,7 +30,7 @@ class ExtractConstantCommandTest extends TestCase
 
     public function testSuccessfulCall(): void
     {
-        $textEdits = new TextEdits(TextEdit::create(self::EXAMPLE_OFFSET, 1, 'test'));
+        $textEdits = new TextDocumentEdits(TextDocumentUri::fromString('file:///foobar'), new TextEdits(TextEdit::create(self::EXAMPLE_OFFSET, 1, 'test')));
 
         $extractConstant = $this->prophesize(ExtractConstant::class);
         $extractConstant->extractConstant(
@@ -49,7 +51,7 @@ class ExtractConstantCommandTest extends TestCase
         self::assertEquals([
             'edit' => new WorkspaceEdit([
                 self::EXAMPLE_URI => TextEditConverter::toLspTextEdits(
-                    $textEdits,
+                    $textEdits->textEdits(),
                     self::EXAMPLE_SOURCE
                 )
             ]),
@@ -66,7 +68,7 @@ class ExtractConstantCommandTest extends TestCase
         $extractConstant = $this->prophesize(ExtractConstant::class);
         $extractConstant->extractConstant(
             Argument::type(SourceCode::class),
-            0,
+            self::EXAMPLE_OFFSET,
             ExtractConstantCommand::DEFAULT_VARIABLE_NAME
         )
              ->shouldBeCalled()
