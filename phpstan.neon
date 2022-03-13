@@ -10,6 +10,7 @@ parameters:
         - lib/Extension/LanguageServer
         - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
+    reportUnmatchedIgnoredErrors: true
 
 includes:
     - phpstan-baseline.neon
