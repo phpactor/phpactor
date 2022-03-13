@@ -24,7 +24,14 @@ return (new Config())
             'remove_inheritdoc' => true,
             'allow_mixed' => true,
         ],
-        'class_attributes_separation' => true,
+        'class_attributes_separation' => [
+            'elements' => [
+                'const' => 'only_if_meta',
+                'property' => 'one',
+                'trait_import' => 'only_if_meta',
+            ],
+        ],
+        'ordered_class_elements' => true,
         'no_empty_phpdoc' => true,
         'phpdoc_trim' => true,
         'array_syntax' => ['syntax' => 'short'],
