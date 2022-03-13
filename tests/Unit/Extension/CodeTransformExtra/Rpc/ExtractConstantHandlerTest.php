@@ -21,7 +21,6 @@ class ExtractConstantHandlerTest extends HandlerTestCase
     const OFFSET = 1234;
 
     const CONSTANT_NAME = 'FOOBAR';
-
     
     private ObjectProphecy $extractConstant;
 

@@ -18,10 +18,8 @@ use RuntimeException;
 class FileFinderTest extends TestCase
 {
     use ProphecyTrait;
-
     
     private ObjectProphecy $filesystem;
-
     
     private ObjectProphecy $fileList;
 

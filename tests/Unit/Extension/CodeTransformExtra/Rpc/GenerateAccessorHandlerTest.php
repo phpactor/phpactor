@@ -38,10 +38,8 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
     const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
 
     const CURSOR_OFFSET = 57;
-
     
     private ObjectProphecy $generateAccessor;
-
     
     private Reflector $reflector;
 

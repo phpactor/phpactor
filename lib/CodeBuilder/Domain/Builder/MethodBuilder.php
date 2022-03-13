@@ -12,12 +12,9 @@ use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 
 class MethodBuilder extends AbstractBuilder implements NamedBuilder
 {
-    
     protected string $name;
-
     
     protected ?Visibility $visibility = null;
-
     
     protected ?ReturnType $returnType = null;
 
@@ -25,19 +22,14 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
      * @var ParameterBuilder[]
      */
     protected array $parameters = [];
-
     
     protected ?Docblock $docblock = null;
-
     
     protected bool $static = false;
-
     
     protected bool $abstract = false;
-
     
     protected MethodBodyBuilder $bodyBuilder;
-
     
     private ClassLikeBuilder $parent;
 

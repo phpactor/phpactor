@@ -11,7 +11,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class CachingPathResolverTest extends TestCase
 {
     use ProphecyTrait;
-
     
     private ObjectProphecy $resolver;
 

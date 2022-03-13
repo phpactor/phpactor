@@ -12,7 +12,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class DeserializersTest extends TestCase
 {
     use ProphecyTrait;
-
     
     private ObjectProphecy $deserializer;
 

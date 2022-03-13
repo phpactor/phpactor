@@ -18,18 +18,13 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ChainTolerantCompletorTest extends TestCase
 {
-    
     private ObjectProphecy $completor1;
-
     
     private ObjectProphecy $qualifiableCompletor1;
-
     
     private ObjectProphecy $qualifier1;
-
     
     private ObjectProphecy $qualifiableCompletor2;
-
     
     private ObjectProphecy $qualifier2;
 

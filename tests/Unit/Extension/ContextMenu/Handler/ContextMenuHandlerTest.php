@@ -30,22 +30,16 @@ class ContextMenuHandlerTest extends HandlerTestCase
     const FOUND_OFFSET = 10;
 
     const ORIGINAL_OFFSET = 8;
-
     
     private Reflector $reflector;
-
     
     private ObjectProphecy $container;
-
     
     private ?ContextMenu $menu = null;
-
     
     private ObjectProphecy $requestHandler;
-
     
     private ObjectProphecy $classFileNormalizer;
-
     
     private ObjectProphecy $offsetFinder;
 

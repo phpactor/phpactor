@@ -13,7 +13,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassSearchHandlerTest extends HandlerTestCase
 {
-    
     private ObjectProphecy $classSearch;
 
     public function setUp(): void

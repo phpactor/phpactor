@@ -13,10 +13,8 @@ class PathFinderNavigatorTest extends TestCase
     use ProphecyTrait;
 
     const TEST_PATH = '/test/path';
-
     
     private ObjectProphecy $pathFinder;
-
     
     private PathFinderNavigator $navigator;
 

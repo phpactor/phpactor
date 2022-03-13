@@ -14,7 +14,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ConfigLoaderTest extends TestCase
 {
     use ProphecyTrait;
-
     
     private ObjectProphecy $deserializer;
 

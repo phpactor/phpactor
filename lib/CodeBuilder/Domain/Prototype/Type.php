@@ -4,12 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Type extends Prototype
 {
-    
     private ?string $type;
-
     
     private bool $none = false;
-
     
     private bool $nullable = false;
 

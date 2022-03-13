@@ -28,10 +28,8 @@ class ChainDefinitionLocationProviderTest extends TestCase
      * @var ObjectProphecy|DefinitionLocator
      */
     private $locator2;
-
     
     private TextDocument $document;
-
     
     private ByteOffset $offset;
 

@@ -13,19 +13,15 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class MarkdownObjectRendererTest extends IntegrationTestCase
 {
-    
     private Reflector $reflector;
-
     
     private ObjectRenderer $renderer;
-
     
     private SourceCodeLocator $locator;
 

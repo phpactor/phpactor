@@ -27,10 +27,8 @@ class ImportMissingClassesHandlerTest extends IntegrationTestCase
     const EXAMPLE_SOURCE = 'example-source';
 
     private $requestHandler;
-
     
     private ObjectProphecy $finder;
-
     
     private HandlerTester $tester;
 

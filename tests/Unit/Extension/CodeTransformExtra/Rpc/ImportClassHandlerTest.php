@@ -32,10 +32,8 @@ class ImportClassHandlerTest extends HandlerTestCase
     const TEST_SOURCE = '<?php Foo';
 
     const TEST_ALIAS = 'Alias';
-
     
     private ObjectProphecy $importName;
-
     
     private ObjectProphecy $classSearch;
 

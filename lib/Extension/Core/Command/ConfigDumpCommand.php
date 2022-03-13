@@ -9,20 +9,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Config\Paths;
 use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command
 {
-    
     private array $config;
-
     
     private DumperRegistry $registry;
-
     
     private PathCandidates $paths;
-
     
     private Expanders $expanders;
 

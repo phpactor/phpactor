@@ -26,19 +26,14 @@ use RuntimeException;
 class ReferencesHandlerTest extends HandlerTestCase
 {
     const TEST_PATH = 'test_file.php';
-
     
     private ObjectProphecy $classReferences;
-
     
     private Reflector $reflector;
-
     
     private ObjectProphecy $classMemberReferences;
-
     
     private ArrayLogger $logger;
-
     
     private ObjectProphecy $filesystemRegistry;
 

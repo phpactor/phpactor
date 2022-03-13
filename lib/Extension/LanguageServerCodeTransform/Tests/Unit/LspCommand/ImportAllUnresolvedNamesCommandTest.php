@@ -11,7 +11,6 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameCandidate;
 use Phpactor\LanguageServerProtocol\MessageActionItem;
-use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\TextDocument\ByteOffset;
@@ -27,7 +26,6 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
     const EXAMPLE_URI = 'file:///foobar';
 
     const EXAMPLE_CANDIDATE = 'Foobar';
-
     
     private ObjectProphecy $candidateFinder;
 

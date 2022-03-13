@@ -22,7 +22,6 @@ class RenameVariableHandlerTest extends HandlerTestCase
     const OFFSET = 1234;
 
     const VARIABLE_NAME = 'FOOBAR';
-
     
     private ObjectProphecy $renameVariable;
 

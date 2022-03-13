@@ -23,10 +23,8 @@ class ChainSignatureHelperTest extends TestCase
      * @var SignatureHelper|ObjectProphecy
      */
     private $helper1;
-
     
     private TextDocument $document;
-
     
     private ByteOffset $offset;
 

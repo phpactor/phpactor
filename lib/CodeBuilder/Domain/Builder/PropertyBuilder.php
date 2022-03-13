@@ -10,18 +10,13 @@ use Phpactor\CodeBuilder\Domain\Prototype\Property;
 
 class PropertyBuilder extends AbstractBuilder implements NamedBuilder
 {
-    
     protected string $name;
-
     
     protected ?Visibility $visibility = null;
-
     
     protected ?Type $type = null;
-
     
     protected ?DefaultValue $defaultValue = null;
-
     
     private ClassLikeBuilder $parent;
 

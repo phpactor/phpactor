@@ -13,9 +13,7 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class OffsetInfoCommand extends Command
 {
-    
     private OffsetInfo $infoForOffset;
-
     
     private DumperRegistry $dumperRegistry;
 

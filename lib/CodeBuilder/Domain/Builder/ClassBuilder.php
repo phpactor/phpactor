@@ -27,7 +27,6 @@ class ClassBuilder extends ClassLikeBuilder
      * @var ConstantBuilder[]
      */
     protected array $constants = [];
-
     
     private ?ExtendsClass $extends = null;
 

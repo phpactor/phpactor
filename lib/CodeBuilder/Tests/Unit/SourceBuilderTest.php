@@ -14,7 +14,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class SourceBuilderTest extends TestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
-
     
     private ObjectProphecy $updater;
 

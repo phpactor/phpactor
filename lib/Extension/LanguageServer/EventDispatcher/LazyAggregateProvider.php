@@ -9,12 +9,9 @@ use RuntimeException;
 
 class LazyAggregateProvider implements ListenerProviderInterface
 {
-    
     private ContainerInterface $container;
-
     
     private array $serviceIds;
-
     
     private ?ListenerProviderAggregate $aggregateProvider = null;
 
@@ -23,7 +20,6 @@ class LazyAggregateProvider implements ListenerProviderInterface
         $this->container = $container;
         $this->serviceIds = $serviceIds;
     }
-
     
     public function getListenersForEvent(object $event): iterable
     {

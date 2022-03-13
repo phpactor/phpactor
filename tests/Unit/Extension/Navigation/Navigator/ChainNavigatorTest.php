@@ -17,10 +17,8 @@ class ChainNavigatorTest extends TestCase
     const TEST_DESTINATION_1 = '/destination1.php';
 
     const TEST_DESTINATION_2 = '/destination2.php';
-
     
     private ObjectProphecy $navigator1;
-
     
     private ObjectProphecy $navigator2;
 

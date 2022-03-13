@@ -15,7 +15,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class HoverHandlerTest extends HandlerTestCase
 {
-    
     private Reflector $reflector;
 
     public function setUp(): void

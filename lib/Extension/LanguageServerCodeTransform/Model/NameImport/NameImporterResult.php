@@ -10,9 +10,7 @@ use Throwable;
 
 class NameImporterResult
 {
-    
     private bool $success;
-
     
     private ?Throwable $error;
 
@@ -20,7 +18,6 @@ class NameImporterResult
      * @var array<LspTextEdit>|null
      */
     private ?array $textEdits;
-
     
     private ?NameImport $nameImport;
 
