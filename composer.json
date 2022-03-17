@@ -24,7 +24,9 @@
         "phpactor/language-server-protocol": "~0.3.0",
         "monolog/monolog": "^1.23",
         "sebastian/diff": "^4.0",
-        "webmozart/glob": "^4.4"
+        "webmozart/glob": "^4.4",
+        "symfony/filesystem": "^5.4",
+        "symfony/process": "^5.4"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
