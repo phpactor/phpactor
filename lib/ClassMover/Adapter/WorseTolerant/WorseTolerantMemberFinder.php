@@ -379,7 +379,12 @@ class WorseTolerantMemberFinder implements MemberFinder
             return $reference;
         }
 
-        if ($type->accepts(TypeFactory::class((string) $query->class()))->isFalse()) {
+        $accepts = $type->accepts(TypeFactory::class((string) $query->class()));
+
+        if ($accepts->isMaybe()) {
+            return $reference;
+        }
+        if ($accepts->isFalse()) {
             return;
         }
 
