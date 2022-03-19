@@ -7,6 +7,7 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -69,15 +70,13 @@ class WorseExtractConstant implements ExtractConstant
             throw new TransformException(sprintf('Node does not belong to a class'));
         }
 
-        $className = $containerType->className();
-
-        if (!$className) {
+        if (!$containerType instanceof ClassType) {
             throw new TransformException(sprintf('Could not find container class'));
         }
 
-        $builder->namespace($className->namespace());
+        $builder->namespace($containerType->name()->namespace());
         $builder
-            ->class($className->short())
+            ->class($containerType->name()->short())
                 ->constant($constantName, $symbolInformation->value())
             ->end();
 
