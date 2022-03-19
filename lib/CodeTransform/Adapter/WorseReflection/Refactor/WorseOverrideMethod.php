@@ -7,6 +7,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -16,6 +17,7 @@ use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseOverrideMethod implements OverrideMethod
 {
@@ -92,14 +94,19 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $usedClasses = [];
 
-        if ($method->returnType()->isDefined() && $method->returnType()->isClass()) {
-            $usedClasses[] = $method->returnType();
+        $returnType = $method->returnType();
+        if ($returnType instanceof ClassType) {
+            $usedClasses[] = $returnType;
         }
 
         /**
          * @var ReflectionParameter $parameter */
         foreach ($method->parameters() as $parameter) {
-            if (false === $parameter->type()->isDefined() || false === $parameter->type()->isClass()) {
+            $parameterType = $parameter->type();
+            if (false === TypeUtil::isDefined($parameterType)) {
+                continue;
+            }
+            if (false === $parameterType instanceof ClassType) {
                 continue;
             }
 
@@ -107,11 +114,8 @@ class WorseOverrideMethod implements OverrideMethod
         }
 
         foreach ($usedClasses as $usedClass) {
-            $className = $usedClass->className();
-
-            if (!$className) {
-                continue;
-            }
+            assert($usedClass instanceof ClassType);
+            $className = $usedClass->name();
 
             if ($class->name()->namespace() == $className->namespace()) {
                 continue;
