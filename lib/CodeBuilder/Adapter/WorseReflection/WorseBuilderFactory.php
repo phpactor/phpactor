@@ -7,6 +7,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -93,7 +94,7 @@ class WorseBuilderFactory implements BuilderFactory
         $type = $property->inferredTypes()->best();
         if (TypeUtil::isDefined($type)) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
-            $propertyBuilder->type((string) $type->short());
+            $propertyBuilder->type(TypeUtil::short($type));
         }
     }
 
@@ -102,10 +103,10 @@ class WorseBuilderFactory implements BuilderFactory
         $methodBuilder = $classBuilder->method($method->name());
         $methodBuilder->visibility((string) $method->visibility());
 
-        if ($method->returnType()->isDefined()) {
+        if (TypeUtil::isDefined($method->returnType())) {
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
-            $typeName = $type->short();
+            $typeName = TypeUtil::short($type);
             if ($type->isNullable()) {
                 $typeName = '?' . $typeName;
             }
@@ -151,8 +152,8 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function resolveClassMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        if ($type->isClass() && $classType->namespace() != $type->className()->namespace()) {
-            $classBuilder->end()->use($type->className()->full());
+        if ($type instanceof ClassType && $classType->namespace() != $type->name()->namespace()) {
+            $classBuilder->end()->use($type->name()->full());
         }
     }
 

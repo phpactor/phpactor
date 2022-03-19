@@ -27,4 +27,9 @@ class TypeUtil
     {
         return $type instanceof PrimitiveType;
     }
+
+    public static function isClass(Type $type): bool
+    {
+        return $type instanceof ClassType;
+    }
 }
