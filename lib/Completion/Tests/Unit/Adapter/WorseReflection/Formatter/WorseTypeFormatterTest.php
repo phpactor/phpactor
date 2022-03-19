@@ -5,9 +5,10 @@ namespace Phpactor\Completion\Tests\Unit\Adapter\WorseReflection\Formatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypesFormatter;
 use Phpactor\Completion\Tests\TestCase;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTypeFormatterTest extends TestCase
 {
@@ -26,28 +27,29 @@ class WorseTypeFormatterTest extends TestCase
 
     public function provideFormat()
     {
+        $reflector = ReflectorBuilder::create()->build();
         yield 'no types' => [
             Types::empty(),
             '<unknown>',
         ];
 
         yield 'single scalar' => [
-            Types::fromTypes([Type::string()]),
+            Types::fromTypes([TypeFactory::string()]),
             'string',
         ];
 
         yield 'union' => [
-            Types::fromTypes([Type::string(), Type::null()]),
+            Types::fromTypes([TypeFactory::string(), TypeFactory::null()]),
             'string|null',
         ];
 
         yield 'typed array' => [
-            Types::fromTypes([Type::array('string')]),
+            Types::fromTypes([TypeFactory::array('string')]),
             'string[]',
         ];
 
         yield 'generic' => [
-            Types::fromTypes([Type::collection('Collection', 'Item')]),
+            Types::fromTypes([TypeFactory::collection($reflector, 'Collection', 'Item')]),
             'Collection<Item>',
         ];
     }

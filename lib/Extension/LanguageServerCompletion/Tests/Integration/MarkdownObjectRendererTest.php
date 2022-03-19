@@ -13,7 +13,7 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -72,7 +72,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             file_put_contents($path, $actual);
         }
 
-        self::assertEquals(file_get_contents($path), $actual);
+        self::assertEquals(trim(file_get_contents($path)), trim($actual));
     }
 
     /**
@@ -513,7 +513,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             'property4.md',
         ];
 
-        yield 'null property' => [
+        yield 'mixed property' => [
             '',
             function (Reflector $reflector) {
                 return $reflector->reflectClassesIn(
@@ -653,7 +653,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'mixed' => [
             '',
             function (Reflector $reflector) {
-                return Type::mixed();
+                return TypeFactory::mixed();
             },
             'type1.md',
         ];

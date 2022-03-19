@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
