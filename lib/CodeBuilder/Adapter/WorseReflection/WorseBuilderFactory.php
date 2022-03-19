@@ -107,7 +107,7 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
             $typeName = TypeUtil::short($type);
-            if ($type->isNullable()) {
+            if (TypeUtil::isNullable($type)) {
                 $typeName = '?' . $typeName;
             }
             $methodBuilder->returnType($typeName);
@@ -126,7 +126,7 @@ class WorseBuilderFactory implements BuilderFactory
     {
         $parameterBuilder = $methodBuilder->parameter($parameter->name());
 
-        if ($parameter->type()->isDefined()) {
+        if (TypeUtil::isDefined($parameter->type())) {
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
@@ -134,7 +134,7 @@ class WorseBuilderFactory implements BuilderFactory
 
             $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
 
-            if ($type->isNullable()) {
+            if (TypeUtil::isNullable($type)) {
                 $typeName = '?' . $typeName;
             }
 
@@ -159,10 +159,10 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function resolveTypeNameFromNameImports(Type $type, NameImports $imports)
     {
-        $typeName = $type->short();
+        $typeName = TypeUtil::short($type);
 
         foreach ($imports as $alias => $import) {
-            if ($type->short() == $import->head()) {
+            if ($typeName == $import->head()) {
                 $typeName = $alias;
             }
         }

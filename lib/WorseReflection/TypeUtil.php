@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 
 class TypeUtil
@@ -31,5 +32,10 @@ class TypeUtil
     public static function isClass(Type $type): bool
     {
         return $type instanceof ClassType;
+    }
+
+    public static function isNullable(Type $type): bool
+    {
+        return $type instanceof NullableType;
     }
 }
