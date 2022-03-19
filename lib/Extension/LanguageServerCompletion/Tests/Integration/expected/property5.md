@@ -1,1 +1,1 @@
-public |foo $foobar;
+public mixed|foo $foobar;

@@ -29,6 +29,7 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\TypeUtil;
 
 class AddMissingProperties implements Transformer
 {
@@ -71,8 +72,9 @@ class AddMissingProperties implements Transformer
                     ->property($memberName)
                     ->visibility('private');
 
-                if ($offset->symbolContext()->type()->isDefined()) {
-                    $propertyBuilder->type($offset->symbolContext()->type()->short());
+                $type = $offset->symbolContext()->type();
+                if (TypeUtil::isDefined($type)) {
+                    $propertyBuilder->type(TypeUtil::short($type));
                 }
             }
         }

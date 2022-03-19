@@ -7,6 +7,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -18,6 +19,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\WorseReflection\Core\NameImports;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseBuilderFactory implements BuilderFactory
 {
@@ -90,9 +92,9 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder->visibility((string) $property->visibility());
 
         $type = $property->inferredTypes()->best();
-        if ($type->isDefined()) {
+        if (TypeUtil::isDefined($type)) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
-            $propertyBuilder->type((string) $type->short());
+            $propertyBuilder->type(TypeUtil::short($type));
         }
     }
 
@@ -101,13 +103,10 @@ class WorseBuilderFactory implements BuilderFactory
         $methodBuilder = $classBuilder->method($method->name());
         $methodBuilder->visibility((string) $method->visibility());
 
-        if ($method->returnType()->isDefined()) {
+        if (TypeUtil::isDefined($method->returnType())) {
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
-            $typeName = $type->short();
-            if ($type->isNullable()) {
-                $typeName = '?' . $typeName;
-            }
+            $typeName = TypeUtil::short($type);
             $methodBuilder->returnType($typeName);
         }
 
@@ -124,18 +123,13 @@ class WorseBuilderFactory implements BuilderFactory
     {
         $parameterBuilder = $methodBuilder->parameter($parameter->name());
 
-        if ($parameter->type()->isDefined()) {
+        if (TypeUtil::isDefined($parameter->type())) {
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
             $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
             $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
-
-            if ($type->isNullable()) {
-                $typeName = '?' . $typeName;
-            }
-
             $parameterBuilder->type($typeName);
         }
 
@@ -150,17 +144,25 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function resolveClassMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        if ($type->isClass() && $classType->namespace() != $type->className()->namespace()) {
-            $classBuilder->end()->use($type->className()->full());
+        $type = TypeUtil::unwrapNullableType($type);
+
+        if (!$type instanceof ClassType) {
+            return;
         }
+
+        if ($classType->namespace() == $type->name()->namespace()) {
+            return;
+        }
+
+        $classBuilder->end()->use($type->name()->full());
     }
 
     private function resolveTypeNameFromNameImports(Type $type, NameImports $imports)
     {
-        $typeName = $type->short();
+        $typeName = TypeUtil::short($type);
 
         foreach ($imports as $alias => $import) {
-            if ($type->short() == $import->head()) {
+            if ($typeName == $import->head()) {
                 $typeName = $alias;
             }
         }

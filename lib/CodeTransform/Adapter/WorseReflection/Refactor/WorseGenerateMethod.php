@@ -9,6 +9,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -19,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseGenerateMethod implements GenerateMethod
 {
@@ -112,15 +114,11 @@ class WorseGenerateMethod implements GenerateMethod
 
             $argumentBuilder = $methodBuilder->parameter($argument->guessName());
 
-            if ($type->isDefined()) {
-                if ($type->isPrimitive()) {
-                    $argumentBuilder->type((string) $type);
-                }
+            if (TypeUtil::isDefined($type)) {
+                $argumentBuilder->type(TypeUtil::short($type));
 
-                $className = $type->className();
-                if ($className) {
-                    $argumentBuilder->type($className->short());
-                    $builder->use($className->full());
+                foreach (TypeUtil::unwrapClassTypes($type) as $classType) {
+                    $builder->use($classType->toPhpString());
                 }
             }
         }
@@ -134,7 +132,7 @@ class WorseGenerateMethod implements GenerateMethod
             return Visibility::public();
         }
 
-        if ($contextType->isClass() && $contextType->className() == $targetClass->name()) {
+        if ($contextType instanceof ClassType && $contextType->name() == $targetClass->name()) {
             return Visibility::private();
         }
 

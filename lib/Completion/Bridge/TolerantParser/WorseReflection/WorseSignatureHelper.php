@@ -24,7 +24,9 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseSignatureHelper implements SignatureHelper
 {
@@ -135,23 +137,16 @@ class WorseSignatureHelper implements SignatureHelper
                 ));
             }
         
-            $containerType = $symbolContext->containerType();
+            $containerType = TypeUtil::unwrapNullableType($symbolContext->containerType());
         
-            if (null === $containerType) {
-                throw new CouldNotHelpWithSignature(sprintf(
-                    'Could not determine container type for: "%s"',
-                    $symbolContext->symbol()->name()
-                ));
-            }
-        
-            if (!$containerType->isClass()) {
+            if (!$containerType instanceof ClassType) {
                 throw new CouldNotHelpWithSignature(sprintf(
                     'Container type is not a class: "%s"',
                     $symbolContext->symbol()->name()
                 ));
             }
         
-            $reflectionClass = $this->reflector->reflectClassLike($containerType->className());
+            $reflectionClass = $this->reflector->reflectClassLike($containerType->name());
             $reflectionMethod = $reflectionClass->methods()->get($symbolContext->symbol()->name());
         
             return $this->createSignatureHelp($reflectionMethod, $position);

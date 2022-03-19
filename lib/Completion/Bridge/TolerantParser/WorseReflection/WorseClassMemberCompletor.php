@@ -12,19 +12,20 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {
@@ -98,25 +99,27 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
     private function populateSuggestions(SymbolContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
     {
-        if (false === $type->isDefined()) {
+        if (false === TypeUtil::isDefined($type)) {
             return;
         }
 
-        if (null === $type->className()) {
+        $type = TypeUtil::unwrapNullableType($type);
+
+        if (!$type instanceof ReflectedClassType) {
             return;
         }
 
         if ($static) {
             yield Suggestion::createWithOptions('class', [
                 'type' => Suggestion::TYPE_CONSTANT,
-                'short_description' => $type->className(),
+                'short_description' => $type->name(),
                 'priority' => Suggestion::PRIORITY_HIGH,
             ]);
         }
 
-        try {
-            $classReflection = $this->reflector->reflectClassLike($type->className()->full());
-        } catch (NotFound $e) {
+        $classReflection = $type->reflectionOrNull();
+
+        if (null === $classReflection) {
             return;
         }
 

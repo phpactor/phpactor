@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40682c8a7b3b71e967e343b586b40ff3",
+    "content-hash": "ebbfda28abc3b761c2c1805558e0a153",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2018,16 +2018,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "0.4.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "ec966ef99b8c089380615351523146fd20856f9a"
+                "reference": "3994218cceec7899d7216393e59dd62bb62e102d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/ec966ef99b8c089380615351523146fd20856f9a",
-                "reference": "ec966ef99b8c089380615351523146fd20856f9a",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3994218cceec7899d7216393e59dd62bb62e102d",
+                "reference": "3994218cceec7899d7216393e59dd62bb62e102d",
                 "shasum": ""
             },
             "require": {
@@ -2050,10 +2050,11 @@
                 "symfony/filesystem": "^4.3 || ^5.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.4.x-dev"
+                    "dev-master": "0.5.x-dev"
                 }
             },
             "autoload": {
@@ -2074,9 +2075,9 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/0.4.10"
+                "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2022-03-08T11:54:29+00:00"
+            "time": "2022-03-19T17:10:46+00:00"
         },
         {
             "name": "psr/container",

@@ -8,6 +8,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -16,6 +17,7 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ImplementContracts implements Transformer
 {
@@ -78,7 +80,6 @@ class ImplementContracts implements Transformer
             /** @var ReflectionMethod $missingMethod */
             foreach ($missingMethods as $missingMethod) {
                 $builder = $this->factory->fromSource($missingMethod->declaringClass()->sourceCode());
-
                 $methodBuilder = $builder->classLike(
                     $missingMethod->declaringClass()->name()->short()
                 )->method($missingMethod->name());
@@ -87,17 +88,19 @@ class ImplementContracts implements Transformer
                     $methodBuilder->docblock('{@inheritDoc}');
                 }
 
-                if ($missingMethod->returnType()->isDefined()) {
-                    $returnTypeClassName = $missingMethod->returnType()->className();
-                    if ($returnTypeClassName && $missingMethod->returnType()->isClass() && $returnTypeClassName->namespace() != $class->name()->namespace()) {
-                        $sourceCodeBuilder->use($returnTypeClassName);
-                    }
+                $missingMethodReturnType = $missingMethod->returnType();
+                foreach (TypeUtil::unwrapClassTypes($missingMethodReturnType) as $type) {
+                    $sourceCodeBuilder->use($type->name());
                 }
 
                 foreach ($missingMethod->parameters() as $parameter) {
-                    if ($parameter->type()->isDefined()) {
-                        if ($parameter->type()->isClass() && $parameter->type()->className()->namespace() != $class->name()->namespace()) {
-                            $sourceCodeBuilder->use($parameter->type()->className());
+                    $parameterType = $parameter->type();
+                    if (TypeUtil::isDefined($parameterType)) {
+                        $parameterType = TypeUtil::unwrapNullableType($parameterType);
+                        if (
+                             $parameterType instanceof ClassType && $parameterType->name()->namespace() != $class->name()->namespace()
+                        ) {
+                            $sourceCodeBuilder->use($parameterType->name());
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-`38:42 variable  zed`
+`38:42 variable <missing> zed`
 
 Frame: 
 

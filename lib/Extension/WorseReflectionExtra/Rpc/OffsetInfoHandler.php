@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\TypeUtil;
 
 class OffsetInfoHandler implements Handler
 {
@@ -83,7 +83,7 @@ class OffsetInfoHandler implements Handler
         }
         $return['frame'] = $frame;
 
-        if (Type::unknown() === $symbolContext->type()) {
+        if (false === TypeUtil::isDefined($symbolContext->type())) {
             return $return;
         }
 

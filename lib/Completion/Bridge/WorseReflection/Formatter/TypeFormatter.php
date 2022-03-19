@@ -17,22 +17,6 @@ class TypeFormatter implements Formatter
     {
         assert($type instanceof Type);
 
-        if (false === $type->isDefined()) {
-            return '<unknown>';
-        }
-
-        $shortName = $type->short();
-
-        if ($type->arrayType()->isDefined()) {
-            // generic
-            if ($type->isClass()) {
-                return sprintf('%s<%s>', $shortName, $type->arrayType()->short());
-            }
-
-            // array
-            return sprintf('%s[]', $type->arrayType()->short());
-        }
-
-        return $shortName;
+        return $type->__toString();
     }
 }

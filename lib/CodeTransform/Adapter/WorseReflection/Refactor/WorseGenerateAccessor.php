@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use InvalidArgumentException;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PrototypeSourceCode;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -83,8 +84,8 @@ class WorseGenerateAccessor implements GenerateAccessor
             $method->body()->line(sprintf('return $this->%s;', $reflectionProperty->name()));
 
             $type = $reflectionProperty->inferredTypes()->best();
-            if ($type->isDefined()) {
-                $method->returnType($type->short());
+            if (TypeUtil::isDefined($type)) {
+                $method->returnType(TypeUtil::short($type));
             }
         }
 

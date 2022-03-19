@@ -6,6 +6,8 @@ use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Microsoft\PhpParser\Parser;
@@ -25,8 +27,8 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -361,33 +363,30 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     private function attachClassInfoToReference(MemberReference $reference, ClassMemberQuery $query, ReflectionOffset $offset)
     {
-        $type = $offset->symbolContext()->type();
+        $type = TypeUtil::unwrapNullableType($offset->symbolContext()->type());
 
-        if ($query->hasMember() && Type::unknown() == $type) {
+        if ($query->hasMember() && TypeFactory::unknown() == $type) {
             return $reference;
         }
-
-        if (false === $type->isClass()) {
+        if (!$type instanceof ReflectedClassType) {
             return;
         }
 
         if (false === $query->hasClass()) {
-            $reference = $reference->withClass(Class_::fromString((string) $type->className()));
+            $reference = $reference->withClass(Class_::fromString((string) $type->name()->full()));
             return $reference;
         }
 
-        if (null === $reflectionClass = $this->reflectClass($type->className())) {
-            $this->logger->warning(sprintf('Could not find class "%s", logging as risky', (string) $type->className()));
+        $accepts = $type->accepts(TypeFactory::class((string) $query->class()));
 
+        if ($accepts->isMaybe()) {
             return $reference;
         }
-
-        if (false === $reflectionClass->isInstanceOf(ClassName::fromString((string) $query->class()))) {
-            // is not the correct class
+        if ($accepts->isFalse()) {
             return;
         }
 
-        return $reference->withClass(Class_::fromString((string) $type->className()));
+        return $reference->withClass(Class_::fromString((string) $type->name()->full()));
     }
 
     private function memberStartPosition(Node $memberNode)

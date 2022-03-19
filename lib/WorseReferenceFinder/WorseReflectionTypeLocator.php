@@ -14,7 +14,10 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {
@@ -68,25 +71,19 @@ class WorseReflectionTypeLocator implements TypeLocator
 
     private function resolveClassName(Type $type): ClassName
     {
-        if ($type->arrayType()->isDefined()) {
-            return $this->resolveClassName($type->arrayType());
+        $type = TypeUtil::unwrapNullableType($type);
+
+        if ($type instanceof ArrayType) {
+            return $this->resolveClassName($type->valueType);
         }
 
-        if ($type->isPrimitive()) {
+        if (!$type instanceof ClassType) {
             throw new CouldNotLocateType(sprintf(
                 'Cannot goto to primitive type "%s"',
                 $type->__toString()
             ));
         }
         
-        $className = $type->className();
-        
-        if (null === $className) {
-            throw new CouldNotLocateType(sprintf(
-                'Cannot goto to type "%s"',
-                $type->__toString()
-            ));
-        }
-        return $className;
+        return $type->name();
     }
 }
