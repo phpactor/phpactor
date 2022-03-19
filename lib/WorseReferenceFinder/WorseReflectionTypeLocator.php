@@ -71,11 +71,11 @@ class WorseReflectionTypeLocator implements TypeLocator
 
     private function resolveClassName(Type $type): ClassName
     {
+        $type = TypeUtil::unwrapNullableType($type);
+
         if ($type instanceof ArrayType) {
             return $this->resolveClassName($type->valueType);
         }
-
-        $type = TypeUtil::unwrapNullableType($type);
 
         if (!$type instanceof ClassType) {
             throw new CouldNotLocateType(sprintf(

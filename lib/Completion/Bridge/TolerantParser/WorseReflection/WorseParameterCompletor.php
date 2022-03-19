@@ -154,7 +154,9 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
     {
         $offset = $this->reflector->reflectOffset($source, $callableExpression->getEndPosition());
 
-        if ($containerType = $offset->symbolContext()->containerType()) {
+        $containerType = $offset->symbolContext()->containerType();
+        if ($containerType) {
+            $containerType = TypeUtil::unwrapNullableType($containerType);
             if (!$containerType instanceof ReflectedClassType) {
                 return null;
             }

@@ -225,7 +225,7 @@ class WorseExtractMethod implements ExtractMethod
             throw new TransformException('Cannot extract method, not in class scope');
         }
 
-        $type = $thisVariable->last()->symbolContext()->type();
+        $type = TypeUtil::unwrapNullableType($thisVariable->last()->symbolContext()->type());
 
         if (!$type instanceof ClassType) {
             throw new TransformException('Cannot extract method, not in class scope');
@@ -342,6 +342,7 @@ class WorseExtractMethod implements ExtractMethod
             $type = $variable->symbolContext()->types()->best();
             if (TypeUtil::isDefined($type)) {
                 $methodBuilder->returnType(TypeUtil::short($type));
+                $type = TypeUtil::unwrapNullableType($type);
                 if ($type instanceof ClassType) {
                     $methodBuilder->end()->end()->use($type->name()->full());
                 }
@@ -423,6 +424,7 @@ class WorseExtractMethod implements ExtractMethod
             if (TypeUtil::isDefined($type)) {
                 $methodBuilder->returnType(TypeUtil::short($type));
             }
+            $type = TypeUtil::unwrapNullableType($type);
             if ($type instanceof ClassType) {
                 $methodBuilder->end()->end()->use($type->name()->full());
             }

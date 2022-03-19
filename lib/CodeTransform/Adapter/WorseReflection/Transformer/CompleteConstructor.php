@@ -70,6 +70,7 @@ class CompleteConstructor implements Transformer
                 $parameterType = $parameter->type();
                 if (TypeUtil::isDefined($parameterType)) {
                     $typeName = TypeUtil::short($parameterType);
+                    $parameterType = TypeUtil::unwrapNullableType($parameterType);
                     if ($parameterType instanceof ClassType) {
                         $typeName = $class->scope()->resolveLocalName($parameterType->name())->__toString();
                     }

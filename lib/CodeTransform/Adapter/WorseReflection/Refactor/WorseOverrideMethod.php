@@ -94,7 +94,7 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $usedClasses = [];
 
-        $returnType = $method->returnType();
+        $returnType = TypeUtil::unwrapNullableType($method->returnType());
         if ($returnType instanceof ClassType) {
             $usedClasses[] = $returnType;
         }
@@ -102,15 +102,9 @@ class WorseOverrideMethod implements OverrideMethod
         /**
          * @var ReflectionParameter $parameter */
         foreach ($method->parameters() as $parameter) {
-            $parameterType = $parameter->type();
-            if (false === TypeUtil::isDefined($parameterType)) {
-                continue;
+            foreach (TypeUtil::unwrapClassTypes($parameter->type()) as $classType) {
+                $usedClasses[] = $parameter->type();
             }
-            if (false === $parameterType instanceof ClassType) {
-                continue;
-            }
-
-            $usedClasses[] = $parameter->type();
         }
 
         foreach ($usedClasses as $usedClass) {
