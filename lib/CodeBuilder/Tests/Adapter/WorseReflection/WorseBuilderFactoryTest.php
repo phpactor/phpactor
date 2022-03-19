@@ -122,8 +122,9 @@ class WorseBuilderFactoryTest extends TestCase
     public function testMethodWithNullableReturnType(): void
     {
         $source = $this->build('<?php class Foobar { public function method(): ?string {} }');
+        // TODO: Changed this from `?string`, not sure how it worked before
         $this->assertEquals(
-            '?string',
+            'string',
             $source->classes()->first()->methods()->first()->returnType()->__toString(),
         );
         $this->assertTrue($source->classes()->first()->methods()->first()->returnType()->nullable(), 'Type is nullable');

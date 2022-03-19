@@ -54,7 +54,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
             if (TypeUtil::isDefined($method->returnType())) {
                 $methodBuilder->returnType(TypeUtil::short($method->returnType()));
 
-                foreach (TypeUtil::unwrapClassTypes($method->returnType() as $classType) {
+                foreach (TypeUtil::unwrapClassTypes($method->returnType()) as $classType) {
                     $sourceBuilder->use($classType->toPhpString());
                 }
             }

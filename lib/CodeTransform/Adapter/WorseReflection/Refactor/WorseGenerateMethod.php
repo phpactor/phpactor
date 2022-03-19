@@ -115,7 +115,7 @@ class WorseGenerateMethod implements GenerateMethod
             $argumentBuilder = $methodBuilder->parameter($argument->guessName());
 
             if (TypeUtil::isDefined($type)) {
-                $argumentBuilder->type($type->toPhpString());
+                $argumentBuilder->type(TypeUtil::short($type));
 
                 foreach (TypeUtil::unwrapClassTypes($type) as $classType) {
                     $builder->use($classType->toPhpString());
