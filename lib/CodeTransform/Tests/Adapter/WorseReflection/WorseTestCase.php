@@ -27,8 +27,6 @@ class WorseTestCase extends AdapterTestCase
             $builder->addSource($source);
         }
 
-        $builder->addFrameWalker(new AssertFrameWalker());
-
         return $builder->build();
     }
 

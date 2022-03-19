@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting;
 use Phpactor\CodeTransform\Domain\GenerateFromExisting;
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\ClassName as ReflectionClassName;
 use Phpactor\CodeBuilder\Domain\Renderer;
@@ -12,6 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Visibility;
+use Phpactor\WorseReflection\TypeUtil;
 
 final class InterfaceFromExistingGenerator implements GenerateFromExisting
 {
@@ -49,29 +51,24 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
                 $methodBuilder->docblock($method->docblock()->formatted());
             }
 
-            if ($method->returnType()->isDefined()) {
-                $methodBuilder->returnType($method->returnType()->short());
+            if (TypeUtil::isDefined($method->returnType())) {
+                $methodBuilder->returnType(TypeUtil::short($method->returnType()));
 
-                if ($method->returnType()->isClass()) {
-                    $sourceBuilder->use($method->returnType());
+                if ($method->returnType() instanceof ClassType) {
+                    $sourceBuilder->use($method->returnType()->toPhpString());
                 }
             }
 
             /** @var ReflectionParameter $parameter */
             foreach ($method->parameters() as $parameter) {
                 $parameterBuilder = $methodBuilder->parameter($parameter->name());
-                if ($parameter->type()->isDefined()) {
-                    if ($parameter->type()->isPrimitive()) {
-                        $parameterBuilder->type($parameter->type()->primitive());
-                    } else {
-                        $className = $parameter->type()->className();
-                        if ($className) {
-                            $parameterBuilder->type($className->short());
-                            $paramClassName = $parameter->type()->className();
-                            if ($paramClassName) {
-                                $useClasses[$paramClassName->__toString()] = true;
-                            }
-                        }
+                $parameterType = $parameter->type();
+
+                if (TypeUtil::isDefined($parameter->type())) {
+                    $parameterBuilder->type(TypeUtil::short($parameterType));
+
+                    if ($parameterType instanceof ClassType) {
+                        $useClasses[$parameterType->name->__toString()] = true;
                     }
 
                     if ($parameter->default()->isDefined()) {
