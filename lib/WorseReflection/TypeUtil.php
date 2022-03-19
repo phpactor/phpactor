@@ -21,7 +21,7 @@ class TypeUtil
             return $type->name()->short();
         }
 
-        return $type->__toString();
+        return $type->toPhpString();
     }
 
     public static function isPrimitive(Type $type): bool
