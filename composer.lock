@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70300c69dec0e82982f7c3dabaed7550",
+    "content-hash": "ebbfda28abc3b761c2c1805558e0a153",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2018,16 +2018,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "dev-new-types",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "fdb474a86a9d451222ace543cb48b9f72402ba0f"
+                "reference": "3994218cceec7899d7216393e59dd62bb62e102d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/fdb474a86a9d451222ace543cb48b9f72402ba0f",
-                "reference": "fdb474a86a9d451222ace543cb48b9f72402ba0f",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3994218cceec7899d7216393e59dd62bb62e102d",
+                "reference": "3994218cceec7899d7216393e59dd62bb62e102d",
                 "shasum": ""
             },
             "require": {
@@ -2050,10 +2050,11 @@
                 "symfony/filesystem": "^4.3 || ^5.0",
                 "symfony/var-dumper": "^5.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.4.x-dev"
+                    "dev-master": "0.5.x-dev"
                 }
             },
             "autoload": {
@@ -2074,9 +2075,9 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/new-types"
+                "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2022-03-19T16:31:23+00:00"
+            "time": "2022-03-19T17:10:46+00:00"
         },
         {
             "name": "psr/container",
@@ -7793,7 +7794,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/worse-reflection": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
