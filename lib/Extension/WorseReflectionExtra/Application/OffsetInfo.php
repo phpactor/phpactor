@@ -5,10 +5,10 @@ namespace Phpactor\Extension\WorseReflectionExtra\Application;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
+use Phpactor\WorseReflection\TypeUtil;
 
 final class OffsetInfo
 {
@@ -68,12 +68,12 @@ final class OffsetInfo
             $return['frame'] = $frame;
         }
 
-        if (Type::unknown() === $symbolContext->type()) {
+        if (false === TypeUtil::isDefined($symbolContext->type())) {
             return $return;
         }
 
-        $return['type_path'] = $symbolContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
-        $return['class_type_path'] = $symbolContext->containerType() && false === $symbolContext->containerType()->isPrimitive() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['type_path'] = TypeUtil::isClass($symbolContext->type()) ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
+        $return['class_type_path'] = $symbolContext->containerType() && false === TypeUtil::isPrimitive($symbolContext->containerType()) ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }

@@ -11,6 +11,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -22,6 +23,7 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 /**
@@ -338,8 +340,9 @@ class ReferencesHandler extends AbstractHandler
 
     private function defaultReplacement(SymbolContext $symbolContext)
     {
-        if ($symbolContext->symbol()->symbolType() === Symbol::CLASS_) {
-            return (string) $symbolContext->type()->className();
+        $type = TypeUtil::unwrapNullableType($symbolContext->type());
+        if ($type instanceof ClassType) {
+            return $type->name()->__toString();
         }
 
         return $symbolContext->symbol()->name();

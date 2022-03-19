@@ -10,7 +10,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\Constants;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
-use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ClassBuilder extends ClassLikeBuilder
 {
@@ -58,7 +57,7 @@ class ClassBuilder extends ClassLikeBuilder
 
     public function implements(string $interface): ClassBuilder
     {
-        $this->interfaces[] = TypeFactory::fromString($interface);
+        $this->interfaces[] = Type::fromString($interface);
 
         return $this;
     }

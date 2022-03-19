@@ -7,7 +7,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\CodeBuilder\Domain\Prototype\ExtendsInterfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\InterfacePrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
-use Phpactor\WorseReflection\Core\TypeFactory;
 
 class InterfaceBuilder extends ClassLikeBuilder
 {
@@ -23,7 +22,7 @@ class InterfaceBuilder extends ClassLikeBuilder
 
     public function extends(string $class): InterfaceBuilder
     {
-        $this->extends[] = TypeFactory::fromString($class);
+        $this->extends[] = Type::fromString($class);
 
         return $this;
     }
