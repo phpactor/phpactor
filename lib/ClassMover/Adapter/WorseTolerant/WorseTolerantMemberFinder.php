@@ -6,6 +6,9 @@ use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Microsoft\PhpParser\Parser;
@@ -363,31 +366,24 @@ class WorseTolerantMemberFinder implements MemberFinder
     {
         $type = $offset->symbolContext()->type();
 
-        if ($query->hasMember() && Type::unknown() == $type) {
+        if ($query->hasMember() && TypeFactory::unknown() == $type) {
             return $reference;
         }
 
-        if (false === $type->isClass()) {
+        if (!$type instanceof ReflectedClassType) {
             return;
         }
 
         if (false === $query->hasClass()) {
-            $reference = $reference->withClass(Class_::fromString((string) $type->className()));
+            $reference = $reference->withClass(Class_::fromString((string) $type->name()->full()));
             return $reference;
         }
 
-        if (null === $reflectionClass = $this->reflectClass($type->className())) {
-            $this->logger->warning(sprintf('Could not find class "%s", logging as risky', (string) $type->className()));
-
-            return $reference;
-        }
-
-        if (false === $reflectionClass->isInstanceOf(ClassName::fromString((string) $query->class()))) {
-            // is not the correct class
+        if ($type->accepts(TypeFactory::class((string) $query->class()))->isFalse()) {
             return;
         }
 
-        return $reference->withClass(Class_::fromString((string) $type->className()));
+        return $reference->withClass(Class_::fromString((string) $type->name()->full()));
     }
 
     private function memberStartPosition(Node $memberNode)
