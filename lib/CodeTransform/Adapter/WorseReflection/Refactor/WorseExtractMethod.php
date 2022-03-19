@@ -14,6 +14,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -220,15 +221,16 @@ class WorseExtractMethod implements ExtractMethod
         $offset = $this->reflector->reflectOffset($source, $offsetEnd);
         $thisVariable = $offset->frame()->locals()->byName('this');
 
-        if (empty($thisVariable)) {
+        if ($thisVariable->count() === 0) {
             throw new TransformException('Cannot extract method, not in class scope');
         }
 
-        $className = $thisVariable->last()->symbolContext()->type()->className();
+        $type = $thisVariable->last()->symbolContext()->type();
 
-        if (!$className) {
+        if (!$type instanceof ClassType) {
             throw new TransformException('Cannot extract method, not in class scope');
         }
+        $className = $type->name();
 
         $reflectionClass = $this->reflector->reflectClass((string) $className);
 
@@ -259,11 +261,10 @@ class WorseExtractMethod implements ExtractMethod
 
             $parameterBuilder = $methodBuilder->parameter($freeVariable->name());
             $variableType = $freeVariable->symbolContext()->types()->best();
-            if ($variableType->isDefined()) {
-                $prefix = $variableType->isNullable() ? '?' : '';
-                $parameterBuilder->type($prefix.$variableType->short());
-                if ($variableType->isClass()) {
-                    $builder->use((string) $variableType);
+            if (TypeUtil::isDefined($variableType)) {
+                $parameterBuilder->type(TypeUtil::short($variableType));
+                if ($variableType instanceof ClassType) {
+                    $builder->use($variableType->toPhpString());
                 }
             }
 
@@ -323,7 +324,7 @@ class WorseExtractMethod implements ExtractMethod
         });
 
         $returnVariables = array_filter($returnVariables, function (Variable $variable) use ($args) {
-            if ($variable->symbolContext()->type()->isPrimitive()) {
+            if (TypeUtil::isPrimitive($variable->symbolContext()->type())) {
                 return true;
             }
 
@@ -340,11 +341,9 @@ class WorseExtractMethod implements ExtractMethod
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
             $type = $variable->symbolContext()->types()->best();
             if (TypeUtil::isDefined($type)) {
-                $prefix = $type->isNullable() ? '?' : '';
-                $className = $type->className();
-                $methodBuilder->returnType($prefix.$type->short());
-                if ($className) {
-                    $methodBuilder->end()->end()->use($className->full());
+                $methodBuilder->returnType(TypeUtil::short($type));
+                if ($type instanceof ClassType) {
+                    $methodBuilder->end()->end()->use($type->name()->full());
                 }
             }
 
@@ -422,11 +421,10 @@ class WorseExtractMethod implements ExtractMethod
         if ($expressionTypes->count() === 1) {
             $type = $expressionTypes->best();
             if (TypeUtil::isDefined($type)) {
-                $methodBuilder->returnType($type->short());
+                $methodBuilder->returnType(TypeUtil::short($type));
             }
-            $className = $type->className();
-            if ($className) {
-                $methodBuilder->end()->end()->use($className->full());
+            if ($type instanceof ClassType) {
+                $methodBuilder->end()->end()->use($type->name()->full());
             }
         }
         return $newMethodBody;
