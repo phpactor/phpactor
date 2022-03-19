@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterFormatter implements Formatter
 {
@@ -22,7 +23,7 @@ class ParameterFormatter implements Formatter
         if ($object->inferredTypes()->count()) {
             $isDefined = false;
             foreach ($object->inferredTypes() as $type) {
-                if ($type->isDefined()) {
+                if (TypeUtil::isDefined($type)) {
                     $isDefined = true;
                 }
             }
