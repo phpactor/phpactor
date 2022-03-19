@@ -21,6 +21,8 @@ use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseParameterCompletor extends AbstractParameterCompletor implements TolerantCompletor
 {
@@ -108,7 +110,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if ($parameter->inferredTypes()->best() == Type::undefined()) {
+        if (false === TypeUtil::isDefined($parameter->inferredTypes()->best())) {
             return true;
         }
 
@@ -117,16 +119,8 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         /** @var Type $variableType */
         foreach ($variable->symbolContext()->types() as $variableType) {
             $variableTypeClass = null;
-            if ($variableType->isClass()) {
-                $variableTypeClass = $this->reflector->reflectClassLike($variableType->className());
-            }
-
             foreach ($parameter->inferredTypes() as $parameterType) {
-                if ($variableType == $parameterType) {
-                    return true;
-                }
-
-                if ($variableTypeClass && $parameterType->isClass() && $variableTypeClass->isInstanceOf($parameterType->className())) {
+                if ($parameterType->accepts($variableType)->isTrue()) {
                     return true;
                 }
             }
@@ -161,11 +155,16 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         $offset = $this->reflector->reflectOffset($source, $callableExpression->getEndPosition());
 
         if ($containerType = $offset->symbolContext()->containerType()) {
-            try {
-                $containerClass = $this->reflector->reflectClassLike($containerType->className());
-            } catch (NotFound $notFound) {
+            if (!$containerType instanceof ReflectedClassType) {
                 return null;
             }
+
+            $containerClass = $containerType->reflectionOrNull();
+
+            if ($containerClass === null) {
+                return null;
+            }
+
             return $containerClass->methods()->get($offset->symbolContext()->symbol()->name());
         }
 
