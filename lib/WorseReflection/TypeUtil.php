@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
@@ -17,6 +18,10 @@ class TypeUtil
 
     public static function short(Type $type): string
     {
+        if ($type instanceof NullableType) {
+            return '?' . self::short($type->type);
+        }
+
         if ($type instanceof ClassType) {
             return $type->name()->short();
         }
@@ -37,5 +42,21 @@ class TypeUtil
     public static function isNullable(Type $type): bool
     {
         return $type instanceof NullableType;
+    }
+
+    /**
+     * @return ClassType[]
+     */
+    public static function unwrapClassTypes(Type $type): array
+    {
+        if ($type instanceof ClassType) {
+            return [$type];
+        }
+
+        if ($type instanceof NullableType) {
+            return self::unwrapClassTypes($type->type);
+        }
+
+        return [];
     }
 }

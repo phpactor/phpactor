@@ -107,9 +107,6 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
             $typeName = TypeUtil::short($type);
-            if (TypeUtil::isNullable($type)) {
-                $typeName = '?' . $typeName;
-            }
             $methodBuilder->returnType($typeName);
         }
 

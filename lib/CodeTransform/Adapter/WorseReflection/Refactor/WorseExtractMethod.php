@@ -263,8 +263,8 @@ class WorseExtractMethod implements ExtractMethod
             $variableType = $freeVariable->symbolContext()->types()->best();
             if (TypeUtil::isDefined($variableType)) {
                 $parameterBuilder->type(TypeUtil::short($variableType));
-                if ($variableType instanceof ClassType) {
-                    $builder->use($variableType->toPhpString());
+                foreach (TypeUtil::unwrapClassTypes($variableType) as $classType) {
+                    $builder->use($classType->toPhpString());
                 }
             }
 
