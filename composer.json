@@ -30,7 +30,6 @@
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
-        "symfony/process": "^5.0",
         "friendsofphp/php-cs-fixer": "^3.1",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
@@ -106,6 +105,7 @@
             "bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
+            "composer validate --strict",
             "vendor/bin/php-cs-fixer fix",
             "vendor/bin/phpstan analyse",
             "vendor/bin/phpunit",
