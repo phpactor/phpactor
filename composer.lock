@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40682c8a7b3b71e967e343b586b40ff3",
+    "content-hash": "70300c69dec0e82982f7c3dabaed7550",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2018,16 +2018,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "0.4.10",
+            "version": "dev-new-types",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "ec966ef99b8c089380615351523146fd20856f9a"
+                "reference": "e66638f252376713c3f878bfa5670bdd0a5c95d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/ec966ef99b8c089380615351523146fd20856f9a",
-                "reference": "ec966ef99b8c089380615351523146fd20856f9a",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/e66638f252376713c3f878bfa5670bdd0a5c95d4",
+                "reference": "e66638f252376713c3f878bfa5670bdd0a5c95d4",
                 "shasum": ""
             },
             "require": {
@@ -2074,9 +2074,9 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/0.4.10"
+                "source": "https://github.com/phpactor/worse-reflection/tree/new-types"
             },
-            "time": "2022-03-08T11:54:29+00:00"
+            "time": "2022-03-19T10:23:15+00:00"
         },
         {
             "name": "psr/container",
@@ -7793,6 +7793,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/worse-reflection": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
