@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\WorseReflection\Core\NameImports;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseBuilderFactory implements BuilderFactory
 {
@@ -90,7 +91,7 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder->visibility((string) $property->visibility());
 
         $type = $property->inferredTypes()->best();
-        if ($type->isDefined()) {
+        if (TypeUtil::isDefined($type)) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type((string) $type->short());
         }

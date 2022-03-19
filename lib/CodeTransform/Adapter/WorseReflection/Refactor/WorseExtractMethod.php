@@ -27,6 +27,7 @@ use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Utils\TextUtils;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\TypeUtil;
 use function iterator_to_array;
 use function prev;
 
@@ -338,7 +339,7 @@ class WorseExtractMethod implements ExtractMethod
             $variable = reset($returnVariables);
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
             $type = $variable->symbolContext()->types()->best();
-            if ($type->isDefined()) {
+            if (TypeUtil::isDefined($type)) {
                 $prefix = $type->isNullable() ? '?' : '';
                 $className = $type->className();
                 $methodBuilder->returnType($prefix.$type->short());
@@ -420,7 +421,7 @@ class WorseExtractMethod implements ExtractMethod
         $expressionTypes = $offset->symbolContext()->types();
         if ($expressionTypes->count() === 1) {
             $type = $expressionTypes->best();
-            if ($type->isDefined()) {
+            if (TypeUtil::isDefined($type)) {
                 $methodBuilder->returnType($type->short());
             }
             $className = $type->className();

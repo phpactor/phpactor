@@ -12,6 +12,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 abstract class ClassLikeUpdater
 {
@@ -72,7 +73,7 @@ abstract class ClassLikeUpdater
 
         foreach ($classPrototype->properties()->notIn($existingPropertyNames) as $property) {
             // if property type exists then the last property has a docblock - add a line break
-            if ($lastProperty instanceof PropertyDeclaration && $property->type() != Type::none()) {
+            if ($lastProperty instanceof PropertyDeclaration && $property->type() != TypeFactory::none()) {
                 $edits->after($lastProperty, PHP_EOL);
             }
 
