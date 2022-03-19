@@ -136,7 +136,7 @@ class WorseGenerateMethod implements GenerateMethod
             return Visibility::public();
         }
 
-        if ($contextType->isClass() && $contextType->className() == $targetClass->name()) {
+        if ($contextType instanceof ClassType && $contextType->name() == $targetClass->name()) {
             return Visibility::private();
         }
 
