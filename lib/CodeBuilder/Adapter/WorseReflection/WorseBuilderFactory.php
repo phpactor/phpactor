@@ -144,9 +144,17 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function resolveClassMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        if ($type instanceof ClassType && $classType->namespace() != $type->name()->namespace()) {
-            $classBuilder->end()->use($type->name()->full());
+        $type = TypeUtil::unwrapNullableType($type);
+
+        if (!$type instanceof ClassType) {
+            return;
         }
+
+        if ($classType->namespace() == $type->name()->namespace()) {
+            return;
+        }
+
+        $classBuilder->end()->use($type->name()->full());
     }
 
     private function resolveTypeNameFromNameImports(Type $type, NameImports $imports)

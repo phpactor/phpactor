@@ -28,6 +28,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -362,12 +363,11 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     private function attachClassInfoToReference(MemberReference $reference, ClassMemberQuery $query, ReflectionOffset $offset)
     {
-        $type = $offset->symbolContext()->type();
+        $type = TypeUtil::unwrapNullableType($offset->symbolContext()->type());
 
         if ($query->hasMember() && TypeFactory::unknown() == $type) {
             return $reference;
         }
-
         if (!$type instanceof ReflectedClassType) {
             return;
         }
