@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
+
 Features:
 
   - [lsp] Added generate accessors code action

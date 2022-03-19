@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 
 use Amp\Promise;
+use Generator;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameCandidate;
@@ -46,7 +47,7 @@ class ImportAllUnresolvedNamesCommand implements Command
             $item = $this->workspace->get($uri);
             foreach ($this->candidateFinder->unresolved($item) as $unresolvedName) {
                 assert($unresolvedName instanceof NameWithByteOffset);
-                $candidates = iterator_to_array($this->candidateFinder->candidatesForUnresolvedName($unresolvedName));
+                $candidates = $this->candidates($this->candidateFinder->candidatesForUnresolvedName($unresolvedName));
                 $candidate = yield $this->resolveCandidate($unresolvedName, $candidates);
                 if (null === $candidate) {
                     $this->client->window()->showMessage()->warning(sprintf(
@@ -98,5 +99,19 @@ class ImportAllUnresolvedNamesCommand implements Command
 
             return null;
         });
+    }
+
+    /**
+     * @param Generator<NameCandidate> $candidates
+     */
+    private function candidates(Generator $candidates): array
+    {
+        $filtered = [];
+        foreach ($candidates as $candidate) {
+            assert($candidate instanceof NameCandidate);
+            $filtered[$candidate->candidateFqn()] = $candidate;
+        }
+
+        return array_values($filtered);
     }
 }
