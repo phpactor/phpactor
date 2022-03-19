@@ -105,7 +105,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        if (!$type instanceof ReflectedClassType) {
+        if (!$type instanceof ClassType) {
             return;
         }
 
