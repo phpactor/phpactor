@@ -13,11 +13,13 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\WorseReflection\TypeUtil;
 
 class CompleteConstructor implements Transformer
 {
@@ -66,15 +68,10 @@ class CompleteConstructor implements Transformer
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);
                 $parameterType = $parameter->type();
-                if ($parameterType->isDefined()) {
-                    $typeName = (string) $parameter->type()->short();
-                    $className = $parameterType->className();
-                    if ($className) {
-                        $typeName = $class->scope()->resolveLocalName($className)->__toString();
-                    }
-
-                    if ($parameterType->isNullable()) {
-                        $typeName = '?' . $typeName;
+                if (TypeUtil::isDefined($parameterType)) {
+                    $typeName = TypeUtil::short($parameterType);
+                    if ($parameterType instanceof ClassType) {
+                        $typeName = $class->scope()->resolveLocalName($parameterType->name())->__toString();
                     }
 
                     $propertyBuilder->type($typeName);
