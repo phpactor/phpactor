@@ -1916,11 +1916,6 @@ parameters:
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
 
 		-
-			message: "#^Variable \\$thisVariable in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMethod\\:\\:\\$methodSuffixIndex is never read, only written\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseGenerateMethod.php
@@ -4976,42 +4971,12 @@ parameters:
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:isAbstract\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:isStatic\\(\\)\\.$#"
-			count: 2
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:parameters\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:returnType\\(\\)\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
-			message: "#^PHPDoc tag @var has invalid value \\(\\$constant ReflectionConstant\\)\\: Unexpected token \"\\$constant\", expected type at offset 9$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
-			message: "#^PHPDoc tag @var has invalid value \\(\\$method ReflectionMethod\\)\\: Unexpected token \"\\$method\", expected type at offset 9$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
-			message: "#^PHPDoc tag @var has invalid value \\(\\$parameter ReflectionParameter\\)\\: Unexpected token \"\\$parameter\", expected type at offset 9$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
