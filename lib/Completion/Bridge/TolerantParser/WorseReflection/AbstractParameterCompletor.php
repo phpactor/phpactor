@@ -22,7 +22,10 @@ use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\TypeUtil;
 
 abstract class AbstractParameterCompletor
 {
@@ -116,27 +119,16 @@ abstract class AbstractParameterCompletor
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if ($parameter->inferredTypes()->best() == Type::undefined()) {
+        if (false === TypeUtil::isDefined($parameter->inferredTypes()->best())) {
             return true;
         }
 
         /** @var Type $variableType */
         foreach ($variable->symbolContext()->types() as $variableType) {
-            $variableTypeClass = null;
-            if ($variableType->isClass()) {
-                try {
-                    $variableTypeClass = $this->reflector->reflectClassLike($variableType->className());
-                } catch (NotFound $e) {
-                    return false;
-                }
-            }
+            $variableType = TypeUtil::unwrapNullableType($variableType);
 
             foreach ($parameter->inferredTypes() as $parameterType) {
-                if ($variableType == $parameterType) {
-                    return true;
-                }
-
-                if ($variableTypeClass && $parameterType->isClass() && $variableTypeClass->isInstanceOf($parameterType->className())) {
+                if ($parameterType->accepts($variableType)) {
                     return true;
                 }
             }

@@ -59,4 +59,13 @@ class TypeUtil
 
         return [];
     }
+
+    public static function unwrapNullableType(Type $type): Type
+    {
+        if (!$type instanceof NullableType) {
+            return $type;
+        }
+
+        return $type->type;
+    }
 }
