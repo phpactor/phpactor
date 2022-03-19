@@ -8,6 +8,7 @@ use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 abstract class UpdaterTestCase extends TestCase
 {
@@ -972,7 +973,7 @@ abstract class UpdaterTestCase extends TestCase
                 , SourceCodeBuilder::create()
                     ->class('Aardvark')
                         ->property('propertyOne')->type(
-                            Type::fromString('Hello')->asNullable()
+                            TypeFactory::fromString('?Hello')
                         )->end()
                     ->end()
                     ->build(),
@@ -1786,7 +1787,7 @@ abstract class UpdaterTestCase extends TestCase
                     ->class('Aardvark')
                         ->method('methodOne')
                             ->parameter('sniff')->type(
-                                Type::fromString('Barf')->asNullable()
+                                TypeFactory::fromString('?Barf')
                             )
                             ->end()
                         ->end()
