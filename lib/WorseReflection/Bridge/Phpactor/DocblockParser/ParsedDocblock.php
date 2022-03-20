@@ -2,15 +2,15 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
-use Phpactor\WorseReflection\DocblockParser\Ast\Docblock as ParserDocblock;
-use Phpactor\WorseReflection\DocblockParser\Ast\ParameterList;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\DeprecatedTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\MethodTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\ParamTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\ParameterTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\PropertyTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\ReturnTag;
-use Phpactor\WorseReflection\DocblockParser\Ast\Tag\VarTag;
+use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
+use Phpactor\DocblockParser\Ast\ParameterList;
+use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
+use Phpactor\DocblockParser\Ast\Tag\MethodTag;
+use Phpactor\DocblockParser\Ast\Tag\ParamTag;
+use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
+use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
+use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
+use Phpactor\DocblockParser\Ast\Tag\VarTag;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
