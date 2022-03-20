@@ -1,0 +1,14 @@
+/**
+ * @var callable(string,bool): string
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   CallableNode: = callable(
+    TypeList: = 
+     ScalarNode: = string,
+     ScalarNode: = bool):
+    ScalarNode: = string
+ */

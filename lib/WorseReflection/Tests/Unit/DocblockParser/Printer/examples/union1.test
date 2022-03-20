@@ -1,0 +1,11 @@
+/** @var string|bool|?Bar */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   UnionNode: = 
+    TypeList: = 
+     ScalarNode: = string|
+     ScalarNode: = bool|
+     NullableNode: = ?
+      ClassNode: = Bar */

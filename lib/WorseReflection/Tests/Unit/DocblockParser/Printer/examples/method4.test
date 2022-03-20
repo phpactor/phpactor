@@ -1,0 +1,15 @@
+/**
+ * @method bool is(string $value = null)
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  MethodTag: = @method
+   ScalarNode: = boolis(
+   ParameterList: = 
+    ParameterTag: = 
+     ScalarNode: = string
+     VariableNode: = $value
+     NullValue: = )
+ */

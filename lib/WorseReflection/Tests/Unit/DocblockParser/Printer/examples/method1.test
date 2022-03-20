@@ -1,0 +1,10 @@
+/**
+ * @method Foobar foobar()
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  MethodTag: = @method
+   ClassNode: = Foobarfoobar()
+ */

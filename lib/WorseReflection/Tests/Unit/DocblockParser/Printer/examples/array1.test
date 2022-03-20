@@ -1,0 +1,10 @@
+/**
+ * @var array
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ArrayNode: = 
+ */

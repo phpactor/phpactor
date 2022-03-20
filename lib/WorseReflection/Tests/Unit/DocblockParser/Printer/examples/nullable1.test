@@ -1,0 +1,11 @@
+/**
+ * @var ?Foo
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   NullableNode: = ?
+    ClassNode: = Foo
+ */

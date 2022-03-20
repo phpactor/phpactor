@@ -1,0 +1,10 @@
+/**
+ * @template T of Foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  TemplateTag: = @templateTof
+   ClassNode: = Foobar
+ */

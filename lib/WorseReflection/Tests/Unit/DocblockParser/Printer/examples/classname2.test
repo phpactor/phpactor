@@ -1,0 +1,10 @@
+/**
+ * @var \foo_bar\bar_foo
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ClassNode: = \foo_bar\bar_foo
+ */
