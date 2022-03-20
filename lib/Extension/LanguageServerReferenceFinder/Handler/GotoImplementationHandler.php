@@ -49,7 +49,10 @@ class GotoImplementationHandler implements Handler, CanRegisterCapabilities
             )->build();
 
             $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
-            $locations = $this->finder->findImplementations($phpactorDocument, $offset);
+            $locations = $this->finder->findImplementations(
+                $phpactorDocument,
+                $offset
+            );
 
             return $this->locationConverter->toLspLocations($locations);
         });

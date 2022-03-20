@@ -56,6 +56,10 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
 
+            if (null === $record) {
+                continue;
+            }
+
             $locations[] = new Location(
                 TextDocumentUri::fromString($record->filePath()),
                 $record->start()

@@ -25,7 +25,15 @@ final class ChainImplementationFinder implements ClassImplementationFinder
         $messages = [];
         $locations = [];
         foreach ($this->finders as $finder) {
-            $locations = array_merge($locations, iterator_to_array($finder->findImplementations($document, $byteOffset)));
+            $locations = array_merge(
+                $locations,
+                iterator_to_array(
+                    $finder->findImplementations(
+                        $document,
+                        $byteOffset
+                    )
+                )
+            );
         }
 
         return new Locations($locations);
