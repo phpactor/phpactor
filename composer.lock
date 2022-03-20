@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebbfda28abc3b761c2c1805558e0a153",
+    "content-hash": "18e3f21dc86089230a9839a214a7562d",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1729,6 +1729,74 @@
             "time": "2022-03-08T11:46:42+00:00"
         },
         {
+            "name": "phpactor/docblock-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/docblock-parser.git",
+                "reference": "4c8b450795bc704639e450b2921be132777f36da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/docblock-parser/zipball/4c8b450795bc704639e450b2921be132777f36da",
+                "reference": "4c8b450795bc704639e450b2921be132777f36da",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "jetbrains/phpstorm-stubs": "^2020.2",
+                "phpbench/phpbench": "dev-master",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpstan/phpdoc-parser": "^0.4.10",
+                "phpstan/phpstan": "~0.12.0",
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^5.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\DocblockParser\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\DocblockParser\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "integrate": [
+                    "vendor/bin/phpunit",
+                    "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Simple Docblock Parser",
+            "support": {
+                "source": "https://github.com/phpactor/docblock-parser/tree/master",
+                "issues": "https://github.com/phpactor/docblock-parser/issues"
+            },
+            "time": "2021-06-07T15:48:21+00:00"
+        },
+        {
             "name": "phpactor/language-server",
             "version": "1.1.3",
             "source": {
@@ -2018,16 +2086,16 @@
         },
         {
             "name": "phpactor/worse-reflection",
-            "version": "dev-master",
+            "version": "dev-new-docblock-parser",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "3994218cceec7899d7216393e59dd62bb62e102d"
+                "reference": "4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/3994218cceec7899d7216393e59dd62bb62e102d",
-                "reference": "3994218cceec7899d7216393e59dd62bb62e102d",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06",
+                "reference": "4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06",
                 "shasum": ""
             },
             "require": {
@@ -2035,6 +2103,7 @@
                 "microsoft/tolerant-php-parser": "^0.1.0",
                 "php": "^7.4 || ^8.0",
                 "phpactor/docblock": "^0.3.5",
+                "phpactor/docblock-parser": "*",
                 "phpactor/text-document": "~1.2.3",
                 "psr/log": "^1.0"
             },
@@ -2050,7 +2119,6 @@
                 "symfony/filesystem": "^4.3 || ^5.0",
                 "symfony/var-dumper": "^5.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2075,9 +2143,9 @@
             "description": "Lazy AST reflector that is much worse than better",
             "support": {
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/master"
+                "source": "https://github.com/phpactor/worse-reflection/tree/new-docblock-parser"
             },
-            "time": "2022-03-19T17:10:46+00:00"
+            "time": "2022-03-20T11:16:31+00:00"
         },
         {
             "name": "psr/container",
@@ -7794,6 +7862,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/worse-reflection": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
