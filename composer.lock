@@ -1677,82 +1677,30 @@
             "time": "2021-02-06T14:38:57+00:00"
         },
         {
-            "name": "phpactor/docblock",
-            "version": "0.3.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/docblock.git",
-                "reference": "a5567feab7b36938d6a1018a60efc5a7c4fd696c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock/zipball/a5567feab7b36938d6a1018a60efc5a7c4fd696c",
-                "reference": "a5567feab7b36938d6a1018a60efc5a7c4fd696c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3 || ^8.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.0",
-                "friendsofphp/php-cs-fixer": "^2.17",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "~0.12.0",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\Docblock\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Simple Docblock Parser",
-            "support": {
-                "issues": "https://github.com/phpactor/docblock/issues",
-                "source": "https://github.com/phpactor/docblock/tree/0.3.6"
-            },
-            "time": "2022-03-08T11:46:42+00:00"
-        },
-        {
             "name": "phpactor/docblock-parser",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/docblock-parser.git",
-                "reference": "4c8b450795bc704639e450b2921be132777f36da"
+                "reference": "7417696f9d7c7abd3fe7c29d22f53c3534f88b52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/docblock-parser/zipball/4c8b450795bc704639e450b2921be132777f36da",
-                "reference": "4c8b450795bc704639e450b2921be132777f36da",
+                "url": "https://api.github.com/repos/phpactor/docblock-parser/zipball/7417696f9d7c7abd3fe7c29d22f53c3534f88b52",
+                "reference": "7417696f9d7c7abd3fe7c29d22f53c3534f88b52",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
-                "friendsofphp/php-cs-fixer": "^2.17",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "jetbrains/phpstorm-stubs": "^2020.2",
-                "phpbench/phpbench": "dev-master",
+                "phpbench/phpbench": "^1.1",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpdoc-parser": "^0.4.10",
-                "phpstan/phpstan": "~0.12.0",
+                "phpstan/phpstan": "^1.0",
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.2"
             },
@@ -1789,12 +1737,12 @@
                     "email": "daniel@dantleech.com"
                 }
             ],
-            "description": "Simple Docblock Parser",
+            "description": "Docblock Parser",
             "support": {
                 "source": "https://github.com/phpactor/docblock-parser/tree/master",
                 "issues": "https://github.com/phpactor/docblock-parser/issues"
             },
-            "time": "2021-06-07T15:48:21+00:00"
+            "time": "2022-03-20T12:42:18+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -2090,19 +2038,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06"
+                "reference": "17d35366f15387c3816a76db34fded5a5d038fd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06",
-                "reference": "4ae13bf4f02629bc7a0a82f8d3f1d2fff9dbae06",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/17d35366f15387c3816a76db34fded5a5d038fd1",
+                "reference": "17d35366f15387c3816a76db34fded5a5d038fd1",
                 "shasum": ""
             },
             "require": {
                 "jetbrains/phpstorm-stubs": "*",
                 "microsoft/tolerant-php-parser": "^0.1.0",
                 "php": "^7.4 || ^8.0",
-                "phpactor/docblock": "^0.3.5",
                 "phpactor/docblock-parser": "*",
                 "phpactor/text-document": "~1.2.3",
                 "psr/log": "^1.0"
@@ -2145,7 +2092,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/new-docblock-parser"
             },
-            "time": "2022-03-20T11:16:31+00:00"
+            "time": "2022-03-20T12:53:27+00:00"
         },
         {
             "name": "psr/container",
