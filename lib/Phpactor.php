@@ -41,7 +41,7 @@ use Phpactor\Extension\WorseReflectionExtra\WorseReflectionExtraExtension;
 use Phpactor\Extension\WorseReferenceFinder\WorseReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\ClassMover\ClassMoverExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Console\ConsoleExtension;

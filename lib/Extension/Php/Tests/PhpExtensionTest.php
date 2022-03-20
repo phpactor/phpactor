@@ -6,7 +6,7 @@ use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Php\PhpExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 
 class PhpExtensionTest extends IntegrationTestCase
 {

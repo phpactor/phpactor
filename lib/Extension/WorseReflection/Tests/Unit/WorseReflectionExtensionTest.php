@@ -9,7 +9,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionExtensionTest extends TestCase

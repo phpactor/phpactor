@@ -21,7 +21,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;

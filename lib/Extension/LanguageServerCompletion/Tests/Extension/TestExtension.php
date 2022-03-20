@@ -7,7 +7,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension

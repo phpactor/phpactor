@@ -5,7 +5,7 @@ namespace Phpactor\Extension\ClassToFile;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;

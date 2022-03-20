@@ -8,7 +8,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerHover\Handler\HoverHandler;

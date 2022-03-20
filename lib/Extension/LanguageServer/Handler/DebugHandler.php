@@ -6,7 +6,7 @@ use Amp\Promise;
 use Amp\Success;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Handler\Handler;

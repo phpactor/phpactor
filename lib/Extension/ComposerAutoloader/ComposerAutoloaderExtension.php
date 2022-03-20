@@ -6,7 +6,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Extension\ComposerAutoloader\ClassLoaderFactory as PhpactorClassLoader;

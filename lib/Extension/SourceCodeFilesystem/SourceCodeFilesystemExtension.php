@@ -4,7 +4,7 @@ namespace Phpactor\Extension\SourceCodeFilesystem;
 
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;

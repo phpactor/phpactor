@@ -15,7 +15,7 @@ use Phpactor\Extension\Core\Rpc\StatusHandler;
 use Phpactor\Extension\Core\Model\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;

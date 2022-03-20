@@ -4936,26 +4936,6 @@ parameters:
 			path: lib/FilePathResolver/Tests/Unit/Filter/TokenExpandingFilterTest.php
 
 		-
-			message: "#^Method Phpactor\\\\FilePathResolverExtension\\\\Tests\\\\Unit\\\\FilePathResolverExtensionTest\\:\\:createResolver\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/FilePathResolverExtension/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolverExtension\\\\Tests\\\\Unit\\\\FilePathResolverExtensionTest\\:\\:provideProjectIdCalculate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/FilePathResolverExtension/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolverExtension\\\\Tests\\\\Unit\\\\FilePathResolverExtensionTest\\:\\:testProjectIdCalculate\\(\\) has parameter \\$input with no type specified\\.$#"
-			count: 1
-			path: lib/FilePathResolverExtension/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$needle of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/FilePathResolverExtension/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:__construct\\(\\) has parameter \\$providers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/ChainFileListProvider.php
