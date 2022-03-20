@@ -1,9 +1,0 @@
-/**
- * @deprecated
- */
----
-Docblock: = 
- ElementList: = /**
- * 
-  DeprecatedTag: = @deprecated
- */

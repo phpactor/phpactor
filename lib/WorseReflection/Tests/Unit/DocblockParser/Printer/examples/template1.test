@@ -1,9 +1,0 @@
-/**
- * @template T
- */
----
-Docblock: = 
- ElementList: = /**
- * 
-  TemplateTag: = @templateT
- */
