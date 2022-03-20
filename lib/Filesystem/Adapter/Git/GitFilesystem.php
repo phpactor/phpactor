@@ -15,7 +15,7 @@ use InvalidArgumentException;
 
 class GitFilesystem extends SimpleFilesystem
 {
-    private $path;
+    private FilePath $path;
 
     public function __construct($path, FileListProvider $fileListProvider = null)
     {

@@ -30,7 +30,7 @@ abstract class AbstractParserBenchCase
      */
     public function benchAssert(): void
     {
-        $this->parse(file_get_contents(__DIR__ . '/examples/assert.example'));
+        $this->parse((string)file_get_contents(__DIR__ . '/examples/assert.example'));
     }
 
     abstract public function parse(string $doc): void;

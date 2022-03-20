@@ -121,7 +121,10 @@ class NodeTest extends NodeTestCase
         ];
     }
 
-    private function provideDocblock()
+    /**
+     * @return Generator<mixed>
+     */
+    private function provideDocblock(): Generator
     {
         yield 'docblock' => [
             <<<'EOT'

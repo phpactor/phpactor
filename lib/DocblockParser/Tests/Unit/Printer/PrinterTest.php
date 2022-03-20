@@ -23,7 +23,6 @@ class PrinterTest extends TestCase
 
         if (empty($parts[0])) {
             $this->markTestIncomplete(sprintf('No example given for "%s"', $path));
-            return;
         }
 
         $tokens = (new Lexer())->lex($parts[0]);
@@ -36,7 +35,6 @@ class PrinterTest extends TestCase
         if (!isset($parts[1]) || $update) {
             file_put_contents($path, implode("---\n", [$parts[0], $rendered]));
             $this->markTestSkipped('Generated output');
-            return;
         }
 
         self::assertEquals(trim($parts[1]), trim($rendered));
@@ -48,7 +46,7 @@ class PrinterTest extends TestCase
     public function provideExamples(): Generator
     {
         foreach ((array)glob(__DIR__ . '/examples/*.test') as $path) {
-            yield basename($path) => [
+            yield basename((string)$path) => [
                 $path
             ];
         }

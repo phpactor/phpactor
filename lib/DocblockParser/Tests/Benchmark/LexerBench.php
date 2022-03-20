@@ -9,6 +9,7 @@ class LexerBench
 {
     /**
      * @ParamProviders({"provideDocblock"})
+     * @param array{docblock:string} $docblock
      */
     public function benchLex(array $docblock): void
     {

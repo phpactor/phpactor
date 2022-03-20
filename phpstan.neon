@@ -8,10 +8,12 @@ parameters:
         - */lib/Extension/*/Tests/Workspace/*
         - */lib/Extension/*/Tests/Example/*
         - */lib/WorseReflection/Tests/*
+        - */lib/WorseReflection/*
         - lib/Extension/LanguageServer
         - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
-    reportUnmatchedIgnoredErrors: true
+        - lib/Test.php
+    reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
 
 includes:
