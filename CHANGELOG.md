@@ -7,6 +7,10 @@ Bug fixes:
 
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
 
+Improvements:
+
+  - [docblock] New docblock parser to facilitate parsing complex types
+
 Features:
 
   - [lsp] Added generate accessors code action
