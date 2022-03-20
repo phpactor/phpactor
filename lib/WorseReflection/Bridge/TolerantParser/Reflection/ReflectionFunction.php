@@ -85,6 +85,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
 
     public function body(): NodeText
     {
+        return NodeText::fromString($this->node->__toString());
     }
 
     public function sourceCode(): SourceCode
