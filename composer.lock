@@ -1970,12 +1970,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "d097422fd9052c19be78304e464017757476deac"
+                "reference": "278c1b2a48dc330a500e2def56b77887882ef053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d097422fd9052c19be78304e464017757476deac",
-                "reference": "d097422fd9052c19be78304e464017757476deac",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/278c1b2a48dc330a500e2def56b77887882ef053",
+                "reference": "278c1b2a48dc330a500e2def56b77887882ef053",
                 "shasum": ""
             },
             "require": {
@@ -2024,7 +2024,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2022-03-20T14:30:41+00:00"
+            "time": "2022-03-20T15:16:51+00:00"
         },
         {
             "name": "psr/container",
@@ -4126,12 +4126,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rdohms/phpunit-arraysubset-asserts.git",
-                "reference": "428293c2a00eceefbad71a2dbdfb913febb35de2"
+                "reference": "a54c72da11d6ec0b875514aae6f43e1315bfb8fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rdohms/phpunit-arraysubset-asserts/zipball/428293c2a00eceefbad71a2dbdfb913febb35de2",
-                "reference": "428293c2a00eceefbad71a2dbdfb913febb35de2",
+                "url": "https://api.github.com/repos/rdohms/phpunit-arraysubset-asserts/zipball/a54c72da11d6ec0b875514aae6f43e1315bfb8fa",
+                "reference": "a54c72da11d6ec0b875514aae6f43e1315bfb8fa",
                 "shasum": ""
             },
             "require": {
@@ -4162,9 +4162,9 @@
             "description": "This package provides ArraySubset and related asserts once deprecated in PHPUnit 8",
             "support": {
                 "issues": "https://github.com/rdohms/phpunit-arraysubset-asserts/issues",
-                "source": "https://github.com/rdohms/phpunit-arraysubset-asserts/tree/v0.4.0"
+                "source": "https://github.com/rdohms/phpunit-arraysubset-asserts/tree/master"
             },
-            "time": "2022-02-13T15:00:28+00:00"
+            "time": "2022-03-20T14:44:36+00:00"
         },
         {
             "name": "doctrine/annotations",
