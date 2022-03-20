@@ -1,0 +1,10 @@
+/**
+ * @return $this
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ThisNode: = $this
+ */

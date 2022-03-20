@@ -1,0 +1,7 @@
+/** @var string $foobar */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   ScalarNode: = string
+   VariableNode: = $foobar */

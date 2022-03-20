@@ -1,0 +1,10 @@
+/**
+ * @var callable()
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   CallableNode: = callable()
+ */

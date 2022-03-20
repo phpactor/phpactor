@@ -13,7 +13,6 @@
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",
-        "phpactor/worse-reflection": "^0.5",
         "phpactor/text-document": "^1.2.3",
         "phpactor/container": "^2.0.0",
         "phpactor/class-to-file": "~0.4.2",
@@ -32,7 +31,9 @@
         "sebastian/diff": "^4.0",
         "webmozart/glob": "^4.4",
         "symfony/filesystem": "^5.4",
-        "symfony/process": "^5.4"
+        "symfony/process": "^5.4",
+        "jetbrains/phpstorm-stubs": "dev-master",
+        "microsoft/tolerant-php-parser": "^0.1.0"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",

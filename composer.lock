@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8efd44b04a947f1bee587055ece2cd28",
+    "content-hash": "811c27822837ba742d86f73be8e18549",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1209,25 +1209,26 @@
         },
         {
             "name": "jetbrains/phpstorm-stubs",
-            "version": "v2021.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "c790a8fa467ff5d3f11b0e7c1f3698abbe37b182"
+                "reference": "1da9555a9d07b69b10e59f09aef56e43133ae6f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c790a8fa467ff5d3f11b0e7c1f3698abbe37b182",
-                "reference": "c790a8fa467ff5d3f11b0e7c1f3698abbe37b182",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/1da9555a9d07b69b10e59f09aef56e43133ae6f8",
+                "reference": "1da9555a9d07b69b10e59f09aef56e43133ae6f8",
                 "shasum": ""
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "dev-master",
+                "friendsofphp/php-cs-fixer": "@stable",
                 "nikic/php-parser": "@stable",
                 "php": "^8.0",
                 "phpdocumentor/reflection-docblock": "@stable",
                 "phpunit/phpunit": "@stable"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
@@ -1251,9 +1252,9 @@
                 "type"
             ],
             "support": {
-                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/v2021.3"
+                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2021-10-19T20:06:47+00:00"
+            "time": "2022-03-17T09:37:53+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -1963,68 +1964,6 @@
                 "source": "https://github.com/phpactor/text-document/tree/1.2.4"
             },
             "time": "2021-05-24T07:37:55+00:00"
-        },
-        {
-            "name": "phpactor/worse-reflection",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "278c1b2a48dc330a500e2def56b77887882ef053"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/278c1b2a48dc330a500e2def56b77887882ef053",
-                "reference": "278c1b2a48dc330a500e2def56b77887882ef053",
-                "shasum": ""
-            },
-            "require": {
-                "jetbrains/phpstorm-stubs": "*",
-                "microsoft/tolerant-php-parser": "^0.1.0",
-                "php": "^7.4 || ^8.0",
-                "phpactor/text-document": "~1.2.3",
-                "psr/log": "^1.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.0",
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpactor/class-to-file": "~0.4.0",
-                "phpactor/test-utils": "~1.1.3",
-                "phpbench/phpbench": "dev-master",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "~0.12.0",
-                "phpunit/phpunit": "^9.0",
-                "symfony/filesystem": "^4.3 || ^5.0",
-                "symfony/var-dumper": "^5.2"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\WorseReflection\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Lazy AST reflector that is much worse than better",
-            "support": {
-                "issues": "https://github.com/phpactor/worse-reflection/issues",
-                "source": "https://github.com/phpactor/worse-reflection/tree/master"
-            },
-            "time": "2022-03-20T15:16:51+00:00"
         },
         {
             "name": "psr/container",
@@ -7741,6 +7680,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "jetbrains/phpstorm-stubs": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,

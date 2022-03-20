@@ -1,0 +1,29 @@
+/**
+ * Hello World
+ *
+ * @param Foobar $foobar
+ *
+ * @param string $barfoo
+ *
+ * @param bool $bool
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * Hello World
+ *
+ * 
+  ParamTag: = @param
+   ClassNode: = Foobar
+   VariableNode: = $foobar
+ *
+ * 
+  ParamTag: = @param
+   ScalarNode: = string
+   VariableNode: = $barfoo
+ *
+ * 
+  ParamTag: = @param
+   ScalarNode: = bool
+   VariableNode: = $bool
+ */
