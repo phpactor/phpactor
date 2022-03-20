@@ -1,0 +1,18 @@
+/**
+ * @param Foobar[] $foobar
+ * @param string[] $strings
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   ListNode: = 
+    ClassNode: = Foobar[]
+   VariableNode: = $foobar
+ * 
+  ParamTag: = @param
+   ListNode: = 
+    ScalarNode: = string[]
+   VariableNode: = $strings
+ */

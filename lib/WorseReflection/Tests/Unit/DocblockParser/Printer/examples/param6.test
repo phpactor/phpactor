@@ -1,0 +1,20 @@
+/**
+ * @param bool $bool This is a boolean
+ *                   multiline comments not currently supported
+ * @param bool $bool This is a boolean
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   ScalarNode: = bool
+   VariableNode: = $bool
+   TextNode: = This is a boolean
+ *                   multiline comments not currently supported
+ * 
+  ParamTag: = @param
+   ScalarNode: = bool
+   VariableNode: = $bool
+   TextNode: = This is a boolean
+ */

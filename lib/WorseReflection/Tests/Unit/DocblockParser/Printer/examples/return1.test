@@ -1,0 +1,10 @@
+/**
+ * @return Foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ClassNode: = Foobar
+ */

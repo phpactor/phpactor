@@ -1,0 +1,13 @@
+/**
+ * @var array<string>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   GenericNode: = 
+    ArrayNode: = <
+    TypeList: = 
+     ScalarNode: = string>
+ */

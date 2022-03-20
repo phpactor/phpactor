@@ -1,0 +1,13 @@
+/**
+ * @extends Foobar<Barfoo>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ExtendsTag: = @extends
+   GenericNode: = 
+    ClassNode: = Foobar<
+    TypeList: = 
+     ClassNode: = Barfoo>
+ */

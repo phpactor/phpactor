@@ -1,0 +1,10 @@
+/**
+ * @mixin Foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  MixinTag: = @mixin
+   ClassNode: = Foobar
+ */

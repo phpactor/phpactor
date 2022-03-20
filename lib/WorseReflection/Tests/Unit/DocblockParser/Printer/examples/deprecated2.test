@@ -1,0 +1,10 @@
+/**
+ * @deprecated This is because
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  DeprecatedTag: = @deprecated
+   TextNode: = This is because
+ */
