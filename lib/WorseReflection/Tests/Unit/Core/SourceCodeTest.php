@@ -11,7 +11,6 @@ use stdClass;
 class SourceCodeTest extends TestCase
 {
     const SOURCE_CODE = 'source code';
-
     const EXAMPLE_PATH = '/path/to';
 
     /**

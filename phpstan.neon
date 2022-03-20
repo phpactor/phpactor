@@ -7,10 +7,12 @@ parameters:
         - */lib/*Tests/Example/*
         - */lib/Extension/*/Tests/Workspace/*
         - */lib/Extension/*/Tests/Example/*
+        - */lib/WorseReflection/Tests/*
         - lib/Extension/LanguageServer
         - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
     reportUnmatchedIgnoredErrors: true
+    inferPrivatePropertyTypeFromConstructor: true
 
 includes:
     - phpstan-baseline.neon

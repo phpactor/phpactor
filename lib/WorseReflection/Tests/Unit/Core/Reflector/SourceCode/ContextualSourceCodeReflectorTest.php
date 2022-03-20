@@ -15,9 +15,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ContextualSourceCodeReflectorTest extends TestCase
 {
     use ProphecyTrait;
-
     const TEST_SOURCE_CODE = 'hello';
-
     const TEST_OFFSET = 666;
     
     private ObjectProphecy $innerReflector;

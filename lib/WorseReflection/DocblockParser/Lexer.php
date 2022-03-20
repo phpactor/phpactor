@@ -27,7 +27,6 @@ final class Lexer
         '\$[a-zA-Z0-9_\x80-\xff]+', // variable
         '[a-zA-Z0-9_\\\]+', // label
     ];
-
     private const TOKEN_VALUE_MAP = [
         ']' => Token::T_BRACKET_SQUARE_CLOSE,
         '[' => Token::T_BRACKET_SQUARE_OPEN,
