@@ -1,1 +1,2 @@
-`{{ object.symbol.position.start }}:{{ object.symbol.position.end }} {{ object.symbol.symbolType }} {{ render(object.types) }} {{ object.symbol.name }}{{ '`' -}}
+{{ object.symbol.symbolType }}: __{{ object.symbol.name }}__
+type: __{{ render(object.types) }}__{% if object.value %} = {{ object.value|json_encode }}{% endif %}

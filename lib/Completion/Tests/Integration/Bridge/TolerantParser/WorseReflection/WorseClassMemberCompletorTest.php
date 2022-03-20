@@ -189,7 +189,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'foo',
                     'short_description' => 'pub foo(): Foobar|Barbar',
-                    'documentation' => "Returns a foobar\n",
+                    'documentation' => 'Returns a foobar',
                     'snippet' => 'foo()',
                 ]
             ]

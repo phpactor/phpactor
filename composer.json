@@ -2,12 +2,18 @@
     "name": "phpactor/phpactor",
     "description": "PHP refactoring and intellisense tool for text editors",
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:phpactor/docblock-parser"
+        }
+    ],
     "require": {
         "php": "^7.4 || ^8.0",
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",
-        "phpactor/worse-reflection": "^0.5.0",
+        "phpactor/worse-reflection": "^0.5",
         "phpactor/text-document": "^1.2.3",
         "phpactor/container": "^2.0.0",
         "phpactor/class-to-file": "~0.4.2",
