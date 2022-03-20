@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\FilePathResolverExtension;
+namespace Phpactor\Extension\FilePathResolver;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;

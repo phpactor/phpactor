@@ -12,7 +12,7 @@ use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
 use Phpactor\Extension\LanguageServerPsalm\Model\PsalmProcess;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPsalmExtension implements Extension

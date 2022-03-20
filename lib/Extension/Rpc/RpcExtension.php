@@ -13,7 +13,7 @@ use Phpactor\Extension\Rpc\Registry\LazyContainerHandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
 use Phpactor\Extension\Rpc\RequestHandler\LoggingHandler;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace Phpactor\FilePathResolverExtension\Tests\Unit;
+namespace Phpactor\Extension\FilePathResolver\Tests\Unit;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use RuntimeException;
 
@@ -19,7 +20,7 @@ class FilePathResolverExtensionTest extends TestCase
         $this->assertStringContainsString('cache/phpactor', $resolver->resolve('%cache%'));
         $this->assertStringContainsString('config/phpactor', $resolver->resolve('%config%'));
         $this->assertStringContainsString('/phpactor', $resolver->resolve('%data%'));
-        $this->assertStringContainsString(getcwd(), $resolver->resolve('%project_root%'));
+        $this->assertStringContainsString((string)getcwd(), $resolver->resolve('%project_root%'));
     }
 
     public function testPathResolverWithApplicationRoot(): void
@@ -53,6 +54,7 @@ class FilePathResolverExtensionTest extends TestCase
 
     /**
      * @dataProvider provideProjectIdCalculate
+     * @param mixed $input
      */
     public function testProjectIdCalculate($input, ?string $expectedId = null, ?string $expectedException = null): void
     {
@@ -63,7 +65,10 @@ class FilePathResolverExtensionTest extends TestCase
         self::assertEquals($expectedId, FilePathResolverExtension::calculateProjectId($input));
     }
 
-    public function provideProjectIdCalculate()
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideProjectIdCalculate(): Generator
     {
         yield [
             false,
@@ -82,6 +87,9 @@ class FilePathResolverExtensionTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<mixed> $config
+     */
     public function createResolver(array $config): PathResolver
     {
         $container = PhpactorContainer::fromExtensions([
