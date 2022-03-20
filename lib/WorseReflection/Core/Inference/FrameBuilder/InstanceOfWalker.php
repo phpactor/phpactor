@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -89,8 +90,17 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
                 continue;
             }
             foreach ($list as $statement) {
+                if (!is_object($statement)) {
+                    continue;
+                }
                 if ($statement instanceof ReturnStatement) {
                     return true;
+                }
+
+                if ($statement instanceof ExpressionStatement) {
+                    if ($statement->expression instanceof ThrowExpression) {
+                        return true;
+                    }
                 }
 
                 if ($statement instanceof ThrowExpression) {

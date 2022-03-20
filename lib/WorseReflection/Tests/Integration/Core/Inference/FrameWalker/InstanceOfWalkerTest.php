@@ -138,6 +138,24 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
         }
                 ];
 
+        yield 'adds type information for nullable if negated and if statement terminates' => [
+            <<<'EOT'
+                <?php
+                class fo { public static function foo(): ?Foo {}}
+
+                $foo = fo::foo();
+
+                if (!$foobar instanceof Foobar) {
+                    throw new \RuntimeException('');
+                }
+                <>
+                EOT
+        , function (Frame $frame, int $offset): void {
+            $this->assertCount(3, $frame->locals());
+            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(2)->symbolContext()->types()->best());
+        }
+        ];
+
         yield 'has no type information if double negated and if statement terminates' => [
             <<<'EOT'
                 <?php

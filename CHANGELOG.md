@@ -6,6 +6,7 @@ Changelog
 Bug fixes:
 
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
+  - [wr] detect branch determination with throw expression
 
 Improvements:
 
