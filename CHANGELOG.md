@@ -10,6 +10,7 @@ Bug fixes:
 Improvements:
 
   - [docblock] New docblock parser to facilitate parsing complex types
+  - [hover] Improve "offset" hover (mostly related to showing variable info)
 
 Features:
 

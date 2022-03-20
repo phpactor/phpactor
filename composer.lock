@@ -1970,12 +1970,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/worse-reflection.git",
-                "reference": "8834f17b74e732082465c0727f6500bd4385fb02"
+                "reference": "d097422fd9052c19be78304e464017757476deac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/8834f17b74e732082465c0727f6500bd4385fb02",
-                "reference": "8834f17b74e732082465c0727f6500bd4385fb02",
+                "url": "https://api.github.com/repos/phpactor/worse-reflection/zipball/d097422fd9052c19be78304e464017757476deac",
+                "reference": "d097422fd9052c19be78304e464017757476deac",
                 "shasum": ""
             },
             "require": {
@@ -2024,7 +2024,7 @@
                 "issues": "https://github.com/phpactor/worse-reflection/issues",
                 "source": "https://github.com/phpactor/worse-reflection/tree/master"
             },
-            "time": "2022-03-20T13:54:44+00:00"
+            "time": "2022-03-20T14:30:41+00:00"
         },
         {
             "name": "psr/container",
