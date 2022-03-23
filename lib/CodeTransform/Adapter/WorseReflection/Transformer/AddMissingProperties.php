@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
 use Generator;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
@@ -67,7 +68,8 @@ class AddMissingProperties implements Transformer
             $classBuilder = $this->resolveClassBuilder($sourceBuilder, $class);
 
             foreach ($this->missingPropertyNames($rootNode, $class) as [$memberName, $token, $expression]) {
-                $offset = $this->reflector->reflectOffset($code->__toString(), $expression->getStartPosition());
+                assert($expression instanceof Node);
+                $offset = $this->reflector->reflectOffset($code->__toString(), $expression->getEndPosition());
                 $propertyBuilder = $classBuilder
                     ->property($memberName)
                     ->visibility('private');
