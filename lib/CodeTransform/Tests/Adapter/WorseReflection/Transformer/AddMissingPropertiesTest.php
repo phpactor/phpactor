@@ -373,6 +373,44 @@ class AddMissingPropertiesTest extends WorseTestCase
                     }
                     EOT
             ],
+            'It adds missing property from call expression' => [
+                <<<'EOT'
+                    <?php
+
+                    class Foobar
+                    {
+                        public function hello()
+                        {
+                            $this->bar = $this->bar();
+                        }
+
+                        public function bar(): string
+                        {
+                        }
+                    }
+                    EOT
+                ,
+                <<<'EOT'
+                    <?php
+
+                    class Foobar
+                    {
+                        /**
+                         * @var string
+                         */
+                        private $bar;
+
+                        public function hello()
+                        {
+                            $this->bar = $this->bar();
+                        }
+
+                        public function bar(): string
+                        {
+                        }
+                    }
+                    EOT
+            ]
         ];
     }
 
