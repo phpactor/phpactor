@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServer\Dispatcher;
 
 use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher\MiddlewareDispatcher;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\Container\Container;

@@ -12,7 +12,7 @@ use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\FilePathResolverExtension\FilePathResolverExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 
 class RpcExtensionTest extends TestCase
 {
