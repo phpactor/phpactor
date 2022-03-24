@@ -13,18 +13,23 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
+use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
+    private ClassFileNormalizer $classFileNormalizer;
+
     private ReferenceFinder $referenceFinder;
 
     private TextDocumentLocator $locator;
@@ -34,11 +39,13 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
+        ClassFileNormalizer $classFileNormalizer,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
+        $this->classFileNormalizer = $classFileNormalizer;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
         $this->parser = $parser;
@@ -68,7 +75,6 @@ final class ClassRenamer implements Renamer
         return null;
     }
 
-    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
@@ -97,7 +103,8 @@ final class ClassRenamer implements Renamer
             foreach ($edits as $edit) {
                 yield new LocatedTextEdit(
                     $reference->location()->uri(),
-                    $edit
+                    $edit,
+                    TextDocumentUri::fromString($this->classFileNormalizer->classToFile($newName))
                 );
             }
         }

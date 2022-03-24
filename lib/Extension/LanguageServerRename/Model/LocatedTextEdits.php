@@ -11,10 +11,13 @@ class LocatedTextEdits
 
     private TextDocumentUri $documentUri;
 
-    public function __construct(TextEdits $textEdits, TextDocumentUri $documentUri)
+    private TextDocumentUri $newDocumentUri;
+
+    public function __construct(TextEdits $textEdits, TextDocumentUri $documentUri, ?TextDocumentUri $newDocumentUri)
     {
         $this->textEdits = $textEdits;
         $this->documentUri = $documentUri;
+        $this->newDocumentUri = $newDocumentUri;
     }
 
     public function textEdits(): TextEdits
@@ -25,5 +28,10 @@ class LocatedTextEdits
     public function documentUri(): TextDocumentUri
     {
         return $this->documentUri;
+    }
+
+    public function newDocumentUri(): ?TextDocumentUri
+    {
+        return $this->newDocumentUri;
     }
 }

@@ -10,21 +10,30 @@ final class LocatedTextEditsMap
     /**
      * @var array<string,TextEdits>
      */
-    private array $map;
+    private array $editMap = [];
 
-    public function __construct(array $map)
+    /**
+     * @var array<string,TextDocumentUri>
+     */
+    private array $moveMap = [];
+
+    public function __construct(array $editMap, array $moveMap)
     {
-        $this->map = $map;
+        $this->editMap = $editMap;
+        $this->moveMap = $moveMap;
     }
 
     public static function create(): self
     {
-        return new self([]);
+        return new self([], []);
     }
 
+    /**
+     * @param LocatedTextEdit[] $locatedEdits
+     */
     public static function fromLocatedEdits(array $locatedEdits): self
     {
-        $map = new self([]);
+        $map = new self([], []);
         foreach ($locatedEdits as $locationEdit) {
             $map = $map->withTextEdit($locationEdit);
         }
@@ -34,17 +43,21 @@ final class LocatedTextEditsMap
 
     public function withTextEdit(LocatedTextEdit $edit): self
     {
-        $map = $this->map;
+        $editMap = $this->editMap;
+        $moveMap = $this->moveMap;
         $uri = $edit->documentUri();
-        $edit = $edit->textEdit();
 
-        if (!isset($map[$uri->__toString()])) {
-            $map[$uri->__toString()] = new TextEdits();
+        if (!isset($editMap[$uri->__toString()])) {
+            $editMap[$uri->__toString()] = new TextEdits();
         }
 
-        $map[$uri->__toString()] = $map[$uri->__toString()]->add($edit);
+        $editMap[$uri->__toString()] = $editMap[$uri->__toString()]->add($edit->textEdit());
 
-        return new self($map);
+        if (null !== $edit->newDocumentUri()) {
+            $moveMap[$uri->__toString()] = $edit->newDocumentUri();
+        }
+
+        return new self($editMap, $moveMap);
     }
 
     public function merge(self $map): self
@@ -53,7 +66,7 @@ final class LocatedTextEditsMap
 
         foreach ($map->toLocatedTextEdits() as $textEdit) {
             foreach ($textEdit->textEdits() as $edit) {
-                $me = $me->withTextEdit(new LocatedTextEdit($textEdit->documentUri(), $edit));
+                $me = $me->withTextEdit(new LocatedTextEdit($textEdit->documentUri(), $edit, $textEdit->newDocumentUri()));
             }
         }
 
@@ -66,8 +79,12 @@ final class LocatedTextEditsMap
     public function toLocatedTextEdits(): array
     {
         $locatedTextEdits = [];
-        foreach ($this->map as $uri => $edits) {
-            $locatedTextEdits[] = new LocatedTextEdits($edits, TextDocumentUri::fromString($uri));
+        foreach ($this->editMap as $uri => $edits) {
+            $locatedTextEdits[] = new LocatedTextEdits(
+                $edits,
+                TextDocumentUri::fromString($uri),
+                $this->moveMap[$uri] ?? null,
+            );
         }
 
         return $locatedTextEdits;

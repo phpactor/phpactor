@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerRename\Util;
 
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
+use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\LanguageServerProtocol\TextDocumentEdit;
 use Phpactor\LanguageServerProtocol\VersionedTextDocumentIdentifier;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
@@ -37,6 +38,13 @@ final class LocatedTextEditConverter
                     (string)$this->locator->get($result->documentUri())
                 )
             );
+            if (null !== $result->newDocumentUri()) {
+                $documentEdits[] = new RenameFile(
+                    'rename',
+                    $result->documentUri(),
+                    $result->newDocumentUri(),
+                );
+            }
         }
         return new WorkspaceEdit(null, $documentEdits);
     }
