@@ -65,7 +65,7 @@ class GenerateMethodCommand implements Command
 
         return $this->clientApi->workspace()->applyEdit(
             new WorkspaceEdit([
-                $textEdits->uri()->path() => TextEditConverter::toLspTextEdits(
+                $textEdits->uri()->__toString() => TextEditConverter::toLspTextEdits(
                     $textEdits->textEdits(),
                     $this->locator->get($textEdits->uri())->__toString()
                 )

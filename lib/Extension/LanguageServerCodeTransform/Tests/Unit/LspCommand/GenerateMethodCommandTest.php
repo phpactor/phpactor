@@ -54,7 +54,7 @@ class GenerateMethodCommandTest extends TestCase
         self::assertNotNull($applyEdit);
         self::assertEquals([
             'edit' => new WorkspaceEdit([
-                $textEdits->uri()->path() => TextEditConverter::toLspTextEdits(
+                $textEdits->uri()->__toString() => TextEditConverter::toLspTextEdits(
                     $textEdits->textEdits(),
                     self::EXAMPLE_SOURCE
                 )

@@ -6,6 +6,7 @@ Changelog
 Bug fixes:
 
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
+  - [lsp] ensure fully qualified filename is used for generate method refactoring #1313
   - [wr] detect branch determination with throw expression
   - [cr] add missing properties: correctly infer type from call expressions
   - [filesystem] Fix "too many files open" issue #1376
