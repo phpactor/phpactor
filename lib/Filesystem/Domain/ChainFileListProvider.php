@@ -2,7 +2,7 @@
 
 namespace Phpactor\Filesystem\Domain;
 
-use Phpactor\Filesystem\Iterator\AppendIterator;
+use AppendIterator;
 
 class ChainFileListProvider implements FileListProvider
 {
