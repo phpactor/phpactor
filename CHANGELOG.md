@@ -8,6 +8,7 @@ Bug fixes:
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
   - [wr] detect branch determination with throw expression
   - [cr] add missing properties: correctly infer type from call expressions
+  - [filesystem] Fix "too many files open" issue #1376
 
 Improvements:
 

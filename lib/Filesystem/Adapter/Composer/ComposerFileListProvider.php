@@ -6,7 +6,7 @@ use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Iterator\AppendIterator;
+use AppendIterator;
 use Webmozart\PathUtil\Path;
 use SplFileInfo;
 use ArrayIterator;
@@ -39,6 +39,7 @@ class ComposerFileListProvider implements FileListProvider
         $appendIterator = new AppendIterator();
         $files = [];
         $seenPaths = [];
+        $count = 0;
         foreach ($prefixes as $paths) {
             $paths = (array) $paths;
             foreach ($paths as $path) {
