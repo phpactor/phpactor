@@ -17,6 +17,10 @@ final class ClassReference
 
     private $importedNameRef;
 
+    private bool $hasAlias = false;
+
+    private bool $isImport = false;
+
     public function __toString()
     {
         return (string) $this->fullName;
@@ -27,7 +31,9 @@ final class ClassReference
         FullyQualifiedName $fullName,
         Position $position,
         ImportedNameReference $importedNameRef,
-        bool $isClassDeclaration = false
+        bool $isClassDeclaration = false,
+        bool $hasAlias = false,
+        bool $isImport = false
     ) {
         $new = new self();
         $new->position = $position;
@@ -35,6 +41,8 @@ final class ClassReference
         $new->fullName = $fullName;
         $new->importedNameRef = $importedNameRef;
         $new->isClassDeclaration = $isClassDeclaration;
+        $new->hasAlias = $hasAlias;
+        $new->isImport = $isImport;
 
         return $new;
     }
@@ -62,5 +70,15 @@ final class ClassReference
     public function isClassDeclaration(): bool
     {
         return $this->isClassDeclaration;
+    }
+
+    public function hasAlias(): bool
+    {
+        return $this->hasAlias;
+    }
+
+    public function isImport(): bool
+    {
+        return $this->isImport;
     }
 }

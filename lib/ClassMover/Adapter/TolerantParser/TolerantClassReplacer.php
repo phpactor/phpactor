@@ -33,9 +33,13 @@ class TolerantClassReplacer implements ClassReplacer
         $edits = [];
         $importClass = false;
         $addNamespace = false;
+        $replacedImports = [];
 
         foreach ($classRefList as $classRef) {
-            $importClass = $this->shouldImportClass($classRef, $originalName);
+            assert($classRef instanceof ClassReference);
+            if (false === $importClass) {
+                $importClass = $this->shouldImportClass($classRef, $originalName);
+            }
 
             if ($this->classIsTheOriginalInstance($classRef, $originalName)) {
                 $addNamespace = $classRefList->namespaceRef()->namespace()->isRoot();
@@ -80,11 +84,24 @@ class TolerantClassReplacer implements ClassReplacer
 
     private function shouldImportClass(ClassReference $classRef, FullyQualifiedName $originalName)
     {
-        return ImportedNameReference::none() == $classRef->importedNameRef() &&
-            false === ($classRef->isClassDeclaration() && $classRef->fullName()->equals($originalName));
+        if ($classRef->isImport()) {
+            return false;
+        }
+        if ($classRef->hasAlias()) {
+            return false;
+        }
+        if (ImportedNameReference::none() != $classRef->importedNameRef()) {
+            return false;
+        }
+        
+        if ($classRef->isClassDeclaration()) {
+            return false;
+        }
+        
+        return $classRef->fullName()->equals($originalName);
     }
 
-    private function classIsTheOriginalInstance($classRef, $originalName)
+    private function classIsTheOriginalInstance(ClassReference $classRef, $originalName)
     {
         return $classRef->isClassDeclaration() && $classRef->fullName()->equals($originalName);
     }
