@@ -10,6 +10,8 @@ Bug fixes:
   - [wr] detect branch determination with throw expression
   - [cr] add missing properties: correctly infer type from call expressions
   - [filesystem] Fix "too many files open" issue #1376
+  - [class-mover] Fix long standing bug with aliased imports being duplicated
+    on class move and other strange issues.
 
 Improvements:
 

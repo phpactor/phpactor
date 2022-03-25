@@ -35,7 +35,7 @@ class TolerantClassReplacerTest extends TestCase
                 return $line !== '';
             }));
         };
-        $this->assertStringContainsString($stripEmptyLines($expectedSource), $stripEmptyLines($edits->apply($source->__toString())));
+        self::assertStringContainsString($stripEmptyLines($expectedSource), $stripEmptyLines($edits->apply($source->__toString())));
     }
 
     public function provideTestFind()
@@ -46,6 +46,8 @@ class TolerantClassReplacerTest extends TestCase
                 'Acme\\Foobar\\Warble',
                 'BarBar\\Hello',
                 <<<'EOT'
+                    <?php
+                    namespace Acme;
                     use BarBar\Hello;
                     use Acme\Foobar\Barfoo;
                     use Acme\Barfoo as ZedZed;
@@ -62,6 +64,7 @@ class TolerantClassReplacerTest extends TestCase
                 'Acme\\Hello',
                 'Acme\\Definee',
                 <<<'EOT'
+                    <?php
                     namespace Acme;
 
                     use Acme\Foobar\Warble;
@@ -90,6 +93,7 @@ class TolerantClassReplacerTest extends TestCase
                 'Acme\\Barfoo',
                 'Acme\\Definee\\Barfoo',
                 <<<'EOT'
+                    <?php
                     namespace Acme;
 
                     use Acme\Definee\Barfoo;
@@ -116,6 +120,7 @@ class TolerantClassReplacerTest extends TestCase
                 'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
                 'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
                 <<<'EOT'
+                    <?php
                     namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
                     EOT
             ],
@@ -132,7 +137,16 @@ class TolerantClassReplacerTest extends TestCase
                 'Acme\\ClassMover\\RefFinder\\RefFinder\\TolerantRefFinder',
                 'Acme\\ClassMover\\RefFinder\\RefFinder\\Foobar',
                 <<<'EOT'
-                    Foobar::class
+                    <?php
+                    namespace Acme;
+                    use Acme\ClassMover\RefFinder\RefFinder\Foobar;
+                    class Hello
+                    {
+                        public function something(): void
+                        {
+                            Foobar::class;
+                        }
+                    }
                     EOT
             ],
             'Class which includes use statement for itself' => [
@@ -148,6 +162,7 @@ class TolerantClassReplacerTest extends TestCase
                 'ClassOne',
                 'Phpactor\ClassMover\Example8',
                 <<<'EOT'
+                    <?php
                     namespace Phpactor\ClassMover;
 
 
@@ -165,12 +180,40 @@ class TolerantClassReplacerTest extends TestCase
                 'Example',
                 'Phpactor\ClassMover\Example',
                 <<<'EOT'
+                    <?php
 
                     use Phpactor\ClassMover\Example;
 
                     class ClassOne
                     {
                         public function build(): Example
+                    EOT
+            ],
+            'Aliased class' => [
+                'Example10.php',
+                'Foobar\Example',
+                'Phpactor\ClassMover\Example',
+                <<<'EOT'
+                    <?php
+
+                    use Phpactor\ClassMover\Example as BadExample;
+
+                    class ClassOne
+                    {
+                        public function build(): BadExample
+                    EOT
+            ],
+            'Aliased class named the same' => [
+                'Example11.php',
+                'Foobar\Example',
+                'Phpactor\ClassMover\Example',
+                <<<'EOT'
+                    <?php
+
+                    use Phpactor\ClassMover\Example as BadExample;
+                    class Example extends BadExample
+                    {
+                    }
                     EOT
             ],
         ];
