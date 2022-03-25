@@ -32,7 +32,6 @@ class LanguageServerRenameWorseExtension implements Extension
     public const TAG_RENAMER = 'language_server_rename.renamer';
     public const PARAM_FILE_RENAME_LISTENER = 'language_server_rename.file_rename_listener';
 
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(VariableRenamer::class, function (Container $container) {
@@ -96,7 +95,7 @@ class LanguageServerRenameWorseExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

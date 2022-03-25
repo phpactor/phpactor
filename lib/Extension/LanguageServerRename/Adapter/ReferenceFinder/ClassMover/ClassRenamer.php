@@ -16,6 +16,7 @@ use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
+use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
 use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -81,6 +82,7 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
+        $newUri = TextDocumentUri::fromString($this->classFileNormalizer->classToFile($newName));
 
         $seen = [];
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
@@ -104,10 +106,11 @@ final class ClassRenamer implements Renamer
                 yield new LocatedTextEdit(
                     $reference->location()->uri(),
                     $edit,
-                    TextDocumentUri::fromString($this->classFileNormalizer->classToFile($newName))
                 );
             }
         }
+
+        return new RenameResult($textDocument->uri(), $newUri);
     }
 
     private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string
