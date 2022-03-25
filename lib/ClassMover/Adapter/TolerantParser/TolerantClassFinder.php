@@ -57,8 +57,6 @@ class TolerantClassFinder implements ClassFinder
                 $node instanceof InterfaceDeclaration ||
                 $node instanceof TraitDeclaration
             ) {
-                $namespace = $node->getNamespaceDefinition();
-
                 $name = (string) $node->name->getText($node->getFileContents());
 
                 if (!$name) {
@@ -67,7 +65,7 @@ class TolerantClassFinder implements ClassFinder
 
                 $classRefs[] = ClassReference::fromNameAndPosition(
                     QualifiedName::fromString($name),
-                    FullyQualifiedName::fromString(($namespace && $namespace->name ? $namespace->name->getText().'\\' : '').$name),
+                    FullyQualifiedName::fromString($node->getNamespacedName()->getFullyQualifiedNameText()),
                     Position::fromStartAndEnd($node->name->start, $node->name->start + $node->name->length - 1),
                     ImportedNameReference::none(),
                     true
@@ -89,18 +87,24 @@ class TolerantClassFinder implements ClassFinder
                 continue;
             }
 
+            $qualifiedName = QualifiedName::fromString($node->getText());
+
             // we want to replace all fully qualified use statements
-            if ($node->getParent() instanceof NamespaceUseClause) {
+            $parentNode = $node->getParent();
+            if ($parentNode instanceof NamespaceUseClause) {
                 $classRefs[] = ClassReference::fromNameAndPosition(
                     FullyQualifiedName::fromString($node->getText()),
                     FullyQualifiedName::fromString($node->getText()),
                     Position::fromStartAndEnd($node->getStartPosition(), $node->getEndPosition()),
-                    ImportedNameReference::none()
+                    ImportedNameReference::none(),
+                    false,
+                    // @phpstan-ignore-next-line It can be NULL
+                    $parentNode->namespaceAliasingClause ? true : false,
+                    true,
                 );
                 continue;
             }
 
-            $qualifiedName = QualifiedName::fromString($node->getText());
             $resolvedClassName = $env->resolveClassName($qualifiedName);
 
             // if the name is aliased, then we can safely ignore it
