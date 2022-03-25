@@ -16,6 +16,7 @@ use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
+use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
 use Phpactor\LanguageServerProtocol\RenameFile;
@@ -29,7 +30,7 @@ use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
-    private ClassFileNormalizer $classFileNormalizer;
+    private NameToUriConverter $nameToUriConverter;
 
     private ReferenceFinder $referenceFinder;
 
@@ -40,13 +41,13 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
-        ClassFileNormalizer $classFileNormalizer,
+        NameToUriConverter $nameToUriConverter,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
-        $this->classFileNormalizer = $classFileNormalizer;
+        $this->nameToUriConverter = $nameToUriConverter;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
         $this->parser = $parser;
@@ -82,7 +83,7 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $newUri = TextDocumentUri::fromString($this->classFileNormalizer->classToFile($newName));
+        $newUri = TextDocumentUri::fromString($this->nameToUriConverter->convert($newName));
 
         $seen = [];
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
