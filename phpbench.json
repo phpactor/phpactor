@@ -4,6 +4,7 @@
     "runner.annotation_import_use": false,
     "runner.path": [
         "lib/**/Tests/Benchmark",
+        "lib/**/Tests/Benchmarks",
         "tests/Benchmark"
     ],
     "runner.bootstrap": "vendor/autoload.php",

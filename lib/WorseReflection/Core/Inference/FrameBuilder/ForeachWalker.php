@@ -16,8 +16,8 @@ use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class ForeachWalker extends AbstractWalker
 {
@@ -108,7 +108,7 @@ class ForeachWalker extends AbstractWalker
             ]
         );
         
-        if ($collectionType instanceof GenericClassType) {
+        if ($collectionType instanceof ReflectedClassType) {
             $context = $context->withType($collectionType->iterableValueType());
         }
         if ($collectionType instanceof ArrayType) {

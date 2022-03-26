@@ -45,8 +45,8 @@ class FullyQualifiedNameResolver
         $type = $type instanceof Type ? $type : TypeFactory::fromStringWithReflector($type, $this->reflector);
 
         if ($type instanceof GenericClassType) {
-            foreach ($type->templateMap()->toArray() as $key => $gType) {
-                $type->templateMap()->replace($key, $this->resolve($node, $gType));
+            foreach ($type->arguments() as $offset => $gType) {
+                $type->replaceArgument($offset, $this->resolve($node, $gType));
             }
         }
         if ($type instanceof ArrayType) {

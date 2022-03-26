@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @implements Iterator<int>
+ */
+class Foobar implements Iterator {
+}
+
+$foo = new Foobar();
+
+foreach ($foo as $bar) {
+    wrAssertType('int', $bar);
+}
+

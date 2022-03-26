@@ -1,0 +1,31 @@
+<?php
+
+namespace Bar;
+
+use IteratorAggregate;
+
+/**
+ * @template T
+ * @extends IteratorAggregate<T>
+ */
+interface Collection extends IteratorAggregate {
+}
+
+/**
+ * @extends Collection<Five>
+ */
+interface Foobar extends Collection {
+}
+
+class Test{ 
+    public function foobar(): Foobar
+    {
+    }
+}
+
+$foo = new Test();
+
+foreach ($foo->foobar() as $bar) {
+    wrAssertType('Bar\Five', $bar);
+}
+

@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @implements IteratorAggregate<int>
+ */
+class Foobar implements IteratorAggregate {
+}
+
+$foo = new Foobar();
+
+foreach ($foo as $bar) {
+    wrAssertType('int', $bar);
+}
+

@@ -190,19 +190,9 @@ class TypeFactory
         return new GenericClassType(
             $reflector,
             ClassName::fromString($classType),
-            new TemplateMap(
-                [
-                    'TValue' => self::fromString($iterableType)
-                ]
-            ),
             [
-                new GenericClassType(
-                    $reflector,
-                    ClassName::fromString('Traversable'),
-                    new TemplateMap([]),
-                    [],
-                )
-            ],
+                self::fromString($iterableType)
+            ]
         );
     }
 

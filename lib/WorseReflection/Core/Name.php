@@ -34,6 +34,10 @@ class Name
         return new static($parts, $fullyQualified);
     }
 
+    /**
+     * @param Name|string $value
+     * @return static|Name
+     */
     public static function fromUnknown($value)
     {
         if ($value instanceof Name) {
@@ -44,23 +48,18 @@ class Name
             return static::fromString($value);
         }
 
+        /** @phpstan-ignore-next-line */
         throw new InvalidArgumentException(sprintf(
             'Do not know how to create class from type "%s"',
             is_object($value) ? get_class($value) : gettype($value)
         ));
     }
 
-    /**
-     * @return static
-     */
-    public function head()
+    public function head(): self
     {
         return new self([ reset($this->parts) ], false);
     }
 
-    /**
-     * @return static
-     */
     public function tail(): self
     {
         $parts = $this->parts;
@@ -114,5 +113,10 @@ class Name
             [$alias],
             $suffix
         ));
+    }
+
+    public function count(): int
+    {
+        return count($this->parts);
     }
 }

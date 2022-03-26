@@ -16,9 +16,7 @@ use Phpactor\DocblockParser\Ast\Type\ThisNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
-use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
@@ -147,18 +145,13 @@ class TypeConverter
 
         $parameters = iterator_to_array($type->parameters()->types());
 
-        if (count($parameters) === 1) {
-            // pretend this is a traversable
-            return TypeFactory::collection($this->reflector, $classType, $this->convert($parameters[0]));
-        }
-
         return new GenericClassType(
             $this->reflector,
             $classType->name(),
-            new TemplateMap(array_map(
+            array_map(
                 fn (TypeNode $node) => $this->convert($node, $scope),
                 $parameters
-            ))
+            )
         );
     }
 

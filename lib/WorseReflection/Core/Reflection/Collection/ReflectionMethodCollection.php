@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod last()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get(string $name)
  *
- * @implements ReflectionMemberCollection<ReflectionMethod>
+ * @extends ReflectionMemberCollection<ReflectionMethod>
  */
 interface ReflectionMethodCollection extends ReflectionMemberCollection
 {

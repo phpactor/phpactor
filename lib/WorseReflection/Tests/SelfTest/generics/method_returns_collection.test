@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @template T
+ * @implements IteratorAggregate<T>
+ */
+class Collection implements IteratorAggregate {
+}
+
+/**
+ * @extends Collection<int>
+ */
+class Foobar extends Collection {
+}
+
+class Test{ 
+    public function foobar(): Foobar
+    {
+    }
+}
+
+$foo = new Test();
+
+foreach ($foo->foobar() as $bar) {
+    wrAssertType('int', $bar);
+}
+

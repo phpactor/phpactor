@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @template T
+ */
+class First {
+    /**
+     * @return T
+     */
+    public function bar()
+    {
+    }
+}
+
+/**
+ * @template T
+ * @template Y
+ * @template-extends First<T>
+ */
+class Second extends First {
+    /**
+     * @return Y
+     */
+    public function boo()
+    {
+    }
+}
+
+/**
+ * @template-extends Second<Baz, Boo>
+ */
+class Foo extends Second
+{
+}
+
+$foo = new Foo();
+
+wrAssertType('Baz', $foo->bar());
+wrAssertType('Boo', $foo->boo());

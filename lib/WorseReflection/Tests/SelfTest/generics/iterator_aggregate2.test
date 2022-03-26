@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @implements IteratorAggregate<array<string,Foo|Bar>>
+ */
+class Foobar implements IteratorAggregate {
+}
+
+$foo = new Foobar();
+
+foreach ($foo as $bar) {
+    wrAssertType('array<string,Foo|Bar>', $bar);
+}
+

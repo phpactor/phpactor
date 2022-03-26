@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @template T
+ */
+interface First {
+    /**
+     * @return T
+     */
+    public function bar()
+    {
+    }
+}
+
+/**
+ * @template Y
+ */
+interface Second {
+    /**
+     * @return Y
+     */
+    public function boo();
+}
+
+/**
+ * @implements Second<Baz>, First<Boo>
+ */
+class Foo implements Second, First
+{
+    public function boo()
+    {
+    }
+    public function bar()
+    {
+    }
+}
+
+$foo = new Foo();
+
+wrAssertType('Boo', $foo->bar());
+wrAssertType('Baz', $foo->boo());

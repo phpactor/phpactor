@@ -30,4 +30,9 @@ class TemplateTag extends TagNode
         $this->constraint = $constraint;
         $this->type = $type;
     }
+
+    public function placeholder(): string
+    {
+        return $this->placeholder ? $this->placeholder->toString() : '';
+    }
 }

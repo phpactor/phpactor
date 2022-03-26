@@ -210,20 +210,25 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             }
         ];
 
-        yield 'From return type with docblock' => [
+        yield 'From generic return type with docblock' => [
             <<<'EOT'
                 <?php
 
                 namespace Foobar;
 
-                use Foo\Lister;
+                /**
+                 * @template T
+                 * @extends \Iterator<T>
+                 */
+                interface Listy extends \Iterator {
+                }
 
                 interface Barfoo
                 {
                     /**
-                     * @return Lister<Collection>
+                     * @return Listy<Collection>
                      */
-                    public static function bar(): List;
+                    public static function bar(): Listy;
                 }
 
                 class Baz
@@ -241,7 +246,7 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(3, $frame->locals());
                 $this->assertEquals(
-                    'Foo\Lister<Foobar\Collection>',
+                    'Foobar\Listy<Foobar\Collection>',
                     (string) $frame->locals()->byName('bar')->first()->symbolContext()->types()->best()
                 );
                 $type = $frame->locals()->byName('bar')->first()->symbolContext()->types()->best();

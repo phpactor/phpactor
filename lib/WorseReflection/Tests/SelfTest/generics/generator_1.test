@@ -1,0 +1,17 @@
+<?php
+
+class Foobar {
+    /**
+     * @return Generator<string, int, Foo, Bar>
+     */
+    public function gen(): Generator
+    {
+    }
+}
+
+$foo = new Foobar();
+
+foreach ($foo->gen() as $bar) {
+    wrAssertType('int', $bar);
+}
+
