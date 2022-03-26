@@ -40,7 +40,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * @throws ClassNotFound If the class was not found, or the class found was
      *         an interface or trait.
      */
-    public function reflectClass($className, array $arguments = []): ReflectionClass
+    public function reflectClass($className): ReflectionClass
     {
         $className = ClassName::fromUnknown($className);
 
@@ -65,7 +65,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * @throws ClassNotFound If the class was not found, or the found class
      *         was not a trait.
      */
-    public function reflectInterface($className, array $arguments = []): ReflectionInterface
+    public function reflectInterface($className): ReflectionInterface
     {
         $className = ClassName::fromUnknown($className);
 
@@ -90,7 +90,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * @throws ClassNotFound If the class was not found, or the found class
      *         was not a trait.
      */
-    public function reflectTrait($className, array $arguments = []): ReflectionTrait
+    public function reflectTrait($className): ReflectionTrait
     {
         $className = ClassName::fromUnknown($className);
 
@@ -107,7 +107,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $class;
     }
     
-    public function reflectEnum($className, array $arguments = []): ReflectionEnum
+    public function reflectEnum($className): ReflectionEnum
     {
         $className = ClassName::fromUnknown($className);
 
@@ -131,7 +131,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      *
      * @throws ClassNotFound
      */
-    public function reflectClassLike($className, array $arguments = []): ReflectionClassLike
+    public function reflectClassLike($className): ReflectionClassLike
     {
         $className = ClassName::fromUnknown($className);
 

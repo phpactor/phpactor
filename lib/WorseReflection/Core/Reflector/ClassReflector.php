@@ -17,38 +17,33 @@ interface ClassReflector
     /**
      * Reflect class.
      * @param Name|string $className
-     * @param Type[] $arguments
      */
-    public function reflectClass($className, array $arguments = []): ReflectionClass;
+    public function reflectClass($className): ReflectionClass;
 
     /**
      * Reflect an interface.
      * @param Name|string $className
-     * @param Type[] $arguments
      */
-    public function reflectInterface($className, array $arguments = []): ReflectionInterface;
+    public function reflectInterface($className): ReflectionInterface;
 
     /**
      * Reflect a trait
      * @param Name|string $className
-     * @param Type[] $arguments
      */
-    public function reflectTrait($className, array $arguments = []): ReflectionTrait;
+    public function reflectTrait($className): ReflectionTrait;
 
     /**
      * Reflect a trait
      *
      * @param Name|string $className
-     * @param Type[] $arguments
      */
-    public function reflectEnum($className, array $arguments = []): ReflectionEnum;
+    public function reflectEnum($className): ReflectionEnum;
 
     /**
      * Reflect a class, trait, enum or interface by its name.
      * @param Name|string $className
-     * @param Type[] $arguments
      */
-    public function reflectClassLike($className, array $arguments = []): ReflectionClassLike;
+    public function reflectClassLike($className): ReflectionClassLike;
 
     /**
      * @param string|Name $className
