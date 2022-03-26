@@ -501,9 +501,9 @@ final class Parser
         $types = [];
 
         if ($this->tokens->if(Token::T_LABEL)) {
-            $types = $this->parseTypeList();
+            $types = $this->parseTypeList()->list;
         }
 
-        return new ImplementsTag($tag, $types->list);
+        return new ImplementsTag($tag, $types);
     }
 }

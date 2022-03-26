@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class GenericHelper
 {
