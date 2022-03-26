@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -56,10 +58,15 @@ class MethodTypeResolver
         return Types::fromTypes(array_map(function (Type $type) {
             $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
             if ($type instanceof ClassType) {
-                $templateMap = $this->method->class()->templateMap();
-                if ($templateMap->has($type->name()->short())) {
-                    return $templateMap->get($type->name()->short());
+                $extendsType = $this->method->class()->docblock()->extends();
+
+                if (!$extendsType instanceof GenericClassType) {
+                    return $type;
                 }
+
+                $arguments = $extendsType->arguments();
+
+                return $this->method->declaringClass()->templateMap()->get($type->__toString(), $arguments);
             }
 
             return $type;

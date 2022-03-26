@@ -39,10 +39,21 @@ final class TemplateMap
         return isset($this->map[$key]);
     }
 
-    public function get(string $key): Type
+    /**
+     * @param Type[] $arguments
+     */
+    public function get(string $key, array $arguments = []): Type
     {
         if (!isset($this->map[$key])) {
             return new MissingType();
+        }
+
+        if ($arguments) {
+            $offset = array_search($key, array_keys($this->map));
+
+            if (isset($arguments[$offset])) {
+                return $arguments[$offset];
+            }
         }
 
         return $this->map[$key];
@@ -54,6 +65,7 @@ final class TemplateMap
         foreach ($map->map as $key => $value) {
             $new[$key] = $value;
         }
+
 
         return new TemplateMap($new);
     }

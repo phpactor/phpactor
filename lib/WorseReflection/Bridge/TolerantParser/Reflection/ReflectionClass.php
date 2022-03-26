@@ -31,6 +31,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -59,6 +60,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      * @var array<string,ReflectionMethodCollection>
      */
     private array $methods = [];
+
+    private ?TemplateMap $templateMap = null;
 
     private ?TolerantReflectionClassCollection $ancestors = null;
 
@@ -140,7 +143,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             }
 
             $reflectedClass = $this->serviceLocator->reflector()->reflectClassLike(
-                $className
+                $className,
             );
 
             if (!$reflectedClass instanceof CoreReflectionClass) {
@@ -378,6 +381,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function templateMap(): TemplateMap
     {
-        return $this->docblock()->templateMap();
+        if ($this->templateMap) {
+            return $this->templateMap;
+        }
+
+        $this->templateMap = $this->docblock()->templateMap();
+
+        return $this->templateMap;
     }
 }

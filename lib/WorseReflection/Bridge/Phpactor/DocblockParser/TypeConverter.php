@@ -147,18 +147,13 @@ class TypeConverter
 
         $parameters = iterator_to_array($type->parameters()->types());
 
-        if (count($parameters) === 1) {
-            // pretend this is a traversable
-            return TypeFactory::collection($this->reflector, $classType, $this->convert($parameters[0]));
-        }
-
         return new GenericClassType(
             $this->reflector,
             $classType->name(),
-            new TemplateMap(array_map(
+            array_map(
                 fn (TypeNode $node) => $this->convert($node, $scope),
                 $parameters
-            ))
+            )
         );
     }
 

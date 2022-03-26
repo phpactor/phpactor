@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TemplateMap;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
 {
@@ -95,5 +96,10 @@ class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
     public function templateMap(): TemplateMap
     {
         return $this->classLike->templateMap();
+    }
+
+    public function type(): ReflectedClassType
+    {
+        return $this->classLike->type();
     }
 }
