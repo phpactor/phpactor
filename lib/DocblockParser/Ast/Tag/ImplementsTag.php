@@ -29,4 +29,14 @@ class ImplementsTag extends TagNode
         $this->tag = $tag;
         $this->tokensAndTypes = $tokensAndTypes;
     }
+
+    /**
+     * @return TypeNode[]
+     */
+    public function types(): array
+    {
+        return array_filter($this->tokensAndTypes, function ($node) {
+            return $node instanceof TypeNode;
+        });
+    }
 }

@@ -14,6 +14,7 @@ use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\Tag\VarTag;
+use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -228,7 +229,9 @@ class ParsedDocblock implements DocBlock
     {
         foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
             assert($implementsTag instanceof ImplementsTag);
-            return [$this->typeConverter->convert($implementsTag->type)];
+            return array_map(function (TypeNode $type) {
+                return $this->typeConverter->convert($type);
+            }, $implementsTag->types());
         }
         return [];
     }

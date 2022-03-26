@@ -25,7 +25,7 @@ interface Second {
 /**
  * @implements Second<Baz>, First<Boo>
  */
-class Foo implements Second
+class Foo implements Second, First
 {
     public function boo()
     {
@@ -38,4 +38,4 @@ class Foo implements Second
 $foo = new Foo();
 
 wrAssertType('Baz', $foo->boo());
-wrAssertType('Bar', $foo->bar());
+wrAssertType('Boo', $foo->bar());
