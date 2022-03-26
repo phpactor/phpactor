@@ -22,10 +22,10 @@ class ClassToFileNameToUriConverter implements NameToUriConverter
     /**
      * {@inheritDoc}
      */
-    public function convert(string $uri): TextDocumentUri
+    public function convert(string $className): TextDocumentUri
     {
         try {
-            return TextDocumentUri::fromString($this->classToFile->classToFileCandidates(ClassName::fromString($uri))->best());
+            return TextDocumentUri::fromString($this->classToFile->classToFileCandidates(ClassName::fromString($className))->best());
         } catch (RuntimeException $error) {
             throw new CouldNotConvertClassToUri($error->getMessage(), 0, $error);
         }
