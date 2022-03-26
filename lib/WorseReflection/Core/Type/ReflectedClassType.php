@@ -83,7 +83,6 @@ class ReflectedClassType extends ClassType
         return new MissingType();
     }
 
-
     public function instanceOf(ClassName $className): Trinary
     {
         $reflection = $this->reflectionOrNull();

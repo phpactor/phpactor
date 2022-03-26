@@ -101,9 +101,11 @@ final class Parser
                 return $this->parseTemplate();
 
             case '@extends':
+            case '@template-extends':
                 return $this->parseExtends();
 
             case '@implements':
+            case '@template-implements':
                 return $this->parseImplements();
         }
 
