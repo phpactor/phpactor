@@ -24,6 +24,10 @@ class IterableTypeResolver
             if (count($arguments) === 1) {
                 return $arguments[0];
             }
+
+            if (isset($arguments[1])) {
+                return $arguments[1];
+            }
         }
 
         $iterableClasses = [
@@ -57,6 +61,9 @@ class IterableTypeResolver
         return new MissingType();
     }
 
+    /**
+     * @param Type[] $arguments
+     */
     private static function valueTypeFromArgs(array $arguments): Type
     {
         if (isset($arguments[1])) {

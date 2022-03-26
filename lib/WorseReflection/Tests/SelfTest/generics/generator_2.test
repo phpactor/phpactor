@@ -2,7 +2,7 @@
 
 class Foobar {
     /**
-     * @return Generator<string, int, Foo, Bar>
+     * @return Generator<int>
      */
     public function gen(): Generator
     {
