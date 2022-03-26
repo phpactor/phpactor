@@ -21,6 +21,7 @@ Improvements:
 
 Features:
 
+  - [wr] Initial support for generics #1382
   - [lsp] Added generate accessors code action
   - [lsp] Added extract constant code action
   - [extension] Removed the extension manager.
