@@ -204,6 +204,25 @@ class ParsedDocblock implements DocBlock
         return new Deprecation(false);
     }
 
+    public function templateMap(): TemplateMap
+    {
+        $map = [];
+        foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
+            assert($templateTag instanceof TemplateTag);
+            $map[$templateTag->placeholder()] = new MissingType();
+        }
+        return new TemplateMap($map);
+    }
+
+    public function extends(): Type
+    {
+        foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
+            assert($extendsTag instanceof ExtendsTag);
+            return $this->typeConverter->convert($extendsTag->type);
+        }
+        return new MissingType();
+    }
+
     private function addParameters(VirtualReflectionMethod $method, VirtualReflectionParameterCollection $collection, ?ParameterList $parameterList): void
     {
         if (null === $parameterList) {
@@ -223,24 +242,5 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
-    }
-
-    public function templateMap(): TemplateMap
-    {
-        $map = [];
-        foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
-            assert($templateTag instanceof TemplateTag);
-            $map[$templateTag->placeholder()] = new MissingType();
-        }
-        return new TemplateMap($map);
-    }
-
-    public function extends(): Type
-    {
-        foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
-            assert($extendsTag instanceof ExtendsTag);
-            return $this->typeConverter->convert($extendsTag->type);
-        }
-        return new MissingType();
     }
 }

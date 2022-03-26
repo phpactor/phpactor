@@ -52,6 +52,7 @@ class SourceCode implements TextDocument
             return self::fromString($value);
         }
 
+        /** @phpstan-ignore-next-line */
         throw new InvalidArgumentException(sprintf(
             'Do not know how to create source code from type "%s"',
             is_object($value) ? get_class($value) : gettype($value)

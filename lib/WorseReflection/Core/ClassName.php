@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 /**
  * @method static ClassName fromString(string $name)
- * @method static ClassName fromunknown($unknown)
+ * @method static ClassName fromUnknown($unknown)
  */
 class ClassName extends Name
 {

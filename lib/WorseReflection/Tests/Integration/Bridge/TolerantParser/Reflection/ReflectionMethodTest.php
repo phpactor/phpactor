@@ -643,25 +643,25 @@ class ReflectionMethodTest extends IntegrationTestCase
     {
         yield 'return type from generic' => [
             <<<'PHP'
-<?php
+                <?php
 
-/**
- * @template T
- */
-abstract class Generic {
-    /**
-     * @return T
-     */
-    public function bar() {}
-}
+                /**
+                 * @template T
+                 */
+                abstract class Generic {
+                    /**
+                     * @return T
+                     */
+                    public function bar() {}
+                }
 
-/**
- * @extends Generic<Baz>
- */
-class Foobar extends Generic
-{
-}
-PHP
+                /**
+                 * @extends Generic<Baz>
+                 */
+                class Foobar extends Generic
+                {
+                }
+                PHP
         ,
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
@@ -671,30 +671,30 @@ PHP
         ];
         yield 'return type from generic with multiple parameters' => [
             <<<'PHP'
-<?php
+                <?php
 
-/**
- * @template T
- * @template V
- */
-abstract class Generic {
-    /**
-     * @return V
-     */
-    public function vee() {}
-    /**
-     * @return T
-     */
-    public function tee() {}
-}
+                /**
+                 * @template T
+                 * @template V
+                 */
+                abstract class Generic {
+                    /**
+                     * @return V
+                     */
+                    public function vee() {}
+                    /**
+                     * @return T
+                     */
+                    public function tee() {}
+                }
 
-/**
- * @extends Generic<Boo,Baz>
- */
-class Foobar extends Generic
-{
-}
-PHP
+                /**
+                 * @extends Generic<Boo,Baz>
+                 */
+                class Foobar extends Generic
+                {
+                }
+                PHP
         ,
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
@@ -706,42 +706,42 @@ PHP
         ];
         yield 'return type from generic with multiple parameters at a distance' => [
             <<<'PHP'
-<?php
+                <?php
 
-/**
- * @template T
- * @template V
- */
-abstract class Generic {
-    /**
-     * @return V
-     */
-    public function vee() {}
-    /**
-     * @return T
-     */
-    public function tee() {}
-}
+                /**
+                 * @template T
+                 * @template V
+                 */
+                abstract class Generic {
+                    /**
+                     * @return V
+                     */
+                    public function vee() {}
+                    /**
+                     * @return T
+                     */
+                    public function tee() {}
+                }
 
 
-/**
- * @template T
- * @template V
- * @template G
- * @extends Generic<T, V>
- */
-abstract class Middle extends Generic {
-    /** @return G */
-    public function gee() {}
-}
+                /**
+                 * @template T
+                 * @template V
+                 * @template G
+                 * @extends Generic<T, V>
+                 */
+                abstract class Middle extends Generic {
+                    /** @return G */
+                    public function gee() {}
+                }
 
-/**
- * @extends Middle<Boo,Baz,Bom>
- */
-class Foobar extends Middle
-{
-}
-PHP
+                /**
+                 * @extends Middle<Boo,Baz,Bom>
+                 */
+                class Foobar extends Middle
+                {
+                }
+                PHP
         ,
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
