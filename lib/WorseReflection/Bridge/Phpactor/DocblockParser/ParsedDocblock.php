@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
+use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
@@ -22,6 +23,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
@@ -231,5 +233,14 @@ class ParsedDocblock implements DocBlock
             $map[$templateTag->placeholder()] = new MissingType();
         }
         return new TemplateMap($map);
+    }
+
+    public function extends(): Type
+    {
+        foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
+            assert($extendsTag instanceof ExtendsTag);
+            return $this->typeConverter->convert($extendsTag->type);
+        }
+        return new MissingType();
     }
 }
