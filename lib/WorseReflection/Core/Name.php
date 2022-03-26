@@ -114,4 +114,9 @@ class Name
             $suffix
         ));
     }
+
+    public function count(): int
+    {
+        return count($this->parts);
+    }
 }

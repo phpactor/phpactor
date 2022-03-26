@@ -56,19 +56,12 @@ class MethodTypeResolver
     {
         return Types::fromTypes(array_map(function (Type $type) {
             $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
-            if ($type instanceof ClassType) {
-                $extendsType = $this->method->class()->docblock()->extends();
 
-                if (!$extendsType instanceof GenericClassType) {
-                    return $type;
-                }
-
-                $arguments = $extendsType->arguments();
-
-                return $this->method->declaringClass()->templateMap()->get($type->__toString(), $arguments);
-            }
-
-            return $type;
+            return GenericHelper::resolveMethodType(
+                $this->method->class(),
+                $this->method->declaringClass(),
+                $type
+            );
         }, $types));
     }
 
