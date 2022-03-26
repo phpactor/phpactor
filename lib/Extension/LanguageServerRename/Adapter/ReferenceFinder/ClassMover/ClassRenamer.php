@@ -85,6 +85,10 @@ final class ClassRenamer implements Renamer
         $newName = $this->createNewName($originalName, $newName);
         $newUri = TextDocumentUri::fromString($this->nameToUriConverter->convert($newName));
 
+        if ($newName === $originalName->getFullyQualifiedNameText()) {
+            return;
+        }
+
         $seen = [];
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
             if (isset($seen[$reference->location()->uri()->__toString()])) {

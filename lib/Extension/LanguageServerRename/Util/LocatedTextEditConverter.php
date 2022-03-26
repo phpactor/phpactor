@@ -24,7 +24,7 @@ final class LocatedTextEditConverter
         $this->locator = $locator;
     }
 
-    public function toWorkspaceEdit(LocatedTextEditsMap $map, RenameResult $renameResult): WorkspaceEdit
+    public function toWorkspaceEdit(LocatedTextEditsMap $map, ?RenameResult $renameResult = null): WorkspaceEdit
     {
         $documentEdits = [];
         foreach ($map->toLocatedTextEdits() as $result) {
@@ -40,11 +40,15 @@ final class LocatedTextEditConverter
                 )
             );
         }
-        $documentEdits[] = new RenameFile(
-            'rename',
-            $renameResult->oldUri(),
-            $renameResult->newUri(),
-        );
+
+        if (null !== $renameResult) {
+            $documentEdits[] = new RenameFile(
+                'rename',
+                $renameResult->oldUri(),
+                $renameResult->newUri(),
+            );
+        }
+
         return new WorkspaceEdit(null, $documentEdits);
     }
 
