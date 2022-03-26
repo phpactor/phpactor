@@ -63,7 +63,12 @@ class ReflectedClassType extends ClassType
             return new MissingType();
         }
 
-        foreach ($class->docblock()->implements() as $implementsType) {
+        assert($class instanceof ReflectionClassLike);
+        $implements = $class->docblock()->implements();
+        $extendsType = $class->docblock()->extends();
+        $implements[] = $extendsType;
+
+        foreach ($implements as $implementsType) {
             if (!$implementsType instanceof GenericClassType) {
                 return new MissingType();
             }
