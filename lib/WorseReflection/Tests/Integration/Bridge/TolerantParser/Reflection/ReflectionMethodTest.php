@@ -667,6 +667,8 @@ PHP
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('bar'));
                 self::assertEquals('Baz', $methods->get('bar')->inferredTypes()->best()->__toString());
+
+                // get extends
             },
         ];
     }

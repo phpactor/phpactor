@@ -27,6 +27,9 @@ class SourceCode implements TextDocument
         return $this->source;
     }
 
+    /**
+     * @param SourceCode|TextDocument|string $value
+     */
     public static function fromUnknown($value): SourceCode
     {
         if ($value instanceof SourceCode) {

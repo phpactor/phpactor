@@ -21,6 +21,9 @@ final class Offset
         $this->offset = $offset;
     }
 
+    /**
+     * @param Offset|ByteOffset|int $value
+     */
     public static function fromUnknown($value)
     {
         if ($value instanceof ByteOffset) {

@@ -33,27 +33,27 @@ class CompositeReflector implements Reflector
         $this->functionReflector = $functionReflector;
     }
     
-    public function reflectClass($className): ReflectionClass
+    public function reflectClass($className, array $arguments = []): ReflectionClass
     {
         return $this->classReflector->reflectClass($className);
     }
     
-    public function reflectInterface($className): ReflectionInterface
+    public function reflectInterface($className, array $arguments = []): ReflectionInterface
     {
         return $this->classReflector->reflectInterface($className);
     }
     
-    public function reflectTrait($className): ReflectionTrait
+    public function reflectTrait($className, array $arguments = []): ReflectionTrait
     {
         return $this->classReflector->reflectTrait($className);
     }
     
-    public function reflectEnum($className): ReflectionEnum
+    public function reflectEnum($className, array $arguments = []): ReflectionEnum
     {
         return $this->classReflector->reflectEnum($className);
     }
     
-    public function reflectClassLike($className): ReflectionClassLike
+    public function reflectClassLike($className, array $arguments = []): ReflectionClassLike
     {
         return $this->classReflector->reflectClassLike($className);
     }
