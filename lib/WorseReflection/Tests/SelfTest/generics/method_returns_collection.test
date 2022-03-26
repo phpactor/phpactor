@@ -1,12 +1,10 @@
 <?php
 
-class IteratorAggregate {}
-
 /**
  * @template T
- * @extends IteratorAggregate<T>
+ * @implements IteratorAggregate<T>
  */
-class Collection extends IteratorAggregate {
+class Collection implements IteratorAggregate {
 }
 
 /**
