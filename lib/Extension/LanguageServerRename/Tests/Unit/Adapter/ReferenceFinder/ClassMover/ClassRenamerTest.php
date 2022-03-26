@@ -158,7 +158,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
     private function createRenamer(
         string $namespaceRootDir,
         array $references,
-        TextDocument $textDocument,
+        TextDocument $textDocument
     ): ClassRenamer {
         $nameToUriConverter = new class($namespaceRootDir) implements NameToUriConverter {
             private string $namespaceRootDir;
