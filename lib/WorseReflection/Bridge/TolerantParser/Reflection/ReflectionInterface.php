@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\InterfaceBaseClause;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionConstantCollection;
@@ -85,11 +87,23 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             return true;
         }
 
-        if ($this->parents()) {
-            foreach ($this->parents() as $parent) {
-                if ($parent->isInstanceOf($className)) {
+        // do not try and reflect the parents if we can locally see that it is
+        // an instance of the given class
+        $baseClause = $this->node->interfaceBaseClause;
+        if ($baseClause instanceof InterfaceBaseClause) {
+            foreach ($baseClause->interfaceNameList->getElements() as $element) {
+                if (!$element instanceof QualifiedName) {
+                    continue;
+                }
+                if ((string)$element->getResolvedName() === $className->__toString()) {
                     return true;
                 }
+            }
+        }
+
+        foreach ($this->parents() as $parent) {
+            if ($parent->isInstanceOf($className)) {
+                return true;
             }
         }
 

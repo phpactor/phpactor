@@ -19,7 +19,12 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
     
     protected array $items = [];
 
-    protected function __construct(ServiceLocator $serviceLocator, array $items)
+    /**
+     * All names even if they could not be loaded
+     */
+    protected array $resolvedNames = [];
+
+    protected function __construct(ServiceLocator $serviceLocator, array $items, array $resolvedNames = [])
     {
         $this->serviceLocator = $serviceLocator;
         $this->items = $items;

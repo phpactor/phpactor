@@ -44,8 +44,12 @@ class GenericClassType extends ReflectedClassType implements IterableType
 
     public function iterableValueType(): Type
     {
-        if ($this->accepts(TypeFactory::class('Traversable'))->isTrue()) {
-             return $this->templateMap->get('TValue');
+        $class = $this->reflectionOrNull();
+        if (null === $class) {
+            return new MissingType();
+        }
+        if ($this->instanceOf(ClassName::fromString('Iterator'))->isTrue()) {
+            return $this->arguments[0];
         }
 
         return new MissingType();

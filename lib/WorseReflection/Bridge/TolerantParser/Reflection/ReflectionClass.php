@@ -378,15 +378,4 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     {
         return $this->node;
     }
-
-    public function templateMap(): TemplateMap
-    {
-        if ($this->templateMap) {
-            return $this->templateMap;
-        }
-
-        $this->templateMap = $this->docblock()->templateMap();
-
-        return $this->templateMap;
-    }
 }

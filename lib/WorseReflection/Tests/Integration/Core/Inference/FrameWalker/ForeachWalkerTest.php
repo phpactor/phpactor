@@ -77,6 +77,13 @@ class ForeachWalkerTest extends FrameWalkerTestCase
 
                 namespace Foobar;
 
+                /**
+                 * @template T
+                 * @implements \Iterable<T>
+                 */
+                class Collection implements \Iterable {
+                }
+
                 /** @var Collection<Item> $items */
                 $items = new Collection();
 
