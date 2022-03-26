@@ -27,6 +27,18 @@ class GenericHelper
             return $declaringClass->templateMap()->get($type->__toString(), $arguments);
         }
 
+        $implements = $class->docblock()->implements();
+
+        foreach ($implements as $implementsType) {
+            if (!$implementsType instanceof GenericClassType) {
+                continue;
+            }
+            if ($implementsType->name()->full() === $declaringClass->name()->__toString()) {
+                $arguments = $implementsType->arguments();
+                return $declaringClass->templateMap()->get($type->__toString(), $arguments);
+            }
+        }
+
         return new MissingType();
     }
 }
