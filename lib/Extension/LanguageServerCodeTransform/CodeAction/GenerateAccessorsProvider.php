@@ -10,6 +10,7 @@ use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
@@ -51,6 +52,10 @@ class GenerateAccessorsProvider implements CodeActionProvider
 
             // TODO: Class at offset
             $reflectionClass = $classes->first();
+
+            if (!$reflectionClass instanceof ReflectionClass) {
+                return [];
+            }
 
             $propertyNames = [];
             foreach ($reflectionClass->properties() as $property) {

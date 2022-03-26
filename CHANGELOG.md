@@ -12,6 +12,7 @@ Bug fixes:
   - [filesystem] Fix "too many files open" issue #1376
   - [class-mover] Fix long standing bug with aliased imports being duplicated
     on class move and other strange issues.
+  - [lsp] Fix call to properties() on non-class in generate accessors provider.
 
 Improvements:
 
