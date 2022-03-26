@@ -48,7 +48,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         $actualResults = iterator_to_array($rename, false);
 
         $renameResult = $rename->getReturn();
-        self::assertSame($newUri, $renameResult?->newUri()->__toString());
+        self::assertSame($newUri, $renameResult ? $renameResult->newUri()->__toString() : null);
 
         $edits = LocatedTextEditsMap::fromLocatedEdits($actualResults);
         $locateds = $edits->toLocatedTextEdits();
