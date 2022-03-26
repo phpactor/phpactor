@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TemplateMap;
 
 class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
 {
@@ -89,5 +90,10 @@ class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
     public function deprecation(): Deprecation
     {
         return $this->classLike->deprecation();
+    }
+
+    public function templateMap(): TemplateMap
+    {
+        return $this->classLike->templateMap();
     }
 }

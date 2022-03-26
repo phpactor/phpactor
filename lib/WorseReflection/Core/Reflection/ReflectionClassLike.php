@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\TemplateMap;
 
 interface ReflectionClassLike extends ReflectionNode
 {
@@ -37,4 +38,6 @@ interface ReflectionClassLike extends ReflectionNode
     public function docblock(): DocBlock;
 
     public function deprecation(): Deprecation;
+
+    public function templateMap(): TemplateMap;
 }

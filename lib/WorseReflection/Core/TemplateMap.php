@@ -34,6 +34,11 @@ final class TemplateMap
         return $this;
     }
 
+    public function has(string $key): bool
+    {
+        return isset($this->map[$key]);
+    }
+
     public function get(string $key): Type
     {
         if (!isset($this->map[$key])) {

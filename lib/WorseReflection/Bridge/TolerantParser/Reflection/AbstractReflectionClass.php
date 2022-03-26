@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Core\TemplateMap;
 
 abstract class AbstractReflectionClass extends AbstractReflectedNode implements ReflectionClassLike
 {
@@ -45,5 +46,10 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
     public function deprecation(): Deprecation
     {
         return $this->docblock()->deprecation();
+    }
+
+    public function templateMap(): TemplateMap
+    {
+        return new TemplateMap([]);
     }
 }
