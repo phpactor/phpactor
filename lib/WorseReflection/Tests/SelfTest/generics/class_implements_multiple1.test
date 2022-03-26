@@ -3,7 +3,7 @@
 /**
  * @template T
  */
-class First {
+interface First {
     /**
      * @return T
      */
@@ -37,5 +37,5 @@ class Foo implements Second, First
 
 $foo = new Foo();
 
-wrAssertType('Baz', $foo->boo());
 wrAssertType('Boo', $foo->bar());
+wrAssertType('Baz', $foo->boo());
