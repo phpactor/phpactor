@@ -34,12 +34,39 @@ final class TemplateMap
         return $this;
     }
 
-    public function get(string $key): Type
+    public function has(string $key): bool
+    {
+        return isset($this->map[$key]);
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function get(string $key, array $arguments = []): Type
     {
         if (!isset($this->map[$key])) {
             return new MissingType();
         }
 
+        if ($arguments) {
+            $offset = array_search($key, array_keys($this->map));
+
+            if (isset($arguments[$offset])) {
+                return $arguments[$offset];
+            }
+        }
+
         return $this->map[$key];
+    }
+
+    public function merge(TemplateMap $map): TemplateMap
+    {
+        $new = $this->map;
+        foreach ($map->map as $key => $value) {
+            $new[$key] = $value;
+        }
+
+
+        return new TemplateMap($new);
     }
 }

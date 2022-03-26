@@ -27,6 +27,9 @@ class SourceCode implements TextDocument
         return $this->source;
     }
 
+    /**
+     * @param SourceCode|TextDocument|string $value
+     */
     public static function fromUnknown($value): SourceCode
     {
         if ($value instanceof SourceCode) {
@@ -49,6 +52,7 @@ class SourceCode implements TextDocument
             return self::fromString($value);
         }
 
+        /** @phpstan-ignore-next-line */
         throw new InvalidArgumentException(sprintf(
             'Do not know how to create source code from type "%s"',
             is_object($value) ? get_class($value) : gettype($value)

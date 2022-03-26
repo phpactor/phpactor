@@ -5,12 +5,16 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
+use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
+use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
+use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\Tag\VarTag;
+use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -20,6 +24,9 @@ use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\TemplateMap;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
@@ -197,6 +204,36 @@ class ParsedDocblock implements DocBlock
         }
 
         return new Deprecation(false);
+    }
+
+    public function templateMap(): TemplateMap
+    {
+        $map = [];
+        foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
+            assert($templateTag instanceof TemplateTag);
+            $map[$templateTag->placeholder()] = new MissingType();
+        }
+        return new TemplateMap($map);
+    }
+
+    public function extends(): Type
+    {
+        foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
+            assert($extendsTag instanceof ExtendsTag);
+            return $this->typeConverter->convert($extendsTag->type);
+        }
+        return new MissingType();
+    }
+
+    public function implements(): array
+    {
+        foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
+            assert($implementsTag instanceof ImplementsTag);
+            return array_map(function (TypeNode $type) {
+                return $this->typeConverter->convert($type);
+            }, $implementsTag->types());
+        }
+        return [];
     }
 
     private function addParameters(VirtualReflectionMethod $method, VirtualReflectionParameterCollection $collection, ?ParameterList $parameterList): void

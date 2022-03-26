@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -53,7 +54,13 @@ class MethodTypeResolver
     private function resolveTypes(array $types): Types
     {
         return Types::fromTypes(array_map(function (Type $type) {
-            return $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+            $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+
+            return GenericHelper::resolveMethodType(
+                $this->method->class(),
+                $this->method->declaringClass(),
+                $type
+            );
         }, $types));
     }
 
@@ -88,7 +95,16 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                return $interface->methods()->get($this->method->name())->inferredTypes();
+                $types = $interface->methods()->get($this->method->name())->inferredTypes();
+                $type = GenericHelper::resolveMethodType(
+                    $this->method->class(),
+                    $interface,
+                    $types->best()
+                );
+                if ($type instanceof MissingType) {
+                    return Types::fromTypes([]);
+                }
+                return Types::fromTypes([$type]);
             }
         }
 

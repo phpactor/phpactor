@@ -101,9 +101,11 @@ final class Parser
                 return $this->parseTemplate();
 
             case '@extends':
+            case '@template-extends':
                 return $this->parseExtends();
 
             case '@implements':
+            case '@template-implements':
                 return $this->parseImplements();
         }
 
@@ -498,12 +500,12 @@ final class Parser
     private function parseImplements(): ImplementsTag
     {
         $tag = $this->tokens->chomp(Token::T_TAG);
-        $type = null;
+        $types = [];
 
         if ($this->tokens->if(Token::T_LABEL)) {
-            $type = $this->parseTypes();
+            $types = $this->parseTypeList()->list;
         }
 
-        return new ImplementsTag($tag, $type);
+        return new ImplementsTag($tag, $types);
     }
 }

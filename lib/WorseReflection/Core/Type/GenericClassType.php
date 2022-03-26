@@ -4,28 +4,24 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
-use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
 class GenericClassType extends ReflectedClassType implements IterableType
 {
     /**
-     * @var GenericClassType[]
+     * @var Type[]
      */
-    private array $extendAndImplements;
-
-    private TemplateMap $templateMap;
+    private array $arguments;
 
     /**
-     * @param GenericClassType[] $extendAndImplements
+     * @param Type[] $arguments
      */
-    public function __construct(ClassReflector $reflector, ClassName $name, TemplateMap $templateMap, array $extendAndImplements = [])
+    public function __construct(ClassReflector $reflector, ClassName $name, array $arguments)
     {
         parent::__construct($reflector, $name);
-        $this->extendAndImplements = $extendAndImplements;
-        $this->templateMap = $templateMap;
+        $this->arguments = $arguments;
     }
 
     public function __toString(): string
@@ -33,22 +29,21 @@ class GenericClassType extends ReflectedClassType implements IterableType
         return sprintf(
             '%s<%s>',
             $this->name->__toString(),
-            implode(',', array_map(fn (Type $t) => $t->__toString(), $this->templateMap->toArray()))
+            implode(',', array_map(fn (Type $t) => $t->__toString(), $this->arguments))
         );
     }
 
-    public function templateMap(): TemplateMap
+    /**
+     * @return Type[]
+     */
+    public function arguments(): array
     {
-        return $this->templateMap;
+        return $this->arguments;
     }
 
     public function iterableValueType(): Type
     {
-        if ($this->accepts(TypeFactory::class('Traversable'))->isTrue()) {
-            return $this->templateMap->get('TValue');
-        }
-
-        return new MissingType();
+        return IterableTypeResolver::resolveIterable($this, $this->arguments);
     }
 
     public function toPhpString(): string
@@ -62,12 +57,16 @@ class GenericClassType extends ReflectedClassType implements IterableType
             return Trinary::true();
         }
 
-        foreach ($this->extendAndImplements as $generic) {
-            if ($generic->accepts($type)->isTrue()) {
-                return Trinary::true();
-            }
+        return Trinary::false();
+    }
+
+    public function replaceArgument(int $offset, Type $type): self
+    {
+        if (!isset($this->arguments[$offset])) {
+            return $this;
         }
 
-        return Trinary::false();
+        $this->arguments[$offset] = $type;
+        return $this;
     }
 }

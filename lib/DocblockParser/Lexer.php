@@ -17,7 +17,7 @@ final class Lexer
         ' {1}\* {1}',
         '\[\]', // list
         '\?', //tag
-        '@\w+', //tag
+        '@[\w-]+', //tag
         '\R', // newline
         ' *', // space
         ',', // comma

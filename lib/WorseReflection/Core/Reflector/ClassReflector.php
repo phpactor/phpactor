@@ -14,16 +14,19 @@ interface ClassReflector
 {
     /**
      * Reflect class.
+     * @param Name|string $className
      */
     public function reflectClass($className): ReflectionClass;
 
     /**
      * Reflect an interface.
+     * @param Name|string $className
      */
     public function reflectInterface($className): ReflectionInterface;
 
     /**
      * Reflect a trait
+     * @param Name|string $className
      */
     public function reflectTrait($className): ReflectionTrait;
 
@@ -36,6 +39,7 @@ interface ClassReflector
 
     /**
      * Reflect a class, trait, enum or interface by its name.
+     * @param Name|string $className
      */
     public function reflectClassLike($className): ReflectionClassLike;
 

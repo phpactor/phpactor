@@ -8,6 +8,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectedClassType extends ClassType
 {
@@ -53,6 +55,32 @@ class ReflectedClassType extends ClassType
         } catch (NotFound $notFound) {
         }
         return null;
+    }
+
+    public function iterableValueType(): Type
+    {
+        $class = $this->reflectionOrNull();
+        if (!$class instanceof ReflectionClassLike) {
+            return new MissingType();
+        }
+        $scope = $class->scope();
+
+        assert($class instanceof ReflectionClassLike);
+        $implements = array_map(fn (Type $t) => $scope->resolveFullyQualifiedName($t), $class->docblock()->implements());
+        $extendsType = $scope->resolveFullyQualifiedName($class->docblock()->extends());
+        if (TypeUtil::isDefined($extendsType)) {
+            $implements[] = $extendsType;
+        }
+
+        foreach ($implements as $implementsType) {
+            if (!$implementsType instanceof GenericClassType) {
+                return new MissingType();
+            }
+
+            return IterableTypeResolver::resolveIterable($implementsType, $implementsType->arguments());
+        }
+
+        return new MissingType();
     }
 
     public function instanceOf(ClassName $className): Trinary

@@ -10,16 +10,32 @@ class ImplementsTag extends TagNode
 {
     protected const CHILD_NAMES = [
         'tag',
-        'type',
+        'tokensAndTypes',
     ];
     
     public Token $tag;
     
-    public TypeNode $type;
+    /**
+     * @var array<array-key, Token|TypeNode>
+     */
+    public array $tokensAndTypes;
 
-    public function __construct(Token $tag, ?TypeNode $type = null)
+    /**
+     * @param array<array-key, Token|TypeNode> $tokensAndTypes
+     */
+    public function __construct(Token $tag, array $tokensAndTypes = [])
     {
         $this->tag = $tag;
-        $this->type = $type;
+        $this->tokensAndTypes = $tokensAndTypes;
+    }
+
+    /**
+     * @return TypeNode[]
+     */
+    public function types(): array
+    {
+        return array_filter($this->tokensAndTypes, function ($node) {
+            return $node instanceof TypeNode;
+        });
     }
 }

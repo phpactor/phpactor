@@ -5,15 +5,22 @@ namespace Phpactor\WorseReflection\Core;
 use IteratorAggregate;
 use Countable;
 use ArrayIterator;
+use Phpactor\WorseReflection\TypeUtil;
 
 /**
  * @implements IteratorAggregate<Type>
  */
 final class Types implements IteratorAggregate, Countable
 {
-    private $types = [];
+    /**
+     * @var Type[]
+     */
+    private array $types = [];
 
-    private function __construct($inferredTypes)
+    /**
+     * @param Type[] $inferredTypes
+     */
+    private function __construct(array $inferredTypes)
     {
         foreach ($inferredTypes as $item) {
             $this->add($item);
@@ -33,6 +40,9 @@ final class Types implements IteratorAggregate, Countable
     public function best(): Type
     {
         foreach ($this->types as $type) {
+            if (!TypeUtil::isDefined($type)) {
+                continue;
+            }
             return $type;
         }
 

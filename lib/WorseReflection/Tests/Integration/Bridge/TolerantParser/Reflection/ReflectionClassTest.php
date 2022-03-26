@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -29,7 +30,7 @@ class ReflectionClassTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideReflectionClass()
+    public function provideReflectionClass(): Generator
     {
         yield 'It reflects an empty class' => [
             <<<'EOT'
