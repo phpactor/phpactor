@@ -350,7 +350,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return false === $this->isAbstract();
     }
 
-    public function docblock(): docblock
+    public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
     }

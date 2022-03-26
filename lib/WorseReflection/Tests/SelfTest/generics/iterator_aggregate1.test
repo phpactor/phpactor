@@ -3,7 +3,7 @@
 /**
  * @implements IteratorAggregate<int>
  */
-class Foobar extends IteratorAggregate {
+class Foobar implements IteratorAggregate {
 }
 
 $foo = new Foobar();

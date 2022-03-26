@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -95,11 +96,15 @@ class MethodTypeResolver
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
                 $types = $interface->methods()->get($this->method->name())->inferredTypes();
-                return Types::fromTypes([GenericHelper::resolveMethodType(
+                $type = GenericHelper::resolveMethodType(
                     $this->method->class(),
                     $interface,
                     $types->best()
-                )]);
+                );
+                if ($type instanceof MissingType) {
+                    return Types::fromTypes([]);
+                }
+                return Types::fromTypes([$type]);
             }
         }
 

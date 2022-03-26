@@ -12,9 +12,15 @@ use Phpactor\WorseReflection\TypeUtil;
  */
 final class Types implements IteratorAggregate, Countable
 {
-    private $types = [];
+    /**
+     * @var Type[]
+     */
+    private array $types = [];
 
-    private function __construct($inferredTypes)
+    /**
+     * @param Type[] $inferredTypes
+     */
+    private function __construct(array $inferredTypes)
     {
         foreach ($inferredTypes as $item) {
             $this->add($item);
