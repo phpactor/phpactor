@@ -2,12 +2,6 @@
     "name": "phpactor/phpactor",
     "description": "PHP refactoring and intellisense tool for text editors",
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:phpactor/docblock-parser"
-        }
-    ],
     "require": {
         "php": "^7.4 || ^8.0",
         "composer/package-versions-deprecated": "^1.0",
