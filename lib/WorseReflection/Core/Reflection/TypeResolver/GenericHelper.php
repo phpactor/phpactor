@@ -39,6 +39,6 @@ class GenericHelper
             }
         }
 
-        return new MissingType();
+        return $type;
     }
 }

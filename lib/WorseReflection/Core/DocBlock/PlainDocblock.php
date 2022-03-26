@@ -106,4 +106,9 @@ class PlainDocblock implements DocBlock
     {
         return new MissingType();
     }
+
+    public function implements(): array
+    {
+        return [];
+    }
 }

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use IteratorAggregate;
 use Countable;
 use ArrayIterator;
+use Phpactor\WorseReflection\TypeUtil;
 
 /**
  * @implements IteratorAggregate<Type>
@@ -33,6 +34,9 @@ final class Types implements IteratorAggregate, Countable
     public function best(): Type
     {
         foreach ($this->types as $type) {
+            if (!TypeUtil::isDefined($type)) {
+                continue;
+            }
             return $type;
         }
 

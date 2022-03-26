@@ -6,6 +6,7 @@ use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
+use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
@@ -221,6 +222,16 @@ class ParsedDocblock implements DocBlock
             return $this->typeConverter->convert($extendsTag->type);
         }
         return new MissingType();
+    }
+
+    public function implements(): array
+    {
+        foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
+            assert($implementsTag instanceof ImplementsTag);
+            return [$this->typeConverter->convert($implementsTag->type)];
+
+        }
+        return [];
     }
 
     private function addParameters(VirtualReflectionMethod $method, VirtualReflectionParameterCollection $collection, ?ParameterList $parameterList): void

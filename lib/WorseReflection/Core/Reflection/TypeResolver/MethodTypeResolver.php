@@ -96,7 +96,12 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                return $interface->methods()->get($this->method->name())->inferredTypes();
+                $types = $interface->methods()->get($this->method->name())->inferredTypes();
+                return Types::fromTypes([GenericHelper::resolveMethodType(
+                    $this->method->class(),
+                    $interface,
+                    $types->best()
+                )]);
             }
         }
 
