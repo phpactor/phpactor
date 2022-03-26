@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionConstantCollection;
@@ -20,6 +19,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as CoreReflectionInterface;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -91,13 +91,8 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         // an instance of the given class
         $baseClause = $this->node->interfaceBaseClause;
         if ($baseClause instanceof InterfaceBaseClause) {
-            foreach ($baseClause->interfaceNameList->getElements() as $element) {
-                if (!$element instanceof QualifiedName) {
-                    continue;
-                }
-                if ((string)$element->getResolvedName() === $className->__toString()) {
-                    return true;
-                }
+            if (NodeUtil::qualifiedNameListContains($baseClause->interfaceNameList, $className->__toString())) {
+                return true;
             }
         }
 

@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 
@@ -31,6 +30,7 @@ use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -306,12 +306,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         // an instance of the given class
         $baseClause = $this->node->classBaseClause;
         if ($baseClause instanceof ClassBaseClause) {
-            $name = $baseClause->baseClass;
-            if ($name instanceof QualifiedName) {
-                if ((string)$name->getResolvedName() === $className->__toString()) {
-                    return true;
-                }
-            }
+            NodeUtil::qualfiiedNameIs($baseClause->baseClass, $className->__toString());
         }
 
         // do not try and reflect the parents if we can locally see that it is
@@ -319,13 +314,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $baseClause = $this->node->classInterfaceClause;
         /** @phpstan-ignore-next-line */
         if ($baseClause instanceof ClassInterfaceClause) {
-            foreach ($baseClause->interfaceNameList->getElements() as $element) {
-                if (!$element instanceof QualifiedName) {
-                    continue;
-                }
-                if ((string)$element->getResolvedName() === $className->__toString()) {
-                    return true;
-                }
+            if (NodeUtil::qualifiedNameListContains($baseClause->interfaceNameList, $className->__toString())) {
+                return true;
             }
         }
 
