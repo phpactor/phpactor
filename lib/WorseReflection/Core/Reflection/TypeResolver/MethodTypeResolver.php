@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -53,7 +54,15 @@ class MethodTypeResolver
     private function resolveTypes(array $types): Types
     {
         return Types::fromTypes(array_map(function (Type $type) {
-            return $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+            $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+            if ($type instanceof ClassType) {
+                $templateMap = $this->method->class()->templateMap();
+                if ($templateMap->has($type->name()->short())) {
+                    return $templateMap->get($type->name()->short());
+                }
+            }
+
+            return $type;
         }, $types));
     }
 
