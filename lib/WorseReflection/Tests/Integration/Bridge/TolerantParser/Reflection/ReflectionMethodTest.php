@@ -667,8 +667,90 @@ PHP
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('bar'));
                 self::assertEquals('Baz', $methods->get('bar')->inferredTypes()->best()->__toString());
+            },
+        ];
+        yield 'return type from generic with multiple parameters' => [
+            <<<'PHP'
+<?php
 
-                // get extends
+/**
+ * @template T
+ * @template V
+ */
+abstract class Generic {
+    /**
+     * @return V
+     */
+    public function vee() {}
+    /**
+     * @return T
+     */
+    public function tee() {}
+}
+
+/**
+ * @extends Generic<Boo,Baz>
+ */
+class Foobar extends Generic
+{
+}
+PHP
+        ,
+            'Foobar',
+            function (ReflectionMethodCollection $methods): void {
+                self::assertTrue($methods->has('tee'));
+                self::assertTrue($methods->has('vee'));
+                self::assertEquals('Boo', $methods->get('tee')->inferredTypes()->best()->__toString());
+                self::assertEquals('Baz', $methods->get('vee')->inferredTypes()->best()->__toString());
+            },
+        ];
+        yield 'return type from generic with multiple parameters at a distance' => [
+            <<<'PHP'
+<?php
+
+/**
+ * @template T
+ * @template V
+ */
+abstract class Generic {
+    /**
+     * @return V
+     */
+    public function vee() {}
+    /**
+     * @return T
+     */
+    public function tee() {}
+}
+
+
+/**
+ * @template T
+ * @template V
+ * @template G
+ * @extends Generic<T, V>
+ */
+abstract class Middle extends Generic {
+    /** @return G */
+    public function gee() {}
+}
+
+/**
+ * @extends Middle<Boo,Baz,Bom>
+ */
+class Foobar extends Middle
+{
+}
+PHP
+        ,
+            'Foobar',
+            function (ReflectionMethodCollection $methods): void {
+                self::assertTrue($methods->has('tee'));
+                self::assertTrue($methods->has('vee'));
+                self::assertTrue($methods->has('gee'));
+                self::assertEquals('Boo', $methods->get('tee')->inferredTypes()->best()->__toString());
+                self::assertEquals('Baz', $methods->get('vee')->inferredTypes()->best()->__toString());
+                self::assertEquals('Bom', $methods->get('gee')->inferredTypes()->best()->__toString());
             },
         ];
     }
