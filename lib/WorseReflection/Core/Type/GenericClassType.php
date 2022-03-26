@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
 class GenericClassType extends ReflectedClassType implements IterableType
 {
@@ -42,16 +43,7 @@ class GenericClassType extends ReflectedClassType implements IterableType
 
     public function iterableValueType(): Type
     {
-        $class = $this->reflectionOrNull();
-        if (null === $class) {
-            return new MissingType();
-        }
-
-        if ($this->instanceOf(ClassName::fromString('Iterator'))->isTrue()) {
-            return $this->arguments[0];
-        }
-
-        return new MissingType();
+        return IterableTypeResolver::resolveIterable($this, $this->arguments);
     }
 
     public function toPhpString(): string
