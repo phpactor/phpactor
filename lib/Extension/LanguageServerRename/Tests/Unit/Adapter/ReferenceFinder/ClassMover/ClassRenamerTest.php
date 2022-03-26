@@ -27,8 +27,9 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         string $oldPath,
         string $source,
         string $newName,
-        string $newUri,
-        string $expected,
+        ?string $newUri,
+        int $expectedEditsCount,
+        ?string $expected
     ): void {
         $extractor = OffsetExtractor::create()
             ->registerOffset('offset', '<>')
@@ -49,11 +50,15 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         $actualResults = iterator_to_array($rename, false);
 
         $renameResult = $rename->getReturn();
-        self::assertEquals($newUri, $renameResult?->newUri()->__toString());
+        self::assertSame($newUri, $renameResult?->newUri()->__toString());
 
         $edits = LocatedTextEditsMap::fromLocatedEdits($actualResults);
         $locateds = $edits->toLocatedTextEdits();
-        self::assertCount(1, $locateds);
+        self::assertCount($expectedEditsCount, $locateds);
+
+        if (0 === $expectedEditsCount) {
+            return;
+        }
         $located = reset($locateds);
         assert($located instanceof LocatedTextEdits);
         self::assertEquals($expected, $located->textEdits()->apply($source));
@@ -66,7 +71,17 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php <r>class Cl<>ass1 { }',
             'Class2',
             'file:///foo/Class2.php',
+            1,
             '<?php class Class2 { }',
+        ];
+
+        yield 'class: no change' => [
+            '/foo/Class1.php',
+            '<?php <r>class Cl<>ass1 { }',
+            'Class1',
+            null,
+            0,
+            null,
         ];
 
         yield 'interface' => [
@@ -74,6 +89,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php <r>interface Inter<>face1 { }',
             'Interface2',
             'file:///foo/Interface2.php',
+            1,
             '<?php interface Interface2 { }',
         ];
 
@@ -82,6 +98,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php <r>interface Inter<>face1 { } class Class1 implements Interface1 { }',
             'Interface2',
             'file:///foo/Interface2.php',
+            1,
             '<?php interface Interface2 { } class Class1 implements Interface2 { }',
         ];
 
@@ -90,6 +107,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php <r>trait Tra<>it1 { }',
             'Trait2',
             'file:///foo/Trait2.php',
+            1,
             '<?php trait Trait2 { }',
         ];
 
@@ -98,6 +116,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php <r>trait Tra<>it1 { } class Class1 { use Trait1; }',
             'Trait2',
             'file:///foo/Trait2.php',
+            1,
             '<?php trait Trait2 { } class Class1 { use Trait2; }',
         ];
 
@@ -106,6 +125,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php namespace Foo; <r>class Cl<>ass1 { }',
             'Class2',
             'file:///foo/Foo/Class2.php',
+            1,
             '<?php namespace Foo; class Class2 { }',
         ];
 
@@ -114,6 +134,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php namespace Foo; <r>class Class1 { } <r>Cla<>ss1::foo();',
             'Class2',
             'file:///foo/Foo/Class2.php',
+            1,
             '<?php namespace Foo; class Class2 { } Class2::foo();',
         ];
 
@@ -122,6 +143,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php use Foo\Class1; <r>Cla<>ss1::foo();',
             'Class2',
             'file:///foo/Foo/Class2.php',
+            1,
             '<?php use Foo\Class2; Class2::foo();',
         ];
 
@@ -130,6 +152,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php use Class1; <r>Cla<>ss1::foo();',
             'Class2',
             'file:///foo/Class2.php',
+            1,
             '<?php use Class2; Class2::foo();',
         ];
     }
