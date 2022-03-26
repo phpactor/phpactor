@@ -91,7 +91,6 @@ class SymbolContextResolver
     {
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
 
-        /** @var QualifiedName $node */
         if ($node instanceof QualifiedName) {
             return $this->resolveQualfiedName($frame, $node);
         }
@@ -99,7 +98,6 @@ class SymbolContextResolver
             return $this->resolveQualfiedNameList($frame, $node);
         }
 
-        /** @var ConstElement $node */
         if ($node instanceof ConstElement) {
             return $this->symbolFactory->context(
                 $node->getName(),
@@ -169,7 +167,7 @@ class SymbolContextResolver
 
         if ($node instanceof ClassDeclaration || $node instanceof TraitDeclaration || $node instanceof InterfaceDeclaration) {
             return $this->symbolFactory->context(
-                $node->name->getText($node->getFileContents()),
+                $node->name->getText((string)$node->getFileContents()),
                 $node->name->getStartPosition(),
                 $node->name->getEndPosition(),
                 [
@@ -182,7 +180,7 @@ class SymbolContextResolver
 
         if ($node instanceof FunctionDeclaration) {
             return $this->symbolFactory->context(
-                $node->name->getText($node->getFileContents()),
+                (string)$node->name->getText((string)$node->getFileContents()),
                 $node->name->getStartPosition(),
                 $node->name->getEndPosition(),
                 [
@@ -201,7 +199,6 @@ class SymbolContextResolver
             return $this->resolveSubscriptExpression($frame, $variableValue, $node);
         }
 
-        /** @var StringLiteral $node */
         if ($node instanceof StringLiteral) {
             return $this->symbolFactory->context(
                 (string) $node->getStringContentsText(),
@@ -761,7 +758,7 @@ class SymbolContextResolver
         }
 
         $information = $this->symbolFactory->context(
-            $memberName,
+            (string)$memberName,
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
