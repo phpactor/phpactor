@@ -498,12 +498,12 @@ final class Parser
     private function parseImplements(): ImplementsTag
     {
         $tag = $this->tokens->chomp(Token::T_TAG);
-        $type = null;
+        $types = [];
 
         if ($this->tokens->if(Token::T_LABEL)) {
-            $type = $this->parseTypes();
+            $types = $this->parseTypeList();
         }
 
-        return new ImplementsTag($tag, $type);
+        return new ImplementsTag($tag, $types->list);
     }
 }
