@@ -13,7 +13,6 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
