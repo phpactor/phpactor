@@ -20,6 +20,7 @@ class DocblockParserFactory implements DocBlockFactory
         '@method',
         '@deprecated',
         '@extends',
+        '@implements',
         '@template',
     ];
 

@@ -79,9 +79,9 @@ class ForeachWalkerTest extends FrameWalkerTestCase
 
                 /**
                  * @template T
-                 * @implements \Iterable<T>
+                 * @implements \Iterator<T>
                  */
-                class Collection implements \Iterable {
+                class Collection implements \Iterator {
                 }
 
                 /** @var Collection<Item> $items */

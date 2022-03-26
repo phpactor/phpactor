@@ -48,6 +48,7 @@ class GenericClassType extends ReflectedClassType implements IterableType
         if (null === $class) {
             return new MissingType();
         }
+
         if ($this->instanceOf(ClassName::fromString('Iterator'))->isTrue()) {
             return $this->arguments[0];
         }
