@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
@@ -20,6 +21,7 @@ class ReflectionMethodTest extends IntegrationTestCase
 
     /**
      * @dataProvider provideReflectionMethod
+     * @dataProvider provideGenerics
      * @dataProvider provideDeprecations
      */
     public function testReflectMethod(string $source, string $class, Closure $assertion): void
@@ -634,7 +636,45 @@ class ReflectionMethodTest extends IntegrationTestCase
         ];
     }
 
-    public function provideDeprecations()
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideGenerics(): Generator
+    {
+        yield 'return type from generic' => [
+            <<<'PHP'
+<?php
+
+/**
+ * @template T
+ */
+abstract class Generic {
+    /**
+     * @return T
+     */
+    public function bar() {}
+}
+
+/**
+ * @extends Generic<Baz>
+ */
+class Foobar extends Generic
+{
+}
+PHP
+        ,
+            'Foobar',
+            function (ReflectionMethodCollection $methods): void {
+                self::assertTrue($methods->has('bar'));
+                self::assertEquals('Baz', $methods->get('bar')->inferredTypes()->best()->__toString());
+            },
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideDeprecations(): Generator
     {
         yield 'It shows when method is deprecated' => [
             <<<'EOT'
