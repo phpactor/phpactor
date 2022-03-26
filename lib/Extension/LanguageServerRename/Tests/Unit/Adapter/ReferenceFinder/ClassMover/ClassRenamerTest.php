@@ -4,23 +4,32 @@ namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Adapter\ReferenceFi
 
 use Generator;
 use Microsoft\PhpParser\Parser;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdits;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
+use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\Adapter\ReferenceFinder\ReferenceRenamerIntegrationTestCase;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
 {
     /**
      * @dataProvider provideRename
      */
-    public function testRename(string $source, string $newName, string $expected): void
-    {
+    public function testRename(
+        string $oldPath,
+        string $source,
+        string $newName,
+        string $newUri,
+        string $expected,
+    ): void {
         $extractor = OffsetExtractor::create()
             ->registerOffset('offset', '<>')
             ->registerOffset('r', '<r>')
@@ -30,13 +39,17 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         $references = $extractor->offsets('r');
 
         $source = $extractor->source();
-        
-        $textDocument = TextDocumentBuilder::create($source)->uri('/foo')->build();
-        
-        $renamer = $this->createRenamer($references, $textDocument);
-        self::assertNotNull($renamer->getRenameRange($textDocument, $offset));
 
-        $actualResults = iterator_to_array($renamer->rename($textDocument, $offset, $newName), false);
+        $textDocument = TextDocumentBuilder::create($source)->uri($oldPath)->build();
+
+        $renamer = $this->createRenamer('/foo/', $references, $textDocument);
+        self::assertNotNull($renamer->getRenameRange($textDocument, $offset));
+        $rename = $renamer->rename($textDocument, $offset, $newName);
+
+        $actualResults = iterator_to_array($rename, false);
+
+        $renameResult = $rename->getReturn();
+        self::assertEquals($newUri, $renameResult?->newUri()->__toString());
 
         $edits = LocatedTextEditsMap::fromLocatedEdits($actualResults);
         $locateds = $edits->toLocatedTextEdits();
@@ -49,63 +62,103 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
     public function provideRename(): Generator
     {
         yield 'class' => [
+            '/foo/Class1.php',
             '<?php <r>class Cl<>ass1 { }',
             'Class2',
+            'file:///foo/Class2.php',
             '<?php class Class2 { }',
         ];
 
         yield 'interface' => [
+            '/foo/Interface1.php',
             '<?php <r>interface Inter<>face1 { }',
             'Interface2',
+            'file:///foo/Interface2.php',
             '<?php interface Interface2 { }',
         ];
 
         yield 'interface: updates implements' => [
+            '/foo/Interface1.php',
             '<?php <r>interface Inter<>face1 { } class Class1 implements Interface1 { }',
             'Interface2',
+            'file:///foo/Interface2.php',
             '<?php interface Interface2 { } class Class1 implements Interface2 { }',
         ];
 
         yield 'trait' => [
+            '/foo/Trait1.php',
             '<?php <r>trait Tra<>it1 { }',
             'Trait2',
+            'file:///foo/Trait2.php',
             '<?php trait Trait2 { }',
         ];
 
         yield 'trait: updates uses' => [
+            '/foo/Trait1.php',
             '<?php <r>trait Tra<>it1 { } class Class1 { use Trait1; }',
             'Trait2',
+            'file:///foo/Trait2.php',
             '<?php trait Trait2 { } class Class1 { use Trait2; }',
         ];
 
         yield 'namespaced class' => [
+            '/foo/Foo/Class1.php',
             '<?php namespace Foo; <r>class Cl<>ass1 { }',
             'Class2',
+            'file:///foo/Foo/Class2.php',
             '<?php namespace Foo; class Class2 { }',
         ];
 
         yield 'class reference' => [
+            '/foo/Foo/Class1.php',
             '<?php namespace Foo; <r>class Class1 { } <r>Cla<>ss1::foo();',
             'Class2',
+            'file:///foo/Foo/Class2.php',
             '<?php namespace Foo; class Class2 { } Class2::foo();',
         ];
 
         yield 'updates namespaced imported class' => [
+            '/foo/Foo/Class1.php',
             '<?php use Foo\Class1; <r>Cla<>ss1::foo();',
             'Class2',
+            'file:///foo/Foo/Class2.php',
             '<?php use Foo\Class2; Class2::foo();',
         ];
 
         yield 'updates imported class' => [
+            '/foo/Class1.php',
             '<?php use Class1; <r>Cla<>ss1::foo();',
             'Class2',
+            'file:///foo/Class2.php',
             '<?php use Class2; Class2::foo();',
         ];
     }
 
-    private function createRenamer(array $references, TextDocument $textDocument): ClassRenamer
-    {
+    private function createRenamer(
+        string $namespaceRootDir,
+        array $references,
+        TextDocument $textDocument,
+    ): ClassRenamer {
+        $nameToUriConverter = new class($namespaceRootDir) implements NameToUriConverter {
+            private string $namespaceRootDir;
+            public function __construct(
+                string $namespaceRootDir
+            ) {
+                $this->namespaceRootDir = $namespaceRootDir;
+            }
+
+            public function convert(string $className): TextDocumentUri
+            {
+                return TextDocumentUri::fromString(sprintf(
+                    '%s%s.php',
+                    $this->namespaceRootDir,
+                    str_replace('\\', '/', $className),
+                ));
+            }
+        };
+
         return new ClassRenamer(
+            $nameToUriConverter,
             $this->offsetsToReferenceFinder($textDocument, $references),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),
