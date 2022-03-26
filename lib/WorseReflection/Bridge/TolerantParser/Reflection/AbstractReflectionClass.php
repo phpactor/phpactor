@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 abstract class AbstractReflectionClass extends AbstractReflectedNode implements ReflectionClassLike
 {
     abstract public function name(): ClassName;
-    abstract public function docBlock(): DocBlock;
+    abstract public function docblock(): DocBlock;
 
     /**
      * @deprecated Use instanceof instead
