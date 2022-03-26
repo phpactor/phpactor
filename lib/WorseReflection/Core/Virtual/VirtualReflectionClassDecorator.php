@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
@@ -79,13 +80,19 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         $realMethods = $this->class->methods($contextClass ?: $this->class);
         $virtualMethods = $this->virtualMethods();
 
-        return $realMethods->merge($virtualMethods);
+        $merged = $realMethods->merge($virtualMethods);
+        assert($merged instanceof ReflectionMethodCollection);
+        return $merged;
     }
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
     public function members(): ReflectionMemberCollection
     {
         $members = $this->class->members();
         $members->merge($this->virtualMethods());
+        assert($members instanceof ReflectionMemberCollection);
         return $members;
     }
 

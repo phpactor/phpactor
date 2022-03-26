@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -33,9 +34,9 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     
     private SourceCode $sourceCode;
 
-    private $parents;
+    private ?ReflectionInterfaceCollection $parents = null;
 
-    private $methods;
+    private ?ReflectionMethodCollection $methods = null;
 
     public function __construct(
         ServiceLocator $serviceLocator,
@@ -47,6 +48,9 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         $this->sourceCode = $sourceCode;
     }
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
     public function members(): ReflectionMemberCollection
     {
         return ChainReflectionMemberCollection::fromCollections([
@@ -121,8 +125,9 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         $contextClass = $contextClass ?: $this;
         $parentMethods = ReflectionMethodCollection::fromReflectionMethods($this->serviceLocator, $parentMethods);
         $methods = ReflectionMethodCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $contextClass);
-
-        $this->methods =  $parentMethods->merge($methods);
+        $merged = $parentMethods->merge($methods);
+        assert($merged instanceof ReflectionMethodCollection);
+        $this->methods = $merged;
 
         return $this->methods;
     }

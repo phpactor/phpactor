@@ -46,7 +46,9 @@ class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDeco
         $realMethods = $this->interface->methods($contextClass);
         $virtualMethods = $this->virtualMethods();
 
-        return $realMethods->merge($virtualMethods);
+        $methods = $realMethods->merge($virtualMethods);
+        assert($methods instanceof ReflectionMethodCollection);
+        return $methods;
     }
 
     public function members(): ReflectionMemberCollection
