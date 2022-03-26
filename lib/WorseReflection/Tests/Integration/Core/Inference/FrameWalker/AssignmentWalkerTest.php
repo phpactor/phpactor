@@ -210,13 +210,20 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             }
         ];
 
-        yield 'From return type with docblock' => [
+        yield 'From generic return type with docblock' => [
             <<<'EOT'
                 <?php
 
                 namespace Foobar;
 
                 use Foo\Lister;
+
+                /**
+                 * @template T
+                 * @extends \Iterator<T>
+                 */
+                interface List extends \Iterator {
+                }
 
                 interface Barfoo
                 {
