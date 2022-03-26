@@ -17,13 +17,13 @@ abstract class BaseBenchCase
 
     public function setUp(): void
     {
-        $composerLocator = new ComposerSourceLocator(include(__DIR__ . '/../../vendor/autoload.php'));
+        $composerLocator = new ComposerSourceLocator(include(__DIR__ . '/../../../../vendor/autoload.php'));
 
         $workspace = new Workspace(__DIR__ . '/../Workspace');
         $workspace->reset();
         $stubLocator = new StubSourceLocator(
             ReflectorBuilder::create()->build(),
-            __DIR__ . '/../../vendor/jetbrains/phpstorm-stubs',
+            __DIR__ . '/../../../../vendor/jetbrains/phpstorm-stubs',
             $workspace->path('/')
         );
 
