@@ -229,7 +229,6 @@ class ParsedDocblock implements DocBlock
         foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
             assert($implementsTag instanceof ImplementsTag);
             return [$this->typeConverter->convert($implementsTag->type)];
-
         }
         return [];
     }
