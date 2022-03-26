@@ -28,6 +28,7 @@ use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -370,5 +371,15 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     protected function node(): Node
     {
         return $this->node;
+    }
+
+    public function templateMap(): TemplateMap
+    {
+        $map = $this->docblock()->templateMap();
+        if ($parent = $this->parent()) {
+            $map = $map->merge($this->parent()->docblock()->templateMap());
+        }
+
+        return $map;
     }
 }

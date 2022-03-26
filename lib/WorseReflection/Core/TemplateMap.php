@@ -47,4 +47,14 @@ final class TemplateMap
 
         return $this->map[$key];
     }
+
+    public function merge(TemplateMap $map): TemplateMap
+    {
+        $new = $this->map;
+        foreach ($map->map as $key => $value) {
+            $new[$key] = $value;
+        }
+
+        return new TemplateMap($new);
+    }
 }
