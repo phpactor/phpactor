@@ -27,6 +27,7 @@ class SelfTest extends IntegrationTestCase
     public function provideSelf(): Generator
     {
         foreach ([
+            'flow',
             'generics',
         ] as $topic) {
             foreach ((array)glob(__DIR__ . '/' . $topic . '/*.test') as $fname) {

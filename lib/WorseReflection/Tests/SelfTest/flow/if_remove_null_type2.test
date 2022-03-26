@@ -1,0 +1,11 @@
+<?php
+
+function foo(?Foo $foo = null) {
+    if (null === $foo) {
+        return;
+    }
+
+    // @todo the null type should be stripped
+    wrAssertType('?Foo', $foo);
+}
+

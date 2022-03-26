@@ -10,6 +10,21 @@ use Microsoft\PhpParser\Token;
 class NodeUtil
 {
     /**
+     * @param Token|Node|mixed $nodeOrToken
+     */
+    public static function nameFromTokenOrNode(Node $node, $nodeOrToken): string
+    {
+        if ($nodeOrToken instanceof Token) {
+            return (string)$nodeOrToken->getText($node->getFileContents());
+        }
+        if ($nodeOrToken instanceof Node) {
+            return (string)$nodeOrToken->getText();
+        }
+
+        return '';
+    }
+
+    /**
      * @param Token|QualifiedName|mixed $name
      */
     public static function nameFromTokenOrQualifiedName(Node $node, $name): string
