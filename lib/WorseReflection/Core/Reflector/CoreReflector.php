@@ -180,6 +180,9 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
     }
 
+    /**
+     * @param Name|string $name
+     */
     public function reflectFunction($name): ReflectionFunction
     {
         $name = Name::fromUnknown($name);

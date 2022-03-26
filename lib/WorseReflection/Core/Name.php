@@ -34,7 +34,10 @@ class Name
         return new static($parts, $fullyQualified);
     }
 
-    public static function fromUnknown($value)
+    /**
+     * @param Name|string $value
+     */
+    public static function fromUnknown($value): self
     {
         if ($value instanceof Name) {
             return $value;
