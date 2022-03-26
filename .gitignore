@@ -6,6 +6,7 @@
 /extensions
 /phpactor.schema.json
 /**/Tests/Workspace
+/lib/Completion/cache
 /lib/Test.php
 
 # File frequently used for testing
