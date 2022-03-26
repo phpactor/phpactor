@@ -20,6 +20,7 @@ class GenericHelper
         }
 
         $extendsType = $class->docblock()->extends();
+        $extendsType = $class->scope()->resolveFullyQualifiedName($extendsType);
 
         if ($extendsType instanceof GenericClassType) {
             $arguments = $extendsType->arguments();
@@ -29,9 +30,11 @@ class GenericHelper
         $implements = $class->docblock()->implements();
 
         foreach ($implements as $implementsType) {
+            $implementsType = $class->scope()->resolveFullyQualifiedName($implementsType);
             if (!$implementsType instanceof GenericClassType) {
                 continue;
             }
+
             if ($implementsType->name()->full() === $declaringClass->name()->__toString()) {
                 $arguments = $implementsType->arguments();
                 return $declaringClass->templateMap()->get($type->__toString(), $arguments);

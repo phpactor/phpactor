@@ -81,11 +81,6 @@ class WorseBuilderFactory implements BuilderFactory
             }
         }
 
-        $m = $reflectionClass->methods();
-        foreach ($m as $c) {
-            $c;
-        }
-
         foreach ($reflectionClass->methods()->real()->belongingTo($reflectionClass->name()) as $method) {
             $this->buildMethod($classBuilder, $method);
         }

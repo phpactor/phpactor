@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectedClassType extends ClassType
 {
@@ -59,14 +60,17 @@ class ReflectedClassType extends ClassType
     public function iterableValueType(): Type
     {
         $class = $this->reflectionOrNull();
-        if (null === $class) {
+        if (!$class instanceof ReflectionClassLike) {
             return new MissingType();
         }
+        $scope = $class->scope();
 
         assert($class instanceof ReflectionClassLike);
-        $implements = $class->docblock()->implements();
-        $extendsType = $class->docblock()->extends();
-        $implements[] = $extendsType;
+        $implements = array_map(fn (Type $t) => $scope->resolveFullyQualifiedName($t), $class->docblock()->implements());
+        $extendsType = $scope->resolveFullyQualifiedName($class->docblock()->extends());
+        if (TypeUtil::isDefined($extendsType)) {
+            $implements[] = $extendsType;
+        }
 
         foreach ($implements as $implementsType) {
             if (!$implementsType instanceof GenericClassType) {
