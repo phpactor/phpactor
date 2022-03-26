@@ -64,4 +64,14 @@ class GenericClassType extends ReflectedClassType implements IterableType
 
         return Trinary::false();
     }
+
+    public function replaceArgument(int $offset, Type $type): self
+    {
+        if (!isset($this->arguments[$offset])) {
+            return $this;
+        }
+
+        $this->arguments[$offset] = $type;
+        return $this;
+    }
 }

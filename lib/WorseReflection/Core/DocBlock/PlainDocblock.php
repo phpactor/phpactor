@@ -6,6 +6,8 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
@@ -98,5 +100,10 @@ class PlainDocblock implements DocBlock
     public function templateMap(): TemplateMap
     {
         return new TemplateMap([]);
+    }
+
+    public function extends(): Type
+    {
+        return new MissingType();
     }
 }
