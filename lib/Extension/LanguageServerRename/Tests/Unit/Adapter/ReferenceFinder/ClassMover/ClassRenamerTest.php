@@ -4,9 +4,7 @@ namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Adapter\ReferenceFi
 
 use Generator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdits;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
