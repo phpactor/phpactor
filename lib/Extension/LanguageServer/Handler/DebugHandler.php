@@ -7,6 +7,8 @@ use Amp\Success;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\LanguageServer\Core\Server\ServerStats;
+use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Handler\Handler;
@@ -15,6 +17,7 @@ class DebugHandler implements Handler
 {
     const METHOD_DEBUG_CONFIG = 'phpactor/debug/config';
     const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
+    const METHOD_DEBUG_STATUS = 'phpactor/status';
 
     private Container $container;
 
@@ -22,11 +25,22 @@ class DebugHandler implements Handler
 
     private Workspace $workspace;
 
-    public function __construct(Container $container, ClientApi $client, Workspace $workspace)
-    {
+    private ServerStats $stats;
+
+    private ServiceManager $serviceManager;
+
+    public function __construct(
+        Container $container,
+        ClientApi $client,
+        Workspace $workspace,
+        ServerStats $stats,
+        ServiceManager $serviceManager
+    ) {
         $this->container = $container;
         $this->client = $client;
         $this->workspace = $workspace;
+        $this->stats = $stats;
+        $this->serviceManager = $serviceManager;
     }
 
     
@@ -34,14 +48,15 @@ class DebugHandler implements Handler
     {
         return [
             self::METHOD_DEBUG_CONFIG => 'dumpConfig',
-            self::METHOD_DEBUG_WORKSPACE => 'dumpWorkspace'
+            self::METHOD_DEBUG_WORKSPACE => 'dumpWorkspace',
+            self::METHOD_DEBUG_STATUS => 'status'
         ];
     }
 
     /**
-     * @return Promise<null>
+     * @return Promise<null|string>
      */
-    public function dumpConfig(): Promise
+    public function dumpConfig(bool $return = false): Promise
     {
         $message = [
             'Config Dump',
@@ -66,10 +81,14 @@ class DebugHandler implements Handler
         $message[] = '------';
 
 
-        $message[] = json_encode($this->container->getParameters(), JSON_PRETTY_PRINT);
+        $json = (string)json_encode($this->container->getParameters(), JSON_PRETTY_PRINT);
+        $message[] = $json;
+
+        if ($return) {
+            return new Success($json);
+        }
 
         $this->client->window()->logMessage()->info(implode(PHP_EOL, $message));
-
         return new Success(null);
     }
 
@@ -89,5 +108,42 @@ class DebugHandler implements Handler
         $this->client->window()->logMessage()->info(implode("\n", $info));
 
         return new Success(null);
+    }
+
+    /**
+     * @return Promise<string>
+     */
+    public function status(): Promise
+    {
+        $info = [
+            'Process',
+            '-------',
+            '',
+            '  cwd:' . getcwd(),
+            '  pid: ' . getmypid(),
+            '  up: ' . $this->stats->uptime()->format('%ad %hh %im %ss'),
+            '',
+            'Server',
+            '------',
+            '',
+            // '  connections: ' . $this->stats->connectionCount(),
+            // '  requests: ' . $this->stats->requestCount(),
+            '  mem: ' . number_format(memory_get_peak_usage()) . 'b',
+            '  documents: ' . $this->workspace->count(),
+            '  services: ' . (string)json_encode($this->serviceManager->runningServices()),
+            '',
+            'Paths',
+            '-----',
+            '',
+        ];
+        foreach (
+            $this->container->get(
+                FilePathResolverExtension::SERVICE_EXPANDERS
+            )->toArray() as $tokenName => $value
+        ) {
+            $info[] = sprintf('  %s: %s', $tokenName, $value);
+        }
+
+        return new Success(implode(PHP_EOL, $info));
     }
 }

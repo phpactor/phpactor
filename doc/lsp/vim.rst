@@ -98,9 +98,10 @@ Client Guides
 
     .. tab:: Neovim LSP
 
-        You will need Neovim 0.5.0 or higher.
-
-        Ensure you have installed `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package: This contains common LSP configurations, including one for Phpactor.
+        Prerequisites:
+            - Neovim 0.5.0 or higher.
+            - `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package (this contains common LSP configurations, including one for Phpactor)
+            - `phpactor` is installed and executable in your path
 
         For example: include it in your ``.vimrc`` with Plug:
 
@@ -108,17 +109,30 @@ Client Guides
 
             Plug 'neovim/nvim-lspconfig'
 
-        Then enable it in your ``.vimrc.``:
+        Then enable it in your ``.vimrc.`` (note that `on_attach` is a
+        `callback
+        <https://github.com/neovim/nvim-lspconfig#suggested-configuration>`_
+        which can be used for key bindings):
 
         ::
 
             lua << EOF
-            require'lspconfig'.phpactor.setup{}
+            require'lspconfig'.phpactor.setup{
+                on_attach = on_attach,
+                init_options = {
+                    ["language_server_phpstan.enabled"] = false,
+                    ["language_server_psalm.enabled"] = false,
+                }
+            }
             EOF
 
-        Ensure phpactor is in your ``$PATH``
+        the `init_options` map directly to Phpactors configuration.
 
-        Please refer to the `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings (also see `:help lsp`).
+        Please refer to the `nvim-lspconfig
+        <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings
+        (also see `:help lsp`).
+
+        See :doc:`vim-lsp` for further configuration options.
 
     .. tab:: Autozimu
 
