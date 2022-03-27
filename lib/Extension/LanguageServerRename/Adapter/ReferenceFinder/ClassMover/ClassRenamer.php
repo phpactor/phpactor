@@ -15,16 +15,21 @@ use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
+use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
+use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
+    private NameToUriConverter $nameToUriConverter;
+
     private ReferenceFinder $referenceFinder;
 
     private TextDocumentLocator $locator;
@@ -34,11 +39,13 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
+        NameToUriConverter $nameToUriConverter,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
+        $this->nameToUriConverter = $nameToUriConverter;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
         $this->parser = $parser;
@@ -68,13 +75,17 @@ final class ClassRenamer implements Renamer
         return null;
     }
 
-    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
+        $newUri = TextDocumentUri::fromString($this->nameToUriConverter->convert($newName));
+
+        if ($newName === $originalName->getFullyQualifiedNameText()) {
+            return;
+        }
 
         $seen = [];
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
@@ -97,10 +108,12 @@ final class ClassRenamer implements Renamer
             foreach ($edits as $edit) {
                 yield new LocatedTextEdit(
                     $reference->location()->uri(),
-                    $edit
+                    $edit,
                 );
             }
         }
+
+        return new RenameResult($textDocument->uri(), $newUri);
     }
 
     private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string

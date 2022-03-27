@@ -18,7 +18,6 @@ class ClassToFileUriToNameConverter implements UriToNameConverter
         $this->fileToClass = $fileToClass;
     }
 
-    
     public function convert(TextDocumentUri $uri): string
     {
         try {

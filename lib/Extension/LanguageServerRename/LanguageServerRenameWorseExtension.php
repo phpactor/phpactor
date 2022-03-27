@@ -9,6 +9,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassMover\FileRenamer as PhpactorFileRenamer;
+use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\MemberRenamer;
@@ -31,7 +32,6 @@ class LanguageServerRenameWorseExtension implements Extension
     public const TAG_RENAMER = 'language_server_rename.renamer';
     public const PARAM_FILE_RENAME_LISTENER = 'language_server_rename.file_rename_listener';
 
-    
     public function load(ContainerBuilder $container): void
     {
         $container->register(VariableRenamer::class, function (Container $container) {
@@ -59,6 +59,7 @@ class LanguageServerRenameWorseExtension implements Extension
 
         $container->register(ClassRenamer::class, function (Container $container) {
             return new ClassRenamer(
+                new ClassToFileNameToUriConverter($container->get(ClassToFileExtension::SERVICE_CONVERTER)),
                 $container->get(DefinitionAndReferenceFinder::class),
                 $container->get(TextDocumentLocator::class),
                 $container->get('worse_reflection.tolerant_parser'),
@@ -94,7 +95,7 @@ class LanguageServerRenameWorseExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

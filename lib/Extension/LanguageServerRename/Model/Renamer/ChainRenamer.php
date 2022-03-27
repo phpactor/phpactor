@@ -28,13 +28,14 @@ class ChainRenamer implements Renamer
         return null;
     }
 
-    
+
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         foreach ($this->renamers as $renamer) {
             if (null !== ($range = $renamer->getRenameRange($textDocument, $offset))) {
-                yield from $renamer->rename($textDocument, $offset, $newName);
-                return;
+                $rename = $renamer->rename($textDocument, $offset, $newName);
+                yield from $rename;
+                return $rename->getReturn();
             }
         }
     }

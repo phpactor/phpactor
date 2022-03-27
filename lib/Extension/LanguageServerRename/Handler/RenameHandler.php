@@ -8,6 +8,7 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
+use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
@@ -47,7 +48,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
         $this->documentLocator = $documentLocator;
     }
 
-    
+
     public function methods(): array
     {
         return [
@@ -67,19 +68,22 @@ class RenameHandler implements Handler, CanRegisterCapabilities
             $count = 0;
 
             try {
-                foreach ($this->renamer->rename(
+                $rename = $this->renamer->rename(
                     $document,
                     PositionConverter::positionToByteOffset(
                         $params->position,
                         (string)$document
                     ),
                     $params->newName
-                ) as $result) {
+                );
+                foreach ($rename as $result) {
                     if ($count++ === 10) {
                         yield delay(1);
                     }
                     $locatedEdits[] = $result;
                 }
+
+                return $this->resultToWorkspaceEdit($locatedEdits, $rename->getReturn());
             } catch (CouldNotRename $couldNotRename) {
                 $this->clientApi->window()->showMessage()->error(sprintf(
                     $couldNotRename->getMessage()
@@ -87,8 +91,6 @@ class RenameHandler implements Handler, CanRegisterCapabilities
 
                 return new WorkspaceEdit(null, []);
             }
-
-            return $this->resultToWorkspaceEdit($locatedEdits);
         });
     }
 
@@ -121,10 +123,11 @@ class RenameHandler implements Handler, CanRegisterCapabilities
     /**
      * @param LocatedTextEdit[] $locatedEdits
      */
-    private function resultToWorkspaceEdit(array $locatedEdits): WorkspaceEdit
+    private function resultToWorkspaceEdit(array $locatedEdits, ?RenameResult $renameResult): WorkspaceEdit
     {
         return $this->converter->toWorkspaceEdit(
-            LocatedTextEditsMap::fromLocatedEdits($locatedEdits)
+            LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
+            $renameResult
         );
     }
 }
