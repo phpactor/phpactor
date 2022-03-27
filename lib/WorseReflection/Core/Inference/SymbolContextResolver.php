@@ -394,7 +394,7 @@ class SymbolContextResolver
 
     private function resolveParameter(Frame $frame, Parameter $node): SymbolContext
     {
-        /** @var MethodDeclaration $method */
+        /** @var MethodDeclaration|null $method */
         $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class);
 
         if ($method instanceof MethodDeclaration) {
@@ -413,9 +413,13 @@ class SymbolContextResolver
 
         if ($typeDeclaration instanceof Token) {
             $type = TypeFactory::fromStringWithReflector(
-                $typeDeclaration->getText($node->getFileContents()),
+                (string)$typeDeclaration->getText($node->getFileContents()),
                 $this->reflector,
             );
+        }
+
+        if ($node->questionToken) {
+            $type = TypeFactory::nullable($type);
         }
 
         $value = null;
@@ -724,7 +728,7 @@ class SymbolContextResolver
         $classSymbolContext = $this->_resolveNode($frame, $classNode);
 
         return $this->symbolFactory->context(
-            $node->name->getText($node->getFileContents()),
+            (string)$node->name->getText($node->getFileContents()),
             $node->name->getStartPosition(),
             $node->name->getEndPosition(),
             [
@@ -738,7 +742,7 @@ class SymbolContextResolver
     {
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 
-        $memberName = $node->memberName->getText($node->getFileContents());
+        $memberName = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
         $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         if ($node->memberName instanceof Node) {

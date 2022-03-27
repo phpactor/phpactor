@@ -1,0 +1,9 @@
+<?php
+
+namespace Foo;
+
+function foo($foo) {
+    assert($foo instanceof Bar);
+    wrAssertType('Foo\Bar', $foo);
+}
+
