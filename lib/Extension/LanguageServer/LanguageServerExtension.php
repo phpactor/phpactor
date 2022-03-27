@@ -196,6 +196,8 @@ class LanguageServerExtension implements Extension
                 $container,
                 $container->get(ClientApi::class),
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
+                $container->get(ServerStats::class),
+                $container->get(ServiceManager::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
