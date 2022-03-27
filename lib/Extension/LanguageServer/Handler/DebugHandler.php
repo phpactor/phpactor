@@ -34,7 +34,7 @@ class DebugHandler implements Handler
         ClientApi $client,
         Workspace $workspace,
         ServerStats $stats,
-        ServiceManager $serviceManager,
+        ServiceManager $serviceManager
     ) {
         $this->container = $container;
         $this->client = $client;
