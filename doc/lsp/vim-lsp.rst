@@ -12,7 +12,7 @@ Phpactor Commands
    This snippet depends on the "plenary" plugin (which is also required by
    "telescope")
 
-This command enables the following commands:
+This configuration snippet enables the following commands:
 
 - ``:LspPhpactorReindex``: Reindex the current project
 - ``:LspPhpactorStatus``: Show some useful information and statistics
