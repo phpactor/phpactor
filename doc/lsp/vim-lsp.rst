@@ -12,7 +12,7 @@ Phpactor Commands
    This snippet depends on the "plenary" plugin (which is also required by
    "telescope")
 
-This command enables the following commands:
+This configuration snippet enables the following commands:
 
 - ``:LspPhpactorReindex``: Reindex the current project
 - ``:LspPhpactorStatus``: Show some useful information and statistics
@@ -20,7 +20,7 @@ This command enables the following commands:
 
 .. code-block:: lua
 
-    -- requies plenary (which is required by telescope)
+    -- requires plenary (which is required by telescope)
     local Float = require "plenary.window.float"
 
     vim.cmd([[
