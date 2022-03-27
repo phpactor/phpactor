@@ -10,3 +10,7 @@ Clients
    sublime
    vscode
 
+.. toctree::
+   :hidden:
+
+   vim-lsp
