@@ -24,6 +24,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
@@ -152,7 +153,16 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             if (isset($notFoundCache[$cacheKey])) {
                 throw $notFoundCache[$cacheKey];
             }
-            $class = $this->reflector->sourceCodeForClassLike($nameText);
+
+            // we could reflect the class here but it's much more expensive
+            // than simply locating the source, however locating the source
+            // does not _guarantee_ that the name exists, so we additionally
+            // ensure that at least the short name of the FQN is located in
+            // the source code.
+            $source = $this->reflector->sourceCodeForClassLike($nameText);
+            if (!$this->nameContainedInSource($source, $nameText)) {
+                throw new NotFound();
+            }
         } catch (NotFound $notFound) {
             $notFoundCache[$cacheKey] = $notFound;
             $unresolvedNames[] = new NameWithByteOffset(
@@ -175,7 +185,12 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             if (isset($notFoundCache[$cacheKey])) {
                 throw $notFoundCache[$cacheKey];
             }
-            $this->reflector->sourceCodeForFunction($nameText);
+
+            // see comment for appendUnresolvedClassName
+            $source = $this->reflector->sourceCodeForFunction($nameText);
+            if (!$this->nameContainedInSource($source, $nameText)) {
+                throw new NotFound();
+            }
         } catch (NotFound $notFound) {
             $notFoundCache[$cacheKey] = $notFound;
             $unresolvedNames[] = new NameWithByteOffset(
@@ -201,5 +216,17 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
         }
 
         return $descendants;
+    }
+
+    private function nameContainedInSource(SourceCode $source, string $nameText): bool
+    {
+        $lastPart = explode('\\', $nameText);
+        $last = $lastPart[array_key_last($lastPart)];
+
+        if ($source->__toString() === '') {
+            return false;
+        }
+
+        return false !== strpos($source->__toString(), $last);
     }
 }
