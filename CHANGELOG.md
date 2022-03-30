@@ -13,6 +13,7 @@ Bug fixes:
   - [class-mover] Fix long standing bug with aliased imports being duplicated
     on class move and other strange issues.
   - [lsp] Fix call to properties() on non-class in generate accessors provider.
+  - [lsp] Fix unresolvable classes not being listed in code actions
 
 Improvements:
 

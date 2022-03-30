@@ -10,6 +10,9 @@ use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\Name\QualifiedName;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 {
@@ -422,5 +425,27 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
             ,[
             ]
         ];
+    }
+
+    public function testSourceCanBeFoundButNoClassIsContainedInIt(): void
+    {
+        $finder = new WorseUnresolvableClassNameFinder(
+            ReflectorBuilder::create()->addLocator(new StringSourceLocator(SourceCode::fromString('')))->build()
+        );
+        $found = $finder->find(
+            TextDocumentBuilder::create('<?php Foobar::class;')->build()
+        );
+        self::assertCount(1, $found);
+    }
+
+    public function testSourceCanBeFoundButNoFunctionIsContainedInIt(): void
+    {
+        $finder = new WorseUnresolvableClassNameFinder(
+            ReflectorBuilder::create()->addLocator(new StringSourceLocator(SourceCode::fromString('')))->build()
+        );
+        $found = $finder->find(
+            TextDocumentBuilder::create('<?php barboo();')->build()
+        );
+        self::assertCount(1, $found);
     }
 }
