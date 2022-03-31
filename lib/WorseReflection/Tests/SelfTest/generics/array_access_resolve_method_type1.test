@@ -1,0 +1,11 @@
+<?php
+
+class Bar {}
+
+class Foo { public function bar(): Bar {} }
+
+/** @var Foo[] */
+$foo;
+
+wrAssertType('Bar', $foo[0]->bar());
+

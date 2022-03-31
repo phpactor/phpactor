@@ -1,0 +1,7 @@
+<?php
+
+/** @var Foo[] */
+$foo;
+
+wrAssertType('Foo', $foo[0]);
+
