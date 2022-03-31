@@ -129,8 +129,44 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
             ]
         ];
 
-        yield 'interfaces' => [
+        yield 'interface not found' => [
             <<<'EOT'
+                // File: test.php
+                <?php 
+
+                class Bar implements Sugar {}
+                EOT
+            ,
+            [
+                new NameWithByteOffset(
+                    QualifiedName::fromString('Sugar'),
+                    ByteOffset::fromInt(29)
+                ),
+            ]
+        ];
+
+        yield 'interface found' => [
+            <<<'EOT'
+                // File: Interface.php
+                <?php
+
+                interface Sugar {}
+                // File: test.php
+                <?php 
+
+                class Bar implements Sugar {}
+                EOT
+            ,
+            [
+            ]
+        ];
+
+        yield 'interface not found but located source contains name' => [
+            <<<'EOT'
+                // File: Interface.php
+                <?php
+
+                Sugar::class;
                 // File: test.php
                 <?php 
 
@@ -178,6 +214,61 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 ),
             ]
         ];
+
+        yield 'resolvable trait' => [
+            <<<'EOT'
+                // File: Interface.php
+                <?php
+
+                trait Sugar {}
+                // File: test.php
+                <?php 
+
+                class Bar {
+                    use Sugar;
+                }
+                EOT
+            ,
+            [
+            ]
+        ];
+
+        if (defined('T_ENUM')) {
+            yield 'unresolvable enum' => [
+                <<<'EOT'
+                    // File: test.php
+                    <?php 
+
+                    enum Bar extends Sugar {
+                    }
+                    EOT
+                ,
+                [
+                    new NameWithByteOffset(
+                        QualifiedName::fromString('Sugar'),
+                        ByteOffset::fromInt(25)
+                    ),
+                ]
+            ];
+
+            yield 'resolvable enum' => [
+                <<<'EOT'
+                    // File: Sugar.php
+                    <?php 
+
+                    enum Sugar {
+                    }
+                    // File: test.php
+                    <?php 
+
+                    enum Bar extends Sugar {
+                    }
+                    EOT
+                ,
+                [
+                ]
+            ];
+        }
 
         yield 'filter duplicates' => [
             <<<'EOT'
