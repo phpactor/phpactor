@@ -78,7 +78,7 @@ class CreateClassProviderTest extends IntegrationTestCase
                 // File: subject.php
 
                 EOT
-        , 1, 1
+        , 4, 1
         ];
 
         yield 'non empty file' => [

@@ -19,6 +19,7 @@ Improvements:
 
   - [docblock] New docblock parser to facilitate parsing complex types
   - [hover] Improve "offset" hover (mostly related to showing variable info)
+  - [templates] Include templates for creating new interfaces, traits and enums
 
 Features:
 
