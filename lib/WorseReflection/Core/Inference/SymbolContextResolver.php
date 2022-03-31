@@ -32,6 +32,7 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
@@ -633,8 +634,9 @@ class SymbolContextResolver
         }
 
         $node = $node->accessExpression;
+        $type = $info->type();
 
-        if ($info->type() != TypeFactory::array()) {
+        if (!$type instanceof ArrayType) {
             $info = $info->withIssue(sprintf(
                 'Not resolving subscript expression of type "%s"',
                 (string) $info->type()
@@ -642,6 +644,7 @@ class SymbolContextResolver
             return $info;
         }
 
+        $info = $info->withType($type->valueType);
         $subjectValue = $info->value();
 
         if (false === is_array($subjectValue)) {
