@@ -160,7 +160,7 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             // ensure that at least the short name of the FQN is located in
             // the source code.
             $source = $this->reflector->sourceCodeForClassLike($nameText);
-            if (!$this->nameContainedInSource($source, $nameText)) {
+            if (!$this->nameContainedInSource('(class|trait|interface|enum)', $source, $nameText)) {
                 throw new NotFound();
             }
         } catch (NotFound $notFound) {
@@ -188,7 +188,7 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
 
             // see comment for appendUnresolvedClassName
             $source = $this->reflector->sourceCodeForFunction($nameText);
-            if (!$this->nameContainedInSource($source, $nameText)) {
+            if (!$this->nameContainedInSource('function', $source, $nameText)) {
                 throw new NotFound();
             }
         } catch (NotFound $notFound) {
@@ -218,7 +218,7 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
         return $descendants;
     }
 
-    private function nameContainedInSource(SourceCode $source, string $nameText): bool
+    private function nameContainedInSource(string $declarationPattern, SourceCode $source, string $nameText): bool
     {
         $lastPart = explode('\\', $nameText);
         $last = $lastPart[array_key_last($lastPart)];
@@ -227,6 +227,6 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             return false;
         }
 
-        return false !== strpos($source->__toString(), $last);
+        return (bool)preg_match(sprintf('{%s\s+%s}', $declarationPattern, $last), $source->__toString());
     }
 }
