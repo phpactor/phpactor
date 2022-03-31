@@ -236,6 +236,9 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform_extra.class_generator.variants', function (Container $container) {
             $generators = [
                 'default' => new ClassGenerator($container->get('code_transform.renderer')),
+                'interface' => new ClassGenerator($container->get('code_transform.renderer'), 'interface'),
+                'trait' => new ClassGenerator($container->get('code_transform.renderer'), 'trait'),
+                'enum' => new ClassGenerator($container->get('code_transform.renderer'), 'enum'),
             ];
             foreach ($container->getParameter(self::PARAM_NEW_CLASS_VARIANTS) as $variantName => $variant) {
                 $generators[$variantName] = new ClassGenerator($container->get('code_transform.renderer'), $variant);

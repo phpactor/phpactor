@@ -2,7 +2,10 @@
 
 namespace Phpactor\Extension\CodeTransform\Tests\Unit;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
+use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
+use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
@@ -25,6 +28,28 @@ class CodeTransformExtensionTest extends TestCase
         }
     }
 
+    /**
+     * @dataProvider provideClassNew
+     */
+    public function testClassNew(string $variant): void
+    {
+        /** @var array<string,ClassGenerator> */
+        $generators = $this->createContainer()->get('code_transform_extra.class_generator.variants');
+        self::assertArrayHasKey($variant, $generators);
+        $generators[$variant]->generateNew(ClassName::fromString('Foo'));
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideClassNew(): Generator
+    {
+        yield ['default'];
+        yield ['interface'];
+        yield ['enum'];
+        yield ['trait'];
+    }
+
     private function createContainer(): Container
     {
         $container = PhpactorContainer::fromExtensions([
@@ -36,7 +61,9 @@ class CodeTransformExtensionTest extends TestCase
             PhpExtension::class,
             WorseReflectionExtension::class,
         ], [
-            CodeTransformExtension::PARAM_TEMPLATE_PATHS => [],
+            CodeTransformExtension::PARAM_TEMPLATE_PATHS => [
+                __DIR__ . '/../../../../../templates/code',
+            ],
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__,
         ]);
 
