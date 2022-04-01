@@ -65,7 +65,7 @@ class NodeContextFactory
         Symbol $symbol,
         Types $types = null,
         Type $containerType = null,
-        $value = null,
+        $value = null
     ): NodeContext {
         $context = NodeContext::for($symbol);
 

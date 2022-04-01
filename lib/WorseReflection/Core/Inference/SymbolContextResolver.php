@@ -74,7 +74,7 @@ class SymbolContextResolver
         Reflector $reflector,
         LoggerInterface $logger,
         Cache $cache,
-        FullyQualifiedNameResolver $nameResolver,
+        FullyQualifiedNameResolver $nameResolver
     ) {
         $this->logger = $logger;
         $this->memberTypeResolver = new MemberTypeResolver($reflector);
