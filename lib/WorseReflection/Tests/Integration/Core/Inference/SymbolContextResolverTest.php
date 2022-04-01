@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
-use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -15,7 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\TestUtils\ExtractOffset;
 use RuntimeException;
@@ -36,7 +35,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
         $properties = [];
         foreach ($locals as $name => $varSymbolInfo) {
             if ($varSymbolInfo instanceof Type) {
-                $varSymbolInfo = SymbolContext::for(
+                $varSymbolInfo = NodeContext::for(
                     Symbol::fromTypeNameAndPosition(
                         'variable',
                         $name,
@@ -89,7 +88,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
         $value = $this->resolveNodeAtOffset(
             LocalAssignments::fromArray([
                 Variable::fromSymbolContext(
-                    SymbolContext::for(Symbol::fromTypeNameAndPosition(
+                    NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
                         Position::fromStartAndEnd(0, 0)
@@ -770,7 +769,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     EOT
                 , [
                     'foobar' => TypeFactory::fromString('Foobar'),
-                    'barfoo' => SymbolContext::for(
+                    'barfoo' => NodeContext::for(
                         Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromStartAndEnd(0, 0))
                     )
                     ->withType(TypeFactory::string())->withValue('hello')
@@ -837,7 +836,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     EOT
             , [
                 'this' => TypeFactory::class('Foobar\Barfoo\Foobar'),
-                'bar' => SymbolContext::for(Symbol::fromTypeNameAndPosition(
+                'bar' => NodeContext::for(Symbol::fromTypeNameAndPosition(
                     Symbol::PROPERTY,
                     'bar',
                     Position::fromStartAndEnd(0, 0),
@@ -1162,7 +1161,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
         LocalAssignments $locals,
         PropertyAssignments $properties,
         string $source
-    ): SymbolContext {
+    ): NodeContext {
         $frame = new Frame('test', $locals, $properties);
 
         list($source, $offset) = ExtractOffset::fromSource($source);
@@ -1179,7 +1178,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
         return $resolver->resolveNode($frame, $node);
     }
 
-    private function assertExpectedInformation(array $expectedInformation, SymbolContext $information): void
+    private function assertExpectedInformation(array $expectedInformation, NodeContext $information): void
     {
         foreach ($expectedInformation as $name => $value) {
             switch ($name) {

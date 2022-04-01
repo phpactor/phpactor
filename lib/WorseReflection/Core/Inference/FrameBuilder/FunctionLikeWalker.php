@@ -11,7 +11,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
@@ -55,7 +55,7 @@ class FunctionLikeWalker extends AbstractWalker
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
             $classType = $builder->resolveNode($frame, $classNode)->type();
-            $context = SymbolContextFactory::create(
+            $context = NodeContextFactory::create(
                 'this',
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -84,7 +84,7 @@ class FunctionLikeWalker extends AbstractWalker
 
             $symbolContext = $builder->resolveNode($frame, $parameterNode);
 
-            $context = SymbolContextFactory::create(
+            $context = NodeContextFactory::create(
                 (string)$parameterName,
                 $parameterNode->getStartPosition(),
                 $parameterNode->getEndPosition(),
@@ -121,7 +121,7 @@ class FunctionLikeWalker extends AbstractWalker
         foreach ($useClause->useVariableNameList->getElements() as $element) {
             $varName = $element->variableName->getText($node->getFileContents());
 
-            $variableContext = SymbolContextFactory::create(
+            $variableContext = NodeContextFactory::create(
                 $varName,
                 $element->getStartPosition(),
                 $element->getEndPosition(),

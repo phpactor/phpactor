@@ -3,9 +3,9 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -16,7 +16,7 @@ class SymbolFactoryTest extends TestCase
 {
     use ProphecyTrait;
     
-    private SymbolContextFactory $factory;
+    private NodeContextFactory $factory;
 
     /**
      * @var Node
@@ -25,7 +25,7 @@ class SymbolFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->factory = new SymbolContextFactory();
+        $this->factory = new NodeContextFactory();
         $this->node = $this->prophesize(Node::class);
     }
 
@@ -39,7 +39,7 @@ class SymbolFactoryTest extends TestCase
     public function testInformation(): void
     {
         $information = $this->factory->create('hello', 10, 20);
-        $this->assertInstanceOf(SymbolContext::class, $information);
+        $this->assertInstanceOf(NodeContext::class, $information);
         $symbol = $information->symbol();
 
         $this->assertEquals('hello', $symbol->name());
@@ -59,7 +59,7 @@ class SymbolFactoryTest extends TestCase
             'value' => 1234
         ]);
 
-        $this->assertInstanceOf(SymbolContext::class, $information);
+        $this->assertInstanceOf(NodeContext::class, $information);
         $this->assertSame($information->type(), $type);
         $this->assertSame($information->containerType(), $containerType);
         $this->assertEquals(1234, $information->value());

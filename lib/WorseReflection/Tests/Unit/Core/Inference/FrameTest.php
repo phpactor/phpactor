@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Problems;
 
 class FrameTest extends TestCase
@@ -24,8 +24,8 @@ class FrameTest extends TestCase
 
     public function testReduce(): void
     {
-        $s1 = SymbolContext::none();
-        $s2 = SymbolContext::none();
+        $s1 = NodeContext::none();
+        $s2 = NodeContext::none();
 
         $frame = new Frame('test');
         $frame->problems()->add($s1);

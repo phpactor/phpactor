@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 use RuntimeException;
 
-class SymbolContextFactory
+class NodeContextFactory
 {
     /**
      * @param array{
@@ -20,7 +20,7 @@ class SymbolContextFactory
      *     value?: mixed|null,
      * } $config
      */
-    public static function create(string $symbolName, int $start, int $end, array $config = []): SymbolContext
+    public static function create(string $symbolName, int $start, int $end, array $config = []): NodeContext
     {
         $defaultConfig = [
             'symbol_type' => Symbol::UNKNOWN,
@@ -28,7 +28,6 @@ class SymbolContextFactory
             'type' => null,
             'types' => null,
             'value' => null,
-            'name' => null,
         ];
 
         if ($diff = array_diff(array_keys($config), array_keys($defaultConfig))) {
@@ -56,7 +55,6 @@ class SymbolContextFactory
             $config['types'],
             $config['container_type'],
             $config['value'],
-            $config['name']
         );
     }
 
@@ -68,9 +66,8 @@ class SymbolContextFactory
         Types $types = null,
         Type $containerType = null,
         $value = null,
-        Name $name = null
-    ): SymbolContext {
-        $context = SymbolContext::for($symbol);
+    ): NodeContext {
+        $context = NodeContext::for($symbol);
 
         if ($types) {
             $context = $context->withTypes($types);
@@ -82,10 +79,6 @@ class SymbolContextFactory
 
         if (null !== $value) {
             $context = $context->withValue($value);
-        }
-
-        if (null !== $name) {
-            $context = $context->withName($name);
         }
 
         return $context;

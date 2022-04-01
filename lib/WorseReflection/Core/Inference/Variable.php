@@ -11,9 +11,9 @@ final class Variable
     
     private Offset $offset;
     
-    private SymbolContext $symbolContext;
+    private NodeContext $symbolContext;
 
-    private function __construct(string $name, Offset $offset, SymbolContext $symbolContext)
+    private function __construct(string $name, Offset $offset, NodeContext $symbolContext)
     {
         $this->name = $name;
         $this->offset = $offset;
@@ -25,7 +25,7 @@ final class Variable
         return $this->name;
     }
 
-    public static function fromSymbolContext(SymbolContext $symbolContext): Variable
+    public static function fromSymbolContext(NodeContext $symbolContext): Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
@@ -44,7 +44,7 @@ final class Variable
         return $this->name;
     }
 
-    public function symbolContext(): SymbolContext
+    public function symbolContext(): NodeContext
     {
         return $this->symbolContext;
     }

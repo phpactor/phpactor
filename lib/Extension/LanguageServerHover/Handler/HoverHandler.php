@@ -21,7 +21,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
@@ -94,7 +94,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         return $this->renderer->render($offset);
     }
 
-    private function infoFromSymbolContext(SymbolContext $symbolContext): ?string
+    private function infoFromSymbolContext(NodeContext $symbolContext): ?string
     {
         try {
             return $this->renderSymbolContext($symbolContext);
@@ -104,7 +104,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         return null;
     }
 
-    private function renderSymbolContext(SymbolContext $symbolContext): ?string
+    private function renderSymbolContext(NodeContext $symbolContext): ?string
     {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::METHOD:
@@ -120,7 +120,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         return null;
     }
 
-    private function renderMember(SymbolContext $symbolContext): string
+    private function renderMember(NodeContext $symbolContext): string
     {
         $name = $symbolContext->symbol()->name();
         $container = $symbolContext->containerType();
@@ -164,7 +164,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         }
     }
 
-    private function renderFunction(SymbolContext $symbolContext): string
+    private function renderFunction(NodeContext $symbolContext): string
     {
         $name = $symbolContext->symbol()->name();
         try {

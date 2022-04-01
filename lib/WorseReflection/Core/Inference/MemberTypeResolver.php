@@ -24,17 +24,17 @@ class MemberTypeResolver
         $this->reflector = $reflector;
     }
 
-    public function methodType(Type $containerType, SymbolContext $info, string $name): SymbolContext
+    public function methodType(Type $containerType, NodeContext $info, string $name): NodeContext
     {
         return $this->memberType(self::TYPE_METHODS, $containerType, $info, $name);
     }
 
-    public function constantType(Type $containerType, SymbolContext $info, string $name): SymbolContext
+    public function constantType(Type $containerType, NodeContext $info, string $name): NodeContext
     {
         return $this->memberType(self::TYPE_CONSTANTS, $containerType, $info, $name);
     }
 
-    public function propertyType(Type $containerType, SymbolContext $info, string $name): SymbolContext
+    public function propertyType(Type $containerType, NodeContext $info, string $name): NodeContext
     {
         if (mb_substr($name, 0, 1) == '$') {
             $name = mb_substr($name, 1);
@@ -50,7 +50,7 @@ class MemberTypeResolver
         return $this->reflector->reflectClassLike($containerType->name);
     }
 
-    private function memberType(string $memberType, Type $containerType, SymbolContext $info, string $name)
+    private function memberType(string $memberType, Type $containerType, NodeContext $info, string $name)
     {
         if ($containerType instanceof MissingType) {
             return $info->withIssue(sprintf(

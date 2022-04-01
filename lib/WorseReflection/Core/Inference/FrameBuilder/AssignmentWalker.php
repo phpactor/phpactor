@@ -11,11 +11,11 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\ArrayElement;
@@ -82,10 +82,10 @@ class AssignmentWalker extends AbstractWalker
         return $frame;
     }
 
-    private function walkParserVariable(Frame $frame, Variable $leftOperand, SymbolContext $rightContext): void
+    private function walkParserVariable(Frame $frame, Variable $leftOperand, NodeContext $rightContext): void
     {
         $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
-        $context = SymbolContextFactory::create(
+        $context = NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -103,7 +103,7 @@ class AssignmentWalker extends AbstractWalker
         FrameBuilder $builder,
         Frame $frame,
         MemberAccessExpression $leftOperand,
-        SymbolContext $typeContext
+        NodeContext $typeContext
     ): void {
         $variable = $leftOperand->dereferencableExpression;
 
@@ -130,7 +130,7 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameInfo->value();
         }
 
-        $context = SymbolContextFactory::create(
+        $context = NodeContextFactory::create(
             (string)$memberName,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -144,7 +144,7 @@ class AssignmentWalker extends AbstractWalker
         $frame->properties()->add(WorseVariable::fromSymbolContext($context));
     }
 
-    private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, SymbolContext $symbolContext): void
+    private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->arrayElements;
         $value = $symbolContext->value();
@@ -155,7 +155,7 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, SymbolContext $symbolContext): void
+    private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->listElements;
         $value = $symbolContext->value();
@@ -166,7 +166,7 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, SymbolContext $rightContext): void
+    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());
@@ -216,7 +216,7 @@ class AssignmentWalker extends AbstractWalker
         
             $varName = NodeUtil::nameFromTokenOrNode($leftOperand, $elementValue->name);
 
-            $variableContext = SymbolContextFactory::create(
+            $variableContext = NodeContextFactory::create(
                 (string)$varName,
                 $element->getStartPosition(),
                 $element->getEndPosition(),

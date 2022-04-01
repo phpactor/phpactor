@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -51,7 +51,7 @@ class VariableWalker extends AbstractWalker
             return $frame;
         }
 
-        $context = SymbolContextFactory::create(
+        $context = NodeContextFactory::create(
             (string)$token->getText($node->getFileContents()),
             $node->getStartPosition(),
             $node->getEndPosition(),

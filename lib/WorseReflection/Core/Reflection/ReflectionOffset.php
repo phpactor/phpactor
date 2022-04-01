@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 
 interface ReflectionOffset
 {
@@ -11,5 +11,5 @@ interface ReflectionOffset
 
     public function frame(): Frame;
 
-    public function symbolContext(): SymbolContext;
+    public function symbolContext(): NodeContext;
 }

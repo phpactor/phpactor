@@ -12,7 +12,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -97,7 +97,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         return true;
     }
 
-    private function populateSuggestions(SymbolContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
+    private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
     {
         if (false === TypeUtil::isDefined($type)) {
             return;

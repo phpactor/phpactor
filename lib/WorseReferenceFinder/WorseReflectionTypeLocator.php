@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -49,7 +49,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         return $this->gotoType($offset->symbolContext());
     }
 
-    private function gotoType(SymbolContext $symbolContext): Location
+    private function gotoType(NodeContext $symbolContext): Location
     {
         $type = $symbolContext->type();
 

@@ -11,7 +11,7 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
@@ -62,7 +62,7 @@ class GenerateAccessorHandler extends AbstractHandler
         return $this->handleClass($arguments);
     }
 
-    private function getPropertyContext(array $arguments): ?SymbolContext
+    private function getPropertyContext(array $arguments): ?NodeContext
     {
         $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
@@ -142,7 +142,7 @@ class GenerateAccessorHandler extends AbstractHandler
         return array_combine($propertiesNames, $propertiesNames);
     }
 
-    private function handleSingle(SymbolContext $context, array $arguments)
+    private function handleSingle(NodeContext $context, array $arguments)
     {
         $newSource = $this->generateAccessor->generate(
             SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),

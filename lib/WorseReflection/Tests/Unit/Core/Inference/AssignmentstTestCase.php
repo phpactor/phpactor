@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Position;
@@ -17,7 +17,7 @@ abstract class AssignmentstTestCase extends TestCase
         $assignments = $this->assignments();
         $this->assertCount(0, $assignments->byName('hello'));
 
-        $information = SymbolContext::for(
+        $information = NodeContext::for(
             Symbol::fromTypeNameAndPosition(
                 Symbol::VARIABLE,
                 'hello',
@@ -99,7 +99,7 @@ abstract class AssignmentstTestCase extends TestCase
 
     private function createVariable(string $name, int $start, int $end): Variable
     {
-        return Variable::fromSymbolContext(SymbolContext::for(Symbol::fromTypeNameAndPosition(
+        return Variable::fromSymbolContext(NodeContext::for(Symbol::fromTypeNameAndPosition(
             Symbol::VARIABLE,
             $name,
             Position::fromStartAndEnd($start, $end)

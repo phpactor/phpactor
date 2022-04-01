@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -80,7 +80,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ));
     }
 
-    private function gotoClass(SymbolContext $symbolContext): DefinitionLocation
+    private function gotoClass(NodeContext $symbolContext): DefinitionLocation
     {
         $className = $symbolContext->type();
 
@@ -107,7 +107,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         );
     }
 
-    private function gotoFunction(SymbolContext $symbolContext): DefinitionLocation
+    private function gotoFunction(NodeContext $symbolContext): DefinitionLocation
     {
         $functionName = $symbolContext->symbol()->name();
 
@@ -132,7 +132,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         );
     }
 
-    private function gotoMember(SymbolContext $symbolContext): DefinitionLocation
+    private function gotoMember(NodeContext $symbolContext): DefinitionLocation
     {
         $symbolName = $symbolContext->symbol()->name();
         $symbolType = $symbolContext->symbol()->symbolType();

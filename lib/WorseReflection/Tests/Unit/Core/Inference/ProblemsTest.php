@@ -4,16 +4,16 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Problems;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 
 class ProblemsTest extends TestCase
 {
     public function testMerge(): void
     {
-        $s1 = SymbolContext::none();
-        $s2 = SymbolContext::none();
-        $s3 = SymbolContext::none();
-        $s4 = SymbolContext::none();
+        $s1 = NodeContext::none();
+        $s2 = NodeContext::none();
+        $s3 = NodeContext::none();
+        $s4 = NodeContext::none();
 
         $p1 = Problems::create();
         $p1->add($s1);

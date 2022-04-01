@@ -12,9 +12,9 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\ForeachValue;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
@@ -37,7 +37,7 @@ class ForeachWalker extends AbstractWalker
         return $frame;
     }
 
-    private function processValue(FrameBuilder $builder, ForeachStatement $node, Frame $frame, SymbolContext $collection): void
+    private function processValue(FrameBuilder $builder, ForeachStatement $node, Frame $frame, NodeContext $collection): void
     {
         $itemName = $node->foreachValue;
         
@@ -56,7 +56,7 @@ class ForeachWalker extends AbstractWalker
         }
     }
 
-    private function processKey(ForeachStatement $node, Frame $frame, SymbolContext $collection): void
+    private function processKey(ForeachStatement $node, Frame $frame, NodeContext $collection): void
     {
         $itemName = $node->foreachKey;
         
@@ -78,7 +78,7 @@ class ForeachWalker extends AbstractWalker
         
         $collectionType = $collection->types()->best();
         
-        $context = SymbolContextFactory::create(
+        $context = NodeContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -90,7 +90,7 @@ class ForeachWalker extends AbstractWalker
         $frame->locals()->add(WorseVariable::fromSymbolContext($context));
     }
 
-    private function valueFromVariable(Variable $expression, ForeachStatement $node, SymbolContext $collection, Frame $frame): void
+    private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $collection, Frame $frame): void
     {
         $itemName = $expression->getText();
         
@@ -100,7 +100,7 @@ class ForeachWalker extends AbstractWalker
 
         $collectionType = $collection->types()->best();
 
-        $context = SymbolContextFactory::create(
+        $context = NodeContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -123,7 +123,7 @@ class ForeachWalker extends AbstractWalker
         FrameBuilder $builder,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
-        SymbolContext $collection,
+        NodeContext $collection,
         Frame $frame
     ): void {
         $elements = $expression->arrayElements;

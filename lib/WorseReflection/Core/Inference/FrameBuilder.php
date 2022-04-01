@@ -54,7 +54,7 @@ final class FrameBuilder
      *
      * TODO: Make an interface for this, extract it.
      */
-    public function resolveNode(Frame $frame, $node): SymbolContext
+    public function resolveNode(Frame $frame, $node): NodeContext
     {
         $info = $this->symbolContextResolver->resolveNode($frame, $node);
 
