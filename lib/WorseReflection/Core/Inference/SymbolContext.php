@@ -176,11 +176,6 @@ final class SymbolContext
         return $this->scope;
     }
 
-    public function name()
-    {
-        return $this->name;
-    }
-
     public function withName(Name $name): SymbolContext
     {
         $new = clone $this;

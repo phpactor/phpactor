@@ -958,7 +958,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     {
                     }
                     EOT
-                , [], ['name' => 'Foobar', 'type' => 'Foobar', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'Foobar'],
+                , [], ['type' => 'Foobar', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'Foobar'],
                 ];
 
         yield 'Property name' => [
@@ -1018,7 +1018,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     {
                     }
                     EOT
-                , [], ['symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'foobar', 'name' => 'foobar'],
+                , [], ['symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'foobar'],
                 ];
 
 
@@ -1030,7 +1030,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     hel<>lo();
                     EOT
-                , [], ['type' => 'string', 'name' => 'hello', 'symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'hello'],
+                , [], ['type' => 'string', 'symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'hello'],
                 ];
 
         yield 'Trait name' => [
@@ -1195,9 +1195,6 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     continue 2;
                 case 'value':
                     $this->assertEquals($value, $information->value(), $name);
-                    continue 2;
-                case 'name':
-                    $this->assertEquals(Name::fromString($value), $information->name(), $name);
                     continue 2;
                 case 'symbol_type':
                     $this->assertEquals($value, $information->symbol()->symbolType(), $name);
