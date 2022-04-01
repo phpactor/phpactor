@@ -64,8 +64,6 @@ class SymbolContextResolver
     
     private LoggerInterface $logger;
     
-    private SymbolFactory $symbolFactory;
-    
     private FullyQualifiedNameResolver $nameResolver;
     
     private ExpressionEvaluator $expressionEvaluator;
@@ -77,10 +75,8 @@ class SymbolContextResolver
         LoggerInterface $logger,
         Cache $cache,
         FullyQualifiedNameResolver $nameResolver,
-        SymbolFactory $symbolFactory = null
     ) {
         $this->logger = $logger;
-        $this->symbolFactory = $symbolFactory ?: new SymbolFactory();
         $this->memberTypeResolver = new MemberTypeResolver($reflector);
         $this->nameResolver = $nameResolver;
         $this->reflector = $reflector;
@@ -100,7 +96,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof ConstElement) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 $node->getName(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -112,7 +108,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof EnumCaseDeclaration) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 NodeUtil::nameFromTokenOrQualifiedName($node, $node->name),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -154,7 +150,7 @@ class SymbolContextResolver
 
         if ($node instanceof BinaryExpression) {
             $value = $this->expressionEvaluator->evaluate($node);
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 $node->getText(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -167,8 +163,8 @@ class SymbolContextResolver
         }
 
         if ($node instanceof ClassDeclaration || $node instanceof TraitDeclaration || $node instanceof InterfaceDeclaration) {
-            return $this->symbolFactory->context(
-                $node->name->getText((string)$node->getFileContents()),
+            return SymbolContextFactory::create(
+                (string)$node->name->getText((string)$node->getFileContents()),
                 $node->name->getStartPosition(),
                 $node->name->getEndPosition(),
                 [
@@ -180,7 +176,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof FunctionDeclaration) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 (string)$node->name->getText((string)$node->getFileContents()),
                 $node->name->getStartPosition(),
                 $node->name->getEndPosition(),
@@ -201,7 +197,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof StringLiteral) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 (string) $node->getStringContentsText(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -300,7 +296,7 @@ class SymbolContextResolver
 
     private function resolvePropertyVariable(ParserVariable $node)
     {
-        $info = $this->symbolFactory->context(
+        $info = SymbolContextFactory::create(
             $node->getName(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -344,7 +340,7 @@ class SymbolContextResolver
         }
 
         $types = Types::fromTypes($types);
-        return $this->symbolFactory->context(
+        return SymbolContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -362,7 +358,7 @@ class SymbolContextResolver
         if ($node->parent instanceof CallExpression) {
             $name = $node->getResolvedName() ?: $node;
             $name = Name::fromString((string) $name);
-            $context = $this->symbolFactory->context(
+            $context = SymbolContextFactory::create(
                 $name->short(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -381,7 +377,7 @@ class SymbolContextResolver
                 ->withName($name);
         }
 
-        return $this->symbolFactory->context(
+        return SymbolContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -428,8 +424,8 @@ class SymbolContextResolver
             $value = $this->_resolveNode($frame, $node->default)->value();
         }
 
-        return $this->symbolFactory->context(
-            $node->variableName->getText($node->getFileContents()),
+        return SymbolContextFactory::create(
+            (string)$node->variableName->getText($node->getFileContents()),
             $node->variableName->getStartPosition(),
             $node->variableName->getEndPosition(),
             [
@@ -481,8 +477,8 @@ class SymbolContextResolver
 
         $reflectionParameter = $reflectionMethod->parameters()->get($node->getName());
 
-        return $this->symbolFactory->context(
-            $node->variableName->getText($node->getFileContents()),
+        return SymbolContextFactory::create(
+            (string)$node->variableName->getText($node->getFileContents()),
             $node->variableName->getStartPosition(),
             $node->variableName->getEndPosition(),
             [
@@ -500,7 +496,7 @@ class SymbolContextResolver
             str_replace('_', '', $node->getText())
         );
 
-        return $this->symbolFactory->context(
+        return SymbolContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -559,7 +555,7 @@ class SymbolContextResolver
             $containerType = $this->classTypeFromNode($node);
         }
 
-        $info = $this->symbolFactory->context(
+        $info = SymbolContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -587,7 +583,7 @@ class SymbolContextResolver
         $array  = [];
 
         if (null === $node->arrayElements) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 $node->getText(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
@@ -609,7 +605,7 @@ class SymbolContextResolver
             $array[] = $value;
         }
 
-        return $this->symbolFactory->context(
+        return SymbolContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -730,7 +726,7 @@ class SymbolContextResolver
         $classNode = $this->getClassLikeAncestor($node);
         $classSymbolContext = $this->_resolveNode($frame, $classNode);
 
-        return $this->symbolFactory->context(
+        return SymbolContextFactory::create(
             (string)$node->name->getText($node->getFileContents()),
             $node->name->getStartPosition(),
             $node->name->getEndPosition(),
@@ -764,7 +760,7 @@ class SymbolContextResolver
             $memberType = Symbol::CONSTANT;
         }
 
-        $information = $this->symbolFactory->context(
+        $information = SymbolContextFactory::create(
             (string)$memberName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -829,7 +825,7 @@ class SymbolContextResolver
         $variables = $frame->locals()->lessThanOrEqualTo($offset)->byName($varName);
 
         if (0 === $variables->count()) {
-            return $this->symbolFactory->context(
+            return SymbolContextFactory::create(
                 $name,
                 $node->getStartPosition(),
                 $node->getEndPosition(),

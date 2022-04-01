@@ -15,12 +15,14 @@ use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Psr\Log\LoggerInterface;
 
 class AssignmentWalker extends AbstractWalker
@@ -82,9 +84,8 @@ class AssignmentWalker extends AbstractWalker
 
     private function walkParserVariable(Frame $frame, Variable $leftOperand, SymbolContext $rightContext): void
     {
-        /** @phpstan-ignore-next-line */
-        $name = $leftOperand->name->getText($leftOperand->getFileContents());
-        $context = $this->symbolFactory()->context(
+        $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
+        $context = SymbolContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -118,6 +119,7 @@ class AssignmentWalker extends AbstractWalker
         //       evaluate the variable (e.g. $this->$foobar);
         if ($memberNameNode instanceof Token) {
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
+        /** @phpstan-ignore-next-line */
         } else {
             $memberNameInfo = $builder->resolveNode($frame, $memberNameNode);
 
@@ -128,8 +130,8 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameInfo->value();
         }
 
-        $context = $this->symbolFactory()->context(
-            $memberName,
+        $context = SymbolContextFactory::create(
+            (string)$memberName,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
             [
@@ -212,9 +214,10 @@ class AssignmentWalker extends AbstractWalker
                 continue;
             }
         
-            $varName = $elementValue->name->getText($leftOperand->getFileContents());
-            $variableContext = $this->symbolFactory()->context(
-                $varName,
+            $varName = NodeUtil::nameFromTokenOrNode($leftOperand, $elementValue->name);
+
+            $variableContext = SymbolContextFactory::create(
+                (string)$varName,
                 $element->getStartPosition(),
                 $element->getEndPosition(),
                 [

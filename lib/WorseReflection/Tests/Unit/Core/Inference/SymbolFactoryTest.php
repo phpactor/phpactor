@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Inference\SymbolFactory;
+use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -16,7 +16,7 @@ class SymbolFactoryTest extends TestCase
 {
     use ProphecyTrait;
     
-    private SymbolFactory $factory;
+    private SymbolContextFactory $factory;
 
     /**
      * @var Node
@@ -25,7 +25,7 @@ class SymbolFactoryTest extends TestCase
 
     public function setUp(): void
     {
-        $this->factory = new SymbolFactory();
+        $this->factory = new SymbolContextFactory();
         $this->node = $this->prophesize(Node::class);
     }
 
@@ -33,12 +33,12 @@ class SymbolFactoryTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid keys "asd"');
-        $this->factory->context('hello', 10, 20, [ 'asd' => 'asd' ]);
+        $this->factory->create('hello', 10, 20, [ 'asd' => 'asd' ]);
     }
 
     public function testInformation(): void
     {
-        $information = $this->factory->context('hello', 10, 20);
+        $information = $this->factory->create('hello', 10, 20);
         $this->assertInstanceOf(SymbolContext::class, $information);
         $symbol = $information->symbol();
 
@@ -52,7 +52,7 @@ class SymbolFactoryTest extends TestCase
         $containerType = TypeFactory::fromString('container');
         $type = TypeFactory::fromString('type');
 
-        $information = $this->factory->context('hello', 10, 20, [
+        $information = $this->factory->create('hello', 10, 20, [
             'symbol_type' => Symbol::ARRAY,
             'container_type' => $containerType,
             'type' => $type,

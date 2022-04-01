@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
@@ -114,7 +115,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
     ): SymbolContext {
         assert($leftOperand->dereferencableExpression instanceof Variable);
 
-        $symbolContext = $this->symbolFactory()->context(
+        $symbolContext = SymbolContextFactory::create(
             (string) $leftOperand->memberName->getText($leftOperand->getFileContents()),
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -144,7 +145,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
             return SymbolContext::none();
         }
 
-        return $this->symbolFactory()->context(
+        return SymbolContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),

@@ -14,6 +14,7 @@ use Microsoft\PhpParser\Node\ForeachValue;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\SymbolContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\SymbolContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
@@ -77,7 +78,7 @@ class ForeachWalker extends AbstractWalker
         
         $collectionType = $collection->types()->best();
         
-        $context = $this->symbolFactory()->context(
+        $context = SymbolContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -99,7 +100,7 @@ class ForeachWalker extends AbstractWalker
 
         $collectionType = $collection->types()->best();
 
-        $context = $this->symbolFactory()->context(
+        $context = SymbolContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),

@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 use RuntimeException;
 
-class SymbolFactory
+class SymbolContextFactory
 {
     /**
      * @param array{
@@ -20,7 +20,7 @@ class SymbolFactory
      *     value?: mixed|null,
      * } $config
      */
-    public function context(string $symbolName, int $start, int $end, array $config = []): SymbolContext
+    public static function create(string $symbolName, int $start, int $end, array $config = []): SymbolContext
     {
         $defaultConfig = [
             'symbol_type' => Symbol::UNKNOWN,
@@ -51,7 +51,7 @@ class SymbolFactory
             $config['types'] = Types::fromTypes([$config['type']]);
         }
 
-        return $this->contextFromParameters(
+        return self::contextFromParameters(
             $symbol,
             $config['types'],
             $config['container_type'],
@@ -60,7 +60,10 @@ class SymbolFactory
         );
     }
 
-    private function contextFromParameters(
+    /**
+     * @param mixed $value
+     */
+    private static function contextFromParameters(
         Symbol $symbol,
         Types $types = null,
         Type $containerType = null,
