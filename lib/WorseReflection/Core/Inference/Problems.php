@@ -6,10 +6,19 @@ use IteratorAggregate;
 use Countable;
 use ArrayIterator;
 
+/**
+ * @implements IteratorAggregate<array-key,NodeContext>
+ */
 final class Problems implements IteratorAggregate, Countable
 {
-    private $problems = [];
+    /**
+     * @var NodeContext[]
+     */
+    private array $problems = [];
 
+    /**
+     * @param NodeContext[] $problems
+     */
     private function __construct(array $problems = [])
     {
         $this->problems = $problems;
@@ -18,7 +27,6 @@ final class Problems implements IteratorAggregate, Countable
     public function __toString()
     {
         $lines = [];
-        /** @var SymbolContext $symbolInformation */
         foreach ($this->problems as $symbolInformation) {
             $lines[] = sprintf(
                 '%s:%s %s',
@@ -36,12 +44,15 @@ final class Problems implements IteratorAggregate, Countable
         return new self();
     }
 
+    /**
+     * @return ArrayIterator<array-key,NodeContext>
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->problems);
     }
 
-    public function add(SymbolContext $problem): void
+    public function add(NodeContext $problem): void
     {
         $this->problems[] = $problem;
     }
@@ -56,12 +67,15 @@ final class Problems implements IteratorAggregate, Countable
         return count($this->problems);
     }
 
+    /**
+     * @return NodeContext[]
+     */
     public function toArray(): array
     {
         return $this->problems;
     }
 
-    public function merge(Problems $problems)
+    public function merge(Problems $problems): self
     {
         return new self(array_merge(
             $this->problems,

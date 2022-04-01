@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as CoreReflectionArgument;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -75,7 +75,7 @@ class ReflectionArgument implements CoreReflectionArgument
         );
     }
 
-    private function info(): SymbolContext
+    private function info(): NodeContext
     {
         return $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
     }

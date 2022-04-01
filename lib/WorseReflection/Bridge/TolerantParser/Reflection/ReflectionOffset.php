@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset as CoreReflectionOffset;
 
@@ -10,9 +10,9 @@ final class ReflectionOffset implements CoreReflectionOffset
 {
     private Frame $frame;
     
-    private SymbolContext $symbolContext;
+    private NodeContext $symbolContext;
 
-    private function __construct(Frame $frame, SymbolContext $symbolContext)
+    private function __construct(Frame $frame, NodeContext $symbolContext)
     {
         $this->frame = $frame;
         $this->symbolContext = $symbolContext;
@@ -28,7 +28,7 @@ final class ReflectionOffset implements CoreReflectionOffset
         return $this->frame;
     }
 
-    public function symbolContext(): SymbolContext
+    public function symbolContext(): NodeContext
     {
         return $this->symbolContext;
     }

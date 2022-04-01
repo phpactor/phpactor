@@ -871,11 +871,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
 
 		-
-			message: "#^Parameter \\#2 \\$method of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\WorseReflection\\\\WorseBuilderFactory\\:\\:buildMethod\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMethod, Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
-
-		-
 			message: "#^Argument of an invalid type Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\AbstractBuilder supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/AbstractBuilder.php
@@ -3452,11 +3447,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\OverrideMethodHandler\\:\\:parentClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\)\\: mixed\\)\\|null, Closure\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMethod\\)\\: string given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
 
@@ -6101,26 +6091,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionInterface\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionInterface.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionInterface\\:\\:methods\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionInterface.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionInterface\\:\\:\\$methods has no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionInterface.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionInterface\\:\\:\\$parents has no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionInterface.php
-
-		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$statements\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
@@ -6461,27 +6431,7 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/FrameBuilder/AbstractInstanceOfWalker.php
 
 		-
-			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameBuilder/AssignmentWalker.php
-
-		-
-			message: "#^Method Microsoft\\\\PhpParser\\\\Node\\:\\:getText\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameBuilder/AssignmentWalker.php
-
-		-
-			message: "#^Parameter \\#1 \\$symbolName of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolFactory\\:\\:context\\(\\) expects string, bool\\|string\\|null given\\.$#"
-			count: 3
-			path: lib/WorseReflection/Core/Inference/FrameBuilder/AssignmentWalker.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameBuilder\\\\FunctionLikeWalker\\:\\:functionName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameBuilder/FunctionLikeWalker.php
-
-		-
-			message: "#^Parameter \\#1 \\$symbolName of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolFactory\\:\\:context\\(\\) expects string, bool\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameBuilder/FunctionLikeWalker.php
 
@@ -6626,36 +6576,6 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/NodeReflector.php
 
 		-
-			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems\\:\\:__construct\\(\\) has parameter \\$problems with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems\\:\\:merge\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Problems\\:\\:\\$problems type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Problems.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:create\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
@@ -6666,52 +6586,7 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:fromType\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:fromTypeAndValue\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:issues\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:name\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:value\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:withScope\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContext\\:\\:withValue\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContext.php
-
-		-
 			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Microsoft\\\\PhpParser\\\\Node\\:\\:getText\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
 
@@ -6751,34 +6626,14 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveVariable\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveVariableName\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$symbolName of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolFactory\\:\\:context\\(\\) expects string, bool\\|string\\|null given\\.$#"
-			count: 3
 			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InterfaceDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\TraitDeclaration will always evaluate to false\\.$#"
 			count: 2
 			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolFactory\\:\\:contextFromParameters\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolFactory.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Variable\\:\\:isNamed\\(\\) has no return type specified\\.$#"
@@ -6919,16 +6774,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection\\:\\:byVisibilities\\(\\) has parameter \\$visibilities with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionMemberCollection.php
-
-		-
-			message: "#^Interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection extends generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection but does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionMethodCollection.php
-
-		-
-			message: "#^Interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection has @implements tag, but can not implement any interface, must extend from it\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionMethodCollection.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection\\:\\:abstract\\(\\) has no return type specified\\.$#"
@@ -7286,16 +7131,6 @@ parameters:
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:methods\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:properties\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionPropertyCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
@@ -7327,11 +7162,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionInterfaceDecorator\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionInterfaceDecorator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionInterfaceDecorator\\:\\:methods\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionInterfaceDecorator.php
 

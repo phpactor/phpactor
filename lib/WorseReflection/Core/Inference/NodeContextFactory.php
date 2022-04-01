@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 use RuntimeException;
 
-class SymbolFactory
+class NodeContextFactory
 {
     /**
      * @param array{
@@ -20,7 +20,7 @@ class SymbolFactory
      *     value?: mixed|null,
      * } $config
      */
-    public function context(string $symbolName, int $start, int $end, array $config = []): SymbolContext
+    public static function create(string $symbolName, int $start, int $end, array $config = []): NodeContext
     {
         $defaultConfig = [
             'symbol_type' => Symbol::UNKNOWN,
@@ -28,7 +28,6 @@ class SymbolFactory
             'type' => null,
             'types' => null,
             'value' => null,
-            'name' => null,
         ];
 
         if ($diff = array_diff(array_keys($config), array_keys($defaultConfig))) {
@@ -51,23 +50,24 @@ class SymbolFactory
             $config['types'] = Types::fromTypes([$config['type']]);
         }
 
-        return $this->contextFromParameters(
+        return self::contextFromParameters(
             $symbol,
             $config['types'],
             $config['container_type'],
             $config['value'],
-            $config['name']
         );
     }
 
-    private function contextFromParameters(
+    /**
+     * @param mixed $value
+     */
+    private static function contextFromParameters(
         Symbol $symbol,
         Types $types = null,
         Type $containerType = null,
-        $value = null,
-        Name $name = null
-    ): SymbolContext {
-        $context = SymbolContext::for($symbol);
+        $value = null
+    ): NodeContext {
+        $context = NodeContext::for($symbol);
 
         if ($types) {
             $context = $context->withTypes($types);
@@ -79,10 +79,6 @@ class SymbolFactory
 
         if (null !== $value) {
             $context = $context->withValue($value);
-        }
-
-        if (null !== $name) {
-            $context = $context->withName($name);
         }
 
         return $context;

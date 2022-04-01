@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Position;
 
@@ -46,7 +46,7 @@ class TestFrameWalker implements FrameWalker
 
         $frame->locals()->add(
             Variable::fromSymbolContext(
-                SymbolContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', Position::fromFullStartStartAndEnd(0, 1, 10)))
+                NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', Position::fromFullStartStartAndEnd(0, 1, 10)))
             )
         );
         return $frame;

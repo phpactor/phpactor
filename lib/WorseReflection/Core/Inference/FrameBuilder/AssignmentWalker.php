@@ -11,16 +11,18 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Psr\Log\LoggerInterface;
 
 class AssignmentWalker extends AbstractWalker
@@ -80,11 +82,10 @@ class AssignmentWalker extends AbstractWalker
         return $frame;
     }
 
-    private function walkParserVariable(Frame $frame, Variable $leftOperand, SymbolContext $rightContext): void
+    private function walkParserVariable(Frame $frame, Variable $leftOperand, NodeContext $rightContext): void
     {
-        /** @phpstan-ignore-next-line */
-        $name = $leftOperand->name->getText($leftOperand->getFileContents());
-        $context = $this->symbolFactory()->context(
+        $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
+        $context = NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -102,7 +103,7 @@ class AssignmentWalker extends AbstractWalker
         FrameBuilder $builder,
         Frame $frame,
         MemberAccessExpression $leftOperand,
-        SymbolContext $typeContext
+        NodeContext $typeContext
     ): void {
         $variable = $leftOperand->dereferencableExpression;
 
@@ -118,6 +119,7 @@ class AssignmentWalker extends AbstractWalker
         //       evaluate the variable (e.g. $this->$foobar);
         if ($memberNameNode instanceof Token) {
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
+        /** @phpstan-ignore-next-line */
         } else {
             $memberNameInfo = $builder->resolveNode($frame, $memberNameNode);
 
@@ -128,8 +130,8 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameInfo->value();
         }
 
-        $context = $this->symbolFactory()->context(
-            $memberName,
+        $context = NodeContextFactory::create(
+            (string)$memberName,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
             [
@@ -142,7 +144,7 @@ class AssignmentWalker extends AbstractWalker
         $frame->properties()->add(WorseVariable::fromSymbolContext($context));
     }
 
-    private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, SymbolContext $symbolContext): void
+    private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->arrayElements;
         $value = $symbolContext->value();
@@ -153,7 +155,7 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, SymbolContext $symbolContext): void
+    private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->listElements;
         $value = $symbolContext->value();
@@ -164,7 +166,7 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, SymbolContext $rightContext): void
+    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());
@@ -212,9 +214,10 @@ class AssignmentWalker extends AbstractWalker
                 continue;
             }
         
-            $varName = $elementValue->name->getText($leftOperand->getFileContents());
-            $variableContext = $this->symbolFactory()->context(
-                $varName,
+            $varName = NodeUtil::nameFromTokenOrNode($leftOperand, $elementValue->name);
+
+            $variableContext = NodeContextFactory::create(
+                (string)$varName,
                 $element->getStartPosition(),
                 $element->getEndPosition(),
                 [

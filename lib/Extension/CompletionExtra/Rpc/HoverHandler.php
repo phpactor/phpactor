@@ -9,7 +9,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
@@ -60,7 +60,7 @@ class HoverHandler implements Handler
         return EchoResponse::fromMessage($info);
     }
 
-    private function renderSymbolContext(SymbolContext $symbolContext): ?string
+    private function renderSymbolContext(NodeContext $symbolContext): ?string
     {
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::METHOD:
@@ -78,7 +78,7 @@ class HoverHandler implements Handler
         return null;
     }
 
-    private function renderMember(SymbolContext $symbolContext): ?string
+    private function renderMember(NodeContext $symbolContext): ?string
     {
         $name = $symbolContext->symbol()->name();
         $container = $symbolContext->containerType();
@@ -112,7 +112,7 @@ class HoverHandler implements Handler
         }
     }
 
-    private function renderFunction(SymbolContext $symbolContext)
+    private function renderFunction(NodeContext $symbolContext)
     {
         $name = $symbolContext->symbol()->name();
         $function = $this->reflector->reflectFunction($name);
@@ -120,7 +120,7 @@ class HoverHandler implements Handler
         return $this->formatter->format($function);
     }
 
-    private function renderVariable(SymbolContext $symbolContext)
+    private function renderVariable(NodeContext $symbolContext)
     {
         return $this->formatter->format($symbolContext->types());
     }
@@ -135,7 +135,7 @@ class HoverHandler implements Handler
         }
     }
 
-    private function messageFromSymbolContext(SymbolContext $symbolContext): ?string
+    private function messageFromSymbolContext(NodeContext $symbolContext): ?string
     {
         try {
             return $this->renderSymbolContext($symbolContext);

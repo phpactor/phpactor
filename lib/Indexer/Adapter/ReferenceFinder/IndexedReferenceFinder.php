@@ -12,7 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Reflector;
 
 class IndexedReferenceFinder implements ReferenceFinder
@@ -65,7 +65,7 @@ class IndexedReferenceFinder implements ReferenceFinder
     /**
      * @return Generator<LocationConfidence>
      */
-    private function resolveReferences(SymbolContext $symbolContext): Generator
+    private function resolveReferences(NodeContext $symbolContext): Generator
     {
         $symbolType = $symbolContext->symbol()->symbolType();
         if ($symbolType === Symbol::CLASS_) {

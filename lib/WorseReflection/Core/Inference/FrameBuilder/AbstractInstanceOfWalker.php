@@ -10,7 +10,8 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
@@ -97,7 +98,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
         return $variable;
     }
 
-    protected function createSymbolContext(Expression $leftOperand, Frame $frame): SymbolContext
+    protected function createSymbolContext(Expression $leftOperand, Frame $frame): NodeContext
     {
         assert($leftOperand instanceof Variable || $leftOperand instanceof MemberAccessExpression);
 
@@ -111,10 +112,10 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
     protected function createPropertySymbolContext(
         MemberAccessExpression $leftOperand,
         Frame $frame
-    ): SymbolContext {
+    ): NodeContext {
         assert($leftOperand->dereferencableExpression instanceof Variable);
 
-        $symbolContext = $this->symbolFactory()->context(
+        $symbolContext = NodeContextFactory::create(
             (string) $leftOperand->memberName->getText($leftOperand->getFileContents()),
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -136,15 +137,15 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
         return $symbolContext->withContainerType($classType);
     }
 
-    protected function createVariableSymbolContext(Variable $leftOperand): SymbolContext
+    protected function createVariableSymbolContext(Variable $leftOperand): NodeContext
     {
         $name = $leftOperand->getName();
 
         if (null === $name) {
-            return SymbolContext::none();
+            return NodeContext::none();
         }
 
-        return $this->symbolFactory()->context(
+        return NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),

@@ -17,7 +17,7 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\WorseReflection\TypeUtil;
@@ -60,7 +60,7 @@ class WorseExtractConstant implements ExtractConstant
         return true;
     }
 
-    private function addConstant(string $sourceCode, SymbolContext $symbolInformation, string $constantName): TextEdits
+    private function addConstant(string $sourceCode, NodeContext $symbolInformation, string $constantName): TextEdits
     {
         $symbol = $symbolInformation->symbol();
 

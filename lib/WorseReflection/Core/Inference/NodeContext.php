@@ -2,13 +2,12 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
-final class SymbolContext
+final class NodeContext
 {
     /**
      * @var mixed
@@ -35,29 +34,27 @@ final class SymbolContext
     private ?ReflectionScope $scope = null;
 
     /**
-     * @var Name
+     * @param mixed $value
      */
-    private ?Name $name = null;
-
-    private function __construct(Symbol $symbol, Types $types, Name $name = null, $value = null, Type $containerType = null, ReflectionScope $scope = null)
+    private function __construct(Symbol $symbol, Types $types, $value = null, Type $containerType = null, ReflectionScope $scope = null)
     {
         $this->value = $value;
         $this->symbol = $symbol;
         $this->containerType = $containerType;
         $this->types = $types;
         $this->scope = $scope;
-        $this->name = $name;
     }
 
-    public static function for(Symbol $symbol): SymbolContext
+    public static function for(Symbol $symbol): NodeContext
     {
         return new self($symbol, Types::fromTypes([ TypeFactory::unknown() ]));
     }
 
     /**
      * @deprecated
+     * @param mixed $value
      */
-    public static function fromTypeAndValue(Type $type, $value): SymbolContext
+    public static function fromTypeAndValue(Type $type, $value): NodeContext
     {
         return new self(Symbol::unknown(), Types::fromTypes([ $type ]), $value);
     }
@@ -65,17 +62,20 @@ final class SymbolContext
     /**
      * @deprecated Types are plural
      */
-    public static function fromType(Type $type)
+    public static function fromType(Type $type): NodeContext
     {
         return new self(Symbol::unknown(), Types::fromTypes([ $type ]));
     }
 
-    public static function none(): SymbolContext
+    public static function none(): NodeContext
     {
         return new self(Symbol::unknown(), Types::empty());
     }
 
-    public function withValue($value): SymbolContext
+    /**
+     * @param mixed $value
+     */
+    public function withValue($value): NodeContext
     {
         $new = clone $this;
         $new->value = $value;
@@ -83,7 +83,7 @@ final class SymbolContext
         return $new;
     }
 
-    public function withContainerType(Type $containerType): SymbolContext
+    public function withContainerType(Type $containerType): NodeContext
     {
         $new = clone $this;
         $new->containerType = $containerType;
@@ -94,7 +94,7 @@ final class SymbolContext
     /**
      * @deprecated Types are plural
      */
-    public function withType(Type $type): SymbolContext
+    public function withType(Type $type): NodeContext
     {
         $new = clone $this;
         $new->types = Types::fromTypes([ $type ]);
@@ -102,7 +102,7 @@ final class SymbolContext
         return $new;
     }
 
-    public function withTypes(Types $types): SymbolContext
+    public function withTypes(Types $types): NodeContext
     {
         $new = clone $this;
         $new->types = $types;
@@ -110,7 +110,7 @@ final class SymbolContext
         return $new;
     }
 
-    public function withScope(ReflectionScope $scope)
+    public function withScope(ReflectionScope $scope): NodeContext
     {
         $new = clone $this;
         $new->scope = $scope;
@@ -118,7 +118,7 @@ final class SymbolContext
         return $new;
     }
 
-    public function withIssue(string $message): SymbolContext
+    public function withIssue(string $message): NodeContext
     {
         $new = clone $this;
         $new->issues[] = $message;
@@ -143,6 +143,9 @@ final class SymbolContext
         return $this->types;
     }
 
+    /**
+     * @return mixed
+     */
     public function value()
     {
         return $this->value;
@@ -166,6 +169,9 @@ final class SymbolContext
         return $this->containerType;
     }
 
+    /**
+     * @return string[]
+     */
     public function issues(): array
     {
         return $this->issues;
@@ -174,18 +180,5 @@ final class SymbolContext
     public function scope(): ReflectionScope
     {
         return $this->scope;
-    }
-
-    public function name()
-    {
-        return $this->name;
-    }
-
-    public function withName(Name $name): SymbolContext
-    {
-        $new = clone $this;
-        $new->name = $name;
-
-        return $new;
     }
 }

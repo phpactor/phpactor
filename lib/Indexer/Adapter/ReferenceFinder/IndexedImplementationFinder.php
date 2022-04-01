@@ -14,7 +14,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
@@ -72,7 +72,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     /**
      * @return Locations<Location>
      */
-    private function methodImplementations(SymbolContext $symbolContext): Locations
+    private function methodImplementations(NodeContext $symbolContext): Locations
     {
         $container = $symbolContext->containerType();
         $methodName = $symbolContext->symbol()->name();
