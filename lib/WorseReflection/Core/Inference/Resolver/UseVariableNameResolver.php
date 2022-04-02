@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 
 class UseVariableNameResolver implements Resolver
@@ -18,21 +17,11 @@ class UseVariableNameResolver implements Resolver
         assert($node instanceof UseVariableName);
         $name = $node->getName();
 
-        $varName = ltrim($name, '$');
-        $offset = $node->getEndPosition();
-        $variables = $frame->locals()->lessThanOrEqualTo($offset)->byName($varName);
-
-        if (0 === $variables->count()) {
-            return NodeContextFactory::create(
-                $name,
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::VARIABLE
-                ]
-            )->withIssue(sprintf('Variable "%s" is undefined', $varName));
-        }
-
-        return $variables->last()->symbolContext();
+        return NodeContextFactory::forVariableAt(
+            $frame,
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            $name
+        );
     }
 }

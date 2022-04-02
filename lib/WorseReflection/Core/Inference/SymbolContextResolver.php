@@ -36,7 +36,6 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -134,10 +133,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof ParserVariable) {
-            return $this->resolveVariable($frame, $node);
         }
 
         if ($node instanceof MemberAccessExpression) {
@@ -249,34 +244,6 @@ class SymbolContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    private function resolveVariable(Frame $frame, ParserVariable $node): NodeContext
-    {
-        if ($node->getFirstAncestor(PropertyDeclaration::class)) {
-            return $this->resolvePropertyVariable($node);
-        }
-
-        $name = $node->getText();
-        return $this->resolveVariableName($name, $node, $frame);
-    }
-
-    private function resolvePropertyVariable(ParserVariable $node): NodeContext
-    {
-        $info = NodeContextFactory::create(
-            $node->getName(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::PROPERTY,
-            ]
-        );
-
-        return $this->memberTypeResolver->propertyType(
-            $this->classTypeFromNode($node),
-            $info,
-            $info->symbol()->name()
-        );
     }
 
     private function resolveMemberAccessExpression(Frame $frame, MemberAccessExpression $node): NodeContext
@@ -477,7 +444,7 @@ class SymbolContextResolver
     {
         $name = null;
         if ($node->scopeResolutionQualifier instanceof ParserVariable) {
-            $context = $this->resolveVariable($frame, $node->scopeResolutionQualifier);
+            $context = $this->resolveNode($frame, $node->scopeResolutionQualifier);
             $type = $context->type();
             if ($type instanceof ClassType) {
                 $name = $type->name->__toString();
@@ -603,26 +570,6 @@ class SymbolContextResolver
     private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
     {
         return $this->doResolveNode($frame, $node->expression);
-    }
-
-    private function resolveVariableName(string $name, Node $node, Frame $frame): NodeContext
-    {
-        $varName = ltrim($name, '$');
-        $offset = $node->getEndPosition();
-        $variables = $frame->locals()->lessThanOrEqualTo($offset)->byName($varName);
-
-        if (0 === $variables->count()) {
-            return NodeContextFactory::create(
-                $name,
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::VARIABLE
-                ]
-            )->withIssue(sprintf('Variable "%s" is undefined', $varName));
-        }
-
-        return $variables->last()->symbolContext();
     }
 
     /**
