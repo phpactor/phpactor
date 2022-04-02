@@ -43,7 +43,7 @@ final class Parser
      * TODO Callable is not a scalar.
      */
     private const SCALAR_TYPES = [
-        'int', 'float', 'bool', 'string', 'mixed', 'callable',
+        'int', 'float', 'bool', 'class-string', 'string', 'mixed', 'callable',
     ];
     
     private Tokens $tokens;

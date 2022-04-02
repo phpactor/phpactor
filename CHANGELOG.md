@@ -24,6 +24,7 @@ Improvements:
   - [templates] Include templates for creating new interfaces, traits and enums
   - [wr] Resolve type from array access
   - [cb] Preserve `?` operator as distinct from a union type
+  - [wr] Support for class-string type (not for type inference however)
 
 Features:
 

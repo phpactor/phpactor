@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -256,6 +257,10 @@ class TypeFactory
 
         if ($type === 'static') {
             return new StaticType();
+        }
+
+        if ($type === 'class-string') {
+            return new ClassStringType();
         }
 
         if ($type === '$this') {

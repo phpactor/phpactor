@@ -31,6 +31,12 @@ class TypeFactoryTest extends TestCase
         ];
 
         yield [
+            TypeFactory::fromString('class-string'),
+            'class-string',
+            'string',
+        ];
+
+        yield [
             TypeFactory::fromString('float'),
             'float',
             'float',
@@ -118,6 +124,12 @@ class TypeFactoryTest extends TestCase
             TypeFactory::fromString('resource'),
             'resource',
             'resource'
+        ];
+
+        yield 'class-string' => [
+            TypeFactory::fromString('class-string'),
+            'class-string',
+            'string',
         ];
     }
 
