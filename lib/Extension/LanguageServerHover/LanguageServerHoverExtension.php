@@ -5,15 +5,17 @@ namespace Phpactor\Extension\LanguageServerHover;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Extension\LanguageServerHover\Twig\TypeShortNameFunction;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerHover\Handler\HoverHandler;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
+use Twig\Environment;
 
 class LanguageServerHoverExtension implements Extension
 {
@@ -61,6 +63,10 @@ class LanguageServerHoverExtension implements Extension
             $builder = ObjectRendererBuilder::create()
                 ->setLogger($container->get(LoggingExtension::SERVICE_LOGGER))
                 ->enableInterfaceCandidates()
+                ->configureTwig(function (Environment $env) {
+                    $env = TypeShortNameFunction::add($env);
+                    return $env;
+                })
                 ->renderEmptyOnNotFound();
 
             foreach ($paths as $path) {

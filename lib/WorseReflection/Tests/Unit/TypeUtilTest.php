@@ -22,7 +22,7 @@ class TypeUtilTest extends TestCase
         $class = $reflector->reflectClassLike('Foo');
         self::assertEquals(
             $expected,
-            (string)TypeUtil::toLocalType($class->scope(), $type)
+            (string)TypeUtil::toLocalType($type, $class->scope())
         );
     }
 

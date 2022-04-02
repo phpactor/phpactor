@@ -7,8 +7,9 @@ use Generator;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\Extension\LanguageServerHover\Renderer\HoverInformation;
 use Phpactor\Extension\LanguageServerHover\Renderer\MemberDocblock;
+use Phpactor\Extension\LanguageServerHover\Twig\TypeShortNameFunction;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
-use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
@@ -16,6 +17,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Twig\Environment;
 
 class MarkdownObjectRendererTest extends IntegrationTestCase
 {
@@ -38,7 +40,11 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         $this->renderer = ObjectRendererBuilder::create()
              ->addTemplatePath(__DIR__ .'/../../../../../templates/help/markdown')
              ->enableInterfaceCandidates()
-             ->build();
+             ->configureTwig(function (Environment $env) {
+                 $env = TypeShortNameFunction::add($env);
+                 return $env;
+             })
+              ->build();
     }
 
     /**

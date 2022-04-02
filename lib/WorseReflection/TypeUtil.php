@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class TypeUtil
 {
@@ -75,16 +76,27 @@ class TypeUtil
         return $type->type;
     }
 
-    public static function toLocalType(ReflectionScope $scope, Type $type): Type
+    public static function toLocalType(Type $type, ?ReflectionScope $scope = null): Type
     {
+        if (null === $scope) {
+            if (!$type instanceof ReflectedClassType) {
+                return $type;
+            }
+            $reflection = $type->reflectionOrNull();
+            if (null === $reflection) {
+                return $type;
+            }
+            $scope = $reflection->scope();
+        }
+
         if ($type instanceof NullableType) {
-            return new NullableType(self::toLocalType($scope, $type->type));
+            return new NullableType(self::toLocalType($type->type, $scope));
         }
         if ($type instanceof GenericClassType) {
             $typeName = $scope->resolveLocalName($type->name());
             $newType = clone $type;
             $newType->name = ClassName::fromString($typeName);
-            $newType->arguments = array_map(fn (Type $type) => self::toLocalType($scope, $type), $type->arguments);
+            $newType->arguments = array_map(fn (Type $type) => self::toLocalType($type, $scope), $type->arguments);
 
             return $newType;
         }
@@ -96,8 +108,8 @@ class TypeUtil
         }
         if ($type instanceof ArrayType) {
             $newType = clone $type;
-            $newType->keyType = self::toLocalType($scope, $type->keyType);
-            $newType->valueType = self::toLocalType($scope, $type->valueType);
+            $newType->keyType = self::toLocalType($type->keyType, $scope);
+            $newType->valueType = self::toLocalType($type->valueType, $scope);
             return $newType;
         }
 
