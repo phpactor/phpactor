@@ -13,6 +13,7 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -20,6 +21,7 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -28,10 +30,12 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
@@ -80,6 +84,8 @@ final class DefaultResolverFactory
             FunctionDeclaration::class => new FunctionDeclarationResolver(),
             ObjectCreationExpression::class => new ObjectCreationExpressionResolver(),
             SubscriptExpression::class => new SubscriptExpressionResolver(),
+            StringLiteral::class => new StringLiteralResolver(),
+            NumericLiteral::class => new NumericLiteralResolver(),
         ];
     }
 }

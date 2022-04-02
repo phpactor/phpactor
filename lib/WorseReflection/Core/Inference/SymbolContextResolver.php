@@ -109,24 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof StringLiteral) {
-            return NodeContextFactory::create(
-                (string) $node->getStringContentsText(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::STRING,
-                    'type' => TypeFactory::string(),
-                    'value' => (string) $node->getStringContentsText(),
-                    'container_type' => $this->classTypeFromNode($node)
-                ]
-            );
-        }
-
-        if ($node instanceof NumericLiteral) {
-            return $this->resolveNumericLiteral($node);
-        }
-
         if ($node instanceof ReservedWord) {
             return $this->resolveReservedWord($node);
         }
@@ -156,47 +138,6 @@ class SymbolContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    private function resolveNumericLiteral(NumericLiteral $node): NodeContext
-    {
-        // Strip PHP 7.4 underscorse separator before comparison
-        $value = $this->convertNumericStringToInternalType(
-            str_replace('_', '', $node->getText())
-        );
-
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::NUMBER,
-                'type' => is_float($value) ? TypeFactory::float() : TypeFactory::int(),
-                'value' => $value,
-                'container_type' => $this->classTypeFromNode($node)
-            ]
-        );
-    }
-
-    /**
-     * @return int|float
-     */
-    private function convertNumericStringToInternalType(string $value)
-    {
-        if (1 === preg_match('/^[1-9][0-9]*$/', $value)) {
-            return (int) $value;
-        }
-        if (1 === preg_match('/^0[xX][0-9a-fA-F]+$/', $value)) {
-            return hexdec(substr($value, 2));
-        }
-        if (1 === preg_match('/^0[0-7]+$/', $value)) {
-            return octdec(substr($value, 1));
-        }
-        if (1 === preg_match('/^0[bB][01]+$/', $value)) {
-            return bindec(substr($value, 2));
-        }
-
-        return (float) $value;
     }
 
     private function resolveReservedWord(Node $node): NodeContext
