@@ -41,6 +41,7 @@ class NodeContextFactory
         $config = array_merge($defaultConfig, $config);
         $position = Position::fromStartAndEnd($start, $end);
         $symbol = Symbol::fromTypeNameAndPosition(
+            /** @phpstan-ignore-next-line */
             $config['symbol_type'],
             $symbolName,
             $position
@@ -56,6 +57,25 @@ class NodeContextFactory
             $config['container_type'],
             $config['value'],
         );
+    }
+
+    public static function forVariableAt(Frame $frame, int $start, int $end, string $name): NodeContext
+    {
+        $varName = ltrim($name, '$');
+        $variables = $frame->locals()->lessThanOrEqualTo($end)->byName($varName);
+
+        if (0 === $variables->count()) {
+            return NodeContextFactory::create(
+                $name,
+                $start,
+                $end,
+                [
+                    'symbol_type' => Symbol::VARIABLE
+                ]
+            )->withIssue(sprintf('Variable "%s" is undefined', $varName));
+        }
+
+        return $variables->last()->symbolContext();
     }
 
     /**

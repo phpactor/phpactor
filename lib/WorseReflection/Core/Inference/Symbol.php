@@ -7,32 +7,18 @@ use InvalidArgumentException;
 
 final class Symbol
 {
-    const CLASS_ = 'class';
-    const VARIABLE = 'variable';
-    const METHOD = 'method';
-    const FUNCTION = 'function';
-    const PROPERTY = 'property';
-    const CONSTANT = 'constant';
-    const CASE = 'case';
-    const STRING = 'string';
-    const NUMBER = 'number';
-    const BOOLEAN = 'boolean';
-    const ARRAY = 'array';
-    const UNKNOWN = '<unknown>';
-    const VALID_SYMBOLS = [
-        self::CLASS_,
-        self::VARIABLE,
-        self::UNKNOWN,
-        self::PROPERTY,
-        self::CONSTANT,
-        self::FUNCTION,
-        self::METHOD,
-        self::STRING,
-        self::NUMBER,
-        self::BOOLEAN,
-        self::ARRAY,
-        self::CASE,
-    ];
+    public const CLASS_ = 'class';
+    public const VARIABLE = 'variable';
+    public const METHOD = 'method';
+    public const FUNCTION = 'function';
+    public const PROPERTY = 'property';
+    public const CONSTANT = 'constant';
+    public const CASE = 'case';
+    public const STRING = 'string';
+    public const NUMBER = 'number';
+    public const BOOLEAN = 'boolean';
+    public const ARRAY = 'array';
+    public const UNKNOWN = '<unknown>';
     
     private string $symbolType;
     
@@ -59,11 +45,11 @@ final class Symbol
 
     public static function assertValidSymbolType(string $symbolType): void
     {
-        if (false === in_array($symbolType, self::VALID_SYMBOLS)) {
+        if (false === in_array($symbolType, self::validSymbols())) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid symbol type "%s", valid symbol names: "%s"',
                 $symbolType,
-                implode('", "', self::VALID_SYMBOLS)
+                implode('", "', self::validSymbols())
             ));
         }
     }
@@ -87,5 +73,26 @@ final class Symbol
     public function position(): Position
     {
         return $this->position;
+    }
+
+    /**
+     * @return array<array-key,self::*>
+     */
+    private static function validSymbols(): array
+    {
+        return [
+            self::CLASS_,
+            self::VARIABLE,
+            self::UNKNOWN,
+            self::PROPERTY,
+            self::CONSTANT,
+            self::FUNCTION,
+            self::METHOD,
+            self::STRING,
+            self::NUMBER,
+            self::BOOLEAN,
+            self::ARRAY,
+            self::CASE,
+        ];
     }
 }

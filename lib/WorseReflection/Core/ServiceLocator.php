@@ -13,8 +13,8 @@ use Phpactor\WorseReflection\Core\Inference\FrameBuilder\IncludeWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\InstanceOfWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
@@ -38,7 +38,7 @@ class ServiceLocator
     
     private FrameBuilder $frameBuilder;
     
-    private SymbolContextResolver $symbolContextResolver;
+    private NodeContextResolver $symbolContextResolver;
     
     private DocBlockFactory $docblockFactory;
 
@@ -87,12 +87,15 @@ class ServiceLocator
         $this->docblockFactory = new DocblockParserFactory($this->reflector);
         $this->logger = $logger;
 
-        $nameResolver = new FullyQualifiedNameResolver($this->reflector, $this->logger);
-        $this->symbolContextResolver = new SymbolContextResolver(
+        $nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
+        $this->symbolContextResolver = new NodeContextResolver(
             $this->reflector,
             $this->logger,
             $cache,
-            $nameResolver,
+            (new DefaultResolverFactory(
+                $this->reflector,
+                $nameResolver
+            ))->createResolvers(),
         );
 
         $this->frameBuilder = FrameBuilder::create(
@@ -135,7 +138,7 @@ class ServiceLocator
     /**
      * TODO: This is TolerantParser specific.
      */
-    public function symbolContextResolver(): SymbolContextResolver
+    public function symbolContextResolver(): NodeContextResolver
     {
         return $this->symbolContextResolver;
     }

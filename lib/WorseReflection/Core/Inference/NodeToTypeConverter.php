@@ -23,7 +23,7 @@ use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 
-class FullyQualifiedNameResolver
+class NodeToTypeConverter
 {
     private LoggerInterface $logger;
 
@@ -37,6 +37,9 @@ class FullyQualifiedNameResolver
         $this->reflector = $reflector;
     }
 
+    /**
+     * @param null|Type|string $type
+     */
     public function resolve(Node $node, $type = null, Name $currentClass = null): Type
     {
         $type = $type ?: $node->getText();
@@ -92,22 +95,18 @@ class FullyQualifiedNameResolver
         return $type;
     }
 
-    private function isFunctionCall(Node $node)
+    private function isFunctionCall(Node $node): bool
     {
         return false === $node instanceof ScopedPropertyAccessExpression &&
             $node->parent instanceof CallExpression;
     }
 
-    private function isFullyQualified(string $name)
-    {
-        return substr($name, 0, 1) === '\\';
-    }
-
-    private function parentClass(Node $node)
+    private function parentClass(Node $node): Type
     {
         /** @var ClassDeclaration $class */
         $class = $node->getFirstAncestor(ClassDeclaration::class);
 
+        /** @phpstan-ignore-next-line */
         if (null === $class) {
             $this->logger->warning('"parent" keyword used outside of class scope');
             return TypeFactory::unknown();
@@ -125,7 +124,7 @@ class FullyQualifiedNameResolver
         );
     }
 
-    private function currentClass(Node $node, Name $currentClass = null)
+    private function currentClass(Node $node, Name $currentClass = null): Type
     {
         if ($currentClass) {
             return TypeFactory::fromStringWithReflector($currentClass->full(), $this->reflector);
@@ -141,7 +140,7 @@ class FullyQualifiedNameResolver
         return TypeFactory::fromStringWithReflector($class->getNamespacedName(), $this->reflector);
     }
 
-    private function isUseDefinition(Node $node)
+    private function isUseDefinition(Node $node): bool
     {
         return $node->getParent() instanceof NamespaceUseClause;
     }

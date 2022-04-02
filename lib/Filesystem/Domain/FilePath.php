@@ -48,7 +48,7 @@ final class FilePath
             throw new RuntimeException(sprintf('Unsupported scheme "%s" for path "%s"', $scheme, $string));
         }
 
-        return new self($path);
+        return new self((string)$path);
     }
 
     public static function fromParts(array $parts): FilePath

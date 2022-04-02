@@ -10,7 +10,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
@@ -23,11 +23,11 @@ class VariableWalker extends AbstractWalker
     
     private array $injectedTypes = [];
     
-    private FullyQualifiedNameResolver $nameResolver;
+    private NodeToTypeConverter $nameResolver;
 
     public function __construct(
         DocBlockFactory $docblockFactory,
-        FullyQualifiedNameResolver $nameResolver
+        NodeToTypeConverter $nameResolver
     ) {
         $this->docblockFactory = $docblockFactory;
         $this->nameResolver = $nameResolver;

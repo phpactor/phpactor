@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Name;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\Reflector;
 
@@ -53,7 +53,7 @@ class ReflectionScope implements CoreReflectionScope
 
     public function resolveFullyQualifiedName($type, ReflectionClassLike $class = null): Type
     {
-        $resolver = new FullyQualifiedNameResolver($this->reflector, new ArrayLogger());
+        $resolver = new NodeToTypeConverter($this->reflector, new ArrayLogger());
         return $resolver->resolve($this->node, $type, $class ? $class->name() : null);
     }
 

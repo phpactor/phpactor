@@ -3,9 +3,10 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Cache\NullCache;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\DefaultResolverFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -719,7 +720,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     ],
                 ];
 
-        yield 'Static property access (instance)' => [
+        yield 'Static property access instance)' => [
             <<<'EOT'
                 <?php
 
@@ -1168,11 +1169,12 @@ class SymbolContextResolverTest extends IntegrationTestCase
         $node = $this->parseSource($source)->getDescendantNodeAtPosition($offset);
 
         $reflector = $this->createReflector($source);
-        $resolver = new SymbolContextResolver(
+        $nameResolver = new NodeToTypeConverter($reflector, $this->logger());
+        $resolver = new NodeContextResolver(
             $reflector,
             $this->logger(),
             new NullCache(),
-            new FullyQualifiedNameResolver($reflector, $this->logger()),
+            (new DefaultResolverFactory($reflector, $nameResolver))->createResolvers(),
         );
 
         return $resolver->resolveNode($frame, $node);
