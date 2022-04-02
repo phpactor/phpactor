@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -15,6 +16,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
@@ -25,6 +27,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
@@ -33,6 +36,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\VariableResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\BinaryExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\FunctionDeclarationResolver;
 use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
@@ -71,6 +75,8 @@ final class DefaultResolverFactory
             InterfaceDeclaration::class => new ClassLikeResolver(),
             TraitDeclaration::class => new ClassLikeResolver(),
             EnumDeclaration::class => new ClassLikeResolver(),
+            FunctionDeclaration::class => new FunctionDeclarationResolver(),
+            ObjectCreationExpression::class => new ObjectCreationExpressionResolver(),
         ];
     }
 }

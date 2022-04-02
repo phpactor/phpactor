@@ -109,21 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof FunctionDeclaration) {
-            return NodeContextFactory::create(
-                (string)$node->name->getText((string)$node->getFileContents()),
-                $node->name->getStartPosition(),
-                $node->name->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::FUNCTION,
-                ]
-            );
-        }
-
-        if ($node instanceof ObjectCreationExpression) {
-            return $this->resolveObjectCreationExpression($frame, $node);
-        }
-
         if ($node instanceof SubscriptExpression) {
             $variableValue = $this->doResolveNodeWithCache($frame, $node->postfixExpression);
             return $this->resolveSubscriptExpression($frame, $variableValue, $node);
@@ -357,15 +342,6 @@ class SymbolContextResolver
         ));
 
         return $info;
-    }
-
-    private function resolveObjectCreationExpression(Frame $frame, ObjectCreationExpression $node): NodeContext
-    {
-        if (false === $node->classTypeDesignator instanceof Node) {
-            throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
-        }
-
-        return $this->doResolveNodeWithCache($frame, $node->classTypeDesignator);
     }
 
     private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
