@@ -2,12 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Microsoft\PhpParser\Node\Expression\BinaryExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\CloneExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
@@ -23,9 +20,7 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Type;
@@ -36,7 +31,6 @@ use Microsoft\PhpParser\ClassLike;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Psr\Log\LoggerInterface;
 
 class SymbolContextResolver
@@ -59,7 +53,7 @@ class SymbolContextResolver
         Reflector $reflector,
         LoggerInterface $logger,
         Cache $cache,
-        array $resolverMap = [],
+        array $resolverMap = []
     ) {
         $this->logger = $logger;
         $this->reflector = $reflector;

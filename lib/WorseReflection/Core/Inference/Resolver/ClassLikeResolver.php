@@ -20,8 +20,8 @@ class ClassLikeResolver implements Resolver
     public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert(
-            $node instanceof ClassDeclaration || 
-            $node instanceof TraitDeclaration || 
+            $node instanceof ClassDeclaration ||
+            $node instanceof TraitDeclaration ||
             $node instanceof EnumDeclaration ||
             $node instanceof InterfaceDeclaration
         );
