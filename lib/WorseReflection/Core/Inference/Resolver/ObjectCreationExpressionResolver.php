@@ -8,11 +8,11 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
 class ObjectCreationExpressionResolver implements Resolver
 {
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ObjectCreationExpression);
         if (false === $node->classTypeDesignator instanceof Node) {

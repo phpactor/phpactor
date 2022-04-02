@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class ScopedPropertyAccessResolver implements Resolver
@@ -21,7 +21,7 @@ class ScopedPropertyAccessResolver implements Resolver
         $this->nodeTypeConverter = $nodeTypeConverter;
     }
 
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ScopedPropertyAccessExpression);
 
@@ -41,7 +41,7 @@ class ScopedPropertyAccessResolver implements Resolver
             $name = $node->scopeResolutionQualifier->getText();
         }
 
-        $parent = $this->nodeTypeConverter->resolve($node, $name);
+        $parent = $this->nodeTypeConverter->resolve($node, (string)$name);
 
         return MemberAccessExpressionResolver::infoFromMemberAccess($resolver, $frame, $parent, $node);
     }

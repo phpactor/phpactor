@@ -13,14 +13,14 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
 {
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof MemberAccessExpression);
 
@@ -29,7 +29,7 @@ class MemberAccessExpressionResolver implements Resolver
         return self::infoFromMemberAccess($resolver, $frame, $class->type(), $node);
     }
 
-    public static function infoFromMemberAccess(SymbolContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
+    public static function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
     {
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 

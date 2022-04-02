@@ -9,13 +9,13 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class NumericLiteralResolver implements Resolver
 {
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof NumericLiteral);
 

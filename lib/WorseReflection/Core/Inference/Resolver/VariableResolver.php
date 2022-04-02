@@ -12,13 +12,13 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class VariableResolver implements Resolver
 {
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof Variable);
 
@@ -50,7 +50,7 @@ class VariableResolver implements Resolver
         );
     }
 
-    private function resolvePropertyVariable(SymbolContextResolver $resolver, Variable $node): NodeContext
+    private function resolvePropertyVariable(NodeContextResolver $resolver, Variable $node): NodeContext
     {
         $info = NodeContextFactory::create(
             $node->getName(),
@@ -68,7 +68,7 @@ class VariableResolver implements Resolver
         );
     }
 
-    private function resolveStaticPropertyAccess(SymbolContextResolver $resolver, Type $containerType, Variable $node): NodeContext
+    private function resolveStaticPropertyAccess(NodeContextResolver $resolver, Type $containerType, Variable $node): NodeContext
     {
         $info = NodeContextFactory::create(
             $node->getName(),

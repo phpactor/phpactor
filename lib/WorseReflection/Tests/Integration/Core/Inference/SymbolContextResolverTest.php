@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -1170,7 +1170,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
         $reflector = $this->createReflector($source);
         $nameResolver = new NodeToTypeConverter($reflector, $this->logger());
-        $resolver = new SymbolContextResolver(
+        $resolver = new NodeContextResolver(
             $reflector,
             $this->logger(),
             new NullCache(),

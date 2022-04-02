@@ -26,7 +26,7 @@ final class FrameBuilder
     /**
      * @param FrameWalker[] $walkers
      */
-    public function __construct(SymbolContextResolver $symbolContextResolver, array $walkers, Cache $cache)
+    public function __construct(NodeContextResolver $symbolContextResolver, array $walkers, Cache $cache)
     {
         $this->symbolContextResolver = $symbolContextResolver;
         $this->walkers = $walkers;
@@ -37,7 +37,7 @@ final class FrameBuilder
      * @param FrameWalker[] $walkers
      */
     public static function create(
-        SymbolContextResolver $symbolContextResolver,
+        NodeContextResolver $symbolContextResolver,
         Cache $cache,
         array $walkers = []
     ): self {

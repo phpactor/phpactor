@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameBuilder\InstanceOfWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
-use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
@@ -38,7 +38,7 @@ class ServiceLocator
     
     private FrameBuilder $frameBuilder;
     
-    private SymbolContextResolver $symbolContextResolver;
+    private NodeContextResolver $symbolContextResolver;
     
     private DocBlockFactory $docblockFactory;
 
@@ -88,7 +88,7 @@ class ServiceLocator
         $this->logger = $logger;
 
         $nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
-        $this->symbolContextResolver = new SymbolContextResolver(
+        $this->symbolContextResolver = new NodeContextResolver(
             $this->reflector,
             $this->logger,
             $cache,
@@ -138,7 +138,7 @@ class ServiceLocator
     /**
      * TODO: This is TolerantParser specific.
      */
-    public function symbolContextResolver(): SymbolContextResolver
+    public function symbolContextResolver(): NodeContextResolver
     {
         return $this->symbolContextResolver;
     }

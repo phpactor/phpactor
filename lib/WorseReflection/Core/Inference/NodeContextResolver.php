@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Psr\Log\LoggerInterface;
 
-class SymbolContextResolver
+class NodeContextResolver
 {
     private Reflector $reflector;
     
