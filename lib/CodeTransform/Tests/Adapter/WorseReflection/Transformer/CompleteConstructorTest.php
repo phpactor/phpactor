@@ -279,7 +279,7 @@ class CompleteConstructorTest extends WorseTestCase
                 class Foobar
                 {
                     /**
-                     * @param Foo<string,Bar> $foo
+                     * @param Foo<class-string,Bar> $foo
                      */
                     public function __construct(array $foo)
                     {
@@ -293,12 +293,12 @@ class CompleteConstructorTest extends WorseTestCase
                 class Foobar
                 {
                     /**
-                     * @var Foo<string,Bar>
+                     * @var Foo<class-string,Bar>
                      */
                     private $foo;
 
                     /**
-                     * @param Foo<string,Bar> $foo
+                     * @param Foo<class-string,Bar> $foo
                      */
                     public function __construct(array $foo)
                     {

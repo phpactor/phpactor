@@ -1,0 +1,11 @@
+/**
+ * @var class-string
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ScalarNode: = class-string
+ */
+
