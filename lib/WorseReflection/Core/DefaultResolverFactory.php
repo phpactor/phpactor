@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -31,6 +32,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionRes
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
@@ -77,6 +79,7 @@ final class DefaultResolverFactory
             EnumDeclaration::class => new ClassLikeResolver(),
             FunctionDeclaration::class => new FunctionDeclarationResolver(),
             ObjectCreationExpression::class => new ObjectCreationExpressionResolver(),
+            SubscriptExpression::class => new SubscriptExpressionResolver(),
         ];
     }
 }

@@ -109,11 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof SubscriptExpression) {
-            $variableValue = $this->doResolveNodeWithCache($frame, $node->postfixExpression);
-            return $this->resolveSubscriptExpression($frame, $variableValue, $node);
-        }
-
         if ($node instanceof StringLiteral) {
             return NodeContextFactory::create(
                 (string) $node->getStringContentsText(),
@@ -288,60 +283,6 @@ class SymbolContextResolver
                 'value' => $array
             ]
         );
-    }
-
-    private function resolveSubscriptExpression(
-        Frame $frame,
-        NodeContext $info,
-        SubscriptExpression $node = null
-    ): NodeContext {
-        if (null === $node->accessExpression) {
-            $info = $info->withIssue(sprintf(
-                'Subscript expression "%s" is incomplete',
-                (string) $node->getText()
-            ));
-            return $info;
-        }
-
-        $node = $node->accessExpression;
-        $type = $info->type();
-
-        if (!$type instanceof ArrayType) {
-            $info = $info->withIssue(sprintf(
-                'Not resolving subscript expression of type "%s"',
-                (string) $info->type()
-            ));
-            return $info;
-        }
-
-        $info = $info->withType($type->valueType);
-        $subjectValue = $info->value();
-
-        if (false === is_array($subjectValue)) {
-            $info = $info->withIssue(sprintf(
-                'Array value for symbol "%s" is not an array, is a "%s"',
-                (string) $info->symbol(),
-                gettype($subjectValue)
-            ));
-
-            return $info;
-        }
-
-        if ($node instanceof StringLiteral) {
-            $string = $this->doResolveNodeWithCache($frame, $node);
-
-            if (array_key_exists($string->value(), $subjectValue)) {
-                $value = $subjectValue[$string->value()];
-                return $string->withValue($value);
-            }
-        }
-
-        $info = $info->withIssue(sprintf(
-            'Did not resolve access expression for node type "%s"',
-            get_class($node)
-        ));
-
-        return $info;
     }
 
     private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
