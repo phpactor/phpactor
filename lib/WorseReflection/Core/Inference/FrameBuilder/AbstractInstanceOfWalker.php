@@ -69,7 +69,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
 
         $variable = $node->getFirstDescendantNode(Variable::class);
 
-        if (null === $variable) {
+        if (!$variable instanceof Expression) {
             return null;
         }
 
@@ -83,9 +83,10 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
             }
         }
 
+        /** @var Node $rightOperand */
         $rightOperand = $node->rightOperand;
 
-        if (false === $rightOperand instanceof QualifiedName) {
+        if (!$rightOperand instanceof QualifiedName) {
             return null;
         }
 
@@ -113,7 +114,8 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
         MemberAccessExpression $leftOperand,
         Frame $frame
     ): NodeContext {
-        assert($leftOperand->dereferencableExpression instanceof Variable);
+        $variable = $leftOperand->dereferencableExpression;
+        assert($variable instanceof Variable);
 
         $symbolContext = NodeContextFactory::create(
             (string) $leftOperand->memberName->getText($leftOperand->getFileContents()),
@@ -122,7 +124,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
             ['symbol_type' => Symbol::PROPERTY],
         );
 
-        $classVariableName = $leftOperand->dereferencableExpression->getName();
+        $classVariableName = $variable->getName();
         $assignments = $frame->locals()->byName($classVariableName);
 
         if (0 === $assignments->count()) {
