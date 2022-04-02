@@ -36,14 +36,9 @@ class VariableWalker extends AbstractWalker
     /**
      * {@inheritDoc}
      */
-    public function nodeFqn(): ?string
+    public function nodeFqns(): array
     {
-        return null;
-    }
-
-    public function canWalk(Node $node): bool
-    {
-        return true;
+        return [];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

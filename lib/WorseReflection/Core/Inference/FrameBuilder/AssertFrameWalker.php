@@ -11,23 +11,25 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 
 class AssertFrameWalker extends AbstractInstanceOfWalker implements FrameWalker
 {
-    public function nodeFqn(): ?string
+    public function nodeFqns(): array
     {
-        return null;
-    }
-
-    public function canWalk(Node $node): bool
-    {
-        if (!$node instanceof CallExpression) {
-            return false;
-        }
-        $name = $node->callableExpression->getText();
-
-        return strtolower($name) == 'assert' && $node->argumentExpressionList !== null;
+        return [
+            CallExpression::class,
+        ];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
+        if (!$node instanceof CallExpression) {
+            return $frame;
+        }
+
+        $name = $node->callableExpression->getText();
+
+        if (strtolower($name) !== 'assert' || $node->argumentExpressionList === null) {
+            return $frame;
+        }
+
         assert($node instanceof CallExpression);
         $list = $node->argumentExpressionList->getElements();
         foreach ($list as $expression) {
@@ -47,7 +49,6 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements FrameWalker
                 $this->getAssignmentsMatchingVariableType($frame, $variable)
                     ->add($variable)
                 ;
-                dump($variable);
             }
         }
 

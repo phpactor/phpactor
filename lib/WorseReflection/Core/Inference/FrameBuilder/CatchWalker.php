@@ -12,14 +12,9 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class CatchWalker extends AbstractWalker
 {
-    public function canWalk(Node $node): bool
+    public function nodeFqns(): array
     {
-        return true;
-    }
-
-    public function nodeFqn(): ?string
-    {
-        return CatchClause::class;
+        return [CatchClause::class];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

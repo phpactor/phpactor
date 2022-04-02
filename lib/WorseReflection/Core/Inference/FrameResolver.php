@@ -14,7 +14,6 @@ use RuntimeException;
 final class FrameResolver
 {
     private NodeContextResolver $nodeContextResolver;
-
     private Cache $cache;
 
     /**
@@ -55,16 +54,17 @@ final class FrameResolver
         $globalWalkers = [];
         $nodeWalkers = [];
         foreach ($walkers as $walker) {
-            $key = $walker->nodeFqn();
-            if ($key === null) {
+            if (empty($walker->nodeFqns())) {
                 $globalWalkers[] = $walker;
                 continue;
             }
-            if (!isset($nodeWalkers[$key])) {
-                $nodeWalkers[$key] = [$walker];
-                continue;
+            foreach ($walker->nodeFqns() as $key) {
+                if (!isset($nodeWalkers[$key])) {
+                    $nodeWalkers[$key] = [$walker];
+                    continue;
+                }
+                $nodeWalkers[$key][] = $walker;
             }
-            $nodeWalkers[$key][] = $walker;
         }
 
         return new self($nodeContextResolver, $globalWalkers, $nodeWalkers, $cache);
@@ -103,17 +103,14 @@ final class FrameResolver
                 $frame = new Frame($node->getNodeKindName());
             }
 
-            $nodeClass = get_class($node);
             foreach ($this->globalWalkers as $walker) {
-                if ($walker->canWalk($node)) {
-                    $frame = $walker->walk($this, $frame, $node);
-                }
+                $frame = $walker->walk($this, $frame, $node);
             }
+
+            $nodeClass = get_class($node);
             if (isset($this->nodeWalkers[$nodeClass])) {
                 foreach ($this->nodeWalkers[$nodeClass] as $walker) {
-                    if ($walker->canWalk($node)) {
-                        $frame = $walker->walk($this, $frame, $node);
-                    }
+                    $frame = $walker->walk($this, $frame, $node);
                 }
             }
 

@@ -12,25 +12,20 @@ use RuntimeException;
 
 class TestAssertWalker implements FrameWalker
 {
-    public function nodeFqn(): ?string
+    public function nodeFqns(): array
     {
-        return CallExpression::class;
-    }
-
-    public function canWalk(Node $node): bool
-    {
-        if (false === $node instanceof CallExpression) {
-            return false;
-        }
-
-        $name = $node->callableExpression->getText();
-
-        return $name == 'wrAssertType' && $node->argumentExpressionList !== null;
+        return [CallExpression::class];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CallExpression);
+        $name = $node->callableExpression->getText();
+
+        if ($name !== 'wrAssertType' || $node->argumentExpressionList === null) {
+            return $frame;
+        }
+
         $list = $node->argumentExpressionList->getElements();
         $args = [];
         foreach ($list as $expression) {

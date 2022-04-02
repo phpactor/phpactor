@@ -22,14 +22,9 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class ForeachWalker extends AbstractWalker
 {
-    public function nodeFqn(): ?string
+    public function nodeFqns(): array
     {
-        return ForeachStatement::class;
-    }
-
-    public function canWalk(Node $node): bool
-    {
-        return true;
+        return [ForeachStatement::class];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

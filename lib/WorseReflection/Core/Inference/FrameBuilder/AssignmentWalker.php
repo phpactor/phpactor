@@ -37,14 +37,9 @@ class AssignmentWalker extends AbstractWalker
     /**
      * {@inheritDoc}
      */
-    public function nodeFqn(): ?string
+    public function nodeFqns(): array
     {
-        return AssignmentExpression::class;
-    }
-
-    public function canWalk(Node $node): bool
-    {
-        return $node instanceof AssignmentExpression;
+        return [AssignmentExpression::class];
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
