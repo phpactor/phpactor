@@ -115,18 +115,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof ClassDeclaration || $node instanceof TraitDeclaration || $node instanceof InterfaceDeclaration) {
-            return NodeContextFactory::create(
-                (string)$node->name->getText((string)$node->getFileContents()),
-                $node->name->getStartPosition(),
-                $node->name->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::CLASS_,
-                    'type' => TypeFactory::fromStringWithReflector($node->getNamespacedName(), $this->reflector)
-                ]
-            );
-        }
-
         if ($node instanceof FunctionDeclaration) {
             return NodeContextFactory::create(
                 (string)$node->name->getText((string)$node->getFileContents()),

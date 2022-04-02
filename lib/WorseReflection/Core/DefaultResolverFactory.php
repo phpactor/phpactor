@@ -13,10 +13,15 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
@@ -62,6 +67,10 @@ final class DefaultResolverFactory
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),
+            ClassDeclaration::class => new ClassLikeResolver(),
+            InterfaceDeclaration::class => new ClassLikeResolver(),
+            TraitDeclaration::class => new ClassLikeResolver(),
+            EnumDeclaration::class => new ClassLikeResolver(),
         ];
     }
 }
