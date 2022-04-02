@@ -114,6 +114,11 @@ class SymbolContextResolver
         }
     }
 
+    public function reflector(): Reflector
+    {
+        return $this->reflector;
+    }
+
     /**
      * @param Node|Token $node
      */
@@ -142,18 +147,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof ConstElement) {
-            return NodeContextFactory::create(
-                $node->getName(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::CONSTANT,
-                    'container_type' => $this->classTypeFromNode($node)
-                ]
-            );
         }
 
         if ($node instanceof EnumCaseDeclaration) {
@@ -741,19 +734,6 @@ class SymbolContextResolver
         return $info;
     }
 
-    private function classTypeFromNode(Node $node): Type
-    {
-        $classNode = $this->getClassLikeAncestor($node);
-
-        if (null === $classNode) {
-            return TypeFactory::undefined();
-        }
-
-        assert($classNode instanceof NamespacedNameInterface);
-
-        return TypeFactory::fromStringWithReflector($classNode->getNamespacedName(), $this->reflector);
-    }
-
     private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
     {
         return $this->doResolveNode($frame, $node->expression);
@@ -842,5 +822,10 @@ class SymbolContextResolver
 
             yield $symbolContext->types();
         }
+    }
+
+    private function classTypeFromNode(Node $node): Type
+    {
+        return NodeUtil::nodeContainerClassLikeType($this->reflector, $node);
     }
 }

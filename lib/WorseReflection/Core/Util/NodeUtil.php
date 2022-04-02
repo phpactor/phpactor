@@ -2,13 +2,59 @@
 
 namespace Phpactor\WorseReflection\Core\Util;
 
+use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
+use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
+use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Reflector;
 
 class NodeUtil
 {
+    public static function nodeContainerClassLikeType(Reflector $reflector, Node $node): Type
+    {
+        $classNode = self::nodeContainerClassLike($node);
+
+        if (null === $classNode) {
+            return TypeFactory::undefined();
+        }
+
+        assert($classNode instanceof NamespacedNameInterface);
+
+        return TypeFactory::fromStringWithReflector($classNode->getNamespacedName(), $reflector);
+    }
+
+    /**
+     * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null
+     */
+    public static function nodeContainerClassLike(Node $node): ?Node
+    {
+        $ancestor = $node->getFirstAncestor(ObjectCreationExpression::class, ClassLike::class);
+
+        if ($ancestor instanceof ObjectCreationExpression) {
+            if ($ancestor->classTypeDesignator instanceof Token) {
+                if ($ancestor->classTypeDesignator->kind == TokenKind::ClassKeyword) {
+                    throw new CouldNotResolveNode('Resolving anonymous classes is not currently supported');
+                }
+            }
+
+            return self::nodeContainerClassLike($ancestor);
+        }
+
+        /** @var ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null */
+        return $ancestor;
+    }
+
     /**
      * @param Token|Node|mixed $nodeOrToken
      */
