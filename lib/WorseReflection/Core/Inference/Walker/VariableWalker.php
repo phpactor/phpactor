@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -11,7 +11,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
@@ -21,6 +21,9 @@ class VariableWalker extends AbstractWalker
 {
     private DocBlockFactory $docblockFactory;
     
+    /**
+     * @var array<string,Types>
+     */
     private array $injectedTypes = [];
     
     private NodeToTypeConverter $nameResolver;
@@ -33,12 +36,13 @@ class VariableWalker extends AbstractWalker
         $this->nameResolver = $nameResolver;
     }
 
-    public function canWalk(Node $node): bool
+    
+    public function nodeFqns(): array
     {
-        return true;
+        return [];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $docblockTypes = $this->injectVariablesFromComment($frame, $node);
 

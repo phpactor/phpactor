@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
@@ -31,7 +31,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     
     private Visibility $visibility;
     
-    private FrameBuilder $frameBuilder;
+    private FrameResolver $frameBuilder;
     
     private ReflectionClassLike $class;
     

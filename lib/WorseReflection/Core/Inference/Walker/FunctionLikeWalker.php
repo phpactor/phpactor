@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -21,29 +21,33 @@ use Microsoft\PhpParser\Token;
 
 class FunctionLikeWalker extends AbstractWalker
 {
-    public function canWalk(Node $node): bool
+    public function nodeFqns(): array
     {
-        return $node instanceof FunctionLike;
+        return [
+            FunctionDeclaration::class,
+            MethodDeclaration::class,
+            AnonymousFunctionCreationExpression::class,
+        ];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert(
-            $node instanceof FunctionLike ||
+            $node instanceof MethodDeclaration ||
             $node instanceof FunctionDeclaration ||
             $node instanceof AnonymousFunctionCreationExpression
         );
 
         $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
-        $this->walkFunctionLike($builder, $frame, $node);
+        $this->walkFunctionLike($resolver, $frame, $node);
 
         return $frame;
     }
 
     /**
-     * @param FunctionDeclaration|AnonymousFunctionCreationExpression $node
+     * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression $node
      */
-    private function walkFunctionLike(FrameBuilder $builder, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(
@@ -54,7 +58,7 @@ class FunctionLikeWalker extends AbstractWalker
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-            $classType = $builder->resolveNode($frame, $classNode)->type();
+            $classType = $resolver->resolveNode($frame, $classNode)->type();
             $context = NodeContextFactory::create(
                 'this',
                 $node->getStartPosition(),
@@ -82,7 +86,7 @@ class FunctionLikeWalker extends AbstractWalker
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $symbolContext = $builder->resolveNode($frame, $parameterNode);
+            $symbolContext = $resolver->resolveNode($frame, $parameterNode);
 
             $context = NodeContextFactory::create(
                 (string)$parameterName,
@@ -149,7 +153,7 @@ class FunctionLikeWalker extends AbstractWalker
         }
     }
 
-    private function functionName(FunctionLike $node)
+    private function functionName(FunctionLike $node): string
     {
         if ($node instanceof MethodDeclaration) {
             return $node->getName();

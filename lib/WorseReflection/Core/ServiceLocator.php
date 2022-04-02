@@ -4,18 +4,18 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\AssertFrameWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\AssignmentWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\CatchWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\ForeachWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\FunctionLikeWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\IncludeWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\InstanceOfWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\Core\Inference\Walker\AssertFrameWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\AssignmentWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\InstanceOfWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -36,7 +36,7 @@ class ServiceLocator
     
     private Reflector $reflector;
     
-    private FrameBuilder $frameBuilder;
+    private FrameResolver $frameBuilder;
     
     private NodeContextResolver $symbolContextResolver;
     
@@ -48,7 +48,7 @@ class ServiceLocator
     private array $methodProviders;
 
     /**
-     * @param list<FrameWalker> $frameWalkers
+     * @param list<Walker> $frameWalkers
      * @param list<ReflectionMemberProvider> $methodProviders
      */
     public function __construct(
@@ -98,7 +98,7 @@ class ServiceLocator
             ))->createResolvers(),
         );
 
-        $this->frameBuilder = FrameBuilder::create(
+        $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
             $cache,
             array_merge([
@@ -146,7 +146,7 @@ class ServiceLocator
     /**
      * TODO: This is TolerantParser specific.
      */
-    public function frameBuilder(): FrameBuilder
+    public function frameBuilder(): FrameResolver
     {
         return $this->frameBuilder;
     }

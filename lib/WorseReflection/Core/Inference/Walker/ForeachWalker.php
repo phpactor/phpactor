@@ -1,13 +1,13 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\ForeachValue;
@@ -22,22 +22,22 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class ForeachWalker extends AbstractWalker
 {
-    public function canWalk(Node $node): bool
+    public function nodeFqns(): array
     {
-        return $node instanceof ForeachStatement;
+        return [ForeachStatement::class];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ForeachStatement);
-        $collection = $builder->resolveNode($frame, $node->forEachCollectionName);
+        $collection = $resolver->resolveNode($frame, $node->forEachCollectionName);
         $this->processKey($node, $frame, $collection);
-        $this->processValue($builder, $node, $frame, $collection);
+        $this->processValue($resolver, $node, $frame, $collection);
 
         return $frame;
     }
 
-    private function processValue(FrameBuilder $builder, ForeachStatement $node, Frame $frame, NodeContext $collection): void
+    private function processValue(FrameResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $collection): void
     {
         $itemName = $node->foreachValue;
         
@@ -52,7 +52,7 @@ class ForeachWalker extends AbstractWalker
         }
 
         if ($expression instanceof ArrayCreationExpression) {
-            $this->valueFromArrayCreation($builder, $expression, $node, $collection, $frame);
+            $this->valueFromArrayCreation($resolver, $expression, $node, $collection, $frame);
         }
     }
 
@@ -120,7 +120,7 @@ class ForeachWalker extends AbstractWalker
     }
 
     private function valueFromArrayCreation(
-        FrameBuilder $builder,
+        FrameResolver $resolver,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
         NodeContext $collection,
@@ -139,7 +139,7 @@ class ForeachWalker extends AbstractWalker
                 continue;
             }
 
-            $context = $builder->resolveNode($frame, $child->elementValue);
+            $context = $resolver->resolveNode($frame, $child->elementValue);
             if ($collectionType instanceof IterableType) {
                 $context = $context->withType($collectionType->iterableValueType());
             }

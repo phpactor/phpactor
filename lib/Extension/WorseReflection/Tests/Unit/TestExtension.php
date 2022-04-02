@@ -9,8 +9,8 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -31,14 +31,9 @@ class TestExtension implements Extension
     }
 }
 
-class TestFrameWalker implements FrameWalker
+class TestFrameWalker implements Walker
 {
-    public function canWalk(Node $node): bool
-    {
-        return true;
-    }
-
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         if ($frame->locals()->byName('test_variable')->count()) {
             return $frame;
@@ -50,5 +45,10 @@ class TestFrameWalker implements FrameWalker
             )
         );
         return $frame;
+    }
+
+    public function nodeFqns(): array
+    {
+        return [];
     }
 }

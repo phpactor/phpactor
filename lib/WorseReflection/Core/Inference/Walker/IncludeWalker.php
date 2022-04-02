@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
@@ -11,13 +11,12 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
-use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Psr\Log\LoggerInterface;
 use Webmozart\PathUtil\Path;
 
-class IncludeWalker implements FrameWalker
+class IncludeWalker implements Walker
 {
     private Parser $parser;
     
@@ -29,15 +28,16 @@ class IncludeWalker implements FrameWalker
         $this->logger = $logger;
     }
 
-    public function canWalk(Node $node): bool
+    
+    public function nodeFqns(): array
     {
-        return $node instanceof ScriptInclusionExpression;
+        return [ScriptInclusionExpression::class];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ScriptInclusionExpression);
-        $context = $builder->resolveNode($frame, $node->expression);
+        $context = $resolver->resolveNode($frame, $node->expression);
         $includeUri = $context->value();
 
         if (!is_string($includeUri)) {
@@ -45,9 +45,8 @@ class IncludeWalker implements FrameWalker
         }
 
         $sourceNode = $node->getFirstAncestor(SourceFileNode::class);
-        assert($sourceNode instanceof SourceFileNode);
 
-        if (!$sourceNode) {
+        if (!$sourceNode instanceof SourceFileNode) {
             return $frame;
         }
 
@@ -67,13 +66,13 @@ class IncludeWalker implements FrameWalker
             return $frame;
         }
 
-        $sourceNode = $this->parser->parseSourceFile(file_get_contents($includeUri));
-        $includedFrame = $builder->build($sourceNode);
+        $sourceNode = $this->parser->parseSourceFile((string)file_get_contents($includeUri));
+        $includedFrame = $resolver->build($sourceNode);
 
         $parentNode = $node->parent;
 
         if ($parentNode instanceof AssignmentExpression) {
-            return $this->processAssignment($sourceNode, $builder, $frame, $parentNode, $node);
+            return $this->processAssignment($sourceNode, $resolver, $frame, $parentNode, $node);
         }
 
         $frame->locals()->merge($includedFrame->locals());
@@ -81,11 +80,11 @@ class IncludeWalker implements FrameWalker
         return $frame;
     }
 
-    private function processAssignment(SourceFileNode $sourceNode, FrameBuilder $builder, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
+    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node): Frame
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
-        $returnValueContext = $builder->resolveNode($frame->new('required'), $return->expression);
+        $returnValueContext = $resolver->resolveNode($frame->new('required'), $return->expression);
         
         if (!$parentNode->leftOperand instanceof Variable) {
             return $frame;
@@ -99,12 +98,13 @@ class IncludeWalker implements FrameWalker
         
         $name = $name->getText($node->getFileContents());
         
-        /** @var WorseVariable $variable */
-        foreach ($frame->locals()->byName($name) as $variable) {
+        foreach ($frame->locals()->byName((string)$name) as $variable) {
             $frame->locals()->add(
                 $variable->withTypes($returnValueContext->types())
             );
             return $frame;
         }
+
+        return $frame;
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -12,19 +13,22 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class CatchWalker extends AbstractWalker
 {
-    public function canWalk(Node $node): bool
+    public function nodeFqns(): array
     {
-        return $node instanceof CatchClause;
+        return [CatchClause::class];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CatchClause);
-        if (!$node->qualifiedNameList) {
+
+        /** @phpstan-ignore-next-line Lies */
+        if (!$node->qualifiedNameList instanceof QualifiedNameList) {
             return $frame;
         }
 
-        $types = $builder->resolveNode($frame, $node->qualifiedNameList)->types();
+        /** @phpstan-ignore-next-line Lies */
+        $types = $resolver->resolveNode($frame, $node->qualifiedNameList)->types();
         $variableName = $node->variableName;
 
         if (null === $variableName) {

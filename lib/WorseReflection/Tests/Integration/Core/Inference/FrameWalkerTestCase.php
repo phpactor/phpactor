@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -33,7 +33,7 @@ abstract class FrameWalkerTestCase extends IntegrationTestCase
         return null;
     }
 
-    private function createReflectorWithWalker($source, FrameWalker $frameWalker = null): Reflector
+    private function createReflectorWithWalker($source, Walker $frameWalker = null): Reflector
     {
         $reflector = ReflectorBuilder::create();
         $reflector->addSource($source);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
@@ -12,7 +12,7 @@ use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -34,16 +34,17 @@ class AssignmentWalker extends AbstractWalker
         $this->logger = $logger;
     }
 
-    public function canWalk(Node $node): bool
+    
+    public function nodeFqns(): array
     {
-        return $node instanceof AssignmentExpression;
+        return [AssignmentExpression::class];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof AssignmentExpression);
 
-        $rightContext = $builder->resolveNode($frame, $node->rightOperand);
+        $rightContext = $resolver->resolveNode($frame, $node->rightOperand);
 
         if ($this->hasMissingTokens($node)) {
             return $frame;
@@ -65,12 +66,12 @@ class AssignmentWalker extends AbstractWalker
         }
 
         if ($node->leftOperand instanceof MemberAccessExpression) {
-            $this->walkMemberAccessExpression($builder, $frame, $node->leftOperand, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frame, $node->leftOperand, $rightContext);
             return $frame;
         }
 
         if ($node->leftOperand instanceof SubscriptExpression) {
-            $this->walkSubscriptExpression($builder, $frame, $node->leftOperand, $rightContext);
+            $this->walkSubscriptExpression($resolver, $frame, $node->leftOperand, $rightContext);
             return $frame;
         }
 
@@ -100,7 +101,7 @@ class AssignmentWalker extends AbstractWalker
     }
 
     private function walkMemberAccessExpression(
-        FrameBuilder $builder,
+        FrameResolver $resolver,
         Frame $frame,
         MemberAccessExpression $leftOperand,
         NodeContext $typeContext
@@ -121,7 +122,7 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
         /** @phpstan-ignore-next-line */
         } else {
-            $memberNameInfo = $builder->resolveNode($frame, $memberNameNode);
+            $memberNameInfo = $resolver->resolveNode($frame, $memberNameNode);
 
             if (false === is_string($memberNameInfo->value())) {
                 return;
@@ -166,11 +167,11 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
+    private function walkSubscriptExpression(FrameResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());
-            $this->walkMemberAccessExpression($builder, $frame, $leftOperand->postfixExpression, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frame, $leftOperand->postfixExpression, $rightContext);
         }
     }
 

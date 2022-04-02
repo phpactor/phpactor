@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\Core\Logger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
@@ -43,7 +43,7 @@ final class ReflectorBuilder
     private ?SourceCodeReflectorFactory $sourceReflectorFactory = null;
 
     /**
-     * @var FrameWalker[]
+     * @var Walker[]
      */
     private array $framewalkers = [];
 
@@ -102,7 +102,7 @@ final class ReflectorBuilder
         return $this;
     }
 
-    public function addFrameWalker(FrameWalker $frameWalker): ReflectorBuilder
+    public function addFrameWalker(Walker $frameWalker): ReflectorBuilder
     {
         $this->framewalkers[] = $frameWalker;
         return $this;

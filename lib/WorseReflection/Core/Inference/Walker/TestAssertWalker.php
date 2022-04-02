@@ -1,31 +1,31 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use RuntimeException;
 
-class TestAssertWalker implements FrameWalker
+class TestAssertWalker implements Walker
 {
-    public function canWalk(Node $node): bool
+    public function nodeFqns(): array
     {
-        if (false === $node instanceof CallExpression) {
-            return false;
-        }
-
-        $name = $node->callableExpression->getText();
-
-        return $name == 'wrAssertType' && $node->argumentExpressionList !== null;
+        return [CallExpression::class];
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CallExpression);
+        $name = $node->callableExpression->getText();
+
+        if ($name !== 'wrAssertType' || $node->argumentExpressionList === null) {
+            return $frame;
+        }
+
         $list = $node->argumentExpressionList->getElements();
         $args = [];
         foreach ($list as $expression) {
@@ -33,7 +33,7 @@ class TestAssertWalker implements FrameWalker
                 continue;
             }
 
-            $args[] = $builder->resolveNode($frame, $expression);
+            $args[] = $resolver->resolveNode($frame, $expression);
         }
 
         $expectedType = $args[0]->value();
