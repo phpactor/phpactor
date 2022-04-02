@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
@@ -33,7 +33,7 @@ class FunctionLikeWalker extends AbstractWalker
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert(
-            $node instanceof FunctionLike ||
+            $node instanceof MethodDeclaration ||
             $node instanceof FunctionDeclaration ||
             $node instanceof AnonymousFunctionCreationExpression
         );
@@ -45,7 +45,7 @@ class FunctionLikeWalker extends AbstractWalker
     }
 
     /**
-     * @param FunctionDeclaration|AnonymousFunctionCreationExpression $node
+     * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression $node
      */
     private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
@@ -153,7 +153,7 @@ class FunctionLikeWalker extends AbstractWalker
         }
     }
 
-    private function functionName(FunctionLike $node)
+    private function functionName(FunctionLike $node): string
     {
         if ($node instanceof MethodDeclaration) {
             return $node->getName();

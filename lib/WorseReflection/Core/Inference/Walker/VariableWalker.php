@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -21,6 +21,9 @@ class VariableWalker extends AbstractWalker
 {
     private DocBlockFactory $docblockFactory;
     
+    /**
+     * @var array<string,Types>
+     */
     private array $injectedTypes = [];
     
     private NodeToTypeConverter $nameResolver;
@@ -33,9 +36,7 @@ class VariableWalker extends AbstractWalker
         $this->nameResolver = $nameResolver;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function nodeFqns(): array
     {
         return [];

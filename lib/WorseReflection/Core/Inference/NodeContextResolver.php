@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
@@ -40,7 +41,7 @@ class NodeContextResolver
     }
 
     /**
-     * @param Node|Token $node
+     * @param Node|Token|MissingToken $node
      */
     public function resolveNode(Frame $frame, $node): NodeContext
     {
@@ -58,7 +59,7 @@ class NodeContextResolver
     }
 
     /**
-     * @param Node|Token $node
+     * @param Node|Token|MissingToken $node
      */
     private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
     {

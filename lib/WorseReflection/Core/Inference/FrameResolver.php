@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\FunctionLike;
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
@@ -14,29 +15,29 @@ use RuntimeException;
 final class FrameResolver
 {
     private NodeContextResolver $nodeContextResolver;
+
     private Cache $cache;
 
     /**
-     * @var FrameWalker[]
+     * @var Walker[]
      */
     private array $globalWalkers;
 
     /**
-     * @var array<class-string,FrameWalker[]>
+     * @var array<class-string,Walker[]>
      */
     private array $nodeWalkers;
 
     /**
-     * @param FrameWalker[] $globalWalkers
-     * @param array<class-string,FrameWalker[]> $nodeWalkers
+     * @param Walker[] $globalWalkers
+     * @param array<class-string,Walker[]> $nodeWalkers
      */
     public function __construct(
         NodeContextResolver $nodeContextResolver,
         array $globalWalkers,
         array $nodeWalkers,
         Cache $cache
-    )
-    {
+    ) {
         $this->nodeContextResolver = $nodeContextResolver;
         $this->cache = $cache;
         $this->globalWalkers = $globalWalkers;
@@ -44,7 +45,7 @@ final class FrameResolver
     }
 
     /**
-     * @param FrameWalker[] $walkers
+     * @param Walker[] $walkers
      */
     public static function create(
         NodeContextResolver $nodeContextResolver,
@@ -76,7 +77,7 @@ final class FrameResolver
     }
 
     /**
-     * @param Node|Token $node
+     * @param Node|Token|MissingToken $node
      */
     public function resolveNode(Frame $frame, $node): NodeContext
     {

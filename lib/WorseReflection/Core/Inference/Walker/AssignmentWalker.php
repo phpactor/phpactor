@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
@@ -34,9 +34,7 @@ class AssignmentWalker extends AbstractWalker
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function nodeFqns(): array
     {
         return [AssignmentExpression::class];

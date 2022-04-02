@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -20,10 +21,13 @@ class CatchWalker extends AbstractWalker
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CatchClause);
-        if (!$node->qualifiedNameList) {
+
+        /** @phpstan-ignore-next-line Lies */
+        if (!$node->qualifiedNameList instanceof QualifiedNameList) {
             return $frame;
         }
 
+        /** @phpstan-ignore-next-line Lies */
         $types = $resolver->resolveNode($frame, $node->qualifiedNameList)->types();
         $variableName = $node->variableName;
 

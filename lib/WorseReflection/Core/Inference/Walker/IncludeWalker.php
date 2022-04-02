@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
@@ -12,12 +12,11 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
-use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Psr\Log\LoggerInterface;
 use Webmozart\PathUtil\Path;
 
-class IncludeWalker implements FrameWalker
+class IncludeWalker implements Walker
 {
     private Parser $parser;
     
@@ -29,9 +28,7 @@ class IncludeWalker implements FrameWalker
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function nodeFqns(): array
     {
         return [ScriptInclusionExpression::class];
@@ -48,9 +45,8 @@ class IncludeWalker implements FrameWalker
         }
 
         $sourceNode = $node->getFirstAncestor(SourceFileNode::class);
-        assert($sourceNode instanceof SourceFileNode);
 
-        if (!$sourceNode) {
+        if (!$sourceNode instanceof SourceFileNode) {
             return $frame;
         }
 
@@ -70,7 +66,7 @@ class IncludeWalker implements FrameWalker
             return $frame;
         }
 
-        $sourceNode = $this->parser->parseSourceFile(file_get_contents($includeUri));
+        $sourceNode = $this->parser->parseSourceFile((string)file_get_contents($includeUri));
         $includedFrame = $resolver->build($sourceNode);
 
         $parentNode = $node->parent;
@@ -84,7 +80,7 @@ class IncludeWalker implements FrameWalker
         return $frame;
     }
 
-    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
+    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node): Frame
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
@@ -102,12 +98,13 @@ class IncludeWalker implements FrameWalker
         
         $name = $name->getText($node->getFileContents());
         
-        /** @var WorseVariable $variable */
-        foreach ($frame->locals()->byName($name) as $variable) {
+        foreach ($frame->locals()->byName((string)$name) as $variable) {
             $frame->locals()->add(
                 $variable->withTypes($returnValueContext->types())
             );
             return $frame;
         }
+
+        return $frame;
     }
 }

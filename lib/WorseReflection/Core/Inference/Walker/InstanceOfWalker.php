@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
-use Phpactor\WorseReflection\Core\Inference\FrameWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Types;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
 
-class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
+class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
 {
     public function nodeFqns(): array
     {
@@ -34,7 +34,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
 
         assert($node instanceof IfStatementNode);
 
-        if (false === $node->expression instanceof Expression) {
+        if (!$node->expression instanceof Expression) {
             return $frame;
         }
 
@@ -85,6 +85,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
 
     private function branchTerminates(IfStatementNode $node): bool
     {
+        /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
             if (null === $list) {
                 continue;
@@ -120,6 +121,10 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
         return false;
     }
 
+    /**
+     * @param WorseVariable[] $variables
+     * @return array<string,WorseVariable>
+     */
     private function mergeTypes(array $variables): array
     {
         $vars = [];
@@ -138,10 +143,11 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
             $vars[$variable->name()] = $variable;
         }
 
+        /** @var array<string,WorseVariable> */
         return $vars;
     }
 
-    private function existingOrStripType(IfStatementNode $node, Frame $frame, WorseVariable $variable)
+    private function existingOrStripType(IfStatementNode $node, Frame $frame, WorseVariable $variable): WorseVariable
     {
         $previousAssignments = $this->getAssignmentsMatchingVariableType($frame, $variable)
             ->lessThan($node->getStartPosition())
