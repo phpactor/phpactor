@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\CloneExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
@@ -34,6 +35,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
@@ -101,6 +103,7 @@ final class DefaultResolverFactory
             ArgumentExpression::class => new ArgumentExpressionResolver(),
             TernaryExpression::class => new TernaryExpressionResolver(),
             MethodDeclaration::class => new MethodDeclarationResolver(),
+            CloneExpression::class => new CloneExpressionResolver(),
         ];
     }
 }

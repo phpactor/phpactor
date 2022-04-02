@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 use Phpactor\WorseReflection\Core\Type\MissingType;

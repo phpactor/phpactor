@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 

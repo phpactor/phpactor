@@ -24,6 +24,5 @@ class FunctionDeclarationResolver implements Resolver
                 'symbol_type' => Symbol::FUNCTION,
             ]
         );
-
     }
 }

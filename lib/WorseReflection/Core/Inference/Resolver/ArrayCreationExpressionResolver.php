@@ -52,5 +52,4 @@ class ArrayCreationExpressionResolver implements Resolver
             ]
         );
     }
-
 }

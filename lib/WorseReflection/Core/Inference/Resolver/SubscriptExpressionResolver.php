@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -67,5 +66,4 @@ class SubscriptExpressionResolver implements Resolver
 
         return $info;
     }
-
 }
