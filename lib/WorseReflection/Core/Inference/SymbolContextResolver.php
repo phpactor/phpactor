@@ -18,7 +18,6 @@ use Microsoft\PhpParser\Node\ReservedWord;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
-use Microsoft\PhpParser\Node\UseVariableName;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Cache;
@@ -135,11 +134,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof UseVariableName) {
-            $name = $node->getText();
-            return $this->resolveVariableName($name, $node, $frame);
         }
 
         if ($node instanceof ParserVariable) {
