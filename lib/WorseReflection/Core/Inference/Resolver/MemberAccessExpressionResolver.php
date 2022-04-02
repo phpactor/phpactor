@@ -26,10 +26,10 @@ class MemberAccessExpressionResolver implements Resolver
 
         $class = $resolver->resolveNode($frame, $node->dereferencableExpression);
 
-        return $this->_infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        return self::infoFromMemberAccess($resolver, $frame, $class->type(), $node);
     }
 
-    private function _infoFromMemberAccess(SymbolContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
+    public static function infoFromMemberAccess(SymbolContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
     {
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 
@@ -67,7 +67,7 @@ class MemberAccessExpressionResolver implements Resolver
         )->{$memberType . 'Type'}($classType, $information, $memberName);
 
         if (Symbol::PROPERTY === $memberType) {
-            $frameTypes = $this->getFrameTypesForPropertyAtPosition(
+            $frameTypes = self::getFrameTypesForPropertyAtPosition(
                 $frame,
                 (string) $memberName,
                 $classType,
@@ -84,7 +84,7 @@ class MemberAccessExpressionResolver implements Resolver
         return $info;
     }
 
-    private function getFrameTypesForPropertyAtPosition(
+    private static function getFrameTypesForPropertyAtPosition(
         Frame $frame,
         string $propertyName,
         Type $classType,

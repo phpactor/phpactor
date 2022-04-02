@@ -720,7 +720,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     ],
                 ];
 
-        yield 'Static property access (instance)' => [
+        yield 'Static property access instance)' => [
             <<<'EOT'
                 <?php
 
@@ -1174,7 +1174,6 @@ class SymbolContextResolverTest extends IntegrationTestCase
             $reflector,
             $this->logger(),
             new NullCache(),
-            $nameResolver,
             (new DefaultResolverFactory($reflector, $nameResolver))->createResolvers(),
         );
 

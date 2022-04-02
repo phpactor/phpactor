@@ -92,7 +92,6 @@ class ServiceLocator
             $this->reflector,
             $this->logger,
             $cache,
-            $nameResolver,
             (new DefaultResolverFactory(
                 $this->reflector,
                 $nameResolver

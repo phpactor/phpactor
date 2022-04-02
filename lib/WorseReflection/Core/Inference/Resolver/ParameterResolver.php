@@ -75,7 +75,7 @@ class ParameterResolver implements Resolver
 
     private function resolveParameterFromReflection(Reflector $reflector, Frame $frame, MethodDeclaration $method, Parameter $node): NodeContext
     {
-        $class = NodeUtil::nodeContainerClassLike($node);
+        $class = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
         if (null === $class) {
             throw new CouldNotResolveNode(sprintf(

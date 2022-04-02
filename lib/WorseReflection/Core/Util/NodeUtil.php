@@ -22,7 +22,7 @@ class NodeUtil
 {
     public static function nodeContainerClassLikeType(Reflector $reflector, Node $node): Type
     {
-        $classNode = self::nodeContainerClassLike($node);
+        $classNode = self::nodeContainerClassLikeDeclaration($node);
 
         if (null === $classNode) {
             return TypeFactory::undefined();
@@ -36,7 +36,7 @@ class NodeUtil
     /**
      * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null
      */
-    public static function nodeContainerClassLike(Node $node): ?Node
+    public static function nodeContainerClassLikeDeclaration(Node $node): ?Node
     {
         $ancestor = $node->getFirstAncestor(ObjectCreationExpression::class, ClassLike::class);
 
@@ -47,7 +47,7 @@ class NodeUtil
                 }
             }
 
-            return self::nodeContainerClassLike($ancestor);
+            return self::nodeContainerClassLikeDeclaration($ancestor);
         }
 
         /** @var ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null */

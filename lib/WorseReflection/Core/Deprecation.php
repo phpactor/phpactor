@@ -21,6 +21,6 @@ class Deprecation
 
     public function message(): string
     {
-        return $this->message;
+        return $this->message ?? '';
     }
 }

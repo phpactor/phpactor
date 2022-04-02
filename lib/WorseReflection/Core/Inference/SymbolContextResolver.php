@@ -2,17 +2,14 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\CloneExpression;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
-use Microsoft\PhpParser\Node\Expression\Variable as ParserVariable;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\ReservedWord;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -25,13 +22,10 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Type;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
@@ -44,13 +38,9 @@ use Psr\Log\LoggerInterface;
 
 class SymbolContextResolver
 {
-    private MemberTypeResolver $memberTypeResolver;
-    
     private Reflector $reflector;
     
     private LoggerInterface $logger;
-    
-    private FullyQualifiedNameResolver $nameResolver;
     
     private ExpressionEvaluator $expressionEvaluator;
     
@@ -68,12 +58,9 @@ class SymbolContextResolver
         Reflector $reflector,
         LoggerInterface $logger,
         Cache $cache,
-        FullyQualifiedNameResolver $nameResolver,
         array $resolverMap = [],
     ) {
         $this->logger = $logger;
-        $this->memberTypeResolver = new MemberTypeResolver($reflector);
-        $this->nameResolver = $nameResolver;
         $this->reflector = $reflector;
         $this->expressionEvaluator = new ExpressionEvaluator();
         $this->cache = $cache;
@@ -86,13 +73,6 @@ class SymbolContextResolver
     public function resolveNode(Frame $frame, $node): NodeContext
     {
         try {
-            if (
-                $node instanceof ParserVariable
-                && $node->parent instanceof ScopedPropertyAccessExpression
-                && $node === $node->parent->memberName
-            ) {
-                return $this->doResolveNodeWithCache($frame, $node->parent);
-            }
             return $this->doResolveNodeWithCache($frame, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
             return NodeContext::none()
@@ -137,10 +117,6 @@ class SymbolContextResolver
 
         if ($node instanceof CallExpression) {
             return $this->resolveCallExpression($frame, $node);
-        }
-
-        if ($node instanceof ScopedPropertyAccessExpression) {
-            return $this->resolveScopedPropertyAccessExpression($frame, $node);
         }
 
         if ($node instanceof ParenthesizedExpression) {
@@ -240,13 +216,6 @@ class SymbolContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    private function resolveMemberAccessExpression(Frame $frame, MemberAccessExpression $node): NodeContext
-    {
-        $class = $this->doResolveNodeWithCache($frame, $node->dereferencableExpression);
-
-        return $this->_infoFromMemberAccess($frame, $class->type(), $node);
     }
 
     private function resolveCallExpression(Frame $frame, CallExpression $node): NodeContext
@@ -436,26 +405,6 @@ class SymbolContextResolver
         return $info;
     }
 
-    private function resolveScopedPropertyAccessExpression(Frame $frame, ScopedPropertyAccessExpression $node): NodeContext
-    {
-        $name = null;
-        if ($node->scopeResolutionQualifier instanceof ParserVariable) {
-            $context = $this->resolveNode($frame, $node->scopeResolutionQualifier);
-            $type = $context->type();
-            if ($type instanceof ClassType) {
-                $name = $type->name->__toString();
-            }
-        }
-
-        if (empty($name)) {
-            $name = $node->scopeResolutionQualifier->getText();
-        }
-
-        $parent = $this->nameResolver->resolve($node, $name);
-
-        return $this->_infoFromMemberAccess($frame, $parent, $node);
-    }
-
     private function resolveObjectCreationExpression(Frame $frame, ObjectCreationExpression $node): NodeContext
     {
         if (false === $node->classTypeDesignator instanceof Node) {
@@ -502,67 +451,6 @@ class SymbolContextResolver
         );
     }
 
-    private function _infoFromMemberAccess(Frame $frame, Type $classType, Node $node): NodeContext
-    {
-        assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
-
-        $memberName = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
-        $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
-
-        if ($node->memberName instanceof Node) {
-            $memberNameInfo = $this->doResolveNodeWithCache($frame, $node->memberName);
-            if (is_string($memberNameInfo->value())) {
-                $memberName = $memberNameInfo->value();
-            }
-        }
-
-        if (
-            Symbol::PROPERTY === $memberType
-            && $node instanceof ScopedPropertyAccessExpression
-            && is_string($memberName)
-            && substr($memberName, 0, 1) !== '$'
-        ) {
-            $memberType = Symbol::CONSTANT;
-        }
-
-        $information = NodeContextFactory::create(
-            (string)$memberName,
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => $memberType,
-            ]
-        );
-
-        // if the classType is a call expression, then this is a method call
-        $info = $this->memberTypeResolver->{$memberType . 'Type'}($classType, $information, $memberName);
-
-        if (Symbol::PROPERTY === $memberType) {
-            $frameTypes = $this->getFrameTypesForPropertyAtPosition(
-                $frame,
-                (string) $memberName,
-                $classType,
-                $node->getEndPosition(),
-            );
-
-            foreach ($frameTypes as $types) {
-                $info = $info->withTypes(
-                    $info->types()->merge($types),
-                );
-            }
-        }
-
-        $this->logger->debug(sprintf(
-            'Resolved type "%s" for %s "%s" of class "%s"',
-            $info->type(),
-            $memberType,
-            $memberName,
-            (string) $classType
-        ));
-
-        return $info;
-    }
-
     private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
     {
         return $this->doResolveNode($frame, $node->expression);
@@ -592,45 +480,6 @@ class SymbolContextResolver
     private function resolveCloneExpression(Frame $frame, CloneExpression $node): NodeContext
     {
         return $this->doResolveNode($frame, $node->expression);
-    }
-
-    /**
-     * @return Generator<int, Types, null, void>
-     */
-    private function getFrameTypesForPropertyAtPosition(
-        Frame $frame,
-        string $propertyName,
-        Type $classType,
-        int $position
-    ): Generator {
-        $assignments = $frame->properties()
-            ->lessThanOrEqualTo($position)
-            ->byName($propertyName)
-        ;
-
-        if (!$classType instanceof ClassType) {
-            return;
-        }
-
-        /** @var Variable $variable */
-        foreach ($assignments as $variable) {
-            $symbolContext = $variable->symbolContext();
-            $containerType = $symbolContext->containerType();
-
-            if (!$containerType) {
-                continue;
-            }
-
-            if (!$containerType instanceof ClassType) {
-                continue;
-            }
-
-            if ($containerType->name != $classType->name) {
-                continue;
-            }
-
-            yield $symbolContext->types();
-        }
     }
 
     private function classTypeFromNode(Node $node): Type
