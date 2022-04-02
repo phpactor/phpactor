@@ -6,7 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use RuntimeException;
 
@@ -23,7 +23,7 @@ class TestAssertWalker implements FrameWalker
         return $name == 'wrAssertType' && $node->argumentExpressionList !== null;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CallExpression);
         $list = $node->argumentExpressionList->getElements();

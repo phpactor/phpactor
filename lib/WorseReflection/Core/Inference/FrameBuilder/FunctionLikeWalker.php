@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -26,7 +26,7 @@ class FunctionLikeWalker extends AbstractWalker
         return $node instanceof FunctionLike;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert(
             $node instanceof FunctionLike ||
@@ -43,7 +43,7 @@ class FunctionLikeWalker extends AbstractWalker
     /**
      * @param FunctionDeclaration|AnonymousFunctionCreationExpression $node
      */
-    private function walkFunctionLike(FrameBuilder $builder, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(FrameResolver $builder, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(

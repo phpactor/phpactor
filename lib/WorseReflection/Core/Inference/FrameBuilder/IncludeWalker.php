@@ -11,7 +11,7 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Psr\Log\LoggerInterface;
@@ -34,7 +34,7 @@ class IncludeWalker implements FrameWalker
         return $node instanceof ScriptInclusionExpression;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ScriptInclusionExpression);
         $context = $builder->resolveNode($frame, $node->expression);
@@ -81,7 +81,7 @@ class IncludeWalker implements FrameWalker
         return $frame;
     }
 
-    private function processAssignment(SourceFileNode $sourceNode, FrameBuilder $builder, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
+    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $builder, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);

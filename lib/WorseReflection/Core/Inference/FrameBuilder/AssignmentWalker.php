@@ -12,7 +12,7 @@ use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -39,7 +39,7 @@ class AssignmentWalker extends AbstractWalker
         return $node instanceof AssignmentExpression;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert($node instanceof AssignmentExpression);
 
@@ -100,7 +100,7 @@ class AssignmentWalker extends AbstractWalker
     }
 
     private function walkMemberAccessExpression(
-        FrameBuilder $builder,
+        FrameResolver $builder,
         Frame $frame,
         MemberAccessExpression $leftOperand,
         NodeContext $typeContext
@@ -166,7 +166,7 @@ class AssignmentWalker extends AbstractWalker
         $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
     }
 
-    private function walkSubscriptExpression(FrameBuilder $builder, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
+    private function walkSubscriptExpression(FrameResolver $builder, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());

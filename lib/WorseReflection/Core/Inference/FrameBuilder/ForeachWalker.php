@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\ForeachValue;
@@ -27,7 +27,7 @@ class ForeachWalker extends AbstractWalker
         return $node instanceof ForeachStatement;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ForeachStatement);
         $collection = $builder->resolveNode($frame, $node->forEachCollectionName);
@@ -37,7 +37,7 @@ class ForeachWalker extends AbstractWalker
         return $frame;
     }
 
-    private function processValue(FrameBuilder $builder, ForeachStatement $node, Frame $frame, NodeContext $collection): void
+    private function processValue(FrameResolver $builder, ForeachStatement $node, Frame $frame, NodeContext $collection): void
     {
         $itemName = $node->foreachValue;
         
@@ -120,7 +120,7 @@ class ForeachWalker extends AbstractWalker
     }
 
     private function valueFromArrayCreation(
-        FrameBuilder $builder,
+        FrameResolver $builder,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
         NodeContext $collection,

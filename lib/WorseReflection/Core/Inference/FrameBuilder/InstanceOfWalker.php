@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
@@ -26,7 +26,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
     /**
      * @param IfStatementNode $node
      */
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         if (null === $node->expression) {
             return $frame;

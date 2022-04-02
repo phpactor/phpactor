@@ -8,5 +8,5 @@ interface FrameWalker
 {
     public function canWalk(Node $node): bool;
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame;
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame;
 }

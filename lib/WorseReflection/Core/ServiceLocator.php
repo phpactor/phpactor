@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -36,7 +36,7 @@ class ServiceLocator
     
     private Reflector $reflector;
     
-    private FrameBuilder $frameBuilder;
+    private FrameResolver $frameBuilder;
     
     private NodeContextResolver $symbolContextResolver;
     
@@ -98,7 +98,7 @@ class ServiceLocator
             ))->createResolvers(),
         );
 
-        $this->frameBuilder = FrameBuilder::create(
+        $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
             $cache,
             array_merge([
@@ -146,7 +146,7 @@ class ServiceLocator
     /**
      * TODO: This is TolerantParser specific.
      */
-    public function frameBuilder(): FrameBuilder
+    public function frameBuilder(): FrameResolver
     {
         return $this->frameBuilder;
     }

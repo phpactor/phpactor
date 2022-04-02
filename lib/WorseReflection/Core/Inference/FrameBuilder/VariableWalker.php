@@ -11,7 +11,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
@@ -38,7 +38,7 @@ class VariableWalker extends AbstractWalker
         return true;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         $docblockTypes = $this->injectVariablesFromComment($frame, $node);
 

@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -17,7 +17,7 @@ class CatchWalker extends AbstractWalker
         return $node instanceof CatchClause;
     }
 
-    public function walk(FrameBuilder $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CatchClause);
         if (!$node->qualifiedNameList) {

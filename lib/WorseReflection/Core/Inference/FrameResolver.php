@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
-final class FrameBuilder
+final class FrameResolver
 {
     private NodeContextResolver $nodeContextResolver;
 
