@@ -7,5 +7,5 @@ use Phpactor\WorseReflection\Core\Type;
 
 interface Resolver
 {
-    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): Type;
+    public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext;
 }

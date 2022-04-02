@@ -70,12 +70,20 @@ class SymbolContextResolver
     
     private Cache $cache;
 
+    /**
+     * @var array<class-name,Resolver>
+     */
+    private array $resolverMap;
     
+    /**
+     * @param array<class-name,Resolver> $resolverMap
+     */
     public function __construct(
         Reflector $reflector,
         LoggerInterface $logger,
         Cache $cache,
-        FullyQualifiedNameResolver $nameResolver
+        FullyQualifiedNameResolver $nameResolver,
+        array $resolverMap = [],
     ) {
         $this->logger = $logger;
         $this->memberTypeResolver = new MemberTypeResolver($reflector);
@@ -83,6 +91,7 @@ class SymbolContextResolver
         $this->reflector = $reflector;
         $this->expressionEvaluator = new ExpressionEvaluator();
         $this->cache = $cache;
+        $this->resolverMap = $resolverMap;
     }
 
     /**
@@ -130,6 +139,10 @@ class SymbolContextResolver
     private function doResolveNode(Frame $frame, Node $node): NodeContext
     {
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
+
+        if (isset($this->resolverMap[get_class($node)])) {
+            return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
+        }
 
         if ($node instanceof QualifiedName) {
             return $this->resolveQualfiedName($frame, $node);
