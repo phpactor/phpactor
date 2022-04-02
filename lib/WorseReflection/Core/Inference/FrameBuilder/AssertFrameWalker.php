@@ -13,12 +13,14 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements FrameWalker
 {
     public function nodeFqn(): ?string
     {
-        return CallExpression::class;
+        return null;
     }
 
     public function canWalk(Node $node): bool
     {
-        assert($node instanceof CallExpression);
+        if (!$node instanceof CallExpression) {
+            return false;
+        }
         $name = $node->callableExpression->getText();
 
         return strtolower($name) == 'assert' && $node->argumentExpressionList !== null;
@@ -45,6 +47,7 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements FrameWalker
                 $this->getAssignmentsMatchingVariableType($frame, $variable)
                     ->add($variable)
                 ;
+                dump($variable);
             }
         }
 

@@ -15,32 +15,59 @@ final class FrameResolver
 {
     private NodeContextResolver $nodeContextResolver;
 
-    /**
-     * @var FrameWalker[]
-     */
-    private array $walkers;
-    
     private Cache $cache;
 
     /**
-     * @param FrameWalker[] $walkers
+     * @var FrameWalker[]
      */
-    public function __construct(NodeContextResolver $symbolContextResolver, array $walkers, Cache $cache)
+    private array $globalWalkers;
+
+    /**
+     * @var array<class-string,FrameWalker[]>
+     */
+    private array $nodeWalkers;
+
+    /**
+     * @param FrameWalker[] $globalWalkers
+     * @param array<class-string,FrameWalker[]> $nodeWalkers
+     */
+    public function __construct(
+        NodeContextResolver $nodeContextResolver,
+        array $globalWalkers,
+        array $nodeWalkers,
+        Cache $cache
+    )
     {
-        $this->nodeContextResolver = $symbolContextResolver;
-        $this->walkers = $walkers;
+        $this->nodeContextResolver = $nodeContextResolver;
         $this->cache = $cache;
+        $this->globalWalkers = $globalWalkers;
+        $this->nodeWalkers = $nodeWalkers;
     }
 
     /**
      * @param FrameWalker[] $walkers
      */
     public static function create(
-        NodeContextResolver $symbolContextResolver,
+        NodeContextResolver $nodeContextResolver,
         Cache $cache,
         array $walkers = []
     ): self {
-        return new self($symbolContextResolver, $walkers, $cache);
+        $globalWalkers = [];
+        $nodeWalkers = [];
+        foreach ($walkers as $walker) {
+            $key = $walker->nodeFqn();
+            if ($key === null) {
+                $globalWalkers[] = $walker;
+                continue;
+            }
+            if (!isset($nodeWalkers[$key])) {
+                $nodeWalkers[$key] = [$walker];
+                continue;
+            }
+            $nodeWalkers[$key][] = $walker;
+        }
+
+        return new self($nodeContextResolver, $globalWalkers, $nodeWalkers, $cache);
     }
 
     public function build(Node $node): Frame
@@ -76,9 +103,17 @@ final class FrameResolver
                 $frame = new Frame($node->getNodeKindName());
             }
 
-            foreach ($this->walkers as $walker) {
+            $nodeClass = get_class($node);
+            foreach ($this->globalWalkers as $walker) {
                 if ($walker->canWalk($node)) {
                     $frame = $walker->walk($this, $frame, $node);
+                }
+            }
+            if (isset($this->nodeWalkers[$nodeClass])) {
+                foreach ($this->nodeWalkers[$nodeClass] as $walker) {
+                    if ($walker->canWalk($node)) {
+                        $frame = $walker->walk($this, $frame, $node);
+                    }
                 }
             }
 
