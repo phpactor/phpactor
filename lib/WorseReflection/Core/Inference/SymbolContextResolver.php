@@ -4,8 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
-use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
@@ -16,8 +14,6 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\Variable as ParserVariable;
 use Microsoft\PhpParser\Node\NumericLiteral;
-use Microsoft\PhpParser\Node\Parameter;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\ReservedWord;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
@@ -27,16 +23,13 @@ use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
-use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
@@ -48,8 +41,6 @@ use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Psr\Log\LoggerInterface;
 
@@ -144,10 +135,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof Parameter) {
-            return $this->resolveParameter($frame, $node);
         }
 
         if ($node instanceof UseVariableName) {
@@ -309,106 +296,6 @@ class SymbolContextResolver
     {
         $resolvableNode = $node->callableExpression;
         return $this->doResolveNodeWithCache($frame, $resolvableNode);
-    }
-
-    private function resolveParameter(Frame $frame, Parameter $node): NodeContext
-    {
-        /** @var MethodDeclaration|null $method */
-        $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class);
-
-        if ($method instanceof MethodDeclaration) {
-            return $this->resolveParameterFromReflection($frame, $method, $node);
-        }
-
-        $typeDeclaration = $node->typeDeclarationList;
-        $type = TypeFactory::unknown();
-        if ($typeDeclaration instanceof QualifiedNameList) {
-            $typeDeclaration = QualifiedNameListUtil::firstQualifiedNameOrToken($typeDeclaration);
-        }
-
-        if ($typeDeclaration instanceof QualifiedName) {
-            $type = $this->nameResolver->resolve($typeDeclaration);
-        }
-
-        if ($typeDeclaration instanceof Token) {
-            $type = TypeFactory::fromStringWithReflector(
-                (string)$typeDeclaration->getText($node->getFileContents()),
-                $this->reflector,
-            );
-        }
-
-        if ($node->questionToken) {
-            $type = TypeFactory::nullable($type);
-        }
-
-        $value = null;
-        if ($node->default) {
-            $value = $this->doResolveNodeWithCache($frame, $node->default)->value();
-        }
-
-        return NodeContextFactory::create(
-            (string)$node->variableName->getText($node->getFileContents()),
-            $node->variableName->getStartPosition(),
-            $node->variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $type,
-                'value' => $value,
-            ]
-        );
-    }
-
-    private function resolveParameterFromReflection(Frame $frame, MethodDeclaration $method, Parameter $node): NodeContext
-    {
-        $class = $this->getClassLikeAncestor($node);
-
-        if (null === $class) {
-            throw new CouldNotResolveNode(sprintf(
-                'Cannot find class context "%s" for parameter',
-                $node->getName()
-            ));
-        }
-
-        /** @var ReflectionClass|ReflectionInterface $reflectionClass */
-        $reflectionClass = $this->reflector->reflectClassLike($class->getNamespacedName()->__toString());
-
-        try {
-            $reflectionMethod = $reflectionClass->methods()->get($method->getName());
-        } catch (ItemNotFound $notFound) {
-            throw new CouldNotResolveNode(sprintf(
-                'Could not find method "%s" in class "%s"',
-                $method->getName(),
-                $reflectionClass->name()->__toString()
-            ), 0, $notFound);
-        }
-
-        if (null === $node->getName()) {
-            throw new CouldNotResolveNode(
-                'Node name for parameter resolved to NULL'
-            );
-        }
-
-        if (!$reflectionMethod->parameters()->has($node->getName())) {
-            throw new CouldNotResolveNode(sprintf(
-                'Cannot find parameter "%s" for method "%s" in class "%s"',
-                $node->getName(),
-                $reflectionMethod->name(),
-                $reflectionClass->name()
-            ));
-        }
-
-        $reflectionParameter = $reflectionMethod->parameters()->get($node->getName());
-
-        return NodeContextFactory::create(
-            (string)$node->variableName->getText($node->getFileContents()),
-            $node->variableName->getStartPosition(),
-            $node->variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $reflectionParameter->inferredTypes()->best(),
-                'value' => $reflectionParameter->default()->value(),
-            ]
-        );
     }
 
     private function resolveNumericLiteral(NumericLiteral $node): NodeContext
