@@ -144,10 +144,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof QualifiedNameList) {
-            return $this->resolveQualfiedNameList($frame, $node);
-        }
-
         if ($node instanceof ConstElement) {
             return NodeContextFactory::create(
                 $node->getName(),
@@ -335,37 +331,6 @@ class SymbolContextResolver
     {
         $resolvableNode = $node->callableExpression;
         return $this->doResolveNodeWithCache($frame, $resolvableNode);
-    }
-
-    private function resolveQualfiedNameList(Frame $frame, QualifiedNameList $node): NodeContext
-    {
-        $types = [];
-        $firstType = null;
-        foreach ($node->getChildNodes() as $child) {
-            if (!$child instanceof QualifiedName) {
-                continue;
-            }
-            if (null === $firstType) {
-                $firstType = $child;
-            }
-            $types[] = $this->nameResolver->resolve($child);
-        }
-
-        $types = Types::fromTypes($types);
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => $types->best(),
-                'types' => $types,
-                'symbol_type' => Symbol::CLASS_,
-            ]
-        );
-    }
-
-    private function resolveQualfiedName(Frame $frame, QualifiedName $node): NodeContext
-    {
     }
 
     private function resolveParameter(Frame $frame, Parameter $node): NodeContext
