@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
@@ -79,6 +80,14 @@ class TypeUtil
         if ($type instanceof NullableType) {
             return new NullableType(self::toLocalType($scope, $type->type));
         }
+        if ($type instanceof GenericClassType) {
+            $typeName = $scope->resolveLocalName($type->name());
+            $newType = clone $type;
+            $newType->name = ClassName::fromString($typeName);
+            $newType->arguments = array_map(fn (Type $type) => self::toLocalType($scope, $type), $type->arguments);
+
+            return $newType;
+        }
         if ($type instanceof ClassType) {
             $typeName = $scope->resolveLocalName($type->name());
             $type = clone $type;
@@ -86,10 +95,10 @@ class TypeUtil
             return $type;
         }
         if ($type instanceof ArrayType) {
-            $type = clone $type;
-            $type->keyType = self::toLocalType($scope, $type->keyType);
-            $type->valueType = self::toLocalType($scope, $type->valueType);
-            return $type;
+            $newType = clone $type;
+            $newType->keyType = self::toLocalType($scope, $type->keyType);
+            $newType->valueType = self::toLocalType($scope, $type->valueType);
+            return $newType;
         }
 
         return $type;

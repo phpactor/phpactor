@@ -70,6 +70,7 @@ class SymbolContextResolver
     
     private Cache $cache;
 
+    
     public function __construct(
         Reflector $reflector,
         LoggerInterface $logger,

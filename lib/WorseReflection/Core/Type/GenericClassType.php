@@ -13,7 +13,7 @@ class GenericClassType extends ReflectedClassType implements IterableType
     /**
      * @var Type[]
      */
-    private array $arguments;
+    public array $arguments;
 
     /**
      * @param Type[] $arguments
