@@ -146,18 +146,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof EnumCaseDeclaration) {
-            return NodeContextFactory::create(
-                NodeUtil::nameFromTokenOrQualifiedName($node, $node->name),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::CASE,
-                    'container_type' => $this->classTypeFromNode($node)
-                ]
-            );
-        }
-
         if ($node instanceof Parameter) {
             return $this->resolveParameter($frame, $node);
         }
