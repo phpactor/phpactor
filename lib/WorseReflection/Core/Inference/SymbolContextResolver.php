@@ -109,14 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof ReservedWord) {
-            return $this->resolveReservedWord($node);
-        }
-
-        if ($node instanceof ArrayCreationExpression) {
-            return $this->resolveArrayCreationExpression($frame, $node);
-        }
-
         if ($node instanceof ArgumentExpression) {
             return $this->doResolveNodeWithCache($frame, $node->expression);
         }
@@ -140,53 +132,6 @@ class SymbolContextResolver
         ));
     }
 
-    private function resolveReservedWord(Node $node): NodeContext
-    {
-        $symbolType = $containerType = $type = $value = null;
-        $word = strtolower($node->getText());
-
-        if ('null' === $word) {
-            $type = TypeFactory::null();
-            $symbolType = Symbol::BOOLEAN;
-            $containerType = $this->classTypeFromNode($node);
-        }
-
-        if ('false' === $word) {
-            $value = false;
-            $type = TypeFactory::bool();
-            $symbolType = Symbol::BOOLEAN;
-            $containerType = $this->classTypeFromNode($node);
-        }
-
-        if ('true' === $word) {
-            $type = TypeFactory::bool();
-            $value = true;
-            $symbolType = Symbol::BOOLEAN;
-            $containerType = $this->classTypeFromNode($node);
-        }
-
-        $info = NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'value' => $value,
-                'type' => $type,
-                'symbol_type' => $symbolType === null ? Symbol::UNKNOWN : $symbolType,
-                'container_type' => $containerType,
-            ]
-        );
-
-        if (null === $symbolType) {
-            $info = $info->withIssue(sprintf('Could not resolve reserved word "%s"', $node->getText()));
-        }
-
-        if (null === $type) {
-            $info = $info->withIssue(sprintf('Could not resolve reserved word "%s"', $node->getText()));
-        }
-
-        return $info;
-    }
 
     private function resolveArrayCreationExpression(Frame $frame, ArrayCreationExpression $node): NodeContext
     {
