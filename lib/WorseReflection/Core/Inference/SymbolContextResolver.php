@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
@@ -22,7 +23,9 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Type;
@@ -113,10 +116,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof CallExpression) {
-            return $this->resolveCallExpression($frame, $node);
         }
 
         if ($node instanceof ParenthesizedExpression) {
@@ -216,12 +215,6 @@ class SymbolContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    private function resolveCallExpression(Frame $frame, CallExpression $node): NodeContext
-    {
-        $resolvableNode = $node->callableExpression;
-        return $this->doResolveNodeWithCache($frame, $resolvableNode);
     }
 
     private function resolveNumericLiteral(NumericLiteral $node): NodeContext
