@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameBuilder\IncludeWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\InstanceOfWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
@@ -87,7 +87,7 @@ class ServiceLocator
         $this->docblockFactory = new DocblockParserFactory($this->reflector);
         $this->logger = $logger;
 
-        $nameResolver = new FullyQualifiedNameResolver($this->reflector, $this->logger);
+        $nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
         $this->symbolContextResolver = new SymbolContextResolver(
             $this->reflector,
             $this->logger,

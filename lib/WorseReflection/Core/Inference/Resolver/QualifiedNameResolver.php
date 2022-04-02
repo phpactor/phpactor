@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -20,10 +20,10 @@ class QualifiedNameResolver implements Resolver
 {
     private FunctionReflector $reflector;
 
-    private FullyQualifiedNameResolver $nodeTypeConverter;
+    private NodeToTypeConverter $nodeTypeConverter;
 
 
-    public function __construct(FunctionReflector $reflector, FullyQualifiedNameResolver $nodeTypeConverter)
+    public function __construct(FunctionReflector $reflector, NodeToTypeConverter $nodeTypeConverter)
     {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;

@@ -6,7 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
@@ -14,9 +14,9 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class ScopedPropertyAccessResolver implements Resolver
 {
-    private FullyQualifiedNameResolver $nodeTypeConverter;
+    private NodeToTypeConverter $nodeTypeConverter;
 
-    public function __construct(FullyQualifiedNameResolver $nodeTypeConverter)
+    public function __construct(NodeToTypeConverter $nodeTypeConverter)
     {
         $this->nodeTypeConverter = $nodeTypeConverter;
     }

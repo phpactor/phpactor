@@ -29,7 +29,7 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
-use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
@@ -61,11 +61,11 @@ final class DefaultResolverFactory
 {
     private Reflector $reflector;
 
-    private FullyQualifiedNameResolver $nodeTypeConverter;
+    private NodeToTypeConverter $nodeTypeConverter;
 
     public function __construct(
         Reflector $reflector,
-        FullyQualifiedNameResolver $nodeTypeConverter
+        NodeToTypeConverter $nodeTypeConverter
     ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
