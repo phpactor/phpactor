@@ -109,10 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof MethodDeclaration) {
-            return $this->resolveMethodDeclaration($frame, $node);
-        }
-
         if ($node instanceof CloneExpression) {
             return $this->resolveCloneExpression($frame, $node);
         }
@@ -125,42 +121,6 @@ class SymbolContextResolver
     }
 
 
-    private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
-    {
-        // @phpstan-ignore-next-line
-        if ($node->ifExpression) {
-            $ifValue = $this->doResolveNodeWithCache($frame, $node->ifExpression);
-
-            if (!$ifValue->type() instanceof MissingType) {
-                return $ifValue;
-            }
-        }
-
-        // if expression was not defined, fallback to condition
-        $conditionValue = $this->doResolveNodeWithCache($frame, $node->condition);
-
-        if (!$conditionValue->type() instanceof MissingType) {
-            return $conditionValue;
-        }
-
-        return NodeContext::none();
-    }
-
-    private function resolveMethodDeclaration(Frame $frame, MethodDeclaration $node): NodeContext
-    {
-        $classNode = $this->getClassLikeAncestor($node);
-        $classSymbolContext = $this->doResolveNodeWithCache($frame, $classNode);
-
-        return NodeContextFactory::create(
-            (string)$node->name->getText($node->getFileContents()),
-            $node->name->getStartPosition(),
-            $node->name->getEndPosition(),
-            [
-                'container_type' => $classSymbolContext->type(),
-                'symbol_type' => Symbol::METHOD,
-            ]
-        );
-    }
 
     /**
      * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null

@@ -16,6 +16,7 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -36,6 +37,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
@@ -98,6 +100,7 @@ final class DefaultResolverFactory
             ArrayCreationExpression::class => new ArrayCreationExpressionResolver(),
             ArgumentExpression::class => new ArgumentExpressionResolver(),
             TernaryExpression::class => new TernaryExpressionResolver(),
+            MethodDeclaration::class => new MethodDeclarationResolver(),
         ];
     }
 }
