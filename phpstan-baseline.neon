@@ -851,11 +851,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/Twig/TwigRenderer.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:property\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|Phpactor\\\\WorseReflection\\\\Reflector\\:\\:reflectClassesIn\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
@@ -967,11 +962,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:defaultValue\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
 
@@ -6584,56 +6574,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:_resolveNode\\(\\) has parameter \\$node with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:classTypeFromNode\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:getClassLikeAncestor\\(\\) should return Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InterfaceDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\TraitDeclaration but returns Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveNode\\(\\) has parameter \\$node with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveObjectCreationExpression\\(\\) has parameter \\$node with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveParenthesizedExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolvePropertyVariable\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\SymbolContextResolver\\:\\:resolveVariableName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InterfaceDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\TraitDeclaration will always evaluate to false\\.$#"
-			count: 2
-			path: lib/WorseReflection/Core/Inference/SymbolContextResolver.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Variable\\:\\:isNamed\\(\\) has no return type specified\\.$#"

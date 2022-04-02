@@ -70,6 +70,7 @@ class SymbolContextResolver
     
     private Cache $cache;
 
+    
     public function __construct(
         Reflector $reflector,
         LoggerInterface $logger,
@@ -84,7 +85,49 @@ class SymbolContextResolver
         $this->cache = $cache;
     }
 
-    private function __resolveNode(Frame $frame, Node $node): NodeContext
+    /**
+     * @param Node|Token $node
+     */
+    public function resolveNode(Frame $frame, $node): NodeContext
+    {
+        try {
+            if (
+                $node instanceof ParserVariable
+                && $node->parent instanceof ScopedPropertyAccessExpression
+                && $node === $node->parent->memberName
+            ) {
+                return $this->doResolveNodeWithCache($frame, $node->parent);
+            }
+            return $this->doResolveNodeWithCache($frame, $node);
+        } catch (CouldNotResolveNode $couldNotResolveNode) {
+            return NodeContext::none()
+                ->withIssue($couldNotResolveNode->getMessage());
+        }
+    }
+
+    /**
+     * @param Node|Token $node
+     */
+    private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
+    {
+        $key = 'sc:'.spl_object_hash($node);
+
+        return $this->cache->getOrSet($key, function () use ($frame, $node) {
+            if (false === $node instanceof Node) {
+                throw new CouldNotResolveNode(sprintf(
+                    'Non-node class passed to resolveNode, got "%s"',
+                    get_class($node)
+                ));
+            }
+
+            $context = $this->doResolveNode($frame, $node);
+            $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+
+            return $context;
+        });
+    }
+
+    private function doResolveNode(Frame $frame, Node $node): NodeContext
     {
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
 
@@ -190,7 +233,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof SubscriptExpression) {
-            $variableValue = $this->_resolveNode($frame, $node->postfixExpression);
+            $variableValue = $this->doResolveNodeWithCache($frame, $node->postfixExpression);
             return $this->resolveSubscriptExpression($frame, $variableValue, $node);
         }
 
@@ -221,7 +264,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof ArgumentExpression) {
-            return $this->_resolveNode($frame, $node->expression);
+            return $this->doResolveNodeWithCache($frame, $node->expression);
         }
 
         if ($node instanceof TernaryExpression) {
@@ -243,45 +286,6 @@ class SymbolContextResolver
         ));
     }
 
-    public function resolveNode(Frame $frame, $node): NodeContext
-    {
-        try {
-            if (
-                $node instanceof ParserVariable
-                && $node->parent instanceof ScopedPropertyAccessExpression
-                && $node === $node->parent->memberName
-            ) {
-                return $this->_resolveNode($frame, $node->parent);
-            }
-            return $this->_resolveNode($frame, $node);
-        } catch (CouldNotResolveNode $couldNotResolveNode) {
-            return NodeContext::none()
-                ->withIssue($couldNotResolveNode->getMessage());
-        }
-    }
-
-    /**
-     * Internal interface
-     */
-    public function _resolveNode(Frame $frame, $node): NodeContext
-    {
-        $key = 'sc:'.spl_object_hash($node);
-
-        return $this->cache->getOrSet($key, function () use ($frame, $node) {
-            if (false === $node instanceof Node) {
-                throw new CouldNotResolveNode(sprintf(
-                    'Non-node class passed to resolveNode, got "%s"',
-                    get_class($node)
-                ));
-            }
-
-            $context = $this->__resolveNode($frame, $node);
-            $context = $context->withScope(new ReflectionScope($this->reflector, $node));
-
-            return $context;
-        });
-    }
-
     private function resolveVariable(Frame $frame, ParserVariable $node): NodeContext
     {
         if ($node->getFirstAncestor(PropertyDeclaration::class)) {
@@ -292,7 +296,7 @@ class SymbolContextResolver
         return $this->resolveVariableName($name, $node, $frame);
     }
 
-    private function resolvePropertyVariable(ParserVariable $node)
+    private function resolvePropertyVariable(ParserVariable $node): NodeContext
     {
         $info = NodeContextFactory::create(
             $node->getName(),
@@ -312,7 +316,7 @@ class SymbolContextResolver
 
     private function resolveMemberAccessExpression(Frame $frame, MemberAccessExpression $node): NodeContext
     {
-        $class = $this->_resolveNode($frame, $node->dereferencableExpression);
+        $class = $this->doResolveNodeWithCache($frame, $node->dereferencableExpression);
 
         return $this->_infoFromMemberAccess($frame, $class->type(), $node);
     }
@@ -320,7 +324,7 @@ class SymbolContextResolver
     private function resolveCallExpression(Frame $frame, CallExpression $node): NodeContext
     {
         $resolvableNode = $node->callableExpression;
-        return $this->_resolveNode($frame, $resolvableNode);
+        return $this->doResolveNodeWithCache($frame, $resolvableNode);
     }
 
     private function resolveQualfiedNameList(Frame $frame, QualifiedNameList $node): NodeContext
@@ -416,7 +420,7 @@ class SymbolContextResolver
 
         $value = null;
         if ($node->default) {
-            $value = $this->_resolveNode($frame, $node->default)->value();
+            $value = $this->doResolveNodeWithCache($frame, $node->default)->value();
         }
 
         return NodeContextFactory::create(
@@ -590,9 +594,9 @@ class SymbolContextResolver
         }
 
         foreach ($node->arrayElements->getElements() as $element) {
-            $value = $this->_resolveNode($frame, $element->elementValue)->value();
+            $value = $this->doResolveNodeWithCache($frame, $element->elementValue)->value();
             if ($element->elementKey) {
-                $key = $this->_resolveNode($frame, $element->elementKey)->value();
+                $key = $this->doResolveNodeWithCache($frame, $element->elementKey)->value();
                 $array[$key] = $value;
                 continue;
             }
@@ -649,7 +653,7 @@ class SymbolContextResolver
         }
 
         if ($node instanceof StringLiteral) {
-            $string = $this->_resolveNode($frame, $node);
+            $string = $this->doResolveNodeWithCache($frame, $node);
 
             if (array_key_exists($string->value(), $subjectValue)) {
                 $value = $subjectValue[$string->value()];
@@ -685,20 +689,20 @@ class SymbolContextResolver
         return $this->_infoFromMemberAccess($frame, $parent, $node);
     }
 
-    private function resolveObjectCreationExpression(Frame $frame, $node): NodeContext
+    private function resolveObjectCreationExpression(Frame $frame, ObjectCreationExpression $node): NodeContext
     {
         if (false === $node->classTypeDesignator instanceof Node) {
             throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
         }
 
-        return $this->_resolveNode($frame, $node->classTypeDesignator);
+        return $this->doResolveNodeWithCache($frame, $node->classTypeDesignator);
     }
 
     private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
     {
-        // assume true
+        // @phpstan-ignore-next-line
         if ($node->ifExpression) {
-            $ifValue = $this->_resolveNode($frame, $node->ifExpression);
+            $ifValue = $this->doResolveNodeWithCache($frame, $node->ifExpression);
 
             if (!$ifValue->type() instanceof MissingType) {
                 return $ifValue;
@@ -706,7 +710,7 @@ class SymbolContextResolver
         }
 
         // if expression was not defined, fallback to condition
-        $conditionValue = $this->_resolveNode($frame, $node->condition);
+        $conditionValue = $this->doResolveNodeWithCache($frame, $node->condition);
 
         if (!$conditionValue->type() instanceof MissingType) {
             return $conditionValue;
@@ -718,7 +722,7 @@ class SymbolContextResolver
     private function resolveMethodDeclaration(Frame $frame, MethodDeclaration $node): NodeContext
     {
         $classNode = $this->getClassLikeAncestor($node);
-        $classSymbolContext = $this->_resolveNode($frame, $classNode);
+        $classSymbolContext = $this->doResolveNodeWithCache($frame, $classNode);
 
         return NodeContextFactory::create(
             (string)$node->name->getText($node->getFileContents()),
@@ -739,7 +743,7 @@ class SymbolContextResolver
         $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         if ($node->memberName instanceof Node) {
-            $memberNameInfo = $this->_resolveNode($frame, $node->memberName);
+            $memberNameInfo = $this->doResolveNodeWithCache($frame, $node->memberName);
             if (is_string($memberNameInfo->value())) {
                 $memberName = $memberNameInfo->value();
             }
@@ -792,13 +796,12 @@ class SymbolContextResolver
         return $info;
     }
 
-    private function classTypeFromNode(Node $node)
+    private function classTypeFromNode(Node $node): Type
     {
         $classNode = $this->getClassLikeAncestor($node);
 
         if (null === $classNode) {
-            // TODO: Wrning here
-            return;
+            return TypeFactory::undefined();
         }
 
         assert($classNode instanceof NamespacedNameInterface);
@@ -806,12 +809,12 @@ class SymbolContextResolver
         return TypeFactory::fromStringWithReflector($classNode->getNamespacedName(), $this->reflector);
     }
 
-    private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node)
+    private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
     {
-        return $this->__resolveNode($frame, $node->expression);
+        return $this->doResolveNode($frame, $node->expression);
     }
 
-    private function resolveVariableName(string $name, Node $node, Frame $frame)
+    private function resolveVariableName(string $name, Node $node, Frame $frame): NodeContext
     {
         $varName = ltrim($name, '$');
         $offset = $node->getEndPosition();
@@ -832,7 +835,7 @@ class SymbolContextResolver
     }
 
     /**
-     * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration
+     * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null
      */
     private function getClassLikeAncestor(Node $node)
     {
@@ -848,12 +851,13 @@ class SymbolContextResolver
             return $this->getClassLikeAncestor($ancestor);
         }
 
+        /** @var ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null */
         return $ancestor;
     }
 
     private function resolveCloneExpression(Frame $frame, CloneExpression $node): NodeContext
     {
-        return $this->__resolveNode($frame, $node->expression);
+        return $this->doResolveNode($frame, $node->expression);
     }
 
     /**

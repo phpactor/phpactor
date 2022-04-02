@@ -53,25 +53,4 @@ class TypeTest extends TestCase
             null
         ];
     }
-
-    public function testItAllowsNullable(): void
-    {
-        $type = Type::fromString('Foo\\Bar');
-        $this->assertFalse($type->nullable());
-
-        $type = Type::fromString('string');
-        $this->assertFalse($type->nullable());
-
-        $type = Type::fromString('Foo\\Bar');
-        $this->assertFalse($type->nullable());
-
-        $type = Type::fromString('string');
-        $this->assertFalse($type->nullable());
-
-        $type = Type::fromString('?Foo\\Bar');
-        $this->assertTrue($type->nullable());
-
-        $type = Type::fromString('?string');
-        $this->assertTrue($type->nullable());
-    }
 }

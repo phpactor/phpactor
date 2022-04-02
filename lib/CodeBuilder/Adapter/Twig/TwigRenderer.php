@@ -48,6 +48,7 @@ final class TwigRenderer implements Renderer
     {
         $twig = new Environment(new FilesystemLoader(__DIR__ . '/../../../../templates/code'), [
             'strict_variables' => true,
+            'autoescape' => false,
         ]);
         $twig->addExtension(new TwigExtension($this));
 

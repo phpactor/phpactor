@@ -8,13 +8,10 @@ final class Type extends Prototype
 
     private bool $none = false;
 
-    private bool $nullable = false;
-
-    public function __construct(string $type = null, bool $nullable = false)
+    public function __construct(string $type = null)
     {
         parent::__construct();
         $this->type = $type;
-        $this->nullable = $nullable;
     }
 
     public function __toString()
@@ -22,12 +19,9 @@ final class Type extends Prototype
         return $this->type;
     }
 
-    public static function fromString(string $string): Type
+    public static function fromString(string $type): Type
     {
-        $nullable = 0 === strpos($string, '?');
-        $type = $nullable ? substr($string, 1) : $string;
-
-        return new self($type, $nullable);
+        return new self($type);
     }
 
     public static function none(): Type
@@ -40,24 +34,24 @@ final class Type extends Prototype
 
     public function namespace(): ?string
     {
-        if (null === $this->type) {
+        $type = $this->type;
+        if (null === $type) {
             return null;
         }
 
-        if (false === strrpos($this->type, '\\')) {
+        if (substr($type, 0, 1) === '?') {
+            $type = substr($type, 1);
+        }
+
+        if (false === strrpos($type, '\\')) {
             return null;
         }
 
-        return substr($this->type, 0, strrpos($this->type, '\\'));
+        return substr($type, 0, strrpos($type, '\\'));
     }
 
     public function notNone(): bool
     {
         return false === $this->none;
-    }
-
-    public function nullable(): bool
-    {
-        return $this->nullable;
     }
 }

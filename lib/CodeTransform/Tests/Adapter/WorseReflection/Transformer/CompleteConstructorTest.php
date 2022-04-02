@@ -259,11 +259,48 @@ class CompleteConstructorTest extends WorseTestCase
                 class Foobar
                 {
                     /**
-                     * @var string|null
+                     * @var ?string
                      */
                     private $foo;
 
                     public function __construct(?string $foo)
+                    {
+                        $this->foo = $foo;
+                    }
+                }
+                EOT
+
+        ];
+
+        yield  'Adds documented types' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param Foo<string,Bar> $foo
+                     */
+                    public function __construct(array $foo)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var Foo<string,Bar>
+                     */
+                    private $foo;
+
+                    /**
+                     * @param Foo<string,Bar> $foo
+                     */
+                    public function __construct(array $foo)
                     {
                         $this->foo = $foo;
                     }

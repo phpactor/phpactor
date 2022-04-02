@@ -64,6 +64,43 @@ class AddMissingPropertiesTest extends WorseTestCase
                     EOT
 
             ],
+            'It adds missing properties with documented type' => [
+                <<<'EOT'
+                    <?php
+
+                    class Foobar
+                    {
+                        /**
+                         * @param array<string,mixed> $bar
+                         */
+                        public function hello(array $bar)
+                        {
+                            $this->hello = $bar;
+                        }
+                    }
+                    EOT
+                ,
+                <<<'EOT'
+                    <?php
+
+                    class Foobar
+                    {
+                        /**
+                         * @var array<string,mixed>
+                         */
+                        private $hello;
+
+                        /**
+                         * @param array<string,mixed> $bar
+                         */
+                        public function hello(array $bar)
+                        {
+                            $this->hello = $bar;
+                        }
+                    }
+                    EOT
+
+            ],
             'It ignores existing properties' => [
                 <<<'EOT'
                     <?php

@@ -266,8 +266,7 @@ class SourceCodeBuilderTest extends TestCase
                 ->defaultValue(1)
                 ->end(),
                 function (Method $method): void {
-                    $this->assertEquals('string', $method->returnType()->__toString());
-                    $this->assertTrue($method->returnType()->nullable());
+                    $this->assertEquals('?string', $method->returnType()->__toString());
                 }
         ],
             'Method mofifiers 1' => [

@@ -1,6 +1,6 @@
-{% if prototype.type.notNone %}
+{% if prototype.docTypeOrType.notNone %}
 /**
- * @var {{ prototype.type }}{{ prototype.type.nullable ? '|null' }}
+ * @var {{ prototype.docTypeOrType }}
  */
 {% endif %}
 {{ prototype.visibility }} ${{ prototype.name}}{% if prototype.defaultValue.notNone %} = {{ prototype.defaultValue.export }}{% endif %};
