@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
@@ -26,6 +27,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\VariableResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\BinaryExpressionResolver;
 use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
@@ -59,6 +61,7 @@ final class DefaultResolverFactory
             ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeTypeConverter),
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
+            BinaryExpression::class => new BinaryExpressionResolver(),
         ];
     }
 }

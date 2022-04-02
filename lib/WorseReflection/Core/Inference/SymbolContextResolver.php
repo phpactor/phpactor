@@ -45,8 +45,6 @@ class SymbolContextResolver
     
     private LoggerInterface $logger;
     
-    private ExpressionEvaluator $expressionEvaluator;
-    
     private Cache $cache;
 
     /**
@@ -65,7 +63,6 @@ class SymbolContextResolver
     ) {
         $this->logger = $logger;
         $this->reflector = $reflector;
-        $this->expressionEvaluator = new ExpressionEvaluator();
         $this->cache = $cache;
         $this->resolverMap = $resolverMap;
     }
@@ -116,20 +113,6 @@ class SymbolContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
-        }
-
-        if ($node instanceof BinaryExpression) {
-            $value = $this->expressionEvaluator->evaluate($node);
-            return NodeContextFactory::create(
-                $node->getText(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::CLASS_,
-                    'type' => TypeFactory::fromValue($value),
-                    'value' => $value,
-                ]
-            );
         }
 
         if ($node instanceof ClassDeclaration || $node instanceof TraitDeclaration || $node instanceof InterfaceDeclaration) {
