@@ -982,7 +982,7 @@ abstract class UpdaterTestCase extends TestCase
                         public $eyes
 
                         /**
-                         * @var Hello|null
+                         * @var ?Hello
                          */
                         public $propertyOne;
                     }

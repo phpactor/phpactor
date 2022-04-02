@@ -22,11 +22,6 @@ final class ReturnType extends Prototype
         return new self(Type::fromString($string));
     }
 
-    public function nullable(): bool
-    {
-        return $this->type->nullable();
-    }
-
     public static function none()
     {
         return new self(Type::none());

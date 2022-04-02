@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -69,13 +68,9 @@ class CompleteConstructor implements Transformer
                 $propertyBuilder->visibility($this->visibility);
                 $parameterType = $parameter->type();
                 if (TypeUtil::isDefined($parameterType)) {
-                    $typeName = TypeUtil::short($parameterType);
-                    $parameterType = TypeUtil::unwrapNullableType($parameterType);
-                    if ($parameterType instanceof ClassType) {
-                        $typeName = $class->scope()->resolveLocalName($parameterType->name())->__toString();
-                    }
-
-                    $propertyBuilder->type($typeName);
+                    $parameterType = TypeUtil::toLocalType($class->scope(), $parameterType);
+                    $propertyBuilder->type($parameterType->toPhpString());
+                    $propertyBuilder->docType((string)$parameterType);
                 }
             }
         }

@@ -1,5 +1,10 @@
+{% if prototype.docTypeAddsAdditionalInfo %}
+/**
+ * @var {{ prototype.docType }}
+ */
+{% endif %}
 {{ prototype.visibility }}
 {%- if prototype.type.notNone %}
- {{ prototype.type.nullable ? '?' : '' }}{{ prototype.type }} 
+ {{ prototype.type }} 
 {%- endif %}
  ${{ prototype.name}}{% if prototype.defaultValue.notNone %} = {{ prototype.defaultValue.export }}{% endif %};

@@ -20,6 +20,8 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
 
     private ClassLikeBuilder $parent;
 
+    private ?Type $docType = null;
+
     public function __construct(ClassLikeBuilder $parent, string $name)
     {
         $this->parent = $parent;
@@ -45,6 +47,16 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
         return $this;
     }
 
+    public function docType(string $type): PropertyBuilder
+    {
+        $this->docType = Type::fromString($type);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     */
     public function defaultValue($value): PropertyBuilder
     {
         $this->defaultValue = DefaultValue::fromValue($value);
@@ -59,6 +71,7 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
             $this->visibility,
             $this->defaultValue,
             $this->type,
+            $this->docType,
             UpdatePolicy::fromModifiedState($this->isModified())
         );
     }

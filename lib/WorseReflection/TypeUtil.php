@@ -2,7 +2,10 @@
 
 namespace Phpactor\WorseReflection;
 
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -69,5 +72,26 @@ class TypeUtil
         }
 
         return $type->type;
+    }
+
+    public static function toLocalType(ReflectionScope $scope, Type $type): Type
+    {
+        if ($type instanceof NullableType) {
+            return new NullableType(self::toLocalType($scope, $type->type));
+        }
+        if ($type instanceof ClassType) {
+            $typeName = $scope->resolveLocalName($type->name());
+            $type = clone $type;
+            $type->name = ClassName::fromString($typeName);
+            return $type;
+        }
+        if ($type instanceof ArrayType) {
+            $type = clone $type;
+            $type->keyType = self::toLocalType($scope, $type->keyType);
+            $type->valueType = self::toLocalType($scope, $type->valueType);
+            return $type;
+        }
+
+        return $type;
     }
 }

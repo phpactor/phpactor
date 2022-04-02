@@ -124,10 +124,9 @@ class WorseBuilderFactoryTest extends TestCase
         $source = $this->build('<?php class Foobar { public function method(): ?string {} }');
         // TODO: Changed this from `?string`, not sure how it worked before
         $this->assertEquals(
-            'string',
+            '?string',
             $source->classes()->first()->methods()->first()->returnType()->__toString(),
         );
-        $this->assertTrue($source->classes()->first()->methods()->first()->returnType()->nullable(), 'Type is nullable');
     }
 
     public function testMethodProtected(): void
@@ -145,7 +144,7 @@ class WorseBuilderFactoryTest extends TestCase
     public function testMethodWithNullableParameter(): void
     {
         $source = $this->build('<?php class Foobar { public function method(?string $param) {} }');
-        $this->assertTrue($source->classes()->first()->methods()->first()->parameters()->first()->type()->nullable());
+        self::assertEquals('?string', (string)$source->classes()->first()->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithParameterByReference(): void

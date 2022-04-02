@@ -3,6 +3,8 @@
 namespace Phpactor\CodeBuilder\Adapter\WorseReflection;
 
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -88,6 +90,8 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function buildProperty(ClassLikeBuilder $classBuilder, ReflectionProperty $property): void
     {
+        assert($classBuilder instanceof ClassBuilder || $classBuilder instanceof TraitBuilder);
+
         $propertyBuilder = $classBuilder->property($property->name());
         $propertyBuilder->visibility((string) $property->visibility());
 
@@ -95,6 +99,7 @@ class WorseBuilderFactory implements BuilderFactory
         if (TypeUtil::isDefined($type)) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type(TypeUtil::short($type));
+            $propertyBuilder->docType((string)$type);
         }
     }
 

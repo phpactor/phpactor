@@ -6,4 +6,4 @@
  */
 {% endif %}
 {% if prototype.isAbstract %}abstract {%endif %}{{ prototype.visibility }} {% if prototype.isStatic %}static {%endif %}function {{ prototype.name}}({% spaceless %}
-{% for parameter in prototype.parameters %}{{ generator.render(parameter, variant)|raw }}{% if not loop.last %}, {% endif %}{% endfor %}{% endspaceless %}){% if prototype.returnType.notNone %}: {{ prototype.returnType.nullable ? '?' : '' }}{{ prototype.returnType }}{% endif %}
+{% for parameter in prototype.parameters %}{{ generator.render(parameter, variant)|raw }}{% if not loop.last %}, {% endif %}{% endfor %}{% endspaceless %}){% if prototype.returnType.notNone %}: {{ prototype.returnType }}{% endif %}
