@@ -26,37 +26,22 @@ final class ObjectRendererBuilder
     /**
      * @var array<string>
      */
-    private $templatePaths = [];
-
-    /**
-     * @var string
-     */
-    private $suffix = '.twig';
-
-    /**
-     * @var bool
-     */
-    private $renderEmptyOnNotFound = false;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private array $templatePaths = [];
+    
+    private string $suffix = '.twig';
+    
+    private bool $renderEmptyOnNotFound = false;
+    
+    private LoggerInterface $logger;
 
     /**
      * @var bool|string|callable
      */
     private $escaping = false;
-
-    /**
-     * @var bool
-     */
-    private $enableAncestoralCandidates = false;
-
-    /**
-     * @var bool
-     */
-    private $enableInterfaceCandidates = false;
+    
+    private bool $enableAncestoralCandidates = false;
+    
+    private bool $enableInterfaceCandidates = false;
 
     /**
      * @var ?Closure(Environment): Environment
