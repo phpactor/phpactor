@@ -84,6 +84,23 @@ class SymbolContextResolver
         $this->cache = $cache;
     }
 
+    public function resolveNode(Frame $frame, $node): NodeContext
+    {
+        try {
+            if (
+                $node instanceof ParserVariable
+                && $node->parent instanceof ScopedPropertyAccessExpression
+                && $node === $node->parent->memberName
+            ) {
+                return $this->_resolveNode($frame, $node->parent);
+            }
+            return $this->_resolveNode($frame, $node);
+        } catch (CouldNotResolveNode $couldNotResolveNode) {
+            return NodeContext::none()
+                ->withIssue($couldNotResolveNode->getMessage());
+        }
+    }
+
     private function __resolveNode(Frame $frame, Node $node): NodeContext
     {
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
@@ -241,23 +258,6 @@ class SymbolContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    public function resolveNode(Frame $frame, $node): NodeContext
-    {
-        try {
-            if (
-                $node instanceof ParserVariable
-                && $node->parent instanceof ScopedPropertyAccessExpression
-                && $node === $node->parent->memberName
-            ) {
-                return $this->_resolveNode($frame, $node->parent);
-            }
-            return $this->_resolveNode($frame, $node);
-        } catch (CouldNotResolveNode $couldNotResolveNode) {
-            return NodeContext::none()
-                ->withIssue($couldNotResolveNode->getMessage());
-        }
     }
 
     /**
