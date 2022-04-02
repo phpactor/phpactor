@@ -144,9 +144,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof QualifiedName) {
-            return $this->resolveQualfiedName($frame, $node);
-        }
         if ($node instanceof QualifiedNameList) {
             return $this->resolveQualfiedNameList($frame, $node);
         }
@@ -369,36 +366,6 @@ class SymbolContextResolver
 
     private function resolveQualfiedName(Frame $frame, QualifiedName $node): NodeContext
     {
-        if ($node->parent instanceof CallExpression) {
-            $name = $node->getResolvedName() ?: $node;
-            $name = Name::fromString((string) $name);
-            $context = NodeContextFactory::create(
-                $name->short(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::FUNCTION,
-                ]
-            );
-
-            try {
-                $function = $this->reflector->reflectFunction($name);
-            } catch (NotFound $exception) {
-                return $context->withIssue($exception->getMessage());
-            }
-
-            return $context->withTypes($function->inferredTypes());
-        }
-
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => $this->nameResolver->resolve($node),
-                'symbol_type' => Symbol::CLASS_,
-            ]
-        );
     }
 
     private function resolveParameter(Frame $frame, Parameter $node): NodeContext
