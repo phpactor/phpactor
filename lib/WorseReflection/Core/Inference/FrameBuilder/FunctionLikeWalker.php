@@ -26,7 +26,7 @@ class FunctionLikeWalker extends AbstractWalker
         return $node instanceof FunctionLike;
     }
 
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert(
             $node instanceof FunctionLike ||
@@ -35,7 +35,7 @@ class FunctionLikeWalker extends AbstractWalker
         );
 
         $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
-        $this->walkFunctionLike($builder, $frame, $node);
+        $this->walkFunctionLike($resolver, $frame, $node);
 
         return $frame;
     }
@@ -43,7 +43,7 @@ class FunctionLikeWalker extends AbstractWalker
     /**
      * @param FunctionDeclaration|AnonymousFunctionCreationExpression $node
      */
-    private function walkFunctionLike(FrameResolver $builder, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(
@@ -54,7 +54,7 @@ class FunctionLikeWalker extends AbstractWalker
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-            $classType = $builder->resolveNode($frame, $classNode)->type();
+            $classType = $resolver->resolveNode($frame, $classNode)->type();
             $context = NodeContextFactory::create(
                 'this',
                 $node->getStartPosition(),
@@ -82,7 +82,7 @@ class FunctionLikeWalker extends AbstractWalker
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $symbolContext = $builder->resolveNode($frame, $parameterNode);
+            $symbolContext = $resolver->resolveNode($frame, $parameterNode);
 
             $context = NodeContextFactory::create(
                 (string)$parameterName,

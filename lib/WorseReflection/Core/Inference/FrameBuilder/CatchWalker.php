@@ -17,14 +17,14 @@ class CatchWalker extends AbstractWalker
         return $node instanceof CatchClause;
     }
 
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CatchClause);
         if (!$node->qualifiedNameList) {
             return $frame;
         }
 
-        $types = $builder->resolveNode($frame, $node->qualifiedNameList)->types();
+        $types = $resolver->resolveNode($frame, $node->qualifiedNameList)->types();
         $variableName = $node->variableName;
 
         if (null === $variableName) {

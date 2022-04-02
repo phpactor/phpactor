@@ -38,7 +38,7 @@ class VariableWalker extends AbstractWalker
         return true;
     }
 
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $docblockTypes = $this->injectVariablesFromComment($frame, $node);
 

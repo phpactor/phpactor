@@ -26,7 +26,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
     /**
      * @param IfStatementNode $node
      */
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         if (null === $node->expression) {
             return $frame;

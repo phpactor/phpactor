@@ -23,7 +23,7 @@ class TestAssertWalker implements FrameWalker
         return $name == 'wrAssertType' && $node->argumentExpressionList !== null;
     }
 
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CallExpression);
         $list = $node->argumentExpressionList->getElements();
@@ -33,7 +33,7 @@ class TestAssertWalker implements FrameWalker
                 continue;
             }
 
-            $args[] = $builder->resolveNode($frame, $expression);
+            $args[] = $resolver->resolveNode($frame, $expression);
         }
 
         $expectedType = $args[0]->value();

@@ -34,10 +34,10 @@ class IncludeWalker implements FrameWalker
         return $node instanceof ScriptInclusionExpression;
     }
 
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ScriptInclusionExpression);
-        $context = $builder->resolveNode($frame, $node->expression);
+        $context = $resolver->resolveNode($frame, $node->expression);
         $includeUri = $context->value();
 
         if (!is_string($includeUri)) {
@@ -68,12 +68,12 @@ class IncludeWalker implements FrameWalker
         }
 
         $sourceNode = $this->parser->parseSourceFile(file_get_contents($includeUri));
-        $includedFrame = $builder->build($sourceNode);
+        $includedFrame = $resolver->build($sourceNode);
 
         $parentNode = $node->parent;
 
         if ($parentNode instanceof AssignmentExpression) {
-            return $this->processAssignment($sourceNode, $builder, $frame, $parentNode, $node);
+            return $this->processAssignment($sourceNode, $resolver, $frame, $parentNode, $node);
         }
 
         $frame->locals()->merge($includedFrame->locals());
@@ -81,11 +81,11 @@ class IncludeWalker implements FrameWalker
         return $frame;
     }
 
-    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $builder, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
+    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node)
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
-        $returnValueContext = $builder->resolveNode($frame->new('required'), $return->expression);
+        $returnValueContext = $resolver->resolveNode($frame->new('required'), $return->expression);
         
         if (!$parentNode->leftOperand instanceof Variable) {
             return $frame;
