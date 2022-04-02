@@ -84,23 +84,6 @@ class SymbolContextResolver
         $this->cache = $cache;
     }
 
-    public function resolveNode(Frame $frame, $node): NodeContext
-    {
-        try {
-            if (
-                $node instanceof ParserVariable
-                && $node->parent instanceof ScopedPropertyAccessExpression
-                && $node === $node->parent->memberName
-            ) {
-                return $this->_resolveNode($frame, $node->parent);
-            }
-            return $this->_resolveNode($frame, $node);
-        } catch (CouldNotResolveNode $couldNotResolveNode) {
-            return NodeContext::none()
-                ->withIssue($couldNotResolveNode->getMessage());
-        }
-    }
-
     private function __resolveNode(Frame $frame, Node $node): NodeContext
     {
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
@@ -261,9 +244,29 @@ class SymbolContextResolver
     }
 
     /**
-     * Internal interface
+     * @param Node|Token $node
      */
-    public function _resolveNode(Frame $frame, $node): NodeContext
+    public function resolveNode(Frame $frame, $node): NodeContext
+    {
+        try {
+            if (
+                $node instanceof ParserVariable
+                && $node->parent instanceof ScopedPropertyAccessExpression
+                && $node === $node->parent->memberName
+            ) {
+                return $this->_resolveNode($frame, $node->parent);
+            }
+            return $this->_resolveNode($frame, $node);
+        } catch (CouldNotResolveNode $couldNotResolveNode) {
+            return NodeContext::none()
+                ->withIssue($couldNotResolveNode->getMessage());
+        }
+    }
+
+    /**
+     * @param Node|Token $node
+     */
+    private function _resolveNode(Frame $frame, $node): NodeContext
     {
         $key = 'sc:'.spl_object_hash($node);
 
@@ -292,7 +295,7 @@ class SymbolContextResolver
         return $this->resolveVariableName($name, $node, $frame);
     }
 
-    private function resolvePropertyVariable(ParserVariable $node)
+    private function resolvePropertyVariable(ParserVariable $node): NodeContext
     {
         $info = NodeContextFactory::create(
             $node->getName(),
@@ -685,7 +688,7 @@ class SymbolContextResolver
         return $this->_infoFromMemberAccess($frame, $parent, $node);
     }
 
-    private function resolveObjectCreationExpression(Frame $frame, $node): NodeContext
+    private function resolveObjectCreationExpression(Frame $frame, ObjectCreationExpression $node): NodeContext
     {
         if (false === $node->classTypeDesignator instanceof Node) {
             throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
@@ -696,7 +699,7 @@ class SymbolContextResolver
 
     private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
     {
-        // assume true
+        // @phpstan-ignore-next-line
         if ($node->ifExpression) {
             $ifValue = $this->_resolveNode($frame, $node->ifExpression);
 
@@ -792,13 +795,12 @@ class SymbolContextResolver
         return $info;
     }
 
-    private function classTypeFromNode(Node $node)
+    private function classTypeFromNode(Node $node): Type
     {
         $classNode = $this->getClassLikeAncestor($node);
 
         if (null === $classNode) {
-            // TODO: Wrning here
-            return;
+            return TypeFactory::undefined();
         }
 
         assert($classNode instanceof NamespacedNameInterface);
@@ -806,12 +808,12 @@ class SymbolContextResolver
         return TypeFactory::fromStringWithReflector($classNode->getNamespacedName(), $this->reflector);
     }
 
-    private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node)
+    private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
     {
         return $this->__resolveNode($frame, $node->expression);
     }
 
-    private function resolveVariableName(string $name, Node $node, Frame $frame)
+    private function resolveVariableName(string $name, Node $node, Frame $frame): NodeContext
     {
         $varName = ltrim($name, '$');
         $offset = $node->getEndPosition();
@@ -832,7 +834,7 @@ class SymbolContextResolver
     }
 
     /**
-     * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration
+     * @return ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null
      */
     private function getClassLikeAncestor(Node $node)
     {
@@ -848,6 +850,7 @@ class SymbolContextResolver
             return $this->getClassLikeAncestor($ancestor);
         }
 
+        /** @var ClassDeclaration|TraitDeclaration|InterfaceDeclaration|null */
         return $ancestor;
     }
 
