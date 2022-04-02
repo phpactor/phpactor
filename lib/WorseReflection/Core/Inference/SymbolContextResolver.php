@@ -135,10 +135,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof MemberAccessExpression) {
-            return $this->resolveMemberAccessExpression($frame, $node);
-        }
-
         if ($node instanceof CallExpression) {
             return $this->resolveCallExpression($frame, $node);
         }

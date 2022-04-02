@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -13,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
@@ -47,6 +49,7 @@ final class DefaultResolverFactory
             Parameter::class => new ParameterResolver(),
             UseVariableName::class => new UseVariableNameResolver(),
             Variable::class => new VariableResolver(),
+            MemberAccessExpression::class => new MemberAccessExpressionResolver(),
         ];
     }
 }
