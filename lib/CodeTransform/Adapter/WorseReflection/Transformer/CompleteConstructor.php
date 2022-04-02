@@ -66,7 +66,7 @@ class CompleteConstructor implements Transformer
 
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);
-                $parameterType = $parameter->type();
+                $parameterType = $parameter->inferredTypes()->best();
                 if (TypeUtil::isDefined($parameterType)) {
                     $parameterType = TypeUtil::toLocalType($class->scope(), $parameterType);
                     $propertyBuilder->type($parameterType->toPhpString());

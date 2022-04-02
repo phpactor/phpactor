@@ -14,13 +14,16 @@ Bug fixes:
     on class move and other strange issues.
   - [lsp] Fix call to properties() on non-class in generate accessors provider.
   - [lsp] Fix unresolvable classes not being listed in code actions
+  - [cb] Do not apply HTML escaping when rendering code templates
 
 Improvements:
 
+  - [code-transform] Faithfully reproduce documented types in generated code
   - [docblock] New docblock parser to facilitate parsing complex types
   - [hover] Improve "offset" hover (mostly related to showing variable info)
   - [templates] Include templates for creating new interfaces, traits and enums
   - [wr] Resolve type from array access
+  - [cb] Preserve `?` operator as distinct from a union type
 
 Features:
 

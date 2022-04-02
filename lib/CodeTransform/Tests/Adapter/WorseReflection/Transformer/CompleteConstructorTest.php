@@ -272,6 +272,43 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
 
+        yield  'Adds documented types' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param Foo<string,Bar> $foo
+                     */
+                    public function __construct(array $foo)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var Foo<string,Bar>
+                     */
+                    private $foo;
+
+                    /**
+                     * @param Foo<string,Bar> $foo
+                     */
+                    public function __construct(array $foo)
+                    {
+                        $this->foo = $foo;
+                    }
+                }
+                EOT
+
+        ];
+
         yield  'It is idempotent' => [
             <<<'EOT'
                 <?php
