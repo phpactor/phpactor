@@ -960,6 +960,31 @@ abstract class UpdaterTestCase extends TestCase
                         public $propertyOne;
                     }
                     EOT
+        ];
+
+        yield 'It adds a generic typed property' => [
+                <<<'EOT'
+                    class Aardvark
+                    {
+                        public $eyes
+                    }
+                    EOT
+                , SourceCodeBuilder::create()
+                    ->class('Aardvark')
+                        ->property('propertyOne')->type('Hello<Bar>')->end()
+                    ->end()
+                    ->build(),
+                <<<'EOT'
+                    class Aardvark
+                    {
+                        public $eyes
+
+                        /**
+                         * @var Hello<Bar>
+                         */
+                        public $propertyOne;
+                    }
+                    EOT
             ];
 
         yield 'It adds a nullable typed property' => [

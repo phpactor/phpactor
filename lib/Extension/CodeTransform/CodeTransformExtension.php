@@ -315,6 +315,7 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform.renderer', function (Container $container) {
             $twig = new Environment($container->get('code_transform.twig_loader'), [
                 'strict_variables' => true,
+                'autoescape' => false,
             ]);
             $renderer = new TwigRenderer($twig);
             $twig->addExtension(new TwigExtension($renderer, $container->get(TextFormat::class)));
