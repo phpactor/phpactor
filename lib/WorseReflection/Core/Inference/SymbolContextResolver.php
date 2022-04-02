@@ -109,14 +109,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof ArgumentExpression) {
-            return $this->doResolveNodeWithCache($frame, $node->expression);
-        }
-
-        if ($node instanceof TernaryExpression) {
-            return $this->resolveTernaryExpression($frame, $node);
-        }
-
         if ($node instanceof MethodDeclaration) {
             return $this->resolveMethodDeclaration($frame, $node);
         }
@@ -132,44 +124,6 @@ class SymbolContextResolver
         ));
     }
 
-
-    private function resolveArrayCreationExpression(Frame $frame, ArrayCreationExpression $node): NodeContext
-    {
-        $array  = [];
-
-        if (null === $node->arrayElements) {
-            return NodeContextFactory::create(
-                $node->getText(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'type' => TypeFactory::array(),
-                    'value' => []
-                ]
-            );
-        }
-
-        foreach ($node->arrayElements->getElements() as $element) {
-            $value = $this->doResolveNodeWithCache($frame, $element->elementValue)->value();
-            if ($element->elementKey) {
-                $key = $this->doResolveNodeWithCache($frame, $element->elementKey)->value();
-                $array[$key] = $value;
-                continue;
-            }
-
-            $array[] = $value;
-        }
-
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => TypeFactory::array(),
-                'value' => $array
-            ]
-        );
-    }
 
     private function resolveTernaryExpression(Frame $frame, TernaryExpression $node): NodeContext
     {

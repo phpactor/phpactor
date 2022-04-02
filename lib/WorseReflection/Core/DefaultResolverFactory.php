@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
@@ -13,6 +14,7 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
@@ -27,6 +29,7 @@ use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
@@ -41,6 +44,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
@@ -92,6 +96,8 @@ final class DefaultResolverFactory
             NumericLiteral::class => new NumericLiteralResolver(),
             ReservedWord::class => new ReservedWordResolver(),
             ArrayCreationExpression::class => new ArrayCreationExpressionResolver(),
+            ArgumentExpression::class => new ArgumentExpressionResolver(),
+            TernaryExpression::class => new TernaryExpressionResolver(),
         ];
     }
 }
