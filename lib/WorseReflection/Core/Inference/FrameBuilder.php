@@ -6,15 +6,14 @@ use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
 final class FrameBuilder
 {
-    /**
-     e @var SymbolContextResolver
-     */
-    private $symbolContextResolver;
+    private NodeContextResolver $nodeContextResolver;
 
     /**
      * @var FrameWalker[]
@@ -28,7 +27,7 @@ final class FrameBuilder
      */
     public function __construct(NodeContextResolver $symbolContextResolver, array $walkers, Cache $cache)
     {
-        $this->symbolContextResolver = $symbolContextResolver;
+        $this->nodeContextResolver = $symbolContextResolver;
         $this->walkers = $walkers;
         $this->cache = $cache;
     }
@@ -50,19 +49,22 @@ final class FrameBuilder
     }
 
     /**
-     * @internal For use with walkers
-     *
-     * TODO: Make an interface for this, extract it.
+     * @param Node|Token $node
      */
     public function resolveNode(Frame $frame, $node): NodeContext
     {
-        $info = $this->symbolContextResolver->resolveNode($frame, $node);
+        $info = $this->nodeContextResolver->resolveNode($frame, $node);
 
         if ($info->issues()) {
             $frame->problems()->add($info);
         }
 
         return $info;
+    }
+
+    public function reflector(): Reflector
+    {
+        return $this->nodeContextResolver->reflector();
     }
 
     private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
