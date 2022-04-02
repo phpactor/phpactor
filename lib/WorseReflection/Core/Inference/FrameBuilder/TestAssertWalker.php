@@ -12,6 +12,11 @@ use RuntimeException;
 
 class TestAssertWalker implements FrameWalker
 {
+    public function nodeFqn(): ?string
+    {
+        return CallExpression::class;
+    }
+
     public function canWalk(Node $node): bool
     {
         if (false === $node instanceof CallExpression) {

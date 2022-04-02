@@ -29,9 +29,17 @@ class IncludeWalker implements FrameWalker
         $this->logger = $logger;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function nodeFqn(): ?string
+    {
+        return ScriptInclusionExpression::class;
+    }
+
     public function canWalk(Node $node): bool
     {
-        return $node instanceof ScriptInclusionExpression;
+        return true;
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

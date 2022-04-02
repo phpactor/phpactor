@@ -21,9 +21,14 @@ use Microsoft\PhpParser\Token;
 
 class FunctionLikeWalker extends AbstractWalker
 {
+    public function nodeFqn(): ?string
+    {
+        return FunctionLike::class;
+    }
+
     public function canWalk(Node $node): bool
     {
-        return $node instanceof FunctionLike;
+        return true;
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

@@ -34,6 +34,14 @@ class AssignmentWalker extends AbstractWalker
         $this->logger = $logger;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function nodeFqn(): ?string
+    {
+        return AssignmentExpression::class;
+    }
+
     public function canWalk(Node $node): bool
     {
         return $node instanceof AssignmentExpression;

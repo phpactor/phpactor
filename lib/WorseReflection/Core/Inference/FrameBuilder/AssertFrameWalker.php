@@ -11,12 +11,14 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 
 class AssertFrameWalker extends AbstractInstanceOfWalker implements FrameWalker
 {
+    public function nodeFqn(): ?string
+    {
+        return CallExpression::class;
+    }
+
     public function canWalk(Node $node): bool
     {
-        if (false === $node instanceof CallExpression) {
-            return false;
-        }
-
+        assert($node instanceof CallExpression);
         $name = $node->callableExpression->getText();
 
         return strtolower($name) == 'assert' && $node->argumentExpressionList !== null;

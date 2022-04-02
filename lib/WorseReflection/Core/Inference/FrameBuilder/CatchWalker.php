@@ -14,7 +14,12 @@ class CatchWalker extends AbstractWalker
 {
     public function canWalk(Node $node): bool
     {
-        return $node instanceof CatchClause;
+        return true;
+    }
+
+    public function nodeFqn(): ?string
+    {
+        return CatchClause::class;
     }
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame

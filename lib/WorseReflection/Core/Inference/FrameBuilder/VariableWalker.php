@@ -33,6 +33,14 @@ class VariableWalker extends AbstractWalker
         $this->nameResolver = $nameResolver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function nodeFqn(): ?string
+    {
+        return null;
+    }
+
     public function canWalk(Node $node): bool
     {
         return true;

@@ -18,9 +18,14 @@ use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
 
 class InstanceOfWalker extends AbstractInstanceOfWalker implements FrameWalker
 {
+    public function nodeFqn(): ?string
+    {
+        return IfStatementNode::class;
+    }
+
     public function canWalk(Node $node): bool
     {
-        return $node instanceof IfStatementNode;
+        return true;
     }
 
     /**
