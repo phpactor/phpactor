@@ -118,10 +118,6 @@ class SymbolContextResolver
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 
-        if ($node instanceof ParenthesizedExpression) {
-            return $this->resolveParenthesizedExpression($frame, $node);
-        }
-
         if ($node instanceof BinaryExpression) {
             $value = $this->expressionEvaluator->evaluate($node);
             return NodeContextFactory::create(
@@ -442,11 +438,6 @@ class SymbolContextResolver
                 'symbol_type' => Symbol::METHOD,
             ]
         );
-    }
-
-    private function resolveParenthesizedExpression(Frame $frame, ParenthesizedExpression $node): NodeContext
-    {
-        return $this->doResolveNode($frame, $node->expression);
     }
 
     /**
