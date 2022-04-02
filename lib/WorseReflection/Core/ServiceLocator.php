@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\FrameBuilder\InstanceOfWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Inference\FullyQualifiedNameResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\SymbolContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;

@@ -15,13 +15,13 @@ use Phpactor\WorseReflection\Reflector;
 final class DefaultResolverFactory
 {
     private Reflector $reflector;
+
     private FullyQualifiedNameResolver $nodeTypeConverter;
 
     public function __construct(
         Reflector $reflector,
         FullyQualifiedNameResolver $nodeTypeConverter
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
     }

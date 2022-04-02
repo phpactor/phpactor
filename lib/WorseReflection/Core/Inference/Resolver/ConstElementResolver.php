@@ -16,7 +16,7 @@ class ConstElementResolver implements Resolver
 {
     public function resolve(SymbolContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        assert ($node instanceof ConstElement);
+        assert($node instanceof ConstElement);
         return NodeContextFactory::create(
             $node->getName(),
             $node->getStartPosition(),

@@ -41,6 +41,7 @@ class NodeContextFactory
         $config = array_merge($defaultConfig, $config);
         $position = Position::fromStartAndEnd($start, $end);
         $symbol = Symbol::fromTypeNameAndPosition(
+            /** @phpstan-ignore-next-line */
             $config['symbol_type'],
             $symbolName,
             $position
