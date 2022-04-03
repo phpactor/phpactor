@@ -12,6 +12,7 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\TypeUtil;
 
 final class ExpressionVariableResolver
 {
@@ -45,7 +46,13 @@ final class ExpressionVariableResolver
         if ($node->operator->kind == TokenKind::InstanceOfKeyword) {
             $left = $resolver->resolveNode($frame, $node->leftOperand);
             $right = $resolver->resolveNode($frame, $node->rightOperand)->type();
-            return new Variables([Variable::fromSymbolContext($left)->withType($right)]);
+            $variable = Variable::fromSymbolContext($left)->withType($right);
+
+            if (TypeUtil::isDefined($left->containerType())) {
+                $variable = $variable->withClassType($left->containerType());
+            }
+
+            return new Variables([$variable]);
         }
 
         if ($node->operator->kind == TokenKind::AmpersandAmpersandToken) {

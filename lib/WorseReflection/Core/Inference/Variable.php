@@ -68,6 +68,11 @@ final class Variable
         return new self($this->name, Types::fromTypes([$type]), $this->classType, $this->value);
     }
 
+    public function withClassType(Type $classType): self
+    {
+        return new self($this->name, $this->types, $classType, $this->value);
+    }
+
     public function type(): Type
     {
         return $this->types->best();

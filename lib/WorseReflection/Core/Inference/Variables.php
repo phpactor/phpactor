@@ -45,7 +45,9 @@ final class Variables implements IteratorAggregate
                 continue;
             }
 
-            $this->variables[$name] = $combineVariable->withType(TypeCombinator::anihilate($combineVariable->type()));
+            $this->variables[$name] = $combineVariable->withType(
+                TypeCombinator::anihilate($combineVariable->type())
+            );
         }
 
         return $this;
@@ -96,5 +98,13 @@ final class Variables implements IteratorAggregate
     public function names(): array
     {
         return array_map(fn(Variable $v) => $v->name(), $this->variables);
+    }
+
+    /**
+     * @param string[] $array
+     */
+    public function byNames(array $array): self
+    {
+        return new self(array_filter($this->variables, fn (Variable $v) => in_array($v->name(), $array)));
     }
 }

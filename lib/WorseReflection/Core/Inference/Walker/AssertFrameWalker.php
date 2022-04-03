@@ -41,7 +41,7 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
             $frameVars = $frame->locals()->toVariables();
             $variables = (new ExpressionVariableResolver())->resolve($resolver, $frame, $expression);
 
-            foreach ($frameVars->combine($variables) as $variable) {
+            foreach ($frameVars->byNames($variables->names())->combine($variables) as $variable) {
                 $this->getAssignmentsMatchingVariableType($frame, $variable)
                     ->add(
                         $node->getStartPosition(),

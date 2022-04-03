@@ -15,8 +15,11 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class TypeUtil
 {
-    public static function isDefined(Type $type): bool
+    public static function isDefined(?Type $type): bool
     {
+        if (!$type) {
+            return false;
+        }
         return !$type instanceof MissingType;
     }
 

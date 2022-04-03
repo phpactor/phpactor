@@ -1,0 +1,14 @@
+<?php
+
+class F {
+    /** @param Foo|Bar|Baz $foo */
+    public function foo($foo) {
+        assert(!$foo instanceof Bar && !$foo instanceof Baz);
+        wrAssertType('Foo', $foo);
+    }
+}
+
+$f = new F();
+$f->foo('d');
+
+

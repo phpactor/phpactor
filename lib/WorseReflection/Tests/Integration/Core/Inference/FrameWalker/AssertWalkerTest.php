@@ -33,7 +33,8 @@ class AssertWalkerTest extends FrameWalkerTestCase
                 EOT
         ,
             function (Frame $frame): void {
-                $this->assertEquals(0, $frame->locals()->count());
+                self::assertEquals(1, $frame->locals()->count());
+                self::assertEquals('<missing>', $frame->locals()->byName('foobar')->first()->type());
             }
         ];
 

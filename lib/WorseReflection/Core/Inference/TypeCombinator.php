@@ -27,6 +27,10 @@ final class TypeCombinator
             return $type->anihilate();
         }
 
+        if ($type instanceof NotType) {
+            return new MissingType();
+        }
+
         return $type;
     }
 }
