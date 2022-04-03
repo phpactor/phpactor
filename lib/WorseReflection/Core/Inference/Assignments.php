@@ -8,28 +8,28 @@ use RuntimeException;
 use ArrayIterator;
 
 /**
- * @implements IteratorAggregate<int,Variable>
+ * @implements IteratorAggregate<array-key,array{int,Variable}>
  */
 abstract class Assignments implements Countable, IteratorAggregate
 {
     /**
-     * @var Variable[]
+     * @var array<array-key,array{int,Variable}>
      */
-    private array $variables = [];
+    private array $variables;
 
     /**
-     * @param Variable[] $variables
+     * @param array<array-key, array{int, Variable}> $variables
      */
-    protected function __construct(array $variables)
+    final function __construct(array $variables)
     {
-        foreach ($variables as $variable) {
-            $this->add($variable);
-        }
+        $this->variables = $variables;
     }
 
-    public function add(Variable $variable): void
+    public function add(int $offset, Variable $variable): void
     {
-        $this->variables[] = $variable;
+        $this->variables[] = [
+            $offset, $variable
+        ];
     }
 
     /**
@@ -37,36 +37,36 @@ abstract class Assignments implements Countable, IteratorAggregate
      */
     public function byName(string $name): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($name) {
-            return $variable->isNamed($name);
+        return new static(array_filter($this->variables, function (array $pair) use ($name) {
+            return $pair[1]->isNamed($name);
         }));
     }
 
     public function lessThanOrEqualTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($offset) {
-            return $variable->offset()->toInt() <= $offset;
+        return new static(array_filter($this->variables, function (array $pair) use ($offset) {
+            return $pair[0] <= $offset;
         }));
     }
 
     public function lessThan(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($offset) {
-            return $variable->offset()->toInt() < $offset;
+        return new static(array_filter($this->variables, function (array $pair) use ($offset) {
+            return $pair[0] < $offset;
         }));
     }
 
     public function greaterThan(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($offset) {
-            return $variable->offset()->toInt() > $offset;
+        return new static(array_filter($this->variables, function (array $pair) use ($offset) {
+            return $pair[0] > $offset;
         }));
     }
 
     public function greaterThanOrEqualTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($offset) {
-            return $variable->offset()->toInt() >= $offset;
+        return new static(array_filter($this->variables, function (array $pair) use ($offset) {
+            return $pair[0] >= $offset;
         }));
     }
 
@@ -80,7 +80,7 @@ abstract class Assignments implements Countable, IteratorAggregate
             );
         }
 
-        return $first;
+        return $first[1];
     }
 
     public function atIndex(int $index): Variable
@@ -92,7 +92,7 @@ abstract class Assignments implements Countable, IteratorAggregate
             ));
         }
 
-        return $this->variables[$index];
+        return array_values($this->variables)[$index][1];
     }
 
     public function last(): Variable
@@ -105,7 +105,7 @@ abstract class Assignments implements Countable, IteratorAggregate
             );
         }
 
-        return $last;
+        return $last[1];
     }
     
     public function count(): int
@@ -113,6 +113,9 @@ abstract class Assignments implements Countable, IteratorAggregate
         return count($this->variables);
     }
 
+    /**
+     * @return ArrayIterator<array-key,array{int,Variable}>
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->variables);
@@ -120,8 +123,8 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function merge(Assignments $variables): Assignments
     {
-        foreach ($variables as $variable) {
-            $this->variables[] = $variable;
+        foreach ($variables->variables as $pair) {
+            $this->variables[] = $pair;
         }
 
         return $this;
@@ -129,18 +132,18 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function replace(Variable $existing, Variable $replacement): void
     {
-        foreach ($this->variables as $index => $variable) {
+        foreach ($this->variables as $index => [$offset, $variable]) {
             if ($variable !== $existing) {
                 continue;
             }
-            $this->variables[$index] = $replacement;
+            $this->variables[$index] = [$offset, $replacement];
         }
     }
 
     public function equalTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $variable) use ($offset) {
-            return $variable->offset()->toInt() === $offset;
+        return new static(array_filter($this->variables, function (array $pair) use ($offset) {
+            return $pair[0] === $offset;
         }));
     }
 }

@@ -47,7 +47,7 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
 
             foreach ($variables as $variable) {
                 $this->getAssignmentsMatchingVariableType($frame, $variable)
-                    ->add($variable)
+                    ->add($node->getStartPosition(), $variable)
                 ;
             }
         }

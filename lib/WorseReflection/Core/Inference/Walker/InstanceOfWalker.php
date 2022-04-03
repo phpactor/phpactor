@@ -61,9 +61,8 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
                 // create new variables after the if branch
                 if (false === $expressionsAreTrue) {
                     $detypedVariable = $variable->withTypes(Types::empty());
-                    $assignments->add($detypedVariable);
-                    $variable = $variable->withOffset($node->getEndPosition());
-                    $assignments->add($variable);
+                    $assignments->add($node->getStartPosition(), $detypedVariable);
+                    $assignments->add($node->getEndPosition(), $variable);
                     continue;
                 }
             }

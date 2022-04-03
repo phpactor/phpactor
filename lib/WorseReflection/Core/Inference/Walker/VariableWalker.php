@@ -79,10 +79,11 @@ class VariableWalker extends AbstractWalker
         $locals = $frame->locals();
         foreach ($locals->byName($symbolName)->equalTo($context->symbol()->position()->start()) as $existing) {
             assert($existing instanceof PhpactorVariable);
+            // TODO: not sure this will work as expected
             $locals->replace($existing, $existing->withTypes($context->types()));
             return $frame;
         }
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add($context->symbol()->position()->start(), WorseVariable::fromSymbolContext($context));
 
         return $frame;
     }
