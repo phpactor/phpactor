@@ -50,11 +50,11 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
 
                 // reset variables after the if branch
                 if ($expressionsAreTrue) {
-                    $assignments->add($variable);
+                    $assignments->add($node->getStartPosition(), $variable);
 
                     // restore
                     $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                    $assignments->add($restoredVariable);
+                    $assignments->add($node->getEndPosition(), $restoredVariable);
                     continue;
                 }
 
@@ -68,14 +68,14 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             }
 
             if ($expressionsAreTrue) {
-                $assignments->add($variable);
+                $assignments->add($node->getStartPosition(), $variable);
                 $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                $assignments->add($restoredVariable);
+                $assignments->add($node->getEndPosition(), $restoredVariable);
             }
 
             if (false === $expressionsAreTrue) {
                 $variable = $variable->withTypes(Types::empty());
-                $assignments->add($variable);
+                $assignments->add($node->getStartPosition(), $variable);
             }
         }
 

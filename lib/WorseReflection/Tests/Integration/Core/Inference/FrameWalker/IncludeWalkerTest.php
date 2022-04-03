@@ -69,7 +69,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
                 EOT
         ,
             function (Frame $frame): void {
-                $this->assertCount(2, $frame->locals());
+                $this->assertCount(1, $frame->locals());
                 $this->assertEquals('foo', $frame->locals()->last()->__toString());
                 $this->assertEquals('string', (string) $frame->locals()->last()->symbolContext()->type());
             }
@@ -84,7 +84,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
                 EOT
         ,
             function (Frame $frame): void {
-                $this->assertCount(2, $frame->locals());
+                $this->assertCount(1, $frame->locals());
                 $this->assertEquals('foo', $frame->locals()->last()->__toString());
                 $this->assertEquals('string', (string) $frame->locals()->last()->symbolContext()->type());
             }

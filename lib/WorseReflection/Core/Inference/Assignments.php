@@ -8,21 +8,23 @@ use RuntimeException;
 use ArrayIterator;
 
 /**
- * @implements IteratorAggregate<array-key,array{int,Variable}>
+ * @implements IteratorAggregate<array-key,Variable>
  */
 abstract class Assignments implements Countable, IteratorAggregate
 {
     /**
      * @var array<array-key,array{int,Variable}>
      */
-    private array $variables;
+    private array $variables = [];
 
     /**
      * @param array<array-key, array{int, Variable}> $variables
      */
     final function __construct(array $variables)
     {
-        $this->variables = $variables;
+        foreach ($variables as [$offset, $variable]) {
+            $this->variables[] = [ $offset, $variable ];
+        }
     }
 
     public function add(int $offset, Variable $variable): void
@@ -85,14 +87,15 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function atIndex(int $index): Variable
     {
-        if (!isset($this->variables[$index])) {
+        $variables = array_values($this->variables);
+        if (!isset($variables[$index])) {
             throw new RuntimeException(sprintf(
                 'No variable at index "%s"',
                 $index
             ));
         }
 
-        return array_values($this->variables)[$index][1];
+        return $variables[$index][1];
     }
 
     public function last(): Variable
@@ -114,11 +117,11 @@ abstract class Assignments implements Countable, IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator<array-key,array{int,Variable}>
+     * @return ArrayIterator<array-key,Variable>
      */
     public function getIterator(): ArrayIterator
     {
-        return new ArrayIterator($this->variables);
+        return new ArrayIterator(array_map(fn(array $pair) => $pair[1], $this->variables));
     }
 
     public function merge(Assignments $variables): Assignments

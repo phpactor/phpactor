@@ -99,7 +99,8 @@ class IncludeWalker implements Walker
         $name = $name->getText($node->getFileContents());
         
         foreach ($frame->locals()->byName((string)$name) as $variable) {
-            $frame->locals()->add(
+            $frame->locals()->replace(
+                $variable,
                 $variable->withTypes($returnValueContext->types())
             );
             return $frame;
