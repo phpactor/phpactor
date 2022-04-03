@@ -40,6 +40,10 @@ final class Variables implements IteratorAggregate
 
     public function add(Variable $variable): self
     {
+        if (isset($this->variables[$variable->name()])) {
+            $this->variables[$variable->name()] = $this->variables[$variable->name()]->mergeType($variable->type());
+            return $this;
+        }
         $this->variables[$variable->name()] = $variable;
         return $this;
     }
@@ -53,5 +57,31 @@ final class Variables implements IteratorAggregate
         }
 
         return new Variable($string, Types::empty());
+    }
+
+    public function and(Variables $andVariables): self
+    {
+        foreach ($andVariables->variables as $andVariable) {
+            if (isset($this->variables[$andVariable->name()])) {
+                $this->variables[$andVariable->name()]->withType(
+                    TypeCombinator::merge(
+                        $this->variables[$andVariable->name()]->type(),
+                        $andVariable->type()
+                    )
+                );
+                continue;
+            }
+            $this->variables[$andVariable->name()] = $andVariable;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function names(): array
+    {
+        return array_map(fn(Variable $v) => $v->name(), $this->variables);
     }
 }

@@ -10,11 +10,13 @@ final class UnionType implements Type
     /**
      * @var Type[]
      */
-    public array $types;
+    public array $types = [];
 
     public function __construct(Type ...$types)
     {
-        $this->types = $types;
+        foreach ($types as $type) {
+            $this->types[$type->__toString()] = $type;
+        }
     }
 
     public function __toString(): string
@@ -46,18 +48,10 @@ final class UnionType implements Type
         return Trinary::false();
     }
 
-    public function unique(): self
-    {
-        $unique = [];
-        foreach ($this->types as $type) {
-            $unique[$type->__toString()] = $type;
-        }
-
-        return new self(...array_values($unique));
-    }
-
     public function exclude(Type $exclude): self
     {
-        return new self(...array_filter($this->types, fn (Type $t) => $t->__toString() !== $exclude->__toString()));
+        return new self(...array_filter($this->types, function (Type $t) use ($exclude) {
+            return $t->__toString() !== $exclude->__toString();
+        }));
     }
 }

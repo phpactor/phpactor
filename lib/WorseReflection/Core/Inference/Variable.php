@@ -95,4 +95,9 @@ final class Variable
     {
         return $this->classType ?: new MissingType();
     }
+
+    public function mergeType(Type $type): self
+    {
+        return $this->withType(TypeCombinator::merge($this->type(), $type));
+    }
 }

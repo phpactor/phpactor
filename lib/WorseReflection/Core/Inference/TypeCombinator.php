@@ -19,7 +19,7 @@ final class TypeCombinator
         if ($type instanceof UnionType) {
             return new UnionType(...array_map(
                 fn(Type $type) => self::anihilate($type),
-                $type->unique()->types
+                $type->types
             ));
         }
 

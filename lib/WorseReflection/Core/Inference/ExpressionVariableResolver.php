@@ -45,7 +45,13 @@ final class ExpressionVariableResolver
         if ($node->operator->kind == TokenKind::InstanceOfKeyword) {
             $left = $resolver->resolveNode($frame, $node->leftOperand);
             $right = $resolver->resolveNode($frame, $node->rightOperand)->type();
-            $variables->add(Variable::fromSymbolContext($left)->withType($right));
+            return new Variables([Variable::fromSymbolContext($left)->withType($right)]);
+        }
+
+        if ($node->operator->kind == TokenKind::AmpersandAmpersandToken) {
+            $leftVars = $this->doResolve($resolver, $frame, $node->leftOperand, $variables);
+            $rightVars = $this->doResolve($resolver, $frame, $node->rightOperand, $variables);
+            return $leftVars->and($rightVars);
         }
 
         return $variables;
@@ -54,23 +60,22 @@ final class ExpressionVariableResolver
     private function resolveUnaryOperator(FrameResolver $resolver, Frame $frame, UnaryExpression $node, Variables $variables): Variables
     {
         $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
+        $return = new Variables([]);
 
         if ($operatorKind === TokenKind::ExclamationToken) {
-            $opVariables = $this->resolve($resolver, $frame, $node->operand);
+            $opVariables = $this->doResolve($resolver, $frame, $node->operand, $variables);
 
             foreach ($opVariables as $opVariable) {
-                $variable = $variables->getOrCreate($opVariable->name());
-                $variables->add(
-                    $variable->withType(
-                        TypeFactory::exclude(
-                            $variable->type(),
-                            $opVariable->type()
-                        )
+                $originalVar = $variables->getOrCreate($opVariable->name());
+                $return->add($originalVar->withType(
+                    TypeFactory::exclude(
+                        $originalVar->type(),
+                        $opVariable->type()
                     )
-                );
+                ));
             }
         }
       
-        return $variables;
+        return $return;
     }
 }
