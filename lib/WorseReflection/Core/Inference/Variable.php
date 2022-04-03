@@ -3,18 +3,25 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 
 final class Variable
 {
     private string $name;
-    
-    private NodeContext $symbolContext;
 
-    private function __construct(string $name, NodeContext $symbolContext)
+    private Type $type;
+
+    /**
+     * @var mixed
+     */
+    private $value;
+
+    private function __construct(string $name, Type $type, $value = null)
     {
         $this->name = $name;
-        $this->symbolContext = $symbolContext;
+        $this->type = $type;
+        $this->value = $value;
     }
 
     public function __toString()
@@ -26,7 +33,8 @@ final class Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
-            $symbolContext
+            $symbolContext->type(),
+            $symbolContext->value(),
         );
     }
 
@@ -35,9 +43,9 @@ final class Variable
         return $this->name;
     }
 
-    public function symbolContext(): NodeContext
+    public function type(): Type
     {
-        return $this->symbolContext;
+        return $this->type;
     }
 
     public function isNamed(string $name): bool

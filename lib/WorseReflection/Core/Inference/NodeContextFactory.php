@@ -75,7 +75,17 @@ class NodeContextFactory
             )->withIssue(sprintf('Variable "%s" is undefined', $varName));
         }
 
-        return $variables->last()->symbolContext();
+        $variable = $variables->last();
+        return NodeContextFactory::create(
+            $name,
+            $start,
+            $end,
+            [
+                'type' => $variable->type(),
+                'symbol_type' => Symbol::VARIABLE,
+                'value' => $variable->value(),
+            ]
+        )->withIssue(sprintf('Variable "%s" is undefined', $varName));
     }
 
     /**

@@ -225,7 +225,7 @@ class WorseExtractMethod implements ExtractMethod
             throw new TransformException('Cannot extract method, not in class scope');
         }
 
-        $type = TypeUtil::unwrapNullableType($thisVariable->last()->symbolContext()->type());
+        $type = TypeUtil::unwrapNullableType($thisVariable->last()->type());
 
         if (!$type instanceof ClassType) {
             throw new TransformException('Cannot extract method, not in class scope');
@@ -260,7 +260,7 @@ class WorseExtractMethod implements ExtractMethod
             }
 
             $parameterBuilder = $methodBuilder->parameter($freeVariable->name());
-            $variableType = $freeVariable->symbolContext()->types()->best();
+            $variableType = $freeVariable->types()->best();
             if (TypeUtil::isDefined($variableType)) {
                 $parameterBuilder->type(TypeUtil::short($variableType));
                 foreach (TypeUtil::unwrapClassTypes($variableType) as $classType) {
@@ -324,7 +324,7 @@ class WorseExtractMethod implements ExtractMethod
         });
 
         $returnVariables = array_filter($returnVariables, function (Variable $variable) use ($args) {
-            if (TypeUtil::isPrimitive($variable->symbolContext()->type())) {
+            if (TypeUtil::isPrimitive($variable->type())) {
                 return true;
             }
 
@@ -339,7 +339,7 @@ class WorseExtractMethod implements ExtractMethod
             /** @var Variable $variable */
             $variable = reset($returnVariables);
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
-            $type = $variable->symbolContext()->types()->best();
+            $type = $variable->types()->best();
             if (TypeUtil::isDefined($type)) {
                 $methodBuilder->returnType(TypeUtil::short($type));
                 $type = TypeUtil::unwrapNullableType($type);
@@ -418,7 +418,7 @@ class WorseExtractMethod implements ExtractMethod
     {
         $newMethodBody = 'return ' . $newMethodBody .';';
         $offset = $this->reflector->reflectOffset($source->__toString(), $offsetEnd);
-        $expressionTypes = $offset->symbolContext()->types();
+        $expressionTypes = $offset->types();
         if ($expressionTypes->count() === 1) {
             $type = $expressionTypes->best();
             if (TypeUtil::isDefined($type)) {

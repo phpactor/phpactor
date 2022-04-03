@@ -100,8 +100,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         foreach ($assignments as $variable) {
-            $symbolContext = $variable->symbolContext();
-            $containerType = $symbolContext->containerType();
+            $containerType = $variable->classType();
 
             if (!$containerType) {
                 continue;

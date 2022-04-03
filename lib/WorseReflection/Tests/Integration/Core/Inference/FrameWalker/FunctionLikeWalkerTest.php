@@ -31,7 +31,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame): void {
             $this->assertCount(1, $frame->locals()->byName('this'));
-            $this->assertEquals('Foobar\Barfoo\Foobar', $frame->locals()->byName('this')->first()->symbolContext()->type()->__toString());
+            $this->assertEquals('Foobar\Barfoo\Foobar', $frame->locals()->byName('this')->first()->type()->__toString());
             $this->assertEquals(Symbol::VARIABLE, $frame->locals()->byName('this')->first()->symbolContext()->symbol()->symbolType());
         }];
 
@@ -57,7 +57,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $frame->locals()->byName('this'));
             $this->assertEquals(
                 'Foobar\Barfoo\Foobar',
-                $frame->locals()->byName('this')->first()->symbolContext()->type()->__toString()
+                $frame->locals()->byName('this')->first()->type()->__toString()
             );
         }];
 
@@ -85,11 +85,11 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame): void {
             $this->assertCount(1, $frame->locals()->byName('many'));
-            $this->assertEquals('string', (string) $frame->locals()->byName('many')->first()->symbolContext()->types()->best());
+            $this->assertEquals('string', (string) $frame->locals()->byName('many')->first()->types()->best());
 
             $this->assertCount(1, $frame->locals()->byName('worlds'));
-            $this->assertEquals('Foobar\Barfoo\World[]', (string) $frame->locals()->byName('worlds')->first()->symbolContext()->types()->best());
-            $type = $frame->locals()->byName('worlds')->first()->symbolContext()->types()->best();
+            $this->assertEquals('Foobar\Barfoo\World[]', (string) $frame->locals()->byName('worlds')->first()->types()->best());
+            $type = $frame->locals()->byName('worlds')->first()->types()->best();
             assert($type instanceof IterableType);
             $this->assertEquals('Foobar\Barfoo\World', (string) $type->valueType);
         }];
@@ -115,7 +115,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
         , function (Frame $frame): void {
             $this->assertCount(1, $frame->locals()->byName('hellos'));
             $variable = $frame->locals()->byName('hellos')->first();
-            $type = $variable->symbolContext()->type();
+            $type = $variable->type();
             assert($type instanceof IterableType);
             $this->assertEquals('string', (string)$type->valueType);
         }];
@@ -150,7 +150,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$foo'));
                 $variable = $frame->locals()->byName('$foo')->first();
-                $this->assertEquals('Foobar', $variable->symbolContext()->type()->__toString());
+                $this->assertEquals('Foobar', $variable->type()->__toString());
             }
         ];
 
@@ -168,7 +168,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
                 $zed = $frame->locals()->byName('$zed')->first();
-                $this->assertEquals('string', (string) $zed->symbolContext()->type());
+                $this->assertEquals('string', (string) $zed->type());
                 $this->assertEquals(Symbol::VARIABLE, $zed->symbolContext()->symbol()->symbolType());
             }
         ];
@@ -194,7 +194,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
     }
