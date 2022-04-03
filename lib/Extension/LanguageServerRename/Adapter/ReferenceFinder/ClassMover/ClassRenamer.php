@@ -81,7 +81,8 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $newUri = TextDocumentUri::fromString($this->nameToUriConverter->convert($newName));
+        $oldUri = $this->nameToUriConverter->convert($originalName);
+        $newUri = $this->nameToUriConverter->convert($newName);
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {
             return;
@@ -113,7 +114,7 @@ final class ClassRenamer implements Renamer
             }
         }
 
-        return new RenameResult($textDocument->uri(), $newUri);
+        return new RenameResult($oldUri, $newUri);
     }
 
     private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string
