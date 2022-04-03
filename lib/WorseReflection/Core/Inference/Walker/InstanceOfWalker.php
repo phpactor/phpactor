@@ -154,9 +154,9 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
         ;
 
         if (0 === $previousAssignments->count()) {
-            return $variable->withTypes(Types::empty())->withOffset($node->getEndPosition());
+            return $variable->withTypes(Types::empty());
         }
 
-        return $previousAssignments->last()->withOffset($node->getEndPosition());
+        return $previousAssignments->last();
     }
 }

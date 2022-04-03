@@ -9,14 +9,11 @@ final class Variable
 {
     private string $name;
     
-    private Offset $offset;
-    
     private NodeContext $symbolContext;
 
-    private function __construct(string $name, Offset $offset, NodeContext $symbolContext)
+    private function __construct(string $name, NodeContext $symbolContext)
     {
         $this->name = $name;
-        $this->offset = $offset;
         $this->symbolContext = $symbolContext;
     }
 
@@ -29,14 +26,8 @@ final class Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
-            Offset::fromInt($symbolContext->symbol()->position()->start()),
             $symbolContext
         );
-    }
-
-    public function offset(): Offset
-    {
-        return $this->offset;
     }
 
     public function name(): string
@@ -49,20 +40,15 @@ final class Variable
         return $this->symbolContext;
     }
 
-    public function isNamed(string $name)
+    public function isNamed(string $name): bool
     {
         $name = ltrim($name, '$');
 
         return $this->name == $name;
     }
 
-    public function withTypes(Types $types)
+    public function withTypes(Types $types): self
     {
-        return new self($this->name, $this->offset, $this->symbolContext->withTypes($types));
-    }
-
-    public function withOffset($offset): Variable
-    {
-        return new self($this->name, Offset::fromUnknown($offset), $this->symbolContext);
+        return new self($this->name, $this->symbolContext->withTypes($types));
     }
 }
