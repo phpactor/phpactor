@@ -7,6 +7,7 @@ use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -108,5 +109,18 @@ class NodeUtil
         }
 
         return (string)$qualifiedName->getResolvedName() === $name;
+    }
+
+    /**
+     * @return int
+     */
+    public static function operatorKindForUnaryExpression(UnaryExpression $node): int
+    {
+        foreach ($node->getChildTokens() as $token) {
+            assert($token instanceof Token);
+            return $token->kind;
+        }
+
+        return 0;
     }
 }

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\ExcludeType;
 use Phpactor\WorseReflection\Core\Types;
 
 final class Variable
@@ -22,7 +23,7 @@ final class Variable
     /**
      * @param mixed $value
      */
-    private function __construct(string $name, Types $types, ?Type $classType = null, $value = null)
+    public function __construct(string $name, Types $types, ?Type $classType = null, $value = null)
     {
         $this->name = $name;
         $this->types = $types;
@@ -60,6 +61,11 @@ final class Variable
     public function withTypes(Types $types): self
     {
         return new self($this->name, $types, $this->classType, $this->value);
+    }
+
+    public function withType(Type $type): self
+    {
+        return new self($this->name, Types::fromTypes([$type]), $this->classType, $this->value);
     }
 
     public function type(): Type

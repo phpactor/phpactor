@@ -45,4 +45,19 @@ final class UnionType implements Type
 
         return Trinary::false();
     }
+
+    public function unique(): self
+    {
+        $unique = [];
+        foreach ($this->types as $type) {
+            $unique[$type->__toString()] = $type;
+        }
+
+        return new self(...array_values($unique));
+    }
+
+    public function exclude(Type $exclude): self
+    {
+        return new self(...array_filter($this->types, fn (Type $t) => $t->__toString() !== $exclude->__toString()));
+    }
 }

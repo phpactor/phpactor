@@ -34,6 +34,11 @@ abstract class Assignments implements Countable, IteratorAggregate
         ];
     }
 
+    public function toVariables(): Variables
+    {
+        return new Variables(array_map(fn (array $pair) => $pair[1], $this->variables));
+    }
+
     /**
      * @return self
      */

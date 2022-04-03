@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Phpactor\WorseReflection\Core\Inference\ExpressionVariableResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -37,15 +38,9 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
                 continue;
             }
 
-            $expressionIsTrue = $this->evaluator->evaluate($expression->expression);
+            $variables = (new ExpressionVariableResolver())->resolve($resolver, $frame, $expression);
 
-            if (false === $expressionIsTrue) {
-                continue;
-            }
-
-            $variables = $this->collectVariables($expression, $frame);
-
-            foreach ($variables as $variable) {
+            foreach ($variables->combine() as $variable) {
                 $this->getAssignmentsMatchingVariableType($frame, $variable)
                     ->add($node->getStartPosition(), $variable)
                 ;
