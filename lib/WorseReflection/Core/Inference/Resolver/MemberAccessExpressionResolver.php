@@ -114,7 +114,7 @@ class MemberAccessExpressionResolver implements Resolver
                 continue;
             }
 
-            yield $symbolContext->types();
+            yield $variable->types();
         }
     }
 }

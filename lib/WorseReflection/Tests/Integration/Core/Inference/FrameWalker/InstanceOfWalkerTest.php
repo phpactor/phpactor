@@ -304,9 +304,9 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foo', $frame->locals()->atIndex(0)->types()->best()->__toString());
             $this->assertCount(2, $frame->properties());
-            $this->assertEquals('Foo', $frame->properties()->atIndex(0)->symbolContext()->containerType()->__toString());
+            $this->assertEquals('Foo', $frame->properties()->atIndex(0)->classType()->__toString());
             $this->assertEquals(TypeFactory::unknown(), $frame->properties()->atIndex(0)->types()->best()->__toString());
-            $this->assertEquals('Foo', $frame->properties()->atIndex(1)->symbolContext()->containerType());
+            $this->assertEquals('Foo', $frame->properties()->atIndex(1)->classType());
             $this->assertEquals('Bar', $frame->properties()->atIndex(1)->types()->best()->__toString());
         }
         ];

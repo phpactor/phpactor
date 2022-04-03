@@ -131,10 +131,9 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             if (isset($vars[$variable->name()])) {
                 $originalVariable = $vars[$variable->name()];
                 $variable = $originalVariable->withTypes(
-                    $originalVariable->symbolContext()
-                        ->types()
+                    $originalVariable->types()
                         ->merge(
-                            $variable->symbolContext()->types()
+                            $variable->types()
                         )
                 );
             }
