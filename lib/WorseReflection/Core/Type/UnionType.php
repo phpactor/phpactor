@@ -54,4 +54,41 @@ final class UnionType implements Type
             return $t->__toString() !== $exclude->__toString();
         }));
     }
+
+    public function anihilate(): self
+    {
+        $anihilated = clone $this;
+
+        foreach ($anihilated->typesByClass(UnionType::class) as $union) {
+            $anihilated->replaceType($union, $union->anihilate());
+        }
+
+        foreach ($anihilated->typesByClass(NotType::class) as $notType) {
+            $anihilated = $anihilated->exclude($notType->not)->exclude($notType);
+        }
+        foreach ($anihilated->typesByClass(MissingType::class) as $missing) {
+            $anihilated = $anihilated->exclude($missing);
+        }
+
+        return $anihilated;
+    }
+
+    /**
+     * @template T
+     * @param class-string<T> $class
+     * @return T[]
+     */
+    private function typesByClass(string $class): array
+    {
+        return array_filter($this->types, fn (Type $type) => $type instanceof $class);
+    }
+
+    private function replaceType(Type $search, Type $replace): void
+    {
+        foreach ($this->types as $i => $type) {
+            if ($search === $type) {
+                $this->types[$i] = $replace;
+            }
+        }
+    }
 }

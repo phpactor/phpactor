@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\ExcludeType;
+use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Types;
 
 final class Variable

@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
-use Phpactor\WorseReflection\Core\Type\ExcludeType;
+use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
@@ -271,8 +271,8 @@ class TypeFactory
         return self::class(ClassName::fromString($type), $reflector);
     }
 
-    public static function exclude(Type $type, Type $exclude): Type
+    public static function not(Type $type): Type
     {
-        return new ExcludeType($type, $exclude);
+        return new NotType($type);
     }
 }

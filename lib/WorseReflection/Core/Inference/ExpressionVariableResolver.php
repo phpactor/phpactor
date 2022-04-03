@@ -20,27 +20,27 @@ final class ExpressionVariableResolver
      */
     public function resolve(FrameResolver $resolver, Frame $frame, Node $node): Variables
     {
-        return $this->doResolve($resolver, $frame, $node, $frame->locals()->toVariables());
+        return $this->doResolve($resolver, $frame, $node);
     }
 
-    private function doResolve(FrameResolver $resolver, Frame $frame, Node $node, Variables $variables): Variables
+    private function doResolve(FrameResolver $resolver, Frame $frame, Node $node): Variables
     {
         if ($node instanceof ArgumentExpression) {
-            return $this->doResolve($resolver, $frame, $node->expression, $variables);
+            return $this->doResolve($resolver, $frame, $node->expression);
         }
 
         if ($node instanceof BinaryExpression) {
-            return $this->resolveBinaryExpression($resolver, $frame, $node, $variables);
+            return $this->resolveBinaryExpression($resolver, $frame, $node);
         }
 
         if ($node instanceof UnaryExpression) {
-            return $this->resolveUnaryOperator($resolver, $frame, $node, $variables);
+            return $this->resolveUnaryOperator($resolver, $frame, $node);
         }
 
-        return $variables;
+        return new Variables([]);
     }
 
-    private function resolveBinaryExpression(FrameResolver $resolver, Frame $frame, BinaryExpression $node, Variables $variables): Variables
+    private function resolveBinaryExpression(FrameResolver $resolver, Frame $frame, BinaryExpression $node): Variables
     {
         if ($node->operator->kind == TokenKind::InstanceOfKeyword) {
             $left = $resolver->resolveNode($frame, $node->leftOperand);
@@ -49,31 +49,31 @@ final class ExpressionVariableResolver
         }
 
         if ($node->operator->kind == TokenKind::AmpersandAmpersandToken) {
-            $leftVars = $this->doResolve($resolver, $frame, $node->leftOperand, $variables);
-            $rightVars = $this->doResolve($resolver, $frame, $node->rightOperand, $variables);
+            $leftVars = $this->doResolve($resolver, $frame, $node->leftOperand);
+            $rightVars = $this->doResolve($resolver, $frame, $node->rightOperand);
+
             return $leftVars->and($rightVars);
         }
 
-        return $variables;
+        return new Variables([]);
     }
 
-    private function resolveUnaryOperator(FrameResolver $resolver, Frame $frame, UnaryExpression $node, Variables $variables): Variables
+    private function resolveUnaryOperator(FrameResolver $resolver, Frame $frame, UnaryExpression $node): Variables
     {
-        $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
         $return = new Variables([]);
+        $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
 
         if ($operatorKind === TokenKind::ExclamationToken) {
-            $opVariables = $this->doResolve($resolver, $frame, $node->operand, $variables);
+            $opVariables = $this->doResolve($resolver, $frame, $node->operand);
 
             foreach ($opVariables as $opVariable) {
-                $originalVar = $variables->getOrCreate($opVariable->name());
-                $return->add($originalVar->withType(
-                    TypeFactory::exclude(
-                        $originalVar->type(),
+                $return->addOrMerge($opVariable->withType(
+                    TypeFactory::not(
                         $opVariable->type()
                     )
                 ));
             }
+            return $return;
         }
       
         return $return;

@@ -15,14 +15,17 @@ final class Variables implements IteratorAggregate
     /**
      * @var Variable[]
      */
-    private array $variables;
+    private array $variables = [];
 
     /**
      * @param Variable[] $variables
      */
     public function __construct(array $variables)
     {
-        $this->variables = $variables;
+        foreach ($variables as $variable) {
+            $this->variables[$variable->name()] = $variable;
+        }
+
     }
 
     public function getIterator(): Traversable
@@ -30,15 +33,25 @@ final class Variables implements IteratorAggregate
         return new ArrayIterator($this->variables);
     }
 
-    public function combine(): self
+    public function combine(Variables $combine): self
     {
-        return new self(array_map(
-            fn (Variable $v) => $v->withType(TypeCombinator::anihilate($v->type())),
-            $this->variables
-        ));
+        foreach ($combine as $combineVariable) {
+            $name = $combineVariable->name();
+
+            if (isset($this->variables[$name])) {
+                $type = TypeCombinator::merge($this->variables[$name]->type(), $combineVariable->type());;
+                $type = TypeCombinator::anihilate($type);;
+                $this->variables[$name] = $this->variables[$name]->withType($type);
+                continue;
+            }
+
+            $this->variables[$name] = $combineVariable->withType(TypeCombinator::anihilate($combineVariable->type()));
+        }
+
+        return $this;
     }
 
-    public function add(Variable $variable): self
+    public function addOrMerge(Variable $variable): self
     {
         if (isset($this->variables[$variable->name()])) {
             $this->variables[$variable->name()] = $this->variables[$variable->name()]->mergeType($variable->type());
@@ -63,7 +76,7 @@ final class Variables implements IteratorAggregate
     {
         foreach ($andVariables->variables as $andVariable) {
             if (isset($this->variables[$andVariable->name()])) {
-                $this->variables[$andVariable->name()]->withType(
+                $this->variables[$andVariable->name()] = $this->variables[$andVariable->name()]->withType(
                     TypeCombinator::merge(
                         $this->variables[$andVariable->name()]->type(),
                         $andVariable->type()
