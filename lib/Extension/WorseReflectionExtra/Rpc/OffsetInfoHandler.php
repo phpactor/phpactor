@@ -70,15 +70,16 @@ class OffsetInfoHandler implements Handler
         $frame = [];
 
         foreach (['locals', 'properties'] as $assignmentType) {
-            foreach ($reflectionOffset->frame()->$assignmentType() as $local) {
+            $assignments = $reflectionOffset->frame()->$assignmentType();
+            foreach ($assignments as $local) {
                 $info = sprintf(
                     '%s = (%s) %s',
                     $local->name(),
-                    $local->symbolContext()->type(),
-                    str_replace(PHP_EOL, '', var_export($local->symbolContext()->value(), true))
+                    $local->type(),
+                    str_replace(PHP_EOL, '', var_export($local->value(), true))
                 );
 
-                $frame[$assignmentType][$local->offset()->toInt()] = $info;
+                $frame[$assignmentType][$assignments->offsetFor($local)] = $info;
             }
         }
         $return['frame'] = $frame;

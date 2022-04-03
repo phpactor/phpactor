@@ -102,10 +102,6 @@ class MemberAccessExpressionResolver implements Resolver
         foreach ($assignments as $variable) {
             $containerType = $variable->classType();
 
-            if (!$containerType) {
-                continue;
-            }
-
             if (!$containerType instanceof ClassType) {
                 continue;
             }

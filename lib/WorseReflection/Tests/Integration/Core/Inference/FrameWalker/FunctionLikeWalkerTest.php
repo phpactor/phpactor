@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference\FrameWalker;
 use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Tests\Integration\Core\Inference\FrameWalkerTestCase;
 use Generator;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class FunctionLikeWalkerTest extends FrameWalkerTestCase

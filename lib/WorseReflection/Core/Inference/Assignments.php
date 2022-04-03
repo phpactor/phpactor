@@ -20,7 +20,7 @@ abstract class Assignments implements Countable, IteratorAggregate
     /**
      * @param array<array-key, array{int, Variable}> $variables
      */
-    final function __construct(array $variables)
+    final public function __construct(array $variables)
     {
         foreach ($variables as [$offset, $variable]) {
             $this->variables[] = [ $offset, $variable ];
@@ -121,7 +121,7 @@ abstract class Assignments implements Countable, IteratorAggregate
      */
     public function getIterator(): ArrayIterator
     {
-        return new ArrayIterator(array_map(fn(array $pair) => $pair[1], $this->variables));
+        return new ArrayIterator(array_map(fn (array $pair) => $pair[1], $this->variables));
     }
 
     public function merge(Assignments $variables): Assignments
@@ -148,5 +148,16 @@ abstract class Assignments implements Countable, IteratorAggregate
         return new static(array_filter($this->variables, function (array $pair) use ($offset) {
             return $pair[0] === $offset;
         }));
+    }
+
+    public function offsetFor(Variable $target): ?int
+    {
+        foreach ($this->variables as [$offset, $variable]) {
+            if ($target === $variable) {
+                return $offset;
+            }
+        }
+
+        return null;
     }
 }

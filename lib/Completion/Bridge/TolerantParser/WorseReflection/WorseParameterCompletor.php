@@ -117,7 +117,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         $valid = false;
 
         /** @var Type $variableType */
-        foreach ($variable->symbolContext()->types() as $variableType) {
+        foreach ($variable->types() as $variableType) {
             $variableTypeClass = null;
             foreach ($parameter->inferredTypes() as $parameterType) {
                 if ($parameterType->accepts($variableType)->isTrue()) {
