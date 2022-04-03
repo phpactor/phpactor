@@ -162,7 +162,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
         Frame $frame,
         WorseVariable $variable
     ): Assignments {
-        if (Symbol::PROPERTY === $variable->symbolContext()->symbol()->symbolType()) {
+        if ($variable->isProperty()) {
             return $frame->properties();
         }
 

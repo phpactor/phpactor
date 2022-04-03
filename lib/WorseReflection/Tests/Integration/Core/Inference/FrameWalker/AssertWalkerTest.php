@@ -57,8 +57,8 @@ class AssertWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foo', $frame->locals()->atIndex(0)->types()->best()->__toString());
             $this->assertCount(1, $frame->properties());
-            $this->assertEquals('Foo', $frame->properties()->atIndex(0)->symbolContext()->containerType()->__toString());
-            $this->assertEquals('Bar', $frame->properties()->atIndex(0)->types()->best()->__toString());
+            $this->assertEquals('Foo', $frame->properties()->atIndex(0)->classType()->__toString());
+            $this->assertEquals('Bar', $frame->properties()->atIndex(0)->type()->__toString());
         }];
     }
 }

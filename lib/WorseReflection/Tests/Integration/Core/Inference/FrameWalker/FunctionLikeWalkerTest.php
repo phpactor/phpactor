@@ -32,7 +32,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
         , function (Frame $frame): void {
             $this->assertCount(1, $frame->locals()->byName('this'));
             $this->assertEquals('Foobar\Barfoo\Foobar', $frame->locals()->byName('this')->first()->type()->__toString());
-            $this->assertEquals(Symbol::VARIABLE, $frame->locals()->byName('this')->first()->symbolContext()->symbol()->symbolType());
+            $this->assertEquals(false, $frame->locals()->byName('this')->first()->isProperty());
         }];
 
         yield 'It returns method arguments' => [
@@ -169,7 +169,6 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
                 $zed = $frame->locals()->byName('$zed')->first();
                 $this->assertEquals('string', (string) $zed->type());
-                $this->assertEquals(Symbol::VARIABLE, $zed->symbolContext()->symbol()->symbolType());
             }
         ];
 
