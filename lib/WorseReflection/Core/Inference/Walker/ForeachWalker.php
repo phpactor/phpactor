@@ -31,6 +31,7 @@ class ForeachWalker extends AbstractWalker
     {
         assert($node instanceof ForeachStatement);
         $collection = $resolver->resolveNode($frame, $node->forEachCollectionName);
+
         $this->processKey($node, $frame, $collection);
         $this->processValue($resolver, $node, $frame, $collection);
 
@@ -87,7 +88,7 @@ class ForeachWalker extends AbstractWalker
             ]
         );
         
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add($node->getStartPosition(), WorseVariable::fromSymbolContext($context));
     }
 
     private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $collection, Frame $frame): void
@@ -116,7 +117,7 @@ class ForeachWalker extends AbstractWalker
             $context = $context->withType($collectionType->valueType);
         }
         
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add($context->symbol()->position()->start(), WorseVariable::fromSymbolContext($context));
     }
 
     private function valueFromArrayCreation(
@@ -148,7 +149,7 @@ class ForeachWalker extends AbstractWalker
                 $context = $context->withValue($values[$index]);
             }
 
-            $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+            $frame->locals()->add($context->symbol()->position()->start(), WorseVariable::fromSymbolContext($context));
             $index++;
         }
     }

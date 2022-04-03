@@ -216,8 +216,12 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition(sprintf('Could not find variable "%s" in scope', $name));
         }
 
-        $variable = $variables->first();
+        $offset = $variables->offsetFor($variables->first());
 
-        return new DefinitionLocation($uri, ByteOffset::fromInt($variable->offset()->toInt()));
+        if (null === $offset) {
+            throw new CouldNotLocateDefinition(sprintf('Could not find variable "%s" in scope', $name));
+        }
+
+        return new DefinitionLocation($uri, ByteOffset::fromInt($offset));
     }
 }

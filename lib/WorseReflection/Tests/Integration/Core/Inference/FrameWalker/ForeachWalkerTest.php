@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference\FrameWalker;
 
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\Core\Inference\FrameWalkerTestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -26,7 +25,7 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('item'));
-                $this->assertEquals('int', (string) $frame->locals()->byName('item')->first()->symbolContext()->types()->best());
+                $this->assertEquals('int', (string) $frame->locals()->byName('item')->first()->types()->best());
             }
         ];
 
@@ -44,8 +43,8 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(3, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('key'));
-                $this->assertEquals(TypeFactory::unknown(), $frame->locals()->byName('key')->first()->symbolContext()->types()->best());
-                $this->assertEquals(Symbol::VARIABLE, $frame->locals()->byName('key')->first()->symbolContext()->symbol()->symbolType());
+                $this->assertEquals(TypeFactory::unknown(), $frame->locals()->byName('key')->first()->types()->best());
+                $this->assertEquals(false, $frame->locals()->byName('key')->first()->isProperty());
             }
         ];
 
@@ -67,7 +66,7 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('item'));
-                $this->assertEquals('Foobar\\Barfoo', (string) $frame->locals()->byName('item')->first()->symbolContext()->types()->best());
+                $this->assertEquals('Foobar\\Barfoo', (string) $frame->locals()->byName('item')->first()->types()->best());
             }
         ];
 
@@ -97,11 +96,11 @@ class ForeachWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(1, $frame->locals()->byName('item'));
                 $this->assertEquals(
                     'Foobar\\Collection<Foobar\Item>',
-                    (string) $frame->locals()->byName('items')->first()->symbolContext()->types()->best()
+                    (string) $frame->locals()->byName('items')->first()->types()->best()
                 );
                 $this->assertEquals(
                     'Foobar\\Item',
-                    (string) $frame->locals()->byName('item')->first()->symbolContext()->types()->best()
+                    (string) $frame->locals()->byName('item')->first()->types()->best()
                 );
             }
         ];
@@ -125,8 +124,8 @@ class ForeachWalkerTest extends FrameWalkerTestCase
         , function (Frame $frame): void {
             $vars = $frame->locals()->byName('foobar');
             $this->assertCount(2, $vars);
-            $symbolInformation = $vars->atIndex(1)->symbolContext();
-            $this->assertEquals('Foobar', (string) $symbolInformation->type());
+            $var = $vars->atIndex(1);
+            $this->assertEquals('Foobar', (string) $var->type());
         }];
 
         yield 'List assignment in foreach' => [
@@ -143,11 +142,11 @@ class ForeachWalkerTest extends FrameWalkerTestCase
                 $this->assertEquals('bar', $frame->locals()->atIndex(1)->name());
                 $this->assertEquals(
                     'foo',
-                    $frame->locals()->byName('foo')->first()->symbolContext()->value()
+                    $frame->locals()->byName('foo')->first()->value()
                 );
                 $this->assertEquals(
                     'bar',
-                    $frame->locals()->byName('bar')->first()->symbolContext()->value()
+                    $frame->locals()->byName('bar')->first()->value()
                 );
             }
         ];
@@ -166,12 +165,12 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertEquals(
                     TypeFactory::string(),
-                    $frame->locals()->byName('foo')->atIndex(0)->symbolContext()->type(),
+                    $frame->locals()->byName('foo')->atIndex(0)->type(),
                     'Type'
                 );
                 $this->assertEquals(
                     'one',
-                    $frame->locals()->byName('foo')->first()->symbolContext()->value(),
+                    $frame->locals()->byName('foo')->first()->value(),
                     'Value'
                 );
             }

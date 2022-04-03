@@ -2,22 +2,32 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 
 final class Variable
 {
     private string $name;
-    
-    private Offset $offset;
-    
-    private NodeContext $symbolContext;
 
-    private function __construct(string $name, Offset $offset, NodeContext $symbolContext)
+    private Types $types;
+
+    /**
+     * @var mixed
+     */
+    private $value;
+
+    private ?Type $classType;
+
+    /**
+     * @param mixed $value
+     */
+    private function __construct(string $name, Types $types, ?Type $classType = null, $value = null)
     {
         $this->name = $name;
-        $this->offset = $offset;
-        $this->symbolContext = $symbolContext;
+        $this->types = $types;
+        $this->value = $value;
+        $this->classType = $classType;
     }
 
     public function __toString()
@@ -29,14 +39,10 @@ final class Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
-            Offset::fromInt($symbolContext->symbol()->position()->start()),
-            $symbolContext
+            $symbolContext->types(),
+            $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null,
+            $symbolContext->value(),
         );
-    }
-
-    public function offset(): Offset
-    {
-        return $this->offset;
     }
 
     public function name(): string
@@ -44,25 +50,43 @@ final class Variable
         return $this->name;
     }
 
-    public function symbolContext(): NodeContext
-    {
-        return $this->symbolContext;
-    }
-
-    public function isNamed(string $name)
+    public function isNamed(string $name): bool
     {
         $name = ltrim($name, '$');
 
         return $this->name == $name;
     }
 
-    public function withTypes(Types $types)
+    public function withTypes(Types $types): self
     {
-        return new self($this->name, $this->offset, $this->symbolContext->withTypes($types));
+        return new self($this->name, $types, $this->classType, $this->value);
     }
 
-    public function withOffset($offset): Variable
+    public function type(): Type
     {
-        return new self($this->name, Offset::fromUnknown($offset), $this->symbolContext);
+        return $this->types->best();
+    }
+
+    public function types(): Types
+    {
+        return $this->types;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function value()
+    {
+        return $this->value;
+    }
+
+    public function isProperty(): bool
+    {
+        return null !== $this->classType;
+    }
+
+    public function classType(): Type
+    {
+        return $this->classType ?: new MissingType();
     }
 }

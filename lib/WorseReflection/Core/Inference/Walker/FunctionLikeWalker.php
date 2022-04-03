@@ -71,7 +71,7 @@ class FunctionLikeWalker extends AbstractWalker
 
             // add this and self
             // TODO: self is NOT added here - does it work?
-            $frame->locals()->add(Variable::fromSymbolContext($context));
+            $frame->locals()->add($node->getStartPosition(), Variable::fromSymbolContext($context));
         }
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
@@ -99,7 +99,7 @@ class FunctionLikeWalker extends AbstractWalker
                 ]
             );
 
-            $frame->locals()->add(Variable::fromSymbolContext($context));
+            $frame->locals()->add($parameterNode->getStartPosition(), Variable::fromSymbolContext($context));
         }
     }
 
@@ -139,17 +139,17 @@ class FunctionLikeWalker extends AbstractWalker
             // add it with above context and continue
             // TODO: Do we infer the type hint??
             if (0 === $parentVars->byName($varName)->count()) {
-                $frame->locals()->add(Variable::fromSymbolContext($variableContext));
+                $frame->locals()->add($element->getStartPosition(), Variable::fromSymbolContext($variableContext));
                 continue;
             }
 
             $variable = $parentVars->byName($varName)->last();
 
             $variableContext = $variableContext
-                ->withType($variable->symbolContext()->type())
-                ->withValue($variable->symbolContext()->value());
+                ->withType($variable->type())
+                ->withValue($variable->value());
 
-            $frame->locals()->add(Variable::fromSymbolContext($variableContext));
+            $frame->locals()->add($element->getStartPosition(), Variable::fromSymbolContext($variableContext));
         }
     }
 

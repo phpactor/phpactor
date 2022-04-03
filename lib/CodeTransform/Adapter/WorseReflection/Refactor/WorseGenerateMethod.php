@@ -79,7 +79,7 @@ class WorseGenerateMethod implements GenerateMethod
          * @var Variable $variable
          */
         foreach ($reflectionOffset->frame()->locals()->byName('$this') as $variable) {
-            return $variable->symbolContext()->type();
+            return $variable->type();
         }
 
         return null;

@@ -40,6 +40,7 @@ class TestFrameWalker implements Walker
         }
 
         $frame->locals()->add(
+            $node->getStartPosition(),
             Variable::fromSymbolContext(
                 NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', Position::fromFullStartStartAndEnd(0, 1, 10)))
             )

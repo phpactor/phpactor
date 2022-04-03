@@ -100,12 +100,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         foreach ($assignments as $variable) {
-            $symbolContext = $variable->symbolContext();
-            $containerType = $symbolContext->containerType();
-
-            if (!$containerType) {
-                continue;
-            }
+            $containerType = $variable->classType();
 
             if (!$containerType instanceof ClassType) {
                 continue;
@@ -115,7 +110,7 @@ class MemberAccessExpressionResolver implements Resolver
                 continue;
             }
 
-            yield $symbolContext->types();
+            yield $variable->types();
         }
     }
 }

@@ -45,7 +45,7 @@ class CatchWalker extends AbstractWalker
             ]
         );
 
-        $frame->locals()->add(Variable::fromSymbolContext($context));
+        $frame->locals()->add($variableName->getStartPosition(), Variable::fromSymbolContext($context));
 
         return $frame;
     }

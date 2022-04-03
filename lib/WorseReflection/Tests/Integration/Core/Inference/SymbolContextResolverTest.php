@@ -48,12 +48,12 @@ class SymbolContextResolverTest extends IntegrationTestCase
             $variable = Variable::fromSymbolContext($varSymbolInfo);
 
             if (Symbol::PROPERTY === $varSymbolInfo->symbol()->symbolType()) {
-                $properties[] = $variable;
+                $properties[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
 
                 continue;
             }
 
-            $variables[] = $variable;
+            $variables[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
         }
 
         $symbolInfo = $this->resolveNodeAtOffset(
@@ -88,13 +88,14 @@ class SymbolContextResolverTest extends IntegrationTestCase
     {
         $value = $this->resolveNodeAtOffset(
             LocalAssignments::fromArray([
-                Variable::fromSymbolContext(
+                [0, Variable::fromSymbolContext(
                     NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
                         Position::fromStartAndEnd(0, 0)
                     ))->withType(TypeFactory::fromString('Foobar'))
                 ),
+                ]
             ]),
             PropertyAssignments::create(),
             $source

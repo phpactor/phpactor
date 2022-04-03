@@ -134,7 +134,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
             ;
         }
 
-        $classType = $assignments->first()->symbolContext()->types()->best();
+        $classType = $assignments->first()->types()->best();
 
         return $symbolContext->withContainerType($classType);
     }
@@ -162,7 +162,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
         Frame $frame,
         WorseVariable $variable
     ): Assignments {
-        if (Symbol::PROPERTY === $variable->symbolContext()->symbol()->symbolType()) {
+        if ($variable->isProperty()) {
             return $frame->properties();
         }
 

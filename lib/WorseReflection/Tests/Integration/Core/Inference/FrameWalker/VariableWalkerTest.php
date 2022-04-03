@@ -27,8 +27,8 @@ class VariableWalkerTest extends FrameWalkerTestCase
         , function (Frame $frame): void {
             $vars = $frame->locals()->byName('$foobar');
             $this->assertCount(2, $vars);
-            $this->assertEquals('Foobar', (string) $vars->first()->symbolContext()->type());
-            $this->assertEquals('stdClass', (string) $vars->last()->symbolContext()->type());
+            $this->assertEquals('Foobar', (string) $vars->first()->type());
+            $this->assertEquals('stdClass', (string) $vars->last()->type());
         }];
 
         yield 'Injects variables with @var (standard)' => [
@@ -41,7 +41,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
 
@@ -56,7 +56,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Foo\\Bar', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('Foo\\Bar', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
 
@@ -71,7 +71,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Foo\\Bar\\Baz', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('Foo\\Bar\\Baz', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
 
@@ -86,7 +86,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Bar\\Baz', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('Bar\\Baz', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
 
@@ -102,7 +102,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Foo\Bar\Zed\Baz', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('Foo\Bar\Zed\Baz', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
 
@@ -117,7 +117,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Bar|Baz', $frame->locals()->byName('$zed')->last()->symbolContext()->types()->__toString());
+                $this->assertEquals('Bar|Baz', $frame->locals()->byName('$zed')->last()->types()->__toString());
             }
         ];
 
@@ -132,7 +132,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Zed\Baz', (string) $frame->locals()->byName('$zed')->first()->symbolContext()->type());
+                $this->assertEquals('Zed\Baz', (string) $frame->locals()->byName('$zed')->first()->type());
             }
         ];
 
@@ -149,7 +149,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Zed\Baz', (string) $frame->locals()->byName('$zed')->first()->symbolContext()->type());
+                $this->assertEquals('Zed\Baz', (string) $frame->locals()->byName('$zed')->first()->type());
             }
         ];
 
@@ -167,7 +167,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->symbolContext()->type());
+                $this->assertEquals('string', (string) $frame->locals()->byName('$zed')->last()->type());
             }
         ];
     }

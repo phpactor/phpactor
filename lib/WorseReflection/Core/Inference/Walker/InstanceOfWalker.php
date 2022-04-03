@@ -50,33 +50,32 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
 
                 // reset variables after the if branch
                 if ($expressionsAreTrue) {
-                    $assignments->add($variable);
+                    $assignments->add($node->getStartPosition(), $variable);
 
                     // restore
                     $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                    $assignments->add($restoredVariable);
+                    $assignments->add($node->getEndPosition(), $restoredVariable);
                     continue;
                 }
 
                 // create new variables after the if branch
                 if (false === $expressionsAreTrue) {
                     $detypedVariable = $variable->withTypes(Types::empty());
-                    $assignments->add($detypedVariable);
-                    $variable = $variable->withOffset($node->getEndPosition());
-                    $assignments->add($variable);
+                    $assignments->add($node->getStartPosition(), $detypedVariable);
+                    $assignments->add($node->getEndPosition(), $variable);
                     continue;
                 }
             }
 
             if ($expressionsAreTrue) {
-                $assignments->add($variable);
+                $assignments->add($node->getStartPosition(), $variable);
                 $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                $assignments->add($restoredVariable);
+                $assignments->add($node->getEndPosition(), $restoredVariable);
             }
 
             if (false === $expressionsAreTrue) {
                 $variable = $variable->withTypes(Types::empty());
-                $assignments->add($variable);
+                $assignments->add($node->getStartPosition(), $variable);
             }
         }
 
@@ -132,10 +131,9 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             if (isset($vars[$variable->name()])) {
                 $originalVariable = $vars[$variable->name()];
                 $variable = $originalVariable->withTypes(
-                    $originalVariable->symbolContext()
-                        ->types()
+                    $originalVariable->types()
                         ->merge(
-                            $variable->symbolContext()->types()
+                            $variable->types()
                         )
                 );
             }
@@ -155,9 +153,9 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
         ;
 
         if (0 === $previousAssignments->count()) {
-            return $variable->withTypes(Types::empty())->withOffset($node->getEndPosition());
+            return $variable->withTypes(Types::empty());
         }
 
-        return $previousAssignments->last()->withOffset($node->getEndPosition());
+        return $previousAssignments->last();
     }
 }

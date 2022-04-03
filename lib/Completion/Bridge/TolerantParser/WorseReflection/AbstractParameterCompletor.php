@@ -56,7 +56,7 @@ abstract class AbstractParameterCompletor
 
         foreach ($variables as $variable) {
             if (
-                $variable->symbolContext()->types()->count() &&
+                $variable->types()->count() &&
                 false === $this->isVariableValidForParameter($variable, $parameter)
             ) {
                 // parameter has no types and is not valid for this position, ignore it
@@ -70,7 +70,7 @@ abstract class AbstractParameterCompletor
                     'priority' => Suggestion::PRIORITY_HIGH,
                     'short_description' => sprintf(
                         '%s => param #%d %s',
-                        $this->formatter->format($variable->symbolContext()->types()),
+                        $this->formatter->format($variable->types()),
                         $paramIndex,
                         $this->formatter->format($parameter)
                     )
@@ -121,7 +121,7 @@ abstract class AbstractParameterCompletor
         }
 
         /** @var Type $variableType */
-        foreach ($variable->symbolContext()->types() as $variableType) {
+        foreach ($variable->types() as $variableType) {
             $variableType = TypeUtil::unwrapNullableType($variableType);
 
             foreach ($parameter->inferredTypes() as $parameterType) {
