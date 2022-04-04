@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
+use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -141,6 +142,14 @@ class LanguageServerExtension implements Extension
 
             return $builder;
         });
+
+        $container->register(ClientLogger::class, function (Container $container) {
+            return new ClientLogger(
+                $container->get(ClientApi::class),
+                $container->get(LoggingExtension::SERVICE_LOGGER),
+            );
+
+        });
     }
 
     private function registerCommand(ContainerBuilder $container): void
@@ -258,8 +267,7 @@ class LanguageServerExtension implements Extension
         $container->register(ServiceManager::class, function (Container $container) {
             return new ServiceManager(
                 $container->get(ServiceProviders::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER),
-                $container->get(ClientApi::class)
+                $container->get(ClientLogger::class)
             );
         });
         $container->register(ServiceProviders::class, function (Container $container) {
