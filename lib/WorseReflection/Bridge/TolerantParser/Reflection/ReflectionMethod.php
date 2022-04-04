@@ -87,12 +87,12 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             return $types->best();
         }
 
-        return $types->merge($this->memberTypeResolver->resolveTypes(
+        return $this->memberTypeResolver->resolveTypes(
             $this->node,
             $this->node->returnTypeList,
             $this->class()->name(), // note: this call is quite expensive
             $this->node->questionToken ? true : false
-        ))->best();
+        );
     }
 
     /**

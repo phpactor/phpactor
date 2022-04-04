@@ -30,13 +30,13 @@ class DeclaredMemberTypeResolver
     /**
      * @param mixed $declaredTypes
      */
-    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className = null, bool $nullable = false): Types
+    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className = null, bool $nullable = false): Type
     {
         if (!$declaredTypes instanceof QualifiedNameList) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
-        return Types::fromTypes(array_filter(array_map(function ($tolerantType = null) use ($tolerantNode, $className, $nullable) {
+        return TypeFactory::union(...array_filter(array_map(function ($tolerantType = null) use ($tolerantNode, $className, $nullable) {
             if ($tolerantType instanceof Token && $tolerantType->kind === TokenKind::BarToken) {
                 return false;
             }
