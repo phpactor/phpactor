@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\NodeText;
@@ -51,7 +50,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
         return $this->serviceLocator->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         return (new FunctionReturnTypeResolver($this))->resolve();
     }

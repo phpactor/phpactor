@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Visibility;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -36,8 +35,6 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
 
     protected Visibility $visibility;
 
-    protected Types $types;
-
     protected Type $type;
 
     public function setUp(): void
@@ -50,7 +47,6 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
         $this->docblock = $this->prophesize(DocBlock::class);
         $this->scope = $this->prophesize(ReflectionScope::class);
         $this->visibility = Visibility::public();
-        $this->types = Types::empty();
         $this->type = TypeFactory::unknown();
     }
 
@@ -94,11 +90,6 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
     public function testVisibility(): void
     {
         $this->assertEquals($this->visibility, $this->member()->visibility());
-    }
-
-    public function testTypes(): void
-    {
-        $this->assertEquals($this->types, $this->member()->inferredTypes());
     }
 
     public function testType(): void

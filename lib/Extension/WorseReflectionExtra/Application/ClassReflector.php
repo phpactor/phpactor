@@ -110,7 +110,7 @@ class ClassReflector
 
         /** @var $property ReflectionProperty */
         foreach ($reflection->properties() as $property) {
-            $propertyType = $property->inferredTypes()->best();
+            $propertyType = $property->inferredType();
             $return['properties'][$property->name()] = [
                 'name' => $property->name(),
                 'visibility' => (string) $property->visibility(),

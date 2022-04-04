@@ -101,7 +101,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                 function hello() {}
                 EOT
             , 'hello', function (ReflectionFunction $function): void {
-                $this->assertEquals(TypeFactory::string(), $function->inferredTypes()->best());
+                $this->assertEquals(TypeFactory::string(), $function->inferredType());
             }
         ];
 
@@ -118,7 +118,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                 function hello() {}
                 EOT
             , 'Bar\hello', function (ReflectionFunction $function): void {
-                $this->assertEquals('Foo\Goodbye', $function->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foo\Goodbye', $function->inferredType()->__toString());
             }
         ];
 
@@ -135,7 +135,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                     EOT
         , 'Bar\hello', function (ReflectionFunction $function): void {
             $this->assertCount(3, $function->parameters());
-            $this->assertEquals('Bar\Barfoo', $function->parameters()->get('barfoo')->inferredTypes()->best());
+            $this->assertEquals('Bar\Barfoo', $function->parameters()->get('barfoo')->inferredType());
         },
         ];
 

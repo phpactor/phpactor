@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Types;
 
 interface ReflectionFunctionLike
 {
@@ -24,7 +23,7 @@ interface ReflectionFunctionLike
 
     public function scope(): ReflectionScope;
 
-    public function inferredTypes(): Types;
+    public function inferredType(): Type;
 
     public function type(): Type;
 }

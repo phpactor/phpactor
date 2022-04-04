@@ -109,6 +109,7 @@
             "vendor/bin/php-cs-fixer fix",
             "vendor/bin/phpstan analyse",
             "vendor/bin/phpunit",
+            "vendor/bin/phpbench run --iterations=1 --revs=1",
             "make docs"
         ]
     }

@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Tests\Assert\TrinaryAssert;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -104,10 +104,10 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
-                $this->assertEquals(Types::fromTypes([
+                $this->assertEquals(new UnionType(
                     TypeFactory::string(),
                     TypeFactory::int(),
-                ]), $methods->get('method1')->inferredTypes());
+                ), $methods->get('method1')->inferredType());
             },
         ];
         yield 'Return type' => [
@@ -219,7 +219,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             function ($methods): void {
                 $this->assertEquals(
                     'Acme\Post',
-                    $methods->get('method1')->inferredTypes()->best()->__toString(),
+                    $methods->get('method1')->inferredType()->__toString(),
                 );
             },
         ];
@@ -243,7 +243,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             function ($methods): void {
                 $this->assertEquals(
                     'Acme\Post[]',
-                    $methods->get('method1')->inferredTypes()->best()
+                    $methods->get('method1')->inferredType()->__toString()
                 );
             },
         ];
@@ -267,8 +267,8 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function ($methods): void {
-                $this->assertEquals('Foobar', $methods->get('method1')->inferredTypes()->best()->__toString(), 'this');
-                $this->assertEquals('Foobar', $methods->get('method2')->inferredTypes()->best()->__toString(), 'static');
+                $this->assertEquals('Foobar', $methods->get('method1')->inferredType()->__toString(), 'this');
+                $this->assertEquals('Foobar', $methods->get('method2')->inferredType()->__toString(), 'static');
             },
         ];
         yield 'Return type from docblock this and static from a trait' => [
@@ -296,8 +296,8 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function ($methods): void {
-                $this->assertEquals('Foobar', $methods->get('method1')->inferredTypes()->best()->__toString());
-                $this->assertEquals('Foobar', $methods->get('method2')->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foobar', $methods->get('method1')->inferredType()->__toString());
+                $this->assertEquals('Foobar', $methods->get('method2')->inferredType()->__toString());
             },
         ];
         yield 'Return type from class @method annotation' => [
@@ -321,7 +321,7 @@ class ReflectionMethodTest extends IntegrationTestCase
                     TypeFactory::class(
                         ClassName::fromString('Acme\Post')
                     )->is(
-                        $methods->get('method1')->inferredTypes()->best()
+                        $methods->get('method1')->inferredType()
                     )
                 );
             },
@@ -352,7 +352,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             function ($methods): void {
                 self::assertTrinaryTrue(
                     TypeFactory::class(ClassName::fromString('Acme\Post'))->is(
-                        $methods->get('method1')->inferredTypes()->best()
+                        $methods->get('method1')->inferredType()
                     )
                 );
             },
@@ -382,7 +382,7 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
-                $this->assertEquals('Articles\Blog', $methods->get('method1')->inferredTypes()->best()->__toString());
+                $this->assertEquals('Articles\Blog', $methods->get('method1')->inferredType()->__toString());
             },
         ];
         yield 'Return type from inherited docblock (from interface)' => [
@@ -412,7 +412,7 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function ($methods): void {
-                $this->assertEquals('Articles\Blog', $methods->get('method1')->inferredTypes()->best()->__toString());
+                $this->assertEquals('Articles\Blog', $methods->get('method1')->inferredType()->__toString());
             },
         ];
         yield 'It reflects an abstract method' => [
@@ -666,7 +666,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('bar'));
-                self::assertEquals('Baz', $methods->get('bar')->inferredTypes()->best()->__toString());
+                self::assertEquals('Baz', $methods->get('bar')->inferredType()->__toString());
             },
         ];
         yield 'return type from generic with multiple parameters' => [
@@ -700,8 +700,8 @@ class ReflectionMethodTest extends IntegrationTestCase
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('tee'));
                 self::assertTrue($methods->has('vee'));
-                self::assertEquals('Boo', $methods->get('tee')->inferredTypes()->best()->__toString());
-                self::assertEquals('Baz', $methods->get('vee')->inferredTypes()->best()->__toString());
+                self::assertEquals('Boo', $methods->get('tee')->inferredType()->__toString());
+                self::assertEquals('Baz', $methods->get('vee')->inferredType()->__toString());
             },
         ];
         yield 'return type from generic with multiple parameters at a distance' => [
@@ -748,9 +748,9 @@ class ReflectionMethodTest extends IntegrationTestCase
                 self::assertTrue($methods->has('tee'));
                 self::assertTrue($methods->has('vee'));
                 self::assertTrue($methods->has('gee'));
-                self::assertEquals('Boo', $methods->get('tee')->inferredTypes()->best()->__toString());
-                self::assertEquals('Baz', $methods->get('vee')->inferredTypes()->best()->__toString());
-                self::assertEquals('Bom', $methods->get('gee')->inferredTypes()->best()->__toString());
+                self::assertEquals('Boo', $methods->get('tee')->inferredType()->__toString());
+                self::assertEquals('Baz', $methods->get('vee')->inferredType()->__toString());
+                self::assertEquals('Bom', $methods->get('gee')->inferredType()->__toString());
             },
         ];
     }

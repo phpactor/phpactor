@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 class VirtualReflectionParameter implements ReflectionParameter
 {
@@ -16,7 +15,7 @@ class VirtualReflectionParameter implements ReflectionParameter
     
     private ReflectionFunctionLike $functionLike;
     
-    private Types $inferredTypes;
+    private Type $inferredType;
     
     private Type $type;
     
@@ -31,7 +30,7 @@ class VirtualReflectionParameter implements ReflectionParameter
     public function __construct(
         string $name,
         ReflectionFunctionLike $functionLike,
-        Types $inferredTypes,
+        Type $inferredType,
         Type $type,
         DefaultValue $default,
         bool $byReference,
@@ -40,7 +39,7 @@ class VirtualReflectionParameter implements ReflectionParameter
     ) {
         $this->name = $name;
         $this->functionLike = $functionLike;
-        $this->inferredTypes = $inferredTypes;
+        $this->inferredType = $inferredType;
         $this->type = $type;
         $this->default = $default;
         $this->byReference = $byReference;
@@ -78,9 +77,9 @@ class VirtualReflectionParameter implements ReflectionParameter
         return $this->type;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
-        return $this->inferredTypes;
+        return $this->inferredType;
     }
 
     public function default(): DefaultValue

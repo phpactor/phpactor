@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 
 class ReflectionConstant extends AbstractReflectionClassMember implements CoreReflectionConstant
@@ -52,13 +51,13 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
         return $this->class;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         if (TypeFactory::unknown() !== $this->type()) {
-            return Types::fromTypes([ $this->type() ]);
+            return $this->type();
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function isVirtual(): bool

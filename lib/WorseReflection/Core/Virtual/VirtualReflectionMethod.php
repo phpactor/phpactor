@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Visibility;
 
 class VirtualReflectionMethod extends VirtualReflectionMember implements ReflectionMethod
@@ -37,7 +36,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
         DocBlock $docblock,
         ReflectionScope $scope,
         Visibility $visiblity,
-        Types $inferredTypes,
+        Type $inferredType,
         Type $type,
         ReflectionParameterCollection $parameters,
         NodeText $body,
@@ -45,7 +44,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
         bool $isStatic,
         Deprecation $deprecation
     ) {
-        parent::__construct($position, $declaringClass, $class, $name, $frame, $docblock, $scope, $visiblity, $inferredTypes, $type, $deprecation);
+        parent::__construct($position, $declaringClass, $class, $name, $frame, $docblock, $scope, $visiblity, $inferredType, $type, $deprecation);
         $this->body = $body;
         $this->parameters = $parameters;
         $this->isAbstract = $isAbstract;
@@ -63,7 +62,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
             $reflectionMethod->docblock(),
             $reflectionMethod->scope(),
             $reflectionMethod->visibility(),
-            $reflectionMethod->inferredTypes(),
+            $reflectionMethod->inferredType(),
             $reflectionMethod->type(),
             $reflectionMethod->parameters(),
             $reflectionMethod->body(),

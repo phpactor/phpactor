@@ -219,7 +219,7 @@ class ReflectionParameterTest extends IntegrationTestCase
             '/** @param Foobar $foobar */',
             function ($method): void {
                 $this->assertCount(1, $method->parameters());
-                $this->assertEquals('Acme\Foobar', (string) $method->parameters()->get('foobar')->inferredTypes()->best());
+                $this->assertEquals('Acme\Foobar', (string) $method->parameters()->get('foobar')->inferredType());
             },
         ];
 
@@ -228,7 +228,7 @@ class ReflectionParameterTest extends IntegrationTestCase
             '/** */',
             function ($method): void {
                 $this->assertCount(1, $method->parameters());
-                $this->assertEquals(TypeFactory::unknown(), $method->parameters()->get('foobar')->inferredTypes()->best());
+                $this->assertEquals(TypeFactory::unknown(), $method->parameters()->get('foobar')->inferredType());
             },
         ];
     }
