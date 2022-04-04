@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
+use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
@@ -86,15 +87,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
                 }
 
                 return $this->resultToWorkspaceEdit($locatedEdits, $rename->getReturn());
-            } catch (CouldNotRename $couldNotRename) {
+            } catch (CouldNotRename | SourceNotFound | CouldNotConvertClassToUri $error) {
                 $this->clientApi->window()->showMessage()->error(sprintf(
-                    $couldNotRename->getMessage()
-                ));
-
-                return new WorkspaceEdit(null, []);
-            } catch (SourceNotFound $sourceNotFound) {
-                $this->clientApi->window()->showMessage()->error(sprintf(
-                    $sourceNotFound->getMessage()
+                    $error->getMessage()
                 ));
 
                 return new WorkspaceEdit(null, []);
