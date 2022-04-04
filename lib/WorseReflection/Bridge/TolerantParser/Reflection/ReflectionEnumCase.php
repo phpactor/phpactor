@@ -55,10 +55,10 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     public function inferredType(): Type
     {
         if (TypeFactory::unknown() !== $this->type()) {
-            return Types::fromTypes([ $this->type() ]);
+            return $this->type();
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function isVirtual(): bool
