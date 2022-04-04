@@ -36,7 +36,7 @@ $foo-> // type: Hello|Goodbye
 
 ### Assignments
 
-Phpactor will track assignemnts:
+Phpactor will track assignments:
 
 ```php
 $a = 'hello';
@@ -83,9 +83,9 @@ foreach ($foos as $foo) {
 
 ### FunctionLike
 
-Understands annonymous functions:
+Understands anonymous functions:
 
-```
+```php
 $barfoo = new Barfoo();
 $function = function (Foobar $foobar) use ($barfoo) {
     $foobar-> // type: Foobar
@@ -122,14 +122,14 @@ if ($foobar instanceof Hello || $foobar instanceof Goodbye) {
 
 Phpactor supports type injection via. docblock:
 
-```
+```php
 /** @var Foobar $foobar */
 $foobar-> // type: Foobar
 ```
 
 and inference from parameters:
 
-```
+```php
 function foobar(Barfoo $foobar, $barbar = 'foofoo')
 {
     $foobar; // type: Barfoo
