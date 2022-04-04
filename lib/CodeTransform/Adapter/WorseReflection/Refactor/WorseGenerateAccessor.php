@@ -83,7 +83,7 @@ class WorseGenerateAccessor implements GenerateAccessor
                 ->method($this->formatName($reflectionProperty->name()));
             $method->body()->line(sprintf('return $this->%s;', $reflectionProperty->name()));
 
-            $type = $reflectionProperty->inferredType()->best();
+            $type = $reflectionProperty->inferredType();
             if (TypeUtil::isDefined($type)) {
                 $method->returnType(TypeUtil::short($type));
             }
