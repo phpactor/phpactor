@@ -258,7 +258,8 @@ class LanguageServerExtension implements Extension
         $container->register(ServiceManager::class, function (Container $container) {
             return new ServiceManager(
                 $container->get(ServiceProviders::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $container->get(LoggingExtension::SERVICE_LOGGER),
+                $container->get(ClientApi::class)
             );
         });
         $container->register(ServiceProviders::class, function (Container $container) {

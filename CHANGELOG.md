@@ -18,6 +18,8 @@ Bug fixes:
 
 Improvements:
 
+  - [ls] Show error message in client if service stops unexpectedly with an
+    error
   - [code-transform] Faithfully reproduce documented types in generated code
   - [docblock] New docblock parser to facilitate parsing complex types
   - [hover] Improve "offset" hover (mostly related to showing variable info)
