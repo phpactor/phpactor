@@ -14,5 +14,5 @@
 {{- object.visibility ~ ' ' -}} 
 {%- if object.isStatic %}static {% endif %}
 function {{ object.name }}({{ render(object.parameters) }})
-{%- if object.inferredTypes.count %}: {{ render(object.inferredTypes) }}{% endif -%}
+{%- if typeDefined(object.inferredType) %}: {{ render(object.inferredType) }}{% endif -%}
 

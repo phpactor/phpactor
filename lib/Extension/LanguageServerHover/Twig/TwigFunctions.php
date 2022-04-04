@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\TypeUtil;
 use Twig\Environment;
 use Twig\TwigFunction;
 
-final class TypeShortNameFunction
+final class TwigFunctions
 {
     public static function add(Environment $env): Environment
     {
@@ -18,6 +18,10 @@ final class TypeShortNameFunction
             }
 
             return $type->__toString();
+        }));
+
+        $env->addFunction(new TwigFunction('typeDefined', function (Type $type) {
+            return TypeUtil::isDefined($type);
         }));
 
         return $env;
