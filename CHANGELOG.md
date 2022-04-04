@@ -15,6 +15,7 @@ Bug fixes:
   - [lsp] Fix call to properties() on non-class in generate accessors provider.
   - [lsp] Fix unresolvable classes not being listed in code actions
   - [cb] Do not apply HTML escaping when rendering code templates
+  - [wr] Promoted property docblock types not picked up #1334
 
 Improvements:
 
