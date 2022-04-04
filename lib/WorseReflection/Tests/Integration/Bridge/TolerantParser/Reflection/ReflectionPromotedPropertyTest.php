@@ -53,10 +53,10 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
                         $properties->get('barfoo')->type()
                     );
                     $this->assertEquals(
-                        Types::fromTypes([
+                        TypeFactory::union(
                             TypeFactory::string(),
                             TypeFactory::int(),
-                        ]),
+                        ),
                         $properties->get('baz')->inferredType()
                     );
                 },

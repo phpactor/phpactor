@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionParameterCollection;
@@ -22,6 +23,7 @@ use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
@@ -81,10 +83,14 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function inferredType(): Type
     {
-        $types = $this->returnTypeResolver->resolve();
+        $type = $this->returnTypeResolver->resolve();
 
         if (!$this->node->returnTypeList) {
-            return $types->best();
+            return $type;
+        }
+
+        if (TypeUtil::isDefined($type)) {
+            return $type;
         }
 
         return $this->memberTypeResolver->resolveTypes(

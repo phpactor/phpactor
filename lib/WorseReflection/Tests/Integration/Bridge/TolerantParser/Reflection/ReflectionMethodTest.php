@@ -244,7 +244,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             function ($methods): void {
                 $this->assertEquals(
                     'Acme\Post[]',
-                    $methods->get('method1')->inferredType()
+                    $methods->get('method1')->inferredType()->__toString()
                 );
             },
         ];
