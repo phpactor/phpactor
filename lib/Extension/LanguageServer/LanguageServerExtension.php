@@ -148,7 +148,6 @@ class LanguageServerExtension implements Extension
                 $container->get(ClientApi::class),
                 $container->get(LoggingExtension::SERVICE_LOGGER),
             );
-
         });
     }
 
