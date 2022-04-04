@@ -844,7 +844,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 );
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->first()->inferredTypes()->best()->__toString(),
+                    $class->methods()->first()->inferredType()->__toString(),
                 );
             },
         ];
@@ -868,7 +868,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertCount(2, $class->methods());
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -891,7 +891,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertCount(1, $class->methods());
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -915,7 +915,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertCount(1, $class->methods());
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -939,7 +939,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertCount(1, $class->methods());
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
                 $this->assertEquals(
                     'ParentInterface',
@@ -954,7 +954,7 @@ class ReflectionClassTest extends IntegrationTestCase
             function (ReflectionClass $class): void {
                 $this->assertEquals(
                     'Bosh\Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -965,7 +965,7 @@ class ReflectionClassTest extends IntegrationTestCase
             function (ReflectionClass $class): void {
                 $this->assertEquals(
                     'Foobar',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -990,7 +990,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertCount(2, $class->methods());
                 $this->assertEquals(
                     'Barfoo',
-                    $class->methods()->get('foobar')->inferredTypes()->best()->__toString()
+                    $class->methods()->get('foobar')->inferredType()->__toString()
                 );
             },
         ];
@@ -1015,7 +1015,7 @@ class ReflectionClassTest extends IntegrationTestCase
             'Class1',
             function (ReflectionClass $class): void {
                 $this->assertCount(1, $class->methods());
-                $this->assertEquals('Foobar', $class->methods()->first()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foobar', $class->methods()->first()->inferredType()->__toString());
             },
         ];
 
@@ -1043,7 +1043,7 @@ class ReflectionClassTest extends IntegrationTestCase
             'Class1',
             function (ReflectionClass $class): void {
                 $this->assertCount(1, $class->methods());
-                $this->assertEquals('Foobar', $class->methods()->first()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foobar', $class->methods()->first()->inferredType()->__toString());
             },
         ];
     }
@@ -1143,9 +1143,9 @@ class ReflectionClassTest extends IntegrationTestCase
             function (ReflectionClass $class): void {
                 $this->assertEquals(2, $class->properties()->count());
                 $this->assertEquals('foobar', $class->properties()->first()->name());
-                $this->assertEquals('Foobar', $class->properties()->first()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foobar', $class->properties()->first()->inferredType()->__toString());
                 $this->assertEquals('barfoo', $class->properties()->last()->name());
-                $this->assertEquals('Barfoo', $class->properties()->last()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Barfoo', $class->properties()->last()->inferredType()->__toString());
             }
         ];
 
@@ -1175,9 +1175,9 @@ class ReflectionClassTest extends IntegrationTestCase
             function (ReflectionClass $class): void {
                 $this->assertEquals(2, $class->properties()->count());
                 $this->assertEquals('foobar', $class->properties()->first()->name());
-                $this->assertEquals('Foobar', $class->properties()->first()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Foobar', $class->properties()->first()->inferredType()->__toString());
                 $this->assertEquals('barfoo', $class->properties()->last()->name());
-                $this->assertEquals('Barfoo', $class->properties()->last()->inferredTypes()->best()->__toString());
+                $this->assertEquals('Barfoo', $class->properties()->last()->inferredType()->__toString());
             }
         ];
     }
