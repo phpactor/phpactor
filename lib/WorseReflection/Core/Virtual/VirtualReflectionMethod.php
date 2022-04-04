@@ -37,7 +37,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
         DocBlock $docblock,
         ReflectionScope $scope,
         Visibility $visiblity,
-        Types $inferredTypes,
+        Type $inferredType,
         Type $type,
         ReflectionParameterCollection $parameters,
         NodeText $body,
@@ -45,7 +45,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
         bool $isStatic,
         Deprecation $deprecation
     ) {
-        parent::__construct($position, $declaringClass, $class, $name, $frame, $docblock, $scope, $visiblity, $inferredTypes, $type, $deprecation);
+        parent::__construct($position, $declaringClass, $class, $name, $frame, $docblock, $scope, $visiblity, $inferredType, $type, $deprecation);
         $this->body = $body;
         $this->parameters = $parameters;
         $this->isAbstract = $isAbstract;

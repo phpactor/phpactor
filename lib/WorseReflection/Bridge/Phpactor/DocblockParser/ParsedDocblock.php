@@ -179,9 +179,7 @@ class ParsedDocblock implements DocBlock
                 $this,
                 $declaringClass->scope(),
                 Visibility::public(),
-                Types::fromTypes([
-                    $this->typeConverter->convert($methodTag->type, $declaringClass->scope())
-                ]),
+                $this->typeConverter->convert($methodTag->type, $declaringClass->scope()),
                 $this->typeConverter->convert($methodTag->type),
                 $params,
                 NodeText::fromString(''),

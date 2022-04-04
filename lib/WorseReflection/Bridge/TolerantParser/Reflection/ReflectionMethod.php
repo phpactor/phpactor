@@ -79,20 +79,12 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         return ReflectionParameterCollection::fromMethodDeclaration($this->serviceLocator, $this->node, $this);
     }
 
-    /**
-     * @deprecated use inferredTypes()
-     */
-    public function inferredReturnTypes(): Types
-    {
-        return $this->inferredType();
-    }
-
     public function inferredType(): Type
     {
         $types = $this->returnTypeResolver->resolve();
 
         if (!$this->node->returnTypeList) {
-            return $types;
+            return $types->best();
         }
 
         return $types->merge($this->memberTypeResolver->resolveTypes(
@@ -100,7 +92,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             $this->node->returnTypeList,
             $this->class()->name(), // note: this call is quite expensive
             $this->node->questionToken ? true : false
-        ));
+        ))->best();
     }
 
     /**
