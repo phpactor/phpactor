@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflectionParameter;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
 
 class ReflectionParameter extends AbstractReflectedNode implements CoreReflectionParameter
@@ -64,7 +63,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return $type;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         return (new ParameterTypeResolver($this))->resolve();
     }

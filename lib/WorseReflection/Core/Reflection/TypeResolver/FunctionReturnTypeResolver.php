@@ -16,7 +16,7 @@ class FunctionReturnTypeResolver
         $this->function = $function;
     }
 
-    public function resolve(): Types
+    public function resolve(): Type
     {
         $resolvedTypes = $this->getDocblockTypesFromFunction($this->function);
 
@@ -24,7 +24,7 @@ class FunctionReturnTypeResolver
             $resolvedTypes = $resolvedTypes->merge(Types::fromTypes([ $this->function->type() ]));
         }
 
-        return $resolvedTypes;
+        return $resolvedTypes->best();
     }
 
     private function getDocblockTypesFromFunction(ReflectionFunction $function): Types

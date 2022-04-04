@@ -2,8 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
-use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 
@@ -16,7 +14,7 @@ class ParameterTypeResolver
         $this->parameter = $parameter;
     }
 
-    public function resolve(): Types
+    public function resolve(): Type
     {
         $docblock = $this->parameter->method()->docblock();
         $docblockTypes = $docblock->parameterTypes($this->parameter->name());
@@ -25,14 +23,10 @@ class ParameterTypeResolver
             return $this->parameter->scope()->resolveFullyQualifiedName($type);
         }, iterator_to_array($docblockTypes));
 
-        if (count($resolvedTypes)) {
-            return Types::fromTypes($resolvedTypes);
+        foreach ($resolvedTypes as $type) {
+            return $type;
         }
 
-        if (!$this->parameter->type() instanceof MissingType) {
-            return Types::fromTypes([ $this->parameter->type() ]);
-        }
-
-        return Types::empty();
+        return $this->parameter->type();
     }
 }

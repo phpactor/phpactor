@@ -15,11 +15,11 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as CoreReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
-use Phpactor\WorseReflection\Core\Types;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Visibility;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionPromotedProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
@@ -40,7 +40,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     ) {
         $this->serviceLocator = $serviceLocator;
         $this->class = $class;
-        $this->typeResolver = new PropertyTypeResolver($this, $this->serviceLocator->logger());
+        $this->typeResolver = new PropertyTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
         $this->parameter = $parameter;
     }
@@ -67,12 +67,16 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
         return (string) $this->parameter->getName();
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
-        $types = $this->typeResolver->resolve();
+        $type = $this->typeResolver->resolve();
+
+        if (TypeUtil::isDefined($type)) {
+            return $type;
+        }
 
         if ($this->parameter->typeDeclarationList) {
-            $types = $this->memberTypeResolver->resolveTypes(
+            $type = $this->memberTypeResolver->resolveTypes(
                 $this->parameter,
                 $this->parameter->typeDeclarationList,
                 $this->class()->name(),
@@ -80,7 +84,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
             );
         }
 
-        return $types;
+        return $type;
     }
 
     public function type(): Type

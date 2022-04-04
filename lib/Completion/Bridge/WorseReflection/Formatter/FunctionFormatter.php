@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\TypeUtil;
 
 class FunctionFormatter implements Formatter
 {
@@ -28,10 +29,10 @@ class FunctionFormatter implements Formatter
         }
         $info[] = '(' . implode(', ', $paramInfos) . ')';
 
-        $returnTypes = $function->inferredTypes();
+        $returnType = $function->inferredType();
 
-        if ($returnTypes->count() > 0) {
-            $info[] = ': ' . $formatter->format($returnTypes);
+        if (TypeUtil::isDefined($returnType)) {
+            $info[] = ': ' . $formatter->format($returnType);
         }
 
         return implode('', $info);

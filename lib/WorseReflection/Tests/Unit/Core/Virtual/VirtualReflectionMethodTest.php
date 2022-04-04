@@ -43,7 +43,7 @@ class VirtualReflectionMethodTest extends VirtualReflectionMemberTestCase
             $this->docblock->reveal(),
             $this->scope->reveal(),
             $this->visibility,
-            $this->types,
+            $this->type,
             $this->type,
             $this->parameters->reveal(),
             $this->body,

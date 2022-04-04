@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\DefaultValue;
-use Phpactor\WorseReflection\Core\Types;
 
 interface ReflectionParameter extends ReflectionNode
 {
@@ -22,7 +21,7 @@ interface ReflectionParameter extends ReflectionNode
 
     public function type(): Type;
 
-    public function inferredTypes(): Types;
+    public function inferredType(): Type;
 
     public function default(): DefaultValue;
 

@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionPropertyCollection as PhpactorReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -32,10 +31,10 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 'Foobar',
                 function ($properties): void {
                     $this->assertEquals('property', $properties->get('property')->name());
-                    $this->assertEquals(Types::fromTypes([
+                    $this->assertEquals(TypeFactory::union(...[
                         TypeFactory::int(),
                         TypeFactory::string(),
-                    ]), $properties->get('property')->inferredTypes());
+                    ]), $properties->get('property')->inferredType());
                 },
         ];
     }
@@ -163,7 +162,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 function ($properties): void {
                     $this->assertEquals(
                         'Acme\Post',
-                        $properties->get('property1')->inferredTypes()->best()->__toString(),
+                        $properties->get('property1')->inferredType()->__toString(),
                     );
                     $this->assertFalse($properties->get('property1')->isStatic());
                 },
@@ -262,7 +261,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 ,
                 'Foobar',
                 function (ReflectionPropertyCollection $properties): void {
-                    $this->assertEquals(TypeFactory::fromString('string'), $properties->get('bar')->inferredTypes()->best());
+                    $this->assertEquals(TypeFactory::fromString('string'), $properties->get('bar')->inferredType());
                 },
             ];
 
@@ -284,7 +283,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 ,
                 'Foobar',
                 function (ReflectionPropertyCollection $properties): void {
-                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredTypes()->best()->__toString());
+                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
                 },
             ];
 
@@ -310,7 +309,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 ,
                 'Foobar',
                 function (ReflectionPropertyCollection $properties): void {
-                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredTypes()->best()->__toString());
+                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
                 },
             ];
 
@@ -338,14 +337,14 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 'Test\Barfoo',
                 function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Bar\Foo', $properties->get('bar')->type()->__toString());
-                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredTypes()->best()->__toString());
+                    $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
 
                     $this->assertEquals(TypeFactory::string(), $properties->get('baz')->type());
 
                     $this->assertEquals(TypeFactory::undefined(), $properties->get('undefined')->type());
 
                     $this->assertEquals(TypeFactory::iterable(), $properties->get('collection')->type());
-                    $this->assertEquals('Bar\Foo[]', $properties->get('collection')->inferredTypes()->best()->__toString());
+                    $this->assertEquals('Bar\Foo[]', $properties->get('collection')->inferredType()->__toString());
                     $this->assertEquals(
                         TypeFactory::iterable(),
                         $properties->get('it')->type()

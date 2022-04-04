@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
@@ -27,10 +26,10 @@ class DeclaredMemberTypeResolverTest extends IntegrationTestCase
             '<?php class C { private int|string $p; }',
                 'C',
                 function (ReflectionProperty $property): void {
-                    $this->assertEquals(Types::fromTypes([
+                    $this->assertEquals(TypeFactory::union(...[
                         TypeFactory::int(),
                         TypeFactory::string(),
-                    ]), $property->inferredTypes());
+                    ]), $property->inferredType());
                 },
         ];
 
@@ -38,7 +37,7 @@ class DeclaredMemberTypeResolverTest extends IntegrationTestCase
             '<?php class C { private int|Foobar|Baz $p; }',
                 'C',
                 function (ReflectionProperty $property): void {
-                    $this->assertEquals('int|Foobar|Baz', $property->inferredTypes()->__toString());
+                    $this->assertEquals('int|Foobar|Baz', $property->inferredType());
                 },
         ];
     }

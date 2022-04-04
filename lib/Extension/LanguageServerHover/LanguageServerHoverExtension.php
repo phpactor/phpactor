@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerHover;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\LanguageServerHover\Twig\TypeShortNameFunction;
+use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
@@ -64,7 +64,7 @@ class LanguageServerHoverExtension implements Extension
                 ->setLogger($container->get(LoggingExtension::SERVICE_LOGGER))
                 ->enableInterfaceCandidates()
                 ->configureTwig(function (Environment $env) {
-                    $env = TypeShortNameFunction::add($env);
+                    $env = TwigFunctions::add($env);
                     return $env;
                 })
                 ->renderEmptyOnNotFound();

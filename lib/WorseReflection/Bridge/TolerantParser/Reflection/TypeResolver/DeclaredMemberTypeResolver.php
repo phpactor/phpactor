@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Reflector;
 
@@ -30,18 +29,18 @@ class DeclaredMemberTypeResolver
     /**
      * @param mixed $declaredTypes
      */
-    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className = null, bool $nullable = false): Types
+    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className = null, bool $nullable = false): Type
     {
         if (!$declaredTypes instanceof QualifiedNameList) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
-        return Types::fromTypes(array_filter(array_map(function ($tolerantType = null) use ($tolerantNode, $className, $nullable) {
+        return TypeFactory::union(...array_filter(array_map(function ($tolerantType = null) use ($tolerantNode, $className, $nullable) {
             if ($tolerantType instanceof Token && $tolerantType->kind === TokenKind::BarToken) {
                 return false;
             }
             return $this->resolve($tolerantNode, $tolerantType, $className, $nullable);
-        }, $declaredTypes->children)));
+        }, $declaredTypes->children)))->reduce();
     }
 
     public function resolve(Node $tolerantNode, $tolerantType = null, ClassName $className = null, bool $nullable = false): Type

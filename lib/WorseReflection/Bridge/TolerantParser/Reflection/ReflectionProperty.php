@@ -14,10 +14,10 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as CoreReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
-use Phpactor\WorseReflection\Core\Types;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Type;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
@@ -43,7 +43,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
         $this->propertyDeclaration = $propertyDeclaration;
         $this->variable = $variable;
         $this->class = $class;
-        $this->typeResolver = new PropertyTypeResolver($this, $this->serviceLocator->logger());
+        $this->typeResolver = new PropertyTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
     }
 
@@ -68,18 +68,20 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
         return (string) $this->variable->getName();
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
-        $types = $this->typeResolver->resolve();
+        $type = $this->typeResolver->resolve();
 
-        $types = $types->merge($this->memberTypeResolver->resolveTypes(
+        if (TypeUtil::isDefined($type)) {
+            return $type;
+        }
+
+        return $this->memberTypeResolver->resolveTypes(
             $this->propertyDeclaration,
             $this->propertyDeclaration->typeDeclarationList,
             $this->class()->name(),
             $this->propertyDeclaration->questionToken ? true : false
-        ));
-
-        return $types;
+        );
     }
 
     public function type(): Type

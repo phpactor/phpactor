@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase as CoreReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 
 class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreReflectionEnumCase
 {
@@ -52,13 +51,13 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return $this->enum;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         if (TypeFactory::unknown() !== $this->type()) {
-            return Types::fromTypes([ $this->type() ]);
+            return $this->type();
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function isVirtual(): bool

@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 interface ReflectionMember
 {
@@ -42,19 +41,13 @@ interface ReflectionMember
 
     public function visibility(): Visibility;
 
-    /**
-     * Inferred types.
-     *
-     * Note that this will also return PHP 8.0 union types until the type
-     * system has been refactored to support more complex types.
-     */
-    public function inferredTypes(): Types;
+    public function inferredType(): Type;
 
     public function type(): Type;
 
     public function isVirtual(): bool;
 
-    public function memberType();
+    public function memberType(): string;
 
     public function deprecation(): Deprecation;
 }

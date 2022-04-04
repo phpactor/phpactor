@@ -3,90 +3,89 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
-use Psr\Log\LoggerInterface;
+use Phpactor\WorseReflection\TypeUtil;
 
 class MethodTypeResolver
 {
     private ReflectionMethod $method;
     
-    private LoggerInterface $logger;
-
-    public function __construct(ReflectionMethod $method, LoggerInterface $logger)
+    public function __construct(ReflectionMethod $method)
     {
         $this->method = $method;
-        $this->logger = $logger;
     }
 
-    public function resolve(): Types
+    public function resolve(): Type
     {
-        $resolvedTypes = $this->getDocblockTypesFromClassOrMethod($this->method);
+        $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method);
 
-        if ($resolvedTypes->count()) {
-            return $resolvedTypes;
+        if (TypeUtil::isDefined($resolvedType)) {
+            return $resolvedType;
         }
 
-        $resolvedTypes = $this->getTypesFromParentClass($this->method->class());
+        $resolvedType = $this->getTypesFromParentClass($this->method->class());
 
-        if ($resolvedTypes->count()) {
-            return $resolvedTypes;
+        if (TypeUtil::isDefined($resolvedType)) {
+            return $resolvedType;
         }
 
         return $this->getTypesFromInterfaces($this->method->class());
     }
 
-    private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Types
+    private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
     {
         $classMethodOverrides = $method->class()->docblock()->methodTypes($method->name());
 
         if (Types::empty() != $classMethodOverrides) {
-            return $this->resolveTypes(iterator_to_array($classMethodOverrides));
+            foreach ($classMethodOverrides as $override) {
+                return $this->resolveType($override);
+            }
         }
 
-        return $this->resolveTypes(iterator_to_array($method->docblock()->returnTypes()));
+        return $this->resolveType($method->docblock()->returnTypes()->best());
     }
 
-    private function resolveTypes(array $types): Types
+    private function resolveType(Type $type): Type
     {
-        return Types::fromTypes(array_map(function (Type $type) {
-            $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+        $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
+        if (false === TypeUtil::isDefined($type)) {
+            return $type;
+        }
 
-            return GenericHelper::resolveMethodType(
-                $this->method->class(),
-                $this->method->declaringClass(),
-                $type
-            );
-        }, $types));
+        return GenericHelper::resolveMethodType(
+            $this->method->class(),
+            $this->method->declaringClass(),
+            $type
+        );
     }
 
-    private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Types
+    private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type
     {
         if (false === $reflectionClassLike instanceof ReflectionClass) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
         if (null === $reflectionClassLike->parent()) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
-        /** @var ReflectionClass $reflectioClass */
         $reflectionClass = $reflectionClassLike->parent();
         if (false === $reflectionClass->methods()->has($this->method->name())) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
-        return $reflectionClass->methods()->get($this->method->name())->inferredTypes();
+        return $reflectionClass->methods()->get($this->method->name())->inferredType();
     }
 
-    private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Types
+    private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Type
     {
         if (false === $reflectionClassLike->isClass()) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
         /** @var ReflectionClass $reflectionClass */
@@ -95,19 +94,15 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                $types = $interface->methods()->get($this->method->name())->inferredTypes();
                 $type = GenericHelper::resolveMethodType(
                     $this->method->class(),
                     $interface,
-                    $types->best()
+                    $interface->methods()->get($this->method->name())->inferredType(),
                 );
-                if ($type instanceof MissingType) {
-                    return Types::fromTypes([]);
-                }
-                return Types::fromTypes([$type]);
+                return $type;
             }
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 }
