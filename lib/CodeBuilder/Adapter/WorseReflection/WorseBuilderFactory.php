@@ -95,7 +95,7 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder = $classBuilder->property($property->name());
         $propertyBuilder->visibility((string) $property->visibility());
 
-        $type = $property->inferredTypes()->best();
+        $type = $property->inferredType();
         if (TypeUtil::isDefined($type)) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type(TypeUtil::short($type));

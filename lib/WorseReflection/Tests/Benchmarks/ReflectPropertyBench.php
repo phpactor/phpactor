@@ -35,6 +35,6 @@ class ReflectPropertyBench extends BaseBenchCase
      */
     public function property_return_type(): void
     {
-        $this->class->properties()->get('withType')->inferredTypes();
+        $this->class->properties()->get('withType')->inferredType();
     }
 }
