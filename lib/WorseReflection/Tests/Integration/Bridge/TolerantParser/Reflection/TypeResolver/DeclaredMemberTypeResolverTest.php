@@ -27,7 +27,7 @@ class DeclaredMemberTypeResolverTest extends IntegrationTestCase
             '<?php class C { private int|string $p; }',
                 'C',
                 function (ReflectionProperty $property): void {
-                    $this->assertEquals(Types::fromTypes([
+                    $this->assertEquals(TypeFactory::union(...[
                         TypeFactory::int(),
                         TypeFactory::string(),
                     ]), $property->inferredType());
