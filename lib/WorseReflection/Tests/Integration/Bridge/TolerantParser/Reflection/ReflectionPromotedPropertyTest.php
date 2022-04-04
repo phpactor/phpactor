@@ -82,5 +82,23 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
                     );
                 },
             ];
+
+        yield 'With docblock' => [
+            <<<'EOT'
+                <?php class Barfoo { 
+                    public function __construct(
+                        /** @var Foobar */
+                        private $foobar
+                    ) {}
+                }
+                EOT,
+                'Barfoo',
+                function (ReflectionPropertyCollection $properties): void {
+                    $this->assertEquals(
+                        'Foobar',
+                        $properties->get('foobar')->inferredType()->__toString(),
+                    );
+                },
+            ];
     }
 }
