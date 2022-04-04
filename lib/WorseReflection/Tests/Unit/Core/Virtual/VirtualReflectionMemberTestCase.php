@@ -98,7 +98,7 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
 
     public function testTypes(): void
     {
-        $this->assertEquals($this->types, $this->member()->inferredTypes());
+        $this->assertEquals($this->types, $this->member()->inferredType());
     }
 
     public function testType(): void

@@ -41,7 +41,7 @@ class DeclaredMemberTypeResolver
                 return false;
             }
             return $this->resolve($tolerantNode, $tolerantType, $className, $nullable);
-        }, $declaredTypes->children)));
+        }, $declaredTypes->children)))->reduce();
     }
 
     public function resolve(Node $tolerantNode, $tolerantType = null, ClassName $className = null, bool $nullable = false): Type

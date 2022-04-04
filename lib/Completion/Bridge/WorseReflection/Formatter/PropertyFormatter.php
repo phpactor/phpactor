@@ -29,8 +29,8 @@ class PropertyFormatter implements Formatter
         $info[] = ' ';
         $info[] = '$' . $object->name();
 
-        if (TypeUtil::isDefined($object->inferredTypes()->best())) {
-            $info[] = ': ' . TypeUtil::short($object->inferredTypes()->best());
+        if (TypeUtil::isDefined($object->inferredType())) {
+            $info[] = ': ' . TypeUtil::short($object->inferredType());
         }
 
         return implode('', $info);

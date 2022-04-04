@@ -45,4 +45,17 @@ final class UnionType implements Type
 
         return Trinary::false();
     }
+
+    public function reduce(): Type
+    {
+        if (count($this->types) === 0) {
+            return new MissingType();
+        }
+
+        if (count($this->types) === 1) {
+            return $this->types[array_key_first($this->types)];
+        }
+
+        return $this;
+    }
 }
