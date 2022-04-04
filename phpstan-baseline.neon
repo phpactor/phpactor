@@ -2151,26 +2151,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseLocalVariableCompletor.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletor\\:\\:isVariableValidForParameter\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletor\\:\\:numberOfArgumentsExceedParameterArity\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletor\\:\\:paramIndex\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletor\\:\\:reflectedParameter\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
 			message: "#^Unsafe call to private method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseSignatureHelper\\:\\:isACallExpression\\(\\) through static\\:\\:\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseSignatureHelper.php
@@ -6081,26 +6061,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
 
 		-
-			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$statements\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethod\\:\\:\\$frameBuilder is unused\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethod\\:\\:\\$visibility is unused\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
-
-		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethodCall\\:\\:\\$node is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethodCall.php
@@ -6291,16 +6251,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockVars.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Assignments\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Assignments.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 6
-			path: lib/WorseReflection/Core/Inference/Assignments.php
-
-		-
 			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
@@ -6454,21 +6404,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Variable\\:\\:isNamed\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Variable.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Variable\\:\\:withOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Variable.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Variable\\:\\:withTypes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Variable.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:__construct\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
@@ -6631,11 +6566,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/ReflectionClassLike.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:memberType\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionMember.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php
@@ -6666,27 +6596,7 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/TypeResolver/FunctionReturnTypeResolver.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\MethodTypeResolver\\:\\:resolveTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/MethodTypeResolver.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\MethodTypeResolver\\:\\:\\$logger is never read, only written\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/MethodTypeResolver.php
-
-		-
-			message: "#^Variable \\$reflectioClass in PHPDoc tag @var does not match assigned variable \\$reflectionClass\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/MethodTypeResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\PropertyTypeResolver\\:\\:getDocblockTypesFromClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/PropertyTypeResolver.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\PropertyTypeResolver\\:\\:\\$logger is never read, only written\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/TypeResolver/PropertyTypeResolver.php
 
@@ -6999,11 +6909,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionProperty\\:\\:memberType\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionProperty.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:create\\(\\) has no return type specified\\.$#"
