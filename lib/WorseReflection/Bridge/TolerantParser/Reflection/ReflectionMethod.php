@@ -5,15 +5,14 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
@@ -29,10 +28,6 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     
     private MethodDeclaration $node;
     
-    private Visibility $visibility;
-    
-    private FrameResolver $frameBuilder;
-    
     private ReflectionClassLike $class;
     
     private MethodTypeResolver $returnTypeResolver;
@@ -47,7 +42,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->class = $class;
-        $this->returnTypeResolver = new MethodTypeResolver($this, $serviceLocator->logger());
+        $this->returnTypeResolver = new MethodTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
     }
 
@@ -64,6 +59,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $class = $classDeclaration->getNamespacedName();
 
 
+        /** @phpstan-ignore-next-line */
         if (null === $class) {
             throw new InvalidArgumentException(sprintf(
                 'Could not locate class-like ancestor node for method "%s"',
@@ -119,7 +115,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function body(): NodeText
     {
-        $statements = $this->node->compoundStatementOrSemicolon->statements;
+        $statement = $this->node->compoundStatementOrSemicolon;
+        if (!$statement instanceof CompoundStatementNode) {
+            return NodeText::fromString('');
+        }
+        $statements = $statement->statements;
         return NodeText::fromString(implode(PHP_EOL, array_reduce($statements, function ($acc, $statement) {
             $acc[] = (string) $statement->getText();
             return $acc;

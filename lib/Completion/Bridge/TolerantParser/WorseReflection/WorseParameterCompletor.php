@@ -3,24 +3,16 @@
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
-use LogicException;
-use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -75,78 +67,6 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         return $suggestions->getReturn();
     }
 
-    private function paramIndex(Node $node): int
-    {
-        $argumentList = $this->argumentListFromNode($node);
-
-        if (null === $argumentList) {
-            return 1;
-        }
-
-        $index = 0;
-        /** @var ArgumentExpression $element */
-        foreach ($argumentList->getElements() as $element) {
-            $index++;
-            if (!$element->expression instanceof Variable) {
-                continue;
-            }
-
-            $name = $element->expression->getName();
-
-            if ($name instanceof MissingToken) {
-                continue;
-            }
-        }
-
-        // if we have a trailing comma, e.g. the argument list is `$foobar, `
-        // then the above elements will contain only `$foobar` but the param
-        // index should be incremented.
-        if (substr(trim($argumentList->getText()), -1, 1) === ',') {
-            return $index + 1;
-        }
-
-        return $index;
-    }
-
-    private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
-    {
-        if (false === TypeUtil::isDefined($parameter->inferredType())) {
-            return true;
-        }
-
-        $valid = false;
-
-        /** @var Type $variableType */
-        foreach ($variable->types() as $variableType) {
-            $variableTypeClass = null;
-            foreach ($parameter->inferredType() as $parameterType) {
-                if ($parameterType->accepts($variableType)->isTrue()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private function reflectedParameter(ReflectionFunctionLike $reflectionFunctionLike, int $paramIndex): ReflectionParameter
-    {
-        $reflectedIndex = 1;
-        /** @var ReflectionParameter $parameter */
-        foreach ($reflectionFunctionLike->parameters() as $parameter) {
-            if ($reflectedIndex == $paramIndex) {
-                return $parameter;
-            }
-            $reflectedIndex++;
-        }
-
-        throw new LogicException(sprintf('Could not find parameter for index "%s"', $paramIndex));
-    }
-
-    private function numberOfArgumentsExceedParameterArity(ReflectionFunctionLike $reflectionFunctionLike, int $paramIndex): bool
-    {
-        return $reflectionFunctionLike->parameters()->count() < $paramIndex;
-    }
-
     /**
      * @return ReflectionFunctionLike|null
      */
@@ -177,25 +97,5 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         $name = $callableExpression->getResolvedName() ?? $callableExpression->getText();
 
         return $this->reflector->reflectFunction((string) $name);
-    }
-
-    /**
-     * @return ArgumentExpressionList|null
-     */
-    private function argumentListFromNode(Node $node)
-    {
-        if ($node instanceof QualifiedName) {
-            $callExpression = $node->parent;
-            assert($callExpression instanceof CallExpression);
-            return $callExpression->argumentExpressionList;
-        }
-        
-        assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
-        assert(null !== $node->parent);
-
-        $list = $node->parent->getFirstDescendantNode(ArgumentExpressionList::class);
-        assert($list instanceof ArgumentExpressionList || is_null($list));
-
-        return $list;
     }
 }

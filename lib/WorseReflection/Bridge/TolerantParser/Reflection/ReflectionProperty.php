@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Type;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
@@ -42,7 +43,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
         $this->propertyDeclaration = $propertyDeclaration;
         $this->variable = $variable;
         $this->class = $class;
-        $this->typeResolver = new PropertyTypeResolver($this, $this->serviceLocator->logger());
+        $this->typeResolver = new PropertyTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
     }
 
@@ -69,10 +70,10 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     public function inferredType(): Type
     {
-        $types = $this->typeResolver->resolve();
+        $type = $this->typeResolver->resolve();
 
-        if (count($types) > 0) {
-            return $types->best();
+        if (TypeUtil::isDefined($type)) {
+            return $type;
         }
 
         return $this->memberTypeResolver->resolveTypes(

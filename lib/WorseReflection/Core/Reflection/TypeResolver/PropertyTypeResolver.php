@@ -3,23 +3,20 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
-use Psr\Log\LoggerInterface;
 
 class PropertyTypeResolver
 {
     private ReflectionProperty $property;
     
-    private LoggerInterface $logger;
-
-    public function __construct(ReflectionProperty $property, LoggerInterface $logger)
+    public function __construct(ReflectionProperty $property)
     {
         $this->property = $property;
-        $this->logger = $logger;
     }
 
-    public function resolve(): Types
+    public function resolve(): Type
     {
         $docblockTypes = $this->getDocblockTypes();
 
@@ -31,7 +28,11 @@ class PropertyTypeResolver
             return $this->property->scope()->resolveFullyQualifiedName($type, $this->property->class());
         }, iterator_to_array($docblockTypes));
 
-        return Types::fromTypes($resolvedTypes);
+        foreach ($resolvedTypes as $resolvedType) {
+            return $resolvedType;
+        }
+
+        return TypeFactory::undefined();
     }
 
     private function getDocblockTypes(): Types
