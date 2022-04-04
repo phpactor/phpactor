@@ -19,18 +19,9 @@ class ParameterFormatter implements Formatter
         assert($object instanceof ReflectionParameter);
 
         $paramInfo = [];
-
-        if ($object->inferredType()->count()) {
-            $isDefined = false;
-            foreach ($object->inferredType() as $type) {
-                if (TypeUtil::isDefined($type)) {
-                    $isDefined = true;
-                }
-            }
-
-            if ($isDefined) {
-                $paramInfo[] = $formatter->format($object->inferredType());
-            }
+        $type = $object->inferredType();
+        if (TypeUtil::isDefined($type)) {
+            $paramInfo[] = $formatter->format($object->inferredType());
         }
         $paramInfo[] = '$' . $object->name();
 
