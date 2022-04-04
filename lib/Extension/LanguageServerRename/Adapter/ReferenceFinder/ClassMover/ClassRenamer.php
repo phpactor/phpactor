@@ -23,11 +23,13 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
+    private Reflector $reflector;
+
     private NameToUriConverter $nameToUriConverter;
 
     private ReferenceFinder $referenceFinder;
@@ -39,12 +41,14 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
+        Reflector $reflector,
         NameToUriConverter $nameToUriConverter,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
+        $this->reflector = $reflector;
         $this->nameToUriConverter = $nameToUriConverter;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
@@ -81,7 +85,7 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $oldUri = $this->nameToUriConverter->convert($originalName);
+        $oldUri = $this->reflector->reflectClass($originalName->getFullyQualifiedNameText())->sourceCode()->uri();
         $newUri = $this->nameToUriConverter->convert($newName);
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {

@@ -24,6 +24,8 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+
 use function Amp\delay;
 
 class RenameHandler implements Handler, CanRegisterCapabilities
@@ -87,6 +89,12 @@ class RenameHandler implements Handler, CanRegisterCapabilities
             } catch (CouldNotRename $couldNotRename) {
                 $this->clientApi->window()->showMessage()->error(sprintf(
                     $couldNotRename->getMessage()
+                ));
+
+                return new WorkspaceEdit(null, []);
+            } catch (SourceNotFound $sourceNotFound) {
+                $this->clientApi->window()->showMessage()->error(sprintf(
+                    $sourceNotFound->getMessage()
                 ));
 
                 return new WorkspaceEdit(null, []);
