@@ -6,7 +6,6 @@ use Generator;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Assert\TrinaryAssert;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;

@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 interface ReflectionMember
 {

@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 class VirtualReflectionParameter implements ReflectionParameter
 {
