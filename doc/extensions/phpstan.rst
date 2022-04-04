@@ -1,7 +1,7 @@
 Phpstan (LSP)
 =============
 
-The PHPStan extension 
+The PHPStan extension
 
 Enable
 ------
@@ -24,7 +24,7 @@ Phpstan Config
 Your project requires a `phpstan.neon` configuration file defining it's
 `level`:
 
-.. code-block::
+.. code-block:: yaml
 
     # phpstan.neon
     parameters:
@@ -33,4 +33,4 @@ Your project requires a `phpstan.neon` configuration file defining it's
 Usage
 -----
 
-You should automatically recieve diagnostics when the extension is installed.
+You should automatically receive diagnostics when the extension is installed.
