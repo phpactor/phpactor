@@ -246,7 +246,7 @@ class ParsedDocblock implements DocBlock
             $collection->add(new VirtualReflectionParameter(
                 ltrim($parameterTag->parameterName() ?? '', '$'),
                 $method,
-                Types::fromTypes([$type]),
+                $type,
                 $type,
                 DefaultValue::undefined(),
                 false,

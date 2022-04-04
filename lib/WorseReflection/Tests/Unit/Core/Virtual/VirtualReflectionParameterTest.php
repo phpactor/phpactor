@@ -30,8 +30,6 @@ class VirtualReflectionParameterTest extends TestCase
     
     private ObjectProphecy $scope;
 
-    private $types;
-    
     private Type $type;
     
     private ObjectProphecy $method;
@@ -44,7 +42,6 @@ class VirtualReflectionParameterTest extends TestCase
         $this->class = $this->prophesize(ReflectionClass::class);
         $this->name = 'test_name';
         $this->scope = $this->prophesize(ReflectionScope::class);
-        $this->types = Types::empty();
         $this->type = TypeFactory::unknown();
         $this->method = $this->prophesize(ReflectionMethod::class);
         $this->defaults = DefaultValue::fromValue(1234);
@@ -56,7 +53,7 @@ class VirtualReflectionParameterTest extends TestCase
         return new VirtualReflectionParameter(
             $this->name,
             $this->method->reveal(),
-            $this->types,
+            $this->type,
             $this->type,
             $this->defaults,
             $this->byReference,
@@ -71,7 +68,7 @@ class VirtualReflectionParameterTest extends TestCase
         $this->assertEquals($this->name, $parameter->name());
         $this->assertEquals($this->method->reveal(), $parameter->functionLike());
         $this->assertEquals($this->method->reveal(), $parameter->method());
-        $this->assertEquals($this->types, $parameter->inferredTypes());
+        $this->assertEquals($this->type, $parameter->inferredType());
         $this->assertEquals($this->type, $parameter->type());
         $this->assertEquals($this->defaults, $parameter->default());
         $this->assertEquals($this->byReference, $parameter->byReference());

@@ -110,7 +110,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if (false === TypeUtil::isDefined($parameter->inferredTypes()->best())) {
+        if (false === TypeUtil::isDefined($parameter->inferredType())) {
             return true;
         }
 
@@ -119,7 +119,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         /** @var Type $variableType */
         foreach ($variable->types() as $variableType) {
             $variableTypeClass = null;
-            foreach ($parameter->inferredTypes() as $parameterType) {
+            foreach ($parameter->inferredType() as $parameterType) {
                 if ($parameterType->accepts($variableType)->isTrue()) {
                     return true;
                 }

@@ -135,7 +135,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                     EOT
         , 'Bar\hello', function (ReflectionFunction $function): void {
             $this->assertCount(3, $function->parameters());
-            $this->assertEquals('Bar\Barfoo', $function->parameters()->get('barfoo')->inferredTypes()->best());
+            $this->assertEquals('Bar\Barfoo', $function->parameters()->get('barfoo')->inferredType());
         },
         ];
 

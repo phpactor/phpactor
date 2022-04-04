@@ -116,7 +116,7 @@ abstract class AbstractParameterCompletor
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if (false === TypeUtil::isDefined($parameter->inferredTypes()->best())) {
+        if (false === TypeUtil::isDefined($parameter->inferredType())) {
             return true;
         }
 
@@ -124,7 +124,7 @@ abstract class AbstractParameterCompletor
         foreach ($variable->types() as $variableType) {
             $variableType = TypeUtil::unwrapNullableType($variableType);
 
-            foreach ($parameter->inferredTypes() as $parameterType) {
+            foreach ($parameter->inferredType() as $parameterType) {
                 if ($parameterType->accepts($variableType)->isTrue()) {
                     return true;
                 }

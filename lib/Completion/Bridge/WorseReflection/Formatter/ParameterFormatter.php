@@ -20,16 +20,16 @@ class ParameterFormatter implements Formatter
 
         $paramInfo = [];
 
-        if ($object->inferredTypes()->count()) {
+        if ($object->inferredType()->count()) {
             $isDefined = false;
-            foreach ($object->inferredTypes() as $type) {
+            foreach ($object->inferredType() as $type) {
                 if (TypeUtil::isDefined($type)) {
                     $isDefined = true;
                 }
             }
 
             if ($isDefined) {
-                $paramInfo[] = $formatter->format($object->inferredTypes());
+                $paramInfo[] = $formatter->format($object->inferredType());
             }
         }
         $paramInfo[] = '$' . $object->name();

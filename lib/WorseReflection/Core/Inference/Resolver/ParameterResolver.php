@@ -119,7 +119,7 @@ class ParameterResolver implements Resolver
             $node->variableName->getEndPosition(),
             [
                 'symbol_type' => Symbol::VARIABLE,
-                'type' => $reflectionParameter->inferredTypes()->best(),
+                'type' => $reflectionParameter->inferredType(),
                 'value' => $reflectionParameter->default()->value(),
             ]
         );

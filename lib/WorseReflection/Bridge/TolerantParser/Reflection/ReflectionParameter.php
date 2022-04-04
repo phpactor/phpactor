@@ -64,7 +64,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return $type;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         return (new ParameterTypeResolver($this))->resolve();
     }
