@@ -51,7 +51,7 @@ class QualifiedNameResolver implements Resolver
                 return $context->withIssue($exception->getMessage());
             }
 
-            return $context->withTypes($function->inferredTypes());
+            return $context->withType($function->inferredType());
         }
 
         return NodeContextFactory::create(

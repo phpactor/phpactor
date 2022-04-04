@@ -163,7 +163,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 function ($properties): void {
                     $this->assertEquals(
                         'Acme\Post',
-                        $properties->get('property1')->inferredTypes()->best()->__toString(),
+                        $properties->get('property1')->inferredType()->__toString(),
                     );
                     $this->assertFalse($properties->get('property1')->isStatic());
                 },
