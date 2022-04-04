@@ -113,6 +113,6 @@ class MemberTypeResolver
 
         $info = $info->withContainerType(TypeFactory::reflectedClass($this->reflector, $declaringClass->name()));
 
-        return $info->withTypes($member->inferredTypes());
+        return $info->withTypes($member->inferredType());
     }
 }

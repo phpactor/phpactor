@@ -52,7 +52,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
         return $this->class;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         if (TypeFactory::unknown() !== $this->type()) {
             return Types::fromTypes([ $this->type() ]);

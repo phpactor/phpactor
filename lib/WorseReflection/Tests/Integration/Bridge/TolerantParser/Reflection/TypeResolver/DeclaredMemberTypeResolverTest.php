@@ -30,7 +30,7 @@ class DeclaredMemberTypeResolverTest extends IntegrationTestCase
                     $this->assertEquals(Types::fromTypes([
                         TypeFactory::int(),
                         TypeFactory::string(),
-                    ]), $property->inferredTypes());
+                    ]), $property->inferredType());
                 },
         ];
 
@@ -38,7 +38,7 @@ class DeclaredMemberTypeResolverTest extends IntegrationTestCase
             '<?php class C { private int|Foobar|Baz $p; }',
                 'C',
                 function (ReflectionProperty $property): void {
-                    $this->assertEquals('int|Foobar|Baz', $property->inferredTypes()->__toString());
+                    $this->assertEquals('int|Foobar|Baz', $property->inferredType());
                 },
         ];
     }

@@ -68,7 +68,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
         return (string) $this->variable->getName();
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         $types = $this->typeResolver->resolve();
 

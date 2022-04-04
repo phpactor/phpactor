@@ -67,7 +67,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
         return (string) $this->parameter->getName();
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         $types = $this->typeResolver->resolve();
 

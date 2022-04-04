@@ -57,7 +57,7 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
                             TypeFactory::string(),
                             TypeFactory::int(),
                         ]),
-                        $properties->get('baz')->inferredTypes()
+                        $properties->get('baz')->inferredType()
                     );
                 },
             ];

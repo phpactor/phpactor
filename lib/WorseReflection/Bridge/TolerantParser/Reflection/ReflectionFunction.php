@@ -51,7 +51,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
         return $this->serviceLocator->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         return (new FunctionReturnTypeResolver($this))->resolve();
     }

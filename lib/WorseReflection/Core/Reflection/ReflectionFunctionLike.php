@@ -24,7 +24,7 @@ interface ReflectionFunctionLike
 
     public function scope(): ReflectionScope;
 
-    public function inferredTypes(): Types;
+    public function inferredType(): Type;
 
     public function type(): Type;
 }

@@ -31,7 +31,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
     
     private Visibility $visibility;
     
-    private Types $inferredTypes;
+    private Type $inferredType;
     
     private Type $type;
     
@@ -48,7 +48,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
         DocBlock $docblock,
         ReflectionScope $scope,
         Visibility $visiblity,
-        Types $inferredTypes,
+        Type $inferredType,
         Type $type,
         Deprecation $deprecation
     ) {
@@ -60,7 +60,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
         $this->docblock = $docblock;
         $this->scope = $scope;
         $this->visibility = $visiblity;
-        $this->inferredTypes = $inferredTypes;
+        $this->inferredType = $inferredType;
         $this->type = $type;
         $this->visiblity = $visiblity;
         $this->deprecation = $deprecation;
@@ -107,10 +107,10 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $new;
     }
 
-    public function withInferredTypes(Types $types): self
+    public function withInferredType(Type $type): self
     {
         $new = clone $this;
-        $new->inferredTypes = $types;
+        $new->inferredType = $type;
 
         return $new;
     }
@@ -143,9 +143,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $this->visibility;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
-        return $this->inferredTypes;
+        return $this->inferredType;
     }
 
     public function type(): Type

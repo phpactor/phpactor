@@ -63,7 +63,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
             $reflectionMethod->docblock(),
             $reflectionMethod->scope(),
             $reflectionMethod->visibility(),
-            $reflectionMethod->inferredTypes(),
+            $reflectionMethod->inferredType(),
             $reflectionMethod->type(),
             $reflectionMethod->parameters(),
             $reflectionMethod->body(),

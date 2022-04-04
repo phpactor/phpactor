@@ -17,7 +17,7 @@ class VirtualReflectionProperty extends VirtualReflectionMember implements Refle
         return false;
     }
 
-    public function memberType()
+    public function memberType(): string
     {
         return ReflectionMember::TYPE_PROPERTY;
     }

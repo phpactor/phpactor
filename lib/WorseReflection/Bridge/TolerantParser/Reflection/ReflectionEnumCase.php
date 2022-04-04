@@ -52,7 +52,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return $this->enum;
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         if (TypeFactory::unknown() !== $this->type()) {
             return Types::fromTypes([ $this->type() ]);

@@ -84,10 +84,10 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
      */
     public function inferredReturnTypes(): Types
     {
-        return $this->inferredTypes();
+        return $this->inferredType();
     }
 
-    public function inferredTypes(): Types
+    public function inferredType(): Type
     {
         $types = $this->returnTypeResolver->resolve();
 
