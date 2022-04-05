@@ -28,9 +28,7 @@ class CatchWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(1, $frame->locals()->byName('$exception'));
                 $exception = $frame->locals()->byName('$exception')->first();
                 self::assertTrinaryTrue(
-                    TypeFactory::class('\Exception')->is(
-                        $exception->type()
-                    )
+                    TypeFactory::class('\Exception')->is($exception->type())
                 );
             }
         ];
@@ -48,7 +46,7 @@ class CatchWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$exception'));
                 $exception = $frame->locals()->byName('$exception')->first();
-                self::assertEquals('Foo|Bar', $exception->types()->__toString());
+                self::assertEquals('Foo|Bar', $exception->type()->__toString());
             }
         ];
     }

@@ -134,7 +134,7 @@ abstract class AbstractInstanceOfWalker extends AbstractWalker
             ;
         }
 
-        $classType = $assignments->first()->types()->best();
+        $classType = $assignments->first()->type();
 
         return $symbolContext->withContainerType($classType);
     }
