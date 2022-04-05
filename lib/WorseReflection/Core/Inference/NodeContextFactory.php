@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use RuntimeException;
 
@@ -14,7 +15,6 @@ class NodeContextFactory
      * @param array{
      *     container_type?: Type|null,
      *     type?: Type|null,
-     *     types?: Types|null,
      *     symbol_type?: Symbol::*|null,
      *     name?: Name|null,
      *     value?: mixed|null,
@@ -25,8 +25,7 @@ class NodeContextFactory
         $defaultConfig = [
             'symbol_type' => Symbol::UNKNOWN,
             'container_type' => null,
-            'type' => null,
-            'types' => null,
+            'type' => TypeFactory::unknown(),
             'value' => null,
         ];
 
@@ -47,13 +46,9 @@ class NodeContextFactory
             $position
         );
 
-        if ($config['type'] && !$config['types']) {
-            $config['types'] = Types::fromTypes([$config['type']]);
-        }
-
         return self::contextFromParameters(
             $symbol,
-            $config['types'],
+            $config['type'],
             $config['container_type'],
             $config['value'],
         );
@@ -93,14 +88,14 @@ class NodeContextFactory
      */
     private static function contextFromParameters(
         Symbol $symbol,
-        Types $types = null,
+        Type $type = null,
         Type $containerType = null,
         $value = null
     ): NodeContext {
         $context = NodeContext::for($symbol);
 
-        if ($types) {
-            $context = $context->withTypes($types);
+        if ($type) {
+            $context = $context->withType($type);
         }
 
         if ($containerType) {
