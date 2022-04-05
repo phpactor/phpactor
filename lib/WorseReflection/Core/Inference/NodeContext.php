@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
@@ -14,7 +15,7 @@ final class NodeContext
      */
     private $value;
     
-    private Types $types;
+    private Type $type;
     
     private Symbol $symbol;
 
@@ -36,18 +37,18 @@ final class NodeContext
     /**
      * @param mixed $value
      */
-    private function __construct(Symbol $symbol, Types $types, $value = null, Type $containerType = null, ReflectionScope $scope = null)
+    private function __construct(Symbol $symbol, Type $type, $value = null, Type $containerType = null, ReflectionScope $scope = null)
     {
         $this->value = $value;
         $this->symbol = $symbol;
         $this->containerType = $containerType;
-        $this->types = $types;
+        $this->type = $type;
         $this->scope = $scope;
     }
 
     public static function for(Symbol $symbol): NodeContext
     {
-        return new self($symbol, Types::fromTypes([ TypeFactory::unknown() ]));
+        return new self($symbol, TypeFactory::unknown());
     }
 
     /**
@@ -56,7 +57,7 @@ final class NodeContext
      */
     public static function fromTypeAndValue(Type $type, $value): NodeContext
     {
-        return new self(Symbol::unknown(), Types::fromTypes([ $type ]), $value);
+        return new self(Symbol::unknown(), $type, $value);
     }
 
     /**
@@ -64,12 +65,12 @@ final class NodeContext
      */
     public static function fromType(Type $type): NodeContext
     {
-        return new self(Symbol::unknown(), Types::fromTypes([ $type ]));
+        return new self(Symbol::unknown(), $type);
     }
 
     public static function none(): NodeContext
     {
-        return new self(Symbol::unknown(), Types::empty());
+        return new self(Symbol::unknown(), new MissingType());
     }
 
     /**
@@ -97,15 +98,7 @@ final class NodeContext
     public function withType(Type $type): NodeContext
     {
         $new = clone $this;
-        $new->types = Types::fromTypes([ $type ]);
-
-        return $new;
-    }
-
-    public function withTypes(Types $types): NodeContext
-    {
-        $new = clone $this;
-        $new->types = $types;
+        $new->type = $type;
 
         return $new;
     }
@@ -131,16 +124,7 @@ final class NodeContext
      */
     public function type(): Type
     {
-        foreach ($this->types() as $type) {
-            return $type;
-        }
-
-        return TypeFactory::unknown();
-    }
-
-    public function types(): Types
-    {
-        return $this->types;
+        return $this->type ?? new MissingType();
     }
 
     /**
