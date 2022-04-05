@@ -84,11 +84,11 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame): void {
             $this->assertCount(1, $frame->locals()->byName('many'));
-            $this->assertEquals('string', (string) $frame->locals()->byName('many')->first()->types()->best());
+            $this->assertEquals('string', (string) $frame->locals()->byName('many')->first()->type());
 
             $this->assertCount(1, $frame->locals()->byName('worlds'));
-            $this->assertEquals('Foobar\Barfoo\World[]', (string) $frame->locals()->byName('worlds')->first()->types()->best());
-            $type = $frame->locals()->byName('worlds')->first()->types()->best();
+            $this->assertEquals('Foobar\Barfoo\World[]', (string) $frame->locals()->byName('worlds')->first()->type());
+            $type = $frame->locals()->byName('worlds')->first()->type();
             assert($type instanceof IterableType);
             $this->assertEquals('Foobar\Barfoo\World', (string) $type->valueType);
         }];

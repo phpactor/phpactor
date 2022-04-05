@@ -117,7 +117,7 @@ class VariableWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
-                $this->assertEquals('Bar|Baz', $frame->locals()->byName('$zed')->last()->types()->__toString());
+                $this->assertEquals('Bar|Baz', $frame->locals()->byName('$zed')->last()->type()->__toString());
             }
         ];
 
