@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use Phpactor\WorseReflection\Core\Types;
 
 class QualifiedNameListResolver implements Resolver
 {

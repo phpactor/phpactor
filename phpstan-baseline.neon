@@ -2111,11 +2111,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\AbstractParameterCompletor\\:\\:populateResponse\\(\\) has parameter \\$variables with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/AbstractParameterCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:createSuggestionOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
@@ -3454,16 +3449,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Application\\\\Complete\\:\\:complete\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/CompletionExtra/Application/Complete.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderClass\\(\\) has no return type specified\\.$#"
