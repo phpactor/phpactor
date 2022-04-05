@@ -101,7 +101,7 @@ class IncludeWalker implements Walker
         foreach ($frame->locals()->byName((string)$name) as $variable) {
             $frame->locals()->replace(
                 $variable,
-                $variable->withTypes($returnValueContext->types())
+                $variable->withType($returnValueContext->type())
             );
             return $frame;
         }

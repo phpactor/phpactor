@@ -21,8 +21,8 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals('Foobar', (string) $frame->locals()->first()->types()->best());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->types()->best());
+            $this->assertEquals('Foobar', (string) $frame->locals()->first()->type());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->type());
         }
         ];
 
@@ -37,7 +37,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->types()->best());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->type());
         }
         ];
 
@@ -52,7 +52,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->types()->best());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->type());
         }
         ];
 
@@ -70,7 +70,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals()->byName('foobar'));
-            $this->assertEquals('Foobar', $frame->locals()->last()->types()->best()->__toString());
+            $this->assertEquals('Foobar', $frame->locals()->last()->type()->__toString());
         }
         ];
 
@@ -88,7 +88,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals()->byName('foobar'));
-            $this->assertEquals('Foobar', $frame->locals()->last()->types()->best()->__toString());
+            $this->assertEquals('Foobar', $frame->locals()->last()->type()->__toString());
         }
         ];
 
@@ -102,7 +102,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(1, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->types()->best());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->type());
         }
     ];
 
@@ -116,7 +116,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(1, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->types()->best());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->type());
         }
         ];
 
@@ -133,8 +133,8 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->types()->best());
-            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(1)->types()->best());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->type());
+            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(1)->type());
         }
                 ];
 
@@ -152,7 +152,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(3, $frame->locals());
-            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(2)->types()->best());
+            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(2)->type());
         }
         ];
 
@@ -168,8 +168,8 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(1)->types()->best());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->types()->best());
+            $this->assertEquals('Foobar', (string) $frame->locals()->atIndex(1)->type());
+            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(0)->type());
         }
         ];
 
@@ -184,7 +184,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->types()->__toString());
+            $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->type()->__toString());
         }
         ];
 
@@ -199,7 +199,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->types()->__toString());
+            $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->type()->__toString());
         }
         ];
 
@@ -215,7 +215,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(3, $frame->locals());
-            $this->assertEquals('stdClass', $frame->locals()->atIndex(2)->types()->best());
+            $this->assertEquals('stdClass', $frame->locals()->atIndex(2)->type());
         }
         ];
 
@@ -231,7 +231,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals('Foobar\Barfoo', (string) $frame->locals()->atIndex(0)->types()->best());
+            $this->assertEquals('Foobar\Barfoo', (string) $frame->locals()->atIndex(0)->type());
         }
         ];
 
@@ -302,12 +302,12 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(1, $frame->locals());
-            $this->assertEquals('Foo', $frame->locals()->atIndex(0)->types()->best()->__toString());
+            $this->assertEquals('Foo', $frame->locals()->atIndex(0)->type()->__toString());
             $this->assertCount(2, $frame->properties());
             $this->assertEquals('Foo', $frame->properties()->atIndex(0)->classType()->__toString());
-            $this->assertEquals(TypeFactory::unknown(), $frame->properties()->atIndex(0)->types()->best()->__toString());
+            $this->assertEquals(TypeFactory::unknown(), $frame->properties()->atIndex(0)->type()->__toString());
             $this->assertEquals('Foo', $frame->properties()->atIndex(1)->classType());
-            $this->assertEquals('Bar', $frame->properties()->atIndex(1)->types()->best()->__toString());
+            $this->assertEquals('Bar', $frame->properties()->atIndex(1)->type()->__toString());
         }
         ];
     }

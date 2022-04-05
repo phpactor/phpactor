@@ -28,7 +28,7 @@ class CatchWalker extends AbstractWalker
         }
 
         /** @phpstan-ignore-next-line Lies */
-        $types = $resolver->resolveNode($frame, $node->qualifiedNameList)->types();
+        $type = $resolver->resolveNode($frame, $node->qualifiedNameList)->type();
         $variableName = $node->variableName;
 
         if (null === $variableName) {
@@ -41,7 +41,7 @@ class CatchWalker extends AbstractWalker
             $variableName->getEndPosition(),
             [
                 'symbol_type' => Symbol::VARIABLE,
-                'types' => $types,
+                'type' => $type,
             ]
         );
 

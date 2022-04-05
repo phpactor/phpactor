@@ -247,9 +247,9 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(3, $frame->locals());
                 $this->assertEquals(
                     'Foobar\Listy<Foobar\Collection>',
-                    (string) $frame->locals()->byName('bar')->first()->types()->best()
+                    (string) $frame->locals()->byName('bar')->first()->type()
                 );
-                $type = $frame->locals()->byName('bar')->first()->types()->best();
+                $type = $frame->locals()->byName('bar')->first()->type();
                 $this->assertEquals(
                     'Foobar\Collection',
                     $type->iterableValueType()->__toString()
@@ -276,7 +276,7 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('barfoo'));
-                $type = $frame->locals()->byName('barfoo')->first()->types()->best();
+                $type = $frame->locals()->byName('barfoo')->first()->type();
                 assert($type instanceof ClassType);
                 $this->assertEquals('Barfoo', $type->name->short());
             }

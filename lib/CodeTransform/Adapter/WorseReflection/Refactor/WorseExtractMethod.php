@@ -260,7 +260,7 @@ class WorseExtractMethod implements ExtractMethod
             }
 
             $parameterBuilder = $methodBuilder->parameter($freeVariable->name());
-            $variableType = $freeVariable->types()->best();
+            $variableType = $freeVariable->type();
             if (TypeUtil::isDefined($variableType)) {
                 $parameterBuilder->type(TypeUtil::short($variableType));
                 foreach (TypeUtil::unwrapClassTypes($variableType) as $classType) {
@@ -339,7 +339,7 @@ class WorseExtractMethod implements ExtractMethod
             /** @var Variable $variable */
             $variable = reset($returnVariables);
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
-            $type = $variable->types()->best();
+            $type = $variable->type();
             if (TypeUtil::isDefined($type)) {
                 $methodBuilder->returnType(TypeUtil::short($type));
                 $type = TypeUtil::unwrapNullableType($type);
@@ -418,17 +418,16 @@ class WorseExtractMethod implements ExtractMethod
     {
         $newMethodBody = 'return ' . $newMethodBody .';';
         $offset = $this->reflector->reflectOffset($source->__toString(), $offsetEnd);
-        $expressionTypes = $offset->symbolContext()->types();
-        if ($expressionTypes->count() === 1) {
-            $type = $expressionTypes->best();
-            if (TypeUtil::isDefined($type)) {
-                $methodBuilder->returnType(TypeUtil::short($type));
-            }
-            $type = TypeUtil::unwrapNullableType($type);
-            if ($type instanceof ClassType) {
-                $methodBuilder->end()->end()->use($type->name()->full());
-            }
+        $expressionType = $offset->symbolContext()->type();
+
+        if (TypeUtil::isDefined($expressionType)) {
+            $methodBuilder->returnType(TypeUtil::short($expressionType));
         }
+        $type = TypeUtil::unwrapNullableType($expressionType);
+        if ($type instanceof ClassType) {
+            $methodBuilder->end()->end()->use($type->name()->full());
+        }
+
         return $newMethodBody;
     }
 

@@ -12,9 +12,10 @@ use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Expression;
-use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
+use Phpactor\WorseReflection\TypeUtil;
 
 class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
 {
@@ -60,7 +61,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
 
                 // create new variables after the if branch
                 if (false === $expressionsAreTrue) {
-                    $detypedVariable = $variable->withTypes(Types::empty());
+                    $detypedVariable = $variable->withType(TypeFactory::unknown());
                     $assignments->add($node->getStartPosition(), $detypedVariable);
                     $assignments->add($node->getEndPosition(), $variable);
                     continue;
@@ -74,7 +75,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             }
 
             if (false === $expressionsAreTrue) {
-                $variable = $variable->withTypes(Types::empty());
+                $variable = $variable->withType(TypeFactory::unknown());
                 $assignments->add($node->getStartPosition(), $variable);
             }
         }
@@ -130,11 +131,8 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
         foreach ($variables as $variable) {
             if (isset($vars[$variable->name()])) {
                 $originalVariable = $vars[$variable->name()];
-                $variable = $originalVariable->withTypes(
-                    $originalVariable->types()
-                        ->merge(
-                            $variable->types()
-                        )
+                $variable = $originalVariable->withType(
+                    TypeUtil::combine($originalVariable->type(), $variable->type())
                 );
             }
 
@@ -153,7 +151,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
         ;
 
         if (0 === $previousAssignments->count()) {
-            return $variable->withTypes(Types::empty());
+            return $variable->withType(TypeFactory::unknown());
         }
 
         return $previousAssignments->last();

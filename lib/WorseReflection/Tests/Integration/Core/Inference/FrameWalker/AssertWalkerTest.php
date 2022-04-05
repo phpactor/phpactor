@@ -20,7 +20,7 @@ class AssertWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('Foobar', (string) $frame->locals()->first()->types()->best());
+                $this->assertEquals('Foobar', (string) $frame->locals()->first()->type());
             }
         ];
 
@@ -55,7 +55,7 @@ class AssertWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(1, $frame->locals());
-            $this->assertEquals('Foo', $frame->locals()->atIndex(0)->types()->best()->__toString());
+            $this->assertEquals('Foo', $frame->locals()->atIndex(0)->type()->__toString());
             $this->assertCount(1, $frame->properties());
             $this->assertEquals('Foo', $frame->properties()->atIndex(0)->classType()->__toString());
             $this->assertEquals('Bar', $frame->properties()->atIndex(0)->type()->__toString());

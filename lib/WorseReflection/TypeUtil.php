@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
@@ -114,5 +115,29 @@ class TypeUtil
         }
 
         return $type;
+    }
+
+    public static function combine(Type ...$types): Type
+    {
+        if (count($types) === 0) {
+            return new MissingType();
+        }
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        return new UnionType(...$types);
+    }
+
+    /**
+     * @return Type[]
+     */
+    public static function unwrapUnion(Type $type): array
+    {
+        if (!$type instanceof UnionType) {
+            return [$type];
+        }
+
+        return $type->types;
     }
 }
