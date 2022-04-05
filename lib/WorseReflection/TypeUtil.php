@@ -128,4 +128,16 @@ class TypeUtil
 
         return new UnionType(...$types);
     }
+
+    /**
+     * @return Type[]
+     */
+    public static function unwrapUnion(Type $type): array
+    {
+        if (!$type instanceof UnionType) {
+            return [$type];
+        }
+
+        return $type->types;
+    }
 }

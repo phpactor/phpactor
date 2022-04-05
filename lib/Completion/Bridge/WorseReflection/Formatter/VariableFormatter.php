@@ -17,6 +17,6 @@ class VariableFormatter implements Formatter
     {
         assert($object instanceof Variable);
 
-        return $formatter->format($object->types());
+        return $formatter->format($object->type());
     }
 }
