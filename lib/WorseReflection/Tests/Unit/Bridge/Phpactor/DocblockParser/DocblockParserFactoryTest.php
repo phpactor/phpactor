@@ -182,8 +182,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
         $docblock = $this->parseDocblockWithReflector($reflector, '/** @var Barfoo */');
         $vars = $docblock->vars();
-        self::assertCount(1, $vars->types());
-        self::assertEquals('Barfoo', $vars->types()->best());
+        self::assertEquals('Barfoo', $vars->type());
     }
 
     public function testVarsWithName(): void

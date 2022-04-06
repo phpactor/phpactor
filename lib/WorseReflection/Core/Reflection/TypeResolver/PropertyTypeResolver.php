@@ -19,7 +19,7 @@ class PropertyTypeResolver
 
     public function resolve(): Type
     {
-        $docblockType = $this->getDocblockTypes()->best();
+        $docblockType = $this->getDocblockType();
 
         if (false === TypeUtil::isDefined($docblockType)) {
             $docblockType = $this->getDocblockTypesFromClass();
@@ -32,9 +32,9 @@ class PropertyTypeResolver
         return $this->property->type();
     }
 
-    private function getDocblockTypes(): Types
+    private function getDocblockType(): Type
     {
-        return $this->property->docblock()->vars()->types();
+        return $this->property->docblock()->vars()->type();
     }
 
     private function getDocblockTypesFromClass(): Type

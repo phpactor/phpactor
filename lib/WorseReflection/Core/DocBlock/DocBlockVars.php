@@ -3,16 +3,25 @@
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
 use IteratorAggregate;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use ArrayIterator;
+use Traversable;
 
 /**
  * @implements IteratorAggregate<DocBlockVar>
  */
 class DocBlockVars implements IteratorAggregate
 {
+    /**
+     * @var DocBlockVar[]
+     */
     private array $vars = [];
 
+    /**
+     * @param DocBlockVar[] $vars
+     */
     public function __construct(array $vars)
     {
         foreach ($vars as $var) {
@@ -20,19 +29,19 @@ class DocBlockVars implements IteratorAggregate
         }
     }
 
-    public function types(): Types
+    public function type(): Type
     {
         $types = [];
         foreach ($this->vars as $var) {
             foreach ($var->types() as $type) {
-                $types[] = $type;
+                return $type;
             }
         }
 
-        return Types::fromTypes($types);
+        return TypeFactory::undefined();
     }
     
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->vars);
     }
