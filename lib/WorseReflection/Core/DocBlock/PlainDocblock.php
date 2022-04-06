@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Deprecation;
@@ -23,9 +24,9 @@ class PlainDocblock implements DocBlock
         $this->raw = trim($raw);
     }
 
-    public function methodTypes(string $methodName): Types
+    public function methodType(string $methodName): Type
     {
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function inherits(): bool
@@ -38,14 +39,14 @@ class PlainDocblock implements DocBlock
         return new DocBlockVars([]);
     }
 
-    public function parameterTypes(string $paramName): Types
+    public function parameterType(string $paramName): Type
     {
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
-    public function propertyTypes(string $methodName): Types
+    public function propertyType(string $methodName): Type
     {
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function formatted(): string
@@ -67,9 +68,9 @@ class PlainDocblock implements DocBlock
         return trim(implode("\n", $lines));
     }
 
-    public function returnTypes(): Types
+    public function returnType(): Type
     {
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function raw(): string

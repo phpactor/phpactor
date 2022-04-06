@@ -26,6 +26,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
@@ -50,17 +51,17 @@ class ParsedDocblock implements DocBlock
         $this->typeConverter = $typeConverter;
     }
 
-    public function methodTypes(string $methodName): Types
+    public function methodType(string $methodName): Type
     {
         foreach ($this->node->descendantElements(MethodTag::class) as $methodTag) {
             assert($methodTag instanceof MethodTag);
             if ($methodTag->methodName() !== $methodName) {
                 continue;
             }
-            return Types::fromTypes([$this->typeConverter->convert($methodTag->type)]);
+            $this->typeConverter->convert($methodTag->type);
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 
     public function inherits(): bool
@@ -84,7 +85,7 @@ class ParsedDocblock implements DocBlock
         return new DocBlockVars($vars);
     }
 
-    public function parameterTypes(string $paramName): Types
+    public function parameterType(string $paramName): Type
     {
         $types = [];
         foreach ($this->node->descendantElements(ParamTag::class) as $paramTag) {
@@ -92,13 +93,13 @@ class ParsedDocblock implements DocBlock
             if (ltrim($paramTag->paramName(), '$') !== $paramName) {
                 continue;
             }
-            $types[] = $this->typeConverter->convert($paramTag->type);
+            return $this->typeConverter->convert($paramTag->type);
         }
 
-        return Types::fromTypes($types);
+        return TypeFactory::undefined();
     }
 
-    public function propertyTypes(string $propertyName): Types
+    public function propertyType(string $propertyName): Type
     {
         $types = [];
         foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
@@ -106,10 +107,10 @@ class ParsedDocblock implements DocBlock
             if (ltrim($propertyTag->propertyName(), '$') !== $propertyName) {
                 continue;
             }
-            $types[] = $this->typeConverter->convert($propertyTag->type);
+            return $this->typeConverter->convert($propertyTag->type);
         }
 
-        return Types::fromTypes($types);
+        return TypeFactory::undefined();
     }
 
     public function formatted(): string
@@ -119,15 +120,14 @@ class ParsedDocblock implements DocBlock
         }, explode("\n", $this->node->prose())));
     }
 
-    public function returnTypes(): Types
+    public function returnType(): Type
     {
         foreach ($this->node->descendantElements(ReturnTag::class) as $tag) {
             assert($tag instanceof ReturnTag);
-            return Types::fromTypes([
-                $this->typeConverter->convert($tag->type())
-            ]);
+            return $this->typeConverter->convert($tag->type());
         }
-        return Types::empty();
+
+        return TypeFactory::undefined();
     }
 
     public function raw(): string

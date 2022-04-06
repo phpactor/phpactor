@@ -22,13 +22,13 @@ interface DocBlock
 
     public function formatted(): string;
 
-    public function returnTypes(): Types;
+    public function returnType(): Type;
 
-    public function methodTypes(string $methodName): Types;
+    public function methodType(string $methodName): Type;
 
-    public function propertyTypes(string $methodName): Types;
+    public function propertyType(string $methodName): Type;
 
-    public function parameterTypes(string $paramName): Types;
+    public function parameterType(string $paramName): Type;
 
     public function vars(): DocBlockVars;
 

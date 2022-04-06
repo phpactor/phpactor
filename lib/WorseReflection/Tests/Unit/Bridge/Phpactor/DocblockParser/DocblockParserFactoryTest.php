@@ -34,10 +34,10 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         $docblock = $this->parseDocblock($docblock);
 
         if (is_string($expected)) {
-            self::assertEquals($expected, $docblock->returnTypes()->best()->__toString());
+            self::assertEquals($expected, $docblock->returnType()->__toString());
             return;
         }
-        self::assertEquals($expected, $docblock->returnTypes()->best());
+        self::assertEquals($expected, $docblock->returnType());
     }
 
     /**
@@ -196,20 +196,20 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         self::assertEquals('foo', $vars[0]->name());
     }
 
-    public function testParameterTypes(): void
+    public function testParameterType(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
         $docblock = $this->parseDocblockWithReflector($reflector, '/** @param Barfoo $foobar */');
-        $types = $docblock->parameterTypes('foobar');
-        self::assertCount(1, $types);
+        $type = $docblock->parameterType('foobar');
+        self::assertEquals('Barfoo', $type->__toString());
     }
 
-    public function testPropertyTypes(): void
+    public function testPropertyType(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
         $docblock = $this->parseDocblockWithReflector($reflector, '/** @property Barfoo $foobar */');
-        $types = $docblock->propertyTypes('foobar');
-        self::assertCount(1, $types);
+        $type = $docblock->propertyType('foobar');
+        self::assertEquals('Barfoo', $type->__toString());
     }
 
     private function parseDocblock(string $docblock): DocBlock
