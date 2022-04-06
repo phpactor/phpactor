@@ -20,7 +20,7 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
-class SymbolContextResolverTest extends IntegrationTestCase
+class NodeContextResolverTest extends IntegrationTestCase
 {
     public function tearDown(): void
     {
@@ -540,7 +540,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     1.<>2;
                     EOT
-                , [], ['type' => 'float', 'value' => 1.2, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '1.2', 'value' => 1.2, 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for integer' => [
@@ -549,7 +549,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     12<>;
                     EOT
-                , [], ['type' => 'int', 'value' => 12, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '12', 'value' => 12, 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for octal integer' => [
@@ -558,7 +558,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     012<>;
                     EOT
-                , [], ['type' => 'int', 'value' => 012, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '012', 'value' => 012, 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for hexadecimal integer' => [
@@ -567,7 +567,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     0x1A<>;
                     EOT
-                , [], ['type' => 'int', 'value' => 0x1A, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '0x1A', 'value' => 0x1A, 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for binary integer' => [
@@ -576,7 +576,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     0b11<>;
                     EOT
-                , [], ['type' => 'int', 'value' => 0b11, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '0b11', 'value' => 0b11, 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for bool true' => [
@@ -585,7 +585,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     tr<>ue;
                     EOT
-                , [], ['type' => 'bool', 'value' => true, 'symbol_type' => Symbol::BOOLEAN],
+                , [], ['type' => 'true', 'value' => true, 'symbol_type' => Symbol::BOOLEAN],
                 ];
 
         yield 'It returns type for bool false' => [
@@ -594,7 +594,7 @@ class SymbolContextResolverTest extends IntegrationTestCase
 
                     <>false;
                     EOT
-                , [], ['type' => 'bool', 'value' => false, 'symbol_type' => Symbol::BOOLEAN],
+                , [], ['type' => 'false', 'value' => false, 'symbol_type' => Symbol::BOOLEAN],
                 ];
 
         yield 'It returns type null' => [

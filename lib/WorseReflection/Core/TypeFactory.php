@@ -4,23 +4,30 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\BinLiteralType;
+use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\HexLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
+use Phpactor\WorseReflection\Core\Type\OctalLiteralType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -48,15 +55,15 @@ class TypeFactory
     public static function fromValue($value): Type
     {
         if (is_int($value)) {
-            return self::int();
+            return self::intLiteral($value);
         }
 
         if (is_string($value)) {
-            return self::string();
+            return self::stringLiteral($value);
         }
 
         if (is_float($value)) {
-            return self::float();
+            return self::floatLiteral($value);
         }
 
         if (is_array($value)) {
@@ -64,7 +71,7 @@ class TypeFactory
         }
 
         if (is_bool($value)) {
-            return self::bool();
+            return self::boolLiteral($value);
         }
 
         if (null === $value) {
@@ -268,5 +275,54 @@ class TypeFactory
         }
 
         return self::class(ClassName::fromString($type), $reflector);
+    }
+
+    public static function intLiteral(int $value)
+    {
+        return new IntLiteralType($value);
+    }
+
+    public static function stringLiteral(string $value)
+    {
+        return new StringLiteralType($value);
+    }
+
+    public static function floatLiteral(float $value)
+    {
+        return new FloatLiteralType($value);
+    }
+
+    public static function boolLiteral(bool $value)
+    {
+        return new BooleanLiteralType($value);
+    }
+
+    public static function fromNumericString(string $value): Type
+    {
+        return self::convertNumericStringToInternalType(
+            // Strip PHP 7.4 underscorse separator before comparison
+            str_replace('_', '', $value)
+        );
+    }
+
+    /**
+     * @return int|float
+     */
+    private static function convertNumericStringToInternalType(string $value): Type
+    {
+        if (1 === preg_match('/^[1-9][0-9]*$/', $value)) {
+            return self::intLiteral((int)$value);
+        }
+        if (1 === preg_match('/^0[xX][0-9a-fA-F]+$/', $value)) {
+            return new HexLiteralType($value);
+        }
+        if (1 === preg_match('/^0[0-7]+$/', $value)) {
+            return new OctalLiteralType($value);
+        }
+        if (1 === preg_match('/^0[bB][01]+$/', $value)) {
+            return new BinLiteralType($value);
+        }
+
+        return self::floatLiteral($value);
     }
 }

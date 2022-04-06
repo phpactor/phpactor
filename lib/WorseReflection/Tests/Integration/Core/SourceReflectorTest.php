@@ -78,7 +78,7 @@ class SourceReflectorTest extends IntegrationTestCase
 
         list($source, $offset) = ExtractOffset::fromSource($source);
 
-        $offset = $this->createReflector($source)->reflectOffset($source, $offset);
-        $this->assertEquals('int', (string) $offset->symbolContext()->type());
+        $offset = $this->createReflector($source)->reflectOffset($source, (int)$offset);
+        $this->assertEquals('1234', (string) $offset->symbolContext()->type());
     }
 }
