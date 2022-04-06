@@ -76,9 +76,7 @@ class ParsedDocblock implements DocBlock
             assert($varTag instanceof VarTag);
             $vars[] = new DocBlockVar(
                 $varTag->variable ? ltrim($varTag->name() ?? '', '$') : '',
-                Types::fromTypes([
-                    $this->typeConverter->convert($varTag->type),
-                ])
+                $this->typeConverter->convert($varTag->type),
             );
         }
 

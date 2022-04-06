@@ -2,18 +2,18 @@
 
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
-use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\Type;
 
 class DocBlockVar
 {
     private string $name;
     
-    private Types $types;
+    private Type $type;
 
-    public function __construct(string $name, Types $types)
+    public function __construct(string $name, Type $type)
     {
         $this->name = $name;
-        $this->types = $types;
+        $this->type = $type;
     }
 
     public function name(): string
@@ -21,8 +21,8 @@ class DocBlockVar
         return $this->name;
     }
 
-    public function types(): Types
+    public function type(): Type
     {
-        return $this->types;
+        return $this->type;
     }
 }

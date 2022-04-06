@@ -31,11 +31,8 @@ class DocBlockVars implements IteratorAggregate
 
     public function type(): Type
     {
-        $types = [];
         foreach ($this->vars as $var) {
-            foreach ($var->types() as $type) {
-                return $type;
-            }
+            return $var->type();
         }
 
         return TypeFactory::undefined();
