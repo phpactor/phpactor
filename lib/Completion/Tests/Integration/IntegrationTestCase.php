@@ -13,7 +13,6 @@ use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParametersFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\PropertyFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TraitFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
-use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypesFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\VariableFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultClassSnippetFormatter;
@@ -29,15 +28,14 @@ class IntegrationTestCase extends TestCase
     {
         return new ObjectFormatter([
             new TypeFormatter(),
-            new TypesFormatter(),
             new FunctionFormatter(),
             new MethodFormatter(),
             new ParameterFormatter(),
             new ParametersFormatter(),
             new PropertyFormatter(),
             new VariableFormatter(),
-            new ClassFormatter(),
             new InterfaceFormatter(),
+            new ClassFormatter(),
             new TraitFormatter(),
             new ConstantFormatter(),
             new EnumCaseFormatter(),

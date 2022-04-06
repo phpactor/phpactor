@@ -3,9 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
-use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\TypeUtil;
 
 class FunctionReturnTypeResolver
 {
@@ -18,24 +17,16 @@ class FunctionReturnTypeResolver
 
     public function resolve(): Type
     {
-        $resolvedTypes = $this->getDocblockTypesFromFunction($this->function);
-
-        if (!$this->function->type() instanceof MissingType) {
-            $resolvedTypes = $resolvedTypes->merge(Types::fromTypes([ $this->function->type() ]));
-        }
-
-        return $resolvedTypes->best();
+        return TypeUtil::firstDefined($this->getDocblockTypeFromFunction($this->function), $this->function->type());
     }
 
-    private function getDocblockTypesFromFunction(ReflectionFunction $function): Types
+    private function getDocblockTypeFromFunction(ReflectionFunction $function): Type
     {
-        return $this->resolveTypes(iterator_to_array($function->docblock()->returnTypes()));
+        return $this->resolveType($function->docblock()->returnType());
     }
 
-    private function resolveTypes(array $types): Types
+    private function resolveType(Type $type): Type
     {
-        return Types::fromTypes(array_map(function (Type $type) {
-            return $this->function->scope()->resolveFullyQualifiedName($type);
-        }, $types));
+        return $this->function->scope()->resolveFullyQualifiedName($type);
     }
 }

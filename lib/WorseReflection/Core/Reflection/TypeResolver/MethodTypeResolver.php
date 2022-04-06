@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -39,15 +38,13 @@ class MethodTypeResolver
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
     {
-        $classMethodOverrides = $method->class()->docblock()->methodTypes($method->name());
+        $classMethodOverride = $method->class()->docblock()->methodType($method->name());
 
-        if (Types::empty() != $classMethodOverrides) {
-            foreach ($classMethodOverrides as $override) {
-                return $this->resolveType($override);
-            }
+        if (TypeUtil::isDefined($classMethodOverride)) {
+            return $this->resolveType($classMethodOverride);
         }
 
-        return $this->resolveType($method->docblock()->returnTypes()->best());
+        return $this->resolveType($method->docblock()->returnType());
     }
 
     private function resolveType(Type $type): Type

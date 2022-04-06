@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -139,5 +140,20 @@ class TypeUtil
         }
 
         return $type->types;
+    }
+
+    public static function firstDefined(Type ...$types): Type
+    {
+        if (empty($types)) {
+            return TypeFactory::undefined();
+        }
+
+        foreach ($types as $type) {
+            if (self::isDefined($type)) {
+                return $type;
+            }
+        }
+
+        return $type;
     }
 }

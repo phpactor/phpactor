@@ -2381,11 +2381,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/CompletorTestCase.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Adapter\\\\WorseReflection\\\\Formatter\\\\WorseTypeFormatterTest\\:\\:provideFormat\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Adapter/WorseReflection/Formatter/WorseTypeFormatterTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
@@ -6221,21 +6216,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockVars\\:\\:__construct\\(\\) has parameter \\$vars with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/DocBlockVars.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockVars\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/DocBlockVars.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockVars\\:\\:\\$vars type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/DocBlockVars.php
-
-		-
 			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
@@ -6576,16 +6556,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/ReflectionSourceCode.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\FunctionReturnTypeResolver\\:\\:resolveTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/FunctionReturnTypeResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\TypeResolver\\\\PropertyTypeResolver\\:\\:getDocblockTypesFromClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/TypeResolver/PropertyTypeResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectFunction\\(\\) has parameter \\$name with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
@@ -6709,11 +6679,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:serializedMapPath\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Types\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Types.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\OriginalMethodResolver\\:\\:resolveInterface\\(\\) has no return type specified\\.$#"

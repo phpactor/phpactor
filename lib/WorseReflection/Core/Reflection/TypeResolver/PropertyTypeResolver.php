@@ -3,9 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\TypeUtil;
 
 class PropertyTypeResolver
 {
@@ -18,30 +17,26 @@ class PropertyTypeResolver
 
     public function resolve(): Type
     {
-        $docblockTypes = $this->getDocblockTypes();
+        $docblockType = $this->getDocblockType();
 
-        if (0 === $docblockTypes->count()) {
-            $docblockTypes = $this->getDocblockTypesFromClass();
+        if (false === TypeUtil::isDefined($docblockType)) {
+            $docblockType = $this->getDocblockTypesFromClass();
         }
 
-        $resolvedTypes = array_map(function (Type $type) {
-            return $this->property->scope()->resolveFullyQualifiedName($type, $this->property->class());
-        }, iterator_to_array($docblockTypes));
-
-        foreach ($resolvedTypes as $resolvedType) {
-            return $resolvedType;
+        if (TypeUtil::isDefined($docblockType)) {
+            return $this->property->scope()->resolveFullyQualifiedName($docblockType, $this->property->class());
         }
 
-        return TypeFactory::undefined();
+        return $this->property->type();
     }
 
-    private function getDocblockTypes(): Types
+    private function getDocblockType(): Type
     {
-        return $this->property->docblock()->vars()->types();
+        return $this->property->docblock()->vars()->type();
     }
 
-    private function getDocblockTypesFromClass()
+    private function getDocblockTypesFromClass(): Type
     {
-        return $this->property->class()->docblock()->propertyTypes($this->property->name());
+        return $this->property->class()->docblock()->propertyType($this->property->name());
     }
 }

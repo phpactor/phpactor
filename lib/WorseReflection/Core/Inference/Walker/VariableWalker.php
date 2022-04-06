@@ -15,14 +15,15 @@ use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class VariableWalker extends AbstractWalker
 {
     private DocBlockFactory $docblockFactory;
     
     /**
-     * @var array<string,Types>
+     * @var array<string,Type>
      */
     private array $injectedTypes = [];
     
@@ -44,7 +45,7 @@ class VariableWalker extends AbstractWalker
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        $docblockTypes = $this->injectVariablesFromComment($frame, $node);
+        $docblockType = $this->injectVariablesFromComment($frame, $node);
 
         if (!$node instanceof Variable) {
             return $frame;
@@ -66,16 +67,16 @@ class VariableWalker extends AbstractWalker
 
         $symbolName = $context->symbol()->name();
 
-        if (!isset($this->injectedTypes[$symbolName]) && $docblockTypes->count() === 0) {
+        if (!isset($this->injectedTypes[$symbolName]) && !TypeUtil::isDefined($docblockType)) {
             return $frame;
         }
 
         if (isset($this->injectedTypes[$symbolName])) {
-            $docblockTypes = $this->injectedTypes[$symbolName];
+            $docblockType = $this->injectedTypes[$symbolName];
             unset($this->injectedTypes[$symbolName]);
         }
 
-        $context = $context->withType($docblockTypes->best());
+        $context = $context->withType($docblockType);
         $locals = $frame->locals();
         foreach ($locals->byName($symbolName)->equalTo($context->symbol()->position()->start()) as $existing) {
             assert($existing instanceof PhpactorVariable);
@@ -88,13 +89,13 @@ class VariableWalker extends AbstractWalker
         return $frame;
     }
 
-    private function injectVariablesFromComment(Frame $frame, Node $node): Types
+    private function injectVariablesFromComment(Frame $frame, Node $node): Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
         $docblock = $this->docblockFactory->create($comment);
 
         if (false === $docblock->isDefined()) {
-            return Types::empty();
+            return TypeFactory::undefined();
         }
 
         $vars = $docblock->vars();
@@ -102,20 +103,18 @@ class VariableWalker extends AbstractWalker
 
         /** @var DocBlockVar $var */
         foreach ($docblock->vars() as $var) {
-            $resolvedTypes = Types::fromTypes(array_map(function (Type $type) use ($node) {
-                return $this->nameResolver->resolve(
-                    $node,
-                    $type
-                );
-            }, iterator_to_array($var->types())));
+            $type = $this->nameResolver->resolve(
+                $node,
+                $var->type()
+            );
 
             if (empty($var->name())) {
-                return $resolvedTypes;
+                return $type;
             }
 
-            $this->injectedTypes[ltrim($var->name(), '$')] = $resolvedTypes;
+            $this->injectedTypes[ltrim($var->name(), '$')] = $type;
         }
 
-        return Types::empty();
+        return TypeFactory::undefined();
     }
 }
