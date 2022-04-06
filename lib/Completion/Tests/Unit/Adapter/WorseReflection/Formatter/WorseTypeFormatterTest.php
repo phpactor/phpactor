@@ -2,9 +2,11 @@
 
 namespace Phpactor\Completion\Tests\Unit\Adapter\WorseReflection\Formatter;
 
+use Generator;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypesFormatter;
 use Phpactor\Completion\Tests\TestCase;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
@@ -15,41 +17,44 @@ class WorseTypeFormatterTest extends TestCase
     /**
      * @dataProvider provideFormat
      */
-    public function testFormat(Types $types, string $expected): void
+    public function testFormat(Type $type, string $expected): void
     {
         $formatter = new ObjectFormatter([
             new TypeFormatter(),
             new TypesFormatter(),
         ]);
 
-        $this->assertEquals($expected, $formatter->format($types));
+        $this->assertEquals($expected, $formatter->format($type));
     }
 
-    public function provideFormat()
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideFormat(): Generator
     {
         $reflector = ReflectorBuilder::create()->build();
         yield 'no types' => [
-            Types::empty(),
-            '<unknown>',
+            TypeFactory::unknown(),
+            '<missing>',
         ];
 
         yield 'single scalar' => [
-            Types::fromTypes([TypeFactory::string()]),
+            TypeFactory::string(),
             'string',
         ];
 
         yield 'union' => [
-            Types::fromTypes([TypeFactory::string(), TypeFactory::null()]),
+            TypeFactory::union(TypeFactory::string(), TypeFactory::null()),
             'string|null',
         ];
 
         yield 'typed array' => [
-            Types::fromTypes([TypeFactory::array('string')]),
+            TypeFactory::array('string'),
             'string[]',
         ];
 
         yield 'generic' => [
-            Types::fromTypes([TypeFactory::collection($reflector, 'Collection', 'Item')]),
+            TypeFactory::collection($reflector, 'Collection', 'Item'),
             'Collection<Item>',
         ];
     }
