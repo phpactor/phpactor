@@ -30,7 +30,6 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseLocalVariable
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ParameterFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\PropertyFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
-use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypesFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultClassSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultFunctionSnippetFormatter;
@@ -293,7 +292,6 @@ class CompletionWorseExtension implements Extension
         $container->register('completion_worse.short_desc.formatters', function (Container $container) {
             return [
                 new TypeFormatter(),
-                new TypesFormatter(),
                 new MethodFormatter(),
                 new ParameterFormatter(),
                 new ParametersFormatter(),

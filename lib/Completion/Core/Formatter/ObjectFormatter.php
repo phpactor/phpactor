@@ -7,12 +7,12 @@ use Phpactor\Completion\Core\Exception\CouldNotFormat;
 class ObjectFormatter
 {
     /**
-     * @var Formatter[]
+     * @var array<array-key,Formatter>
      */
     private array $formatters = [];
 
     /**
-     * @param Formatter[] $formatters
+     * @param array<array-key,Formatter> $formatters
      */
     public function __construct(array $formatters = [])
     {
