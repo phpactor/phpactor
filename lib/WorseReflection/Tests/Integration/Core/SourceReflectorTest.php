@@ -58,7 +58,7 @@ class SourceReflectorTest extends IntegrationTestCase
         ;
 
         $offset = $this->createReflector($source)->reflectOffset($source, 27);
-        $this->assertEquals('string', (string) $offset->symbolContext()->type());
+        $this->assertEquals('"Hello"', (string) $offset->symbolContext()->type());
         $this->assertEquals('Hello', $offset->frame()->locals()->byName('$foobar')->first()->value());
     }
 

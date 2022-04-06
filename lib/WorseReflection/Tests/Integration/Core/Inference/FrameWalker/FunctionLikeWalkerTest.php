@@ -167,7 +167,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals()->byName('$zed'));
                 $zed = $frame->locals()->byName('$zed')->first();
-                $this->assertEquals('string', (string) $zed->type());
+                $this->assertEquals('"zed"', (string) $zed->type());
             }
         ];
 

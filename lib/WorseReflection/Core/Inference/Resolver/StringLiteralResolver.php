@@ -18,14 +18,15 @@ class StringLiteralResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof StringLiteral);
+        $value = (string) $node->getStringContentsText();
         return NodeContextFactory::create(
             (string) $node->getStringContentsText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
                 'symbol_type' => Symbol::STRING,
-                'type' => TypeFactory::string(),
-                'value' => (string) $node->getStringContentsText(),
+                'type' => TypeFactory::stringLiteral($value),
+                'value' => $value,
                 'container_type' => NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
             ]
         );

@@ -531,7 +531,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     'bar<>';
                     EOT
-                , [], ['type' => 'string', 'value' => 'bar', 'symbol_type' => Symbol::STRING ]
+                , [], ['type' => '"bar"', 'value' => 'bar', 'symbol_type' => Symbol::STRING ]
                 ];
 
         yield 'It returns type for float' => [
@@ -644,7 +644,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                         const HELLO = 'string';
                     }
                     EOT
-                , [], ['type' => 'string'],
+                , [], ['type' => '"string"'],
                 ];
 
         yield 'Static method access' => [
@@ -676,7 +676,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                         const HELLO_CONSTANT = 'hello';
                     }
                     EOT
-                , [], ['type' => 'string'],
+                , [], ['type' => '"hello"'],
                 ];
 
         yield 'Static property access' => [
@@ -911,7 +911,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     $barfoo ? <>'foobar' : 'barfoo';
                     EOT
-                , [], ['type' => 'string', 'value' => 'foobar']
+                , [], ['type' => '"foobar"', 'value' => 'foobar']
                 ];
 
         yield 'It uses condition value if ternery "if" is empty' => [
@@ -920,7 +920,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     'string' ?:<> new \stdClass();
                     EOT
-                , [], ['type' => 'string', 'value' => 'string']
+                , [], ['type' => '"string"', 'value' => 'string']
                 ];
 
         yield 'It returns unknown for ternary expressions with unknown condition values' => [

@@ -52,7 +52,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Foobar
                     {
                         /**
-                         * @var string
+                         * @var "Hello"
                          */
                         private $hello;
 
@@ -289,7 +289,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Dodo
                     {
                         /**
-                         * @var string
+                         * @var "string"
                          */
                         private $dodo;
 
@@ -399,7 +399,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     trait Foobar
                     {
                         /**
-                         * @var string
+                         * @var "goodbye"
                          */
                         private $hello;
 
