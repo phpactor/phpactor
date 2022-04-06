@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 class IntType extends ScalarType
 {
-    public function __toString(): string
+    public function toPhpString(): string
     {
         return 'int';
     }

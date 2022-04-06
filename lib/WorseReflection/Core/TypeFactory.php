@@ -110,7 +110,7 @@ class TypeFactory
 
     public static function string(): StringType
     {
-        return new StringType(null);
+        return new StringType();
     }
 
     public static function int(): IntType
@@ -204,6 +204,34 @@ class TypeFactory
         );
     }
 
+    public static function intLiteral(int $value): IntLiteralType
+    {
+        return new IntLiteralType($value);
+    }
+
+    public static function stringLiteral(string $value): StringLiteralType
+    {
+        return new StringLiteralType($value);
+    }
+
+    public static function floatLiteral(float $value): FloatLiteralType
+    {
+        return new FloatLiteralType($value);
+    }
+
+    public static function boolLiteral(bool $value): BooleanLiteralType
+    {
+        return new BooleanLiteralType($value);
+    }
+
+    public static function fromNumericString(string $value): Type
+    {
+        return self::convertNumericStringToInternalType(
+            // Strip PHP 7.4 underscorse separator before comparison
+            str_replace('_', '', $value)
+        );
+    }
+
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
         if ('' === $type) {
@@ -277,37 +305,7 @@ class TypeFactory
         return self::class(ClassName::fromString($type), $reflector);
     }
 
-    public static function intLiteral(int $value)
-    {
-        return new IntLiteralType($value);
-    }
-
-    public static function stringLiteral(string $value)
-    {
-        return new StringLiteralType($value);
-    }
-
-    public static function floatLiteral(float $value)
-    {
-        return new FloatLiteralType($value);
-    }
-
-    public static function boolLiteral(bool $value)
-    {
-        return new BooleanLiteralType($value);
-    }
-
-    public static function fromNumericString(string $value): Type
-    {
-        return self::convertNumericStringToInternalType(
-            // Strip PHP 7.4 underscorse separator before comparison
-            str_replace('_', '', $value)
-        );
-    }
-
-    /**
-     * @return int|float
-     */
+    
     private static function convertNumericStringToInternalType(string $value): Type
     {
         if (1 === preg_match('/^[1-9][0-9]*$/', $value)) {
@@ -323,6 +321,6 @@ class TypeFactory
             return new BinLiteralType($value);
         }
 
-        return self::floatLiteral($value);
+        return self::floatLiteral((float)$value);
     }
 }

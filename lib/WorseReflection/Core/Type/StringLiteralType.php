@@ -16,9 +16,7 @@ class StringLiteralType extends StringType implements Literal
         return sprintf('"%s"', $this->value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function value()
     {
         return $this->value;

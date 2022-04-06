@@ -201,7 +201,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                         public $hello;
 
                         /**
-                         * @var int
+                         * @var 1234
                          */
                         private $foobar;
 
@@ -226,9 +226,9 @@ class AddMissingPropertiesTest extends WorseTestCase
                          */
                         public $hello;
 
-                        public function hello()
+                        public function hello(int $foo)
                         {
-                            $this->foobar = 1234;
+                            $this->foobar = $foo;
                         }
                     }
                     EOT
@@ -251,9 +251,9 @@ class AddMissingPropertiesTest extends WorseTestCase
                         private $foobar;
 
 
-                        public function hello()
+                        public function hello(int $foo)
                         {
-                            $this->foobar = 1234;
+                            $this->foobar = $foo;
                         }
                     }
                     EOT
@@ -302,7 +302,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Foobar extends Dodo
                     {
                         /**
-                         * @var int
+                         * @var 1234
                          */
                         private $foobar;
 

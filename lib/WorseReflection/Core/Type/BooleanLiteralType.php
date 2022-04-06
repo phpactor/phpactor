@@ -2,9 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-use Phpactor\WorseReflection\Core\Trinary;
-
-final class BooleanLiteralType extends BooleanType implements  Literal
+final class BooleanLiteralType extends BooleanType implements Literal
 {
     private bool $value;
 
