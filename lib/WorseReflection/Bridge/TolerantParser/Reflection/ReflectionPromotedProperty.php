@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Visibility;
 use InvalidArgumentException;
 use Phpactor\WorseReflection\TypeUtil;
@@ -89,7 +90,11 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     public function type(): Type
     {
-        return $this->memberTypeResolver->resolve(
+        if (!$this->parameter->typeDeclarationList) {
+            return TypeFactory::undefined();
+        }
+
+        return $this->memberTypeResolver->resolveTypes(
             $this->parameter,
             $this->parameter->typeDeclarationList,
             $this->class()->name(),

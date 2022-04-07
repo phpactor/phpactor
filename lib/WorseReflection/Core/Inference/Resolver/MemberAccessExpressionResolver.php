@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\TypeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
 {
@@ -74,9 +75,9 @@ class MemberAccessExpressionResolver implements Resolver
                 $node->getEndPosition(),
             );
 
-            foreach ($frameTypes as $types) {
-                $info = $info->withTypes(
-                    $info->types()->merge($types),
+            foreach ($frameTypes as $type) {
+                $info = $info->withType(
+                    TypeUtil::combine($info->type(), $type)
                 );
             }
         }
@@ -110,7 +111,7 @@ class MemberAccessExpressionResolver implements Resolver
                 continue;
             }
 
-            yield $variable->types();
+            yield $variable->type();
         }
     }
 }

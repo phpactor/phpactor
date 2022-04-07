@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CompletionExtra\Rpc;
 use Phpactor\Completion\Core\Exception\CouldNotFormat;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -43,11 +44,14 @@ class HoverHandler implements Handler
         ]);
     }
 
-    public function handle(array $arguments)
+    /**
+     * @param array<string,mixed> $arguments
+     */
+    public function handle(array $arguments): Response
     {
         $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
-        $types = $offset->symbolContext()->types();
+        $type = $offset->symbolContext()->type();
         $symbolContext = $offset->symbolContext();
 
         $info = $this->messageFromSymbolContext($symbolContext);
@@ -122,7 +126,7 @@ class HoverHandler implements Handler
 
     private function renderVariable(NodeContext $symbolContext)
     {
-        return $this->formatter->format($symbolContext->types());
+        return $this->formatter->format($symbolContext->type());
     }
 
     private function renderClass(Type $type)

@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -18,6 +17,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 class SymbolContextResolverTest extends IntegrationTestCase
@@ -1190,8 +1190,8 @@ class SymbolContextResolverTest extends IntegrationTestCase
                     continue 2;
                 case 'types':
                     $this->assertEquals(
-                        Types::fromTypes($value)->__toString(),
-                        $information->types()->__toString(),
+                        TypeUtil::combine(...$value)->__toString(),
+                        $information->type()->__toString(),
                         $name,
                     );
                     continue 2;

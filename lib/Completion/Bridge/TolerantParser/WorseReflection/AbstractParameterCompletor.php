@@ -20,7 +20,6 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -39,6 +38,9 @@ abstract class AbstractParameterCompletor
         $this->variableCompletionHelper = $variableCompletionHelper ?: new VariableCompletionHelper($reflector);
     }
 
+    /**
+     * @param WorseVariable[] $variables
+     */
     protected function populateResponse(Node $callableExpression, ReflectionFunctionLike $functionLikeReflection, array $variables): Generator
     {
         // function has no parameters, return empty handed
@@ -56,7 +58,7 @@ abstract class AbstractParameterCompletor
 
         foreach ($variables as $variable) {
             if (
-                $variable->types()->count() &&
+                TypeUtil::isDefined($variable->type()) &&
                 false === $this->isVariableValidForParameter($variable, $parameter)
             ) {
                 // parameter has no types and is not valid for this position, ignore it
@@ -70,7 +72,7 @@ abstract class AbstractParameterCompletor
                     'priority' => Suggestion::PRIORITY_HIGH,
                     'short_description' => sprintf(
                         '%s => param #%d %s',
-                        $this->formatter->format($variable->types()),
+                        $this->formatter->format($variable->type()),
                         $paramIndex,
                         $this->formatter->format($parameter)
                     )
@@ -120,8 +122,7 @@ abstract class AbstractParameterCompletor
             return true;
         }
 
-        /** @var Type $variableType */
-        foreach ($variable->types() as $variableType) {
+        foreach (TypeUtil::unwrapUnion($variable->type()) as $variableType) {
             $variableType = TypeUtil::unwrapNullableType($variableType);
 
             if ($parameter->inferredType()->accepts($variableType)->isTrue()) {

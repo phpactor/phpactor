@@ -25,7 +25,7 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('item'));
-                $this->assertEquals('int', (string) $frame->locals()->byName('item')->first()->types()->best());
+                $this->assertEquals('int', (string) $frame->locals()->byName('item')->first()->type());
             }
         ];
 
@@ -43,7 +43,7 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(3, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('key'));
-                $this->assertEquals(TypeFactory::unknown(), $frame->locals()->byName('key')->first()->types()->best());
+                $this->assertEquals(TypeFactory::unknown(), $frame->locals()->byName('key')->first()->type());
                 $this->assertEquals(false, $frame->locals()->byName('key')->first()->isProperty());
             }
         ];
@@ -66,7 +66,7 @@ class ForeachWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
                 $this->assertCount(1, $frame->locals()->byName('item'));
-                $this->assertEquals('Foobar\\Barfoo', (string) $frame->locals()->byName('item')->first()->types()->best());
+                $this->assertEquals('Foobar\\Barfoo', (string) $frame->locals()->byName('item')->first()->type());
             }
         ];
 
@@ -96,11 +96,11 @@ class ForeachWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(1, $frame->locals()->byName('item'));
                 $this->assertEquals(
                     'Foobar\\Collection<Foobar\Item>',
-                    (string) $frame->locals()->byName('items')->first()->types()->best()
+                    (string) $frame->locals()->byName('items')->first()->type()
                 );
                 $this->assertEquals(
                     'Foobar\\Item',
-                    (string) $frame->locals()->byName('item')->first()->types()->best()
+                    (string) $frame->locals()->byName('item')->first()->type()
                 );
             }
         ];

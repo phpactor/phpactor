@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class QualifiedNameListResolver implements Resolver
 {
@@ -30,14 +30,13 @@ class QualifiedNameListResolver implements Resolver
             $types[] = $resolver->resolveNode($frame, $child)->type();
         }
 
-        $types = Types::fromTypes($types);
+        $type = new UnionType(...$types);
         return NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => $types->best(),
-                'types' => $types,
+                'type' => $type->reduce(),
                 'symbol_type' => Symbol::CLASS_,
             ]
         );

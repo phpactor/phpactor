@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 interface DocBlock
 {
@@ -22,13 +21,13 @@ interface DocBlock
 
     public function formatted(): string;
 
-    public function returnTypes(): Types;
+    public function returnType(): Type;
 
-    public function methodTypes(string $methodName): Types;
+    public function methodType(string $methodName): Type;
 
-    public function propertyTypes(string $methodName): Types;
+    public function propertyType(string $methodName): Type;
 
-    public function parameterTypes(string $paramName): Types;
+    public function parameterType(string $paramName): Type;
 
     public function vars(): DocBlockVars;
 

@@ -77,7 +77,7 @@ class ForeachWalker extends AbstractWalker
             return;
         }
         
-        $collectionType = $collection->types()->best();
+        $collectionType = $collection->type();
         
         $context = NodeContextFactory::create(
             $itemName,
@@ -99,7 +99,7 @@ class ForeachWalker extends AbstractWalker
             return;
         }
 
-        $collectionType = $collection->types()->best();
+        $collectionType = $collection->type();
 
         $context = NodeContextFactory::create(
             $itemName,

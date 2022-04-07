@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -12,6 +13,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
@@ -111,6 +113,45 @@ class TypeUtil
             $newType->keyType = self::toLocalType($type->keyType, $scope);
             $newType->valueType = self::toLocalType($type->valueType, $scope);
             return $newType;
+        }
+
+        return $type;
+    }
+
+    public static function combine(Type ...$types): Type
+    {
+        if (count($types) === 0) {
+            return new MissingType();
+        }
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        return new UnionType(...$types);
+    }
+
+    /**
+     * @return Type[]
+     */
+    public static function unwrapUnion(Type $type): array
+    {
+        if (!$type instanceof UnionType) {
+            return [$type];
+        }
+
+        return $type->types;
+    }
+
+    public static function firstDefined(Type ...$types): Type
+    {
+        if (empty($types)) {
+            return TypeFactory::undefined();
+        }
+
+        foreach ($types as $type) {
+            if (self::isDefined($type)) {
+                return $type;
+            }
         }
 
         return $type;

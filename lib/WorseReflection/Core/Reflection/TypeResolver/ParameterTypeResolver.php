@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterTypeResolver
 {
@@ -17,16 +18,10 @@ class ParameterTypeResolver
     public function resolve(): Type
     {
         $docblock = $this->parameter->method()->docblock();
-        $docblockTypes = $docblock->parameterTypes($this->parameter->name());
+        $docblockType = $this->parameter->scope()->resolveFullyQualifiedName(
+            $docblock->parameterType($this->parameter->name())
+        );
 
-        $resolvedTypes = array_map(function (Type $type) {
-            return $this->parameter->scope()->resolveFullyQualifiedName($type);
-        }, iterator_to_array($docblockTypes));
-
-        foreach ($resolvedTypes as $type) {
-            return $type;
-        }
-
-        return $this->parameter->type();
+        return TypeUtil::firstDefined($docblockType, $this->parameter->type());
     }
 }
