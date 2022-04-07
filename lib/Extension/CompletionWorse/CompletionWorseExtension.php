@@ -72,7 +72,7 @@ class CompletionWorseExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_CLASS_COMPLETOR_LIMIT => 100,
+            self::PARAM_CLASS_COMPLETOR_LIMIT => 25,
             self::PARAM_DISABLED_COMPLETORS => [],
             self::PARAM_NAME_COMPLETION_PRIORITY => self::NAME_SEARCH_STRATEGY_PROXIMITY,
             self::PARAM_SNIPPETS => true,
@@ -253,13 +253,13 @@ class CompletionWorseExtension implements Extension
         ]]);
 
         $container->register('completion_worse.completor.name_search', function (Container $container) {
-            return new NameSearcherCompletor(
+            return new LimitingCompletor(new NameSearcherCompletor(
                 $container->get(NameSearcher::class),
                 new ObjectFormatter(
                     $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
                 ),
                 $container->get(DocumentPrioritizer::class)
-            );
+            ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
         }, [ self::TAG_TOLERANT_COMPLETOR => [
             'name' => 'name_search',
         ]]);
