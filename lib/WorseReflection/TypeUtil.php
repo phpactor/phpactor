@@ -158,6 +158,9 @@ class TypeUtil
         return $type;
     }
 
+    /**
+     * If the given type is a literal, return the general type
+     */
     public static function generalize(Type $type): Type
     {
         if ($type instanceof Generalizable) {

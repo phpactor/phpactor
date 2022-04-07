@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-final class IntLiteralType extends IntType implements Literal
+use Phpactor\WorseReflection\Core\Type;
+
+final class IntLiteralType extends IntType implements Literal, Generalizable
 {
     public int $value;
 
@@ -19,5 +21,10 @@ final class IntLiteralType extends IntType implements Literal
     public function value()
     {
         return $this->value;
+    }
+
+    public function generalize(): Type
+    {
+        return new IntType();
     }
 }
