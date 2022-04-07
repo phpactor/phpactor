@@ -25,6 +25,16 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
 
     public function __toString(): string
     {
+        if (range(0, count($this->typeMap) - 1) === array_keys($this->typeMap)) {
+            return sprintf(
+                'array{%s}',
+                implode(',', array_map(
+                    fn (Type $type) => sprintf('%s', $type->__toString()),
+                    array_values($this->typeMap),
+                ))
+            );
+        }
+
         return sprintf(
             'array{%s}',
             implode(',', array_map(

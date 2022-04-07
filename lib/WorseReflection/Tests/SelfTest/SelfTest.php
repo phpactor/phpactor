@@ -27,6 +27,7 @@ class SelfTest extends IntegrationTestCase
     public function provideSelf(): Generator
     {
         foreach ([
+            'assignment',
             'flow',
             'generics',
         ] as $topic) {
