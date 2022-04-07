@@ -25,14 +25,14 @@ class ArrayCreationExpressionResolver implements Resolver
                 $node->getStartPosition(),
                 $node->getEndPosition(),
                 [
-                    'type' => TypeFactory::array(),
+                    'type' => TypeFactory::arrayLiteral([]),
                     'value' => []
                 ]
             );
         }
 
         foreach ($node->arrayElements->getElements() as $element) {
-            $value = $resolver->resolveNode($frame, $element->elementValue)->value();
+            $value = $resolver->resolveNode($frame, $element->elementValue)->type();
             if ($element->elementKey) {
                 $key = $resolver->resolveNode($frame, $element->elementKey)->value();
                 $array[$key] = $value;
@@ -47,7 +47,7 @@ class ArrayCreationExpressionResolver implements Resolver
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => TypeFactory::array(),
+                'type' => TypeFactory::arrayLiteral($array),
                 'value' => $array
             ]
         );

@@ -174,10 +174,10 @@ class TypeUtil
     /**
      * @return mixed
      */
-    public static function valueOrNull(Type $value)
+    public static function valueOrNull(Type $type)
     {
-        if ($value instanceof Literal) {
-            return $value->value();
+        if ($type instanceof Literal) {
+            return $type->value();
         }
 
         return null;

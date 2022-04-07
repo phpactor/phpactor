@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
+use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
@@ -222,6 +223,14 @@ class TypeFactory
     public static function boolLiteral(bool $value): BooleanLiteralType
     {
         return new BooleanLiteralType($value);
+    }
+
+    /**
+     * @param array<array-key,Type> $elements
+     */
+    public static function arrayLiteral(array $elements): ArrayLiteral
+    {
+        return new ArrayLiteral($elements);
     }
 
     public static function fromNumericString(string $value): Type
