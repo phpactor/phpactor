@@ -205,7 +205,6 @@ class AssignmentWalker extends AbstractWalker
         
             $index++;
             $elementValue = $element->elementValue;
-        
             if (!$elementValue instanceof Variable) {
                 continue;
             }
@@ -228,7 +227,7 @@ class AssignmentWalker extends AbstractWalker
         
             if (is_array($value) && isset($value[$index])) {
                 $variableContext = $variableContext->withValue($value[$index]);
-                $variableContext = $variableContext->withType(TypeFactory::fromString(gettype($value[$index])));
+                $variableContext = $variableContext->withType($value[$index]);
             }
         
             $frame->locals()->add($element->getStartPosition(), WorseVariable::fromSymbolContext($variableContext));

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayLiteral extends ArrayType implements Literal, Generalizable
@@ -18,6 +19,8 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
     public function __construct(array $typeMap)
     {
         $this->typeMap = $typeMap;
+        $this->keyType = new MixedType();
+        $this->valueType = $this->resolveValueType($typeMap);
     }
 
     public function __toString(): string
@@ -46,5 +49,26 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
     public function generalize(): Type
     {
         return new ArrayType(new ArrayKeyType(), new MixedType());
+    }
+
+    /**
+     * @param array<array-key,Type> $typeMap
+     */
+    private function resolveValueType(array $typeMap): Type
+    {
+        $valueType = null;
+        foreach ($typeMap as $type) {
+            $type = TypeUtil::generalize($type);
+            if ($valueType === null) {
+                $valueType = $type;
+                continue;
+            }
+
+            if ($valueType != $type) {
+                return new MixedType();
+            }
+        }
+
+        return $valueType ?: new MissingType();
     }
 }
