@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-final class BooleanLiteralType extends BooleanType implements Literal
+use Phpactor\WorseReflection\Core\Type;
+
+final class BooleanLiteralType extends BooleanType implements Literal, Generalizable
 {
     private bool $value;
 
@@ -19,5 +21,10 @@ final class BooleanLiteralType extends BooleanType implements Literal
     public function value()
     {
         return $this->value;
+    }
+
+    public function generalize(): Type
+    {
+        return new BooleanType();
     }
 }

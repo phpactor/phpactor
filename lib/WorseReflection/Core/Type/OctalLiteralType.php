@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-final class OctalLiteralType extends IntType implements Literal
+use Phpactor\WorseReflection\Core\Type;
+
+final class OctalLiteralType extends IntType implements Literal, Generalizable
 {
     public string $value;
 
@@ -19,5 +21,10 @@ final class OctalLiteralType extends IntType implements Literal
     public function value()
     {
         return octdec(substr($this->value, 1));
+    }
+
+    public function generalize(): Type
+    {
+        return new IntType();
     }
 }

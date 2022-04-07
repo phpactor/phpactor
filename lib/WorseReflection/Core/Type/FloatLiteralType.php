@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-final class FloatLiteralType extends FloatType implements Literal
+use Phpactor\WorseReflection\Core\Type;
+
+final class FloatLiteralType extends FloatType implements Literal, Generalizable
 {
     public float $value;
 
@@ -19,5 +21,10 @@ final class FloatLiteralType extends FloatType implements Literal
     public function value()
     {
         return $this->value;
+    }
+
+    public function generalize(): Type
+    {
+        return new FloatType();
     }
 }

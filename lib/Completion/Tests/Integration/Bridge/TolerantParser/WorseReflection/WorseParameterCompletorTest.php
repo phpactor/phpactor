@@ -47,7 +47,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$param',
-                    'short_description' => 'string => param #1 string $foo',
+                    'short_description' => '"string" => param #1 string $foo',
                 ]
             ]
         ];
@@ -88,7 +88,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$param',
-                    'short_description' => 'string => param #3 $mixed',
+                    'short_description' => '"string" => param #3 $mixed',
                 ],
             ]
         ];
@@ -117,7 +117,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #2 string $barbar',
+                    'short_description' => '"string" => param #2 string $barbar',
                 ],
             ],
         ];
@@ -134,7 +134,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #1 $bar',
+                    'short_description' => '"string" => param #1 $bar',
                 ],
             ],
         ];
@@ -159,7 +159,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #1 $bar',
+                    'short_description' => '"string" => param #1 $bar',
                 ],
             ],
         ];
@@ -183,7 +183,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #1 $bar',
+                    'short_description' => '"string" => param #1 $bar',
                 ],
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
@@ -264,7 +264,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #2 string $barbar',
+                    'short_description' => '"string" => param #2 string $barbar',
                 ],
             ],
         ];
@@ -281,7 +281,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$hello',
-                    'short_description' => 'string => param #1 $bar',
+                    'short_description' => '"string" => param #1 $bar',
                 ],
             ],
         ];
@@ -309,7 +309,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$param',
-                    'short_description' => 'string => param #3 $mixed',
+                    'short_description' => '"string" => param #3 $mixed',
                 ],
             ],
         ];
