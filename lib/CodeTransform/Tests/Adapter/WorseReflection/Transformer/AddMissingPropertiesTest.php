@@ -52,7 +52,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Foobar
                     {
                         /**
-                         * @var "Hello"
+                         * @var string
                          */
                         private $hello;
 
@@ -201,7 +201,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                         public $hello;
 
                         /**
-                         * @var 1234
+                         * @var int
                          */
                         private $foobar;
 
@@ -226,9 +226,9 @@ class AddMissingPropertiesTest extends WorseTestCase
                          */
                         public $hello;
 
-                        public function hello(int $foo)
+                        public function hello()
                         {
-                            $this->foobar = $foo;
+                            $this->foobar = 1234;
                         }
                     }
                     EOT
@@ -251,9 +251,9 @@ class AddMissingPropertiesTest extends WorseTestCase
                         private $foobar;
 
 
-                        public function hello(int $foo)
+                        public function hello()
                         {
-                            $this->foobar = $foo;
+                            $this->foobar = 1234;
                         }
                     }
                     EOT
@@ -289,7 +289,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Dodo
                     {
                         /**
-                         * @var "string"
+                         * @var string
                          */
                         private $dodo;
 
@@ -302,7 +302,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     class Foobar extends Dodo
                     {
                         /**
-                         * @var 1234
+                         * @var int
                          */
                         private $foobar;
 
@@ -399,7 +399,7 @@ class AddMissingPropertiesTest extends WorseTestCase
                     trait Foobar
                     {
                         /**
-                         * @var "goodbye"
+                         * @var string
                          */
                         private $hello;
 
