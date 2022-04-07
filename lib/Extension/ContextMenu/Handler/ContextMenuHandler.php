@@ -20,6 +20,7 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Container\Container;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ContextMenuHandler implements Handler
 {
@@ -166,7 +167,7 @@ class ContextMenuHandler implements Handler
                     // when we want to act on the file in the "type" under the
                     // cursor. this shouldn't be a thing.
                     $type = $symbolContext->hasContainerType() ? $symbolContext->containerType() : $symbolContext->type();
-                    $parameterValue = $this->classFileNormalizer->classToFile($type);
+                    $parameterValue = $this->classFileNormalizer->classToFile(TypeUtil::generalize($type));
                     break;
                 case '%offset%':
                     $parameterValue = $arguments[self::PARAMETER_OFFSET];
