@@ -146,17 +146,17 @@ class TypeFactoryTest extends TestCase
     {
         yield [
             'string',
-            TypeFactory::string(),
+            TypeFactory::stringLiteral('string'),
         ];
 
         yield [
             11,
-            TypeFactory::int(),
+            TypeFactory::intLiteral(11),
         ];
 
         yield [
             11.2,
-            TypeFactory::float(),
+            TypeFactory::floatLiteral(11.2),
         ];
 
         yield [
@@ -166,12 +166,12 @@ class TypeFactoryTest extends TestCase
 
         yield [
             true,
-            TypeFactory::bool(),
+            TypeFactory::boolLiteral(true),
         ];
 
         yield [
             false,
-            TypeFactory::bool(),
+            TypeFactory::boolLiteral(false),
         ];
 
         yield [

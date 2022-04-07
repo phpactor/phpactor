@@ -16,6 +16,7 @@ Bug fixes:
   - [lsp] Fix unresolvable classes not being listed in code actions
   - [cb] Do not apply HTML escaping when rendering code templates
   - [wr] Promoted property docblock types not picked up #1334
+  - [completion] Limit results from the search index (improve search performance significantly)
 
 Improvements:
 

@@ -29,14 +29,14 @@ class ReservedWordResolver implements Resolver
 
         if ('false' === $word) {
             $value = false;
-            $type = TypeFactory::bool();
+            $type = TypeFactory::boolLiteral($value);
             $symbolType = Symbol::BOOLEAN;
             $containerType = NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node);
         }
 
         if ('true' === $word) {
-            $type = TypeFactory::bool();
             $value = true;
+            $type = TypeFactory::boolLiteral($value);
             $symbolType = Symbol::BOOLEAN;
             $containerType = NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node);
         }
