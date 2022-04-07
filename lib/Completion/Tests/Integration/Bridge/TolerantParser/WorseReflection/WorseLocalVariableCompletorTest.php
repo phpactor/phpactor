@@ -48,7 +48,7 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$foobar',
-                    'short_description' => 'string',
+                    'short_description' => '"hello"',
                 ]
             ]
         ];
@@ -59,7 +59,7 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$foobar',
-                    'short_description' => 'string',
+                    'short_description' => '"hello"',
                 ]
             ]
         ];
@@ -70,12 +70,12 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$barfoo',
-                    'short_description' => 'int',
+                    'short_description' => '12',
                 ],
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$foobar',
-                    'short_description' => 'string',
+                    'short_description' => '"hello"',
                 ],
             ]
         ];

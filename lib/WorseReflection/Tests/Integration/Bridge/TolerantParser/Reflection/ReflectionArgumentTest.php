@@ -15,7 +15,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
     public function testReflectMethodCall(string $source, array $frame, Closure $assertion): void
     {
         list($source, $offset) = ExtractOffset::fromSource($source);
-        $reflection = $this->createReflector($source)->reflectMethodCall($source, $offset);
+        $reflection = self::createReflector($source)->reflectMethodCall($source, $offset);
         $assertion($reflection->arguments());
     }
 
@@ -31,7 +31,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals('foo', $arguments->first()->guessName());
+                    self::assertEquals('foo', $arguments->first()->guessName());
                 },
             ],
             'It guesses the name from return type' => [
@@ -51,7 +51,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals('alice', $arguments->first()->guessName());
+                    self::assertEquals('alice', $arguments->first()->guessName());
                 },
             ],
             'It returns a generated name if it cannot be determined' => [
@@ -68,8 +68,8 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals('argument0', $arguments->first()->guessName());
-                    $this->assertEquals('argument1', $arguments->last()->guessName());
+                    self::assertEquals('argument0', $arguments->first()->guessName());
+                    self::assertEquals('argument1', $arguments->last()->guessName());
                 },
             ],
             'It returns the argument type' => [
@@ -82,7 +82,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals('int', (string) $arguments->first()->type());
+                    self::assertEquals('1', (string) $arguments->first()->type());
                 },
             ],
             'It returns the value' => [
@@ -95,7 +95,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals(1, $arguments->first()->value());
+                    self::assertEquals(1, $arguments->first()->value());
                 },
             ],
             'It returns the position' => [
@@ -107,8 +107,8 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    $this->assertEquals(17, $arguments->first()->position()->start());
-                    $this->assertEquals(25, $arguments->first()->position()->end());
+                    self::assertEquals(17, $arguments->first()->position()->start());
+                    self::assertEquals(25, $arguments->first()->position()->end());
                 },
             ],
         ];

@@ -107,7 +107,7 @@ class ReflectionConstantTest extends IntegrationTestCase
             ,
             'Foobar',
             function (ReflectionConstantCollection $constants): void {
-                $this->assertEquals('string', $constants->first()->type());
+                $this->assertEquals('"foobar"', $constants->first()->type()->__toString());
             }
         ];
 
@@ -124,7 +124,7 @@ class ReflectionConstantTest extends IntegrationTestCase
             ,
             'Foobar',
             function (ReflectionConstantCollection $constants): void {
-                $this->assertEquals('string', $constants->first()->inferredType());
+                $this->assertEquals('"foobar"', $constants->first()->inferredType());
             }
         ];
 

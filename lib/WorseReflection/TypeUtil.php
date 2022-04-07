@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -152,6 +153,18 @@ class TypeUtil
             if (self::isDefined($type)) {
                 return $type;
             }
+        }
+
+        return $type;
+    }
+
+    /**
+     * If the given type is a literal, return the general type
+     */
+    public static function generalize(Type $type): Type
+    {
+        if ($type instanceof Generalizable) {
+            return $type->generalize();
         }
 
         return $type;

@@ -7,9 +7,9 @@ use Phpactor\WorseReflection\Core\Type;
 
 abstract class ScalarType extends PrimitiveType
 {
-    public function toPhpString(): string
+    public function __toString(): string
     {
-        return $this->__toString();
+        return $this->toPhpString();
     }
 
     public function accepts(Type $type): Trinary

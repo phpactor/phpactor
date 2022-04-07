@@ -3,22 +3,22 @@
 namespace Phpactor\Tests\Unit\Extension\ContextMenu\Handler;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
-use Phpactor\Extension\ContextMenu\Model\ContextMenu;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
-use Phpactor\TextDocument\ByteOffset;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\ContextMenu\ContextMenuExtension;
-use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
+use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
+use Phpactor\Extension\ContextMenu\Model\ContextMenu;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TextDocument\ByteOffset;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ContextMenuHandlerTest extends HandlerTestCase
