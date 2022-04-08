@@ -11,21 +11,12 @@ final class Variable
 
     private Type $type;
 
-    /**
-     * @var mixed
-     */
-    private $value;
-
     private ?Type $classType;
 
-    /**
-     * @param mixed $value
-     */
-    private function __construct(string $name, Type $type, ?Type $classType = null, $value = null)
+    private function __construct(string $name, Type $type, ?Type $classType = null)
     {
         $this->name = $name;
         $this->type = $type;
-        $this->value = $value;
         $this->classType = $classType;
     }
 
@@ -39,8 +30,7 @@ final class Variable
         return new self(
             $symbolContext->symbol()->name(),
             $symbolContext->type(),
-            $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null,
-            $symbolContext->value(),
+            $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null
         );
     }
 
@@ -58,20 +48,12 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $type, $this->classType, $this->value);
+        return new self($this->name, $type, $this->classType);
     }
 
     public function type(): Type
     {
         return $this->type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function value()
-    {
-        return $this->value;
     }
 
     public function isProperty(): bool

@@ -16,7 +16,6 @@ class NodeContextFactory
      *     type?: Type|null,
      *     symbol_type?: Symbol::*|null,
      *     name?: Name|null,
-     *     value?: mixed|null,
      * } $config
      */
     public static function create(string $symbolName, int $start, int $end, array $config = []): NodeContext
@@ -25,7 +24,6 @@ class NodeContextFactory
             'symbol_type' => Symbol::UNKNOWN,
             'container_type' => null,
             'type' => TypeFactory::unknown(),
-            'value' => null,
         ];
 
         if ($diff = array_diff(array_keys($config), array_keys($defaultConfig))) {
@@ -49,7 +47,6 @@ class NodeContextFactory
             $symbol,
             $config['type'],
             $config['container_type'],
-            $config['value'],
         );
     }
 
@@ -77,19 +74,14 @@ class NodeContextFactory
             [
                 'type' => $variable->type(),
                 'symbol_type' => Symbol::VARIABLE,
-                'value' => $variable->value(),
             ]
         )->withIssue(sprintf('Variable "%s" is undefined', $varName));
     }
 
-    /**
-     * @param mixed $value
-     */
     private static function contextFromParameters(
         Symbol $symbol,
         Type $type = null,
         Type $containerType = null,
-        $value = null
     ): NodeContext {
         $context = NodeContext::for($symbol);
 
@@ -99,10 +91,6 @@ class NodeContextFactory
 
         if ($containerType) {
             $context = $context->withContainerType($containerType);
-        }
-
-        if (null !== $value) {
-            $context = $context->withValue($value);
         }
 
         return $context;

@@ -93,7 +93,6 @@ class AssignmentWalker extends AbstractWalker
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $rightContext->type(),
-                'value' => $rightContext->value(),
             ]
         );
 
