@@ -908,7 +908,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     $barfoo ? <>'foobar' : 'barfoo';
                     EOT
-                , [], ['type' => '"foobar"', 'value' => 'foobar']
+                , [], ['type' => '"foobar"', ]
                 ];
 
         yield 'It uses condition value if ternery "if" is empty' => [
@@ -917,7 +917,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     'string' ?:<> new \stdClass();
                     EOT
-                , [], ['type' => '"string"', 'value' => 'string']
+                , [], ['type' => '"string"', ]
                 ];
 
         yield 'It returns unknown for ternary expressions with unknown condition values' => [

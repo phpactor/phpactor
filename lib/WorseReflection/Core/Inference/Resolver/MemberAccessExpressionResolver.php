@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -16,6 +17,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -38,9 +40,9 @@ class MemberAccessExpressionResolver implements Resolver
         $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         if ($node->memberName instanceof Node) {
-            $memberNameInfo = $resolver->resolveNode($frame, $node->memberName);
-            if (is_string($memberNameInfo->value())) {
-                $memberName = $memberNameInfo->value();
+            $memberNameType = $resolver->resolveNode($frame, $node->memberName)->type();
+            if ($memberNameType instanceof StringLiteralType) {
+                $memberName = $memberNameType->value;
             }
         }
 
