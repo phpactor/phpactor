@@ -22,7 +22,9 @@ use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 
 class AssignmentWalker extends AbstractWalker
@@ -121,13 +123,13 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
         /** @phpstan-ignore-next-line */
         } else {
-            $memberNameInfo = $resolver->resolveNode($frame, $memberNameNode);
+            $memberType = $resolver->resolveNode($frame, $memberNameNode)->type();
 
-            if (false === is_string($memberNameInfo->value())) {
+            if (!$memberType instanceof StringType) {
                 return;
             }
 
-            $memberName = $memberNameInfo->value();
+            $memberName = TypeUtil::valueOrNull($memberType);
         }
 
         $context = NodeContextFactory::create(
@@ -137,7 +139,6 @@ class AssignmentWalker extends AbstractWalker
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $typeContext->type(),
-                'value' => $typeContext->value(),
             ]
         );
 

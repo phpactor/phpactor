@@ -95,7 +95,6 @@ class FunctionLikeWalker extends AbstractWalker
                 [
                     'symbol_type' => Symbol::VARIABLE,
                     'type' => $symbolContext->type(),
-                    'value' => $symbolContext->value(),
                 ]
             );
 

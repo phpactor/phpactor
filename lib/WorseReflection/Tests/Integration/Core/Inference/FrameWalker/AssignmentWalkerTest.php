@@ -50,7 +50,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('World', (string) $var->type());
-            $this->assertEquals('test', (string) $var->value());
         }];
 
         yield 'It returns type for $this' => [
@@ -91,7 +90,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'It assigns property values to assignments' => [
@@ -139,7 +137,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('array', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'It tracks assigned from variable' => [
@@ -161,7 +158,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'Handles array assignments' => [
