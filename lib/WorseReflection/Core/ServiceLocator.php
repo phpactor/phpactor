@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\AssertFrameWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\AssignmentWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
@@ -110,6 +111,7 @@ class ServiceLocator
                 new ForeachWalker(),
                 new InstanceOfWalker($this->reflector),
                 new IncludeWalker($logger),
+                new BinaryExpressionWalker(),
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;

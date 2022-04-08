@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Type;
+
 class StringType extends ScalarType
 {
     public function toPhpString(): string

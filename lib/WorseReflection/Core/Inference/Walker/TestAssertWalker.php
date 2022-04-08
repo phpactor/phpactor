@@ -37,6 +37,7 @@ class TestAssertWalker implements Walker
             $args[] = $resolver->resolveNode($frame, $expression);
         }
 
+        // get string to compare against
         $expectedType = TypeUtil::valueOrNull($args[0]->type());
         $actualType = $args[1]->type();
 

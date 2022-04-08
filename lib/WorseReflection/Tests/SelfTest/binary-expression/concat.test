@@ -1,0 +1,9 @@
+<?php
+
+$a = 'a' . 'b';
+
+wrAssertType('"ab"', $a);
+
+$a .= 'c' . 'd';
+
+wrAssertType('"abcd"', $a);

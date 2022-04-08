@@ -26,16 +26,10 @@ class SelfTest extends IntegrationTestCase
      */
     public function provideSelf(): Generator
     {
-        foreach ([
-            'assignment',
-            'flow',
-            'generics',
-        ] as $topic) {
-            foreach ((array)glob(__DIR__ . '/' . $topic . '/*.test') as $fname) {
-                yield $topic .' ' . basename((string)$fname) => [
-                    $fname
-                ];
-            }
+        foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
+            yield basename(dirname($fname)) .' ' . basename((string)$fname) => [
+                $fname
+            ];
         }
     }
 }
