@@ -171,7 +171,7 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
                 $this->assertEquals('array{foo:"bar"}', (string) $frame->locals()->first()->type());
-                $this->assertEquals('"foo"', (string) $frame->locals()->last()->type());
+                $this->assertEquals('"bar"', (string) $frame->locals()->last()->type());
             }
         ];
 

@@ -9,7 +9,9 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\TypeUtil;
 
 class SubscriptExpressionResolver implements Resolver
 {
@@ -37,14 +39,14 @@ class SubscriptExpressionResolver implements Resolver
             return $info;
         }
 
+        $arrayLiteralType = $info->type();
         $info = $info->withType($type->valueType);
-        $subjectValue = $info->value();
 
-        if (false === is_array($subjectValue)) {
+        if (!$arrayLiteralType instanceof ArrayLiteral) {
             $info = $info->withIssue(sprintf(
                 'Array value for symbol "%s" is not an array, is a "%s"',
                 (string) $info->symbol(),
-                gettype($subjectValue)
+                $arrayLiteralType->__toString()
             ));
 
             return $info;
@@ -53,9 +55,9 @@ class SubscriptExpressionResolver implements Resolver
         if ($node instanceof StringLiteral) {
             $string = $resolver->resolveNode($frame, $node);
 
-            if (array_key_exists($string->value(), $subjectValue)) {
-                $value = $subjectValue[$string->value()];
-                return $string->withValue($value);
+            $type = $arrayLiteralType->typeAtOffset(TypeUtil::valueOrNull($string->type()));
+            if (TypeUtil::isDefined($type)) {
+                return $string->withType($type);
             }
         }
 
