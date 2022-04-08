@@ -141,12 +141,12 @@ class ForeachWalkerTest extends FrameWalkerTestCase
                 $this->assertEquals('foo', $frame->locals()->atIndex(0)->name());
                 $this->assertEquals('bar', $frame->locals()->atIndex(1)->name());
                 $this->assertEquals(
-                    'foo',
-                    $frame->locals()->byName('foo')->first()->value()
+                    '"foo"',
+                    (string)$frame->locals()->byName('foo')->first()->type()
                 );
                 $this->assertEquals(
-                    'bar',
-                    $frame->locals()->byName('bar')->first()->value()
+                    '"bar"',
+                    (string)$frame->locals()->byName('bar')->first()->type()
                 );
             }
         ];

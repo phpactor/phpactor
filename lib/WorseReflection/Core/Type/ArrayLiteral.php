@@ -81,4 +81,16 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
 
         return $valueType ?: new MissingType();
     }
+
+    /**
+     * @param array-key $offset $offset
+     */
+    public function typeAtOffset($offset): Type
+    {
+        if (isset($this->typeMap[$offset])) {
+            return $this->typeMap[$offset];
+        }
+
+        return new MissingType();
+    }
 }
