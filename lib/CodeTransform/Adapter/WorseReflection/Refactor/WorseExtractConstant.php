@@ -79,7 +79,7 @@ class WorseExtractConstant implements ExtractConstant
         $builder->namespace($containerType->name()->namespace());
         $builder
             ->class($containerType->name()->short())
-                ->constant($constantName, $symbolInformation->value())
+                ->constant($constantName, TypeUtil::valueOrNull($symbolInformation->type()))
             ->end();
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($sourceCode));

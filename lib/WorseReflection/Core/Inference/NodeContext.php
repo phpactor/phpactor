@@ -60,9 +60,6 @@ final class NodeContext
         return $new;
     }
 
-    /**
-     * @deprecated Types are plural
-     */
     public function withType(Type $type): NodeContext
     {
         $new = clone $this;

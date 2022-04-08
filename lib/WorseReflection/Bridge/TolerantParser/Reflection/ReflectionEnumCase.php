@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase as CoreReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreReflectionEnumCase
 {
@@ -74,12 +75,12 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
             return null;
         }
 
-        return $this->serviceLocator()
+        return TypeUtil::valueOrNull($this->serviceLocator()
                     ->symbolContextResolver()
                     ->resolveNode(
                         new Frame('_'),
                         $this->node->assignment
-                    )->value();
+                    )->type());
     }
 
     public function memberType(): string
