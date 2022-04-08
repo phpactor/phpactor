@@ -12,8 +12,6 @@ interface Comparable
 
     public function greaterThanEqual(Type $right): BooleanType;
 
-    public function compare(Type $right): BooleanType;
-
     public function lessThan(Type $right): BooleanType;
 
     public function notEqual(Type $right): BooleanType;
