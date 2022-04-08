@@ -8,11 +8,29 @@ wrAssertType('true', "1" == "1", 'equality');
 wrAssertType('false', "2" == "1", 'equality');
 wrAssertType('true', "1" === "1", 'identity');
 wrAssertType('bool', "1" === foo(), 'identity');
+wrAssertType('false', "1" !== "1", 'identity');
+wrAssertType('true', "2" !== "1", 'identity');
+wrAssertType('false', "1" != "1", 'identity');
+wrAssertType('true', "2" != "1", 'identity');
 
 // ints
 wrAssertType('true', 1 == 1, 'equality');
 wrAssertType('false', 2 == 1, 'equality');
 wrAssertType('true', 1 === 1, 'identity');
+
+wrAssertType('true', 2 > 1, 'greater than');
+wrAssertType('false', 1 > 1, 'greater than');
+
+wrAssertType('true', 2 >= 1, 'greater than equal');
+wrAssertType('true', 1 >= 1, 'greater than equal');
+wrAssertType('true', 0 >= 1, 'greater than equal');
+
+wrAssertType('false', 2 < 1, 'less than');
+wrAssertType('true', 1 < 2, 'less than');
+
+wrAssertType('false', 2 <= 1, 'less than equal');
+wrAssertType('true', 1 <= 2, 'less than equal');
+wrAssertType('true', 2 <= 2, 'less than equal');
 
 // floats
 wrAssertType('true', 1.0 == 1.0, 'equality');
@@ -22,3 +40,5 @@ wrAssertType('true', 1.0 === 1.0, 'identity');
 // bool
 wrAssertType('true', true == true, 'equality');
 wrAssertType('false', true === false, 'identity');
+
+
