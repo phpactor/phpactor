@@ -83,7 +83,7 @@ class NodeContextFactory
     private static function contextFromParameters(
         Symbol $symbol,
         Type $type = null,
-        Type $containerType = null,
+        Type $containerType = null
     ): NodeContext {
         $context = NodeContext::for($symbol);
 

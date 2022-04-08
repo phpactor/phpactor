@@ -24,7 +24,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
 
     public function __toString(): string
     {
-        if (range(0, count($this->typeMap) - 1) === array_keys($this->typeMap)) {
+        if ($this->isList()) {
             return sprintf(
                 'array{%s}',
                 implode(',', array_map(
@@ -42,6 +42,11 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
                 array_values($this->typeMap),
             ))
         );
+    }
+
+    public function isList(): bool
+    {
+        return range(0, count($this->typeMap) - 1) === array_keys($this->typeMap);
     }
 
     
