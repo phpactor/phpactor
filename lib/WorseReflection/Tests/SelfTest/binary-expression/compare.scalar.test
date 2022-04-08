@@ -1,0 +1,24 @@
+<?php
+
+function foo(): string {}
+
+// strings
+wrAssertType('bool', foo() === "foo", 'identity');
+wrAssertType('true', "1" == "1", 'equality');
+wrAssertType('false', "2" == "1", 'equality');
+wrAssertType('true', "1" === "1", 'identity');
+wrAssertType('bool', "1" === foo(), 'identity');
+
+// ints
+wrAssertType('true', 1 == 1, 'equality');
+wrAssertType('false', 2 == 1, 'equality');
+wrAssertType('true', 1 === 1, 'identity');
+
+// floats
+wrAssertType('true', 1.0 == 1.0, 'equality');
+wrAssertType('true', 1.0 === 1.0, 'identity');
+wrAssertType('true', 1.0 === 1.0, 'identity');
+
+// bool
+wrAssertType('true', true == true, 'equality');
+wrAssertType('false', true === false, 'identity');

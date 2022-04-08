@@ -67,6 +67,7 @@ class BinaryExpressionResolver implements Resolver
                     return $left->concat($right);
             }
         }
+
         if ($left instanceof Comparable) {
             switch ($operator) {
                 case '===':

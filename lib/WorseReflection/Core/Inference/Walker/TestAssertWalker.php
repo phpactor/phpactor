@@ -40,12 +40,14 @@ class TestAssertWalker implements Walker
         // get string to compare against
         $expectedType = TypeUtil::valueOrNull($args[0]->type());
         $actualType = $args[1]->type();
+        $message = isset($args[2]) ? TypeUtil::valueOrNull($args[2]->type()) : null;
 
         if ($actualType->__toString() !== $expectedType) {
             throw new RuntimeException(sprintf(
-                'Type assertion failed: %s is not %s',
+                'Type assertion failed: %s is not %s%s',
                 $actualType->__toString(),
-                $expectedType
+                $expectedType,
+                $message ? ': ' . $message : '',
             ));
         }
 

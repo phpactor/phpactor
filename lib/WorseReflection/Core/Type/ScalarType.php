@@ -5,8 +5,10 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-abstract class ScalarType extends PrimitiveType
+abstract class ScalarType extends PrimitiveType implements Comparable
 {
+    use ComparableTrait;
+
     public function __toString(): string
     {
         return $this->toPhpString();
@@ -28,4 +30,5 @@ abstract class ScalarType extends PrimitiveType
 
         return Trinary::false();
     }
+
 }

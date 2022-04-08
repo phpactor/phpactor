@@ -6,8 +6,6 @@ use Phpactor\WorseReflection\Core\Type;
 
 interface Comparable
 {
-    public function eq(Type $right): BooleanType;
-
     public function identical(Type $right): BooleanType;
 
     public function greaterThan(Type $right): BooleanType;
