@@ -26,7 +26,6 @@ class StringLiteralResolver implements Resolver
             [
                 'symbol_type' => Symbol::STRING,
                 'type' => TypeFactory::stringLiteral($value),
-                'value' => $value,
                 'container_type' => NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
             ]
         );

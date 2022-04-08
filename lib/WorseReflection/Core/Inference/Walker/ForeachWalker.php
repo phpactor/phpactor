@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
+use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -133,7 +134,7 @@ class ForeachWalker extends AbstractWalker
         }
 
         $collectionType = $collection->type();
-        $values = (array)$collection->value();
+        $values = (array)$collection->type();
         $index = 0;
         foreach ($elements->children as $child) {
             if (!$child instanceof ArrayElement) {
@@ -141,12 +142,11 @@ class ForeachWalker extends AbstractWalker
             }
 
             $context = $resolver->resolveNode($frame, $child->elementValue);
-            if ($collectionType instanceof IterableType) {
-                $context = $context->withType($collectionType->iterableValueType());
-            }
 
-            if (isset($values[$index])) {
-                $context = $context->withValue($values[$index]);
+            if ($collectionType instanceof ArrayLiteral) {
+                $context = $context->withType($collectionType->typeAtOffset($index));
+            } elseif ($collectionType instanceof IterableType) {
+                $context = $context->withType($collectionType->iterableValueType());
             }
 
             $frame->locals()->add($context->symbol()->position()->start(), WorseVariable::fromSymbolContext($context));

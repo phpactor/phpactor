@@ -30,7 +30,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $frame->locals()->byName('foobar'));
             $var = $frame->locals()->byName('foobar')->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
         yield 'It returns types for reassigned variables' => [
             <<<'EOT'
@@ -51,7 +50,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('World', (string) $var->type());
-            $this->assertEquals('test', (string) $var->value());
         }];
 
         yield 'It returns type for $this' => [
@@ -92,7 +90,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'It assigns property values to assignments' => [
@@ -140,7 +137,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('array', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'It tracks assigned from variable' => [
@@ -162,7 +158,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $vars);
             $var = $vars->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
 
         yield 'Handles array assignments' => [
@@ -175,10 +170,8 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
-                $this->assertEquals('array', (string) $frame->locals()->first()->type());
-                $this->assertEquals(['foo' => 'bar'], $frame->locals()->first()->value());
-                $this->assertEquals('"foo"', (string) $frame->locals()->last()->type());
-                $this->assertEquals('bar', (string) $frame->locals()->last()->value());
+                $this->assertEquals('array{foo:"bar"}', (string) $frame->locals()->first()->type());
+                $this->assertEquals('"bar"', (string) $frame->locals()->last()->type());
             }
         ];
 
@@ -191,8 +184,10 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->first()->value());
-                $this->assertEquals('string', (string) $frame->locals()->first()->type());
+                $this->assertEquals('foo', $frame->locals()->first()->name());
+                $this->assertEquals('"foo"', (string)$frame->locals()->first()->type());
+                $this->assertEquals('bar', $frame->locals()->atIndex(1)->name());
+                $this->assertEquals('"bar"', (string)$frame->locals()->atIndex(1)->type());
             }
         ];
 
@@ -205,8 +200,8 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(2, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->atIndex(0)->value());
-                $this->assertEquals('bar', $frame->locals()->atIndex(1)->value());
+                $this->assertEquals('"foo"', (string)$frame->locals()->atIndex(0)->type());
+                $this->assertEquals('"bar"', (string)$frame->locals()->atIndex(1)->type());
             }
         ];
 

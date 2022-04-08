@@ -1,0 +1,18 @@
+<?php
+
+$foo = [];
+
+wrAssertType('array{}', $foo);
+
+$foo = [
+     'foo' => [
+          'hello' => 'world',
+     ],
+     'bar' => 'baz',
+];
+
+wrAssertType('array{foo:array{hello:"world"},bar:"baz"}', $foo);
+
+$foo = [1, 2, 3, 4, 5];
+
+wrAssertType('array{1,2,3,4,5}', $foo);

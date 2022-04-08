@@ -21,8 +21,12 @@ use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 
 class AssignmentWalker extends AbstractWalker
@@ -93,7 +97,6 @@ class AssignmentWalker extends AbstractWalker
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $rightContext->type(),
-                'value' => $rightContext->value(),
             ]
         );
 
@@ -122,13 +125,13 @@ class AssignmentWalker extends AbstractWalker
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
         /** @phpstan-ignore-next-line */
         } else {
-            $memberNameInfo = $resolver->resolveNode($frame, $memberNameNode);
+            $memberType = $resolver->resolveNode($frame, $memberNameNode)->type();
 
-            if (false === is_string($memberNameInfo->value())) {
+            if (!$memberType instanceof StringType) {
                 return;
             }
 
-            $memberName = $memberNameInfo->value();
+            $memberName = TypeUtil::valueOrNull($memberType);
         }
 
         $context = NodeContextFactory::create(
@@ -138,7 +141,6 @@ class AssignmentWalker extends AbstractWalker
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $typeContext->type(),
-                'value' => $typeContext->value(),
             ]
         );
 
@@ -148,23 +150,21 @@ class AssignmentWalker extends AbstractWalker
     private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->arrayElements;
-        $value = $symbolContext->value();
         if (!$list instanceof ArrayElementList) {
             return;
         }
 
-        $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
+        $this->walkArrayElements($list->children, $leftOperand, $symbolContext->type(), $frame);
     }
 
     private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, NodeContext $symbolContext): void
     {
         $list = $leftOperand->listElements;
-        $value = $symbolContext->value();
         if (!$list instanceof ListExpressionList) {
             return;
         }
 
-        $this->walkArrayElements($list->children, $leftOperand, $value, $frame);
+        $this->walkArrayElements($list->children, $leftOperand, $symbolContext->type(), $frame);
     }
 
     private function walkSubscriptExpression(FrameResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
@@ -193,9 +193,8 @@ class AssignmentWalker extends AbstractWalker
 
     /**
      * @param mixed[] $elements
-     * @param mixed $value
      */
-    private function walkArrayElements(array $elements, Node $leftOperand, $value, Frame $frame): void
+    private function walkArrayElements(array $elements, Node $leftOperand, Type $type, Frame $frame): void
     {
         $index = -1;
         foreach ($elements as $element) {
@@ -205,7 +204,6 @@ class AssignmentWalker extends AbstractWalker
         
             $index++;
             $elementValue = $element->elementValue;
-        
             if (!$elementValue instanceof Variable) {
                 continue;
             }
@@ -226,9 +224,8 @@ class AssignmentWalker extends AbstractWalker
                 ]
             );
         
-            if (is_array($value) && isset($value[$index])) {
-                $variableContext = $variableContext->withValue($value[$index]);
-                $variableContext = $variableContext->withType(TypeFactory::fromString(gettype($value[$index])));
+            if ($type instanceof ArrayLiteral) {
+                $variableContext = $variableContext->withType($type->typeAtOffset($index));
             }
         
             $frame->locals()->add($element->getStartPosition(), WorseVariable::fromSymbolContext($variableContext));

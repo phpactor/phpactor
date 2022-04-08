@@ -33,7 +33,6 @@ class BinaryExpressionResolver implements Resolver
             [
                 'symbol_type' => Symbol::CLASS_,
                 'type' => TypeFactory::fromValue($value),
-                'value' => $value,
             ]
         );
     }

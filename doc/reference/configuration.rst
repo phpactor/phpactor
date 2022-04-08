@@ -246,7 +246,7 @@ CompletionWorseExtension
 Suggestion limit for the filesystem based SCF class_completor
 
 
-**Default**: ``100``
+**Default**: ``25``
 
 
 .. _param_completion_worse.disabled_completors:

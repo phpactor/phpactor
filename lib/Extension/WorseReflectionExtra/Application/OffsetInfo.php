@@ -44,7 +44,7 @@ final class OffsetInfo
             'end' => $symbolContext->symbol()->position()->end(),
             'type' => (string) $symbolContext->type(),
             'class_type' => (string) $symbolContext->containerType(),
-            'value' => var_export($symbolContext->value(), true),
+            'value' => var_export(TypeUtil::valueOrNull($symbolContext->type()), true),
             'offset' => $offset,
             'type_path' => null,
         ];

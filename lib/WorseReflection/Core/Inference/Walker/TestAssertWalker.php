@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 class TestAssertWalker implements Walker
@@ -36,7 +37,7 @@ class TestAssertWalker implements Walker
             $args[] = $resolver->resolveNode($frame, $expression);
         }
 
-        $expectedType = $args[0]->value();
+        $expectedType = TypeUtil::valueOrNull($args[0]->type());
         $actualType = $args[1]->type();
 
         if ($actualType->__toString() !== $expectedType) {

@@ -5,16 +5,10 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
 final class NodeContext
 {
-    /**
-     * @var mixed
-     */
-    private $value;
-    
     private Type $type;
     
     private Symbol $symbol;
@@ -34,12 +28,8 @@ final class NodeContext
      */
     private ?ReflectionScope $scope = null;
 
-    /**
-     * @param mixed $value
-     */
-    private function __construct(Symbol $symbol, Type $type, $value = null, Type $containerType = null, ReflectionScope $scope = null)
+    private function __construct(Symbol $symbol, Type $type, Type $containerType = null, ReflectionScope $scope = null)
     {
-        $this->value = $value;
         $this->symbol = $symbol;
         $this->containerType = $containerType;
         $this->type = $type;
@@ -51,18 +41,6 @@ final class NodeContext
         return new self($symbol, TypeFactory::unknown());
     }
 
-    /**
-     * @deprecated
-     * @param mixed $value
-     */
-    public static function fromTypeAndValue(Type $type, $value): NodeContext
-    {
-        return new self(Symbol::unknown(), $type, $value);
-    }
-
-    /**
-     * @deprecated Types are plural
-     */
     public static function fromType(Type $type): NodeContext
     {
         return new self(Symbol::unknown(), $type);
@@ -73,17 +51,6 @@ final class NodeContext
         return new self(Symbol::unknown(), new MissingType());
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function withValue($value): NodeContext
-    {
-        $new = clone $this;
-        $new->value = $value;
-
-        return $new;
-    }
-
     public function withContainerType(Type $containerType): NodeContext
     {
         $new = clone $this;
@@ -92,9 +59,6 @@ final class NodeContext
         return $new;
     }
 
-    /**
-     * @deprecated Types are plural
-     */
     public function withType(Type $type): NodeContext
     {
         $new = clone $this;
@@ -125,14 +89,6 @@ final class NodeContext
     public function type(): Type
     {
         return $this->type ?? new MissingType();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function value()
-    {
-        return $this->value;
     }
 
     public function symbol(): Symbol

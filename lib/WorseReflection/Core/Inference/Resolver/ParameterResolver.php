@@ -56,11 +56,6 @@ class ParameterResolver implements Resolver
             $type = TypeFactory::nullable($type);
         }
 
-        $value = null;
-        if ($node->default) {
-            $value = $resolver->resolveNode($frame, $node->default)->value();
-        }
-
         return NodeContextFactory::create(
             (string)$node->variableName->getText($node->getFileContents()),
             $node->variableName->getStartPosition(),
@@ -68,7 +63,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $type,
-                'value' => $value,
             ]
         );
     }
@@ -120,7 +114,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $reflectionParameter->inferredType(),
-                'value' => $reflectionParameter->default()->value(),
             ]
         );
     }

@@ -20,6 +20,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] literal types and internal refactorings
   - [ls] Show error message in client if service stops unexpectedly with an
     error
   - [code-transform] Faithfully reproduce documented types in generated code

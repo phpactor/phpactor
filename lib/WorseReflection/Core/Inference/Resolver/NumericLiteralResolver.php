@@ -29,7 +29,6 @@ class NumericLiteralResolver implements Resolver
             [
                 'symbol_type' => Symbol::NUMBER,
                 'type' => $type,
-                'value' => $type->value(),
                 'container_type' => NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
             ]
         );

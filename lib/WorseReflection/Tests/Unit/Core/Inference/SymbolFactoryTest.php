@@ -56,13 +56,11 @@ class SymbolFactoryTest extends TestCase
             'symbol_type' => Symbol::ARRAY,
             'container_type' => $containerType,
             'type' => $type,
-            'value' => 1234
         ]);
 
         $this->assertInstanceOf(NodeContext::class, $information);
         $this->assertSame($information->type(), $type);
         $this->assertSame($information->containerType(), $containerType);
-        $this->assertEquals(1234, $information->value());
         $this->assertEquals(Symbol::ARRAY, $information->symbol()->symbolType());
     }
 }

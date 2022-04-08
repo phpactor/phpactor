@@ -13,6 +13,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Webmozart\PathUtil\Path;
 
@@ -38,7 +39,7 @@ class IncludeWalker implements Walker
     {
         assert($node instanceof ScriptInclusionExpression);
         $context = $resolver->resolveNode($frame, $node->expression);
-        $includeUri = $context->value();
+        $includeUri = TypeUtil::valueOrNull($context->type());
 
         if (!is_string($includeUri)) {
             return $frame;

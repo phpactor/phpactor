@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
@@ -168,5 +169,17 @@ class TypeUtil
         }
 
         return $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function valueOrNull(Type $type)
+    {
+        if ($type instanceof Literal) {
+            return $type->value();
+        }
+
+        return null;
     }
 }
