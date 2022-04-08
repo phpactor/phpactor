@@ -193,7 +193,6 @@ class AssignmentWalker extends AbstractWalker
 
     /**
      * @param mixed[] $elements
-     * @param mixed $value
      */
     private function walkArrayElements(array $elements, Node $leftOperand, Type $type, Frame $frame): void
     {

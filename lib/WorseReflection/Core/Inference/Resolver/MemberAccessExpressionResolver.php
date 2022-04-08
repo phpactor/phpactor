@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;

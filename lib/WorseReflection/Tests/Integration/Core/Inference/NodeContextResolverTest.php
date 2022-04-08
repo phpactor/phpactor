@@ -771,7 +771,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     'barfoo' => NodeContext::for(
                         Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromStartAndEnd(0, 0))
                     )
-                    ->withType(TypeFactory::stringLiteral("hello"))
+                    ->withType(TypeFactory::stringLiteral('hello'))
                 ], ['type' => 'string'],
             ];
 

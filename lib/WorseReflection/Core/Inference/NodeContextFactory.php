@@ -45,7 +45,9 @@ class NodeContextFactory
 
         return self::contextFromParameters(
             $symbol,
+            /** @phpstan-ignore-next-line */
             $config['type'],
+            /** @phpstan-ignore-next-line */
             $config['container_type'],
         );
     }
