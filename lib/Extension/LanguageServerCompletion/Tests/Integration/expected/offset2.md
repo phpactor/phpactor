@@ -1,2 +1,2 @@
-variable: __zed__
-type: __<missing>__
+variable: _zed_
+type: _<missing>_

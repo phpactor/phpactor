@@ -40,7 +40,12 @@ final class Symbol
 
     public static function unknown(): Symbol
     {
-        return new self('<unknown>', '<unknown>', Position::fromStartAndEnd(0, 0));
+        return new self(self::UNKNOWN, self::UNKNOWN, Position::fromStartAndEnd(0, 0));
+    }
+
+    public function isKnown(): bool
+    {
+        return $this->symbolType !== self::UNKNOWN;
     }
 
     public static function assertValidSymbolType(string $symbolType): void
