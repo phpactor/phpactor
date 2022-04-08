@@ -46,7 +46,6 @@ class ReservedWordResolver implements Resolver
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'value' => $value,
                 'type' => $type,
                 'symbol_type' => $symbolType === null ? Symbol::UNKNOWN : $symbolType,
                 'container_type' => $containerType,

@@ -68,7 +68,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $type,
-                'value' => $value,
             ]
         );
     }
@@ -120,7 +119,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $reflectionParameter->inferredType(),
-                'value' => $reflectionParameter->default()->value(),
             ]
         );
     }

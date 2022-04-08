@@ -30,7 +30,6 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $this->assertCount(1, $frame->locals()->byName('foobar'));
             $var = $frame->locals()->byName('foobar')->first();
             $this->assertEquals('"foobar"', (string) $var->type());
-            $this->assertEquals('foobar', (string) $var->value());
         }];
         yield 'It returns types for reassigned variables' => [
             <<<'EOT'
