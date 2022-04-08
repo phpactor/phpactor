@@ -621,7 +621,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     [ 'one' => 'two', 'three' => 3 <>];
                     EOT
-                , [], ['type' => 'array', 'value' => [ 'one' => 'two', 'three' => 3]],
+                , [], ['type' => 'array{one:"two",three:3}'],
                 ];
 
         yield 'Empty array' => [
@@ -630,7 +630,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     [  <>];
                     EOT
-                , [], ['type' => 'array', 'value' => [ ]],
+                , [], ['type' => 'array{}', 'value' => [ ]],
                 ];
 
         yield 'It type for a class constant' => [
