@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayLiteral extends ArrayType implements Literal, Generalizable
@@ -45,9 +44,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function value()
     {
         return array_map(
@@ -59,6 +56,18 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
     public function generalize(): Type
     {
         return new ArrayType(new ArrayKeyType(), new MixedType());
+    }
+
+    /**
+     * @param array-key $offset $offset
+     */
+    public function typeAtOffset($offset): Type
+    {
+        if (isset($this->typeMap[$offset])) {
+            return $this->typeMap[$offset];
+        }
+
+        return new MissingType();
     }
 
     /**
@@ -80,17 +89,5 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         }
 
         return $valueType ?: new MissingType();
-    }
-
-    /**
-     * @param array-key $offset $offset
-     */
-    public function typeAtOffset($offset): Type
-    {
-        if (isset($this->typeMap[$offset])) {
-            return $this->typeMap[$offset];
-        }
-
-        return new MissingType();
     }
 }
