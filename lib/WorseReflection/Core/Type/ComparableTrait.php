@@ -46,7 +46,7 @@ trait ComparableTrait
     public function notIdentical(Type $right): BooleanType
     {
         return $this->compare($right, '!==');
-     }
+    }
 
     private function compare(Type $right, string $operator): BooleanType
     {
@@ -61,6 +61,10 @@ trait ComparableTrait
         return TypeFactory::bool();
     }
 
+    /**
+     * @param mixed $left
+     * @param mixed $right
+     */
     private function doCompare($left, $right, string $operator): bool
     {
         if ($operator === '===') {

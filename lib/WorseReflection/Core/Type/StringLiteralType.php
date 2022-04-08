@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 
 class StringLiteralType extends StringType implements Literal, Generalizable, Concatable
 {

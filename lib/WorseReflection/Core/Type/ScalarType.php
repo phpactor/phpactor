@@ -30,5 +30,4 @@ abstract class ScalarType extends PrimitiveType implements Comparable
 
         return Trinary::false();
     }
-
 }

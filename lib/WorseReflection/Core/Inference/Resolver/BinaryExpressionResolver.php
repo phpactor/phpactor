@@ -4,30 +4,18 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
-use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\StringType;
 
 class BinaryExpressionResolver implements Resolver
 {
-    private ExpressionEvaluator $expressionEvaluator;
-
-    public function __construct()
-    {
-        $this->expressionEvaluator = new ExpressionEvaluator();
-    }
-
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof BinaryExpression);
@@ -58,8 +46,7 @@ class BinaryExpressionResolver implements Resolver
         Type $right,
         string $operator,
         BinaryExpression $node
-    ): Type
-    {
+    ): Type {
         if ($left instanceof Concatable) {
             switch ($operator) {
                 case '.':
@@ -92,6 +79,7 @@ class BinaryExpressionResolver implements Resolver
         }
 
         return new MissingType();
+        /**
         switch (strtolower($operator)) {
             case 'or':
                 return $left or $right;
@@ -133,5 +121,6 @@ class BinaryExpressionResolver implements Resolver
             case 'xor':
                 return $left xor $right;
         }
+        **/
     }
 }
