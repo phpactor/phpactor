@@ -1,3 +1,0 @@
-<?php
-
-wrAssertEval(array_sum([10, 10, 10]));
