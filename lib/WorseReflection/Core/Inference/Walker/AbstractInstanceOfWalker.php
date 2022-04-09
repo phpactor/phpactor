@@ -22,13 +22,10 @@ use Phpactor\WorseReflection\Reflector;
 
 abstract class AbstractInstanceOfWalker extends AbstractWalker
 {
-    protected ExpressionEvaluator $evaluator;
-
     private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {
-        $this->evaluator = new ExpressionEvaluator();
         $this->reflector = $reflector;
     }
 
