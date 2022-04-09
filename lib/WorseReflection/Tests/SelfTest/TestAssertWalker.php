@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
@@ -31,10 +33,21 @@ class TestAssertWalker implements Walker
         assert($node instanceof CallExpression);
         $name = $node->callableExpression->getText();
 
-        if ($name !== 'wrAssertType' || $node->argumentExpressionList === null) {
+        if ($node->argumentExpressionList === null) {
             return $frame;
         }
+        if ($name === 'wrAssertType') {
+            $this->assertType($resolver, $frame, $node);
+            return $frame;
+        }
+        if ($name === 'wrAssertEval') {
+            $this->assertEval($resolver, $frame, $node);
+            return $frame;
+        }
+    }
 
+    private function assertType(FrameResolver $resolver, Frame $frame, Node $node): void
+    {
         $list = $node->argumentExpressionList->getElements();
         $args = [];
         foreach ($list as $expression) {
@@ -60,7 +73,32 @@ class TestAssertWalker implements Walker
             ));
         }
         $this->testCase->addToAssertionCount(1);
+    }
 
-        return $frame;
+    private function assertEval(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    {
+        $list = $node->argumentExpressionList->getElements();
+        $args = [];
+        $toEval = null;
+        $resolvedType = new MissingType();
+        foreach ($list as $expression) {
+            if (!$expression instanceof ArgumentExpression) {
+                continue;
+            }
+
+            $toEval = $expression->getText();
+            $resolvedType = $resolver->resolveNode($frame, $expression)->type();
+            break;
+        }
+
+        if ($toEval === null) {
+            return;
+        }
+
+        $evaled = eval('return ' . $toEval . ';');
+        $this->testCase->assertEquals(
+            TypeFactory::fromValue($evaled)->__toString(),
+            $resolvedType->__toString()
+        );
     }
 }

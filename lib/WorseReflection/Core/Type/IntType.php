@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class IntType extends NumericType implements BitwiseOperable
 {
@@ -29,5 +30,10 @@ class IntType extends NumericType implements BitwiseOperable
 
     public function bitwiseAnd(Type $right): Type
     {
+        if ($right instanceof IntType && $right instanceof Literal && $this instanceof Literal) {
+            return $this->withValue($this->value() & $right->value());
+        }
+
+        return new BooleanType();
     }
 }

@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\CloneExpression;
@@ -35,6 +36,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\AssignmentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
@@ -108,6 +110,7 @@ final class DefaultResolverFactory
             TernaryExpression::class => new TernaryExpressionResolver(),
             MethodDeclaration::class => new MethodDeclarationResolver(),
             CloneExpression::class => new CloneExpressionResolver(),
+            AssignmentExpression::class => new AssignmentExpressionResolver(),
         ];
     }
 }
