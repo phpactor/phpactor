@@ -1,0 +1,21 @@
+<?php
+
+wrAssertType('0', ( 0 = 0000) & ( 5 = 0101))
+wrAssertType('1', ( 1 = 0001) & ( 5 = 0101));
+wrAssertType('0', ( 2 = 0010) & ( 5 = 0101));
+wrAssertType('4', ( 4 = 0100) & ( 5 = 0101));
+wrAssertType('0', ( 8 = 1000) & ( 5 = 0101));
+
+// Bitwise Inclusive OR
+wrAssertType('5', ( 0 = 0000) | ( 5 = 0101));
+wrAssertType('5', ( 1 = 0001) | ( 5 = 0101));
+wrAssertType('7', ( 2 = 0010) | ( 5 = 0101));
+wrAssertType('5', ( 4 = 0100) | ( 5 = 0101));
+wrAssertType(13', ( 8 = 1000) | ( 5 = 0101));
+
+//  Bitwise Exclusive OR (XOR)
+wrAssertType('5', ( 0 = 0000) ^ ( 5 = 0101));
+wrAssertType('4', ( 1 = 0001) ^ ( 5 = 0101));
+wrAssertType('7', ( 2 = 0010) ^ ( 5 = 0101));
+wrAssertType('1', ( 4 = 0100) ^ ( 5 = 0101));
+wrAssertType(13', ( 8 = 1000) ^ ( 5 = 0101));

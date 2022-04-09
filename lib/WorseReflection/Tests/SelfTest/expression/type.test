@@ -6,7 +6,7 @@ class Bar extends Foo {}
 // this is actually invalid PHP
 wrAssertType('true', new Foo() instanceof Foo::class);
 
-// but this isn't
+// but this isn't 🤷
 $foo = Foo::class;
 wrAssertType('true', new Foo() instanceof $foo);
 

@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
@@ -111,22 +112,21 @@ class BinaryExpressionResolver implements Resolver
             }
         }
 
-        return new MissingType();
-        /**
-        switch (strtolower($operator)) {
-            case 'instanceof':
-                return true;
-            case '&':
-                return $left & $right;
-            case '|':
-                return $left | $right;
-            case '^':
-                return $left ^ $right;
-            case '<<':
-                return $left << $right;
-            case '>>':
-                return $left >> $right;
+        if ($left instanceof BitwiseOperable) {
+            switch ($operator) {
+                case '&':
+                    return $left->bitwiseAnd($right);
+                case '|':
+                    return $left->bitwiseOr($right);
+                case '^':
+                    return $left->bitwiseXor($right);
+                case '<<':
+                    return $left->shiftLeft($right);
+                case '>>':
+                    return $left->shiftRight($right);
+            }
         }
-        **/
+
+        return new MissingType();
     }
 }
