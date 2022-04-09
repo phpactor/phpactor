@@ -8,3 +8,10 @@ wrAssertType('-1', +-1);
 wrAssertType('1.1', +1.1);
 wrAssertType('-1.2', -1.2);
 wrAssertType('-1.3', +-1.3);
+
+wrAssertType('2', 1 + 1);
+wrAssertType('1', 2 - 1);
+wrAssertType('4', 2 * 2);
+wrAssertType('2', 4 / 2);
+wrAssertType('0', 4 % 2);
+wrAssertType('8', 2 ** 3);
