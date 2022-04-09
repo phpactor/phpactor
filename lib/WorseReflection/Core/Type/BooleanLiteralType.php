@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class BooleanLiteralType extends BooleanType implements Literal, Generalizable
 {
+    use LiteralTrait;
     private bool $value;
 
     public function __construct(bool $value)

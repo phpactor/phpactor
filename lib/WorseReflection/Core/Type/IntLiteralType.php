@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class IntLiteralType extends IntType implements Literal, Generalizable
 {
+    use LiteralTrait;
     public int $value;
 
     public function __construct(int $value)
@@ -39,5 +40,12 @@ final class IntLiteralType extends IntType implements Literal, Generalizable
     public function negative(): NumericType
     {
         return new self(-$this->value());
+    }
+
+    public function withValue($value)
+    {
+        $new = clone $this;
+        $new->value = $value;
+        return $new;
     }
 }

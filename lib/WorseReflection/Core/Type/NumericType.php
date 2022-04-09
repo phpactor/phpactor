@@ -17,28 +17,51 @@ abstract class NumericType extends ScalarType
         return $this;
     }
 
-    public function plus(NumericType $numericType): NumericType
+    public function plus(NumericType $right): NumericType
     {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() + $right->value());
+        }
         return $this;
     }
 
-    public function modulo(NumericType $numericType)
+    public function modulo(NumericType $right): NumericType
     {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() % $right->value());
+        }
         return $this;
     }
 
-    public function divide(NumericType $numericType)
+    public function divide(NumericType $right): NumericType
     {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() / $right->value());
+        }
         return $this;
     }
 
-    public function multiply(NumericType $numericType)
+    public function multiply(NumericType $right): NumericType
     {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() * $right->value());
+        }
         return $this;
     }
 
-    public function minus(NumericType $numericType)
+    public function minus(NumericType $right): NumericType
     {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() - $right->value());
+        }
+        return $this;
+    }
+
+    public function exp(NumericType $right): NumericType
+    {
+        if ($this instanceof Literal && $right instanceof Literal) {
+            return $this->withValue($this->value() ** $right->value());
+        }
         return $this;
     }
 }

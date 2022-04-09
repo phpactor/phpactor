@@ -96,7 +96,7 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
             case '-':
                 return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
-            case '-':
+            case '*':
                 return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
             case '/':
                 return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));

@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 
 class StringLiteralType extends StringType implements Literal, Generalizable, Concatable
 {
+    use LiteralTrait;
     public string $value;
 
     public function __construct(string $value)
