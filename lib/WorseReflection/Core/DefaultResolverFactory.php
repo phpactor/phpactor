@@ -31,6 +31,8 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
+use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
@@ -67,12 +69,15 @@ final class DefaultResolverFactory
 
     private NodeToTypeConverter $nodeTypeConverter;
 
+    private FunctionStubRegistry $functionStubRegistry;
+
     public function __construct(
         Reflector $reflector,
         NodeToTypeConverter $nodeTypeConverter
     ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
+        $this->functionStubRegistry = $this->createStubRegistry();
     }
 
     /**
@@ -81,7 +86,7 @@ final class DefaultResolverFactory
     public function createResolvers(): array
     {
         return [
-            QualifiedName::class => new QualifiedNameResolver($this->reflector, $this->nodeTypeConverter),
+            QualifiedName::class => new QualifiedNameResolver($this->reflector, $this->functionStubRegistry, $this->nodeTypeConverter),
             QualifiedNameList::class => new QualifiedNameListResolver(),
             ConstElement::class => new ConstElementResolver(),
             EnumCaseDeclaration::class => new EnumCaseDeclarationResolver(),
@@ -111,5 +116,12 @@ final class DefaultResolverFactory
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
         ];
+    }
+
+    private function createStubRegistry(): FunctionStubRegistry
+    {
+        return new FunctionStubRegistry([
+            new ArraySumStub(),
+        ]);
     }
 }

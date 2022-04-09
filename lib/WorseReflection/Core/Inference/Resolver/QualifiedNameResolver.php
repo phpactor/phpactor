@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -24,18 +25,25 @@ class QualifiedNameResolver implements Resolver
 
     private NodeToTypeConverter $nodeTypeConverter;
 
+    private FunctionStubRegistry $registry;
 
-    public function __construct(FunctionReflector $reflector, NodeToTypeConverter $nodeTypeConverter)
+    public function __construct(
+        FunctionReflector $reflector,
+        FunctionStubRegistry $registry,
+        NodeToTypeConverter $nodeTypeConverter
+    )
     {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
+        $this->registry = $registry;
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof QualifiedName);
 
-        if ($node->parent instanceof CallExpression) {
+        $parent = $node->parent;
+        if ($parent instanceof CallExpression) {
             $name = $node->getResolvedName() ?: $node;
             $name = Name::fromString((string) $name);
             $context = NodeContextFactory::create(
@@ -46,6 +54,12 @@ class QualifiedNameResolver implements Resolver
                     'symbol_type' => Symbol::FUNCTION,
                 ]
             );
+
+            $stub = $this->registry->get($name);
+            $arguments = $parent->argumentExpressionList;
+            if ($stub && $arguments) {
+                return $stub->invoke($resolver, $frame, $context, $node->parent, $arguments);
+            }
 
             try {
                 $function = $this->reflector->reflectFunction($name);

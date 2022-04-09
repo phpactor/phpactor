@@ -105,12 +105,9 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
-        if ($left instanceof ClassType || $left instanceof MissingType) {
-            switch ($operator) {
-                case 'instanceof':
-                    // TODO:
-                    return TypeFactory::boolLiteral(true);
-            }
+        switch ($operator) {
+            case 'instanceof':
+                return $this->resolveInstanceOf($left, $right);
         }
 
         if ($left instanceof BitwiseOperable) {
@@ -129,5 +126,10 @@ class BinaryExpressionResolver implements Resolver
         }
 
         return new MissingType();
+    }
+
+    private function resolveInstanceOf(Type $left, Type $right): Type
+    {
+        return TypeFactory::boolLiteral(true);
     }
 }
