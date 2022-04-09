@@ -19,9 +19,10 @@ class StringLiteralResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof StringLiteral);
+        // TODO: [TP] tolerant parser method returns the quotes
         $value = (string) $this->getStringContentsText($node);
         return NodeContextFactory::create(
-            (string) $node->getStringContentsText(),
+            'string',
             $node->getStartPosition(),
             $node->getEndPosition(),
             [

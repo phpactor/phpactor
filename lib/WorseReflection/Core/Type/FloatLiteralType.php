@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Type;
 final class FloatLiteralType extends FloatType implements Literal, Generalizable
 {
     use LiteralTrait;
+
     public float $value;
 
     public function __construct(float $value)

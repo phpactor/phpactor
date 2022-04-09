@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\TypeUtil;
-use RuntimeException;
 
 class TestAssertWalker implements Walker
 {

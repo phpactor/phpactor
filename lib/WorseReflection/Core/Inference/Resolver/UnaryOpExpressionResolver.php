@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
-use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -13,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
-use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -32,7 +30,6 @@ class UnaryOpExpressionResolver implements Resolver
         );
         $operand = $resolver->resolveNode($frame, $node->operand);
         $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
-
 
         $type = $this->resolveType($operatorKind, $operand->type());
         return $context->withType($type);

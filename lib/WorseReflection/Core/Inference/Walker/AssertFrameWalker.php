@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Phpactor\WorseReflection\TypeUtil;
 
 class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
 {
@@ -37,9 +38,9 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
                 continue;
             }
 
-            $expressionIsTrue = $this->evaluator->evaluate($expression->expression);
+            $expressionIsTrue = $resolver->resolveNode($frame, $expression->expression)->type();
 
-            if (false === $expressionIsTrue) {
+            if (!TypeUtil::toBool($expressionIsTrue)->isTrue()) {
                 continue;
             }
 

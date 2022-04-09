@@ -39,7 +39,7 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             return $frame;
         }
 
-        $expressionsAreTrue = $this->evaluator->evaluate($node->expression);
+        $expressionsAreTrue = TypeUtil::toBool($resolver->resolveNode($frame, $node->expression)->type())->isTrue();
         $variables = $this->collectVariables($node, $frame);
         $variables = $this->mergeTypes($variables);
         $terminates = $this->branchTerminates($node);

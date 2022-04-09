@@ -4,13 +4,13 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
-use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
@@ -105,10 +105,11 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
-        if ($left instanceof ClassType) {
+        if ($left instanceof ClassType || $left instanceof MissingType) {
             switch ($operator) {
                 case 'instanceof':
-                    return $left->instanceof($right);
+                    // TODO:
+                    return TypeFactory::boolLiteral(true);
             }
         }
 

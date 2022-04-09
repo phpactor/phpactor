@@ -35,4 +35,13 @@ class BooleanType extends ScalarType
     {
         return Trinary::maybe();
     }
+
+    public function isTrue(): bool
+    {
+        if ($this instanceof BooleanLiteralType) {
+            return $this->value() === true;
+        }
+
+        return false;
+    }
 }

@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 
 class IntType extends NumericType implements BitwiseOperable
 {
@@ -59,6 +58,10 @@ class IntType extends NumericType implements BitwiseOperable
 
     public function bitwiseNot(): Type
     {
-        return $this->withValue(~$this->value());
+        if ($this instanceof Literal) {
+            return $this->withValue(~(int)$this->value());
+        }
+
+        return $this;
     }
 }

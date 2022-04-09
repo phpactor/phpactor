@@ -17,7 +17,6 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
-use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryOpExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;

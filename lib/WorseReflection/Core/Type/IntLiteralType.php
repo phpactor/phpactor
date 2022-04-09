@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Type;
 class IntLiteralType extends IntType implements Literal, Generalizable
 {
     use LiteralTrait;
+
     public int $value;
 
     public function __construct(int $value)

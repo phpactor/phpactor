@@ -73,6 +73,10 @@ class QualifiedNameResolver implements Resolver
 
         // magic constants
         if ($text === '__DIR__') {
+            // TODO: [TP] tolerant parser `getUri` returns NULL or string but only declares NULL
+            if (!$node->getRoot()->uri) {
+                return TypeFactory::string();
+            }
             return TypeFactory::stringLiteral(dirname($node->getUri()));
         }
 

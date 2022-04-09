@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 
-interface BitwiseOperable 
+interface BitwiseOperable
 {
     public function shiftRight(Type $right): Type;
     public function shiftLeft(Type $right): Type;

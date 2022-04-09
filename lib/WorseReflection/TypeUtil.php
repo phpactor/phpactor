@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
@@ -195,7 +194,7 @@ class TypeUtil
         if ($type instanceof Literal) {
             return new BooleanLiteralType((bool)$type->value());
         }
-        if($type instanceof NullType) {
+        if ($type instanceof NullType) {
             return new BooleanLiteralType(false);
         }
         if ($type instanceof BooleanType) {

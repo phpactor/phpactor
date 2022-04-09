@@ -85,7 +85,7 @@ class ReflectedClassType extends ClassType
 
     public function instanceof(Type $right): BooleanType
     {
-        $resolve = function (Type $right) {
+        $resolve = function (Type $right): void {
         };
 
         if ($right instanceof MissingType) {

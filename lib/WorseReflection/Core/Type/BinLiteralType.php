@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 final class BinLiteralType extends IntType implements Literal
 {
     use LiteralTrait;
+
     public string $value;
 
     public function __construct(string $value)

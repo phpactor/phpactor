@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayLiteral extends ArrayType implements Literal, Generalizable
 {
-    use LiteralTrait;
     /**
      * @var array<array-key,Type>
      */
@@ -74,6 +73,11 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         }
 
         return new MissingType();
+    }
+
+    public function withValue($value)
+    {
+        return $this;
     }
 
     /**
