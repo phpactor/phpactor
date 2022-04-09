@@ -4,15 +4,21 @@ namespace Phpactor\WorseReflection;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
+use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
+use Phpactor\WorseReflection\Core\Type\NumericType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -181,5 +187,41 @@ class TypeUtil
         }
 
         return null;
+    }
+
+    public static function toBool(Type $type): BooleanType
+    {
+        if ($type instanceof Literal) {
+            return new BooleanLiteralType((bool)$type->value());
+        }
+        if ($type instanceof NullType) {
+            return new BooleanLiteralType(false);
+        }
+        if ($type instanceof BooleanType) {
+            return $type;
+        }
+
+        return new BooleanType();
+    }
+
+    public static function toNumber(Type $type): NumericType
+    {
+        if ($type instanceof Literal) {
+            $value = (string)$type->value();
+            return TypeFactory::fromNumericString($value);
+        }
+        return new IntType();
+    }
+
+    public static function trinaryToBoolean(Trinary $trinary): BooleanType
+    {
+        if ($trinary->isTrue()) {
+            return new BooleanLiteralType(true);
+        }
+        if ($trinary->isFalse()) {
+            return new BooleanLiteralType(false);
+        }
+
+        return new BooleanType();
     }
 }

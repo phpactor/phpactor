@@ -1,0 +1,22 @@
+<?php
+
+function maybe(): bool {}
+
+wrAssertEval(+1);
+wrAssertEval(-1);
+wrAssertEval(+-1);
+wrAssertEval('1.1',+1.1);
+wrAssertEval(-1.2);
+wrAssertEval(+-1.3);
+
+wrAssertEval(1 + 1);
+wrAssertEval(2 - 1);
+wrAssertEval(2 * 2);
+wrAssertEval(4 / 2);
+wrAssertEval(4 % 2);
+wrAssertEval(2 ** 3);
+
+wrAssertEval(3 + 2 * 3);
+wrAssertEval((3 + 2) * 3);
+wrAssertEval(10 + 10 / 2);
+

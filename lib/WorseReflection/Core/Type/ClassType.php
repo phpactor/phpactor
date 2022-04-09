@@ -55,4 +55,9 @@ class ClassType implements Type
 
         return Trinary::false();
     }
+
+    public function instanceof(Type $right): BooleanType
+    {
+        return new BooleanType();
+    }
 }

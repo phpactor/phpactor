@@ -4,8 +4,10 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 
-class StringLiteralType extends StringType implements Literal, Generalizable
+class StringLiteralType extends StringType implements Literal, Generalizable, Concatable
 {
+    use LiteralTrait;
+
     public string $value;
 
     public function __construct(string $value)
@@ -26,6 +28,15 @@ class StringLiteralType extends StringType implements Literal, Generalizable
 
     public function generalize(): Type
     {
+        return new StringType();
+    }
+
+    public function concat(Type $right): Type
+    {
+        if ($right instanceof StringLiteralType) {
+            return new self(sprintf('%s%s', $this->value, (string)$right->value()));
+        }
+
         return new StringType();
     }
 }

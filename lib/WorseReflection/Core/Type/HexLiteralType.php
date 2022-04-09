@@ -6,6 +6,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class HexLiteralType extends IntType implements Literal, Generalizable
 {
+    use LiteralTrait;
+
     public string $value;
 
     public function __construct(string $value)

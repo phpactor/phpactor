@@ -75,6 +75,11 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         return new MissingType();
     }
 
+    public function withValue($value)
+    {
+        return $this;
+    }
+
     /**
      * @param array<array-key,Type> $typeMap
      */

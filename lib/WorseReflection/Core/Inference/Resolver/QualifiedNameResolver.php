@@ -15,6 +15,8 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class QualifiedNameResolver implements Resolver
 {
@@ -59,9 +61,25 @@ class QualifiedNameResolver implements Resolver
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => $this->nodeTypeConverter->resolve($node),
+                'type' => $this->resolveType($node),
                 'symbol_type' => Symbol::CLASS_,
             ]
         );
+    }
+
+    private function resolveType(QualifiedName $node): Type
+    {
+        $text = $node->getText();
+
+        // magic constants
+        if ($text === '__DIR__') {
+            // TODO: [TP] tolerant parser `getUri` returns NULL or string but only declares NULL
+            if (!$node->getRoot()->uri) {
+                return TypeFactory::string();
+            }
+            return TypeFactory::stringLiteral(dirname($node->getUri()));
+        }
+
+        return $this->nodeTypeConverter->resolve($node);
     }
 }

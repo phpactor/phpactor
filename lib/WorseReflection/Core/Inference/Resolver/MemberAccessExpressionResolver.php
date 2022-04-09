@@ -15,6 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -62,6 +63,16 @@ class MemberAccessExpressionResolver implements Resolver
                 'symbol_type' => $memberType,
             ]
         );
+
+        if (Symbol::CONSTANT === $memberType) {
+            if ($memberName === 'class') {
+                if (!$classType instanceof ClassType) {
+                    return $information;
+                }
+                return $information->withType(TypeFactory::stringLiteral($classType->name()->full()));
+            }
+        }
+
 
         // if the classType is a call expression, then this is a method call
         $info = (
