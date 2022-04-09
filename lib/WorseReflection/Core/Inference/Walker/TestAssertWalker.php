@@ -44,7 +44,8 @@ class TestAssertWalker implements Walker
 
         if ($actualType->__toString() !== $expectedType) {
             throw new RuntimeException(sprintf(
-                'Type assertion failed: %s is not %s%s',
+                '%s: %s is not %s%s',
+                $node->getText(),
                 $actualType->__toString(),
                 $expectedType,
                 $message ? ': ' . $message : '',

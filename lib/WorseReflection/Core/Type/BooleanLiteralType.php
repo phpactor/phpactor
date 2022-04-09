@@ -27,4 +27,22 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
     {
         return new BooleanType();
     }
+
+    public function or(BooleanType $right): BooleanType
+    {
+        if ($right instanceof BooleanLiteralType) {
+            return new self($this->value || $right->value);
+        }
+
+        return new BooleanType();
+    }
+
+    public function and(BooleanType $right): BooleanType
+    {
+        if ($right instanceof BooleanLiteralType) {
+            return new self($this->value && $right->value);
+        }
+
+        return new BooleanType();
+    }
 }

@@ -1,0 +1,17 @@
+<?php
+
+function maybe(): bool {}
+
+// or
+wrAssertType('true', true || true);
+wrAssertType('true', false || true);
+wrAssertType('false', false || false);
+wrAssertType('bool', maybe() || false);
+wrAssertType('bool', true || maybe());
+
+// and
+wrAssertType('true', true && true);
+wrAssertType('false', false && true);
+wrAssertType('false', false && false);
+wrAssertType('bool', maybe() && false);
+

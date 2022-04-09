@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
+use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -13,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\TypeUtil;
 
 class BinaryExpressionResolver implements Resolver
 {
@@ -78,17 +80,18 @@ class BinaryExpressionResolver implements Resolver
             }
         }
 
+        switch ($operator) {
+            case 'or':
+            case '||':
+                return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
+            case 'and':
+            case '&&':
+                return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
+        }
+
         return new MissingType();
         /**
         switch (strtolower($operator)) {
-            case 'or':
-                return $left or $right;
-            case '||':
-                return $left or $right;
-            case 'and':
-                return $left and $right;
-            case '&&':
-                return $left && $right;
             case '+':
                 return $left + $right;
             case '-':
