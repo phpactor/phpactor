@@ -20,6 +20,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] expressions are evaluated as types
   - [wr] literal types and internal refactorings
   - [ls] Show error message in client if service stops unexpectedly with an
     error
