@@ -14,10 +14,20 @@ class IntType extends NumericType implements BitwiseOperable
 
     public function shiftRight(Type $right): Type
     {
+        if ($right instanceof IntType && $right instanceof Literal && $this instanceof Literal) {
+            return $this->withValue($this->value() >> $right->value());
+        }
+
+        return new BooleanType();
     }
 
     public function shiftLeft(Type $right): Type
     {
+        if ($right instanceof IntType && $right instanceof Literal && $this instanceof Literal) {
+            return $this->withValue($this->value() << $right->value());
+        }
+
+        return new BooleanType();
     }
 
     public function bitwiseXor(Type $right): Type
@@ -45,5 +55,10 @@ class IntType extends NumericType implements BitwiseOperable
         }
 
         return new BooleanType();
+    }
+
+    public function bitwiseNot(): Type
+    {
+        return $this->withValue(~$this->value());
     }
 }

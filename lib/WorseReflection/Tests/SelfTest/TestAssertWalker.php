@@ -44,6 +44,8 @@ class TestAssertWalker implements Walker
             $this->assertEval($resolver, $frame, $node);
             return $frame;
         }
+
+        return $frame;
     }
 
     private function assertType(FrameResolver $resolver, Frame $frame, Node $node): void

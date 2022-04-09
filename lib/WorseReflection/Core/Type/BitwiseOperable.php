@@ -11,4 +11,5 @@ interface BitwiseOperable
     public function bitwiseXor(Type $right): Type;
     public function bitwiseOr(Type $right): Type;
     public function bitwiseAnd(Type $right): Type;
+    public function bitwiseNot(): Type;
 }

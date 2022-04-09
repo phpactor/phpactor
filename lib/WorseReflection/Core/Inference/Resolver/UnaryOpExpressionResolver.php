@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -46,6 +47,10 @@ class UnaryOpExpressionResolver implements Resolver
                 return TypeUtil::toNumber($type)->identity();
             case TokenKind::MinusToken:
                 return TypeUtil::toNumber($type)->negative();
+            case TokenKind::TildeToken:
+                if ($type instanceof BitwiseOperable) {
+                    return $type->bitwiseNot();
+                }
         }
 
         return new MissingType();
