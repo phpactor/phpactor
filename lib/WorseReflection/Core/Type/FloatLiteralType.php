@@ -27,4 +27,14 @@ final class FloatLiteralType extends FloatType implements Literal, Generalizable
     {
         return new FloatType();
     }
+
+    public function identity(): NumericType
+    {
+        return new self(+$this->value());
+    }
+
+    public function negative(): NumericType
+    {
+        return new self(-$this->value());
+    }
 }

@@ -18,6 +18,9 @@ final class IntLiteralType extends IntType implements Literal, Generalizable
         return (string)$this->value;
     }
 
+    /**
+     * @return int
+     */
     public function value()
     {
         return $this->value;
@@ -26,5 +29,15 @@ final class IntLiteralType extends IntType implements Literal, Generalizable
     public function generalize(): Type
     {
         return new IntType();
+    }
+
+    public function identity(): NumericType
+    {
+        return new self(+$this->value());
+    }
+
+    public function negative(): NumericType
+    {
+        return new self(-$this->value());
     }
 }

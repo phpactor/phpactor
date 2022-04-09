@@ -330,6 +330,10 @@ class TypeFactory
             return new BinLiteralType($value);
         }
 
+        if (false === strpos($value, '.')) {
+            return self::intLiteral((int)$value);
+        }
+
         return self::floatLiteral((float)$value);
     }
 }

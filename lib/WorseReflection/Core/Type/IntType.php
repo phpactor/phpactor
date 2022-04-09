@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-class IntType extends ScalarType
+class IntType extends NumericType
 {
     public function toPhpString(): string
     {

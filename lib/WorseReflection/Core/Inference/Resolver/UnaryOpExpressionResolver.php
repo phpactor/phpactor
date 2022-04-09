@@ -4,12 +4,17 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
+use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class UnaryOpExpressionResolver implements Resolver
@@ -25,8 +30,24 @@ class UnaryOpExpressionResolver implements Resolver
             ]
         );
         $operand = $resolver->resolveNode($frame, $node->operand);
-        $rightType = TypeUtil::toBool($operand->type());
+        $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
 
-        return $context->withType($rightType->negate());
+
+        $type = $this->resolveType($operatorKind, $operand->type());
+        return $context->withType($type);
+    }
+
+    private function resolveType(int $operatorKind, Type $type): Type
+    {
+        switch ($operatorKind) {
+            case TokenKind::ExclamationToken:
+                return TypeUtil::toBool($type)->negate();
+            case TokenKind::PlusToken:
+                return TypeUtil::toNumber($type)->identity();
+            case TokenKind::MinusToken:
+                return TypeUtil::toNumber($type)->negative();
+        }
+
+        return new MissingType();
     }
 }
