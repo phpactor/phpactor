@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
 final class BooleanLiteralType extends BooleanType implements Literal, Generalizable
@@ -59,5 +60,10 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
         }
 
         return new BooleanType();
+    }
+
+    public function toTrinary(): Trinary
+    {
+        return Trinary::fromBoolean($this->value);
     }
 }

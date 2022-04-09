@@ -1,6 +1,16 @@
 <?php
 
 class Foo {}
-class Bar {}
+class Bar extends Foo {}
 
+// this is actually invalid PHP
 wrAssertType('true', new Foo() instanceof Foo::class);
+
+// but this isn't
+$foo = Foo::class;
+wrAssertType('true', new Foo() instanceof $foo);
+
+wrAssertType('true', new Foo() instanceof new Foo());
+wrAssertType('true', new Foo() instanceof Foo);
+wrAssertType('false', new Foo() instanceof Bar);
+wrAssertType('true', Bar instanceof Bar);

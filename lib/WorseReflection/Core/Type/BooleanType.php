@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
+
 class BooleanType extends ScalarType
 {
     public function toPhpString(): string
@@ -27,5 +29,10 @@ class BooleanType extends ScalarType
     public function xor(BooleanType $booleanType): BooleanType
     {
         return new BooleanType();
+    }
+
+    public function toTrinary(): Trinary
+    {
+        return Trinary::maybe();
     }
 }

@@ -104,6 +104,12 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
+        if ($left instanceof ClassType) {
+            switch ($operator) {
+                case 'instanceof':
+                    return $left->instanceof($right);
+            }
+        }
 
         return new MissingType();
         /**

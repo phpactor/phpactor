@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class IterablePrimitiveType implements Type
 {
@@ -25,7 +26,7 @@ class IterablePrimitiveType implements Type
         }
 
         if ($type instanceof ReflectedClassType) {
-            return $type->instanceOf(ClassName::fromString('Iterable'));
+            return $type->instanceof(TypeFactory::class('Iterable'))->toTrinary();
         }
 
         return Trinary::false();

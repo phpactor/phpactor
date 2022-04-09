@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -211,5 +212,17 @@ class TypeUtil
             return TypeFactory::fromNumericString($value);
         }
         return new IntType();
+    }
+
+    public static function trinaryToBoolean(Trinary $trinary): BooleanType
+    {
+        if ($trinary->isTrue()) {
+            return new BooleanLiteralType(true);
+        }
+        if ($trinary->isFalse()) {
+            return new BooleanLiteralType(false);
+        }
+
+        return new BooleanType();
     }
 }

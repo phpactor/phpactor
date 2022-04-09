@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 
-final class IntLiteralType extends IntType implements Literal, Generalizable
+class IntLiteralType extends IntType implements Literal, Generalizable
 {
     use LiteralTrait;
     public int $value;
