@@ -91,6 +91,21 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
         }
 
+        switch ($operator) {
+            case '+':
+                return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
+            case '-':
+                return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
+            case '-':
+                return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
+            case '/':
+                return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
+            case '%':
+                return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
+            case '**':
+                return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
+        }
+
         return new MissingType();
         /**
         switch (strtolower($operator)) {

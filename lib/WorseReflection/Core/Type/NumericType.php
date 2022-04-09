@@ -16,4 +16,29 @@ abstract class NumericType extends ScalarType
     {
         return $this;
     }
+
+    public function plus(NumericType $numericType): NumericType
+    {
+        return $this;
+    }
+
+    public function modulo(NumericType $numericType)
+    {
+        return $this;
+    }
+
+    public function divide(NumericType $numericType)
+    {
+        return $this;
+    }
+
+    public function multiply(NumericType $numericType)
+    {
+        return $this;
+    }
+
+    public function minus(NumericType $numericType)
+    {
+        return $this;
+    }
 }
