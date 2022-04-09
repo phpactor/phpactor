@@ -22,10 +22,20 @@ class IntType extends NumericType implements BitwiseOperable
 
     public function bitwiseXor(Type $right): Type
     {
+        if ($right instanceof IntType && $right instanceof Literal && $this instanceof Literal) {
+            return $this->withValue($this->value() ^ $right->value());
+        }
+
+        return new BooleanType();
     }
 
     public function bitwiseOr(Type $right): Type
     {
+        if ($right instanceof IntType && $right instanceof Literal && $this instanceof Literal) {
+            return $this->withValue($this->value() | $right->value());
+        }
+
+        return new BooleanType();
     }
 
     public function bitwiseAnd(Type $right): Type
