@@ -87,6 +87,8 @@ class BinaryExpressionResolver implements Resolver
             case 'and':
             case '&&':
                 return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
+            case 'xor':
+                return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
         }
 
         return new MissingType();

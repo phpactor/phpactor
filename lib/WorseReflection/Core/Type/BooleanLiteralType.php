@@ -50,4 +50,13 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
     {
         return new self(!$this->value);
     }
+
+    public function xor(BooleanType $booleanType): BooleanType
+    {
+        if ($booleanType instanceof BooleanLiteralType) {
+            return new self($this->value() xor $booleanType->value());
+        }
+
+        return new BooleanType();
+    }
 }

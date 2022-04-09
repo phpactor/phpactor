@@ -23,4 +23,9 @@ class BooleanType extends ScalarType
     {
         return new BooleanType();
     }
+
+    public function xor(BooleanType $booleanType): BooleanType
+    {
+        return new BooleanType();
+    }
 }
