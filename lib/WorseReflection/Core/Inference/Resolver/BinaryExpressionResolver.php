@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -89,9 +90,6 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
             case 'xor':
                 return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
-        }
-
-        switch ($operator) {
             case '+':
                 return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
             case '-':
@@ -106,26 +104,10 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
+
         return new MissingType();
         /**
         switch (strtolower($operator)) {
-            case '+':
-                return $left + $right;
-            case '-':
-                return $left - $right;
-            case '%':
-                // do not cause fatal error if right value is zero-ish
-                if (!$right) {
-                    return 0;
-                }
-                return $left % $right;
-            case '/':
-                // do not cause fatal error if right value is zero-ish
-                if (!$right) {
-                    return 0;
-                }
-
-                return $left / $right;
             case 'instanceof':
                 return true;
             case '&':
@@ -138,8 +120,6 @@ class BinaryExpressionResolver implements Resolver
                 return $left << $right;
             case '>>':
                 return $left >> $right;
-            case 'xor':
-                return $left xor $right;
         }
         **/
     }

@@ -15,3 +15,8 @@ wrAssertType('4', 2 * 2);
 wrAssertType('2', 4 / 2);
 wrAssertType('0', 4 % 2);
 wrAssertType('8', 2 ** 3);
+
+wrAssertType('9', 3 + 2 * 3);
+wrAssertType('15', (3 + 2) * 3);
+wrAssertType('15', 10 + 10 / 2);
+
