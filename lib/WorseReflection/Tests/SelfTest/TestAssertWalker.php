@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\Walker;
+namespace Phpactor\WorseReflection\Tests\SelfTest;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -13,6 +14,13 @@ use RuntimeException;
 
 class TestAssertWalker implements Walker
 {
+    private TestCase $testCase;
+
+    public function __construct(TestCase $testCase)
+    {
+        $this->testCase = $testCase;
+    }
+
     public function nodeFqns(): array
     {
         return [CallExpression::class];
@@ -43,7 +51,7 @@ class TestAssertWalker implements Walker
         $message = isset($args[2]) ? TypeUtil::valueOrNull($args[2]->type()) : null;
 
         if ($actualType->__toString() !== $expectedType) {
-            throw new RuntimeException(sprintf(
+            $this->testCase->fail(sprintf(
                 '%s: %s is not %s%s',
                 $node->getText(),
                 $actualType->__toString(),
@@ -51,6 +59,7 @@ class TestAssertWalker implements Walker
                 $message ? ': ' . $message : '',
             ));
         }
+        $this->testCase->addToAssertionCount(1);
 
         return $frame;
     }
