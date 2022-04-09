@@ -7,12 +7,14 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -186,6 +188,12 @@ class TypeUtil
 
     public static function toBool(Type $type): BooleanType
     {
+        if ($type instanceof Literal) {
+            return new BooleanLiteralType((bool)$type->value());
+        }
+        if($type instanceof NullType) {
+            return new BooleanLiteralType(false);
+        }
         if ($type instanceof BooleanType) {
             return $type;
         }

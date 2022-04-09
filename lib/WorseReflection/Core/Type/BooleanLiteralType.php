@@ -45,4 +45,9 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
 
         return new BooleanType();
     }
+
+    public function negate(): BooleanType
+    {
+        return new self(!$this->value);
+    }
 }

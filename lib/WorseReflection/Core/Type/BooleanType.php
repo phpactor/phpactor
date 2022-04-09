@@ -18,4 +18,9 @@ class BooleanType extends ScalarType
     {
         return new BooleanType();
     }
+
+    public function negate(): BooleanType
+    {
+        return new BooleanType();
+    }
 }

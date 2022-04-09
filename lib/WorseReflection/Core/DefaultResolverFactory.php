@@ -16,6 +16,8 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
+use Microsoft\PhpParser\Node\Expression\UnaryExpression;
+use Microsoft\PhpParser\Node\Expression\UnaryOpExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NumericLiteral;
@@ -49,6 +51,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolve
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\UnaryOpExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
@@ -89,6 +92,7 @@ final class DefaultResolverFactory
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),
+            UnaryOpExpression::class => new UnaryOpExpressionResolver(),
             ClassDeclaration::class => new ClassLikeResolver(),
             InterfaceDeclaration::class => new ClassLikeResolver(),
             TraitDeclaration::class => new ClassLikeResolver(),

@@ -15,3 +15,12 @@ wrAssertType('false', false && true);
 wrAssertType('false', false && false);
 wrAssertType('bool', maybe() && false);
 
+// negation
+wrAssertType('bool', !maybe());
+wrAssertType('false', !true);
+wrAssertType('true', !false);
+wrAssertType('true', !null);
+wrAssertType('false', !"foobar");
+wrAssertType('true', ![]);
+wrAssertType('false', !["foo"]);
+
