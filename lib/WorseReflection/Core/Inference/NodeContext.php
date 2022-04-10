@@ -148,9 +148,6 @@ final class NodeContext
 
     public function withTypeAssertionForSubject(NodeContext $subject, Type $type): NodeContext
     {
-        if ($subject->symbol()->symbolType() === Symbol::VARIABLE) {
-            return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
-        }
         if ($subject->symbol()->symbolType() === Symbol::PROPERTY) {
             return $this->withTypeAssertion(TypeAssertion::property(
                 $subject->symbol()->name(),
@@ -159,6 +156,6 @@ final class NodeContext
             ));
         }
 
-        return $subject;
+        return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
     }
 }

@@ -41,6 +41,7 @@ class BinaryExpressionResolver implements Resolver
             return $context;
         }
 
+        // can remove given the other logic below??
         switch ($operator) {
             case 'instanceof':
                 return $this->resolveInstanceOf($context, $left, $right);

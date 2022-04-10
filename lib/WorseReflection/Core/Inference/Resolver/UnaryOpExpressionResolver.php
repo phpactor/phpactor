@@ -22,13 +22,16 @@ class UnaryOpExpressionResolver implements Resolver
     {
         assert($node instanceof UnaryExpression);
         $operand = $resolver->resolveNode($frame, $node->operand);
+
         $context = NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
             ]
-        )->withTypeAssertions($operand->typeAssertions())->withType($operand->type());
+        )->withTypeAssertions(
+            $operand->typeAssertions()
+        )->withType($operand->type());
         $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);
 
         return $this->resolveType($context, $operatorKind, $operand->type());
