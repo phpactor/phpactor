@@ -160,4 +160,13 @@ abstract class Assignments implements Countable, IteratorAggregate
 
         return null;
     }
+
+    public function firstOrNull(): ?Variable
+    {
+        foreach ($this->variables as [$offset, $variable]) {
+            return $variable;
+        }
+
+        return null;
+    }
 }

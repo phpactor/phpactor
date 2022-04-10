@@ -4,11 +4,15 @@ function foo()
 {
 }
 
-wrAssertType('true', is_null(null));
-wrAssertType('false', is_null("fo"));
+assert(is_null($foo));
+wrAssertType('null', $foo);
 
-$foo = foo();
-if (is_null($foo)) {
-    wrAssertType('true', is_null($foo));
-}
-wrAssertType('<missing>', is_null($foo));
+assert(!is_null($foo));
+wrAssertType('<missing>', $foo);
+
+// wrAssertType('true', is_null(null));
+// wrAssertType('false', is_null("fo"));
+// 
+// $foo = foo();
+// 
+

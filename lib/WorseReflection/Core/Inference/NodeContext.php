@@ -64,6 +64,17 @@ final class NodeContext
         return $new;
     }
 
+    /**
+     * @param TypeAssertion[] $typeAssertions
+     */
+    public function withTypeAssertions(array $typeAssertions): NodeContext
+    {
+        $new = clone $this;
+        $new->typeAssertions = $typeAssertions;
+
+        return $new;
+    }
+
     public function withType(Type $type): NodeContext
     {
         $new = clone $this;
@@ -133,5 +144,13 @@ final class NodeContext
     public function scope(): ReflectionScope
     {
         return $this->scope;
+    }
+
+    /**
+     * @return TypeAssertion[]
+     */
+    public function typeAssertions(): array
+    {
+        return $this->typeAssertions;
     }
 }

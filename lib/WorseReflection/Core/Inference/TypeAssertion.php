@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 
-class TypeAssertion
+final class TypeAssertion
 {
     private string $name;
     private Type $type;
@@ -28,5 +28,10 @@ class TypeAssertion
     public function type(): Type
     {
         return $this->type;
+    }
+
+    public function withType(Type $type): self
+    {
+        return new self($this->name, $type);
     }
 }

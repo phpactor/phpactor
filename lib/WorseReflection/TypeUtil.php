@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReflection;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
@@ -16,6 +18,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
@@ -223,5 +226,14 @@ class TypeUtil
         }
 
         return new BooleanType();
+    }
+
+    public static function applyType(Type $originalType, Type $type): Type
+    {
+        if ($type instanceof NotType) {
+            return TypeCombinator::remove($originalType, $type->type);
+        }
+
+        return TypeCombinator::add($originalType, $type);
     }
 }

@@ -58,4 +58,31 @@ final class UnionType implements Type
 
         return $this;
     }
+
+    public function merge(UnionType $type): self
+    {
+        $types = $this->types;
+        foreach ($type->types as $type) {
+            $types[] = $type;
+        }
+
+        return (new self(...$types))->filter();
+    }
+
+    public function filter(): self
+    {
+        return new self(...array_filter(
+            $this->types,
+            fn (Type $type) => !$type instanceof MissingType
+        ));
+
+    }
+
+    public function remove(UnionType $remove): Type
+    {
+        $removeString = $remove->__toString();
+        return (new self(...array_filter($this->types, function (Type $type) use ($removeString) {
+            return $type->__toString() !== $removeString;
+        })))->reduce();
+    }
 }
