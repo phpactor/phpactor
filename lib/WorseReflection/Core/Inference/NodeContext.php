@@ -152,7 +152,11 @@ final class NodeContext
             return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
         }
         if ($subject->symbol()->symbolType() === Symbol::PROPERTY) {
-            return $this->withTypeAssertion(TypeAssertion::property($subject->symbol()->name(), $subject->containerType(), $type));
+            return $this->withTypeAssertion(TypeAssertion::property(
+                $subject->symbol()->name(),
+                $subject->containerType() ?: new MissingType(),
+                $type
+            ));
         }
 
         return $subject;
