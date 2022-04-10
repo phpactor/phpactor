@@ -76,6 +76,9 @@ class WorseReflectionTypeLocator implements TypeLocator
 
         if ($type instanceof UnionType) {
             foreach ($type->types as $type) {
+                if (!$type instanceof ClassType) {
+                    continue;
+                }
                 return $this->resolveClassName($type);
             }
         }

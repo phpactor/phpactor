@@ -134,6 +134,36 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         self::assertEquals($this->workspace->path('Two.php'), $location->uri()->path());
     }
 
+    public function testLocatesFirstUnionWithNullAndScalar(): void
+    {
+        $location = $this->locate(
+            <<<'EOT'
+                // File: One.php
+                // <?php interface One {}
+                // File: Two.php
+                // <?php class Two {}
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foo
+                {
+                    /** 
+                     * @var string|null|Two|One
+                     */
+                    private $one;
+
+                    public function bar()
+                    {
+                        $this->o<>ne;
+                    }
+                }
+                EOT
+        );
+        self::assertEquals($this->workspace->path('Two.php'), $location->uri()->path());
+    }
+
     protected function locate(string $manifset, string $source): Location
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -142,7 +172,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
         return (new WorseReflectionTypeLocator($this->reflector()))->locateType(
             TextDocumentBuilder::create($source)->language('php')->build(),
-            ByteOffset::fromInt($offset)
+            ByteOffset::fromInt((int)$offset)
         );
     }
 }
