@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 final class UnionType implements Type
 {
@@ -71,10 +72,17 @@ final class UnionType implements Type
 
     public function filter(): self
     {
-        return new self(...array_filter(
-            $this->types,
-            fn (Type $type) => !$type instanceof MissingType
-        ));
+        $types = $this->types;
+        $unique = [];
+
+        foreach ($types as $type) {
+            if ($type instanceof MissingType) {
+                continue;
+            }
+            $unique[$type->__toString()] = $type;
+        }
+
+        return new self(...array_values($unique));
 
     }
 
@@ -88,12 +96,20 @@ final class UnionType implements Type
         })))->reduce();
     }
 
-    private static function toUnion(Type $type): UnionType
+    public static function toUnion(Type $type): UnionType
     {
+        if ($type instanceof NullableType) {
+            return self::toUnion($type->type)->add(TypeFactory::null());
+        }
         if ($type instanceof UnionType) {
             return $type;
         }
 
         return new self($type);
+    }
+
+    private function add(Type $type): UnionType
+    {
+        return (new self(...array_merge($this->types, [$type])))->filter();
     }
 }

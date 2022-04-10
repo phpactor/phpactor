@@ -54,4 +54,43 @@ class UnionTypeTest extends TestCase
             'int|Foo',
         ];
     }
+
+    /**
+     * @dataProvider provideFilter
+     * @param Type[] $types
+     */
+    public function testFilter(array $types, string $expected): void
+    {
+        self::assertEquals($expected, TypeFactory::union(...$types)->filter()->__toString());
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideFilter(): Generator
+    {
+        yield [[], ''];
+        yield [[TypeFactory::undefined()], ''];
+        yield [[TypeFactory::string()], 'string'];
+
+        yield [
+            [
+                TypeFactory::string(),
+                TypeFactory::string(),
+                TypeFactory::string(),
+                TypeFactory::string(),
+            ],
+            'string'
+        ];
+
+        yield [
+            [
+                TypeFactory::string(),
+                TypeFactory::int(),
+                TypeFactory::string(),
+                TypeFactory::string(),
+            ],
+            'string|int'
+        ];
+    }
 }
