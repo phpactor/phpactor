@@ -226,13 +226,4 @@ class TypeUtil
 
         return new BooleanType();
     }
-
-    public static function applyType(Type $originalType, Type $type): Type
-    {
-        if ($type instanceof NotType) {
-            return TypeCombinator::remove($originalType, $type->type);
-        }
-
-        return TypeCombinator::add($originalType, $type);
-    }
 }

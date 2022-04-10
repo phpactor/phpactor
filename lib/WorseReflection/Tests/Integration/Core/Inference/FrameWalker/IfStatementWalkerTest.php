@@ -35,7 +35,6 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame, int $offset): void {
-            dump($frame->__toString());
             $this->assertCount(2, $frame->locals());
             $this->assertEquals('Foobar', $frame->locals()->atIndex(0)->type()->__toString());
             $this->assertEquals('<missing>', $frame->locals()->atIndex(1)->type()->__toString());

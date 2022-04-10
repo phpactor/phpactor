@@ -116,7 +116,7 @@ class Frame
             $originalType = $original ? $original->type() : TypeFactory::undefined();
             $variable = new Variable(
                 $typeAssertion->name(),
-                TypeUtil::applyType($originalType, $typeAssertion->type())
+                TypeCombinator::applyType($originalType, $typeAssertion->type())
             );
             $this->locals()->add($offset, $variable);
         }
@@ -126,7 +126,7 @@ class Frame
             $originalType = $original ? $original->type() : TypeFactory::undefined();
             $variable = new Variable(
                 $typeAssertion->name(),
-                TypeUtil::applyType($originalType, $typeAssertion->type()),
+                TypeCombinator::applyType($originalType, $typeAssertion->type()),
                 $typeAssertion->classType(),
             );
             $this->properties()->add($offset, $variable);
