@@ -127,6 +127,9 @@ class NodeUtil
         return 0;
     }
 
+    /**
+     * For debugging: pretty print the AST
+     */
     public static function dump(Node $node, int $level = 0): string
     {
         $out = [
