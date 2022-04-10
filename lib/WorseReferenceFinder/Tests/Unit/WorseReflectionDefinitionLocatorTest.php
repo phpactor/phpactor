@@ -125,6 +125,38 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals(21, $location->offset()->toInt());
     }
 
+    public function testLocatesToMethodOnUnionTypeReversed(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Factory.php
+            <?php class Factory { public static function create(): Barfoo|Foobar {} }
+            // File: Foobar.php
+            <?php class Foobar { public function bar() {} }
+            // File: Barfoo.php
+            <?php class Barfoo { }
+            EOT
+        , '<?php $f = Factory::create(); $f->b<>ar();');
+
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
+        $this->assertEquals(21, $location->offset()->toInt());
+    }
+
+    public function testLocatesToMethodOnUnionType(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Factory.php
+            <?php class Factory { public static function create(): Foobar|Barfoo {} }
+            // File: Foobar.php
+            <?php class Foobar { public function bar() {} }
+            // File: Barfoo.php
+            <?php class Barfoo { }
+            EOT
+        , '<?php $f = Factory::create(); $f->b<>ar();');
+
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
+        $this->assertEquals(21, $location->offset()->toInt());
+    }
+
     public function testLocatesConstant(): void
     {
         $location = $this->locate(<<<'EOT'

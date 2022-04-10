@@ -17,8 +17,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\TypeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
 {
@@ -73,25 +75,38 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
-        // if the classType is a call expression, then this is a method call
-        $info = (
-            new MemberTypeResolver($resolver->reflector())
-        )->{$memberType . 'Type'}($classType, $information, $memberName);
-
-        if (Symbol::PROPERTY === $memberType) {
-            $frameTypes = self::getFrameTypesForPropertyAtPosition(
-                $frame,
-                (string) $memberName,
-                $classType,
-                $node->getEndPosition(),
-            );
-
-            foreach ($frameTypes as $type) {
-                return $info->withType($type);
+        foreach (TypeUtil::unwrapUnion($classType) as $classType) {
+            if (!$classType instanceof ReflectedClassType) {
+                continue;
             }
+
+            $reflection = $classType->reflectionOrNull();
+            if (null === $reflection) {
+                continue;
+            }
+
+
+            if (!TypeUtil::isDefined($info->type())) {
+                continue;
+            }
+
+            if (Symbol::PROPERTY === $memberType) {
+                $frameTypes = self::getFrameTypesForPropertyAtPosition(
+                    $frame,
+                    (string) $memberName,
+                    $classType,
+                    $node->getEndPosition(),
+                );
+
+                foreach ($frameTypes as $type) {
+                    return $info->withType($type);
+                }
+            }
+
+            return $info;
         }
 
-        return $info;
+        return $information;
     }
 
     private static function getFrameTypesForPropertyAtPosition(

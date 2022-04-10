@@ -25,8 +25,11 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function isDefined(Type $type): bool
+    public static function isDefined(?Type $type): bool
     {
+        if (null === $type) {
+            return false;
+        }
         return !$type instanceof MissingType;
     }
 
