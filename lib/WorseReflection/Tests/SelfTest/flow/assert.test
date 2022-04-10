@@ -1,9 +1,11 @@
 <?php
 
-namespace Foo;
+function notype() {}
+function stringOrNull(): ?string {}
 
-function foo($foo) {
-    assert($foo instanceof Bar);
-    wrAssertType('Foo\Bar', $foo);
-}
+$foo = notype();
+assert(is_null($foo));
+wrAssertType('null', $foo);
 
+assert(!is_null($foo));
+wrAssertType('<missing>', $foo);
