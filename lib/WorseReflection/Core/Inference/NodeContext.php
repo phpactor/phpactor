@@ -14,6 +14,11 @@ final class NodeContext
     private Symbol $symbol;
 
     /**
+     * @var TypeAssertion[]
+     */
+    private array $typeAssertions = [];
+
+    /**
      * @var Type
      */
     private ?Type $containerType = null;
@@ -63,6 +68,14 @@ final class NodeContext
     {
         $new = clone $this;
         $new->type = $type;
+
+        return $new;
+    }
+
+    public function withTypeAssertion(TypeAssertion $typeAssertion): NodeContext
+    {
+        $new = clone $this;
+        $new->typeAssertions[] = $typeAssertion;
 
         return $new;
     }
