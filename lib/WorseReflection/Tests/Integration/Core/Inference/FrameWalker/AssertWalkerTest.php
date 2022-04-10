@@ -34,7 +34,7 @@ class AssertWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertEquals(1, $frame->locals()->count());
-                $this->assertEquals('<missing>', $frame->locals()->first()->type());
+                $this->assertEquals('<missing>', $frame->locals()->first()->type()->__toString());
             }
         ];
 

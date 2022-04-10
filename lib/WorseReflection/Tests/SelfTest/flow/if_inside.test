@@ -1,0 +1,11 @@
+<?php
+
+function bar(): string|int {}
+
+$f = bar();
+
+if (is_int($f)) {
+    wrAssertType('int', $f);
+}
+
+wrAssertType('string|int', $f);

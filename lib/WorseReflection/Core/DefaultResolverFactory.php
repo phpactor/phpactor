@@ -33,7 +33,7 @@ use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
-use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsNullStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
@@ -123,7 +123,10 @@ final class DefaultResolverFactory
     {
         return new FunctionStubRegistry([
             'array_sum' => new ArraySumStub(),
-            'is_null' => new IsNullStub(),
+            'is_null' => new IsSomethingStub(TypeFactory::null()),
+            'is_float' => new IsSomethingStub(TypeFactory::float()),
+            'is_int' => new IsSomethingStub(TypeFactory::int()),
+            'is_string' => new IsSomethingStub(TypeFactory::string()),
         ]);
     }
 }

@@ -10,12 +10,20 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 
-class IsNullStub implements FunctionStub
+class IsSomethingStub implements FunctionStub
 {
+    private Type $isType;
+
+    public function __construct(Type $isType)
+    {
+        $this->isType = $isType;
+    }
+
     public function resolve(
         NodeContextResolver $resolver,
         Frame $frame,
@@ -34,7 +42,7 @@ class IsNullStub implements FunctionStub
             if ($expression instanceof Variable) {
                 $variable = $expression->getName();
                 $context = $context->withTypeAssertion(
-                    TypeAssertion::variable($variable, TypeFactory::null())
+                    TypeAssertion::variable($variable, $this->isType)
                 );
             }
 
