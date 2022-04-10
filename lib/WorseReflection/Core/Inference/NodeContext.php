@@ -158,10 +158,6 @@ final class NodeContext
                 $type
             ));
         }
-        if ($subject->symbol()->symbolType() === Symbol::UNKNOWN) {
-            dump($subject->typeAssertions());
-            dump($subject->symbol());
-        }
 
         return $subject;
     }
