@@ -35,6 +35,6 @@ class TypeCombinator
             return TypeCombinator::remove($originalType, $type->type);
         }
 
-        return $type;
+        return self::add($originalType, $type);
     }
 }

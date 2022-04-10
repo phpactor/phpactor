@@ -1,19 +1,19 @@
 <?php
 
-function foo(Foo|Bar|Baz $foo)
+function foo(Foo $foo)
 {
-    wrAssertType('Foo|Bar|Baz', $foo);
+    wrAssertType('Foo', $foo);
 
     if ($foo instanceof Bar) {
 
-        wrAssertType('Bar', $foo);
+        wrAssertType('Foo|Bar', $foo);
         return;
     }
 
-    wrAssertType('Foo|Baz', $foo);
+    wrAssertType('Foo', $foo);
 
     if ($foo instanceof Baz) {
-        wrAssertType('Baz', $foo);
+        wrAssertType('Foo|Baz', $foo);
         return;
     }
 
