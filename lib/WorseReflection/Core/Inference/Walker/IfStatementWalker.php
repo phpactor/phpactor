@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Microsoft\PhpParser\Node\Expression\ExitIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -13,6 +14,7 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementWalker implements Walker
@@ -44,7 +46,6 @@ class IfStatementWalker implements Walker
 
         $frame->applyTypeAssertions($context->typeAssertions(), $node->expression->getStartPosition());
         $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
-
         if (!$terminates) {
             return $frame;
         }
@@ -83,6 +84,12 @@ class IfStatementWalker implements Walker
                     foreach ($statement->statements as $statement) {
                         if ($statement instanceof BreakOrContinueStatement) {
                             return true;
+                        }
+
+                        if ($statement instanceof ExpressionStatement) {
+                            if ($statement->expression instanceof ExitIntrinsicExpression) {
+                                return true;
+                            }
                         }
                     }
                 }

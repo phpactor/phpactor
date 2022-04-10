@@ -50,7 +50,7 @@ class BinaryExpressionResolver implements Resolver
         $context = $context->withTypeAssertions(
             $left->typeAssertions()->merge($right->typeAssertions())
         );
-        $type = $this->walkBinaryExpression($resolver, $frame, $left->type(), $right->type(), $operator, $node);
+        $type = $this->walkBinaryExpression($left->type(), $right->type(), $operator);
 
         if ($type instanceof BooleanType) {
             if (false === $type->isTrue()) {
@@ -62,12 +62,9 @@ class BinaryExpressionResolver implements Resolver
     }
 
     private function walkBinaryExpression(
-        NodeContextResolver $resolver,
-        Frame $frame,
         Type $left,
         Type $right,
-        string $operator,
-        BinaryExpression $node
+        string $operator
     ): Type {
         if ($left instanceof Concatable) {
             switch ($operator) {

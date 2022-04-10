@@ -1,0 +1,12 @@
+<?php
+
+function foo(): string|int|null {
+}
+
+$foo = foo();
+if (is_null($foo)) {
+    die();
+}
+
+wrAssertType('string|int', $foo);
+
