@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class DeclaredMemberTypeResolver

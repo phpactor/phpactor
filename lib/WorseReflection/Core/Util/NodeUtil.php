@@ -158,6 +158,7 @@ class NodeUtil
             if ($nodeOrToken->isUnqualifiedName() && in_array($text, self::RESERVED_NAMES)) {
                 return TypeFactory::fromStringWithReflector($text, $reflector);
             }
+
             if ($text === 'self') {
                 $class = self::nodeContainerClassLikeDeclaration($node);
                 return TypeFactory::reflectedClass($reflector, $class->getNamespacedName()->__toString());
