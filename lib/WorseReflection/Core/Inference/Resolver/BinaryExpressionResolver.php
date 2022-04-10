@@ -9,6 +9,8 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
@@ -24,6 +26,7 @@ class BinaryExpressionResolver implements Resolver
     {
         assert($node instanceof BinaryExpression);
 
+        $operator = $node->operator->getText($node->getFileContents());
         $context = NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
@@ -32,15 +35,19 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $left = $resolver->resolveNode($frame, $node->leftOperand)->type();
-        $right = $resolver->resolveNode($frame, $node->rightOperand)->type();
-        $operator = $node->operator->getText($node->getFileContents());
+        $left = $resolver->resolveNode($frame, $node->leftOperand);
+        $right = $resolver->resolveNode($frame, $node->rightOperand);
 
         if (!is_string($operator)) {
             return $context;
         }
 
-        return $context->withType($this->walkBinaryExpression($resolver, $frame, $left, $right, $operator, $node));
+        switch ($operator) {
+            case 'instanceof':
+                return $this->resolveInstanceOf($context, $left, $right);
+        }
+
+        return $context->withType($this->walkBinaryExpression($resolver, $frame, $left->type(), $right->type(), $operator, $node));
     }
 
     private function walkBinaryExpression(
@@ -105,11 +112,6 @@ class BinaryExpressionResolver implements Resolver
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
-        switch ($operator) {
-            case 'instanceof':
-                return $this->resolveInstanceOf($left, $right);
-        }
-
         if ($left instanceof BitwiseOperable) {
             switch ($operator) {
                 case '&':
@@ -128,8 +130,14 @@ class BinaryExpressionResolver implements Resolver
         return new MissingType();
     }
 
-    private function resolveInstanceOf(Type $left, Type $right): Type
+    private function resolveInstanceOf(NodeContext $context, NodeContext $left, NodeContext $right): NodeContext
     {
-        return TypeFactory::boolLiteral(true);
+        if($left->symbol()->symbolType() === Symbol::VARIABLE) {
+            $variable = $left->symbol()->name();
+            $context = $context->withTypeAssertion(
+                TypeAssertion::variable($variable, $right->type())
+            );
+        }
+        return $context->withType(TypeFactory::boolLiteral(true));
     }
 }
