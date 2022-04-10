@@ -121,7 +121,7 @@ final class DefaultResolverFactory
     private function createStubRegistry(): FunctionStubRegistry
     {
         return new FunctionStubRegistry([
-            new ArraySumStub(),
+            'array_sum' => new ArraySumStub(),
         ]);
     }
 }

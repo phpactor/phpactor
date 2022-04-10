@@ -58,7 +58,7 @@ class QualifiedNameResolver implements Resolver
             $stub = $this->registry->get($name);
             $arguments = $parent->argumentExpressionList;
             if ($stub && $arguments) {
-                return $stub->invoke($resolver, $frame, $context, $node->parent, $arguments);
+                return $stub->resolve($resolver, $frame, $context, $arguments);
             }
 
             try {
