@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -17,7 +18,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -76,15 +76,18 @@ class MemberAccessExpressionResolver implements Resolver
 
 
         foreach (TypeUtil::unwrapUnion($classType) as $classType) {
-            if (!$classType instanceof ReflectedClassType) {
+            if (!$classType instanceof ClassType) {
                 continue;
             }
 
-            $reflection = $classType->reflectionOrNull();
-            if (null === $reflection) {
+            try {
+                $reflection = $resolver->reflector()->reflectClassLike($classType->name());
+            } catch (NotFound $e) {
                 continue;
             }
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+                $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
+
                 if ($member instanceof ReflectionProperty) {
                     $frameTypes = self::getFrameTypesForPropertyAtPosition(
                         $frame,
@@ -98,12 +101,11 @@ class MemberAccessExpressionResolver implements Resolver
                     }
                 }
 
-                return $information->withContainerType($classType)->withType($member->inferredType());
+                return $information->withContainerType($declaringClass)->withType($member->inferredType());
             }
         }
 
         return $information->withContainerType($classType);
-        ;
     }
 
     private static function getFrameTypesForPropertyAtPosition(
