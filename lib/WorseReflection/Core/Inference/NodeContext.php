@@ -13,10 +13,7 @@ final class NodeContext
     
     private Symbol $symbol;
 
-    /**
-     * @var TypeAssertion[]
-     */
-    private array $typeAssertions = [];
+    private TypeAssertions $typeAssertions;
 
     /**
      * @var Type
@@ -39,6 +36,7 @@ final class NodeContext
         $this->containerType = $containerType;
         $this->type = $type;
         $this->scope = $scope;
+        $this->typeAssertions = new TypeAssertions([]);
     }
 
     public static function for(Symbol $symbol): NodeContext
@@ -64,10 +62,7 @@ final class NodeContext
         return $new;
     }
 
-    /**
-     * @param TypeAssertion[] $typeAssertions
-     */
-    public function withTypeAssertions(array $typeAssertions): NodeContext
+    public function withTypeAssertions(TypeAssertions $typeAssertions): NodeContext
     {
         $new = clone $this;
         $new->typeAssertions = $typeAssertions;
@@ -146,10 +141,7 @@ final class NodeContext
         return $this->scope;
     }
 
-    /**
-     * @return TypeAssertion[]
-     */
-    public function typeAssertions(): array
+    public function typeAssertions(): TypeAssertions
     {
         return $this->typeAssertions;
     }

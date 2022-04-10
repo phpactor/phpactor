@@ -10,11 +10,11 @@ class NodeContextModifier
 {
     public static function negate(NodeContext $context): NodeContext
     {
-        $context = $context->withType(TypeUtil::toBool($context->type())->negate());
-        $context = $context->withTypeAssertions(array_map(function (TypeAssertion $typeAssertion) {
-            return $typeAssertion->withType(TypeFactory::not($typeAssertion->type()));
-        }, $context->typeAssertions()));
-
-        return $context;
+        return $context
+            ->withType(TypeUtil::toBool($context->type())->negate())
+            ->withTypeAssertions($context->typeAssertions()->map(function (TypeAssertion $typeAssertion) {
+                return $typeAssertion->withType(TypeFactory::not($typeAssertion->type()));
+            }))
+        ;
     }
 }
