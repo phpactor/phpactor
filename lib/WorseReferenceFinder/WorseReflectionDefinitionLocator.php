@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\TypeUtil;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
 {
@@ -137,7 +138,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $symbolName = $symbolContext->symbol()->name();
         $symbolType = $symbolContext->symbol()->symbolType();
 
-        if (null === $symbolContext->containerType()) {
+        if (false === TypeUtil::isDefined($symbolContext->containerType())) {
             throw new CouldNotLocateDefinition(sprintf('Containing class for member "%s" could not be determined', $symbolName));
         }
 

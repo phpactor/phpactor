@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -61,7 +62,7 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 
         $containerType = $offset->symbolContext()->containerType();
 
-        if (null === $containerType) {
+        if (!TypeUtil::isDefined($containerType)) {
             return $reference;
         }
 

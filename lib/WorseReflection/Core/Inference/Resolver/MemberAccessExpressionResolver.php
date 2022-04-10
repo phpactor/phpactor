@@ -8,12 +8,12 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -84,29 +84,26 @@ class MemberAccessExpressionResolver implements Resolver
             if (null === $reflection) {
                 continue;
             }
+            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+                if ($member instanceof ReflectionProperty) {
+                    $frameTypes = self::getFrameTypesForPropertyAtPosition(
+                        $frame,
+                        (string) $memberName,
+                        $classType,
+                        $node->getEndPosition(),
+                    );
 
-
-            if (!TypeUtil::isDefined($info->type())) {
-                continue;
-            }
-
-            if (Symbol::PROPERTY === $memberType) {
-                $frameTypes = self::getFrameTypesForPropertyAtPosition(
-                    $frame,
-                    (string) $memberName,
-                    $classType,
-                    $node->getEndPosition(),
-                );
-
-                foreach ($frameTypes as $type) {
-                    return $info->withType($type);
+                    foreach ($frameTypes as $type) {
+                        return $information->withContainerType($classType)->withType($type);
+                    }
                 }
-            }
 
-            return $info;
+                return $information->withContainerType($classType)->withType($member->inferredType());
+            }
         }
 
-        return $information;
+        return $information->withContainerType($classType);
+        ;
     }
 
     private static function getFrameTypesForPropertyAtPosition(
