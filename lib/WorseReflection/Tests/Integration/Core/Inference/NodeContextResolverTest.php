@@ -844,7 +844,6 @@ class NodeContextResolverTest extends IntegrationTestCase
                     ->withType(TypeFactory::class('Acme\Factory')),
             ], [
                 'types' => [
-                    TypeFactory::class('Acme\FactoryInterface'),
                     TypeFactory::class('Acme\Factory'),
                 ],
                 'symbol_type' => Symbol::PROPERTY,
