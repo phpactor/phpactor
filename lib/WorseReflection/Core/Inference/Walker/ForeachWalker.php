@@ -89,7 +89,7 @@ class ForeachWalker extends AbstractWalker
             ]
         );
         
-        $frame->locals()->add($node->getStartPosition(), WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add($node->foreachKey->getStartPosition(), WorseVariable::fromSymbolContext($context));
     }
 
     private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $collection, Frame $frame): void
