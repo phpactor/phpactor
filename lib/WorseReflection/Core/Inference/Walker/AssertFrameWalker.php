@@ -43,7 +43,7 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
             $context = $resolver->resolveNode($frame, $expression->expression);
 
             foreach ($context->typeAssertions() as $typeAssertion) {
-                $original = $frame->locals()->byName($typeAssertion->name())->firstOrNull();
+                $original = $frame->locals()->byName($typeAssertion->name())->lastOrNull();
                 $originalType = $original ? $original->type() : TypeFactory::undefined();
 
                 $variable = new Variable(
