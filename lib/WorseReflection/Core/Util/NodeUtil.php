@@ -22,6 +22,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class NodeUtil
 {
+    private const RESERVED_NAMES = [
+        'iterable',
+        'resource',
+    ];
+
     public static function nodeContainerClassLikeType(Reflector $reflector, Node $node): Type
     {
         $classNode = self::nodeContainerClassLikeDeclaration($node);
@@ -149,17 +154,25 @@ class NodeUtil
         }
 
         if ($nodeOrToken instanceof QualifiedName) {
+            $text = $nodeOrToken->getText();
+            if ($nodeOrToken->isUnqualifiedName() && in_array($text, self::RESERVED_NAMES)) {
+                return TypeFactory::fromStringWithReflector($text, $reflector);
+            }
+            if ($text === 'self') {
+                $class = self::nodeContainerClassLikeDeclaration($node);
+                return TypeFactory::reflectedClass($reflector, $class->getNamespacedName()->__toString());
+            }
+
             return TypeFactory::fromStringWithReflector($nodeOrToken->getResolvedName(), $reflector);
         }
 
         if ($nodeOrToken instanceof QualifiedNameList) {
-            $u = TypeFactory::union(...array_map(function ($name) use ($node, $reflector) {
+            return TypeFactory::union(...array_map(function ($name) use ($node, $reflector) {
                 if (null === $name) {
                     return new MissingType();
                 }
                 return self::typeFromQualfiedNameLike($reflector, $node, $name);
             }, iterator_to_array($nodeOrToken->getElements(), true)))->reduce();
-            return $u;
         }
 
         return TypeFactory::unknown();

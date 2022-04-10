@@ -9,16 +9,12 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class DeclaredMemberTypeResolver
 {
-    private const RESERVED_NAMES = [
-        'iterable',
-        'resource',
-    ];
-
     private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
@@ -43,6 +39,9 @@ class DeclaredMemberTypeResolver
         }, $declaredTypes->children)))->reduce();
     }
 
+    /**
+     * @param null|Node|Token $tolerantType
+     */
     public function resolve(Node $tolerantNode, $tolerantType = null, ClassName $className = null, bool $nullable = false): Type
     {
         $type = $this->doResolve($tolerantType, $tolerantNode, $className);
@@ -53,32 +52,15 @@ class DeclaredMemberTypeResolver
         return $type;
     }
 
+    /**
+     * @param null|Node|Token $tolerantType
+     */
     private function doResolve($tolerantType, ?Node $tolerantNode, ?ClassName $className): Type
     {
         if (null === $tolerantType) {
             return TypeFactory::undefined();
         }
 
-        if ($tolerantType instanceof QualifiedNameList) {
-            $tolerantType = QualifiedNameListUtil::firstQualifiedNameOrToken($tolerantType);
-        }
-
-        if ($tolerantType instanceof Token) {
-            $text = $tolerantType->getText($tolerantNode->getFileContents());
-
-            return TypeFactory::fromStringWithReflector((string)$text, $this->reflector);
-        }
-
-        $text = $tolerantType->getText($tolerantNode->getFileContents());
-        if ($tolerantType->isUnqualifiedName() && in_array($text, self::RESERVED_NAMES)) {
-            return TypeFactory::fromStringWithReflector($text, $this->reflector);
-        }
-
-        $name = $tolerantType->getResolvedName();
-        if ($className && $name === 'self') {
-            return TypeFactory::fromStringWithReflector((string) $className, $this->reflector);
-        }
-
-        return TypeFactory::fromStringWithReflector($name, $this->reflector);
+        return NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType);
     }
 }

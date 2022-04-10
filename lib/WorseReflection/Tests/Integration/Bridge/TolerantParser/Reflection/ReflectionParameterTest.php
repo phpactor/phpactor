@@ -158,8 +158,8 @@ class ReflectionParameterTest extends IntegrationTestCase
             'resource $foobar',
             function (ReflectionMethod $method): void {
                 $this->assertEquals(
-                    TypeFactory::fromString('resource'),
-                    $method->parameters()->get('foobar')->type()
+                    TypeFactory::fromString('resource')->__toString(),
+                    $method->parameters()->get('foobar')->type()->__toString()
                 );
             },
         ];
