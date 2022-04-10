@@ -30,10 +30,31 @@ final class TypeAssertions implements IteratorAggregate
     }
 
     /**
-     * @param callable(TypeAssertion $assertion): TypeAssertion
+     * @param callable(TypeAssertion): TypeAssertion $closure
      */
     public function map(callable $closure): self
     {
         return new self(array_map($closure, $this->typeAssertions));
+    }
+
+    public function add(TypeAssertion $typeAssertion): self
+    {
+        $assertions = $this->typeAssertions;
+        $assertions[] = $typeAssertion;
+        return new self($assertions);
+    }
+
+    public function variables(): self
+    {
+        return new self(array_filter($this->typeAssertions, function (TypeAssertion $typeAssertion) {
+            return $typeAssertion->variableType() === TypeAssertion::VARIABLE_TYPE_VARIABLE;
+        }));
+    }
+
+    public function properties(): self
+    {
+        return new self(array_filter($this->typeAssertions, function (TypeAssertion $typeAssertion) {
+            return $typeAssertion->variableType() === TypeAssertion::VARIABLE_TYPE_PROPERTY;
+        }));
     } 
 }

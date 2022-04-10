@@ -88,9 +88,7 @@ class MemberAccessExpressionResolver implements Resolver
             );
 
             foreach ($frameTypes as $type) {
-                $info = $info->withType(
-                    TypeUtil::combine($info->type(), $type)
-                );
+                return $info->withType($type);
             }
         }
 

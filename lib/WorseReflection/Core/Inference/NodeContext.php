@@ -81,7 +81,7 @@ final class NodeContext
     public function withTypeAssertion(TypeAssertion $typeAssertion): NodeContext
     {
         $new = clone $this;
-        $new->typeAssertions[] = $typeAssertion;
+        $new->typeAssertions = $new->typeAssertions->add($typeAssertion);
 
         return $new;
     }
@@ -144,5 +144,17 @@ final class NodeContext
     public function typeAssertions(): TypeAssertions
     {
         return $this->typeAssertions;
+    }
+
+    public function withTypeAssertionForSubject(NodeContext $subject, Type $type): NodeContext
+    {
+        if ($subject->symbol()->symbolType() === Symbol::VARIABLE) {
+            return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
+        }
+        if ($subject->symbol()->symbolType() === Symbol::PROPERTY) {
+            return $this->withTypeAssertion(TypeAssertion::property($subject->symbol()->name(), $subject->containerType(), $type));
+        }
+
+        return $subject;
     }
 }

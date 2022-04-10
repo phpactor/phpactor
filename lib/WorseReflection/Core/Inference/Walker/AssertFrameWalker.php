@@ -42,16 +42,22 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
 
             $context = $resolver->resolveNode($frame, $expression->expression);
 
-            foreach ($context->typeAssertions() as $typeAssertion) {
+            foreach ($context->typeAssertions()->variables() as $typeAssertion) {
                 $original = $frame->locals()->byName($typeAssertion->name())->lastOrNull();
                 $originalType = $original ? $original->type() : TypeFactory::undefined();
+                $variable = new Variable($typeAssertion->name(), TypeUtil::applyType($originalType, $typeAssertion->type()));
+                $frame->locals()->add($node->getEndPosition(), $variable);
+            }
 
+            foreach ($context->typeAssertions()->properties() as $typeAssertion) {
+                $original = $frame->properties()->byName($typeAssertion->name())->lastOrNull();
+                $originalType = $original ? $original->type() : TypeFactory::undefined();
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    TypeUtil::applyType($originalType, $typeAssertion->type())
+                    TypeUtil::applyType($originalType, $typeAssertion->type()),
+                    $typeAssertion->classType(),
                 );
-
-                $frame->locals()->add($node->getEndPosition(), $variable);
+                $frame->properties()->add($node->getEndPosition(), $variable);
             }
         }
 

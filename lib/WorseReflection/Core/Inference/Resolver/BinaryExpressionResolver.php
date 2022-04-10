@@ -132,12 +132,7 @@ class BinaryExpressionResolver implements Resolver
 
     private function resolveInstanceOf(NodeContext $context, NodeContext $left, NodeContext $right): NodeContext
     {
-        if($left->symbol()->symbolType() === Symbol::VARIABLE) {
-            $variable = $left->symbol()->name();
-            $context = $context->withTypeAssertion(
-                TypeAssertion::variable($variable, $right->type())
-            );
-        }
+        $context = $context->withTypeAssertionForSubject($left, $right->type());
         return $context->withType(TypeFactory::boolLiteral(true));
     }
 }
