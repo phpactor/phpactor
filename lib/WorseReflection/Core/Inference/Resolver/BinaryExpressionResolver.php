@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
-use Phpactor\WorseReflection\Core\Inference\NodeContextModifier;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
@@ -18,7 +17,6 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class BinaryExpressionResolver implements Resolver
@@ -149,8 +147,7 @@ class BinaryExpressionResolver implements Resolver
         Frame $frame,
         Node $leftOperand,
         NodeContext $right
-    ): NodeContext
-    {
+    ): NodeContext {
         // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
         // the left hand side of instanceof should be parsed as a variable but it's not.
         if ($leftOperand instanceof UnaryExpression) {

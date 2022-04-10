@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use ArrayIterator;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\TypeUtil;
 use Traversable;
 
 /**
@@ -27,6 +26,18 @@ final class TypeAssertions implements IteratorAggregate
             $key = $this->key($assertion);
             $this->typeAssertions[$key] = $assertion;
         }
+    }
+
+    public function __toString(): string
+    {
+        return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
+            return sprintf(
+                '%s: %s: %s',
+                $typeAssertion->variableType(),
+                $typeAssertion->name(),
+                $typeAssertion->type()->__toString()
+            );
+        }, $this->typeAssertions));
     }
 
     public function getIterator(): Traversable
@@ -68,18 +79,6 @@ final class TypeAssertions implements IteratorAggregate
         return $this->map(function (TypeAssertion $assertion) {
             return $assertion->withType(TypeFactory::not($assertion->type()));
         });
-    }
-
-    public function __toString(): string
-    {
-        return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
-            return sprintf(
-                '%s: %s: %s',
-                $typeAssertion->variableType(),
-                $typeAssertion->name(),
-                $typeAssertion->type()->__toString()
-            );
-        }, $this->typeAssertions));
     }
 
     public function merge(TypeAssertions $typeAssertions): self

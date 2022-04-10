@@ -2,15 +2,12 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
-use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\TypeUtil;
 
 class AssertFrameWalker implements Walker
 {

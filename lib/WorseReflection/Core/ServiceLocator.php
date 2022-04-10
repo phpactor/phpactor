@@ -109,7 +109,7 @@ class ServiceLocator
                 new AssignmentWalker($this->logger),
                 new CatchWalker(),
                 new ForeachWalker(),
-                new IfStatementWalker($this->reflector),
+                new IfStatementWalker(),
                 new IncludeWalker($logger),
                 new BinaryExpressionWalker(),
             ], $frameWalkers)
