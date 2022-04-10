@@ -3,6 +3,10 @@
 function notype() {}
 function stringOrNull(): ?string {}
 
+$foo = stringOrNull();
+assert(!is_null($foo));
+wrAssertType('string', $foo);
+
 $foo = notype();
 assert(is_null($foo));
 wrAssertType('null', $foo);
@@ -10,5 +14,3 @@ wrAssertType('null', $foo);
 assert(!is_null($foo));
 wrAssertType('<missing>', $foo);
 
-$foo = stringOrNull();
-wrAssertType('?string', $foo);

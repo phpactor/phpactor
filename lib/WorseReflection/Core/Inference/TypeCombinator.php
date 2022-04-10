@@ -12,7 +12,6 @@ class TypeCombinator
     public static function remove(Type $from, Type $type): Type
     {
         $from = self::toUnion($from);
-        $type = self::toUnion($type);
 
         return $from->remove($type);
     }

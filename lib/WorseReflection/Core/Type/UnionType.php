@@ -78,11 +78,22 @@ final class UnionType implements Type
 
     }
 
-    public function remove(UnionType $remove): Type
+    public function remove(Type $remove): Type
     {
-        $removeString = $remove->__toString();
-        return (new self(...array_filter($this->types, function (Type $type) use ($removeString) {
-            return $type->__toString() !== $removeString;
+        $remove = self::toUnion($remove);
+        $removeStrings = array_map(fn (Type $t) => $t->__toString(), $remove->types);
+
+        return (new self(...array_filter($this->types, function (Type $type) use ($removeStrings) {
+            return !in_array($type->__toString(), $removeStrings);
         })))->reduce();
+    }
+
+    private static function toUnion(Type $type): UnionType
+    {
+        if ($type instanceof UnionType) {
+            return $type;
+        }
+
+        return new self($type);
     }
 }
