@@ -5,6 +5,8 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
+use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -25,7 +27,8 @@ class BinaryExpressionResolver implements Resolver
     {
         assert($node instanceof BinaryExpression);
 
-        $operator = $node->operator->getText($node->getFileContents());
+        $operator = $node->operator->kind;
+
         $context = NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
@@ -37,13 +40,8 @@ class BinaryExpressionResolver implements Resolver
         $left = $resolver->resolveNode($frame, $node->leftOperand);
         $right = $resolver->resolveNode($frame, $node->rightOperand);
 
-        if (!is_string($operator)) {
-            return $context;
-        }
-
-        // can remove given the other logic below??
         switch ($operator) {
-            case 'instanceof':
+            case TokenKind::InstanceOfKeyword:
                 return $this->resolveInstanceOf($context, $resolver, $frame, $node->leftOperand, $right);
         }
 
@@ -64,73 +62,71 @@ class BinaryExpressionResolver implements Resolver
     private function walkBinaryExpression(
         Type $left,
         Type $right,
-        string $operator
+        int $operator
     ): Type {
         if ($left instanceof Concatable) {
             switch ($operator) {
-                case '.':
-                case '.=':
+                case TokenKind::DotToken:
+                case TokenKind::DotEqualsToken:
                     return $left->concat($right);
             }
         }
 
         if ($left instanceof Comparable) {
             switch ($operator) {
-                case '===':
+                case TokenKind::EqualsEqualsEqualsToken:
                     return $left->identical($right);
-                case '==':
+                case TokenKind::EqualsEqualsToken:
                     return $left->equal($right);
-                case '>':
+                case TokenKind::GreaterThanToken:
                     return $left->greaterThan($right);
-                case '>=':
+                case TokenKind::GreaterThanEqualsToken:
                     return $left->greaterThanEqual($right);
-                case '>':
-                    return $left->greaterThan($right);
-                case '<':
+                case TokenKind::LessThanToken:
                     return $left->lessThan($right);
-                case '<=':
+                case TokenKind::LessThanEqualsToken:
                     return $left->lessThanEqual($right);
-                case '!=':
+                case TokenKind::ExclamationEqualsToken:
                     return $left->notEqual($right);
-                case '!==':
+                case TokenKind::ExclamationEqualsEqualsToken:
                     return $left->notIdentical($right);
             }
         }
 
         switch ($operator) {
-            case 'or':
-            case '||':
+            case TokenKind::OrKeyword:
+            case TokenKind::BarBarToken:
                 return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
-            case 'and':
-            case '&&':
+            case TokenKind::AndKeyword:
+            case TokenKind::AmpersandAmpersandToken:
                 return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
-            case 'xor':
+            case TokenKind::XorKeyword:
                 return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
-            case '+':
+            case TokenKind::PlusToken:
                 return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
-            case '-':
+            case TokenKind::MinusToken:
                 return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
-            case '*':
+            case TokenKind::AsteriskToken:
                 return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
-            case '/':
+            case TokenKind::SlashToken:
                 return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
-            case '%':
+            case TokenKind::PercentToken:
                 return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
-            case '**':
+            case TokenKind::AsteriskAsteriskToken:
                 return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
         if ($left instanceof BitwiseOperable) {
             switch ($operator) {
-                case '&':
+                case TokenKind::AmpersandToken:
                     return $left->bitwiseAnd($right);
-                case '|':
+                case TokenKind::BarToken:
                     return $left->bitwiseOr($right);
-                case '^':
+                case TokenKind::CaretToken:
                     return $left->bitwiseXor($right);
-                case '<<':
+                case TokenKind::LessThanLessThanToken:
                     return $left->shiftLeft($right);
-                case '>>':
+                case TokenKind::GreaterThanGreaterThanToken:
                     return $left->shiftRight($right);
             }
         }
