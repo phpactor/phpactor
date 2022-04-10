@@ -6,8 +6,10 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -180,5 +182,20 @@ class NodeUtil
         }
 
         return TypeFactory::unknown();
+    }
+
+    public static function canAcceptTypeAssertion(Node ...$nodes): bool
+    {
+        foreach ($nodes as $node) {
+            if ($node instanceof Variable) {
+                return true;
+            }
+
+            if ($node instanceof MemberAccessExpression) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
