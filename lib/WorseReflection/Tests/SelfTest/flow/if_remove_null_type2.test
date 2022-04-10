@@ -5,7 +5,6 @@ function foo(?Foo $foo = null) {
         return;
     }
 
-    // @todo the null type should be stripped
-    wrAssertType('?Foo', $foo);
+    wrAssertType('Foo', $foo);
 }
 

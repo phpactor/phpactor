@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\ReservedWord;
-use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -30,7 +29,7 @@ class BinaryExpressionResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        sasert($node instanceof BinaryExpression);
+        assert($node instanceof BinaryExpression);
 
         $operator = $node->operator->kind;
 
@@ -42,14 +41,7 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $leftOperand = $node->leftOperand;
-        // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
-        // the left hand side of instanceof should be parsed as a variable but it's not.
-        if ($leftOperand instanceof UnaryExpression) {
-            $leftOperand = $leftOperand->operand;
-        }
-
-        $left = $resolver->resolveNode($frame, $leftOperand);
+        $left = $resolver->resolveNode($frame, $node->leftOperand);
         $right = $resolver->resolveNode($frame, $node->rightOperand);
 
         // merge type assertions from left AND right
@@ -58,14 +50,21 @@ class BinaryExpressionResolver implements Resolver
         // resolve the type of the expression
         $context = $context->withType($this->walkBinaryExpression($left->type(), $right->type(), $operator));
 
-        // apply any type assertiosn (e.g. ===, instanceof, etc)
-        $context = $this->applyTypeAssertions($context, $left, $right, $node->leftOperand, $node->rightOperand, $operator);
+        // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
+        // the left hand side of instanceof should be parsed as a variable but it's not.
+        $leftOperand = $node->leftOperand;
+        if ($leftOperand instanceof UnaryExpression) {
+            $leftOperand = $leftOperand->operand;
+            $left = $resolver->resolveNode($frame, $leftOperand);
+        }
 
-        // neate
-        $context = $this->negate($context, $left, $right, $node->leftOperand, $node->rightOperand, $operator);
+        // apply any type assertiosn (e.g. ===, instanceof, etc)
+        $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
+
+        // negate if there is a boolean comparison against an expression
+        $context = $this->negate($context, $node->leftOperand, $node->rightOperand, $operator);
 
         return $context;
-
     }
 
     private function walkBinaryExpression(
@@ -157,8 +156,7 @@ class BinaryExpressionResolver implements Resolver
         Node $leftOperand,
         Node $rightOperand,
         int $operator
-    ): NodeContext
-    {
+    ): NodeContext {
         if (!NodeUtil::canAcceptTypeAssertion($leftOperand, $rightOperand)) {
             return $context;
         }
@@ -185,22 +183,22 @@ class BinaryExpressionResolver implements Resolver
 
     private function negate(
         NodeContext $context,
-        NodeContext $leftContext,
-        NodeContext $rightContext,
         Node $leftOperand,
         Node $rightOperand,
         int $operator
-    ): NodeContext
-    {
+    ): NodeContext {
         $boolean = $leftOperand instanceof ReservedWord ? $leftOperand : $rightOperand;
-        $context = $leftOperand instanceof ReservedWord ? $leftContext : $rightContext;
 
         if (!$boolean instanceof ReservedWord) {
             return $context;
         }
 
-        return $context->withTypeAssertions($context->typeAssertions()->negate());;
+        $evaluatedType = $context->type();
 
+        if ($evaluatedType instanceof BooleanType && false === $evaluatedType->isTrue()) {
+            return $context->withTypeAssertions($context->typeAssertions()->negate());
+        }
+
+        return $context;
     }
-
 }
