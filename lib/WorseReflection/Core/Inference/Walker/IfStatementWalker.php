@@ -17,7 +17,7 @@ use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
 use Phpactor\WorseReflection\TypeUtil;
 
-class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
+class IfStatementWalker extends AbstractInstanceOfWalker implements Walker
 {
     public function nodeFqns(): array
     {
@@ -39,7 +39,9 @@ class InstanceOfWalker extends AbstractInstanceOfWalker implements Walker
             return $frame;
         }
 
-        $expressionsAreTrue = TypeUtil::toBool($resolver->resolveNode($frame, $node->expression)->type())->isTrue();
+        $context = $resolver->resolveNode($frame, $node->expression);
+
+        $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $variables = $this->collectVariables($node, $frame);
         $variables = $this->mergeTypes($variables);
         $terminates = $this->branchTerminates($node);

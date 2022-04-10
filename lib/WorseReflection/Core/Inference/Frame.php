@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Closure;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class Frame
 {
@@ -99,11 +101,32 @@ class Frame
         return $this->name;
     }
 
-    public function withLocals(LocalAssignments $locals)
+    public function withLocals(LocalAssignments $locals): self
     {
         $new = clone $this;
         $new->locals = $locals;
 
         return $new;
+    }
+
+    public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset): void
+    {
+        foreach ($typeAssertions->variables() as $typeAssertion) {
+            $original = $this->locals()->byName($typeAssertion->name())->lastOrNull();
+            $originalType = $original ? $original->type() : TypeFactory::undefined();
+            $variable = new Variable($typeAssertion->name(), TypeUtil::applyType($originalType, $typeAssertion->type()));
+            $this->locals()->add($offset, $variable);
+        }
+
+        foreach ($typeAssertions->properties() as $typeAssertion) {
+            $original = $this->properties()->byName($typeAssertion->name())->lastOrNull();
+            $originalType = $original ? $original->type() : TypeFactory::undefined();
+            $variable = new Variable(
+                $typeAssertion->name(),
+                TypeUtil::applyType($originalType, $typeAssertion->type()),
+                $typeAssertion->classType(),
+            );
+            $this->properties()->add($offset, $variable);
+        }
     }
 }
