@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\ReservedWord;
+use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -17,7 +18,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
-use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
@@ -193,9 +193,14 @@ class BinaryExpressionResolver implements Resolver
             return $context;
         }
 
-        $evaluatedType = $context->type();
+        $text = $boolean->getText();
 
-        if ($evaluatedType instanceof BooleanType && false === $evaluatedType->isTrue()) {
+        // if this is an OR then we don't negate the type
+        if (in_array($operator, [TokenKind::OrKeyword, TokenKind::BarBarToken])) {
+            return $context;
+        }
+
+        if ($text === 'false') {
             return $context->withTypeAssertions($context->typeAssertions()->negate());
         }
 
