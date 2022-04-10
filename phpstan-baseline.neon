@@ -5621,11 +5621,6 @@ parameters:
 			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionDefinitionLocatorTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionTypeLocatorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
@@ -6136,16 +6131,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TypeResolver\\\\DeclaredMemberTypeResolver\\:\\:doResolve\\(\\) has parameter \\$tolerantType with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TypeResolver/DeclaredMemberTypeResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TypeResolver\\\\DeclaredMemberTypeResolver\\:\\:resolve\\(\\) has parameter \\$tolerantType with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TypeResolver/DeclaredMemberTypeResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflector\\\\TolerantSourceCodeReflector\\:\\:reflectNode\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflector/TolerantSourceCodeReflector.php
@@ -6232,11 +6217,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:withLocals\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
 
