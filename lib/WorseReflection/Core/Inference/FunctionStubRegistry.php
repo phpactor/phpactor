@@ -2,8 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Closure;
-
 final class FunctionStubRegistry
 {
     /**
@@ -19,9 +17,7 @@ final class FunctionStubRegistry
         $this->functionMap = $functionMap;
     }
 
-    /**
-     * @return null|FunctionStub
-     */
+    
     public function get(string $name): ?FunctionStub
     {
         if (!isset($this->functionMap[$name])) {

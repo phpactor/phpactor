@@ -4,22 +4,15 @@ namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
-use Phpactor\WorseReflection\Core\Type\IntType;
-use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\NullType;
-use Phpactor\WorseReflection\Core\Type\NumericType;
 
 class IsNullStub implements FunctionStub
 {
@@ -28,8 +21,7 @@ class IsNullStub implements FunctionStub
         Frame $frame,
         NodeContext $context,
         ArgumentExpressionList $node
-    ): NodeContext
-    {
+    ): NodeContext {
         $context = NodeContext::none();
 
         foreach ($node->getChildNodes() as $expression) {
@@ -39,7 +31,7 @@ class IsNullStub implements FunctionStub
 
             $expression = $expression->expression;
 
-            if($expression instanceof Variable) {
+            if ($expression instanceof Variable) {
                 $variable = $expression->getName();
                 $context = $context->withTypeAssertion(
                     TypeAssertion::variable($variable, TypeFactory::null())

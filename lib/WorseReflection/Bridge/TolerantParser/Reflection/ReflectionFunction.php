@@ -57,7 +57,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
 
     public function type(): Type
     {
-        $type = (function  () {
+        $type = (function () {
             $type = QualifiedNameListUtil::firstQualifiedNameOrToken($this->node->returnTypeList);
 
             if (null === $type) {

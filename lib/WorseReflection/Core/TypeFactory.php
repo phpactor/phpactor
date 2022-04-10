@@ -243,6 +243,11 @@ class TypeFactory
         );
     }
 
+    public static function not(Type $type): NotType
+    {
+        return new NotType($type);
+    }
+
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
         if ('' === $type) {
@@ -337,10 +342,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function not(Type $type): NotType
-    {
-        return new NotType($type);
     }
 }

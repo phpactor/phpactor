@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Phpactor\WorseReflection\Core\Type;
 
 interface FunctionStub
 {

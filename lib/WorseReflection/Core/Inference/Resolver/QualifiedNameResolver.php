@@ -31,8 +31,7 @@ class QualifiedNameResolver implements Resolver
         FunctionReflector $reflector,
         FunctionStubRegistry $registry,
         NodeToTypeConverter $nodeTypeConverter
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
         $this->registry = $registry;

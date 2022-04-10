@@ -56,5 +56,5 @@ final class TypeAssertions implements IteratorAggregate
         return new self(array_filter($this->typeAssertions, function (TypeAssertion $typeAssertion) {
             return $typeAssertion->variableType() === TypeAssertion::VARIABLE_TYPE_PROPERTY;
         }));
-    } 
+    }
 }

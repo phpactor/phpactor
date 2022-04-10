@@ -83,7 +83,6 @@ final class UnionType implements Type
         }
 
         return new self(...array_values($unique));
-
     }
 
     public function remove(Type $remove): Type
