@@ -46,7 +46,9 @@ class IsSomethingStub implements FunctionStub
 
             $arg = $resolver->resolveNode($frame, $expression)->type();
 
-            return $context->withType(new BooleanLiteralType($arg instanceof ($this->isType)));
+            // extract to a variabe as it will not otherwise work with PHP 7.4
+            $type = $this->isType;
+            return $context->withType(new BooleanLiteralType($arg instanceof $type));
         }
 
         return $context;
