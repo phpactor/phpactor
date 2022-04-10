@@ -7,11 +7,13 @@ use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextModifier;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
+use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -44,7 +46,16 @@ class BinaryExpressionResolver implements Resolver
                 return $this->resolveInstanceOf($context, $left, $right);
         }
 
-        return $context->withType($this->walkBinaryExpression($resolver, $frame, $left->type(), $right->type(), $operator, $node));
+        $context = $context->withTypeAssertions($right->typeAssertions());
+        $type = $this->walkBinaryExpression($resolver, $frame, $left->type(), $right->type(), $operator, $node);
+
+        if ($type instanceof BooleanType) {
+            if (false === $type->isTrue()) {
+                $context = $context->withTypeAssertions($context->typeAssertions()->negate());
+            }
+        }
+
+        return $context->withType($type);
     }
 
     private function walkBinaryExpression(
