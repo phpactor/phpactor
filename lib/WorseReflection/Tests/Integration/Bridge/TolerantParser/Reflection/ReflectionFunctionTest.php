@@ -82,6 +82,16 @@ class ReflectionFunctionTest extends IntegrationTestCase
             }
         ];
 
+        yield 'the declared union type' => [
+            <<<'EOT'
+                <?php
+                use Foobar\Barfoo;
+                function hello(): string|Barfoo {}
+                EOT
+            , 'hello', function (ReflectionFunction $function): void {
+                $this->assertEquals('string|Foobar\Barfoo', $function->type()->__toString());
+            }
+        ];
         yield 'unknown if nothing declared as type' => [
             <<<'EOT'
                 <?php

@@ -17,6 +17,7 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Reflector;
 
 class NodeUtil
@@ -133,5 +134,34 @@ class NodeUtil
         }
 
         return implode("\n", $out);
+    }
+
+    /**
+     * @param null|Node|Token $nodeOrToken
+     */
+    public static function typeFromQualfiedNameLike(Reflector $reflector, Node $node, $nodeOrToken): Type
+    {
+        if ($nodeOrToken instanceof Token) {
+            return TypeFactory::fromStringWithReflector(
+                (string)$nodeOrToken->getText($node->getFileContents()),
+                $reflector,
+            );
+        }
+
+        if ($nodeOrToken instanceof QualifiedName) {
+            return TypeFactory::fromStringWithReflector($nodeOrToken->getResolvedName(), $reflector);
+        }
+
+        if ($nodeOrToken instanceof QualifiedNameList) {
+            $u = TypeFactory::union(...array_map(function ($name) use ($node, $reflector) {
+                if (null === $name) {
+                    return new MissingType();
+                }
+                return self::typeFromQualfiedNameLike($reflector, $node, $name);
+            }, iterator_to_array($nodeOrToken->getElements(), true)))->reduce();
+            return $u;
+        }
+
+        return TypeFactory::unknown();
     }
 }

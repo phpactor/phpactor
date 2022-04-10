@@ -15,10 +15,8 @@ use Phpactor\WorseReflection\Core\NodeText;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\QualifiedName;
-use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\FunctionReturnTypeResolver;
-use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionFunction extends AbstractReflectedNode implements CoreReflectionFunction
 {
@@ -57,26 +55,11 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
 
     public function type(): Type
     {
-        $type = (function () {
-            $type = QualifiedNameListUtil::firstQualifiedNameOrToken($this->node->returnTypeList);
-
-            if (null === $type) {
-                return TypeFactory::unknown();
-            }
-
-            if ($type instanceof Token) {
-                return TypeFactory::fromStringWithReflector(
-                    (string)$type->getText($this->node->getFileContents()),
-                    $this->serviceLocator()->reflector()
-                );
-            }
-
-            if (!$type instanceof QualifiedName) {
-                return TypeFactory::unknown();
-            }
-
-            return TypeFactory::fromStringWithReflector($type->getResolvedName(), $this->serviceLocator()->reflector());
-        })();
+        $type = NodeUtil::typeFromQualfiedNameLike(
+            $this->serviceLocator->reflector(),
+            $this->node,
+            $this->node->returnTypeList
+        );
 
         if ($this->node->questionToken) {
             return TypeFactory::nullable($type);
