@@ -166,7 +166,13 @@ class Frame
     {
         return implode("\n", array_map(function (Assignments $assignments, string $type) {
             return implode("\n", array_map(function (Variable $variable) use ($assignments, $type) {
-                return sprintf('%s - %s:%s: %s', $type, $variable->name(), $assignments->offsetFor($variable),$variable->type()->__toString());
+                return sprintf(
+                    '%s - %s:%s: %s',
+                    $type,
+                    $variable->name(),
+                    $assignments->offsetFor($variable),
+                    $variable->type()->__toString()
+                );
             }, iterator_to_array($assignments)));
         }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
