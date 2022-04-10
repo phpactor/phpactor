@@ -57,24 +57,32 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
 
     public function type(): Type
     {
-        $type = QualifiedNameListUtil::firstQualifiedNameOrToken($this->node->returnTypeList);
+        $type = (function  () {
+            $type = QualifiedNameListUtil::firstQualifiedNameOrToken($this->node->returnTypeList);
 
-        if (null === $type) {
-            return TypeFactory::unknown();
+            if (null === $type) {
+                return TypeFactory::unknown();
+            }
+
+            if ($type instanceof Token) {
+                return TypeFactory::fromStringWithReflector(
+                    (string)$type->getText($this->node->getFileContents()),
+                    $this->serviceLocator()->reflector()
+                );
+            }
+
+            if (!$type instanceof QualifiedName) {
+                return TypeFactory::unknown();
+            }
+
+            return TypeFactory::fromStringWithReflector($type->getResolvedName(), $this->serviceLocator()->reflector());
+        })();
+
+        if ($this->node->questionToken) {
+            return TypeFactory::nullable($type);
         }
 
-        if ($type instanceof Token) {
-            return TypeFactory::fromStringWithReflector(
-                (string)$type->getText($this->node->getFileContents()),
-                $this->serviceLocator()->reflector()
-            );
-        }
-
-        if (!$type instanceof QualifiedName) {
-            return TypeFactory::unknown();
-        }
-
-        return TypeFactory::fromStringWithReflector($type->getResolvedName(), $this->serviceLocator()->reflector());
+        return $type;
     }
 
     public function parameters(): ReflectionParameterCollection

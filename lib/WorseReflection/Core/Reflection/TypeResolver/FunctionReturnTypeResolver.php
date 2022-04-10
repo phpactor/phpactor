@@ -17,7 +17,10 @@ class FunctionReturnTypeResolver
 
     public function resolve(): Type
     {
-        return TypeUtil::firstDefined($this->getDocblockTypeFromFunction($this->function), $this->function->type());
+        return TypeUtil::firstDefined(
+            $this->getDocblockTypeFromFunction($this->function),
+            $this->function->type()
+        );
     }
 
     private function getDocblockTypeFromFunction(ReflectionFunction $function): Type

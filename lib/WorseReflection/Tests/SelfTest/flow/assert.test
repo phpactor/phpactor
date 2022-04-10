@@ -9,3 +9,6 @@ wrAssertType('null', $foo);
 
 assert(!is_null($foo));
 wrAssertType('<missing>', $foo);
+
+$foo = stringOrNull();
+wrAssertType('?string', $foo);
