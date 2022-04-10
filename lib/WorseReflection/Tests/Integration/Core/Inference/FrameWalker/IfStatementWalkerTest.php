@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Tests\Integration\Core\Inference\FrameWalkerTestCas
 use Generator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 
-class InstanceOfWalkerTest extends FrameWalkerTestCase
+class IfStatementWalkerTest extends FrameWalkerTestCase
 {
     public function provideWalk(): Generator
     {
@@ -20,9 +20,8 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foobar', (string) $frame->locals()->first()->type());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->type());
         }
         ];
 
@@ -36,8 +35,10 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame, int $offset): void {
+            dump($frame->__toString());
             $this->assertCount(2, $frame->locals());
-            $this->assertEquals(TypeFactory::unknown(), $frame->locals()->atIndex(1)->type());
+            $this->assertEquals('Foobar', $frame->locals()->atIndex(0)->type()->__toString());
+            $this->assertEquals('<missing>', $frame->locals()->atIndex(1)->type()->__toString());
         }
         ];
 
@@ -70,6 +71,7 @@ class InstanceOfWalkerTest extends FrameWalkerTestCase
                 EOT
         , function (Frame $frame, int $offset): void {
             $this->assertCount(2, $frame->locals()->byName('foobar'));
+            $this->assertEquals('<missing>', $frame->locals()->byName('foobar')->first()->type()->__toString());
             $this->assertEquals('Foobar', $frame->locals()->last()->type()->__toString());
         }
         ];

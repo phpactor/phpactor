@@ -114,7 +114,10 @@ class Frame
         foreach ($typeAssertions->variables() as $typeAssertion) {
             $original = $this->locals()->byName($typeAssertion->name())->lastOrNull();
             $originalType = $original ? $original->type() : TypeFactory::undefined();
-            $variable = new Variable($typeAssertion->name(), TypeUtil::applyType($originalType, $typeAssertion->type()));
+            $variable = new Variable(
+                $typeAssertion->name(),
+                TypeUtil::applyType($originalType, $typeAssertion->type())
+            );
             $this->locals()->add($offset, $variable);
         }
 
@@ -128,5 +131,43 @@ class Frame
             );
             $this->properties()->add($offset, $variable);
         }
+    }
+
+    public function restoreToStateBefore(int $before, int $after): void
+    {
+        $locals = [];
+        // get most recent state of variables before offset
+        foreach ($this->locals()->lessThan($before) as $local) {
+            $locals[$local->name()] = $local;
+        }
+        foreach ($locals as $local) {
+            $this->locals()->add($after, $local);
+        }
+
+        foreach ($this->locals()->greaterThan($before)->lessThanOrEqualTo($after) as $extra) {
+            if (isset($locals[$extra->name()])) {
+                continue;
+            }
+
+            // if variable was not present before $before, assign as missing
+            $this->locals()->add($after, $extra->withType(TypeFactory::undefined()));
+        }
+
+        $properties = [];
+        foreach ($this->properties() as $property) {
+            $properties[$property->name()] = $property;
+        }
+        foreach ($properties as $property) {
+            $this->properties()->add($after, $property);
+        }
+    }
+
+    public function __toString(): string
+    {
+        return implode("\n", array_map(function (Assignments $assignments) {
+            return implode("\n", array_map(function (Variable $variable) use ($assignments) {
+                return sprintf('%s:%s: %s', $variable->name(), $assignments->offsetFor($variable),$variable->type()->__toString());
+            }, iterator_to_array($assignments)));
+        }, [$this->properties, $this->locals]));
     }
 }

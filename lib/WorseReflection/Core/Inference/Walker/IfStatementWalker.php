@@ -40,47 +40,18 @@ class IfStatementWalker extends AbstractInstanceOfWalker implements Walker
         }
 
         $context = $resolver->resolveNode($frame, $node->expression);
-
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
-        $variables = $this->collectVariables($node, $frame);
-        $variables = $this->mergeTypes($variables);
         $terminates = $this->branchTerminates($node);
+        $originalFrame = clone $frame;
 
-        foreach ($variables as $variable) {
-            $assignments = $this->getAssignmentsMatchingVariableType($frame, $variable);
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->expression->getStartPosition());
 
-            if ($terminates) {
-
-                // reset variables after the if branch
-                if ($expressionsAreTrue) {
-                    $assignments->add($node->getStartPosition(), $variable);
-
-                    // restore
-                    $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                    $assignments->add($node->getEndPosition(), $restoredVariable);
-                    continue;
-                }
-
-                // create new variables after the if branch
-                if (false === $expressionsAreTrue) {
-                    $detypedVariable = $variable->withType(TypeFactory::unknown());
-                    $assignments->add($node->getStartPosition(), $detypedVariable);
-                    $assignments->add($node->getEndPosition(), $variable);
-                    continue;
-                }
-            }
-
-            if ($expressionsAreTrue) {
-                $assignments->add($node->getStartPosition(), $variable);
-                $restoredVariable = $this->existingOrStripType($node, $frame, $variable);
-                $assignments->add($node->getEndPosition(), $restoredVariable);
-            }
-
-            if (false === $expressionsAreTrue) {
-                $variable = $variable->withType(TypeFactory::unknown());
-                $assignments->add($node->getStartPosition(), $variable);
-            }
+        if (!$terminates) {
+            return $frame;
         }
+
+        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
+        $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getEndPosition());
 
         return $frame;
     }
