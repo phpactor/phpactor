@@ -12,7 +12,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
-class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
+class AssertFrameWalker implements Walker
 {
     public function nodeFqns(): array
     {

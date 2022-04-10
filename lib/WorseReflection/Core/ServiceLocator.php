@@ -103,7 +103,7 @@ class ServiceLocator
             $this->symbolContextResolver,
             $cache,
             array_merge([
-                new AssertFrameWalker($this->reflector),
+                new AssertFrameWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory, $nameResolver),
                 new AssignmentWalker($this->logger),
