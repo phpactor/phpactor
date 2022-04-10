@@ -1,0 +1,4 @@
+<?php
+
+wrAssertType('true', is_null(null));
+wrAssertType('false', is_null("fo"));
