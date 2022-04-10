@@ -16,14 +16,17 @@ final class TypeAssertions implements IteratorAggregate
     /**
      * @var TypeAssertion[]
      */
-    private array $typeAssertions;
+    private array $typeAssertions = [];
 
     /**
      * @param TypeAssertion[] $typeAssertions
      */
     public function __construct(array $typeAssertions)
     {
-        $this->typeAssertions = $typeAssertions;
+        foreach ($typeAssertions as $assertion) {
+            $key = $this->key($assertion);
+            $this->typeAssertions[$key] = $assertion;
+        }
     }
 
     public function getIterator(): Traversable
@@ -77,5 +80,25 @@ final class TypeAssertions implements IteratorAggregate
                 $typeAssertion->type()->__toString()
             );
         }, $this->typeAssertions));
+    }
+
+    public function merge(TypeAssertions $typeAssertions): self
+    {
+        $assertions = $this->typeAssertions;
+        foreach ($typeAssertions as $key => $assertion) {
+            if (isset($assertions[$key])) {
+                $assertions[$key] = $assertions[$key]->withType(TypeCombinator::add($assertions[$key]->type(), $assertion->type()));
+                continue;
+            }
+            $assertions[$key] = $assertion;
+        }
+
+        return new self($assertions);
+    }
+
+    private function key(TypeAssertion $assertion): string
+    {
+        $key = $assertion->variableType().$assertion->name();
+        return $key;
     }
 }

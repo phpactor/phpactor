@@ -164,10 +164,10 @@ class Frame
 
     public function __toString(): string
     {
-        return implode("\n", array_map(function (Assignments $assignments) {
-            return implode("\n", array_map(function (Variable $variable) use ($assignments) {
-                return sprintf('%s:%s: %s', $variable->name(), $assignments->offsetFor($variable),$variable->type()->__toString());
+        return implode("\n", array_map(function (Assignments $assignments, string $type) {
+            return implode("\n", array_map(function (Variable $variable) use ($assignments, $type) {
+                return sprintf('%s - %s:%s: %s', $type, $variable->name(), $assignments->offsetFor($variable),$variable->type()->__toString());
             }, iterator_to_array($assignments)));
-        }, [$this->properties, $this->locals]));
+        }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
 }

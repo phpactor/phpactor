@@ -120,4 +120,18 @@ class NodeUtil
 
         return 0;
     }
+
+    public static function dump(Node $node, int $level = 0): string
+    {
+        $out = [
+            str_repeat('  ', $level) . $node->getNodeKindName(),
+        ];
+
+        $level++;
+        foreach ($node->getChildNodes() as $child) {
+            $out[] = self::dump($child, $level);
+        }
+
+        return implode("\n", $out);
+    }
 }

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
+use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -17,6 +18,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class BinaryExpressionResolver implements Resolver
@@ -44,10 +46,12 @@ class BinaryExpressionResolver implements Resolver
         // can remove given the other logic below??
         switch ($operator) {
             case 'instanceof':
-                return $this->resolveInstanceOf($context, $left, $right);
+                return $this->resolveInstanceOf($context, $resolver, $frame, $node->leftOperand, $right);
         }
 
-        $context = $context->withTypeAssertions($right->typeAssertions());
+        $context = $context->withTypeAssertions(
+            $left->typeAssertions()->merge($right->typeAssertions())
+        );
         $type = $this->walkBinaryExpression($resolver, $frame, $left->type(), $right->type(), $operator, $node);
 
         if ($type instanceof BooleanType) {
@@ -139,8 +143,22 @@ class BinaryExpressionResolver implements Resolver
         return new MissingType();
     }
 
-    private function resolveInstanceOf(NodeContext $context, NodeContext $left, NodeContext $right): NodeContext
+    private function resolveInstanceOf(
+        NodeContext $context,
+        NodeContextResolver $resolver,
+        Frame $frame,
+        Node $leftOperand,
+        NodeContext $right
+    ): NodeContext
     {
+        // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
+        // the left hand side of instanceof should be parsed as a variable but it's not.
+        if ($leftOperand instanceof UnaryExpression) {
+            $left = $resolver->resolveNode($frame, $leftOperand->operand);
+        } else {
+            $left = $resolver->resolveNode($frame, $leftOperand);
+        }
+
         $context = $context->withTypeAssertionForSubject($left, $right->type());
         return $context->withType(TypeFactory::boolLiteral(true));
     }

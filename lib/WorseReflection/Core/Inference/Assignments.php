@@ -22,7 +22,9 @@ abstract class Assignments implements Countable, IteratorAggregate
      */
     final public function __construct(array $variables)
     {
-        $this->variables = $variables;
+        $this->variables = array_map(function (Variable $v) {
+            return $v;
+        }, $variables);
     }
 
     public function add(int $offset, Variable $variable): void
@@ -123,8 +125,8 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function merge(Assignments $variables): Assignments
     {
-        foreach ($variables->variables as $pair) {
-            $this->variables[] = $pair;
+        foreach ($variables->variables as $offset => $variable) {
+            $this->variables[$offset] = $variable;
         }
 
         return $this;

@@ -184,7 +184,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->type()->__toString());
         }
         ];
@@ -199,7 +199,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foobar|Barfoo', $frame->locals()->atIndex(0)->type()->__toString());
         }
         ];
@@ -231,7 +231,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 }
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
             $this->assertEquals('Foobar\Barfoo', (string) $frame->locals()->atIndex(0)->type());
         }
         ];
@@ -246,7 +246,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 <>
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
         }
     ];
 
@@ -262,7 +262,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 if
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(2, $frame->locals());
+            $this->assertCount(1, $frame->locals());
         }
         ];
 
@@ -302,7 +302,7 @@ class IfStatementWalkerTest extends FrameWalkerTestCase
                 }
                 EOT
         , function (Frame $frame, int $offset): void {
-            $this->assertCount(1, $frame->locals());
+            $this->assertCount(2, $frame->locals());
             $this->assertEquals('Foo', $frame->locals()->atIndex(0)->type()->__toString());
             $this->assertCount(2, $frame->properties());
             $this->assertEquals('Foo', $frame->properties()->atIndex(0)->classType()->__toString());
