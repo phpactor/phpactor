@@ -125,25 +125,20 @@ class Frame
 
     public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset): void
     {
-        foreach ($typeAssertions->variables() as $typeAssertion) {
-            $original = $this->locals()->byName($typeAssertion->name())->lastOrNull();
-            $originalType = $original ? $original->type() : TypeFactory::undefined();
-            $variable = new Variable(
-                $typeAssertion->name(),
-                TypeCombinator::applyType($originalType, $typeAssertion->type())
-            );
-            $this->locals()->add($offset, $variable);
-        }
-
-        foreach ($typeAssertions->properties() as $typeAssertion) {
-            $original = $this->properties()->byName($typeAssertion->name())->lastOrNull();
-            $originalType = $original ? $original->type() : TypeFactory::undefined();
-            $variable = new Variable(
-                $typeAssertion->name(),
-                TypeCombinator::applyType($originalType, $typeAssertion->type()),
-                $typeAssertion->classType(),
-            );
-            $this->properties()->add($offset, $variable);
+        foreach ([
+            [ $typeAssertions->properties(), $this->properties() ],
+            [ $typeAssertions->variables(), $this->locals() ],
+        ] as [ $typeAssertions, $frameVariables ]) {
+            foreach ($typeAssertions as $typeAssertion) {
+                $original = $frameVariables->byName($typeAssertion->name())->lastOrNull();
+                $originalType = $original ? $original->type() : TypeFactory::undefined();
+                $variable = new Variable(
+                    $typeAssertion->name(),
+                    TypeCombinator::applyType($originalType, $typeAssertion->type()),
+                    $typeAssertion->classType(),
+                );
+                $frameVariables->add($offset, $variable);
+            }
         }
     }
 
