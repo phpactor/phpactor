@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
-use Phpactor\WorseReflection\Core\Type\NullType;
 
 class IsSomethingStub implements FunctionStub
 {
@@ -47,7 +46,7 @@ class IsSomethingStub implements FunctionStub
 
             $arg = $resolver->resolveNode($frame, $expression)->type();
 
-            return $context->withType(new BooleanLiteralType($arg instanceof NullType));
+            return $context->withType(new BooleanLiteralType($arg instanceof ($this->isType)));
         }
 
         return $context;
