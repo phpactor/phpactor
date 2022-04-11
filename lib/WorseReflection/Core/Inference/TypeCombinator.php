@@ -15,6 +15,12 @@ class TypeCombinator
         return $from->remove($type);
     }
 
+    public static function narrowTo(Type $originalType, Type $type): Type
+    {
+        $originalType = UnionType::toUnion($originalType);
+        return $originalType->narrowTo($type);
+    }
+
     public static function add(Type $originalType, Type $type): Type
     {
         $originalType = UnionType::toUnion($originalType);
@@ -29,12 +35,12 @@ class TypeCombinator
 
             // double negative - this should probably be smarter
             if ($type->type instanceof NotType) {
-                return TypeCombinator::add($originalType, $type->type->type);
+                return self::applyType($originalType, $type->type->type);
             }
 
-            return TypeCombinator::remove($originalType, $type->type);
+            return self::remove($originalType, $type->type);
         }
 
-        return self::add($originalType, $type);
+        return self::narrowTo($originalType, $type);
     }
 }
