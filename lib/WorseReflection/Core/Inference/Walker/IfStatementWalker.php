@@ -49,6 +49,7 @@ class IfStatementWalker implements Walker
         if (!$terminates) {
             return $frame;
         }
+
         $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getEndPosition());
 
         return $frame;
