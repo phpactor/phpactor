@@ -44,11 +44,11 @@ class IfStatementWalker implements Walker
         $originalFrame = clone $frame;
 
         $frame->applyTypeAssertions($context->typeAssertions(), $node->expression->getStartPosition());
+        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
 
         if (!$terminates) {
             return $frame;
         }
-        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
         $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getEndPosition());
 
         return $frame;

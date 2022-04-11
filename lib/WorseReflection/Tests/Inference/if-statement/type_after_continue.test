@@ -1,0 +1,17 @@
+<?php
+
+foreach ([1, 2] as $hello) {
+    if (!$foobar instanceof Foobar) {
+        continue;
+    }
+
+    wrAssertType('Foobar', $foobar);
+}
+
+foreach ([1, 2] as $hello) {
+    if ($foobar instanceof Foobar) {
+        continue;
+    }
+
+    wrAssertType('<missing>', $foobar);
+}
