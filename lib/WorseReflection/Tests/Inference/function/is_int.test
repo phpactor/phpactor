@@ -1,0 +1,5 @@
+<?php
+
+wrAssertType('false', is_int(null));
+wrAssertType('true', is_int(123));
+wrAssertType('false', is_int(123.2));

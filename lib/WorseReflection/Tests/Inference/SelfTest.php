@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\SelfTest;
+namespace Phpactor\WorseReflection\Tests\Inference;
 
 use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;

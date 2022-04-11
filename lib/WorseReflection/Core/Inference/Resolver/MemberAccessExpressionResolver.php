@@ -2,18 +2,18 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -74,27 +74,37 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
-        // if the classType is a call expression, then this is a method call
-        $info = (
-            new MemberTypeResolver($resolver->reflector())
-        )->{$memberType . 'Type'}($classType, $information, $memberName);
+        foreach (TypeUtil::unwrapUnion($classType) as $classType) {
+            if (!$classType instanceof ClassType) {
+                continue;
+            }
 
-        if (Symbol::PROPERTY === $memberType) {
-            $frameTypes = self::getFrameTypesForPropertyAtPosition(
-                $frame,
-                (string) $memberName,
-                $classType,
-                $node->getEndPosition(),
-            );
+            try {
+                $reflection = $resolver->reflector()->reflectClassLike($classType->name());
+            } catch (NotFound $e) {
+                continue;
+            }
+            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+                $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
 
-            foreach ($frameTypes as $type) {
-                $info = $info->withType(
-                    TypeUtil::combine($info->type(), $type)
-                );
+                if ($member instanceof ReflectionProperty) {
+                    $type = self::getFrameTypesForPropertyAtPosition(
+                        $frame,
+                        (string) $memberName,
+                        $classType,
+                        $node->getEndPosition(),
+                    );
+
+                    if ($type) {
+                        return $information->withContainerType($classType)->withType($type);
+                    }
+                }
+
+                return $information->withContainerType($declaringClass)->withType($member->inferredType());
             }
         }
 
-        return $info;
+        return $information->withContainerType($classType);
     }
 
     private static function getFrameTypesForPropertyAtPosition(
@@ -102,28 +112,21 @@ class MemberAccessExpressionResolver implements Resolver
         string $propertyName,
         Type $classType,
         int $position
-    ): Generator {
-        $assignments = $frame->properties()
+    ): ?Type {
+        if (!$classType instanceof ClassType) {
+            return null;
+        }
+
+        $variable = $frame->properties()
             ->lessThanOrEqualTo($position)
             ->byName($propertyName)
+            ->lastOrNull()
         ;
 
-        if (!$classType instanceof ClassType) {
-            return;
+        if (null === $variable) {
+            return null;
         }
 
-        foreach ($assignments as $variable) {
-            $containerType = $variable->classType();
-
-            if (!$containerType instanceof ClassType) {
-                continue;
-            }
-
-            if ($containerType->name != $classType->name) {
-                continue;
-            }
-
-            yield $variable->type();
-        }
+        return $variable->type();
     }
 }

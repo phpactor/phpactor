@@ -34,13 +34,15 @@ class NodeContextResolverTest extends IntegrationTestCase
     {
         $variables = [];
         $properties = [];
+        $offset = 0;
         foreach ($locals as $name => $varSymbolInfo) {
+            $offset++;
             if ($varSymbolInfo instanceof Type) {
                 $varSymbolInfo = NodeContext::for(
                     Symbol::fromTypeNameAndPosition(
                         'variable',
                         $name,
-                        Position::fromStartAndEnd(0, 0)
+                        Position::fromStartAndEnd($offset, $offset)
                     )
                 )->withType($varSymbolInfo);
             }
@@ -48,12 +50,12 @@ class NodeContextResolverTest extends IntegrationTestCase
             $variable = Variable::fromSymbolContext($varSymbolInfo);
 
             if (Symbol::PROPERTY === $varSymbolInfo->symbol()->symbolType()) {
-                $properties[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
+                $properties[$varSymbolInfo->symbol()->position()->start()] = $variable;
 
                 continue;
             }
 
-            $variables[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
+            $variables[$varSymbolInfo->symbol()->position()->start()] = $variable;
         }
 
         $symbolInfo = $this->resolveNodeAtOffset(
@@ -88,14 +90,13 @@ class NodeContextResolverTest extends IntegrationTestCase
     {
         $value = $this->resolveNodeAtOffset(
             LocalAssignments::fromArray([
-                [0, Variable::fromSymbolContext(
+                0 => Variable::fromSymbolContext(
                     NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
                         Position::fromStartAndEnd(0, 0)
                     ))->withType(TypeFactory::fromString('Foobar'))
-                ),
-                ]
+                )
             ]),
             PropertyAssignments::create(),
             $source
@@ -770,8 +771,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     'foobar' => TypeFactory::fromString('Foobar'),
                     'barfoo' => NodeContext::for(
                         Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromStartAndEnd(0, 0))
-                    )
-                    ->withType(TypeFactory::stringLiteral('hello'))
+                    )->withType(TypeFactory::stringLiteral('hello'))
                 ], ['type' => 'string'],
             ];
 
@@ -844,7 +844,6 @@ class NodeContextResolverTest extends IntegrationTestCase
                     ->withType(TypeFactory::class('Acme\Factory')),
             ], [
                 'types' => [
-                    TypeFactory::class('Acme\FactoryInterface'),
                     TypeFactory::class('Acme\Factory'),
                 ],
                 'symbol_type' => Symbol::PROPERTY,

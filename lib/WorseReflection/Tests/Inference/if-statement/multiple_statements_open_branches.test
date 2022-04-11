@@ -1,0 +1,18 @@
+<?php
+
+class Foo {
+    function foo(mixed $foo)
+    {
+        if ($foo instanceof Bar) {
+            wrAssertType('Bar', $foo);
+        }
+
+        wrAssertType('mixed', $foo);
+
+        if ($foo instanceof Baz) {
+            wrAssertType('Baz', $foo);
+        }
+
+        wrAssertType('mixed', $foo);
+    }
+}

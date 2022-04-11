@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
@@ -240,6 +241,11 @@ class TypeFactory
             // Strip PHP 7.4 underscorse separator before comparison
             str_replace('_', '', $value)
         );
+    }
+
+    public static function not(Type $type): NotType
+    {
+        return new NotType($type);
     }
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type

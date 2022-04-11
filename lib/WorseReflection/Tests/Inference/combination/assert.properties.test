@@ -1,0 +1,10 @@
+<?php
+
+class Foobar {
+    public $foo;
+
+    public function bar() {
+         assert($this->foo instanceof Bar);
+         wrAssertType('Bar', $this->foo);
+    }
+}

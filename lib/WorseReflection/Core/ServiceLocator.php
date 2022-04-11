@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\InstanceOfWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\IfStatementWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -103,13 +103,13 @@ class ServiceLocator
             $this->symbolContextResolver,
             $cache,
             array_merge([
-                new AssertFrameWalker($this->reflector),
+                new AssertFrameWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory, $nameResolver),
                 new AssignmentWalker($this->logger),
                 new CatchWalker(),
                 new ForeachWalker(),
-                new InstanceOfWalker($this->reflector),
+                new IfStatementWalker(),
                 new IncludeWalker($logger),
                 new BinaryExpressionWalker(),
             ], $frameWalkers)

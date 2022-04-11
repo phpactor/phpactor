@@ -8,9 +8,8 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Phpactor\WorseReflection\TypeUtil;
 
-class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
+class AssertFrameWalker implements Walker
 {
     public function nodeFqns(): array
     {
@@ -38,19 +37,8 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
                 continue;
             }
 
-            $expressionIsTrue = $resolver->resolveNode($frame, $expression->expression)->type();
-
-            if (!TypeUtil::toBool($expressionIsTrue)->isTrue()) {
-                continue;
-            }
-
-            $variables = $this->collectVariables($expression, $frame);
-
-            foreach ($variables as $variable) {
-                $this->getAssignmentsMatchingVariableType($frame, $variable)
-                    ->add($node->getStartPosition(), $variable)
-                ;
-            }
+            $context = $resolver->resolveNode($frame, $expression->expression);
+            $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition());
         }
 
         return $frame;

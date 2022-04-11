@@ -13,7 +13,7 @@ final class Variable
 
     private ?Type $classType;
 
-    private function __construct(string $name, Type $type, ?Type $classType = null)
+    public function __construct(string $name, Type $type, ?Type $classType = null)
     {
         $this->name = $name;
         $this->type = $type;

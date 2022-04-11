@@ -3,7 +3,12 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
+use Microsoft\PhpParser\Node\Expression\UnaryExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\ReservedWord;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -16,6 +21,7 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class BinaryExpressionResolver implements Resolver
@@ -23,6 +29,8 @@ class BinaryExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof BinaryExpression);
+
+        $operator = $node->operator->kind;
 
         $context = NodeContextFactory::create(
             $node->getText(),
@@ -32,102 +40,169 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $left = $resolver->resolveNode($frame, $node->leftOperand)->type();
-        $right = $resolver->resolveNode($frame, $node->rightOperand)->type();
-        $operator = $node->operator->getText($node->getFileContents());
+        $left = $resolver->resolveNode($frame, $node->leftOperand);
+        $right = $resolver->resolveNode($frame, $node->rightOperand);
 
-        if (!is_string($operator)) {
-            return $context;
+        // merge type assertions from left AND right
+        $context = $context->withTypeAssertions($left->typeAssertions()->merge($right->typeAssertions()));
+
+        // resolve the type of the expression
+        $context = $context->withType($this->walkBinaryExpression($left->type(), $right->type(), $operator));
+
+        // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
+        // the left hand side of instanceof should be parsed as a variable but it's not.
+        $leftOperand = $node->leftOperand;
+        if ($leftOperand instanceof UnaryExpression) {
+            $leftOperand = $leftOperand->operand;
+            $left = $resolver->resolveNode($frame, $leftOperand);
         }
 
-        return $context->withType($this->walkBinaryExpression($resolver, $frame, $left, $right, $operator, $node));
+        // apply any type assertiosn (e.g. ===, instanceof, etc)
+        $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
+
+        // negate if there is a boolean comparison against an expression
+        $context = $this->negate($context, $node->leftOperand, $node->rightOperand, $operator);
+
+        return $context;
     }
 
     private function walkBinaryExpression(
-        NodeContextResolver $resolver,
-        Frame $frame,
         Type $left,
         Type $right,
-        string $operator,
-        BinaryExpression $node
+        int $operator
     ): Type {
         if ($left instanceof Concatable) {
             switch ($operator) {
-                case '.':
-                case '.=':
-                    return $left->concat($right);
+            case TokenKind::DotToken:
+            case TokenKind::DotEqualsToken:
+                return $left->concat($right);
             }
         }
 
         if ($left instanceof Comparable) {
             switch ($operator) {
-                case '===':
-                    return $left->identical($right);
-                case '==':
-                    return $left->equal($right);
-                case '>':
-                    return $left->greaterThan($right);
-                case '>=':
-                    return $left->greaterThanEqual($right);
-                case '>':
-                    return $left->greaterThan($right);
-                case '<':
-                    return $left->lessThan($right);
-                case '<=':
-                    return $left->lessThanEqual($right);
-                case '!=':
-                    return $left->notEqual($right);
-                case '!==':
-                    return $left->notIdentical($right);
+            case TokenKind::EqualsEqualsEqualsToken:
+                return $left->identical($right);
+            case TokenKind::EqualsEqualsToken:
+                return $left->equal($right);
+            case TokenKind::GreaterThanToken:
+                return $left->greaterThan($right);
+            case TokenKind::GreaterThanEqualsToken:
+                return $left->greaterThanEqual($right);
+            case TokenKind::LessThanToken:
+                return $left->lessThan($right);
+            case TokenKind::LessThanEqualsToken:
+                return $left->lessThanEqual($right);
+            case TokenKind::ExclamationEqualsToken:
+                return $left->notEqual($right);
+            case TokenKind::ExclamationEqualsEqualsToken:
+                return $left->notIdentical($right);
             }
         }
 
         switch ($operator) {
-            case 'or':
-            case '||':
-                return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
-            case 'and':
-            case '&&':
-                return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
-            case 'xor':
-                return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
-            case '+':
-                return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
-            case '-':
-                return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
-            case '*':
-                return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
-            case '/':
-                return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
-            case '%':
-                return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
-            case '**':
-                return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
-        }
-
-        if ($left instanceof ClassType || $left instanceof MissingType) {
-            switch ($operator) {
-                case 'instanceof':
-                    // TODO:
-                    return TypeFactory::boolLiteral(true);
-            }
+        case TokenKind::OrKeyword:
+        case TokenKind::BarBarToken:
+            return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
+        case TokenKind::AndKeyword:
+        case TokenKind::AmpersandAmpersandToken:
+            return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
+        case TokenKind::XorKeyword:
+            return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
+        case TokenKind::PlusToken:
+            return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
+        case TokenKind::MinusToken:
+            return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
+        case TokenKind::AsteriskToken:
+            return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
+        case TokenKind::SlashToken:
+            return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
+        case TokenKind::PercentToken:
+            return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
+        case TokenKind::AsteriskAsteriskToken:
+            return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
         if ($left instanceof BitwiseOperable) {
             switch ($operator) {
-                case '&':
-                    return $left->bitwiseAnd($right);
-                case '|':
-                    return $left->bitwiseOr($right);
-                case '^':
-                    return $left->bitwiseXor($right);
-                case '<<':
-                    return $left->shiftLeft($right);
-                case '>>':
-                    return $left->shiftRight($right);
+            case TokenKind::AmpersandToken:
+                return $left->bitwiseAnd($right);
+            case TokenKind::BarToken:
+                return $left->bitwiseOr($right);
+            case TokenKind::CaretToken:
+                return $left->bitwiseXor($right);
+            case TokenKind::LessThanLessThanToken:
+                return $left->shiftLeft($right);
+            case TokenKind::GreaterThanGreaterThanToken:
+                return $left->shiftRight($right);
+            }
+        }
+
+        if ($left instanceof ClassType) {
+            switch ($operator) {
+            case TokenKind::InstanceOfKeyword:
+                return TypeFactory::boolLiteral(true);
             }
         }
 
         return new MissingType();
+    }
+
+    private function applyTypeAssertions(
+        NodeContext $context,
+        NodeContext $leftContext,
+        NodeContext $rightContext,
+        Node $leftOperand,
+        Node $rightOperand,
+        int $operator
+    ): NodeContext {
+        if (!NodeUtil::canAcceptTypeAssertion($leftOperand, $rightOperand)) {
+            return $context;
+        }
+
+        [$reciever, $recieverContext ] = NodeUtil::canAcceptTypeAssertion(
+            $leftOperand
+        ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
+        [$transmitter, $transmitteContext ]  = NodeUtil::canAcceptTypeAssertion(
+            $rightOperand
+        ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
+
+        if (!NodeUtil::canAcceptTypeAssertion($reciever)) {
+            return $context;
+        }
+
+        switch ($operator) {
+            case TokenKind::EqualsEqualsEqualsToken:
+            case TokenKind::InstanceOfKeyword:
+                return $context->withTypeAssertionForSubject($recieverContext, $transmitteContext->type());
+        }
+
+        return $context;
+    }
+
+    private function negate(
+        NodeContext $context,
+        Node $leftOperand,
+        Node $rightOperand,
+        int $operator
+    ): NodeContext {
+        $boolean = $leftOperand instanceof ReservedWord ? $leftOperand : $rightOperand;
+
+        if (!$boolean instanceof ReservedWord) {
+            return $context;
+        }
+
+        $text = $boolean->getText();
+
+        // if this is an OR then we don't negate the type
+        if (in_array($operator, [TokenKind::OrKeyword, TokenKind::BarBarToken])) {
+            return $context;
+        }
+
+        if ($text === 'false') {
+            return $context->withTypeAssertions($context->typeAssertions()->negate());
+        }
+
+        return $context;
     }
 }

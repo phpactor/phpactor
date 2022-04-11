@@ -1,0 +1,11 @@
+<?php
+class fo { public static function foo(): ?Foo {}}
+
+$foo = fo::foo();
+
+if (!$foobar instanceof Foo) {
+    throw new \RuntimeException('');
+}
+
+wrAssertType('Foo', $foobar);
+

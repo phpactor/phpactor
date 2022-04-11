@@ -1,0 +1,25 @@
+<?php
+
+function foo(Foo $foo)
+{
+    wrAssertType('Foo', $foo);
+
+    if ($foo instanceof Bar) {
+
+        wrAssertType('Foo|Bar', $foo);
+        return;
+    }
+
+    wrAssertType('Foo', $foo);
+
+    if ($foo instanceof Baz) {
+        wrAssertType('Foo|Baz', $foo);
+        return;
+    }
+
+    wrAssertType('Foo', $foo);
+
+    if ($foo instanceof Bar) {
+        return;
+    }
+}

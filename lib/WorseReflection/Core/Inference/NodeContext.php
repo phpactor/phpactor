@@ -13,6 +13,8 @@ final class NodeContext
     
     private Symbol $symbol;
 
+    private TypeAssertions $typeAssertions;
+
     /**
      * @var Type
      */
@@ -34,6 +36,7 @@ final class NodeContext
         $this->containerType = $containerType;
         $this->type = $type;
         $this->scope = $scope;
+        $this->typeAssertions = new TypeAssertions([]);
     }
 
     public static function for(Symbol $symbol): NodeContext
@@ -59,10 +62,26 @@ final class NodeContext
         return $new;
     }
 
+    public function withTypeAssertions(TypeAssertions $typeAssertions): NodeContext
+    {
+        $new = clone $this;
+        $new->typeAssertions = $typeAssertions;
+
+        return $new;
+    }
+
     public function withType(Type $type): NodeContext
     {
         $new = clone $this;
         $new->type = $type;
+
+        return $new;
+    }
+
+    public function withTypeAssertion(TypeAssertion $typeAssertion): NodeContext
+    {
+        $new = clone $this;
+        $new->typeAssertions = $new->typeAssertions->add($typeAssertion);
 
         return $new;
     }
@@ -120,5 +139,26 @@ final class NodeContext
     public function scope(): ReflectionScope
     {
         return $this->scope;
+    }
+
+    public function typeAssertions(): TypeAssertions
+    {
+        return $this->typeAssertions;
+    }
+
+    public function withTypeAssertionForSubject(NodeContext $subject, Type $type): NodeContext
+    {
+        if ($subject->symbol()->symbolType() === Symbol::VARIABLE) {
+            return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
+        }
+        if ($subject->symbol()->symbolType() === Symbol::PROPERTY) {
+            return $this->withTypeAssertion(TypeAssertion::property(
+                $subject->symbol()->name(),
+                $subject->containerType() ?: new MissingType(),
+                $type
+            ));
+        }
+
+        return $subject;
     }
 }
