@@ -25,11 +25,13 @@ abstract class Assignments implements Countable, IteratorAggregate
         $this->variables = array_map(function (Variable $v) {
             return $v;
         }, $variables);
+        $this->sort();
     }
 
     public function add(int $offset, Variable $variable): void
     {
         $this->variables[$offset] = $variable;
+        $this->sort();
     }
 
     /**
@@ -128,6 +130,7 @@ abstract class Assignments implements Countable, IteratorAggregate
         foreach ($variables->variables as $offset => $variable) {
             $this->variables[$offset] = $variable;
         }
+        $this->sort();
 
         return $this;
     }
@@ -169,5 +172,10 @@ abstract class Assignments implements Countable, IteratorAggregate
         }
 
         return $last;
+    }
+
+    private function sort(): void
+    {
+        ksort($this->variables);
     }
 }
