@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
@@ -114,7 +113,6 @@ class MemberAccessExpressionResolver implements Resolver
         Type $classType,
         int $position
     ): ?Type {
-
         if (!$classType instanceof ClassType) {
             return null;
         }

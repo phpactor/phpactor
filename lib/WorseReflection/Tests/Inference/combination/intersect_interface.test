@@ -1,0 +1,19 @@
+<?php
+
+abstract class AbstractFoo {}
+interface Baz {}
+
+class Foobar extends AbstractFoo implements Baz {
+}
+
+function foo(AbstractFoo $foo) {
+    assert($foo instanceof Foobar);
+    wrAssertType('Foobar', $$foo);
+
+    // TODO: implement intersection types
+    assert($foo instanceof Baz);
+    wrAssertType('Foobar|Baz', $$foo);
+}
+
+
+
