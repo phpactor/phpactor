@@ -19,6 +19,6 @@ final class MixedType extends PrimitiveType
 
     public function accepts(Type $type): Trinary
     {
-        return Trinary::maybe();
+        return Trinary::true();
     }
 }

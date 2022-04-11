@@ -70,6 +70,35 @@ final class UnionType implements Type
         return (new self(...$types))->filter();
     }
 
+    public function narrowTo(Type $narrowTypes): Type
+    {
+        $narrowTypes = self::toUnion($narrowTypes);
+
+        if (count($narrowTypes->types) === 0) {
+            return $this;
+        }
+
+        $toRemove = [];
+        $toAdd = [];
+
+        // for each of these types
+        foreach ($this->types as $type) {
+
+            // check each narrowed to to see if any of these types accept the
+            // narrowed version
+            foreach ($narrowTypes->types as $narrowType) {
+                // if an existing type accepts the narrowed type, remove
+                // the existing type
+                if ($type->accepts($narrowType)->isTrue() && $type->__toString() !== $narrowType->__toString()) {
+                    $toRemove[] = $type;
+                    continue;
+                }
+            }
+        }
+
+        return $this->add($narrowTypes)->remove(new self(...$toRemove));
+    }
+
     public function filter(): self
     {
         $types = $this->types;

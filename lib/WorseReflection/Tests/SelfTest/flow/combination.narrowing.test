@@ -1,0 +1,14 @@
+<?php
+
+abstract class AbstractFoo {}
+
+class Foobar extends AbstractFoo {
+}
+
+function foo(AbstractFoo $foo) {
+    assert($foo instanceof Foobar);
+    wrAssertType('Foobar', $$foo);
+}
+
+
+

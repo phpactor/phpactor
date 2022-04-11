@@ -40,12 +40,12 @@ class ReflectedClassType extends ClassType
         }
 
         try {
-            $reflected = $this->reflector->reflectClass($this->name());
+            $reflectedThat = $this->reflector->reflectClass($type->name());
         } catch (NotFound $e) {
             return Trinary::maybe();
         }
 
-        return Trinary::fromBoolean($reflected->isInstanceOf($type->name()));
+        return Trinary::fromBoolean($reflectedThat->isInstanceOf($this->name()));
     }
 
     public function reflectionOrNull(): ?ReflectionClassLike
