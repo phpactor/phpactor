@@ -2,7 +2,9 @@
 
 class Foobar {
     /**
-     * @param array{foo:string} $config
+     * @param array{
+     *    foo:string,
+     * } $config
      */
     public function barfoo(array $config) {
         $config;

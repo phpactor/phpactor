@@ -540,6 +540,9 @@ final class Parser
 
         $list = [];
         while (true) {
+            if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+                break;
+            }
             $list[] = $this->parseArrayKeyValue();
             if ($this->tokens->if(Token::T_COMMA)) {
                 $list[] = $this->tokens->chomp();
