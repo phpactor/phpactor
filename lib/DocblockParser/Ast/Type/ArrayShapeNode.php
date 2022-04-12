@@ -15,13 +15,13 @@ class ArrayShapeNode extends TypeNode
     ];
 
     public Token $open;
-    public ArrayKeyValueList $paramList;
+    public ArrayKeyValueList $arrayKeyValueList;
     public Token $close;
 
-    public function __construct(Token $open, ArrayKeyValueList $paramList, ?Token $close)
+    public function __construct(Token $open, ArrayKeyValueList $arrayKeyValueList, ?Token $close)
     {
         $this->open = $open;
-        $this->paramList = $paramList;
+        $this->arrayKeyValueList = $arrayKeyValueList;
         $this->close = $close;
     }
 }

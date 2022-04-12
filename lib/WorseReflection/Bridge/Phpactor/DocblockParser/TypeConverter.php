@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
+use JetBrains\PhpStorm\ArrayShape;
+use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -17,6 +19,7 @@ use Phpactor\DocblockParser\Ast\Type\UnionNode;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
@@ -58,6 +61,9 @@ class TypeConverter
         }
         if ($type instanceof ArrayNode) {
             return $this->convertArray($type);
+        }
+        if ($type instanceof ArrayShapeNode) {
+            return $this->convertArrayShape($type);
         }
         if ($type instanceof UnionNode) {
             return $this->convertUnion($type);
@@ -216,5 +222,16 @@ class TypeConverter
         return new CallableType(array_map(function (TypeNode $type) {
             return $this->convert($type);
         }, $type->parameters ? iterator_to_array($type->parameters->types()) : []), $this->convert($type->type));
+    }
+
+    private function convertArrayShape(ArrayShapeNode $type): ArrayShapeType
+    {
+        $typeMap = [];
+        foreach ($type->arrayKeyValueList->arrayKeyValues() as $index => $keyValue) {
+            $key = $keyValue->key ? $keyValue->key->value : $index;
+            $typeMap[$key] = $this->convert($keyValue->type);
+        }
+
+        return new ArrayShapeType($typeMap);
     }
 }
