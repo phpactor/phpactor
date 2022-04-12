@@ -11,7 +11,9 @@ class ArrayKeyValueNode extends Node
     ];
 
     public ?Token $key;
+
     public ?Token $colon;
+
     public ?TypeNode $type;
 
     public function __construct(?Token $key, ?Token $colon, ?TypeNode $type)

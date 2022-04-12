@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
-use JetBrains\PhpStorm\ArrayShape;
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;

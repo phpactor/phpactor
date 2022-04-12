@@ -5,12 +5,6 @@ namespace Phpactor\DocblockParser\Ast;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use Phpactor\DocblockParser\Ast\Element;
-use Phpactor\DocblockParser\Ast\Node;
-use Phpactor\DocblockParser\Ast\Token;
-use Phpactor\DocblockParser\Ast\TypeNode;
-use Phpactor\DocblockParser\Ast\TypeNodes;
-
 
 /**
  * @implements IteratorAggregate<int,Token|Element>

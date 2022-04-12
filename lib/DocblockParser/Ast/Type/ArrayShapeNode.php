@@ -10,13 +10,15 @@ class ArrayShapeNode extends TypeNode
 {
     protected const CHILD_NAMES = [
         'open',
-        'paramList',
+        'arrayKeyValueList',
         'close',
     ];
 
     public Token $open;
+
     public ArrayKeyValueList $arrayKeyValueList;
-    public Token $close;
+
+    public ?Token $close;
 
     public function __construct(Token $open, ArrayKeyValueList $arrayKeyValueList, ?Token $close)
     {

@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Trait\ArrayTypeTrait;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayShapeType extends ArrayType
 {
@@ -41,7 +40,8 @@ class ArrayShapeType extends ArrayType
             'array{%s}',
             implode(',', array_map(
                 fn (string $key, Type $t) => sprintf('%s:%s', $key, $t->__toString()),
-                array_keys($this->typeMap), $this->typeMap
+                array_keys($this->typeMap),
+                $this->typeMap
             ))
         );
     }
