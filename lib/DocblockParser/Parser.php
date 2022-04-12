@@ -530,7 +530,7 @@ final class Parser
     }
 
     /**
-     * @return ArrayKeyValueNode[]
+     * @return array<int,ArrayKeyValueNode|Token>
      */
     private function parseArrayKeyValues(): array
     {
@@ -540,12 +540,16 @@ final class Parser
 
         $list = [];
         while (true) {
+            /** @phpstan-ignore-next-line Condition is not always false */
             if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
                 break;
             }
             $list[] = $this->parseArrayKeyValue();
             if ($this->tokens->if(Token::T_COMMA)) {
-                $list[] = $this->tokens->chomp();
+                $token = $this->tokens->chomp();
+                if ($token) {
+                    $list[] = $token;
+                }
                 continue;
             }
             break;
