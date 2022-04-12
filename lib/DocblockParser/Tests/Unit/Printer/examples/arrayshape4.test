@@ -26,7 +26,6 @@ Docblock: =
       UnionNode: = 
        TypeList: = 
         ClassNode: = Name|
-        NullNode: = null,
-     ArrayKeyValueNode: = }
+        NullNode: = null,}
    VariableNode: = $config
  */

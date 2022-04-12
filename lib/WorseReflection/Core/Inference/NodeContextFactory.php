@@ -14,7 +14,6 @@ class NodeContextFactory
      * @param array{
      *     container_type?: Type|null,
      *     type?: Type|null,
-     *     symbol_type?: Symbol::*|null,
      *     name?: Name|null,
      * } $config
      */
