@@ -40,6 +40,7 @@ class DocblockParserFactory implements DocBlockFactory
 
     public function create(string $docblock): DocBlock
     {
+        dump($docblock);
         if (empty(trim($docblock))) {
             return new PlainDocblock();
         }

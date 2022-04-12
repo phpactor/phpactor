@@ -1,0 +1,14 @@
+<?php
+
+class Foobar {
+    /**
+     * @param array{
+     *    foo:123
+     * } $config
+     */
+    public function barfoo(array $config) {
+        $config;
+        wrAssertType('array{foo:123}', $config);
+    }
+}
+
