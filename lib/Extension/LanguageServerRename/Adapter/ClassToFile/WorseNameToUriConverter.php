@@ -17,9 +17,7 @@ class WorseNameToUriConverter implements NameToUriConverter
         $this->reflector = $reflector;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function convert(string $className): TextDocumentUri
     {
         $uri = $this->reflector->reflectClass($className)->sourceCode()->uri();
