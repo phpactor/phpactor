@@ -2,6 +2,8 @@
 
 namespace Phpactor\DocblockParser;
 
+use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
+use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -16,6 +18,7 @@ use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
+use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Node;
@@ -285,6 +288,23 @@ final class Parser
             );
         }
 
+        if ($this->tokens->current->type === Token::T_BRACKET_CURLY_OPEN) {
+            $open = $this->tokens->chomp();
+            assert(!is_null($open));
+            $keyValues = [];
+            $close = null;
+            if ($this->tokens->if(Token::T_LABEL)) {
+                $keyValues = $this->parseArrayKeyValues();
+            }
+            if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+                $close = $this->tokens->chomp();
+            }
+
+            return new ArrayShapeNode($open, new ArrayKeyValueList(
+                $keyValues,
+            ), $close);
+        }
+
         return $this->createTypeFromToken($type);
     }
 
@@ -507,5 +527,64 @@ final class Parser
         }
 
         return new ImplementsTag($tag, $types);
+    }
+
+    /**
+     * @return array<int,ArrayKeyValueNode|Token>
+     */
+    private function parseArrayKeyValues(): array
+    {
+        if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+            return [];
+        }
+
+        $list = [];
+        while (true) {
+            /** @phpstan-ignore-next-line Condition is not always false */
+            if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+                break;
+            }
+            $list[] = $this->parseArrayKeyValue();
+            if ($this->tokens->if(Token::T_COMMA)) {
+                $token = $this->tokens->chomp();
+                if ($token) {
+                    $list[] = $token;
+                }
+                continue;
+            }
+            break;
+        }
+
+        return $list;
+    }
+
+    private function parseArrayKeyValue(): ArrayKeyValueNode
+    {
+        $key = $colon = $type = null;
+
+        if (
+            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->peekIs(1, Token::T_COLON)
+        ) {
+            $key = $this->tokens->chomp();
+            $colon = $this->tokens->chomp();
+        }
+
+        if (
+            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->peekIs(1, Token::T_NULLABLE) &&
+            $this->tokens->peekIs(2, Token::T_COLON)
+        ) {
+            $key = $this->tokens->chomp();
+            $_ = $this->tokens->chomp();
+            $colon = $this->tokens->chomp();
+        }
+
+        $type = null;
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
+
+        return new ArrayKeyValueNode($key, $colon, $type);
     }
 }

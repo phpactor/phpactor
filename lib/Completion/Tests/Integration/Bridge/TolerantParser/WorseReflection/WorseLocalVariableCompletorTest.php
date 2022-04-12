@@ -117,6 +117,48 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                 ],
             ],
         ];
+
+        yield 'array keys' => [
+            '<?php /** @var array{foo:string,baz:int} */$foo; $fo<>',
+            [
+                [
+                    'type' => Suggestion::TYPE_VARIABLE,
+                    'name' => '$foo',
+                    'short_description' => 'array{foo:string,baz:int}',
+                ],
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'name' => "\$foo['baz']",
+                    'short_description' => 'int',
+                ],
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'name' => "\$foo['foo']",
+                    'short_description' => 'string',
+                ],
+            ]
+        ];
+
+        yield 'no array keys' => [
+            '<?php /** @var array{string,int} */$foo; $fo<>',
+            [
+                [
+                    'type' => Suggestion::TYPE_VARIABLE,
+                    'name' => '$foo',
+                    'short_description' => 'array{string,int}',
+                ],
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'name' => '$foo[0]',
+                    'short_description' => 'string',
+                ],
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'name' => '$foo[1]',
+                    'short_description' => 'int',
+                ],
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor

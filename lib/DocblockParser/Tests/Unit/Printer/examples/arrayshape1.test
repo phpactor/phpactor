@@ -1,0 +1,15 @@
+/**
+ * @var array{foo:string,bar:int}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = foo:
+      ScalarNode: = string,
+     ArrayKeyValueNode: = bar:
+      ScalarNode: = int}
+ */

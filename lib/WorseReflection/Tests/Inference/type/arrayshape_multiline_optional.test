@@ -1,0 +1,16 @@
+<?php
+
+class Foobar {
+    /**
+     * @param array{
+     *    foo?:string,
+     * } $config
+     */
+    public function barfoo(array $config) {
+        $config;
+
+        // TODO: Support optional keys
+        wrAssertType('array{foo:string}', $config);
+    }
+}
+

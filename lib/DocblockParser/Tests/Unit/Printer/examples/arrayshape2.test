@@ -1,0 +1,11 @@
+/**
+ * @var array{}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = }
+ */

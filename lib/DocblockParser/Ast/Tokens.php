@@ -127,14 +127,21 @@ final class Tokens implements IteratorAggregate
             return true;
         }
 
-        if ($this->current->type !== Token::T_WHITESPACE) {
+        $offset = 0;
+        while ($peek = $this->peek($offset)) {
+            if (
+                $peek->type === Token::T_WHITESPACE ||
+                $peek->type === Token::T_PHPDOC_LEADING
+            ) {
+                $offset++;
+                continue;
+            }
+            if ($peek->type === $type) {
+                $this->current = $peek;
+                $this->position += $offset;
+                return true;
+            }
             return false;
-        }
-
-        $next = $this->next();
-        if ($next && $this->next()->type === $type) {
-            $this->current = $this->tokens[++$this->position];
-            return true;
         }
 
         return false;
@@ -147,5 +154,25 @@ final class Tokens implements IteratorAggregate
         }
 
         return $this->tokens[$this->position + 1];
+    }
+
+    public function peekIs(int $offset, string $type): bool
+    {
+        $token = $this->peek($offset);
+
+        if ($token && $token->type === $type) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function peek(int $offset): ?Token
+    {
+        if (!isset($this->tokens[$this->position + $offset])) {
+            return null;
+        }
+
+        return $this->tokens[$this->position + $offset];
     }
 }
