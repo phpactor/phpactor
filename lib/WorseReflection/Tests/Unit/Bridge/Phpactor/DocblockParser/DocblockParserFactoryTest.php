@@ -151,6 +151,19 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return array{foo:int,bar:string} */',
             'array{foo:int,bar:string}',
         ];
+
+        yield 'multiline array shape' => [
+            <<<'EOT'
+            /** 
+             * @return array{
+             *   foo:int,
+             *   bar:string
+             * } 
+             */
+            EOT
+                ,
+            'array{foo:int,bar:string}',
+        ];
     }
 
     public function testMethods(): void
