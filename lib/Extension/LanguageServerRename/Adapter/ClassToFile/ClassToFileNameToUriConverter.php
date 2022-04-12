@@ -19,6 +19,9 @@ class ClassToFileNameToUriConverter implements NameToUriConverter
         $this->classToFile = $classToFile;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function convert(string $className): TextDocumentUri
     {
         try {

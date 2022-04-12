@@ -180,6 +180,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
 
         return new ClassRenamer(
             $nameToUriConverter,
+            $nameToUriConverter,
             $this->offsetsToReferenceFinder($textDocument, $references),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),

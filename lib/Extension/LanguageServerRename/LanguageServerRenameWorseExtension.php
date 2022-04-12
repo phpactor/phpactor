@@ -10,6 +10,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassMover\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
+use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\WorseNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\MemberRenamer;
@@ -60,7 +61,7 @@ class LanguageServerRenameWorseExtension implements Extension
 
         $container->register(ClassRenamer::class, function (Container $container) {
             return new ClassRenamer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                new WorseNameToUriConverter($container->get(WorseReflectionExtension::SERVICE_REFLECTOR)),
                 new ClassToFileNameToUriConverter($container->get(ClassToFileExtension::SERVICE_CONVERTER)),
                 $container->get(DefinitionAndReferenceFinder::class),
                 $container->get(TextDocumentLocator::class),

@@ -28,9 +28,9 @@ use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
-    private Reflector $reflector;
+    private NameToUriConverter $newNameToUriConverter;
 
-    private NameToUriConverter $nameToUriConverter;
+    private NameToUriConverter $oldNameToUriConverter;
 
     private ReferenceFinder $referenceFinder;
 
@@ -41,15 +41,15 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
-        Reflector $reflector,
-        NameToUriConverter $nameToUriConverter,
+        NameToUriConverter $oldNameToUriConverter,
+        NameToUriConverter $newNameToUriConverter,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
-        $this->reflector = $reflector;
-        $this->nameToUriConverter = $nameToUriConverter;
+        $this->oldNameToUriConverter = $oldNameToUriConverter;
+        $this->newNameToUriConverter = $newNameToUriConverter;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
         $this->parser = $parser;
@@ -85,8 +85,8 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $oldUri = $this->reflector->reflectClass($originalName->getFullyQualifiedNameText())->sourceCode()->uri();
-        $newUri = $this->nameToUriConverter->convert($newName);
+        $oldUri = $this->oldNameToUriConverter->convert($originalName->getFullyQualifiedNameText());
+        $newUri = $this->newNameToUriConverter->convert($newName);
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {
             return;
