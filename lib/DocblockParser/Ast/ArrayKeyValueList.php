@@ -15,7 +15,7 @@ use Phpactor\DocblockParser\Ast\TypeNodes;
 /**
  * @implements IteratorAggregate<int,Token|Element>
  */
-class ArrayKeyValueList extends TypeNode implements IteratorAggregate, Countable
+class ArrayKeyValueList extends Node implements IteratorAggregate, Countable
 {
     protected const CHILD_NAMES = [
         'list'

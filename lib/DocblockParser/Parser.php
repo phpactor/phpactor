@@ -18,6 +18,7 @@ use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
+use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Node;
@@ -289,12 +290,19 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_BRACKET_CURLY_OPEN) {
             $open = $this->tokens->chomp();
+            assert(!is_null($open));
             $keyValues = [];
+            $close = null;
             if ($this->tokens->if(Token::T_LABEL)) {
                 $keyValues = $this->parseArrayKeyValues();
             }
+            if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+                $close = $this->tokens->chomp();
+            }
 
-            return new ArrayKeyValueList($keyValues);
+            return new ArrayShapeNode($open, new ArrayKeyValueList(
+                $keyValues,
+            ), $close);
         }
 
         return $this->createTypeFromToken($type);
@@ -521,6 +529,9 @@ final class Parser
         return new ImplementsTag($tag, $types);
     }
 
+    /**
+     * @return ArrayKeyValueNode[]
+     */
     private function parseArrayKeyValues(): array
     {
         if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {

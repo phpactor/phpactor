@@ -6,9 +6,10 @@ Docblock: =
  ElementList: = /**
  * 
   VarTag: = @var
-   ArrayKeyValueList: = 
-    ArrayKeyValueNode: = 
-     ScalarNode: = int,
-    ArrayKeyValueNode: = 
-     ScalarNode: = int}
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = 
+      ScalarNode: = int,
+     ArrayKeyValueNode: = 
+      ScalarNode: = int}
  */

@@ -6,5 +6,6 @@ Docblock: =
  ElementList: = /**
  * 
   VarTag: = @var
-   ArrayKeyValueList: = }
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = }
  */
