@@ -2,6 +2,8 @@
 
 namespace Phpactor\DocblockParser;
 
+use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
+use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -285,6 +287,16 @@ final class Parser
             );
         }
 
+        if ($this->tokens->current->type === Token::T_BRACKET_CURLY_OPEN) {
+            $open = $this->tokens->chomp();
+            $keyValues = [];
+            if ($this->tokens->if(Token::T_LABEL)) {
+                $keyValues = $this->parseArrayKeyValues();
+            }
+
+            return new ArrayKeyValueList($keyValues);
+        }
+
         return $this->createTypeFromToken($type);
     }
 
@@ -507,5 +519,41 @@ final class Parser
         }
 
         return new ImplementsTag($tag, $types);
+    }
+
+    private function parseArrayKeyValues(): array
+    {
+        if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
+            return [];
+        }
+
+        $list = [];
+        while (true) {
+            $list[] = $this->parseArrayKeyValue();
+            if ($this->tokens->if(Token::T_COMMA)) {
+                $list[] = $this->tokens->chomp();
+                continue;
+            }
+            break;
+        }
+
+        return $list;
+    }
+
+    private function parseArrayKeyValue(): ArrayKeyValueNode
+    {
+        $key = $colon = $type = null;
+
+        if (
+            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->peek(Token::T_COLON)
+        ) {
+            $key = $this->tokens->chomp();
+            $colon = $this->tokens->chomp();
+        }
+
+        $type = $this->parseType();
+
+        return new ArrayKeyValueNode($key, $colon, $type);
     }
 }

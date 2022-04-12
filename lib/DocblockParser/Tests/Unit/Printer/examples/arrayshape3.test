@@ -1,0 +1,14 @@
+/**
+ * @var array{int,int}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ArrayKeyValueList: = 
+    ArrayKeyValueNode: = 
+     ScalarNode: = int,
+    ArrayKeyValueNode: = 
+     ScalarNode: = int}
+ */

@@ -148,4 +148,14 @@ final class Tokens implements IteratorAggregate
 
         return $this->tokens[$this->position + 1];
     }
+
+    public function peek(string $type): bool
+    {
+        if (!$this->hasAnother()) {
+            return false;
+        }
+        $next = $this->tokens[$this->position + 1];
+
+        return $next->type === $type;
+    }
 }

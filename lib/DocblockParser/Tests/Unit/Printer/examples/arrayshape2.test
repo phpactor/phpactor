@@ -1,10 +1,10 @@
 /**
- * @var array{foo:string,bar:int}
+ * @var array{}
  */
 ---
 Docblock: = 
  ElementList: = /**
  * 
   VarTag: = @var
-   ArrayNode: = {fo:string,bar:int}
+   ArrayKeyValueList: = }
  */
