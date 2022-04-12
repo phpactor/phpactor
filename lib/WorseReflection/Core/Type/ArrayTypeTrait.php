@@ -1,10 +1,8 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Type\Trait;
+namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\TypeUtil;
 
 trait ArrayTypeTrait

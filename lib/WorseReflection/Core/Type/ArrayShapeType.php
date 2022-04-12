@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\Trait\ArrayTypeTrait;
 
 class ArrayShapeType extends ArrayType
 {
