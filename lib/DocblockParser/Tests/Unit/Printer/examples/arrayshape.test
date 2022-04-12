@@ -1,3 +1,10 @@
 /**
  * @var array{foo:string,bar:int}
  */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ArrayNode: = {fo:string,bar:int}
+ */
