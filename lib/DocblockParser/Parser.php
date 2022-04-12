@@ -557,13 +557,26 @@ final class Parser
 
         if (
             $this->tokens->if(Token::T_LABEL) &&
-            $this->tokens->peek(Token::T_COLON)
+            $this->tokens->peekIs(1, Token::T_COLON)
         ) {
             $key = $this->tokens->chomp();
             $colon = $this->tokens->chomp();
         }
 
-        $type = $this->parseType();
+        if (
+            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->peekIs(1, Token::T_NULLABLE) &&
+            $this->tokens->peekIs(2, Token::T_COLON)
+        ) {
+            $key = $this->tokens->chomp();
+            $_ = $this->tokens->chomp();
+            $colon = $this->tokens->chomp();
+        }
+
+        $type = null;
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
 
         return new ArrayKeyValueNode($key, $colon, $type);
     }
