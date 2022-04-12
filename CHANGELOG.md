@@ -37,7 +37,7 @@ Features:
 
   - [wr] Type combination
   - [wr] Support for type assertions via. is_*, instanceof etc
-  - [wr] Array shape type support
+  - [wr] Array shape type support (types and completion)
   - [lsp] Send rename file request to client when renaming a PSR class
       @przepompownia
   - [wr] Initial support for generics #1382
