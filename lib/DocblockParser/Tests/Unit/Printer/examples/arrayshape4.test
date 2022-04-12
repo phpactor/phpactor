@@ -1,0 +1,31 @@
+/**
+ * @param array{
+ *     container_type?: Type|null,
+ *     type?: Type|null,
+ *     name?: Name|null,
+ * } $config
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = container_type:
+      UnionNode: = 
+       TypeList: = 
+        ClassNode: = Type|
+        NullNode: = null,
+     ArrayKeyValueNode: = type:
+      UnionNode: = 
+       TypeList: = 
+        ClassNode: = Type|
+        NullNode: = null,
+     ArrayKeyValueNode: = name:
+      UnionNode: = 
+       TypeList: = 
+        ClassNode: = Name|
+        NullNode: = null,}
+   VariableNode: = $config
+ */

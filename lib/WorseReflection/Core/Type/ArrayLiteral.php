@@ -7,6 +7,8 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayLiteral extends ArrayType implements Literal, Generalizable
 {
+    use ArrayTypeTrait;
+
     /**
      * @var array<array-key,Type>
      */
@@ -78,26 +80,5 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
     public function withValue($value)
     {
         return $this;
-    }
-
-    /**
-     * @param array<array-key,Type> $typeMap
-     */
-    private function resolveValueType(array $typeMap): Type
-    {
-        $valueType = null;
-        foreach ($typeMap as $type) {
-            $type = TypeUtil::generalize($type);
-            if ($valueType === null) {
-                $valueType = $type;
-                continue;
-            }
-
-            if ($valueType != $type) {
-                return new MixedType();
-            }
-        }
-
-        return $valueType ?: new MissingType();
     }
 }

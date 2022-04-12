@@ -10,6 +10,7 @@ Phpactor provides completion for:
 - **Functions**: Built-in and bootstrapped.
 - **Constants**: Built-in and bootstrapped.
 - **Parameters**: Will suggest appropriate local variables for method parameters.
+- **Array Keys**: For array-shapes (`array{key1:value1}`) complete the keys.
 
 Uniquely, Phpactor does not pre-index anything, completion happens in _real
 time_, file locations are guessed based on composer locations (or brute forced
