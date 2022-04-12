@@ -226,7 +226,7 @@ class TypeConverter
     private function convertArrayShape(ArrayShapeNode $type): ArrayShapeType
     {
         $typeMap = [];
-        foreach ($type->arrayKeyValueList->arrayKeyValues() as $index => $keyValue) {
+        foreach (array_values($type->arrayKeyValueList->arrayKeyValues()) as $index => $keyValue) {
             $key = $keyValue->key ? $keyValue->key->value : $index;
             $typeMap[$key] = $this->convert($keyValue->type);
         }

@@ -7,6 +7,7 @@ use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherComple
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseArrayKeyCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassAliasCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
@@ -217,6 +218,15 @@ class CompletionWorseExtension implements Extension
             );
         }, [ self::TAG_TOLERANT_COMPLETOR => [
             'name' => 'worse_local_variable',
+        ]]);
+
+        $container->register('completion_worse.completor.array_key', function (Container $container) {
+            return new WorseArrayKeyCompletor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+            );
+        }, [ self::TAG_TOLERANT_COMPLETOR => [
+            'name' => 'worse_array_key',
         ]]);
 
         $container->register('completion_worse.completor.function', function (Container $container) {
