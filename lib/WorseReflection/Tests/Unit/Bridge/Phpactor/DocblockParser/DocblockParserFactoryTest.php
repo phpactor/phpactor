@@ -141,6 +141,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return \IteratorAggregate<Foobar> */',
             'IteratorAggregate<Foobar>',
         ];
+
+        yield [
+            '/** @return array{} */',
+            'array{}',
+        ];
     }
 
     public function testMethods(): void
