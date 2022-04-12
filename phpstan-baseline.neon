@@ -5621,11 +5621,6 @@ parameters:
 			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionDefinitionLocatorTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionTypeLocatorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
@@ -6136,16 +6131,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TypeResolver\\\\DeclaredMemberTypeResolver\\:\\:doResolve\\(\\) has parameter \\$tolerantType with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TypeResolver/DeclaredMemberTypeResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TypeResolver\\\\DeclaredMemberTypeResolver\\:\\:resolve\\(\\) has parameter \\$tolerantType with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TypeResolver/DeclaredMemberTypeResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflector\\\\TolerantSourceCodeReflector\\:\\:reflectNode\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflector/TolerantSourceCodeReflector.php
@@ -6216,81 +6201,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
 
 		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:evaluate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:evaluate\\(\\) has parameter \\$node with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkNumericLiteral\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkParenthesizedExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkPostfixUpdateExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkPrefixUpdateExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkReservedWord\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkStringLiteral\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkTernary\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkUnaryOpExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\ExpressionEvaluator\\:\\:walkVariable\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, float given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/ExpressionEvaluator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:children\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
@@ -6307,11 +6217,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:withLocals\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
 

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
+use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
@@ -18,8 +19,10 @@ use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
+use Phpactor\WorseReflection\Core\Type\NumericType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\OctalLiteralType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
@@ -224,12 +227,25 @@ class TypeFactory
         return new BooleanLiteralType($value);
     }
 
-    public static function fromNumericString(string $value): Type
+    /**
+     * @param array<array-key,Type> $elements
+     */
+    public static function arrayLiteral(array $elements): ArrayLiteral
+    {
+        return new ArrayLiteral($elements);
+    }
+
+    public static function fromNumericString(string $value): NumericType
     {
         return self::convertNumericStringToInternalType(
             // Strip PHP 7.4 underscorse separator before comparison
             str_replace('_', '', $value)
         );
+    }
+
+    public static function not(Type $type): NotType
+    {
+        return new NotType($type);
     }
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
@@ -306,7 +322,7 @@ class TypeFactory
     }
 
     
-    private static function convertNumericStringToInternalType(string $value): Type
+    private static function convertNumericStringToInternalType(string $value): NumericType
     {
         if (1 === preg_match('/^[1-9][0-9]*$/', $value)) {
             return self::intLiteral((int)$value);
@@ -319,6 +335,10 @@ class TypeFactory
         }
         if (1 === preg_match('/^0[bB][01]+$/', $value)) {
             return new BinLiteralType($value);
+        }
+
+        if (false === strpos($value, '.')) {
+            return self::intLiteral((int)$value);
         }
 
         return self::floatLiteral((float)$value);

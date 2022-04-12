@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as CoreReflectionArgument;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 
@@ -63,7 +64,7 @@ class ReflectionArgument implements CoreReflectionArgument
 
     public function value()
     {
-        return $this->info()->value();
+        return TypeUtil::valueOrNull($this->info()->type());
     }
 
     public function position(): Position

@@ -10,12 +10,15 @@ abstract class SystemTestCase extends IntegrationTestCase
     protected function phpactor(string $args, string $stdin = null): Process
     {
         chdir($this->workspaceDir());
+
         $bin = __DIR__ . '/../../bin/phpactor --verbose ';
         $process = Process::fromShellCommandline(sprintf(
             '%s %s',
             $bin,
             $args
-        ));
+        ), null, [
+            'XDG_CACHE_HOME' => $this->workspaceDir(),
+        ]);
 
         if ($stdin) {
             $process->setInput($stdin);

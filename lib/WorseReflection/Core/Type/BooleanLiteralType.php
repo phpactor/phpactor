@@ -2,10 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
 final class BooleanLiteralType extends BooleanType implements Literal, Generalizable
 {
+    use LiteralTrait;
+
     private bool $value;
 
     public function __construct(bool $value)
@@ -26,5 +29,42 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
     public function generalize(): Type
     {
         return new BooleanType();
+    }
+
+    public function or(BooleanType $right): BooleanType
+    {
+        if ($right instanceof BooleanLiteralType) {
+            return new self($this->value || $right->value);
+        }
+
+        return new BooleanType();
+    }
+
+    public function and(BooleanType $right): BooleanType
+    {
+        if ($right instanceof BooleanLiteralType) {
+            return new self($this->value && $right->value);
+        }
+
+        return new BooleanType();
+    }
+
+    public function negate(): BooleanType
+    {
+        return new self(!$this->value);
+    }
+
+    public function xor(BooleanType $booleanType): BooleanType
+    {
+        if ($booleanType instanceof BooleanLiteralType) {
+            return new self($this->value() xor $booleanType->value());
+        }
+
+        return new BooleanType();
+    }
+
+    public function toTrinary(): Trinary
+    {
+        return Trinary::fromBoolean($this->value);
     }
 }

@@ -3,12 +3,9 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
-use Microsoft\PhpParser\Node\QualifiedName;
-use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -19,7 +16,6 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class ParameterResolver implements Resolver
@@ -36,29 +32,11 @@ class ParameterResolver implements Resolver
         }
 
         $typeDeclaration = $node->typeDeclarationList;
-        $type = TypeFactory::unknown();
-        if ($typeDeclaration instanceof QualifiedNameList) {
-            $typeDeclaration = QualifiedNameListUtil::firstQualifiedNameOrToken($typeDeclaration);
-        }
 
-        if ($typeDeclaration instanceof QualifiedName) {
-            $type = $resolver->resolveNode($frame, $typeDeclaration)->type();
-        }
-
-        if ($typeDeclaration instanceof Token) {
-            $type = TypeFactory::fromStringWithReflector(
-                (string)$typeDeclaration->getText($node->getFileContents()),
-                $resolver->reflector(),
-            );
-        }
+        $type = NodeUtil::typeFromQualfiedNameLike($resolver->reflector(), $node, $node->typeDeclarationList);
 
         if ($node->questionToken) {
             $type = TypeFactory::nullable($type);
-        }
-
-        $value = null;
-        if ($node->default) {
-            $value = $resolver->resolveNode($frame, $node->default)->value();
         }
 
         return NodeContextFactory::create(
@@ -68,7 +46,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $type,
-                'value' => $value,
             ]
         );
     }
@@ -120,7 +97,6 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $reflectionParameter->inferredType(),
-                'value' => $reflectionParameter->default()->value(),
             ]
         );
     }

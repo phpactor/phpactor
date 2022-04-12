@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Integration;
 
 use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
-use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
+use Phpactor\WorseReflection\Tests\Inference\TestAssertWalker;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class IntegrationTestCase extends TestCase
         return ReflectorBuilder::create()
             ->addSource($source)
             ->addMemberProvider(new DocblockMemberProvider())
-            ->addFrameWalker(new TestAssertWalker())
+            ->addFrameWalker(new TestAssertWalker($this))
             ->withLogger($this->logger())->build();
     }
 

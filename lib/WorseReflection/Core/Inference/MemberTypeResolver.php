@@ -110,7 +110,6 @@ class MemberTypeResolver
         $member = $class->$memberType()->get($name);
         assert($member instanceof ReflectionMember);
         $declaringClass = $member->declaringClass();
-
         $info = $info->withContainerType(TypeFactory::reflectedClass($this->reflector, $declaringClass->name()));
 
         return $info->withType($member->inferredType());

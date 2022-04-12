@@ -1,0 +1,8 @@
+<?php
+
+namespace Foo;
+
+function foo(Foo|Bar|Baz $foo)
+{
+    wrAssertType('Foo\Foo|Foo\Bar|Foo\Baz', $foo);
+}

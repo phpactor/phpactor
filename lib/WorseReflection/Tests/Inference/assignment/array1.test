@@ -1,0 +1,22 @@
+<?php
+
+// empty array
+$foo = [];
+wrAssertType('array{}', $foo);
+
+// nested array
+$foo = [
+     'foo' => [
+          'hello' => 'world',
+     ],
+     'bar' => 'baz',
+];
+wrAssertType('array{foo:array{hello:"world"},bar:"baz"}', $foo);
+
+// list
+$foo = [1, 2, 3, 4, 5];
+wrAssertType('array{1,2,3,4,5}', $foo);
+
+// numerical keys
+$foo = [1 => "a", 2 => "b"];
+wrAssertType('array{1:"a",2:"b"}', $foo);

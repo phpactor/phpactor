@@ -1,0 +1,8 @@
+<?php
+
+if (!!$foobar instanceof Foobar) {
+    wrAssertType('Foobar', $foobar);
+    return;
+}
+
+wrAssertType('<missing>', $foobar);

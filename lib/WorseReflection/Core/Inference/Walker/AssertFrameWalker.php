@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 
-class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
+class AssertFrameWalker implements Walker
 {
     public function nodeFqns(): array
     {
@@ -37,19 +37,8 @@ class AssertFrameWalker extends AbstractInstanceOfWalker implements Walker
                 continue;
             }
 
-            $expressionIsTrue = $this->evaluator->evaluate($expression->expression);
-
-            if (false === $expressionIsTrue) {
-                continue;
-            }
-
-            $variables = $this->collectVariables($expression, $frame);
-
-            foreach ($variables as $variable) {
-                $this->getAssignmentsMatchingVariableType($frame, $variable)
-                    ->add($node->getStartPosition(), $variable)
-                ;
-            }
+            $context = $resolver->resolveNode($frame, $expression->expression);
+            $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition());
         }
 
         return $frame;

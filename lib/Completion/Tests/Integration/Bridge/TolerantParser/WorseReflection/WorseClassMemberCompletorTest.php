@@ -695,6 +695,41 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
+        yield 'union' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                class Foobar {
+                    public function fun(): string {}
+                }
+                class Barfoo {
+                    public function not(): string {}
+                }
+
+                function create(): Foobar|Barfoo {}
+
+                $f = create();
+                $f-><>;
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'fun',
+                    'short_description' => 'pub fun(): string',
+                    'snippet' => 'fun()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'not',
+                    'short_description' => 'pub not(): string',
+                    'snippet' => 'not()',
+                ],
+            ]
+        ];
+
         if (defined('T_ENUM')) {
             yield 'enum' => [
                 <<<'EOT'

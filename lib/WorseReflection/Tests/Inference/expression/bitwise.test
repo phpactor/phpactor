@@ -1,0 +1,30 @@
+<?php
+
+wrAssertEval(( 0000) & ( 0101))
+wrAssertEval(( 0001) & ( 0101));
+wrAssertEval(( 0010) & ( 0101));
+wrAssertEval(( 0100) & ( 0101));
+wrAssertEval(( 1000) & ( 1001));
+
+// Bitwise Inclusive OR
+wrAssertEval(( 0000) | ( 0101));
+wrAssertEval(( 0001) | ( 0101));
+wrAssertEval(( 0010) | ( 0101));
+wrAssertEval(( 0100) | ( 0101));
+wrAssertEval(( 1000) | ( 0101));
+
+//  Bitwise Exclusive OR (XOR)
+wrAssertEval(( 0000) ^ ( 0101));
+wrAssertEval(( 0001) ^ ( 0101));
+wrAssertEval(( 0010) ^ ( 0101));
+wrAssertEval(( 0100) ^ ( 0101));
+wrAssertEval(( 1000) ^ ( 0101));
+
+//  Bitwise NOT
+wrAssertEval(~(0101));
+
+//  Shift left
+wrAssertEval(1 << 2);
+
+//  Shift right
+wrAssertEval(1 >> 2);

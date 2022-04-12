@@ -141,12 +141,12 @@ class ForeachWalkerTest extends FrameWalkerTestCase
                 $this->assertEquals('foo', $frame->locals()->atIndex(0)->name());
                 $this->assertEquals('bar', $frame->locals()->atIndex(1)->name());
                 $this->assertEquals(
-                    'foo',
-                    $frame->locals()->byName('foo')->first()->value()
+                    '"foo"',
+                    (string)$frame->locals()->byName('foo')->first()->type()
                 );
                 $this->assertEquals(
-                    'bar',
-                    $frame->locals()->byName('bar')->first()->value()
+                    '"bar"',
+                    (string)$frame->locals()->byName('bar')->first()->type()
                 );
             }
         ];
@@ -154,7 +154,6 @@ class ForeachWalkerTest extends FrameWalkerTestCase
         yield 'Typed array' => [
             <<<'EOT'
                 <?php
-                /** @var string[] $vars */
                 $vars = ['one', 'two'];
 
                 foreach ($vars as [ $foo, $bar ]) {
@@ -164,13 +163,8 @@ class ForeachWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertEquals(
-                    TypeFactory::string(),
-                    $frame->locals()->byName('foo')->atIndex(0)->type(),
-                    'Type'
-                );
-                $this->assertEquals(
-                    'one',
-                    $frame->locals()->byName('foo')->first()->value(),
+                    '"one"',
+                    (string)$frame->locals()->byName('foo')->first()->type(),
                     'Value'
                 );
             }

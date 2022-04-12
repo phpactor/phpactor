@@ -1,0 +1,6 @@
+<?php
+
+wrAssertType('60', array_sum([10, 20, 30]));
+wrAssertType('60.1', array_sum([10, 20, 30, 0.1]));
+wrAssertType('0', array_sum([]));
+wrAssertType('<missing>', array_sum());

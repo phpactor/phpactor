@@ -1,0 +1,14 @@
+<?php
+
+class Foo
+{
+    private $bar;
+
+    public function bar(): void
+    {
+        if ($this->bar instanceof Bar) {
+            wrAssertType('Bar', $this->bar);
+        }
+    }
+}
+

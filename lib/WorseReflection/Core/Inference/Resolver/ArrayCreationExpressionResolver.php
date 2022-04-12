@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayCreationExpressionResolver implements Resolver
 {
@@ -25,17 +26,16 @@ class ArrayCreationExpressionResolver implements Resolver
                 $node->getStartPosition(),
                 $node->getEndPosition(),
                 [
-                    'type' => TypeFactory::array(),
-                    'value' => []
+                    'type' => TypeFactory::arrayLiteral([]),
                 ]
             );
         }
 
         foreach ($node->arrayElements->getElements() as $element) {
-            $value = $resolver->resolveNode($frame, $element->elementValue)->value();
+            $value = $resolver->resolveNode($frame, $element->elementValue)->type();
             if ($element->elementKey) {
-                $key = $resolver->resolveNode($frame, $element->elementKey)->value();
-                $array[$key] = $value;
+                $key = $resolver->resolveNode($frame, $element->elementKey)->type();
+                $array[TypeUtil::valueOrNull($key)] = $value;
                 continue;
             }
 
@@ -47,8 +47,7 @@ class ArrayCreationExpressionResolver implements Resolver
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => TypeFactory::array(),
-                'value' => $array
+                'type' => TypeFactory::arrayLiteral($array),
             ]
         );
     }

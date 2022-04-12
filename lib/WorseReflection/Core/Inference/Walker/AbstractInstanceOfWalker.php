@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\ExpressionEvaluator;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -22,13 +21,10 @@ use Phpactor\WorseReflection\Reflector;
 
 abstract class AbstractInstanceOfWalker extends AbstractWalker
 {
-    protected ExpressionEvaluator $evaluator;
-
     private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {
-        $this->evaluator = new ExpressionEvaluator();
         $this->reflector = $reflector;
     }
 

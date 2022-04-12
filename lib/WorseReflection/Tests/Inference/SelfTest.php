@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\SelfTest;
+namespace Phpactor\WorseReflection\Tests\Inference;
 
 use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -26,15 +26,10 @@ class SelfTest extends IntegrationTestCase
      */
     public function provideSelf(): Generator
     {
-        foreach ([
-            'flow',
-            'generics',
-        ] as $topic) {
-            foreach ((array)glob(__DIR__ . '/' . $topic . '/*.test') as $fname) {
-                yield $topic .' ' . basename((string)$fname) => [
-                    $fname
-                ];
-            }
+        foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
+            yield basename(dirname($fname)) .' ' . basename((string)$fname) => [
+                $fname
+            ];
         }
     }
 }

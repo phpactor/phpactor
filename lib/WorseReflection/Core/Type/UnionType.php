@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 final class UnionType implements Type
 {
@@ -57,5 +58,86 @@ final class UnionType implements Type
         }
 
         return $this;
+    }
+
+    public function merge(UnionType $type): self
+    {
+        $types = $this->types;
+        foreach ($type->types as $type) {
+            $types[] = $type;
+        }
+
+        return (new self(...$types))->filter();
+    }
+
+    public function narrowTo(Type $narrowTypes): Type
+    {
+        $narrowTypes = self::toUnion($narrowTypes);
+
+        if (count($narrowTypes->types) === 0) {
+            return $this;
+        }
+
+        $toRemove = [];
+        $toAdd = [];
+
+        // for each of these types
+        foreach ($this->types as $type) {
+
+            // check each narrowed to to see if any of these types accept the
+            // narrowed version
+            foreach ($narrowTypes->types as $narrowType) {
+                // if an existing type accepts the narrowed type, remove
+                // the existing type
+                if ($type->accepts($narrowType)->isTrue() && $type->__toString() !== $narrowType->__toString()) {
+                    $toRemove[] = $type;
+                    continue;
+                }
+            }
+        }
+
+        return $this->add($narrowTypes)->remove(new self(...$toRemove));
+    }
+
+    public function filter(): self
+    {
+        $types = $this->types;
+        $unique = [];
+
+        foreach ($types as $type) {
+            if ($type instanceof MissingType) {
+                continue;
+            }
+            $unique[$type->__toString()] = $type;
+        }
+
+        return new self(...array_values($unique));
+    }
+
+    public function remove(Type $remove): Type
+    {
+        $remove = self::toUnion($remove);
+        $removeStrings = array_map(fn (Type $t) => $t->__toString(), $remove->types);
+
+        return (new self(...array_filter($this->types, function (Type $type) use ($removeStrings) {
+            return !in_array($type->__toString(), $removeStrings);
+        })))->reduce();
+    }
+
+    public static function toUnion(Type $type): UnionType
+    {
+        if ($type instanceof NullableType) {
+            return self::toUnion($type->type)->add(TypeFactory::null());
+        }
+        if ($type instanceof UnionType) {
+            return $type;
+        }
+
+        return new self($type);
+    }
+
+    private function add(Type $type): UnionType
+    {
+        return (new self(...array_merge($this->types, [$type])))->filter();
     }
 }

@@ -1,0 +1,11 @@
+<?php
+
+function bar() {}
+
+$f = bar();
+
+if (is_int($f)) {
+    wrAssertType('int', $f);
+}
+
+wrAssertType('<missing>', $f);

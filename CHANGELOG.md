@@ -20,6 +20,8 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] expressions are evaluated as types
+  - [wr] literal types and internal refactorings
   - [ls] Show error message in client if service stops unexpectedly with an
     error
   - [code-transform] Faithfully reproduce documented types in generated code
@@ -29,9 +31,12 @@ Improvements:
   - [wr] Resolve type from array access
   - [cb] Preserve `?` operator as distinct from a union type
   - [wr] Support for class-string type (not for type inference however)
+  - [completion + location] Better support for union types
 
 Features:
 
+  - [wr] Type combination
+  - [wr] Support for type assertions via. is_*, instanceof etc
   - [lsp] Send rename file request to client when renaming a PSR class
       @przepompownia
   - [wr] Initial support for generics #1382

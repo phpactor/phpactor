@@ -1,0 +1,17 @@
+<?php
+
+interface Bag {}
+abstract class AbstractFoobar {}
+class Foobar extends BazBoo implements Bag {}
+
+if ($foobar instanceof AbstractFoobar) {
+
+    if ($foobar instanceof Foobar) {
+    }
+
+    if ($foobar instanceof Bag) {
+    }
+}
+
+wrAssertType('<missing>', $foobar);
+

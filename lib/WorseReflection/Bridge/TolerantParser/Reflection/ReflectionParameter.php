@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflecti
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionParameter extends AbstractReflectedNode implements CoreReflectionParameter
 {
@@ -73,9 +74,9 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         if (null === $this->parameter->default) {
             return DefaultValue::undefined();
         }
-        $value = $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame('test'), $this->parameter->default)->value();
+        $value = $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame('test'), $this->parameter->default)->type();
 
-        return DefaultValue::fromValue($value);
+        return DefaultValue::fromValue(TypeUtil::valueOrNull($value));
     }
 
     public function byReference(): bool

@@ -72,7 +72,7 @@ class CompletionWorseExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_CLASS_COMPLETOR_LIMIT => 25,
+            self::PARAM_CLASS_COMPLETOR_LIMIT => 100,
             self::PARAM_DISABLED_COMPLETORS => [],
             self::PARAM_NAME_COMPLETION_PRIORITY => self::NAME_SEARCH_STRATEGY_PROXIMITY,
             self::PARAM_SNIPPETS => true,

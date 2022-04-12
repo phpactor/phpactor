@@ -30,16 +30,6 @@ abstract class AssignmentstTestCase extends TestCase
         $this->assertEquals('hello', $assignments->byName('hello')->first()->name());
     }
 
-    public function testMultipleByName(): void
-    {
-        $assignments = $this->assignments();
-
-        $assignments->add(0, $this->createVariable('hello', 0, 0));
-        $assignments->add(0, $this->createVariable('hello', 0, 0));
-
-        $this->assertCount(2, $assignments->byName('hello'));
-    }
-
     public function testLessThanEqualTo(): void
     {
         $assignments = $this->assignments();

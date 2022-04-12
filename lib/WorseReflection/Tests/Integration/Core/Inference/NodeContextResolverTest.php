@@ -34,13 +34,15 @@ class NodeContextResolverTest extends IntegrationTestCase
     {
         $variables = [];
         $properties = [];
+        $offset = 0;
         foreach ($locals as $name => $varSymbolInfo) {
+            $offset++;
             if ($varSymbolInfo instanceof Type) {
                 $varSymbolInfo = NodeContext::for(
                     Symbol::fromTypeNameAndPosition(
                         'variable',
                         $name,
-                        Position::fromStartAndEnd(0, 0)
+                        Position::fromStartAndEnd($offset, $offset)
                     )
                 )->withType($varSymbolInfo);
             }
@@ -48,12 +50,12 @@ class NodeContextResolverTest extends IntegrationTestCase
             $variable = Variable::fromSymbolContext($varSymbolInfo);
 
             if (Symbol::PROPERTY === $varSymbolInfo->symbol()->symbolType()) {
-                $properties[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
+                $properties[$varSymbolInfo->symbol()->position()->start()] = $variable;
 
                 continue;
             }
 
-            $variables[] = [$varSymbolInfo->symbol()->position()->start(), $variable];
+            $variables[$varSymbolInfo->symbol()->position()->start()] = $variable;
         }
 
         $symbolInfo = $this->resolveNodeAtOffset(
@@ -88,14 +90,13 @@ class NodeContextResolverTest extends IntegrationTestCase
     {
         $value = $this->resolveNodeAtOffset(
             LocalAssignments::fromArray([
-                [0, Variable::fromSymbolContext(
+                0 => Variable::fromSymbolContext(
                     NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
                         Position::fromStartAndEnd(0, 0)
                     ))->withType(TypeFactory::fromString('Foobar'))
-                ),
-                ]
+                )
             ]),
             PropertyAssignments::create(),
             $source
@@ -191,7 +192,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     }
 
                     EOT
-                , [], ['type' => 'string', 'value' => 'test']
+                , [], ['type' => 'string']
                 ];
 
         yield 'It returns the value of a method parameter with a constant' => [
@@ -208,7 +209,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     }
 
                     EOT
-                , [], ['type' => 'string', 'value' => 'test']
+                , [], ['type' => 'string']
                 ];
 
         yield 'It returns the FQN of a method parameter in an interface' => [
@@ -261,7 +262,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     }
 
                     EOT
-                , [], ['type' => 'string', 'value' => 'test']
+                , [], ['type' => 'string']
                 ];
 
         yield 'Ignores parameter on anonymous class' => [
@@ -531,7 +532,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     'bar<>';
                     EOT
-                , [], ['type' => '"bar"', 'value' => 'bar', 'symbol_type' => Symbol::STRING ]
+                , [], ['type' => '"bar"', 'symbol_type' => Symbol::STRING ]
                 ];
 
         yield 'It returns type for float' => [
@@ -540,7 +541,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     1.<>2;
                     EOT
-                , [], ['type' => '1.2', 'value' => 1.2, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '1.2', 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for integer' => [
@@ -549,7 +550,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     12<>;
                     EOT
-                , [], ['type' => '12', 'value' => 12, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '12', 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for octal integer' => [
@@ -558,7 +559,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     012<>;
                     EOT
-                , [], ['type' => '012', 'value' => 012, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '012', 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for hexadecimal integer' => [
@@ -567,7 +568,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     0x1A<>;
                     EOT
-                , [], ['type' => '0x1A', 'value' => 0x1A, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '0x1A', 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for binary integer' => [
@@ -576,7 +577,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     0b11<>;
                     EOT
-                , [], ['type' => '0b11', 'value' => 0b11, 'symbol_type' => Symbol::NUMBER],
+                , [], ['type' => '0b11', 'symbol_type' => Symbol::NUMBER],
                 ];
 
         yield 'It returns type for bool true' => [
@@ -585,7 +586,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     tr<>ue;
                     EOT
-                , [], ['type' => 'true', 'value' => true, 'symbol_type' => Symbol::BOOLEAN],
+                , [], ['type' => 'true', 'symbol_type' => Symbol::BOOLEAN],
                 ];
 
         yield 'It returns type for bool false' => [
@@ -594,7 +595,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     <>false;
                     EOT
-                , [], ['type' => 'false', 'value' => false, 'symbol_type' => Symbol::BOOLEAN],
+                , [], ['type' => 'false', 'symbol_type' => Symbol::BOOLEAN],
                 ];
 
         yield 'It returns type null' => [
@@ -603,8 +604,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     n<>ull;
                     EOT
-                , [], ['type' => 'null', 'value' => null],
-                ];
+                , [], ['type' => 'null',   ]             ];
 
         yield 'It returns type null case insensitive' => [
                 <<<'EOT'
@@ -612,8 +612,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     N<>ULL;
                     EOT
-                , [], ['type' => 'null', 'value' => null],
-                ];
+                , [], ['type' => 'null',   ]             ];
 
         yield 'It returns type and value for an array' => [
                 <<<'EOT'
@@ -621,7 +620,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     [ 'one' => 'two', 'three' => 3 <>];
                     EOT
-                , [], ['type' => 'array', 'value' => [ 'one' => 'two', 'three' => 3]],
+                , [], ['type' => 'array{one:"two",three:3}'],
                 ];
 
         yield 'Empty array' => [
@@ -630,8 +629,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     [  <>];
                     EOT
-                , [], ['type' => 'array', 'value' => [ ]],
-                ];
+                , [], ['type' => 'array{}']];
 
         yield 'It type for a class constant' => [
                 <<<'EOT'
@@ -773,8 +771,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     'foobar' => TypeFactory::fromString('Foobar'),
                     'barfoo' => NodeContext::for(
                         Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromStartAndEnd(0, 0))
-                    )
-                    ->withType(TypeFactory::string())->withValue('hello')
+                    )->withType(TypeFactory::stringLiteral('hello'))
                 ], ['type' => 'string'],
             ];
 
@@ -847,7 +844,6 @@ class NodeContextResolverTest extends IntegrationTestCase
                     ->withType(TypeFactory::class('Acme\Factory')),
             ], [
                 'types' => [
-                    TypeFactory::class('Acme\FactoryInterface'),
                     TypeFactory::class('Acme\Factory'),
                 ],
                 'symbol_type' => Symbol::PROPERTY,
@@ -911,7 +907,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     $barfoo ? <>'foobar' : 'barfoo';
                     EOT
-                , [], ['type' => '"foobar"', 'value' => 'foobar']
+                , [], ['type' => '"foobar"', ]
                 ];
 
         yield 'It uses condition value if ternery "if" is empty' => [
@@ -920,7 +916,7 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     'string' ?:<> new \stdClass();
                     EOT
-                , [], ['type' => '"string"', 'value' => 'string']
+                , [], ['type' => '"string"', ]
                 ];
 
         yield 'It returns unknown for ternary expressions with unknown condition values' => [
@@ -1194,9 +1190,6 @@ class NodeContextResolverTest extends IntegrationTestCase
                         $information->type()->__toString(),
                         $name,
                     );
-                    continue 2;
-                case 'value':
-                    $this->assertEquals($value, $information->value(), $name);
                     continue 2;
                 case 'symbol_type':
                     $this->assertEquals($value, $information->symbol()->symbolType(), $name);

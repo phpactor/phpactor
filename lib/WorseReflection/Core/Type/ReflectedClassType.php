@@ -40,12 +40,12 @@ class ReflectedClassType extends ClassType
         }
 
         try {
-            $reflected = $this->reflector->reflectClass($this->name());
+            $reflectedThat = $this->reflector->reflectClass($type->name());
         } catch (NotFound $e) {
             return Trinary::maybe();
         }
 
-        return Trinary::fromBoolean($reflected->isInstanceOf($type->name()));
+        return Trinary::fromBoolean($reflectedThat->isInstanceOf($this->name()));
     }
 
     public function reflectionOrNull(): ?ReflectionClassLike
@@ -83,12 +83,35 @@ class ReflectedClassType extends ClassType
         return new MissingType();
     }
 
-    public function instanceOf(ClassName $className): Trinary
+    public function instanceof(Type $right): BooleanType
     {
-        $reflection = $this->reflectionOrNull();
-        if (!$reflection) {
-            return Trinary::maybe();
+        $resolve = function (Type $right): void {
+        };
+
+        if ($right instanceof MissingType) {
+            return new BooleanType();
         }
-        return Trinary::fromBoolean($reflection->isInstanceOf($className));
+
+        if (
+            !$right instanceof StringType &&
+            !$right instanceof ClassType
+        ) {
+            return new BooleanLiteralType(false);
+        }
+
+        $reflection = $this->reflectionOrNull();
+
+        if (!$reflection) {
+            return new BooleanType();
+        }
+
+        if ($right instanceof StringLiteralType) {
+            return new BooleanLiteralType($reflection->isInstanceOf(ClassName::fromString($right->value())));
+        }
+        if ($right instanceof ClassType) {
+            return new BooleanLiteralType($reflection->isInstanceOf($right->name()));
+        }
+
+        return new BooleanType();
     }
 }

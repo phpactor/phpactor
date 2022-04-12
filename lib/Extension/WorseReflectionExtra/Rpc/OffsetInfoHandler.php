@@ -62,7 +62,7 @@ class OffsetInfoHandler implements Handler
             'end' => $symbolContext->symbol()->position()->end(),
             'type' => (string) $symbolContext->type(),
             'container_type' => (string) $symbolContext->containerType(),
-            'value' => var_export($symbolContext->value(), true),
+            'value' => var_export(TypeUtil::valueOrNull($symbolContext->type()), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -76,7 +76,7 @@ class OffsetInfoHandler implements Handler
                     '%s = (%s) %s',
                     $local->name(),
                     $local->type(),
-                    str_replace(PHP_EOL, '', var_export($local->value(), true))
+                    str_replace(PHP_EOL, '', var_export(TypeUtil::valueOrNull($local->type()), true))
                 );
 
                 $frame[$assignmentType][$assignments->offsetFor($local)] = $info;

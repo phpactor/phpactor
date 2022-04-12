@@ -2,20 +2,22 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -38,9 +40,9 @@ class MemberAccessExpressionResolver implements Resolver
         $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         if ($node->memberName instanceof Node) {
-            $memberNameInfo = $resolver->resolveNode($frame, $node->memberName);
-            if (is_string($memberNameInfo->value())) {
-                $memberName = $memberNameInfo->value();
+            $memberNameType = $resolver->resolveNode($frame, $node->memberName)->type();
+            if ($memberNameType instanceof StringLiteralType) {
+                $memberName = $memberNameType->value;
             }
         }
 
@@ -62,27 +64,47 @@ class MemberAccessExpressionResolver implements Resolver
             ]
         );
 
-        // if the classType is a call expression, then this is a method call
-        $info = (
-            new MemberTypeResolver($resolver->reflector())
-        )->{$memberType . 'Type'}($classType, $information, $memberName);
-
-        if (Symbol::PROPERTY === $memberType) {
-            $frameTypes = self::getFrameTypesForPropertyAtPosition(
-                $frame,
-                (string) $memberName,
-                $classType,
-                $node->getEndPosition(),
-            );
-
-            foreach ($frameTypes as $type) {
-                $info = $info->withType(
-                    TypeUtil::combine($info->type(), $type)
-                );
+        if (Symbol::CONSTANT === $memberType) {
+            if ($memberName === 'class') {
+                if (!$classType instanceof ClassType) {
+                    return $information;
+                }
+                return $information->withType(TypeFactory::stringLiteral($classType->name()->full()));
             }
         }
 
-        return $info;
+
+        foreach (TypeUtil::unwrapUnion($classType) as $classType) {
+            if (!$classType instanceof ClassType) {
+                continue;
+            }
+
+            try {
+                $reflection = $resolver->reflector()->reflectClassLike($classType->name());
+            } catch (NotFound $e) {
+                continue;
+            }
+            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+                $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
+
+                if ($member instanceof ReflectionProperty) {
+                    $type = self::getFrameTypesForPropertyAtPosition(
+                        $frame,
+                        (string) $memberName,
+                        $classType,
+                        $node->getEndPosition(),
+                    );
+
+                    if ($type) {
+                        return $information->withContainerType($classType)->withType($type);
+                    }
+                }
+
+                return $information->withContainerType($declaringClass)->withType($member->inferredType());
+            }
+        }
+
+        return $information->withContainerType($classType);
     }
 
     private static function getFrameTypesForPropertyAtPosition(
@@ -90,28 +112,21 @@ class MemberAccessExpressionResolver implements Resolver
         string $propertyName,
         Type $classType,
         int $position
-    ): Generator {
-        $assignments = $frame->properties()
+    ): ?Type {
+        if (!$classType instanceof ClassType) {
+            return null;
+        }
+
+        $variable = $frame->properties()
             ->lessThanOrEqualTo($position)
             ->byName($propertyName)
+            ->lastOrNull()
         ;
 
-        if (!$classType instanceof ClassType) {
-            return;
+        if (null === $variable) {
+            return null;
         }
 
-        foreach ($assignments as $variable) {
-            $containerType = $variable->classType();
-
-            if (!$containerType instanceof ClassType) {
-                continue;
-            }
-
-            if ($containerType->name != $classType->name) {
-                continue;
-            }
-
-            yield $variable->type();
-        }
+        return $variable->type();
     }
 }

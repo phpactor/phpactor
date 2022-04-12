@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectio
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionConstant extends AbstractReflectionClassMember implements CoreReflectionConstant
 {
@@ -67,12 +68,12 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     
     public function value()
     {
-        return $this->serviceLocator()
+        return TypeUtil::valueOrNull($this->serviceLocator()
                     ->symbolContextResolver()
                     ->resolveNode(
                         new Frame('_'),
                         $this->node->assignment
-                    )->value();
+                    )->type());
     }
 
     public function memberType(): string

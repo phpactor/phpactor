@@ -1,0 +1,13 @@
+<?php
+
+function foo(): Foo|Bar {}
+
+$foobar = foo();
+
+wrAssertType('Foo|Bar', $foobar);
+
+if ($foobar instanceof Foo) {
+    return;
+}
+
+wrAssertType('Bar', $foobar);

@@ -95,7 +95,6 @@ class FunctionLikeWalker extends AbstractWalker
                 [
                     'symbol_type' => Symbol::VARIABLE,
                     'type' => $symbolContext->type(),
-                    'value' => $symbolContext->value(),
                 ]
             );
 
@@ -146,8 +145,7 @@ class FunctionLikeWalker extends AbstractWalker
             $variable = $parentVars->byName($varName)->last();
 
             $variableContext = $variableContext
-                ->withType($variable->type())
-                ->withValue($variable->value());
+                ->withType($variable->type());
 
             $frame->locals()->add($element->getStartPosition(), Variable::fromSymbolContext($variableContext));
         }

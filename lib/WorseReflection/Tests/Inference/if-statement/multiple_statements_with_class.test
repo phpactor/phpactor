@@ -1,0 +1,21 @@
+<?php
+
+class Foo {
+    function foo(Foo|Bar $foo)
+    {
+        wrAssertType('Foo|Bar', $foo);
+
+        if (!$foo instanceof Bar) {
+
+            wrAssertType('Foo', $foo);
+            return;
+        }
+
+        wrAssertType('Foo|Bar', $foo);
+
+        if ($foo instanceof Baz) {
+            wrAssertType('Foo|Bar|Baz', $foo);
+            return;
+        }
+    }
+}
