@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-final class CallableType extends PrimitiveType
+class CallableType extends PrimitiveType
 {
     /**
      * @var Type[]
@@ -17,10 +17,10 @@ final class CallableType extends PrimitiveType
     /**
      * @param Type[] $args
      */
-    public function __construct(array $args, Type $returnType)
+    public function __construct(array $args = [], ?Type $returnType = null)
     {
         $this->args = $args;
-        $this->returnType = $returnType;
+        $this->returnType = $returnType ?? new MissingType();
     }
 
     public function __toString(): string

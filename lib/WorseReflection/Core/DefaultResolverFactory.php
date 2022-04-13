@@ -127,6 +127,7 @@ final class DefaultResolverFactory
             'is_float' => new IsSomethingStub(TypeFactory::float()),
             'is_int' => new IsSomethingStub(TypeFactory::int()),
             'is_string' => new IsSomethingStub(TypeFactory::string()),
+            'is_callable' => new IsSomethingStub(TypeFactory::callable()),
         ]);
     }
 }
