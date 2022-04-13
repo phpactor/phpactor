@@ -159,6 +159,12 @@ class WorseBuilderFactoryTest extends TestCase
         $this->assertEquals('string', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
     }
 
+    public function testMethodWithVariadicParameter(): void
+    {
+        $source = $this->build('<?php class Foobar { public function method(string ...$param) {} }');
+        $this->assertEquals('string', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
+    }
+
     public function testMethodWithAliasedParameter(): void
     {
         $source = $this->build('<?php use Foobar as Barfoo; class Foobar { public function method(Barfoo $param) {} }');

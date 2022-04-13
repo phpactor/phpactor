@@ -132,6 +132,7 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
+            dump($parameter->type()->__toString());
             $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
             $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
