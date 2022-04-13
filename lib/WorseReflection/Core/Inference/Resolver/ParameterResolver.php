@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -26,7 +25,6 @@ class ParameterResolver implements Resolver
     {
         assert($node instanceof Parameter);
 
-        /** @var MethodDeclaration|null $method */
         $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class, FunctionDeclaration::class);
 
         if ($method instanceof MethodDeclaration) {
@@ -77,13 +75,10 @@ class ParameterResolver implements Resolver
                 'type' => $parameter->inferredType(),
             ]
         );
-
-
     }
 
     private function resolveParameterFromMethodReflection(Reflector $reflector, MethodDeclaration $method, Parameter $node): NodeContext
     {
-
         $class = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
         if (null === $class) {

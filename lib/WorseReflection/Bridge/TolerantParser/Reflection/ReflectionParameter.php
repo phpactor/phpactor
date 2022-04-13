@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\Decla
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionParameter extends AbstractReflectedNode implements CoreReflectionParameter

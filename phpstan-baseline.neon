@@ -861,11 +861,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\WorseReflection\\\\WorseBuilderFactory\\:\\:resolveTypeNameFromNameImports\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
-
-		-
 			message: "#^Argument of an invalid type Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\AbstractBuilder supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/AbstractBuilder.php
@@ -939,21 +934,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:build\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:byReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:defaultValue\\(\\) has parameter \\$value with no type specified\\.$#"
