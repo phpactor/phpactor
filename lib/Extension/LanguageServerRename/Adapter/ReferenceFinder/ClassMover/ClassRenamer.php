@@ -14,6 +14,8 @@ use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
+use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
+use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
@@ -23,12 +25,13 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 
 final class ClassRenamer implements Renamer
 {
-    private NameToUriConverter $nameToUriConverter;
+    private NameToUriConverter $newNameToUriConverter;
+
+    private NameToUriConverter $oldNameToUriConverter;
 
     private ReferenceFinder $referenceFinder;
 
@@ -39,13 +42,15 @@ final class ClassRenamer implements Renamer
     private ClassMover $classMover;
 
     public function __construct(
-        NameToUriConverter $nameToUriConverter,
+        NameToUriConverter $oldNameToUriConverter,
+        NameToUriConverter $newNameToUriConverter,
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
         ClassMover $classMover
     ) {
-        $this->nameToUriConverter = $nameToUriConverter;
+        $this->oldNameToUriConverter = $oldNameToUriConverter;
+        $this->newNameToUriConverter = $newNameToUriConverter;
         $this->referenceFinder = $referenceFinder;
         $this->locator = $locator;
         $this->parser = $parser;
@@ -81,7 +86,13 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $newUri = TextDocumentUri::fromString($this->nameToUriConverter->convert($newName));
+
+        try {
+            $oldUri = $this->oldNameToUriConverter->convert($originalName->getFullyQualifiedNameText());
+            $newUri = $this->newNameToUriConverter->convert($newName);
+        } catch (CouldNotConvertClassToUri $error) {
+            throw new CouldNotRename($e->getMessage(), 0, $error);
+        }
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {
             return;
@@ -113,7 +124,7 @@ final class ClassRenamer implements Renamer
             }
         }
 
-        return new RenameResult($textDocument->uri(), $newUri);
+        return new RenameResult($oldUri, $newUri);
     }
 
     private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string

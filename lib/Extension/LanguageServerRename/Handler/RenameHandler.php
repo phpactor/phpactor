@@ -24,6 +24,7 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
+
 use function Amp\delay;
 
 class RenameHandler implements Handler, CanRegisterCapabilities
@@ -49,6 +50,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
     }
 
 
+    /**
+     * @return array<string,string>
+     */
     public function methods(): array
     {
         return [
@@ -84,9 +88,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
                 }
 
                 return $this->resultToWorkspaceEdit($locatedEdits, $rename->getReturn());
-            } catch (CouldNotRename $couldNotRename) {
+            } catch (CouldNotRename $error) {
                 $this->clientApi->window()->showMessage()->error(sprintf(
-                    $couldNotRename->getMessage()
+                    $error->getMessage()
                 ));
 
                 return new WorkspaceEdit(null, []);
