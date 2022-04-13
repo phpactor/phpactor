@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerRename\Adapter\WorseReflection;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
 use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseNameToUriConverter implements NameToUriConverter
@@ -20,10 +21,14 @@ class WorseNameToUriConverter implements NameToUriConverter
     
     public function convert(string $className): TextDocumentUri
     {
-        $uri = $this->reflector->reflectClass($className)->sourceCode()->uri();
+        try {
+            $uri = $this->reflector->reflectClass($className)->sourceCode()->uri();
+        } catch (NotFound $notFound) {
+            throw new CouldNotConvertClassToUri($notFound->getMessage(), 0, $notFound);
+        }
 
         if (null === $uri) {
-            throw new CouldNotConvertClassToUri();
+            throw new CouldNotConvertClassToUri(sprintf('Reflected source for "%s" did not have a URI associated with it', $className));
         }
 
         return $uri;
