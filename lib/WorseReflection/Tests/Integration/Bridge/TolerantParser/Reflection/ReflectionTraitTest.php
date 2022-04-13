@@ -105,9 +105,6 @@ class ReflectionTraitTest extends IntegrationTestCase
 
                     trait Int1
                     {
-                        /**
-                         * {@inheritDoc()
-                         */
                         public function foo()
                         {
                         }
