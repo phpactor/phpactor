@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -135,12 +136,12 @@ class WorseBuilderFactory implements BuilderFactory
 
             $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
-            $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
             if ($parameter->isVariadic()) {
                 if ($type instanceof ArrayType) {
-                    $typeName = $type->valueType;
+                    $type = $type->valueType;
                 }
             }
+            $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
             $parameterBuilder->type($typeName);
         }
 
@@ -172,8 +173,11 @@ class WorseBuilderFactory implements BuilderFactory
         $classBuilder->end()->use($type->name()->full());
     }
 
-    private function resolveTypeNameFromNameImports(Type $type, NameImports $imports)
+    private function resolveTypeNameFromNameImports(Type $type, NameImports $imports): string
     {
+        if ($type instanceof MissingType) {
+            return '';
+        }
         $typeName = TypeUtil::short($type);
 
         foreach ($imports as $alias => $import) {
