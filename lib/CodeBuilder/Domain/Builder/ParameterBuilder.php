@@ -19,12 +19,17 @@ class ParameterBuilder extends AbstractBuilder
 
     private MethodBuilder $parent;
 
+    private bool $variadic = false;
+
     public function __construct(MethodBuilder $parent, string $name)
     {
         $this->parent = $parent;
         $this->name = $name;
     }
 
+    /**
+     * @return array{}
+     */
     public static function childNames(): array
     {
         return [];
@@ -44,14 +49,15 @@ class ParameterBuilder extends AbstractBuilder
         return $this;
     }
 
-    public function build()
+    public function build(): Parameter
     {
         return new Parameter(
             $this->name,
             $this->type,
             $this->defaultValue,
             $this->byReference,
-            UpdatePolicy::fromModifiedState($this->isModified())
+            UpdatePolicy::fromModifiedState($this->isModified()),
+            $this->variadic,
         );
     }
 
@@ -60,9 +66,16 @@ class ParameterBuilder extends AbstractBuilder
         return $this->parent;
     }
 
-    public function byReference(bool $bool)
+    public function byReference(bool $bool): self
     {
         $this->byReference = $bool;
+
+        return $this;
+    }
+
+    public function asVariadic(): self
+    {
+        $this->variadic = true;
 
         return $this;
     }

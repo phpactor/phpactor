@@ -189,9 +189,6 @@ class ImplementContractsTest extends WorseTestCase
 
                     class Foobar implements Bird
                     {
-                        /**
-                         * {@inheritDoc}
-                         */
                         public function chirp()
                         {
                         }
