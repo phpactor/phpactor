@@ -21,9 +21,6 @@ class WorkspaceIndexListener implements ListenerProviderInterface
         $this->index = $index;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof TextDocumentUpdated) {

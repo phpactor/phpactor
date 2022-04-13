@@ -28,4 +28,6 @@ interface ReflectionParameter extends ReflectionNode
     public function byReference(): bool;
 
     public function isPromoted(): bool;
+
+    public function isVariadic(): bool;
 }

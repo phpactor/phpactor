@@ -84,10 +84,6 @@ class ImplementContracts implements Transformer
                     $missingMethod->declaringClass()->name()->short()
                 )->method($missingMethod->name());
 
-                if ($missingMethod->docblock()->isDefined()) {
-                    $methodBuilder->docblock('{@inheritDoc}');
-                }
-
                 $missingMethodReturnType = $missingMethod->returnType();
                 foreach (TypeUtil::unwrapClassTypes($missingMethodReturnType) as $type) {
                     $sourceCodeBuilder->use($type->name());

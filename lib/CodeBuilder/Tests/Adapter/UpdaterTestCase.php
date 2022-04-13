@@ -1291,6 +1291,32 @@ abstract class UpdaterTestCase extends TestCase
                         }
                     }
                     EOT
+        ];
+
+        yield 'It adds parameterized method with array shape' => [
+                <<<'EOT'
+                    class Aardvark
+                    {
+                    }
+                    EOT
+                , SourceCodeBuilder::create()
+                    ->class('Aardvark')
+                        ->method('methodOne')
+                            ->parameter('sniff')
+                                ->asVariadic()
+                                ->type('Snort')
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->build(),
+                <<<'EOT'
+                    class Aardvark
+                    {
+                        public function methodOne(Snort ...$sniff)
+                        {
+                        }
+                    }
+                    EOT
             ];
 
         yield 'It is idempotent' => [

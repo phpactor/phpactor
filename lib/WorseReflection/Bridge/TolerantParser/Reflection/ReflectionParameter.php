@@ -11,8 +11,9 @@ use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflectionParameter;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionParameter extends AbstractReflectedNode implements CoreReflectionParameter
@@ -58,7 +59,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         );
 
         if ($this->parameter->dotDotDotToken) {
-            return TypeFactory::array($type->__toString());
+            return new ArrayType(new IntType(), $type);
         }
 
         return $type;
@@ -100,6 +101,11 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
     public function isPromoted(): bool
     {
         return $this->parameter->visibilityToken !== null;
+    }
+
+    public function isVariadic(): bool
+    {
+        return $this->parameter->dotDotDotToken !== null;
     }
 
     protected function node(): Node
