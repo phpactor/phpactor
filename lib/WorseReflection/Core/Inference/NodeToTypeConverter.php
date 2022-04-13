@@ -16,12 +16,14 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class NodeToTypeConverter
 {
@@ -31,9 +33,9 @@ class NodeToTypeConverter
 
     public function __construct(
         Reflector $reflector,
-        LoggerInterface $logger
+        ?LoggerInterface $logger = null
     ) {
-        $this->logger = $logger;
+        $this->logger = $logger ?: new NullLogger();
         $this->reflector = $reflector;
     }
 
@@ -55,6 +57,11 @@ class NodeToTypeConverter
         if ($type instanceof ArrayType) {
             $arrayType = $this->resolve($node, $type->valueType);
             $type->valueType = $arrayType;
+        }
+        if ($type instanceof ClosureType) {
+            return new ClosureType(array_map(function (Type $type) use ($node) {
+                return $this->resolve($node, $type);
+            }, $type->args), $this->resolve($node, $type->returnType));
         }
 
         if ($this->isFunctionCall($node)) {
