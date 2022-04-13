@@ -111,4 +111,9 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
     {
         return $this->serviceLocator;
     }
+
+    public function isVariadic(): bool
+    {
+        return $this->parameter->dotDotDotToken !== null;
+    }
 }

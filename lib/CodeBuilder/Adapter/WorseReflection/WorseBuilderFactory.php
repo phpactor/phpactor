@@ -9,6 +9,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -132,11 +133,19 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
-            dump($parameter->type()->__toString());
             $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
             $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
+            if ($parameter->isVariadic()) {
+                if ($type instanceof ArrayType) {
+                    $typeName = $type->valueType;
+                }
+            }
             $parameterBuilder->type($typeName);
+        }
+
+        if ($parameter->isVariadic()) {
+            $parameterBuilder->asVariadic();
         }
 
         if ($parameter->default()->isDefined()) {

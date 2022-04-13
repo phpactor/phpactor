@@ -96,4 +96,9 @@ class VirtualReflectionParameter implements ReflectionParameter
     {
         return false;
     }
+
+    public function isVariadic(): bool
+    {
+        return false;
+    }
 }
