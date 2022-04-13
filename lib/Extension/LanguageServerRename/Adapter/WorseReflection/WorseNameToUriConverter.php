@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile;
+namespace Phpactor\Extension\LanguageServerRename\Adapter\WorseReflection;
 
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
 use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
