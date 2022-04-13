@@ -10,7 +10,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassMover\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
-use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\WorseNameToUriConverter;
+use Phpactor\Extension\LanguageServerRename\Adapter\WorseReflection\WorseNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\MemberRenamer;

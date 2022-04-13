@@ -14,6 +14,8 @@ use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\Extension\LanguageServerRename\Adapter\Tolerant\TokenUtil;
+use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
+use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\NameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
@@ -84,8 +86,13 @@ final class ClassRenamer implements Renamer
 
         $originalName = $this->getFullName($node);
         $newName = $this->createNewName($originalName, $newName);
-        $oldUri = $this->oldNameToUriConverter->convert($originalName->getFullyQualifiedNameText());
-        $newUri = $this->newNameToUriConverter->convert($newName);
+
+        try {
+            $oldUri = $this->oldNameToUriConverter->convert($originalName->getFullyQualifiedNameText());
+            $newUri = $this->newNameToUriConverter->convert($newName);
+        } catch (CouldNotConvertClassToUri $error) {
+            throw new CouldNotRename($e->getMessage(), 0, $error);
+        }
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {
             return;

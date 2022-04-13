@@ -52,6 +52,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
     }
 
 
+    /**
+     * @return array<string,string>
+     */
     public function methods(): array
     {
         return [
@@ -87,7 +90,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
                 }
 
                 return $this->resultToWorkspaceEdit($locatedEdits, $rename->getReturn());
-            } catch (CouldNotRename | SourceNotFound | CouldNotConvertClassToUri $error) {
+            } catch (CouldNotRename $error) {
                 $this->clientApi->window()->showMessage()->error(sprintf(
                     $error->getMessage()
                 ));
