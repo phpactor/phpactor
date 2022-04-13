@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @param Closure(string,int): string $foo
+ */
+function foobar(Closure $foo) {
+     wrAssertType('string', $foo('asd', 12));
+}
+
