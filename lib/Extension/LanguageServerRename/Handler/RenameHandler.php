@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
-use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotConvertClassToUri;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
@@ -25,7 +24,6 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 
 use function Amp\delay;
 
