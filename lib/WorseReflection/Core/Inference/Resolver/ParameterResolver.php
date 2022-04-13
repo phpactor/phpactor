@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -24,16 +25,20 @@ class ParameterResolver implements Resolver
     {
         assert($node instanceof Parameter);
 
-        /** @var MethodDeclaration|null $method */
-        $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class);
+        $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class, FunctionDeclaration::class);
 
         if ($method instanceof MethodDeclaration) {
-            return $this->resolveParameterFromReflection($resolver->reflector(), $frame, $method, $node);
+            return $this->resolveParameterFromMethodReflection($resolver->reflector(), $method, $node);
+        }
+
+        if ($method instanceof FunctionDeclaration) {
+            return $this->resolveParameterFromFunctionReflection($resolver->reflector(), $method, $node);
         }
 
         $typeDeclaration = $node->typeDeclarationList;
 
         $type = NodeUtil::typeFromQualfiedNameLike($resolver->reflector(), $node, $node->typeDeclarationList);
+
         if ($node->dotDotDotToken) {
             $type = TypeFactory::array($type);
         }
@@ -53,7 +58,26 @@ class ParameterResolver implements Resolver
         );
     }
 
-    private function resolveParameterFromReflection(Reflector $reflector, Frame $frame, MethodDeclaration $method, Parameter $node): NodeContext
+    private function resolveParameterFromFunctionReflection(Reflector $reflector, FunctionDeclaration $function, Parameter $node): NodeContext
+    {
+        $name = $function->getNamespacedName();
+
+        $function = $reflector->reflectFunction($name->getFullyQualifiedNameText());
+        $parameter = $function->parameters()->get($node->getName());
+
+
+        return NodeContextFactory::create(
+            (string)$node->variableName->getText($node->getFileContents()),
+            $node->variableName->getStartPosition(),
+            $node->variableName->getEndPosition(),
+            [
+                'symbol_type' => Symbol::VARIABLE,
+                'type' => $parameter->inferredType(),
+            ]
+        );
+    }
+
+    private function resolveParameterFromMethodReflection(Reflector $reflector, MethodDeclaration $method, Parameter $node): NodeContext
     {
         $class = NodeUtil::nodeContainerClassLikeDeclaration($node);
 

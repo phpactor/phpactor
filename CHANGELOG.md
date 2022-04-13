@@ -20,6 +20,8 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] infer param types from _function_ docblock
+  - [wr] support for Closure as a type #1413
   - [wr] expressions are evaluated as types
   - [wr] literal types and internal refactorings
   - [ls] Show error message in client if service stops unexpectedly with an

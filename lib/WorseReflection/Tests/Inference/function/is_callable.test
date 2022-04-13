@@ -1,0 +1,5 @@
+<?php
+
+if (is_callable($foo)) {
+    wrAssertType('callable(): <missing>', $foo);
+}

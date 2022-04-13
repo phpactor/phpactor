@@ -24,6 +24,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
@@ -216,11 +217,19 @@ class TypeConverter
         return new SelfType();
     }
 
-    private function convertCallable(CallableNode $type, ?ReflectionScope $scope): CallableType
+    private function convertCallable(CallableNode $callableNode, ?ReflectionScope $scope): CallableType
     {
-        return new CallableType(array_map(function (TypeNode $type) {
+        $parameters = array_map(function (TypeNode $type) {
             return $this->convert($type);
-        }, $type->parameters ? iterator_to_array($type->parameters->types()) : []), $this->convert($type->type));
+        }, $callableNode->parameters ? iterator_to_array($callableNode->parameters->types()) : []);
+
+        $type = $this->convert($callableNode->type);
+
+        if ($callableNode->name && $callableNode->name->toString() === 'Closure') {
+            return new ClosureType($parameters, $type);
+        }
+
+        return new CallableType($parameters, $type);
     }
 
     private function convertArrayShape(ArrayShapeNode $type): ArrayShapeType

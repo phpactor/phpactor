@@ -1,0 +1,11 @@
+<?php
+
+namespace Foo;
+
+/**
+ * @param Closure(string,int): Foo $foo
+ */
+function foobar(Closure $foo) {
+     wrAssertType('Foo\Foo', $foo('asd', 12));
+}
+
