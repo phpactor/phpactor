@@ -43,10 +43,13 @@ class QualifiedNameResolver implements Resolver
 
         $parent = $node->parent;
         if ($parent instanceof CallExpression) {
-            $name = $node->getNamespacedName();
+            $name = $node->getResolvedName();
+            if (null === $name) {
+                $name = $node->getNamespacedName();
+            }
             $name = Name::fromString((string) $name);
             $context = NodeContextFactory::create(
-                $name->short(),
+                $name->full(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
                 [
