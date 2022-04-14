@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\TypeUtil;
 
 class TestAssertWalker implements Walker
@@ -41,6 +42,10 @@ class TestAssertWalker implements Walker
         }
         if ($name === 'wrAssertEval') {
             $this->assertEval($resolver, $frame, $node);
+            return $frame;
+        }
+        if ($name === 'wrAssertSymbolName') {
+            $this->assertSymbolName($resolver, $frame, $node);
             return $frame;
         }
 
@@ -101,5 +106,35 @@ class TestAssertWalker implements Walker
             TypeFactory::fromValue($evaled)->__toString(),
             $resolvedType->__toString()
         );
+    }
+
+    private function assertSymbolName(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    {
+        $list = $node->argumentExpressionList->getElements();
+        $args = [];
+        foreach ($list as $expression) {
+            if (!$expression instanceof ArgumentExpression) {
+                continue;
+            }
+
+            $args[] = $resolver->resolveNode($frame, $expression);
+        }
+
+        $expectedName = $args[0]->symbol()->name();
+        $actualName = $args[1]->type();
+        if (!$actualName instanceof StringType) {
+            return;
+        }
+        $message = isset($args[2]) ? TypeUtil::valueOrNull($args[2]->type()) : null;
+
+        if ($actualName->value() !== $expectedName) {
+            $this->testCase->fail(sprintf(
+                '%s: "%s" is not "%s"',
+                $node->getText(),
+                $actualName,
+                $expectedName
+            ));
+        }
+        $this->testCase->addToAssertionCount(1);
     }
 }

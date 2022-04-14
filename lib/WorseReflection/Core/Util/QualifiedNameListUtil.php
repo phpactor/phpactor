@@ -22,10 +22,7 @@ class QualifiedNameListUtil
             return $qualifiedNameOrList;
         }
 
-        throw new RuntimeException(sprintf(
-            'Do not know how to resolve qualified name from class "%s"',
-            get_class($qualifiedNameOrList)
-        ));
+        return null;
     }
 
     /**
