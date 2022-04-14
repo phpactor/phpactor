@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -58,11 +59,21 @@ class NodeToTypeConverter
             $arrayType = $this->resolve($node, $type->valueType);
             $type->valueType = $arrayType;
         }
+
         if ($type instanceof ClosureType) {
             return new ClosureType(array_map(function (Type $type) use ($node) {
                 return $this->resolve($node, $type);
             }, $type->args), $this->resolve($node, $type->returnType));
         }
+
+        if ($type instanceof UnionType) {
+            $type->types = array_map(function (Type $type) use ($node) {
+                return $this->resolve($node, $type);
+            }, $type->types);
+
+            return $type;
+        }
+
 
         if ($this->isFunctionCall($node)) {
             return TypeFactory::unknown();
