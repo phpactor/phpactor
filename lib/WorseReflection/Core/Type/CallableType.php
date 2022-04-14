@@ -27,7 +27,7 @@ class CallableType extends PrimitiveType
     {
         return sprintf(
             'callable(%s): %s',
-            implode(', ', array_map(fn (Type $type) => $type->__toString(), $this->args)),
+            implode(',', array_map(fn (Type $type) => $type->__toString(), $this->args)),
             $this->returnType->__toString()
         );
     }

@@ -1,0 +1,10 @@
+<?php
+
+namespace Test;
+
+/**
+ * @param callable(Foo,int): string $foo
+ */
+function foobar(Closure $foo) {
+    wrAssertType('callable(Test\Foo,int): string', $foo);
+}

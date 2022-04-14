@@ -1,0 +1,11 @@
+<?php
+
+namespace Test;
+
+class union_from_relative_docblock {
+    /** @var DelimitedList\QualifiedNameList|MissingToken|null */
+    public $typeDeclarationList;
+}
+
+$foo = new union_from_relative_docblock();
+wrAssertType('Test\DelimitedList\QualifiedNameList|Test\MissingToken|null', $foo->typeDeclarationList);
