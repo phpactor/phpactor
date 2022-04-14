@@ -62,4 +62,45 @@ class TypeUtilTest extends TestCase
             'Foo<string,Boo>',
         ];
     }
+
+    /**
+     * @dataProvider provideShort
+     */
+    public function testShort(Type $type, string $expected): void
+    {
+        self::assertEquals(
+            $expected,
+            TypeUtil::short($type),
+        );
+    }
+
+    public function provideShort(): Generator
+    {
+        yield 'scalar' => [
+            TypeFactory::string(),
+            'string',
+        ];
+
+        yield 'Root class' => [
+            TypeFactory::class('Foo'),
+            'Foo',
+        ];
+        yield 'Namespaced class' => [
+            TypeFactory::class('\Foo\Bar'),
+            'Bar',
+        ];
+        yield 'Union' => [
+            TypeFactory::union(
+                TypeFactory::class('\Foo\Bar'),
+            ),
+            'Bar',
+        ];
+        yield 'Union with two elements' => [
+            TypeFactory::union(
+                TypeFactory::class('\Foo\Bar'),
+                TypeFactory::class('\Foo\Baz'),
+            ),
+            'Bar|Baz',
+        ];
+    }
 }
