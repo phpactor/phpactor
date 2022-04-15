@@ -48,9 +48,13 @@ class UnaryOpExpressionResolver implements Resolver
     {
         switch ($operatorKind) {
             case TokenKind::ExclamationToken:
-                return $context->withType(
+                $context = $context->withType(
                     TypeUtil::toBool($context->type())->negate()
-                )->negateTypeAssertions();
+                );
+                if ($doubleNegate) {
+                    return $context;
+                }
+                return $context->negateTypeAssertions();
             case TokenKind::PlusToken:
                 return $context->withType(TypeUtil::toNumber($type)->identity());
             case TokenKind::MinusToken:
