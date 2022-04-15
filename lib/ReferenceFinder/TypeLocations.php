@@ -53,4 +53,9 @@ class TypeLocations implements IteratorAggregate
 
         return $this->typeLocations[$index];
     }
+
+    public function count(): int
+    {
+        return count($this->typeLocations);
+    }
 }
