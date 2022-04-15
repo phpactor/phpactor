@@ -54,7 +54,6 @@ class TypeCombinator
                 if ($t->__toString() === $subtract->__toString()) {
                     return false;
                 }
-
             }
             return true;
         }));
@@ -63,7 +62,7 @@ class TypeCombinator
     /**
      * Return only those types in type2 that are in type1
      */
-    public static function intersection(Type $type1, Type $type2)
+    public static function intersection(Type $type1, Type $type2): UnionType
     {
         $type1 = UnionType::toUnion($type1);
         $type2 = UnionType::toUnion($type2);
@@ -73,7 +72,6 @@ class TypeCombinator
                 if ($t->__toString() === $subtract->__toString()) {
                     return true;
                 }
-
             }
             return false;
         }));

@@ -5,9 +5,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use ArrayIterator;
 use Closure;
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Traversable;
 
 /**

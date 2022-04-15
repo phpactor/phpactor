@@ -131,7 +131,6 @@ class Frame
             [ $typeAssertions->properties(), $this->properties() ],
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
-
             $type = new MissingType();
             foreach ($frameVariables->lessThanOrEqualTo($offset) as $variable) {
                 $type = $variable->type();

@@ -58,7 +58,7 @@ final class TypeAssertion
             return TypeAssertion::property(
                 $context->symbol()->name(),
                 $context->symbol()->position()->start(),
-                $true, 
+                $true,
                 $false,
                 $context->containerType() ?: new MissingType(),
             );
