@@ -33,8 +33,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
         TypeLocator $typeLocator,
         LocationConverter $locationConverter,
         ClientApi $client
-    )
-    {
+    ) {
         $this->typeLocator = $typeLocator;
         $this->workspace = $workspace;
         $this->locationConverter = $locationConverter;

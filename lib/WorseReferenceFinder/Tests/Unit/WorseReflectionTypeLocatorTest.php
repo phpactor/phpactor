@@ -2,11 +2,9 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
-use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReferenceFinder\Tests\IntegrationTestCase;
 use Phpactor\WorseReferenceFinder\WorseReflectionTypeLocator;

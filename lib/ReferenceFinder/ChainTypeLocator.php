@@ -5,7 +5,6 @@ namespace Phpactor\ReferenceFinder;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -40,6 +39,7 @@ final class ChainTypeLocator implements TypeLocator
                     $unsupported->getMessage()
                 ));
                 $messages[] = $unsupported->getMessage();
+                continue;
             }
 
             if (!$typeLocations->count()) {

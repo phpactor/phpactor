@@ -56,7 +56,7 @@ class ChainTypeLocatorTest extends TestCase
         $this->locator2->locateType($this->document, $this->offset)->willReturn($location2);
 
         $location = $locator->locateTypes($this->document, $this->offset);
-        $this->assertSame($location->first(), $location1);
+        $this->assertSame($location->first()->location(), $location1);
     }
 
     public function testExceptionWhenTypeNotFound(): void

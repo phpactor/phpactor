@@ -38,7 +38,7 @@ class GotoTypeHandlerTest extends TestCase
         $locator = new class implements TypeLocator {
             public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
             {
-                return 
+                return
                     new TypeLocations([
                         new TypeLocation(
                             new MixedType(),
