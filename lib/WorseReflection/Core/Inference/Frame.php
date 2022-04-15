@@ -44,7 +44,7 @@ class Frame
     public function __toString(): string
     {
         return implode("\n", array_map(function (Assignments $assignments, string $type) {
-            return implode("\n", array_map(function (Variable $variable) use ($assignments, $type) {
+            return implode("\n", array_map(function (Variable $variable) use ($type) {
                 return sprintf(
                     '%s - %s:%s: %s',
                     $type,

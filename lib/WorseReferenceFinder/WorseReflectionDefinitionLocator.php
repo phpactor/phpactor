@@ -201,28 +201,4 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ByteOffset::fromInt($member->position()->start())
         );
     }
-
-    private function gotoVariable(TextDocument $document, ReflectionOffset $offset): DefinitionLocation
-    {
-        $uri = $document->uri();
-        if (null === $uri) {
-            throw new CouldNotLocateDefinition('Text Document has no URI');
-        }
-
-        $name = $offset->symbolContext()->symbol()->name();
-        $frame = $offset->frame();
-        $variables = $frame->locals()->byName($name);
-
-        if ($variables->count() === 0) {
-            throw new CouldNotLocateDefinition(sprintf('Could not find variable "%s" in scope', $name));
-        }
-
-        $offset = $variables->first()->offset();
-
-        if (null === $offset) {
-            throw new CouldNotLocateDefinition(sprintf('Could not find variable "%s" in scope', $name));
-        }
-
-        return new DefinitionLocation($uri, ByteOffset::fromInt($offset));
-    }
 }
