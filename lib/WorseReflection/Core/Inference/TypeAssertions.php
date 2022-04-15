@@ -3,8 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use ArrayIterator;
+use Closure;
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Traversable;
 
 /**
@@ -31,26 +31,13 @@ final class TypeAssertions implements IteratorAggregate
     public function __toString(): string
     {
         return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
-            return sprintf(
-                '%s: %s: %s',
-                $typeAssertion->variableType(),
-                $typeAssertion->name(),
-                $typeAssertion->type()->__toString()
-            );
+            return $typeAssertion->__toString();
         }, $this->typeAssertions));
     }
 
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->typeAssertions);
-    }
-
-    /**
-     * @param callable(TypeAssertion): TypeAssertion $closure
-     */
-    public function map(callable $closure): self
-    {
-        return new self(array_map($closure, $this->typeAssertions));
     }
 
     public function add(TypeAssertion $typeAssertion): self
@@ -77,18 +64,20 @@ final class TypeAssertions implements IteratorAggregate
     public function negate(): self
     {
         return $this->map(function (TypeAssertion $assertion) {
-            return $assertion->withType(TypeFactory::not($assertion->type()));
+            $assertion->negate();
+            return $assertion;
         });
+    }
+
+    public function map(Closure $closure): self
+    {
+        return new self(array_map($closure, $this->typeAssertions));
     }
 
     public function merge(TypeAssertions $typeAssertions): self
     {
         $assertions = $this->typeAssertions;
         foreach ($typeAssertions as $key => $assertion) {
-            if (isset($assertions[$key])) {
-                $assertions[$key] = $assertions[$key]->withType(TypeCombinator::add($assertions[$key]->type(), $assertion->type()));
-                continue;
-            }
             $assertions[$key] = $assertion;
         }
 
@@ -97,7 +86,7 @@ final class TypeAssertions implements IteratorAggregate
 
     private function key(TypeAssertion $assertion): string
     {
-        $key = $assertion->variableType().$assertion->name();
+        $key = $assertion->variableType().$assertion->name().$assertion->offset();
         return $key;
     }
 }

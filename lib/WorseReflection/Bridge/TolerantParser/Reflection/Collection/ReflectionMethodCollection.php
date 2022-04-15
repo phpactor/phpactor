@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\AbstractReflectionClass;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get()
+ * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get(string $name)
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod last()
  */

@@ -4,6 +4,9 @@ function foo(): string|int|null {
 }
 
 $foo = foo();
+
+wrAssertType('string|int|null', $foo);
+
 if (is_null($foo)) {
     die();
 }

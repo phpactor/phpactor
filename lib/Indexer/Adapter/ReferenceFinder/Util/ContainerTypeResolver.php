@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Adapter\ReferenceFinder\Util;
 
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class ContainerTypeResolver
@@ -14,6 +15,9 @@ class ContainerTypeResolver
         $this->reflector = $reflector;
     }
 
+    /**
+     * @param ReflectionMember::TYPE_* $memberType
+     */
     public function resolveDeclaringContainerType(string $memberType, string $memberName, ?string $containerFqn): ?string
     {
         if (null === $containerFqn) {

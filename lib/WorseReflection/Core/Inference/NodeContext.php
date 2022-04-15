@@ -146,19 +146,12 @@ final class NodeContext
         return $this->typeAssertions;
     }
 
-    public function withTypeAssertionForSubject(NodeContext $subject, Type $type): NodeContext
+    public function negateTypeAssertions(): self
     {
-        if ($subject->symbol()->symbolType() === Symbol::VARIABLE) {
-            return $this->withTypeAssertion(TypeAssertion::variable($subject->symbol()->name(), $type));
-        }
-        if ($subject->symbol()->symbolType() === Symbol::PROPERTY) {
-            return $this->withTypeAssertion(TypeAssertion::property(
-                $subject->symbol()->name(),
-                $subject->containerType() ?: new MissingType(),
-                $type
-            ));
+        foreach ($this->typeAssertions as $typeAssertion) {
+            $typeAssertion->negate();
         }
 
-        return $subject;
+        return $this;
     }
 }

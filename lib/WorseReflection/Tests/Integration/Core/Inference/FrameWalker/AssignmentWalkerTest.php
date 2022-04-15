@@ -111,7 +111,7 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
         , function (Frame $frame): void {
             $vars = $frame->locals()->byName('foobar');
             $this->assertCount(1, $vars);
-            $var = $vars->first();
+            $var = $vars->last();
             $type = $var->type();
             assert($type instanceof IterableType);
             $this->assertEquals('Foobar[]', (string) $type);

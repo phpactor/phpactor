@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 /**
  * @method \Phpactor\CodeBuilder\Domain\Prototype\Method first()
- * @method \Phpactor\CodeBuilder\Domain\Prototype\Method get()
+ * @method \Phpactor\CodeBuilder\Domain\Prototype\Method get(string $name)
  */
 class Methods extends Collection
 {

@@ -13,7 +13,9 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Reflector;
+use RuntimeException;
 
 class IndexedReferenceFinder implements ReferenceFinder
 {
@@ -80,13 +82,15 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        if (in_array($symbolContext->symbol()->symbolType(), [
+        $memberType = $symbolContext->symbol()->symbolType();
+        if (in_array($memberType, [
             Symbol::METHOD,
             Symbol::CONSTANT,
-            Symbol::PROPERTY
+            Symbol::PROPERTY,
+            Symbol::CASE,
         ])) {
             $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
-                $symbolContext->symbol()->symbolType(),
+                $this->symbolTypeToMemberType($symbolContext),
                 $symbolContext->symbol()->name(),
                 $symbolContext->containerType()
             );
@@ -127,5 +131,31 @@ class IndexedReferenceFinder implements ReferenceFinder
         foreach ($this->query->class()->implementing($fqn) as $implementation) {
             yield from $this->implementationsOf($implementation->__toString());
         }
+    }
+
+    /**
+     * @return ReflectionMember::TYPE_*
+     */
+    private function symbolTypeToMemberType(NodeContext $symbolContext): string
+    {
+        $symbolType = $symbolContext->symbol()->symbolType();
+
+        if ($symbolType === Symbol::CASE) {
+            return ReflectionMember::TYPE_ENUM;
+        }
+        if ($symbolType === Symbol::METHOD) {
+            return ReflectionMember::TYPE_METHOD;
+        }
+        if ($symbolType === Symbol::PROPERTY) {
+            return ReflectionMember::TYPE_PROPERTY;
+        }
+        if ($symbolType === Symbol::CONSTANT) {
+            return ReflectionMember::TYPE_CONSTANT;
+        }
+
+        throw new RuntimeException(sprintf(
+            'Could not convert symbol type "%s" to member type',
+            $symbolType
+        ));
     }
 }

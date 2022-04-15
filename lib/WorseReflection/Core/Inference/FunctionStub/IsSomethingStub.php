@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 
@@ -39,9 +40,12 @@ class IsSomethingStub implements FunctionStub
 
             if ($expression instanceof Variable) {
                 $variable = $expression->getName();
-                $context = $context->withTypeAssertion(
-                    TypeAssertion::variable($variable, $this->isType)
-                );
+                $context = $context->withTypeAssertion(TypeAssertion::variable(
+                    $variable,
+                    $expression->getStartPosition(),
+                    fn (Type $type) => $this->isType,
+                    fn (Type $type) => TypeCombinator::subtract($this->isType, $type),
+                ));
             }
 
             $arg = $resolver->resolveNode($frame, $expression)->type();

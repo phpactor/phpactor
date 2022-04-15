@@ -1,0 +1,32 @@
+<?php
+
+interface Timeline
+{
+    public function getItems(): iterable;
+}
+
+class Trip implements Timeline
+{
+    public function getItems(): iterable
+    {
+        return [];
+    }
+
+    public function getLinkedCustomer(): string
+    {
+        return 'James Bond';
+    }
+}
+
+class Test
+{
+    private Timeline $timeline;
+
+    public function doSomething(): void
+    {
+        if ($this->timeline instanceof Trip) {
+            wrAssertType('string', $this->timeline->getLinkedCustomer());
+        }
+    }
+}
+

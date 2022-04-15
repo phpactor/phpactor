@@ -52,6 +52,6 @@ class BinaryExpressionWalker extends AbstractWalker
             ]
         );
 
-        $frame->locals()->add($leftOperand->getStartPosition(), WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
     }
 }

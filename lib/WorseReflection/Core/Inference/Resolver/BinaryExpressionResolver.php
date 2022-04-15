@@ -14,6 +14,8 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
@@ -173,8 +175,22 @@ class BinaryExpressionResolver implements Resolver
 
         switch ($operator) {
             case TokenKind::EqualsEqualsEqualsToken:
+                return $context->withTypeAssertion(TypeAssertion::forContext(
+                    $recieverContext,
+                    fn (Type $type) => $transmitteContext->type(),
+                    fn (Type $type) => TypeCombinator::subtract($transmitteContext->type(), $recieverContext->type()),
+                ));
             case TokenKind::InstanceOfKeyword:
-                return $context->withTypeAssertionForSubject($recieverContext, $transmitteContext->type());
+                return $context->withTypeAssertion(TypeAssertion::forContext(
+                    $recieverContext,
+                    function (Type $type) use ($transmitteContext) {
+                        return TypeCombinator::narrowTo($type, $transmitteContext->type());
+                    },
+                    function (Type $type) use ($transmitteContext) {
+                        $subtracted = TypeCombinator::subtract($transmitteContext->type(), $type);
+                        return $subtracted;
+                    }
+                ));
         }
 
         return $context;
@@ -200,7 +216,8 @@ class BinaryExpressionResolver implements Resolver
         }
 
         if ($text === 'false') {
-            return $context->withTypeAssertions($context->typeAssertions()->negate());
+            $context->typeAssertions()->negate();
+            return $context;
         }
 
         return $context;

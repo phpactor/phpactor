@@ -47,6 +47,9 @@ interface ReflectionMember
 
     public function isVirtual(): bool;
 
+    /**
+     * @return self::TYPE_*
+     */
     public function memberType(): string;
 
     public function deprecation(): Deprecation;

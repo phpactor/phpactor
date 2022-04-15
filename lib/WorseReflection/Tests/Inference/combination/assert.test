@@ -1,15 +1,34 @@
 <?php
 
 function notype() {}
-function stringOrNull(): ?string {}
+function stringOrNull(): null|string {}
+function fooOrNull(): Foo|null {}
 
 $foo = stringOrNull();
-assert(!is_null($foo))
-wrAssertType('string', $foo);
+wrAssertType('null|string', $foo); 
+
+// empty: 0|0|""|"0"|array{}|false|null
+//
+// foreach empty type 
+// does string accept it?
+// replace
+assert(!$foo); // ''|'0'
+
+// foreach empty type 
+// does Foo accept it?
+// replace
+$bar = fooOrNull(); // Foo|null
+assert($bar); // Foo
+
+$bar = fooOrNull(); // Foo|null
+assert(!$bar); // Foo
+
 
 $foo = notype();
 assert(is_null($foo));
+
 wrAssertType('null', $foo);
 
 assert(!is_null($foo));
+
 wrAssertType('<missing>', $foo);

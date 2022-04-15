@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
@@ -21,26 +20,36 @@ class TypeCombinator
         return $originalType->narrowTo($type);
     }
 
-    public static function add(Type $originalType, Type $type): Type
+    public static function subtract(Type $type, Type $from): Type
     {
-        $originalType = UnionType::toUnion($originalType);
         $type = UnionType::toUnion($type);
+        $from = UnionType::toUnion($from);
 
-        return $originalType->merge($type);
+        return new UnionType(...array_filter($from->types, function (Type $t) use ($type) {
+            foreach ($type->types as $subtract) {
+                if ($t->__toString() === $subtract->__toString()) {
+                    return false;
+                }
+            }
+            return true;
+        }));
     }
 
-    public static function applyType(Type $originalType, Type $type): Type
+    /**
+     * Return only those types in type2 that are in type1
+     */
+    public static function intersection(Type $type1, Type $type2): UnionType
     {
-        if ($type instanceof NotType) {
+        $type1 = UnionType::toUnion($type1);
+        $type2 = UnionType::toUnion($type2);
 
-            // double negative - this should probably be smarter
-            if ($type->type instanceof NotType) {
-                return self::applyType($originalType, $type->type->type);
+        return new UnionType(...array_filter($type2->types, function (Type $t) use ($type1) {
+            foreach ($type1->types as $subtract) {
+                if ($t->__toString() === $subtract->__toString()) {
+                    return true;
+                }
             }
-
-            return self::remove($originalType, $type->type);
-        }
-
-        return self::narrowTo($originalType, $type);
+            return false;
+        }));
     }
 }

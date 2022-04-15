@@ -2,8 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use Closure;
+use Generator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -13,9 +16,57 @@ class ReflectedClassTypeTest extends TestCase
 {
     use TrinaryAssert;
 
+    /**
+     * @dataProvider provideAccepts
+     */
+    public function testAccepts(Type $type, Closure $closure): void
+    {
+        $closure($type);
+    }
+
+    public function provideAccepts(): Generator
+    {
+        yield 'accepts class which is it' => [
+            $this->createType(
+                '<?php class Bar{};',
+                'Bar'
+            ),
+            function (Type $type): void {
+                self::assertTrue($type->accepts(TypeFactory::class('Bar'))->isTrue());
+            }
+        ];
+        yield 'accepts class which extends it' => [
+            $this->createType(
+                '<?php class Bar{}; class Foobar extends Bar {};',
+                'Bar'
+            ),
+            function (Type $type): void {
+                self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isTrue());
+            }
+        ];
+        yield 'rejects class which implements it' => [
+            $this->createType(
+                '<?php interface Bar{}; class Foobar implements Bar {};',
+                'Bar'
+            ),
+            function (Type $type): void {
+                self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
+            }
+        ];
+        yield 'rejects class which is not it' => [
+            $this->createType(
+                '<?php class Bar{}; class Foobar {};',
+                'Bar'
+            ),
+            function (Type $type): void {
+                self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
+            }
+        ];
+    }
+
     public function testInstanceOf(): void
     {
-        // is instance of
+        // is extends
         self::assertTrinaryTrue($this->createType(
             '<?php class Bar{}; class Foobar extends Bar {};',
             'Foobar'

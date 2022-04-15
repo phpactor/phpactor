@@ -25,7 +25,7 @@ abstract class AssignmentstTestCase extends TestCase
             )
         );
 
-        $assignments->add(0, Variable::fromSymbolContext($information));
+        $assignments->add(Variable::fromSymbolContext($information));
 
         $this->assertEquals('hello', $assignments->byName('hello')->first()->name());
     }
@@ -34,9 +34,9 @@ abstract class AssignmentstTestCase extends TestCase
     {
         $assignments = $this->assignments();
 
-        $assignments->add(0, $this->createVariable('hello', 0, 5));
-        $assignments->add(5, $this->createVariable('hello', 5, 10));
-        $assignments->add(10, $this->createVariable('hello', 10, 15));
+        $assignments->add($this->createVariable('hello', 0, 5));
+        $assignments->add($this->createVariable('hello', 5, 10));
+        $assignments->add($this->createVariable('hello', 10, 15));
 
         $this->assertCount(2, $assignments->byName('hello')->lessThanOrEqualTo(5));
     }
@@ -45,9 +45,9 @@ abstract class AssignmentstTestCase extends TestCase
     {
         $assignments = $this->assignments();
 
-        $assignments->add(0, $this->createVariable('hello', 0, 5));
-        $assignments->add(5, $this->createVariable('hello', 5, 10));
-        $assignments->add(10, $this->createVariable('hello', 10, 15));
+        $assignments->add($this->createVariable('hello', 0, 5));
+        $assignments->add($this->createVariable('hello', 5, 10));
+        $assignments->add($this->createVariable('hello', 10, 15));
 
         $this->assertCount(1, $assignments->byName('hello')->lessThan(5));
     }
@@ -56,9 +56,9 @@ abstract class AssignmentstTestCase extends TestCase
     {
         $assignments = $this->assignments();
 
-        $assignments->add(0, $this->createVariable('hello', 0, 5));
-        $assignments->add(5, $this->createVariable('hello', 5, 10));
-        $assignments->add(10, $this->createVariable('hello', 10, 15));
+        $assignments->add($this->createVariable('hello', 0, 5));
+        $assignments->add($this->createVariable('hello', 5, 10));
+        $assignments->add($this->createVariable('hello', 10, 15));
 
         $this->assertCount(2, $assignments->byName('hello')->greaterThanOrEqualTo(5));
     }
@@ -67,9 +67,9 @@ abstract class AssignmentstTestCase extends TestCase
     {
         $assignments = $this->assignments();
 
-        $assignments->add(0, $this->createVariable('hello', 0, 5));
-        $assignments->add(5, $this->createVariable('hello', 5, 10));
-        $assignments->add(10, $this->createVariable('hello', 10, 15));
+        $assignments->add($this->createVariable('hello', 0, 5));
+        $assignments->add($this->createVariable('hello', 5, 10));
+        $assignments->add($this->createVariable('hello', 10, 15));
 
         $this->assertCount(1, $assignments->byName('hello')->greaterThan(5));
     }
@@ -80,7 +80,7 @@ abstract class AssignmentstTestCase extends TestCase
         $this->expectExceptionMessage('No variable at index "5"');
         $assignments = $this->assignments();
 
-        $assignments->add(0, $this->createVariable('hello', 0, 5));
+        $assignments->add($this->createVariable('hello', 0, 5));
 
         $this->assertCount(1, $assignments->atIndex(5));
     }

@@ -41,16 +41,17 @@ class IfStatementWalker implements Walker
         $context = $resolver->resolveNode($frame, $node->expression);
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $terminates = $this->branchTerminates($node);
-        $originalFrame = clone $frame;
 
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->expression->getStartPosition());
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
         $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
 
         if (!$terminates) {
             return $frame;
         }
 
-        $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getEndPosition());
+        $context->typeAssertions()->negate();
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition(), true);
+
 
         return $frame;
     }

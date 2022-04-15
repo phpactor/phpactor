@@ -100,7 +100,7 @@ class AssignmentWalker extends AbstractWalker
             ]
         );
 
-        $frame->locals()->add($leftOperand->getStartPosition(), WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add(WorseVariable::fromSymbolContext($context)->asAssignment());
     }
 
     private function walkMemberAccessExpression(
@@ -144,7 +144,7 @@ class AssignmentWalker extends AbstractWalker
             ]
         );
 
-        $frame->properties()->add($leftOperand->getStartPosition(), WorseVariable::fromSymbolContext($context));
+        $frame->properties()->add(WorseVariable::fromSymbolContext($context));
     }
 
     private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
@@ -228,7 +228,7 @@ class AssignmentWalker extends AbstractWalker
                 $variableContext = $variableContext->withType($type->typeAtOffset($index));
             }
         
-            $frame->locals()->add($element->getStartPosition(), WorseVariable::fromSymbolContext($variableContext));
+            $frame->locals()->add(WorseVariable::fromSymbolContext($variableContext));
         }
     }
 }

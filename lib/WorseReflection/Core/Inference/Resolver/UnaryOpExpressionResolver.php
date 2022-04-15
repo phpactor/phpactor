@@ -9,7 +9,6 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
-use Phpactor\WorseReflection\Core\Inference\NodeContextModifier;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Type;
@@ -46,7 +45,13 @@ class UnaryOpExpressionResolver implements Resolver
     {
         switch ($operatorKind) {
             case TokenKind::ExclamationToken:
-                return $doubleNegate ? $context : NodeContextModifier::negate($context);
+                $context = $context->withType(
+                    TypeUtil::toBool($context->type())->negate()
+                );
+                if ($doubleNegate) {
+                    return $context;
+                }
+                return $context->negateTypeAssertions();
             case TokenKind::PlusToken:
                 return $context->withType(TypeUtil::toNumber($type)->identity());
             case TokenKind::MinusToken:

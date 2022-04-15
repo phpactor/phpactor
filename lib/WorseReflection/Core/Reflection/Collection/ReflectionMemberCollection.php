@@ -19,6 +19,7 @@ interface ReflectionMemberCollection extends ReflectionCollection
     /**
      * By member type: constant, method, or property
      *
+     * @param ReflectionMember::TYPE_* $type
      * @return ReflectionMemberCollection<T>
      */
     public function byMemberType(string $type): ReflectionMemberCollection;

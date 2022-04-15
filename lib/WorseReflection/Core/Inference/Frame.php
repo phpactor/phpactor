@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Closure;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class Frame
 {
@@ -42,15 +44,7 @@ class Frame
     public function __toString(): string
     {
         return implode("\n", array_map(function (Assignments $assignments, string $type) {
-            return implode("\n", array_map(function (Variable $variable) use ($assignments, $type) {
-                return sprintf(
-                    '%s - %s:%s: %s',
-                    $type,
-                    $variable->name(),
-                    $assignments->offsetFor($variable),
-                    $variable->type()->__toString()
-                );
-            }, iterator_to_array($assignments)));
+            return $type ."\n:" . $assignments->__toString();
         }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
 
@@ -123,21 +117,31 @@ class Frame
         return $new;
     }
 
-    public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset): void
+    public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset, bool $createNew = false): void
     {
         foreach ([
             [ $typeAssertions->properties(), $this->properties() ],
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
             foreach ($typeAssertions as $typeAssertion) {
-                $original = $frameVariables->byName($typeAssertion->name())->lastOrNull();
-                $originalType = $original ? $original->type() : TypeFactory::undefined();
+                $original = null;
+                foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo(
+                    $createNew ? $offset : $typeAssertion->offset()
+                ) as $variable) {
+                    $original = $variable;
+                }
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    TypeCombinator::applyType($originalType, $typeAssertion->type()),
+                    $createNew  ? $offset : $typeAssertion->offset(),
+                    UnionType::toUnion($typeAssertion->apply(
+                        $original ? $original->type() : new MissingType(),
+                    ))->reduce(),
                     $typeAssertion->classType(),
                 );
-                $frameVariables->add($offset, $variable);
+
+                $type = $variable->type();
+
+                $frameVariables->add($variable);
             }
         }
     }
@@ -150,16 +154,16 @@ class Frame
             $locals[$local->name()] = $local;
         }
         foreach ($locals as $local) {
-            $this->locals()->add($after, $local);
+            $this->locals()->add($local->withOffset($after));
         }
 
-        foreach ($this->locals()->greaterThan($before)->lessThanOrEqualTo($after) as $extra) {
+        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
             if (isset($locals[$extra->name()])) {
                 continue;
             }
 
             // if variable was not present before $before, assign as missing
-            $this->locals()->add($after, $extra->withType(TypeFactory::undefined()));
+            $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
         }
 
         $properties = [];
@@ -167,7 +171,7 @@ class Frame
             $properties[$property->name()] = $property;
         }
         foreach ($properties as $property) {
-            $this->properties()->add($after, $property);
+            $this->properties()->add($property);
         }
     }
 }

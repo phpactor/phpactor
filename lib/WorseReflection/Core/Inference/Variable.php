@@ -13,22 +13,29 @@ final class Variable
 
     private ?Type $classType;
 
-    public function __construct(string $name, Type $type, ?Type $classType = null)
+    private int $offset;
+
+    private bool $wasAssigned;
+
+    public function __construct(string $name, int $offset, Type $type, ?Type $classType = null, bool $wasAssigned = false)
     {
-        $this->name = $name;
+        $this->name = ltrim($name, '$');
         $this->type = $type;
         $this->classType = $classType;
+        $this->offset = $offset;
+        $this->wasAssigned = $wasAssigned;
     }
 
     public function __toString()
     {
-        return $this->name;
+        return sprintf('%s#%s %s %s', $this->name, $this->offset, $this->type, $this->classType ? $this->classType->__toString() : '');
     }
 
     public static function fromSymbolContext(NodeContext $symbolContext): Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
+            $symbolContext->symbol()->position()->start(),
             $symbolContext->type(),
             $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null
         );
@@ -48,7 +55,17 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $type, $this->classType);
+        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned);
+    }
+
+    public function withOffset(int $offset): self
+    {
+        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned);
+    }
+
+    public function asAssignment(): self
+    {
+        return new self($this->name, $this->offset, $this->type, $this->classType, true);
     }
 
     public function type(): Type
@@ -64,5 +81,15 @@ final class Variable
     public function classType(): Type
     {
         return $this->classType ?: new MissingType();
+    }
+
+    public function offset(): int
+    {
+        return $this->offset;
+    }
+
+    public function wasAssigned(): bool
+    {
+        return $this->wasAssigned;
     }
 }

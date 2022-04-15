@@ -28,7 +28,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->first()->__toString());
+                $this->assertEquals('foo', $frame->locals()->first()->name());
             }
         ];
 
@@ -42,7 +42,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->first()->__toString());
+                $this->assertEquals('foo', $frame->locals()->first()->name());
             }
         ];
 
@@ -56,7 +56,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->first()->__toString());
+                $this->assertEquals('foo', $frame->locals()->first()->name());
             }
         ];
 
@@ -70,7 +70,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->last()->__toString());
+                $this->assertEquals('foo', $frame->locals()->last()->name());
                 $this->assertEquals('"bar"', (string) $frame->locals()->last()->type());
             }
         ];
@@ -85,7 +85,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
         ,
             function (Frame $frame): void {
                 $this->assertCount(1, $frame->locals());
-                $this->assertEquals('foo', $frame->locals()->last()->__toString());
+                $this->assertEquals('foo', $frame->locals()->last()->name());
                 $this->assertEquals('"bar"', (string) $frame->locals()->last()->type());
             }
         ];
