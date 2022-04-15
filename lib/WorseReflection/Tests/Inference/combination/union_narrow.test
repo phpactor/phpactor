@@ -1,0 +1,16 @@
+<?php
+
+abstract Foo {}
+class Bar extends Foo {}
+
+class Foo {
+    function foo(Foo|Bar $foo)
+    {
+        if (!$foo instanceof Bar) {
+            wrAssertType('Foo', $foo);
+            return;
+        }
+
+        wrAssertType('Bar', $foo);
+    }
+}
