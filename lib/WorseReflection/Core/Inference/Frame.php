@@ -161,7 +161,7 @@ class Frame
             $this->locals()->add($after, $local);
         }
 
-        foreach ($this->locals()->greaterThan($before)->lessThanOrEqualTo($after) as $extra) {
+        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
             if (isset($locals[$extra->name()])) {
                 continue;
             }
