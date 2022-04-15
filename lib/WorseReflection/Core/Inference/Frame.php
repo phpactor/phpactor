@@ -142,6 +142,9 @@ class Frame
                     UnionType::toUnion($typeAssertion->apply($type))->reduce(),
                     $typeAssertion->classType(),
                 );
+
+                $type = $variable->type();
+
                 $frameVariables->add($offset, $variable);
             }
         }

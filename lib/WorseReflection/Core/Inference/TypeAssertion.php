@@ -27,26 +27,29 @@ final class TypeAssertion
 
     private bool $polarity = true;
 
+    private int $offset;
+
     /**
      * @param self::VARIABLE_TYPE_* $variableType
      */
-    private function __construct(string $variableType, string $name, Closure $true, Closure $false, Type $classType = null)
+    private function __construct(string $variableType, string $name, int $offset, Closure $true, Closure $false, Type $classType = null)
     {
         $this->name = ltrim($name, '$');
         $this->variableType = $variableType;
         $this->classType = $classType;
         $this->true = $true;
         $this->false = $false;
+        $this->offset = $offset;
     }
 
-    public static function variable(string $name, Closure $true, Closure $false): self
+    public static function variable(string $name, int $offset, Closure $true, Closure $false): self
     {
-        return new self(self::VARIABLE_TYPE_VARIABLE, $name, $true, $false, null);
+        return new self(self::VARIABLE_TYPE_VARIABLE, $name, $offset, $true, $false, null);
     }
 
-    public static function property(string $name, Closure $true, Closure $false, Type $classType): self
+    public static function property(string $name, int $offset, Closure $true, Closure $false, Type $classType): self
     {
-        return new self(self::VARIABLE_TYPE_PROPERTY, $name, $true, $false, $classType);
+        return new self(self::VARIABLE_TYPE_PROPERTY, $name, $offset, $true, $false, $classType);
     }
 
     public static function forContext(NodeContext $context, Closure $true, Closure $false): self
@@ -54,6 +57,7 @@ final class TypeAssertion
         if ($context->symbol()->symbolType() === Symbol::PROPERTY) {
             return TypeAssertion::property(
                 $context->symbol()->name(),
+                $context->symbol()->position()->start(),
                 $true, 
                 $false,
                 $context->containerType() ?: new MissingType(),
@@ -61,12 +65,12 @@ final class TypeAssertion
         }
 
         if ($context->symbol()->symbolType() === Symbol::VARIABLE) {
-            return TypeAssertion::variable($context->symbol()->name(), $true, $false);
+            return TypeAssertion::variable($context->symbol()->name(), $context->symbol()->position()->start(), $true, $false);
         }
 
         throw new RuntimeException(sprintf(
             'Do not know how to create type assertion for symbol type: "%s"',
-            $context->sumbol()->type()
+            $context->type()->__toString()
         ));
     }
 
@@ -101,7 +105,8 @@ final class TypeAssertion
         $this->polarity = !$this->polarity;
     }
 
-    private function withTypeAssertion(TypeAssertion $typeAssertion)
+    public function offset(): int
     {
+        return $this->offset;
     }
 }

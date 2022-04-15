@@ -43,6 +43,7 @@ class IsSomethingStub implements FunctionStub
                 $variable = $expression->getName();
                 $context = $context->withTypeAssertion(TypeAssertion::variable(
                     $variable,
+                    $expression->getStartPosition(),
                     fn (Type $type) => $this->isType,
                     fn (Type $type) => TypeCombinator::subtract($this->isType, $type),
                 ));

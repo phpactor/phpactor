@@ -47,16 +47,6 @@ final class TypeAssertions implements IteratorAggregate
         return new ArrayIterator($this->typeAssertions);
     }
 
-    /**
-     * @param Closure(Type): Type $map
-     */
-    public function mapType(Closure $map): self
-    {
-        return new self(array_map(function (TypeAssertion $assertion) use ($map) {
-            return $assertion->withType($map($assertion->type()));
-        }, $this->typeAssertions));
-    }
-
     public function add(TypeAssertion $typeAssertion): self
     {
         $assertions = $this->typeAssertions;
@@ -81,8 +71,13 @@ final class TypeAssertions implements IteratorAggregate
     public function negate(): self
     {
         return $this->map(function (TypeAssertion $assertion) {
-            return $assertion->negate();
+            $assertion->negate();
         });
+    }
+
+    public function map(Closure $closure): self
+    {
+        return new self(array_map($closure, $this->typeAssertions));
     }
 
     public function merge(TypeAssertions $typeAssertions): self
@@ -97,7 +92,7 @@ final class TypeAssertions implements IteratorAggregate
 
     private function key(TypeAssertion $assertion): string
     {
-        $key = $assertion->variableType().$assertion->name();
+        $key = $assertion->variableType().$assertion->name().$assertion->offset();
         return $key;
     }
 }
