@@ -41,4 +41,16 @@ class TypeLocations implements IteratorAggregate
 
         return reset($this->typeLocations);
     }
+
+    public function atIndex(int $index): TypeLocation
+    {
+        if (!isset($this->typeLocations[$index])) {
+            throw new CouldNotLocateType(sprintf(
+                'There are no type locations at index "%s"',
+                $index
+            ));
+        }
+
+        return $this->typeLocations[$index];
+    }
 }

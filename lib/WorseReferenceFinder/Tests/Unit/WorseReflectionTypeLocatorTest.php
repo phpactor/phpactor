@@ -134,7 +134,8 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->first()->location()->uri()->path());
+        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->atIndex(0)->location()->uri()->path());
+        self::assertEquals($this->workspace->path('One.php'), $typeLocations->atIndex(1)->location()->uri()->path());
     }
 
     public function testLocatesFirstUnionWithNullAndScalar(): void
