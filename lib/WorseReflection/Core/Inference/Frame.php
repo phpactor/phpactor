@@ -169,7 +169,7 @@ class Frame
             }
 
             // if variable was not present before $before, assign as missing
-            $this->locals()->add($extra->withType(TypeFactory::undefined()));
+            $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
         }
 
         $properties = [];

@@ -45,7 +45,6 @@ class IfStatementWalker implements Walker
         $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
         $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
 
-        dump($frame->__toString());
         if (!$terminates) {
             return $frame;
         }
