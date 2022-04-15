@@ -5,6 +5,8 @@ namespace Phpactor\ReferenceFinder\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\TextDocument\ByteOffset;
@@ -12,6 +14,7 @@ use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -50,13 +53,13 @@ class ChainTypeLocatorTest extends TestCase
         ]);
 
         $location1 = $this->createLocation();
-        $this->locator1->locateType($this->document, $this->offset)->willReturn($location1);
+        $this->locator1->locateTypes($this->document, $this->offset)->willReturn($this->createLocations($location1));
 
         $location2 = $this->createLocation();
-        $this->locator2->locateType($this->document, $this->offset)->willReturn($location2);
+        $this->locator2->locateTypes($this->document, $this->offset)->willReturn($this->createLocations($location2));
 
-        $location = $locator->locateType($this->document, $this->offset);
-        $this->assertSame($location, $location1);
+        $location = $locator->locateTypes($this->document, $this->offset);
+        $this->assertSame($location->first()->location(), $location1);
     }
 
     public function testExceptionWhenTypeNotFound(): void
@@ -68,8 +71,8 @@ class ChainTypeLocatorTest extends TestCase
             $this->locator1->reveal()
         ]);
 
-        $this->locator1->locateType($this->document, $this->offset)->willThrow(new CouldNotLocateType('No'));
-        $locator->locateType($this->document, $this->offset);
+        $this->locator1->locateTypes($this->document, $this->offset)->willThrow(new CouldNotLocateType('No'));
+        $locator->locateTypes($this->document, $this->offset);
     }
 
     public function testExceptionWhenTypeNotSupported(): void
@@ -81,12 +84,19 @@ class ChainTypeLocatorTest extends TestCase
             $this->locator1->reveal()
         ]);
 
-        $this->locator1->locateType($this->document, $this->offset)->willThrow(new UnsupportedDocument('Not supported'));
-        $locator->locateType($this->document, $this->offset);
+        $this->locator1->locateTypes($this->document, $this->offset)->willThrow(new UnsupportedDocument('Not supported'));
+        $locator->locateTypes($this->document, $this->offset);
     }
 
     private function createLocation(): Location
     {
         return new Location(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+    }
+
+    private function createLocations(Location $location1): TypeLocations
+    {
+        return new TypeLocations([
+            new TypeLocation(new MixedType(), $location1)
+        ]);
     }
 }

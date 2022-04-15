@@ -38,6 +38,7 @@ Improvements:
 
 Features:
 
+  - [lsp] jump to types in a union type
   - [wr] Type combination
   - [wr] Support for type assertions via. is_*, instanceof etc
   - [wr] Array shape type support (types and completion)

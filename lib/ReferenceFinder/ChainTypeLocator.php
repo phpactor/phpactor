@@ -5,7 +5,6 @@ namespace Phpactor\ReferenceFinder;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -27,12 +26,12 @@ final class ChainTypeLocator implements TypeLocator
         }
     }
 
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         $messages = [];
         foreach ($this->locators as $locator) {
             try {
-                return $locator->locateType($document, $byteOffset);
+                $typeLocations = $locator->locateTypes($document, $byteOffset);
             } catch (UnsupportedDocument $unsupported) {
                 $this->logger->debug(sprintf(
                     'Document is unsupported by "%s": %s',
@@ -40,10 +39,14 @@ final class ChainTypeLocator implements TypeLocator
                     $unsupported->getMessage()
                 ));
                 $messages[] = $unsupported->getMessage();
-            } catch (CouldNotLocateType $exception) {
-                $this->logger->info(sprintf('Could not locate type ""%s"', $exception->getMessage()));
-                $messages[] = $exception->getMessage();
+                continue;
             }
+
+            if (!$typeLocations->count()) {
+                continue;
+            }
+
+            return $typeLocations;
         }
 
         if ($messages) {

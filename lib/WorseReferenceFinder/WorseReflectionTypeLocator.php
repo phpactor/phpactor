@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReferenceFinder;
 
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\TextDocument\ByteOffset;
@@ -11,7 +13,6 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -30,7 +31,7 @@ class WorseReflectionTypeLocator implements TypeLocator
     }
 
     
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {
             throw new UnsupportedDocument('I only work with PHP files');
@@ -42,18 +43,28 @@ class WorseReflectionTypeLocator implements TypeLocator
             $sourceCode = SourceCode::fromString($document->__toString());
         }
 
-        $offset = $this->reflector->reflectOffset(
+        $type = $this->reflector->reflectOffset(
             $sourceCode,
             $byteOffset->toInt()
-        );
+        )->symbolContext()->type();
 
-        return $this->gotoType($offset->symbolContext());
+        $typeLocations = [];
+        foreach (TypeUtil::unwrapUnion($type) as $type) {
+            if ($type instanceof ArrayType) {
+                $type = $type->valueType;
+            }
+
+            if (!$type instanceof ClassType) {
+                continue;
+            }
+            $typeLocations[] = new TypeLocation($type, $this->gotoType($type));
+        }
+
+        return new TypeLocations($typeLocations);
     }
 
-    private function gotoType(NodeContext $symbolContext): Location
+    private function gotoType(Type $type): Location
     {
-        $type = $symbolContext->type();
-
         $className = $this->resolveClassName($type);
 
         try {

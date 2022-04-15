@@ -5,10 +5,13 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoTypeHandler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 
 class GotoTypeHandlerTest extends TestCase
 {
@@ -33,9 +36,15 @@ class GotoTypeHandlerTest extends TestCase
     public function create(): HandlerTester
     {
         $locator = new class implements TypeLocator {
-            public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+            public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
             {
-                return new Location($document->uri(), $byteOffset);
+                return
+                    new TypeLocations([
+                        new TypeLocation(
+                            new MixedType(),
+                            new Location($document->uri(), $byteOffset),
+                        )
+                    ]);
             }
         };
         return new HandlerTester(new GotoTypeHandler($locator));

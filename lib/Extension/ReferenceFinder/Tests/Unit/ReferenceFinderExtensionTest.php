@@ -67,9 +67,9 @@ class ReferenceFinderExtensionTest extends TestCase
         $locator = $container->get(ReferenceFinderExtension::SERVICE_TYPE_LOCATOR);
         $this->assertInstanceOf(ChainTypeLocator::class, $locator);
 
-        $location = $locator->locateType(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
-        $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $location->offset()->toInt());
-        $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $location->uri()->path());
+        $location = $locator->locateTypes(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1))->first();
+        $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $location->location()->offset()->toInt());
+        $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $location->location()->uri()->path());
     }
 
     public function testReturnsImplementationFinder(): void
