@@ -125,7 +125,7 @@ class Frame
         return $new;
     }
 
-    public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset): void
+    public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset, bool $createNew = false): void
     {
         foreach ([
             [ $typeAssertions->properties(), $this->properties() ],
@@ -144,7 +144,7 @@ class Frame
 
                 $type = $variable->type();
 
-                $frameVariables->add($offset, $variable);
+                $frameVariables->add($createNew ? $offset : $typeAssertion->offset(), $variable);
             }
         }
     }

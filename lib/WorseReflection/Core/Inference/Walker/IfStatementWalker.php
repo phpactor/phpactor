@@ -50,7 +50,7 @@ class IfStatementWalker implements Walker
         }
 
         $context->typeAssertions()->negate();
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition());
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition(), true);
 
 
         return $frame;
