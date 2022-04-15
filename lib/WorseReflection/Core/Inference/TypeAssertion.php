@@ -109,4 +109,9 @@ final class TypeAssertion
     {
         return $this->offset;
     }
+
+    public function polarity(): bool
+    {
+        return $this->polarity;
+    }
 }

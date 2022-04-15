@@ -35,9 +35,10 @@ final class TypeAssertions implements IteratorAggregate
     {
         return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
             return sprintf(
-                '%s: %s',
+                '%s: %s %s',
                 $typeAssertion->variableType(),
                 $typeAssertion->name(),
+                $typeAssertion->polarity() ? 'positive' : 'negative',
             );
         }, $this->typeAssertions));
     }
