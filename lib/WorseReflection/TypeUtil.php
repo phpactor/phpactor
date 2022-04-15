@@ -35,6 +35,14 @@ class TypeUtil
 
     public static function short(Type $type): string
     {
+        if ($type instanceof UnionType) {
+            $type = $type->reduce();
+        }
+
+        if ($type instanceof UnionType) {
+            return implode('|', array_map(fn (Type $t) => self::short($t), $type->types));
+        }
+
         if ($type instanceof NullableType) {
             return '?' . self::short($type->type);
         }
