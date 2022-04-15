@@ -33,6 +33,9 @@ class ReflectedClassType extends ClassType
         return $this->__toString();
     }
 
+    /**
+     * Accept if same class or class extends this class
+     */
     public function accepts(Type $type): Trinary
     {
         if (!$type instanceof ClassType) {
@@ -45,7 +48,18 @@ class ReflectedClassType extends ClassType
             return Trinary::maybe();
         }
 
-        return Trinary::fromBoolean($reflectedThat->isInstanceOf($this->name()));
+        if ($reflectedThat->name() == $this->name()) {
+            return Trinary::true();
+        }
+
+        while ($parent = $reflectedThat->parent()) {
+            if ($parent->name() == $this->name()) {
+                return Trinary::true();
+            }
+            $reflectedThat = $parent;
+        }
+
+        return Trinary::false();
     }
 
     public function reflectionOrNull(): ?ReflectionClassLike
