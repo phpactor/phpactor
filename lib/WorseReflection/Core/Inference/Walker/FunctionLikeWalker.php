@@ -10,6 +10,7 @@ use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -18,6 +19,10 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class FunctionLikeWalker extends AbstractWalker
 {
@@ -59,18 +64,7 @@ class FunctionLikeWalker extends AbstractWalker
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
             $classType = $resolver->resolveNode($frame, $classNode)->type();
-            $context = NodeContextFactory::create(
-                'this',
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'type' => $classType,
-                    'symbol_type' => Symbol::VARIABLE,
-                ]
-            );
-
-            // add this and self
-            $frame->locals()->add(Variable::fromSymbolContext($context));
+            $this->addClassContext($node, $classType, $frame);
         }
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
@@ -169,5 +163,33 @@ class FunctionLikeWalker extends AbstractWalker
         }
 
         return '<unknown>';
+    }
+
+    private function addClassContext(Node $node, Type $classType, Frame $frame): void
+    {
+        $context = NodeContextFactory::create(
+            'this',
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            [
+                'type' => $classType,
+                'symbol_type' => Symbol::VARIABLE,
+            ]
+        );
+        
+        // add this and self
+        $frame->locals()->add(Variable::fromSymbolContext($context));
+
+        if (!$classType instanceof ReflectedClassType) {
+            return;
+        }
+        $reflection = $classType->reflectionOrNull();
+        if (null === $reflection) {
+            return;
+        }
+        foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_PROPERTY) as $property) {
+            assert($property instanceof ReflectionProperty);
+            $frame->properties()->add(new Variable($property->name(),$property->position()->start(), $property->type(), $classType));
+        }
     }
 }
