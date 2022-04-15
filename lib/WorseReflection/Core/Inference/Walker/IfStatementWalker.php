@@ -49,6 +49,9 @@ class IfStatementWalker implements Walker
             return $frame;
         }
 
+        $context->typeAssertions()->negate();
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition());
+
 
         return $frame;
     }

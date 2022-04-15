@@ -72,6 +72,7 @@ final class TypeAssertions implements IteratorAggregate
     {
         return $this->map(function (TypeAssertion $assertion) {
             $assertion->negate();
+            return $assertion;
         });
     }
 
