@@ -43,6 +43,7 @@ class IfStatementWalker implements Walker
         $terminates = $this->branchTerminates($node);
         $originalFrame = clone $frame;
 
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
 
         if (!$terminates) {
             return $frame;
