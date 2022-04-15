@@ -150,7 +150,16 @@ class TypeUtil
             return [$type];
         }
 
-        return $type->types;
+        $types = [];
+        foreach ($type->types as $type) {
+            if ($type instanceof UnionType) {
+                $types = array_merge(self::unwrapUnion($type));
+                continue;
+            }
+            $types[] = $type;
+        }
+
+        return $types;
     }
 
     public static function firstDefined(Type ...$types): Type
