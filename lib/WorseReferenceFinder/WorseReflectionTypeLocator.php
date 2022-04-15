@@ -44,20 +44,28 @@ class WorseReflectionTypeLocator implements TypeLocator
             $sourceCode = SourceCode::fromString($document->__toString());
         }
 
-        $offset = $this->reflector->reflectOffset(
+        $type = $this->reflector->reflectOffset(
             $sourceCode,
             $byteOffset->toInt()
-        );
+        )->symbolContext()->type();
 
-        return new TypeLocations([
-            new TypeLocation($offset->symbolContext()->type(), $this->gotoType($offset->symbolContext()))
-        ]);
+        $typeLocations = [];
+        foreach (TypeUtil::unwrapUnion($type) as $type) {
+            if ($type instanceof ArrayType) {
+                $type = $type->valueType;
+            }
+
+            if (!$type instanceof ClassType) {
+                continue;
+            }
+            $typeLocations[] = new TypeLocation($type, $this->gotoType($type));
+        }
+
+        return new TypeLocations($typeLocations);
     }
 
-    private function gotoType(NodeContext $symbolContext): Location
+    private function gotoType(Type $type): Location
     {
-        $type = $symbolContext->type();
-
         $className = $this->resolveClassName($type);
 
         try {
