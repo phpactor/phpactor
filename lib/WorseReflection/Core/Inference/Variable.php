@@ -52,7 +52,12 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $type, $this->classType);
+        return new self($this->name, $this->offset, $type, $this->classType);
+    }
+
+    public function withOffset(int $offset): self
+    {
+        return new self($this->name, $offset, $this->type, $this->classType);
     }
 
     public function type(): Type

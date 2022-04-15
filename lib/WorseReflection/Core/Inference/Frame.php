@@ -49,7 +49,7 @@ class Frame
                     '%s - %s:%s: %s',
                     $type,
                     $variable->name(),
-                    $assignments->offsetFor($variable),
+                    $$variable->offset(),
                     $variable->type()->__toString()
                 );
             }, iterator_to_array($assignments)));
@@ -131,20 +131,23 @@ class Frame
             [ $typeAssertions->properties(), $this->properties() ],
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
-            $type = new MissingType();
             foreach ($typeAssertions as $typeAssertion) {
+                $original = null;
                 foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo($offset) as $variable) {
-                    $type = $variable->type();
+                    $original = $variable;
                 }
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    UnionType::toUnion($typeAssertion->apply($type))->reduce(),
+                    $original ? ($createNew  ? $typeAssertion->offset() : $original->offset()): $typeAssertion->offset(),
+                    UnionType::toUnion($typeAssertion->apply(
+                        $original ? $original->type() : new MissingType(),
+                    ))->reduce(),
                     $typeAssertion->classType(),
                 );
 
                 $type = $variable->type();
 
-                $frameVariables->add($createNew ? $offset : $typeAssertion->offset(), $variable);
+                $frameVariables->add($variable);
             }
         }
     }
@@ -157,7 +160,7 @@ class Frame
             $locals[$local->name()] = $local;
         }
         foreach ($locals as $local) {
-            $this->locals()->add($after, $local);
+            $this->locals()->add($local->withOffset($after));
         }
 
         foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
@@ -166,7 +169,7 @@ class Frame
             }
 
             // if variable was not present before $before, assign as missing
-            $this->locals()->add($after, $extra->withType(TypeFactory::undefined()));
+            $this->locals()->add($extra->withType(TypeFactory::undefined()));
         }
 
         $properties = [];
@@ -174,7 +177,7 @@ class Frame
             $properties[$property->name()] = $property;
         }
         foreach ($properties as $property) {
-            $this->properties()->add($after, $property);
+            $this->properties()->add($property);
         }
     }
 }

@@ -70,8 +70,7 @@ class FunctionLikeWalker extends AbstractWalker
             );
 
             // add this and self
-            // TODO: self is NOT added here - does it work?
-            $frame->locals()->add($node->getStartPosition(), Variable::fromSymbolContext($context));
+            $frame->locals()->add(Variable::fromSymbolContext($context));
         }
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
@@ -98,7 +97,7 @@ class FunctionLikeWalker extends AbstractWalker
                 ]
             );
 
-            $frame->locals()->add($parameterNode->getStartPosition(), Variable::fromSymbolContext($context));
+            $frame->locals()->add(Variable::fromSymbolContext($context));
         }
     }
 
