@@ -133,7 +133,9 @@ class Frame
         ] as [ $typeAssertions, $frameVariables ]) {
             foreach ($typeAssertions as $typeAssertion) {
                 $original = null;
-                foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo($offset) as $variable) {
+                foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo(
+                    $createNew ? $offset : $typeAssertion->offset()
+                ) as $variable) {
                     $original = $variable;
                 }
                 $variable = new Variable(
