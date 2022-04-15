@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
@@ -30,6 +31,9 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
         $this->locationConverter = $locationConverter;
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function methods(): array
     {
         return [
@@ -37,6 +41,9 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
+    /**
+     * @return Promise<Location>
+     */
     public function type(
         TextDocumentIdentifier $textDocument,
         Position $position
@@ -47,7 +54,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
             $offset = PositionConverter::positionToByteOffset($position, $textDocument->text);
 
             try {
-                $location = $this->typeLocator->locateTypes(
+                $typeLocations = $this->typeLocator->locateTypes(
                     TextDocumentBuilder::create($textDocument->text)->uri($textDocument->uri)->language('php')->build(),
                     $offset
                 );
@@ -55,7 +62,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
                 return null;
             }
 
-            return $this->locationConverter->toLspLocation($location);
+            return $this->locationConverter->toLspLocation($typeLocations->first()->location());
         });
     }
 
