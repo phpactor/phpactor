@@ -31,13 +31,7 @@ final class TypeAssertions implements IteratorAggregate
     public function __toString(): string
     {
         return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
-            return sprintf(
-                '%s: %s#%s %s',
-                $typeAssertion->variableType(),
-                $typeAssertion->name(),
-                $typeAssertion->offset(),
-                $typeAssertion->polarity() ? 'positive' : 'negative',
-            );
+            return $typeAssertion->__toString();
         }, $this->typeAssertions));
     }
 

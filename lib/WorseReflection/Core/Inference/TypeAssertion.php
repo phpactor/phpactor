@@ -114,4 +114,15 @@ final class TypeAssertion
     {
         return $this->polarity;
     }
+
+    public function __toString()
+    {
+        return sprintf(
+            '%s: %s#%s %s',
+            $this->variableType(),
+            $this->name(),
+            $this->offset(),
+            $this->polarity() ? 'positive' : 'negative',
+        );
+    }
 }
