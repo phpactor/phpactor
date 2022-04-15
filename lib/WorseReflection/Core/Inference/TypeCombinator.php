@@ -43,4 +43,39 @@ class TypeCombinator
 
         return self::narrowTo($originalType, $type);
     }
+
+    public static function subtract(Type $type, Type $from): Type
+    {
+        $type = UnionType::toUnion($type);
+        $from = UnionType::toUnion($from);
+
+        return new UnionType(...array_filter($from->types, function (Type $t) use ($type) {
+            foreach ($type->types as $subtract) {
+                if ($t->__toString() === $subtract->__toString()) {
+                    return false;
+                }
+
+            }
+            return true;
+        }));
+    }
+
+    /**
+     * Return only those types in type2 that are in type1
+     */
+    public static function intersection(Type $type1, Type $type2)
+    {
+        $type1 = UnionType::toUnion($type1);
+        $type2 = UnionType::toUnion($type2);
+
+        return new UnionType(...array_filter($type2->types, function (Type $t) use ($type1) {
+            foreach ($type1->types as $subtract) {
+                if ($t->__toString() === $subtract->__toString()) {
+                    return true;
+                }
+
+            }
+            return false;
+        }));
+    }
 }

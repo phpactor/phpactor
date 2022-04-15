@@ -99,6 +99,10 @@ abstract class Assignments implements Countable, IteratorAggregate
         return $variables[$index];
     }
 
+    public function lastOrCreate(): Variable
+    {
+    }
+
     public function last(): Variable
     {
         $last = end($this->variables);

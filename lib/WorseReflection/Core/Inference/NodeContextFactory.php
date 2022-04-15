@@ -68,6 +68,7 @@ class NodeContextFactory
         }
 
         $variable = $variables->last();
+
         return NodeContextFactory::create(
             $name,
             $start,
@@ -76,7 +77,7 @@ class NodeContextFactory
                 'type' => $variable->type(),
                 'symbol_type' => Symbol::VARIABLE,
             ]
-        )->withIssue(sprintf('Variable "%s" is undefined', $varName));
+        );
     }
 
     private static function contextFromParameters(

@@ -15,7 +15,7 @@ final class Variable
 
     public function __construct(string $name, Type $type, ?Type $classType = null)
     {
-        $this->name = $name;
+        $this->name = ltrim($name, '$');
         $this->type = $type;
         $this->classType = $classType;
     }

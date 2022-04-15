@@ -343,4 +343,22 @@ class TypeFactory
 
         return self::floatLiteral((float)$value);
     }
+
+    public static function unionEmpty(): UnionType
+    {
+        return new UnionType(
+            new IntLiteralType(0),
+            new FloatLiteralType(0.0),
+            new StringLiteralType(''),
+            new StringLiteralType('0'),
+            new ArrayLiteral([]),
+            new BooleanLiteralType(false),
+            new NullType()
+        );
+    }
+
+    public static function subtract(Type $from, Type $type): Type
+    {
+        return new SubtractType($from, $type);
+    }
 }

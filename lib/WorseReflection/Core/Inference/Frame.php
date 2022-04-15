@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Closure;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class Frame
 {
@@ -129,12 +131,15 @@ class Frame
             [ $typeAssertions->properties(), $this->properties() ],
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
+
+            $type = new MissingType();
+            foreach ($frameVariables->lessThanOrEqualTo($offset) as $variable) {
+                $type = $variable->type();
+            }
             foreach ($typeAssertions as $typeAssertion) {
-                $original = $frameVariables->byName($typeAssertion->name())->lastOrNull();
-                $originalType = $original ? $original->type() : TypeFactory::undefined();
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    TypeCombinator::applyType($originalType, $typeAssertion->type()),
+                    UnionType::toUnion($typeAssertion->apply($type))->reduce(),
                     $typeAssertion->classType(),
                 );
                 $frameVariables->add($offset, $variable);

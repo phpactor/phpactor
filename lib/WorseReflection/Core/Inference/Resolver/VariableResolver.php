@@ -13,7 +13,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class VariableResolver implements Resolver
@@ -40,14 +43,18 @@ class VariableResolver implements Resolver
             return $access;
         }
 
-        $name = $node->getText();
+        $variableName = $node->getText();
 
         return NodeContextFactory::forVariableAt(
             $frame,
             $node->getStartPosition(),
             $node->getEndPosition(),
-            $name
-        );
+            $variableName
+        )->withTypeAssertion(TypeAssertion::variable(
+            $variableName,
+            fn (Type $type) => TypeCombinator::subtract(TypeFactory::unionEmpty(), $type),
+            fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
+        ));
     }
 
     private function resolvePropertyVariable(NodeContextResolver $resolver, Variable $node): NodeContext

@@ -3,8 +3,11 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use ArrayIterator;
+use Closure;
 use IteratorAggregate;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Traversable;
 
 /**
@@ -32,10 +35,9 @@ final class TypeAssertions implements IteratorAggregate
     {
         return implode("\n", array_map(function (TypeAssertion $typeAssertion) {
             return sprintf(
-                '%s: %s: %s',
+                '%s: %s',
                 $typeAssertion->variableType(),
                 $typeAssertion->name(),
-                $typeAssertion->type()->__toString()
             );
         }, $this->typeAssertions));
     }
@@ -46,11 +48,13 @@ final class TypeAssertions implements IteratorAggregate
     }
 
     /**
-     * @param callable(TypeAssertion): TypeAssertion $closure
+     * @param Closure(Type): Type $map
      */
-    public function map(callable $closure): self
+    public function mapType(Closure $map): self
     {
-        return new self(array_map($closure, $this->typeAssertions));
+        return new self(array_map(function (TypeAssertion $assertion) use ($map) {
+            return $assertion->withType($map($assertion->type()));
+        }, $this->typeAssertions));
     }
 
     public function add(TypeAssertion $typeAssertion): self
@@ -77,7 +81,7 @@ final class TypeAssertions implements IteratorAggregate
     public function negate(): self
     {
         return $this->map(function (TypeAssertion $assertion) {
-            return $assertion->withType(TypeFactory::not($assertion->type()));
+            return $assertion->negate();
         });
     }
 
@@ -85,10 +89,6 @@ final class TypeAssertions implements IteratorAggregate
     {
         $assertions = $this->typeAssertions;
         foreach ($typeAssertions as $key => $assertion) {
-            if (isset($assertions[$key])) {
-                $assertions[$key] = $assertions[$key]->withType(TypeCombinator::add($assertions[$key]->type(), $assertion->type()));
-                continue;
-            }
             $assertions[$key] = $assertion;
         }
 

@@ -38,6 +38,7 @@ class AssertFrameWalker implements Walker
             }
 
             $context = $resolver->resolveNode($frame, $expression->expression);
+
             $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition());
         }
 

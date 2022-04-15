@@ -1,0 +1,34 @@
+<?php
+
+function objectOrNull(): null|Foo {}
+$foo = objectOrNull();
+
+assert(!$foo); // null
+wrAssertType('null', $foo);
+
+
+assert(
+    ! // false === true
+    (
+        // assert: foo = "bar" | foo is not bar
+        $foo === "bar" &&
+        // assert: {true: narrow to Boo, false: subtract boo}
+        $bar instanceof Boo &&
+        // assert: {true: bar is Boo | false subtract Boo}
+        !$bar instanceof Boo &&
+        // assert: {true not empty, false: empty}
+        $bag &&
+        // assert: {true not empty, false: empty}
+        !$baz &&
+        // assert: bar null
+        is_null($bar)
+    )
+);
+// foo != "bar
+// bar != Boo
+// bag = empty
+
+// each operand operating on a variable
+// CAN provide:
+//    - type transformation if true
+//    - type transformation if false

@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class NodeContextModifier
 {
-    public static function negate(NodeContext $context): NodeContext
+    public static function subtract(NodeContext $context): NodeContext
     {
         return $context
             ->withType(TypeUtil::toBool($context->type())->negate())

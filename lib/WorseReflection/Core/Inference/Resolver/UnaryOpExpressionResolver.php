@@ -12,7 +12,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextModifier;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -46,7 +48,9 @@ class UnaryOpExpressionResolver implements Resolver
     {
         switch ($operatorKind) {
             case TokenKind::ExclamationToken:
-                return $doubleNegate ? $context : NodeContextModifier::negate($context);
+                return $context->withType(
+                    TypeUtil::toBool($context->type())->negate()
+                )->negateTypeAssertions();
             case TokenKind::PlusToken:
                 return $context->withType(TypeUtil::toNumber($type)->identity());
             case TokenKind::MinusToken:

@@ -1,0 +1,7 @@
+<?php
+
+function objectOrNull(): null|Foo|string {}
+
+$foo = objectOrNull();
+assert($foo);
+wrAssertType('Foo|string', $foo);
