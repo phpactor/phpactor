@@ -216,7 +216,8 @@ class BinaryExpressionResolver implements Resolver
         }
 
         if ($text === 'false') {
-            return $context->typeAssertions()->negate();
+            $context->typeAssertions()->negate();
+            return $context;
         }
 
         return $context;
