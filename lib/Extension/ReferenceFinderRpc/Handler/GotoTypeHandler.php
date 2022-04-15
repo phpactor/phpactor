@@ -51,11 +51,11 @@ class GotoTypeHandler implements Handler
             ->language($arguments[self::PARAM_LANGUAGE])->build();
 
         $offset = ByteOffset::fromInt($arguments[self::PARAM_OFFSET]);
-        $location = $this->locator->locateTypes($document, $offset);
+        $location = $this->locator->locateTypes($document, $offset)->first();
 
         return OpenFileResponse::fromPathAndOffset(
-            $location->uri()->path(),
-            $location->offset()->toInt()
+            $location->location()->uri()->path(),
+            $location->location()->offset()->toInt()
         )->withTarget($arguments[self::PARAM_TARGET]);
     }
 }

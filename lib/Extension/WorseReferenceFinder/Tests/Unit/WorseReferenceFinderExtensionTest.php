@@ -51,7 +51,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ByteOffset::fromInt(10)
         );
 
-        $this->assertEquals('/foo', $location->first()->uri()->path());
+        $this->assertEquals('/foo', $location->first()->location()->uri()->path());
     }
 
     public function testLocateVariable(): void
