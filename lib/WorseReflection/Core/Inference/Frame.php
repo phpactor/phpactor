@@ -132,10 +132,10 @@ class Frame
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
             $type = new MissingType();
-            foreach ($frameVariables->lessThanOrEqualTo($offset) as $variable) {
-                $type = $variable->type();
-            }
             foreach ($typeAssertions as $typeAssertion) {
+                foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo($offset) as $variable) {
+                    $type = $variable->type();
+                }
                 $variable = new Variable(
                     $typeAssertion->name(),
                     UnionType::toUnion($typeAssertion->apply($type))->reduce(),

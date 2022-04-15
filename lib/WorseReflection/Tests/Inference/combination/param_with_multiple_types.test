@@ -1,0 +1,15 @@
+<?php
+
+class Foo {
+    private function walkBinaryExpression(
+        Type $left,
+        Type $right,
+        int $operator
+    ): Type {
+        if ($left instanceof Concatable) {
+            wrAssertType('Type|Concatable', $left);
+        }
+
+        wrAssertType('Type', $left);
+    }
+}
