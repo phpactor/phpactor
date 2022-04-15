@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReferenceFinder;
 
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\TextDocument\ByteOffset;
@@ -30,7 +32,7 @@ class WorseReflectionTypeLocator implements TypeLocator
     }
 
     
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {
             throw new UnsupportedDocument('I only work with PHP files');
@@ -47,7 +49,9 @@ class WorseReflectionTypeLocator implements TypeLocator
             $byteOffset->toInt()
         );
 
-        return $this->gotoType($offset->symbolContext());
+        return new TypeLocations([
+            new TypeLocation($offset->symbolContext()->type(), $this->gotoType($offset->symbolContext()))
+        ]);
     }
 
     private function gotoType(NodeContext $symbolContext): Location

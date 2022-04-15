@@ -14,7 +14,7 @@ class SomeTypeLocator implements TypeLocator
     const EXAMPLE_PATH = '/foobar';
 
     
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): Location
     {
         return new Location(
             TextDocumentUri::fromString(self::EXAMPLE_PATH),

@@ -55,8 +55,8 @@ class ChainTypeLocatorTest extends TestCase
         $location2 = $this->createLocation();
         $this->locator2->locateType($this->document, $this->offset)->willReturn($location2);
 
-        $location = $locator->locateType($this->document, $this->offset);
-        $this->assertSame($location, $location1);
+        $location = $locator->locateTypes($this->document, $this->offset);
+        $this->assertSame($location->first(), $location1);
     }
 
     public function testExceptionWhenTypeNotFound(): void
@@ -69,7 +69,7 @@ class ChainTypeLocatorTest extends TestCase
         ]);
 
         $this->locator1->locateType($this->document, $this->offset)->willThrow(new CouldNotLocateType('No'));
-        $locator->locateType($this->document, $this->offset);
+        $locator->locateTypes($this->document, $this->offset);
     }
 
     public function testExceptionWhenTypeNotSupported(): void
@@ -82,7 +82,7 @@ class ChainTypeLocatorTest extends TestCase
         ]);
 
         $this->locator1->locateType($this->document, $this->offset)->willThrow(new UnsupportedDocument('Not supported'));
-        $locator->locateType($this->document, $this->offset);
+        $locator->locateTypes($this->document, $this->offset);
     }
 
     private function createLocation(): Location

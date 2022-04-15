@@ -47,7 +47,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
             $offset = PositionConverter::positionToByteOffset($position, $textDocument->text);
 
             try {
-                $location = $this->typeLocator->locateType(
+                $location = $this->typeLocator->locateTypes(
                     TextDocumentBuilder::create($textDocument->text)->uri($textDocument->uri)->language('php')->build(),
                     $offset
                 );

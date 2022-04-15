@@ -27,12 +27,12 @@ final class ChainTypeLocator implements TypeLocator
         }
     }
 
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): Location
     {
         $messages = [];
         foreach ($this->locators as $locator) {
             try {
-                return $locator->locateType($document, $byteOffset);
+                return $locator->locateTypes($document, $byteOffset);
             } catch (UnsupportedDocument $unsupported) {
                 $this->logger->debug(sprintf(
                     'Document is unsupported by "%s": %s',

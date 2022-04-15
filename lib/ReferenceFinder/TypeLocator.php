@@ -15,8 +15,6 @@ interface TypeLocator
      *
      * If this locator cannot provide a location it MUST throw a
      * CouldNotLocateType exception.
-     *
-     * @throws CouldNotLocateType
      */
-    public function locateType(TextDocument $document, ByteOffset $byteOffset): Location;
+    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations;
 }

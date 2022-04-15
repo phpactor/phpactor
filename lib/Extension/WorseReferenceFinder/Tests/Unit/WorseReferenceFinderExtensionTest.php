@@ -42,7 +42,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
 
         assert($locator instanceof TypeLocator);
 
-        $location = $locator->locateType(
+        $location = $locator->locateTypes(
             TextDocumentBuilder::create(
                 <<<'EOT'
                     <?php class Foobar{};
@@ -51,7 +51,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ByteOffset::fromInt(10)
         );
 
-        $this->assertEquals('/foo', $location->uri()->path());
+        $this->assertEquals('/foo', $location->first()->uri()->path());
     }
 
     public function testLocateVariable(): void

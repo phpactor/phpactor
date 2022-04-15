@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
@@ -38,8 +39,9 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('One.php'), $location->uri()->path());
-        self::assertEquals(9, $location->offset()->toInt());
+        self::assertEquals('One', $location->type()->__toString());
+        self::assertEquals($this->workspace->path('One.php'), $location->location()->uri()->path());
+        self::assertEquals(9, $location->location()->offset()->toInt());
     }
 
     public function testLocatesArrayType(): void
@@ -69,8 +71,8 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('One.php'), $location->uri()->path());
-        self::assertEquals(9, $location->offset()->toInt());
+        self::assertEquals($this->workspace->path('One.php'), $location->location()->uri()->path());
+        self::assertEquals(9, $location->location()->offset()->toInt());
     }
 
     public function testLocatesInterface(): void
@@ -100,8 +102,8 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('One.php'), $location->uri()->path());
-        self::assertEquals(9, $location->offset()->toInt());
+        self::assertEquals($this->workspace->path('One.php'), $location->location()->uri()->path());
+        self::assertEquals(9, $location->location()->offset()->toInt());
     }
 
     public function testLocatesFirstUnion(): void
@@ -131,7 +133,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('Two.php'), $location->uri()->path());
+        self::assertEquals($this->workspace->path('Two.php'), $location->location()->uri()->path());
     }
 
     public function testLocatesFirstUnionWithNullAndScalar(): void
@@ -161,18 +163,18 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('Two.php'), $location->uri()->path());
+        self::assertEquals($this->workspace->path('Two.php'), $location->location()->uri()->path());
     }
 
-    protected function locate(string $manifset, string $source): Location
+    protected function locate(string $manifset, string $source): TypeLocation
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
         $this->workspace->loadManifest($manifset);
 
-        return (new WorseReflectionTypeLocator($this->reflector()))->locateType(
+        return (new WorseReflectionTypeLocator($this->reflector()))->locateTypes(
             TextDocumentBuilder::create($source)->language('php')->build(),
             ByteOffset::fromInt((int)$offset)
-        );
+        )->first();
     }
 }
