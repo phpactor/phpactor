@@ -172,8 +172,13 @@ class WorseExtractMethod implements ExtractMethod
         return $parameterVariables;
     }
 
-    private function returnVariables(Assignments $locals, ReflectionMethod $reflectionMethod, string $source, int $offsetStart, int $offsetEnd): array
-    {
+    private function returnVariables(
+        Assignments $locals,
+        ReflectionMethod $reflectionMethod,
+        string $source,
+        int $offsetStart,
+        int $offsetEnd
+    ): array {
         // variables that are:
         //
         // - defined in the selection
@@ -190,6 +195,7 @@ class WorseExtractMethod implements ExtractMethod
         $returnVariables = [];
         foreach ($tailDependencies as $variable) {
             $variables = $locals->byName($variable)
+                ->assignmentsOnly()
                 ->lessThanOrEqualTo($offsetEnd)
                 ->greaterThanOrEqualTo($offsetStart);
 

@@ -15,12 +15,15 @@ final class Variable
 
     private int $offset;
 
-    public function __construct(string $name, int $offset, Type $type, ?Type $classType = null)
+    private bool $wasAssigned;
+
+    public function __construct(string $name, int $offset, Type $type, ?Type $classType = null, bool $wasAssigned = false)
     {
         $this->name = ltrim($name, '$');
         $this->type = $type;
         $this->classType = $classType;
         $this->offset = $offset;
+        $this->wasAssigned = $wasAssigned;
     }
 
     public function __toString()
@@ -52,12 +55,17 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $this->offset, $type, $this->classType);
+        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned);
     }
 
     public function withOffset(int $offset): self
     {
-        return new self($this->name, $offset, $this->type, $this->classType);
+        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned);
+    }
+
+    public function asAssignment(): self
+    {
+        return new self($this->name, $this->offset, $this->type, $this->classType, true);
     }
 
     public function type(): Type
@@ -78,5 +86,10 @@ final class Variable
     public function offset(): int
     {
         return $this->offset;
+    }
+
+    public function wasAssigned(): bool
+    {
+        return $this->wasAssigned;
     }
 }

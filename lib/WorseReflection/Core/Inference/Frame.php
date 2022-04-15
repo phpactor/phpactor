@@ -44,15 +44,7 @@ class Frame
     public function __toString(): string
     {
         return implode("\n", array_map(function (Assignments $assignments, string $type) {
-            return implode("\n", array_map(function (Variable $variable) use ($type) {
-                return sprintf(
-                    '%s - %s:%s: %s',
-                    $type,
-                    $variable->name(),
-                    $variable->offset(),
-                    $variable->type()->__toString()
-                );
-            }, iterator_to_array($assignments)));
+            return $type ."\n:" . $assignments->__toString();
         }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
 

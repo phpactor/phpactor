@@ -28,6 +28,19 @@ abstract class Assignments implements Countable, IteratorAggregate
         $this->sort();
     }
 
+
+    public function __toString(): string
+    {
+        return implode("\n", array_map(function (Variable $variable) {
+            return sprintf(
+                '%s:%s: %s',
+                $variable->name(),
+                $variable->offset(),
+                $variable->type()->__toString()
+            );
+        }, $this->variables));
+    }
+
     public function add(Variable $variable): void
     {
         $this->variables[] = $variable;
@@ -149,6 +162,13 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
             return $v->offset() === $offset;
+        }));
+    }
+
+    public function assignmentsOnly(): Assignments
+    {
+        return new static(array_filter($this->variables, function (Variable $v) {
+            return $v->wasAssigned();
         }));
     }
 

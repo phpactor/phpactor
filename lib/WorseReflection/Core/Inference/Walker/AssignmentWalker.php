@@ -100,7 +100,7 @@ class AssignmentWalker extends AbstractWalker
             ]
         );
 
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add(WorseVariable::fromSymbolContext($context)->asAssignment());
     }
 
     private function walkMemberAccessExpression(

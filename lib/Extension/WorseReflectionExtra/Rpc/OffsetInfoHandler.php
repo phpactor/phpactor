@@ -79,7 +79,7 @@ class OffsetInfoHandler implements Handler
                     str_replace(PHP_EOL, '', var_export(TypeUtil::valueOrNull($local->type()), true))
                 );
 
-                $frame[$assignmentType][$assignments->offsetFor($local)] = $info;
+                $frame[$assignmentType][$local->offset()] = $info;
             }
         }
         $return['frame'] = $frame;
