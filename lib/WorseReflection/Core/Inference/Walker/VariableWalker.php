@@ -84,7 +84,7 @@ class VariableWalker extends AbstractWalker
             $locals->replace($existing, $existing->withType($context->type()));
             return $frame;
         }
-        $frame->locals()->add($context->symbol()->position()->start(), WorseVariable::fromSymbolContext($context));
+        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
 
         return $frame;
     }
