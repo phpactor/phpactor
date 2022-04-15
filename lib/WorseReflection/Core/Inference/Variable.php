@@ -13,11 +13,14 @@ final class Variable
 
     private ?Type $classType;
 
-    public function __construct(string $name, Type $type, ?Type $classType = null)
+    private int $offset;
+
+    public function __construct(string $name, int $offset, Type $type, ?Type $classType = null)
     {
         $this->name = ltrim($name, '$');
         $this->type = $type;
         $this->classType = $classType;
+        $this->offset = $offset;
     }
 
     public function __toString()
@@ -29,6 +32,7 @@ final class Variable
     {
         return new self(
             $symbolContext->symbol()->name(),
+            $symbolContext->symbol()->position()->start(),
             $symbolContext->type(),
             $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null
         );
@@ -64,5 +68,10 @@ final class Variable
     public function classType(): Type
     {
         return $this->classType ?: new MissingType();
+    }
+
+    public function offset(): int
+    {
+        return $this->offset;
     }
 }

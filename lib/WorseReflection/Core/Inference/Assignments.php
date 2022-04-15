@@ -28,9 +28,9 @@ abstract class Assignments implements Countable, IteratorAggregate
         $this->sort();
     }
 
-    public function add(int $offset, Variable $variable): void
+    public function add(Variable $variable): void
     {
-        $this->variables[$offset] = $variable;
+        $this->variables[] = $variable;
         $this->sort();
     }
 
@@ -40,37 +40,37 @@ abstract class Assignments implements Countable, IteratorAggregate
     public function byName(string $name): Assignments
     {
         $name = ltrim($name, '$');
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($name) {
+        return new static(array_filter($this->variables, function (Variable $v) use ($name) {
             return $v->name() === $name;
-        }, ARRAY_FILTER_USE_BOTH));
+        }));
     }
 
     public function lessThanOrEqualTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($offset) {
-            return $o <= $offset;
-        }, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() <= $offset;
+        }));
     }
 
     public function lessThan(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($offset) {
-            return $o < $offset;
-        }, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() < $offset;
+        }));
     }
 
     public function greaterThan(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($offset) {
-            return $o > $offset;
-        }, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() > $offset;
+        }));
     }
 
     public function greaterThanOrEqualTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($offset) {
-            return $o >= $offset;
-        }, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() >= $offset;
+        }));
     }
 
     public function first(): Variable
@@ -147,20 +147,9 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function equalTo(int $offset): Assignments
     {
-        return new static(array_filter($this->variables, function (Variable $v, int $o) use ($offset) {
-            return $o === $offset;
-        }, ARRAY_FILTER_USE_BOTH));
-    }
-
-    public function offsetFor(Variable $target): ?int
-    {
-        foreach ($this->variables as $offset => $variable) {
-            if ($target === $variable) {
-                return $offset;
-            }
-        }
-
-        return null;
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() === $offset;
+        }));
     }
 
     public function lastOrNull(): ?Variable
@@ -176,6 +165,8 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     private function sort(): void
     {
-        ksort($this->variables);
+        usort($this->variables, function (Variable $one, Variable $two) {
+            return $one->offset() <=> $two->offset();
+        });
     }
 }
