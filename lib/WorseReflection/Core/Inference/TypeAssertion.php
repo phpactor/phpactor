@@ -42,6 +42,17 @@ final class TypeAssertion
         $this->offset = $offset;
     }
 
+    public function __toString()
+    {
+        return sprintf(
+            '%s: %s#%s %s',
+            $this->variableType(),
+            $this->name(),
+            $this->offset(),
+            $this->polarity() ? 'positive' : 'negative',
+        );
+    }
+
     public static function variable(string $name, int $offset, Closure $true, Closure $false): self
     {
         return new self(self::VARIABLE_TYPE_VARIABLE, $name, $offset, $true, $false, null);
@@ -113,16 +124,5 @@ final class TypeAssertion
     public function polarity(): bool
     {
         return $this->polarity;
-    }
-
-    public function __toString()
-    {
-        return sprintf(
-            '%s: %s#%s %s',
-            $this->variableType(),
-            $this->name(),
-            $this->offset(),
-            $this->polarity() ? 'positive' : 'negative',
-        );
     }
 }

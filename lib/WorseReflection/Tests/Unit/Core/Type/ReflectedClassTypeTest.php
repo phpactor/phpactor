@@ -31,7 +31,7 @@ class ReflectedClassTypeTest extends TestCase
                 '<?php class Bar{};',
                 'Bar'
             ),
-            function (Type $type) {
+            function (Type $type): void {
                 self::assertTrue($type->accepts(TypeFactory::class('Bar'))->isTrue());
             }
         ];
@@ -40,7 +40,7 @@ class ReflectedClassTypeTest extends TestCase
                 '<?php class Bar{}; class Foobar extends Bar {};',
                 'Bar'
             ),
-            function (Type $type) {
+            function (Type $type): void {
                 self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isTrue());
             }
         ];
@@ -49,7 +49,7 @@ class ReflectedClassTypeTest extends TestCase
                 '<?php interface Bar{}; class Foobar implements Bar {};',
                 'Bar'
             ),
-            function (Type $type) {
+            function (Type $type): void {
                 self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
             }
         ];
@@ -58,7 +58,7 @@ class ReflectedClassTypeTest extends TestCase
                 '<?php class Bar{}; class Foobar {};',
                 'Bar'
             ),
-            function (Type $type) {
+            function (Type $type): void {
                 self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
             }
         ];

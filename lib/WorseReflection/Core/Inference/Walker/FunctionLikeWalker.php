@@ -10,7 +10,6 @@ use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -189,7 +188,7 @@ class FunctionLikeWalker extends AbstractWalker
         }
         foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_PROPERTY) as $property) {
             assert($property instanceof ReflectionProperty);
-            $frame->properties()->add(new Variable($property->name(),$property->position()->start(), $property->type(), $classType));
+            $frame->properties()->add(new Variable($property->name(), $property->position()->start(), $property->type(), $classType));
         }
     }
 }

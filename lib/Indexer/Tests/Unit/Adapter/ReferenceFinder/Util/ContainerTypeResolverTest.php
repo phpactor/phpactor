@@ -25,6 +25,7 @@ class ContainerTypeResolverTest extends IntegrationTestCase
         [$source, $offset] = ExtractOffset::fromSource($source);
 
         $type = (new ContainerTypeResolver($this->createReflector()))->resolveDeclaringContainerType(
+            /** @phpstan-ignore-next-line */
             $memberType,
             $memberName,
             $containerType
