@@ -25,7 +25,8 @@ class Test
     public function doSomething(): void
     {
         if ($this->timeline instanceof Trip) {
-            wrAssertType('Timeline|Trip', $this->timeline);
+            wrAssertType('string', $this->timeline->getLinkedCustomer());
         }
     }
 }
+
