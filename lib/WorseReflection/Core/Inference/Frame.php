@@ -49,7 +49,7 @@ class Frame
                     '%s - %s:%s: %s',
                     $type,
                     $variable->name(),
-                    $$variable->offset(),
+                    $variable->offset(),
                     $variable->type()->__toString()
                 );
             }, iterator_to_array($assignments)));
@@ -138,7 +138,7 @@ class Frame
                 }
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    $original ? ($createNew  ? $typeAssertion->offset() : $original->offset()): $typeAssertion->offset(),
+                    $createNew  ? $offset : $typeAssertion->offset(),
                     UnionType::toUnion($typeAssertion->apply(
                         $original ? $original->type() : new MissingType(),
                     ))->reduce(),
