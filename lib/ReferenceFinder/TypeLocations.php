@@ -58,4 +58,17 @@ class TypeLocations implements IteratorAggregate
     {
         return count($this->typeLocations);
     }
+
+    public function byTypeName(string $typeName): TypeLocation
+    {
+        foreach ($this->typeLocations as $typeLocation) {
+            if ($typeLocation->type()->__toString() === $typeName) {
+                return $typeLocation;
+            }
+        }
+        throw new CouldNotLocateType(sprintf(
+            'Unknown type name "%s"',
+            $typeName
+        ));
+    }
 }

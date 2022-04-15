@@ -8,7 +8,11 @@ use Phpactor\LanguageServerProtocol\DefinitionRequest;
 use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServerProtocol\TypeDefinitionRequest;
+use Phpactor\LanguageServer\Core\Rpc\Message;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
+use Phpactor\LanguageServer\Core\Server\ResponseWatcher\TestResponseWatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -23,6 +27,7 @@ use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use function Amp\Promise\wait;
 
 class TypeDefinitionHandlerTest extends TestCase
 {
@@ -40,7 +45,7 @@ class TypeDefinitionHandlerTest extends TestCase
                 )
             )
         ];
-        $tester = $this->createTester($locations);
+        [$tester, $_] = $this->createTester($locations);
         $response = $tester->requestAndWait(TypeDefinitionRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
             'position' => ProtocolFactory::position(0, 0),
@@ -53,10 +58,44 @@ class TypeDefinitionHandlerTest extends TestCase
         $this->assertEquals(2, $location->range->start->character);
     }
 
+    public function testGoesToMultipleTypes(): void
+    {
+        $locations = [
+            new TypeLocation(
+                TypeFactory::class('Foobar'),
+                new PhpactorLocation(
+                    TextDocumentUri::fromString(self::EXAMPLE_URI),
+                    ByteOffset::fromInt(2)
+                )
+            ),
+            new TypeLocation(
+                TypeFactory::class('Barfoo'),
+                new PhpactorLocation(
+                    TextDocumentUri::fromString(self::EXAMPLE_URI),
+                    ByteOffset::fromInt(2)
+                )
+            )
+        ];
+        [$tester, $watcher] = $this->createTester($locations);
+        $promise = $tester->request(TypeDefinitionRequest::METHOD, [
+            'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
+            'position' => ProtocolFactory::position(0, 0),
+        ]);
+        $watcher->resolveLastResponse(new MessageActionItem('Foobar'));
+        $response = wait($promise);
+
+        $location = $response->result;
+
+        $this->assertInstanceOf(Location::class, $location);
+        $this->assertEquals(self::EXAMPLE_URI, $location->uri);
+        $this->assertEquals(2, $location->range->start->character);
+    }
+
     /**
+     * @return array{LanguageServerTester,TestResponseWatcher}
      * @param TypeLocation[] $locations
      */
-    private function createTester(array $locations): LanguageServerTester
+    private function createTester(array $locations): array
     {
         $document = TextDocumentBuilder::create(self::EXAMPLE_TEXT)->uri(self::EXAMPLE_URI)->build();
         $builder = LanguageServerTesterBuilder::create();
@@ -65,10 +104,11 @@ class TypeDefinitionHandlerTest extends TestCase
             new TestTypeLocator(
                 new TypeLocations($locations)
             ),
-            new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace()))
+            new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace())),
+            $builder->clientApi(),
         ))->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_TEXT);
 
-        return $tester;
+        return [$tester, $builder->responseWatcher()];
     }
 }
