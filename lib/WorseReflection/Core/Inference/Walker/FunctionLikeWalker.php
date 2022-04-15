@@ -188,7 +188,7 @@ class FunctionLikeWalker extends AbstractWalker
         }
         foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_PROPERTY) as $property) {
             assert($property instanceof ReflectionProperty);
-            $frame->properties()->add(new Variable($property->name(), $property->position()->start(), $property->type(), $classType));
+            $frame->properties()->add(new Variable($property->name(), $property->position()->start(), $property->inferredType(), $classType));
         }
     }
 }
