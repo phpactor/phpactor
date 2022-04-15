@@ -137,7 +137,7 @@ class FunctionLikeWalker extends AbstractWalker
             // add it with above context and continue
             // TODO: Do we infer the type hint??
             if (0 === $parentVars->byName($varName)->count()) {
-                $frame->locals()->add($element->getStartPosition(), Variable::fromSymbolContext($variableContext));
+                $frame->locals()->add(Variable::fromSymbolContext($variableContext));
                 continue;
             }
 
@@ -146,7 +146,7 @@ class FunctionLikeWalker extends AbstractWalker
             $variableContext = $variableContext
                 ->withType($variable->type());
 
-            $frame->locals()->add($element->getStartPosition(), Variable::fromSymbolContext($variableContext));
+            $frame->locals()->add(Variable::fromSymbolContext($variableContext));
         }
     }
 
