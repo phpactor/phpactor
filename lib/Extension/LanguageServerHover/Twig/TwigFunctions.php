@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerHover\Twig;
 
-use Phpactor\Extension\LanguageServerHover\Twig\Function\TypeShortName;
-use Phpactor\Extension\LanguageServerHover\Twig\Function\TypeType;
+use Phpactor\Extension\LanguageServerHover\Twig\Functions\TypeShortName;
+use Phpactor\Extension\LanguageServerHover\Twig\Functions\TypeType;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\TypeUtil;
@@ -14,7 +14,7 @@ final class TwigFunctions
 {
     public static function add(Environment $env): Environment
     {
-        $env->addFunction(new TwigFunction('typeShortName', new TypeShortName());
+        $env->addFunction(new TwigFunction('typeShortName', new TypeShortName()));
 
         $env->addFunction(new TwigFunction('typeDefined', function (Type $type) {
             return TypeUtil::isDefined($type);

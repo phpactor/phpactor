@@ -1,1 +1,1 @@
-type: _<missing>_
+<missing>

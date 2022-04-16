@@ -1,2 +1,1 @@
-variable: _zed_
-type: _<missing>_
+<missing>

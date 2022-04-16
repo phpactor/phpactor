@@ -1,3 +1,1 @@
-{% if object.symbol.isKnown %}{{ object.symbol.symbolType }}: _{{ object.symbol.name }}_{% endif %}
-
-type: _{{ render(object.type) }}_
+{% if typeType(object.type) %}{{- typeType(object.type) }} {% endif %}{{- object.type -}}

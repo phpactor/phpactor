@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerHover\Twig\Function;
+namespace Phpactor\Extension\LanguageServerHover\Twig\Functions;
 
 use Phpactor\WorseReflection\TypeUtil;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
