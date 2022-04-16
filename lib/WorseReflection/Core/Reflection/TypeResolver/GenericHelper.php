@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -18,10 +19,11 @@ class GenericHelper
 
         $extendsType = $class->docblock()->extends();
         $extendsType = $class->scope()->resolveFullyQualifiedName($extendsType);
+        $templateMap = $declaringClass->templateMap();
 
         if ($extendsType instanceof GenericClassType) {
             $arguments = $extendsType->arguments();
-            return self::resolveGenericType($declaringClass, $type, $arguments);
+            return self::resolveGenericType($templateMap, $type, $arguments);
         }
 
         $implements = $class->docblock()->implements();
@@ -34,7 +36,8 @@ class GenericHelper
 
             if ($implementsType->name()->full() === $declaringClass->name()->__toString()) {
                 $arguments = $implementsType->arguments();
-                return self::resolveGenericType($declaringClass, $type, $arguments);
+
+                return self::resolveGenericType($templateMap, $type, $arguments);
             }
         }
 
@@ -44,12 +47,21 @@ class GenericHelper
     /**
      * @param Type[] $arguments
      */
-    private static function resolveGenericType(ReflectionClassLike $declaringClass, Type $type, array $arguments): Type
+    private static function resolveGenericType(TemplateMap $templateMap, Type $type, array $arguments): Type
     {
-        if ($type instanceof GenericClassType) {
-            return $type->setArguments($arguments);
+        if (!$type instanceof GenericClassType) {
+            return $templateMap->get(TypeUtil::short($type), $arguments);
         }
 
-        return $declaringClass->templateMap()->get(TypeUtil::short($type), $arguments);
+        // replace any unresolved template parameters with any
+        // type constraint defined by the parameter declaration
+        // (e.g. @template T of Foo)
+        foreach ($arguments as $argument) {
+            if ($templateMap->has(TypeUtil::short($argument))) {
+                $argument = $templateMap->get(TypeUtil::short($argument));
+            }
+        }
+
+        return $type->setArguments($arguments);
     }
 }
