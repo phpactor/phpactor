@@ -1,10 +1,12 @@
 <?php
 
+namespace Foo;
+
 /**
  * @template T
  * @extends IteratorAggregate<T>
  */
-interface ReflectionCollection extends IteratorAggregate, Countable
+interface ReflectionCollection extends \IteratorAggregate, \Countable
 {
 }
 
@@ -36,8 +38,8 @@ interface ReflectionClassLike
 /** @var ReflectionClassLike $reflection */
 $reflection;
 foreach ($reflection->methods()->byName('__construct') as $constructor) {
-    wrAssertType('ReflectionClassLike', $reflection);
-    wrAssertType('ReflectionMethodCollection', $reflection->methods());
-    wrAssertType('ReflectionMemberCollection<ReflectionMethod>', $reflection->methods()->byName('foo'));
-    wrAssertType('ReflectionMethod', $constructor);
+    wrAssertType('Foo\ReflectionClassLike', $reflection);
+    wrAssertType('Foo\ReflectionMethodCollection', $reflection->methods());
+    wrAssertType('Foo\ReflectionMemberCollection<Foo\ReflectionMethod>', $reflection->methods()->byName('foo'));
+    wrAssertType('Foo\ReflectionMethod', $constructor);
 }
