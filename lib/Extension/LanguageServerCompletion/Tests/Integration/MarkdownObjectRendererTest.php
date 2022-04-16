@@ -29,8 +29,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
 
     protected function setUp(): void
     {
-        $this->workspace()->mkdir('project');
         $this->workspace()->reset();
+        $this->workspace()->mkdir('project');
         $this->locator = new StubSourceLocator(ReflectorBuilder::create()->build(), $this->workspace()->path('project'), $this->workspace()->path('cache'));
         $this->reflector = ReflectorBuilder::create()
             ->addLocator($this->locator)
