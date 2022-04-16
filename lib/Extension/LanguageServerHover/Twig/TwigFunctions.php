@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerHover\Twig;
 
+use Phpactor\Extension\LanguageServerHover\Twig\Function\TypeType;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\TypeUtil;
@@ -23,6 +24,7 @@ final class TwigFunctions
         $env->addFunction(new TwigFunction('typeDefined', function (Type $type) {
             return TypeUtil::isDefined($type);
         }));
+        $env->addFunction(new TwigFunction('typeType', new TypeType()));
 
         return $env;
     }

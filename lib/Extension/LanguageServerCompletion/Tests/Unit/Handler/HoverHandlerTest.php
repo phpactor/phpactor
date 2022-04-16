@@ -37,6 +37,10 @@ class HoverHandlerTest extends IntegrationTestCase
         yield 'var' => [
             '<?php $foo = "foo"; $f<>oo;',
         ];
+        yield 'interface type' => [
+            '<?php interface ThisInterface{}/** @var ThisInterface $foo */$f<>oo = "bar"',
+        ];
+
 
         yield 'poperty' => [
             '<?php class A { private $<>b; }',
