@@ -5,7 +5,7 @@ $foo;
 
 if (is_string($foo)) {
     wrAssertType('string', $foo, 'in');
-} else {
+} elseif (is_int($foo)) {
     wrAssertType('int', $foo, 'out');
 }
 

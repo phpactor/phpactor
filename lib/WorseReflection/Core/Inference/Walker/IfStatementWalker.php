@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Microsoft\PhpParser\Node\ElseIfClauseNode;
 use Microsoft\PhpParser\Node\Expression\ExitIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
@@ -38,7 +39,6 @@ class IfStatementWalker implements Walker
             return $frame;
         }
 
-
         $frame = $this->ifBranch(
             $resolver,
             $frame,
@@ -47,13 +47,26 @@ class IfStatementWalker implements Walker
             $this->resolveInitialEndPosition($node)
         );
 
+        foreach ($node->elseIfClauses as $clause) {
+            $frame = $this->ifBranch(
+                $resolver,
+                $frame,
+                $clause,
+                $clause->getStartPosition(),
+                $clause->getEndPosition(),
+            );
+        }
+
         return $frame;
     }
 
+    /**
+     * @param IfStatementNode|ElseIfClauseNode $node
+     */
     private function ifBranch(
         FrameResolver $resolver,
         Frame $frame,
-        IfStatementNode $node,
+        $node,
         int $start,
         int $end
     ): Frame
@@ -61,20 +74,23 @@ class IfStatementWalker implements Walker
         $context = $resolver->resolveNode($frame, $node->expression);
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $terminates = $this->branchTerminates($node);
-        
+
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
         $frame->restoreToStateBefore($node->getStartPosition(), $end);
-        
+
         if (!$terminates) {
             return $frame;
         }
-        
+
         $context->typeAssertions()->negate();
         $frame->applyTypeAssertions($context->typeAssertions(), $end, true);
         return $frame;
     }
 
-    private function branchTerminates(IfStatementNode $node): bool
+    /**
+     * @param IfStatementNode|ElseIfClauseNode $node
+     */
+    private function branchTerminates($node): bool
     {
         /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
