@@ -38,6 +38,7 @@ Improvements:
 
 Features:
 
+  - [lsp] show class category in offset hover info 
   - [lsp] jump to types in a union type
   - [wr] Type combination
   - [wr] Support for type assertions via. is_*, instanceof etc

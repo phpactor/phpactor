@@ -1,0 +1,21 @@
+<?php
+
+namespace Foo;
+interface IterableType{}
+
+interface Type {}
+class ClassType implements Type {}
+class ReflectedClassType extends ClassType {}
+class GenericClassType extends ReflectedClassType implements IterableType {}
+
+class Foo {
+    function foo(Type $foo)
+    {
+        if (!$foo instanceof GenericClassType) {
+            wrAssertType('Foo\Type', $foo);
+            return;
+        }
+
+        wrAssertType('Foo\Type|Foo\GenericClassType', $foo);
+    }
+}
