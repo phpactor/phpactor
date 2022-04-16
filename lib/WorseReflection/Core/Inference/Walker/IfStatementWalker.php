@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Microsoft\PhpParser\Node\ElseIfClauseNode;
 use Microsoft\PhpParser\Node\Expression\ExitIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
@@ -38,25 +39,61 @@ class IfStatementWalker implements Walker
             return $frame;
         }
 
-        $context = $resolver->resolveNode($frame, $node->expression);
-        $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
-        $terminates = $this->branchTerminates($node);
+        $frame = $this->ifBranch(
+            $resolver,
+            $frame,
+            $node,
+            $node->getStartPosition(),
+            $this->resolveInitialEndPosition($node)
+        );
 
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
-        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
-
-        if (!$terminates) {
-            return $frame;
+        foreach ($node->elseIfClauses as $clause) {
+            $frame = $this->ifBranch(
+                $resolver,
+                $frame,
+                $clause,
+                $clause->getStartPosition(),
+                $clause->getEndPosition(),
+            );
         }
-
-        $context->typeAssertions()->negate();
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition(), true);
-
 
         return $frame;
     }
 
-    private function branchTerminates(IfStatementNode $node): bool
+    /**
+     * @param IfStatementNode|ElseIfClauseNode $node
+     */
+    private function ifBranch(
+        FrameResolver $resolver,
+        Frame $frame,
+        $node,
+        int $start,
+        int $end
+    ): Frame {
+        $context = $resolver->resolveNode($frame, $node->expression);
+        $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
+        $terminates = $this->branchTerminates($node);
+
+        $frame->applyTypeAssertions($context->typeAssertions(), $start);
+        $frame->restoreToStateBefore($node->getStartPosition(), $end);
+
+        $context->typeAssertions()->negate();
+        if ($terminates) {
+            $frame->applyTypeAssertions($context->typeAssertions(), $end, true);
+        }
+
+        if ($node instanceof IfStatementNode && $node->elseClause) {
+            $frame->applyTypeAssertions($context->typeAssertions(), $node->elseClause->getStartPosition(), true);
+            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition());
+        }
+
+        return $frame;
+    }
+
+    /**
+     * @param IfStatementNode|ElseIfClauseNode $node
+     */
+    private function branchTerminates($node): bool
     {
         /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
@@ -98,5 +135,18 @@ class IfStatementWalker implements Walker
         }
 
         return false;
+    }
+
+    private function resolveInitialEndPosition(IfStatementNode $node): int
+    {
+        foreach ($node->elseIfClauses as $clause) {
+            return $clause->getStartPosition();
+        }
+
+        if ($node->elseClause) {
+            return $node->elseClause->getStartPosition();
+        }
+
+        return $node->getEndPosition();
     }
 }
