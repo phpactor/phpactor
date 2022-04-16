@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -169,7 +170,15 @@ class ForeachWalker extends AbstractWalker
 
             return new UnionType(...$possibleTypes);
         }
-        return $arrayType->iterableValueType();
+
+        if ($arrayType instanceof ArrayType) {
+            $value = $arrayType->iterableValueType();
+            if ($value instanceof IterableType) {
+                return $value->iterableValueType();
+            }
+        }
+
+        return new MixedType();
     }
 
     private function resolveValueType(ArrayType $type): Type
