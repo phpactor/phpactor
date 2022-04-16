@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CastExpressionResolver implements Resolver
@@ -32,7 +31,7 @@ class CastExpressionResolver implements Resolver
             ]
         );
 
-        if (!in_array($type->__toString(),[
+        if (!in_array($type->__toString(), [
             'string',
             'bool',
             'float',
@@ -47,6 +46,5 @@ class CastExpressionResolver implements Resolver
         }
 
         return $context;
-
     }
 }
