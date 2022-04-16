@@ -1,0 +1,21 @@
+<?php
+
+namespace Foo;
+
+/**
+ * @implements \IteratorAggregate<array-key,TypeAssertion>
+ */
+final class TypeAssertions implements \IteratorAggregate {}
+
+function (TypeAssertions $assertions): void
+{
+    foreach ([
+        [ $assertions, 'bar', ],
+        [ $assertions, 'foo', ],
+    ] as [ $typeAssertions, $frameVariables ]) {
+        foreach ($typeAssertions as $typeAssertion) {
+            wrAssertType('Foo\TypeAssertion', $typeAssertion);
+        }
+    }
+}
+

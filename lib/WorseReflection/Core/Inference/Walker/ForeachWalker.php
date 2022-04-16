@@ -42,7 +42,7 @@ class ForeachWalker extends AbstractWalker
         return $frame;
     }
 
-    private function processValue(FrameResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $collection): void
+    private function processValue(FrameResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $nodeContext): void
     {
         $itemName = $node->foreachValue;
         
@@ -52,12 +52,12 @@ class ForeachWalker extends AbstractWalker
         
         $expression = $itemName->expression;
         if ($expression instanceof Variable) {
-            $this->valueFromVariable($expression, $node, $collection, $frame);
+            $this->valueFromVariable($expression, $node, $nodeContext, $frame);
             return;
         }
 
         if ($expression instanceof ArrayCreationExpression) {
-            $this->valueFromArrayCreation($resolver, $expression, $node, $collection, $frame);
+            $this->valueFromArrayCreation($resolver, $expression, $node, $nodeContext, $frame);
         }
     }
 
@@ -96,7 +96,7 @@ class ForeachWalker extends AbstractWalker
         $frame->locals()->add(WorseVariable::fromSymbolContext($context));
     }
 
-    private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $collection, Frame $frame): void
+    private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $nodeContext, Frame $frame): void
     {
         $itemName = $expression->getText();
         
@@ -104,7 +104,7 @@ class ForeachWalker extends AbstractWalker
             return;
         }
 
-        $collectionType = $collection->type();
+        $type = $nodeContext->type();
 
         $context = NodeContextFactory::create(
             $itemName,
@@ -115,11 +115,11 @@ class ForeachWalker extends AbstractWalker
             ]
         );
         
-        if ($collectionType instanceof ReflectedClassType) {
-            $context = $context->withType($collectionType->iterableValueType());
+        if ($type instanceof ReflectedClassType) {
+            $context = $context->withType($type->iterableValueType());
         }
-        if ($collectionType instanceof ArrayType) {
-            $context = $context->withType($this->resolveValueType($collectionType));
+        if ($type instanceof IterableType) {
+            $context = $context->withType($this->resolveValueType($type));
         }
         
         $frame->locals()->add(WorseVariable::fromSymbolContext($context));
@@ -129,7 +129,7 @@ class ForeachWalker extends AbstractWalker
         FrameResolver $resolver,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
-        NodeContext $collection,
+        NodeContext $nodeContext,
         Frame $frame
     ): void {
         $elements = $expression->arrayElements;
@@ -137,7 +137,7 @@ class ForeachWalker extends AbstractWalker
             return;
         }
 
-        $arrayType = $collection->type();
+        $arrayType = $nodeContext->type();
 
         if (!$arrayType instanceof IterableType) {
             return;
@@ -168,7 +168,7 @@ class ForeachWalker extends AbstractWalker
                 }
             }
 
-            return new UnionType(...$possibleTypes);
+            return (new UnionType(...$possibleTypes))->reduce();
         }
 
         if ($arrayType instanceof ArrayType) {
@@ -181,19 +181,19 @@ class ForeachWalker extends AbstractWalker
         return new MixedType();
     }
 
-    private function resolveValueType(ArrayType $type): Type
+    private function resolveValueType(IterableType $type): Type
     {
         if ($type instanceof ArrayLiteral) {
-            return new UnionType(...$type->iterableValueTypes());
+            return (new UnionType(...$type->iterableValueTypes()));
         }
 
-        return $type->valueType;
+        return $type->iterableValueType();
     }
 
     private function resolveKeyType(IterableType $type): Type
     {
         if ($type instanceof ArrayLiteral) {
-            return new UnionType(...$type->iterableKeyTypes());
+            return (new UnionType(...$type->iterableKeyTypes()));
         }
 
         return $type->iterableKeyType();

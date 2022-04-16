@@ -15,7 +15,11 @@ final class UnionType implements Type
 
     public function __construct(Type ...$types)
     {
-        $this->types = $types;
+        $unique = [];
+        foreach ($types as $type) {
+            $unique[$type->__toString()] = $type;
+        }
+        $this->types = array_values($unique);
     }
 
     public function __toString(): string

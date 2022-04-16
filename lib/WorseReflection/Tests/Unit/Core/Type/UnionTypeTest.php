@@ -204,6 +204,16 @@ class UnionTypeTest extends TestCase
         ];
     }
 
+    public function testDeduplicatesTypesOnConstruct(): void
+    {
+        self::assertEquals('One|Two', TypeFactory::union(
+            TypeFactory::class('One'),
+            TypeFactory::class('Two'),
+            TypeFactory::class('One'),
+            TypeFactory::class('Two'),
+        )->__toString());
+    }
+
     /**
      * @return Type[]
      */
