@@ -278,3 +278,51 @@ and inference from parameters:
        $foobar; // type: Barfoo
        $barbar; // type: foofoo
    }
+
+Generics
+~~~~~~~~
+
+Phpactor currently supports the `@implements` and `@extends` generic tags:
+
+.. code:: php
+
+   <?php
+
+   namespace Foo;
+
+   /**
+    * @template T
+    * @extends IteratorAggregate<T>
+    */
+   interface ReflectionCollection extends \IteratorAggregate, \Countable
+   {
+   }
+
+   /**
+    * @template T of ReflectionMember
+    * @extends ReflectionCollection<T>
+    */
+   interface ReflectionMemberCollection extends ReflectionCollection
+   {
+       /**
+        * @return ReflectionMemberCollection<T>
+        */
+       public function byName(string $name): ReflectionMemberCollection;
+
+       /**
+        * @return ReflectionMemberCollection<T>
+        */
+       public function byMemberType(string $type): ReflectionMemberCollection;
+   }
+
+   interface ReflectionClassLike
+   {
+       public function members(): ReflectionMemberCollection;
+   }
+
+
+   /** @var ReflectionClassLike $reflection */
+   $reflection;
+   foreach ($reflection->members()->byMemberType('fii')->byName('__construct') as $constructor) {
+        $reflection-><>
+   }
