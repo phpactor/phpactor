@@ -21,6 +21,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] support for casts
   - [wr] if statement branches
   - [wr] inline type inference
   - [wr] infer param types from _function_ docblock
