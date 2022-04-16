@@ -34,7 +34,7 @@ final class ClassReference
         bool $isClassDeclaration = false,
         bool $hasAlias = false,
         bool $isImport = false
-    ) {
+    ): self {
         $new = new self();
         $new->position = $position;
         $new->name = $referencedName;

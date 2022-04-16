@@ -1,0 +1,6 @@
+<?php
+
+$foo = [];
+$foo[] = 123;
+
+wrAssertType('array{123}', $foo);
