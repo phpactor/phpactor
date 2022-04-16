@@ -207,7 +207,7 @@ class ParsedDocblock implements DocBlock
         $map = [];
         foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
             assert($templateTag instanceof TemplateTag);
-            $map[$templateTag->placeholder()] = new MissingType();
+            $map[$templateTag->placeholder()] = $this->typeConverter->convert($templateTag->type);
         }
         return new TemplateMap($map);
     }
