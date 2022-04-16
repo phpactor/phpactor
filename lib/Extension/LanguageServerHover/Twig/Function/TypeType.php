@@ -29,19 +29,19 @@ class TypeType
         }
 
         if ($reflection instanceof ReflectionInterface) {
-            return 'interface';
+            return 'Ⓘ';
         }
 
         if ($reflection instanceof ReflectionClass) {
-            return 'class';
+            return 'Ⓒ';
         }
 
         if ($reflection instanceof ReflectionTrait) {
-            return 'trait';
+            return 'Ⓣ';
         }
 
         if ($reflection instanceof ReflectionEnum) {
-            return 'enum';
+            return 'Ⓔ';
         }
 
         return '';

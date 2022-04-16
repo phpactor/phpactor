@@ -82,7 +82,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideHoverInformation(): Generator
     {
@@ -120,7 +120,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideClass(): Generator
     {
@@ -209,7 +209,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideInterface()
     {
@@ -243,7 +243,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideTrait()
     {
@@ -266,7 +266,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideMethod()
     {
@@ -442,7 +442,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideProperty()
     {
@@ -541,7 +541,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideConstant()
     {
@@ -581,7 +581,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideFunction()
     {
@@ -613,7 +613,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideSymbolOffset()
     {
@@ -652,7 +652,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideType()
     {
@@ -663,10 +663,29 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'type1.md',
         ];
+        yield 'union' => [
+            <<<PHP
+            // File: project/Foo.php
+            <?php class Foo {}
+            // File: project/Baz.php
+            <?php interface Baz {}
+            // File: project/Trag.php
+            <?php trait Trag {}
+            PHP
+            ,
+            function (Reflector $reflector) {
+                return TypeFactory::union(
+                    TypeFactory::reflectedClass($reflector, 'Foo'),
+                    TypeFactory::reflectedClass($reflector, 'Baz'),
+                    TypeFactory::reflectedClass($reflector, 'Trag'),
+                );
+            },
+            'type2.md',
+        ];
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<mixed>
      */
     public function provideMemberDocblock()
     {
