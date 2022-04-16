@@ -56,7 +56,7 @@ class GenericHelper
         // replace any unresolved template parameters with any
         // type constraint defined by the parameter declaration
         // (e.g. @template T of Foo)
-        foreach ($arguments as $argument) {
+        foreach ($arguments as &$argument) {
             if ($templateMap->has(TypeUtil::short($argument))) {
                 $argument = $templateMap->get(TypeUtil::short($argument));
             }
