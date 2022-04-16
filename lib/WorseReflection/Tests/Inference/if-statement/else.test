@@ -1,0 +1,11 @@
+<?php
+
+/** @var Foobar|string */
+$foo;
+
+if (is_string($foo)) {
+    wrAssertType('string', $foo, 'in');
+} else {
+    wrAssertType('Foobar', $foo, 'out');
+}
+

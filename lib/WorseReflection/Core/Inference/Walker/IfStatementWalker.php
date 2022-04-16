@@ -38,21 +38,39 @@ class IfStatementWalker implements Walker
             return $frame;
         }
 
+
+        $frame = $this->ifBranch(
+            $resolver,
+            $frame,
+            $node,
+            $node->getStartPosition(),
+            $this->resolveInitialEndPosition($node)
+        );
+
+        return $frame;
+    }
+
+    private function ifBranch(
+        FrameResolver $resolver,
+        Frame $frame,
+        IfStatementNode $node,
+        int $start,
+        int $end
+    ): Frame
+    {
         $context = $resolver->resolveNode($frame, $node->expression);
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $terminates = $this->branchTerminates($node);
-
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
-        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition());
-
+        
+        $frame->applyTypeAssertions($context->typeAssertions(), $start);
+        $frame->restoreToStateBefore($node->getStartPosition(), $end);
+        
         if (!$terminates) {
             return $frame;
         }
-
+        
         $context->typeAssertions()->negate();
-        $frame->applyTypeAssertions($context->typeAssertions(), $node->getEndPosition(), true);
-
-
+        $frame->applyTypeAssertions($context->typeAssertions(), $end, true);
         return $frame;
     }
 
@@ -98,5 +116,18 @@ class IfStatementWalker implements Walker
         }
 
         return false;
+    }
+
+    private function resolveInitialEndPosition(IfStatementNode $node): int
+    {
+        foreach ($node->elseIfClauses as $clause) {
+            return $clause->getStartPosition();
+        }
+
+        if ($node->elseClause) {
+            return $node->elseClause->getStartPosition();
+        }
+
+        return $node->getEndPosition();
     }
 }
