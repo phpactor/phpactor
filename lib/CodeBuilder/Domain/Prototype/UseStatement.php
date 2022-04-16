@@ -21,7 +21,7 @@ class UseStatement
         $this->alias = $alias;
         $this->type = $type;
 
-        if (!in_array($type, [ self::TYPE_CLASS, self::TYPE_FUNCTION ])) {
+        if (in_array($type, [ self::TYPE_CLASS, self::TYPE_FUNCTION ])) {
             throw new RuntimeException(sprintf(
                 'Invalid use type'
             ));
