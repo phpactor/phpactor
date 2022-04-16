@@ -20,11 +20,8 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Psalm\Internal\Type\ArrayType as PsalmArrayType;
 
 class ForeachWalker extends AbstractWalker
 {
@@ -184,7 +181,7 @@ class ForeachWalker extends AbstractWalker
         return $type->valueType;
     }
 
-    private function resolveKeyType(Type|IterableType $type): Type
+    private function resolveKeyType(IterableType $type): Type
     {
         if ($type instanceof ArrayLiteral) {
             return new UnionType(...$type->iterableKeyTypes());

@@ -266,6 +266,15 @@ class TypeFactory
         return new SubtractType($from, $type);
     }
 
+    /**
+     * @param mixed[] $values
+     * @return Type[]
+     */
+    public static function fromValues(array $values): array
+    {
+        return array_map(fn ($value) => self::fromValue($value), $values);
+    }
+
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
         if ('' === $type) {
@@ -360,14 +369,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    /**
-     * @param mixed[] $values
-     * @return Type[]
-     */
-    public static function fromValues(array $values): array
-    {
-        return array_map(fn ($value) => self::fromValue($value), $values);
     }
 }

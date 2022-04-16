@@ -23,19 +23,6 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         $this->valueType = TypeUtil::generalTypeFromTypes(array_values($typeMap));
     }
 
-    /**
-     * @return Type[]
-     */
-    public function iterableValueTypes(): array
-    {
-        return array_values($this->typeMap);
-    }
-
-    public function iterableKeyTypes()
-    {
-        return TypeFactory::fromValues(array_keys($this->typeMap));
-    }
-
     public function __toString(): string
     {
         if ($this->isList()) {
@@ -56,6 +43,22 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
                 array_values($this->typeMap),
             ))
         );
+    }
+
+    /**
+     * @return Type[]
+     */
+    public function iterableValueTypes(): array
+    {
+        return array_values($this->typeMap);
+    }
+
+    /**
+     * @return Type[]
+     */
+    public function iterableKeyTypes(): array
+    {
+        return TypeFactory::fromValues(array_keys($this->typeMap));
     }
 
     public function isList(): bool
