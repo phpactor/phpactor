@@ -21,6 +21,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] if statement branches
   - [wr] inline type inference
   - [wr] infer param types from _function_ docblock
   - [wr] support for Closure as a type #1413
