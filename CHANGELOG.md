@@ -21,6 +21,8 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] support array [] addition operator
+  - [wr] support in_array type assertion
   - [wr] support for casts
   - [wr] if statement branches
   - [wr] inline type inference
