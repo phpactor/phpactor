@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\CastExpression;
 use Microsoft\PhpParser\Node\Expression\CloneExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
@@ -40,6 +41,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\AssignmentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\CastExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
@@ -116,6 +118,7 @@ final class DefaultResolverFactory
             MethodDeclaration::class => new MethodDeclarationResolver(),
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
+            CastExpression::class => new CastExpressionResolver(),
         ];
     }
 

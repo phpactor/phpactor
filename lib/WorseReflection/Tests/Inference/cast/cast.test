@@ -1,0 +1,5 @@
+<?php
+
+wrAssertType('string', (string)$foo);
+wrAssertType('int', (int)$foo);
+wrAssertType('float', (float)$foo);
