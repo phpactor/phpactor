@@ -665,13 +665,13 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         ];
         yield 'union' => [
             <<<PHP
-            // File: project/Foo.php
-            <?php class Foo {}
-            // File: project/Baz.php
-            <?php interface Baz {}
-            // File: project/Trag.php
-            <?php trait Trag {}
-            PHP
+                // File: project/Foo.php
+                <?php class Foo {}
+                // File: project/Baz.php
+                <?php interface Baz {}
+                // File: project/Trag.php
+                <?php trait Trag {}
+                PHP
             ,
             function (Reflector $reflector) {
                 return TypeFactory::union(

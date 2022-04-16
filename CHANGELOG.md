@@ -20,7 +20,6 @@ Bug fixes:
 
 Improvements:
 
-  - [lsp] show class category in offset hover info 
   - [wr] inline type inference
   - [wr] infer param types from _function_ docblock
   - [wr] support for Closure as a type #1413
@@ -39,6 +38,7 @@ Improvements:
 
 Features:
 
+  - [lsp] show class category in offset hover info 
   - [lsp] jump to types in a union type
   - [wr] Type combination
   - [wr] Support for type assertions via. is_*, instanceof etc
