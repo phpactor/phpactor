@@ -361,4 +361,13 @@ class TypeFactory
 
         return self::floatLiteral((float)$value);
     }
+
+    /**
+     * @param mixed[] $values
+     * @return Type[]
+     */
+    public static function fromValues(array $values): array
+    {
+        return array_map(fn ($value) => self::fromValue($value), $values);
+    }
 }

@@ -78,4 +78,9 @@ class GenericClassType extends ReflectedClassType implements IterableType
         $this->arguments = $arguments;
         return $this;
     }
+
+    public function iterableKeyType(): Type
+    {
+        return $this->iterableKeyType;
+    }
 }

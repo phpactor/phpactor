@@ -1,0 +1,9 @@
+<?php
+
+/** @var array<string,int> $items */
+$items;
+
+foreach ($items as $key => $item) {
+    wrAssertType('string', $key);
+}
+

@@ -3,11 +3,11 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayShapeType extends ArrayType
 {
-    use ArrayTypeTrait;
-
     /**
      * @var array<array-key,Type>
      */
@@ -19,8 +19,8 @@ class ArrayShapeType extends ArrayType
     public function __construct(array $typeMap)
     {
         $this->typeMap = $typeMap;
-        $this->keyType = new MixedType();
-        $this->valueType = $this->resolveValueType($typeMap);
+        $this->keyType = TypeUtil::generalTypeFromTypes(TypeFactory::fromValues(array_keys($typeMap)));
+        $this->valueType = TypeUtil::generalTypeFromTypes($typeMap);
     }
 
     public function __toString(): string

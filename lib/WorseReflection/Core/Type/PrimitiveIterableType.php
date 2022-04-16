@@ -26,4 +26,9 @@ class PrimitiveIterableType implements Type, IterableType
     {
         return Trinary::fromBoolean($type instanceof IterableType);
     }
+
+    public function iterableKeyType(): Type
+    {
+        return new MissingType();
+    }
 }

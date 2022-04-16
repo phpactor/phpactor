@@ -1,0 +1,13 @@
+<?php
+
+class Foobar
+{
+    public function hello()
+    {
+        /** @var Foobar $foobar */
+        foreach ($collection as $foobar) {
+            $foobar->foobar();
+            wrAssertType('Foobar', $foobar);
+        }
+    }
+}
