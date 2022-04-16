@@ -24,7 +24,7 @@ class GenericHelper
 
         if ($extendsType instanceof GenericClassType) {
             $arguments = $extendsType->arguments();
-            return $declaringClass->templateMap()->get($type->__toString(), $arguments);
+            return self::resolveGenericType($declaringClass, $type, $arguments);
         }
 
         $implements = $class->docblock()->implements();
@@ -42,5 +42,17 @@ class GenericHelper
         }
 
         return $type;
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    private static function resolveGenericType(ReflectionClassLike $declaringClass, Type $type, array $arguments): Type
+    {
+        if ($type instanceof GenericClassType) {
+            return $type->setArguments($arguments);
+        }
+
+        return $declaringClass->templateMap()->get($type->__toString(), $arguments);
     }
 }

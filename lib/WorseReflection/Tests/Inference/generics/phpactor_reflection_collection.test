@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @template T
+ * @extends IteratorAggregate<T>
+ */
+interface ReflectionCollection extends IteratorAggregate, Countable
+{
+}
+
+/**
+ * @template T of ReflectionMember
+ * @extends ReflectionCollection<T>
+ */
+interface ReflectionMemberCollection extends ReflectionCollection
+{
+    /**
+     * @return ReflectionMemberCollection<T>
+     */
+    public function byName(string $name): ReflectionMemberCollection;
+}
+
+/**
+ * @extends ReflectionMemberCollection<ReflectionMethod>
+ */
+interface ReflectionMethodCollection extends ReflectionMemberCollection
+{
+}
+
+interface ReflectionClassLike
+{
+    public function methods(): ReflectionMethodCollection;
+}
+
+
+/** @var ReflectionClassLike $reflection */
+$reflection;
+foreach ($reflection->methods()->byName('__construct') as $constructor) {
+    wrAssertType('ReflectionClassLike', $reflection);
+    wrAssertType('ReflectionMethodCollection', $reflection->methods());
+    wrAssertType('ReflectionMemberCollection<ReflectionMethod>', $reflection->methods()->byName('foo'));
+    wrAssertType('ReflectionMethod', $constructor);
+}

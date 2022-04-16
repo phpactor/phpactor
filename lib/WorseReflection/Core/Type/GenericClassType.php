@@ -69,4 +69,10 @@ class GenericClassType extends ReflectedClassType implements IterableType
         $this->arguments[$offset] = $type;
         return $this;
     }
+
+    public function setArguments(array $arguments): self
+    {
+        $this->arguments = $arguments;
+        return $this;
+    }
 }
