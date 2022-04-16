@@ -48,7 +48,7 @@ class GenericHelper
     /**
      * @param Type[] $arguments
      */
-    private static function resolveGenericType(ReflectionScope $scope, $templateMap, Type $type, array $arguments): Type
+    private static function resolveGenericType(ReflectionScope $scope, TemplateMap $templateMap, Type $type, array $arguments): Type
     {
         if (!$type instanceof GenericClassType) {
             return $templateMap->get(TypeUtil::short($type), $arguments);

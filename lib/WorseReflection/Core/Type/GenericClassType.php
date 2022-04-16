@@ -70,6 +70,9 @@ class GenericClassType extends ReflectedClassType implements IterableType
         return $this;
     }
 
+    /**
+     * @param Type[] $arguments
+     */
     public function setArguments(array $arguments): self
     {
         $this->arguments = $arguments;
