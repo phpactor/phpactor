@@ -1,0 +1,10 @@
+<?php
+
+namespace Foobar;
+
+/** @var Barfoo[] $items */
+$items = [];
+
+foreach ($items as $item) {
+    wrAssertType('Foobar\Barfoo', $item);
+}

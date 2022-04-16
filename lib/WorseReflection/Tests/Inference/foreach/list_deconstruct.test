@@ -1,0 +1,10 @@
+<?php
+
+foreach ([
+    ['foo', 'bar'],
+    ['baz', 'boo']
+] as [ $foo, $bar ]) {
+    wrAssertType('"foo"|"baz"', $foo);
+    wrAssertType('"bar"|"boo"', $bar);
+}
+

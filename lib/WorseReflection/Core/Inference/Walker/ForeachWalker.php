@@ -16,10 +16,13 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class ForeachWalker extends AbstractWalker
 {
@@ -31,10 +34,10 @@ class ForeachWalker extends AbstractWalker
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ForeachStatement);
-        $collection = $resolver->resolveNode($frame, $node->forEachCollectionName);
+        $nodeContext = $resolver->resolveNode($frame, $node->forEachCollectionName);
 
-        $this->processKey($node, $frame, $collection);
-        $this->processValue($resolver, $node, $frame, $collection);
+        $this->processKey($resolver, $node, $frame, $nodeContext->type());
+        $this->processValue($resolver, $node, $frame, $nodeContext);
 
         return $frame;
     }
@@ -58,7 +61,7 @@ class ForeachWalker extends AbstractWalker
         }
     }
 
-    private function processKey(ForeachStatement $node, Frame $frame, NodeContext $collection): void
+    private function processKey(FrameResolver $resolver, ForeachStatement $node, Frame $frame, Type $type): void
     {
         $itemName = $node->foreachKey;
         
@@ -77,9 +80,7 @@ class ForeachWalker extends AbstractWalker
         if (!is_string($itemName)) {
             return;
         }
-        
-        $collectionType = $collection->type();
-        
+
         $context = NodeContextFactory::create(
             $itemName,
             $node->getStartPosition(),
@@ -88,6 +89,9 @@ class ForeachWalker extends AbstractWalker
                 'symbol_type' => Symbol::VARIABLE,
             ]
         );
+        if ($type instanceof IterableType) {
+            $context = $context->withType($this->resolveKeyType($type));
+        }
         
         $frame->locals()->add(WorseVariable::fromSymbolContext($context));
     }
@@ -115,7 +119,7 @@ class ForeachWalker extends AbstractWalker
             $context = $context->withType($collectionType->iterableValueType());
         }
         if ($collectionType instanceof ArrayType) {
-            $context = $context->withType($collectionType->valueType);
+            $context = $context->withType($this->resolveValueType($collectionType));
         }
         
         $frame->locals()->add(WorseVariable::fromSymbolContext($context));
@@ -133,24 +137,65 @@ class ForeachWalker extends AbstractWalker
             return;
         }
 
-        $collectionType = $collection->type();
-        $values = (array)$collection->type();
+        $arrayType = $collection->type();
+
+        if (!$arrayType instanceof IterableType) {
+            return;
+        }
+
         $index = 0;
-        foreach ($elements->children as $child) {
-            if (!$child instanceof ArrayElement) {
+
+        foreach ($elements->children as $item) {
+            if (!$item instanceof ArrayElement) {
                 continue;
             }
 
-            $context = $resolver->resolveNode($frame, $child->elementValue);
-
-            if ($collectionType instanceof ArrayLiteral) {
-                $context = $context->withType($collectionType->typeAtOffset($index));
-            } elseif ($collectionType instanceof IterableType) {
-                $context = $context->withType($collectionType->iterableValueType());
-            }
+            $context = $resolver->resolveNode($frame, $item->elementValue);
+            $context = $context->withType($this->resolveArrayCreationType($arrayType, $index));
 
             $frame->locals()->add(WorseVariable::fromSymbolContext($context));
             $index++;
         }
+    }
+
+    private function resolveArrayCreationType(IterableType $arrayType, int $index): Type
+    {
+        if ($arrayType instanceof ArrayLiteral) {
+            $possibleTypes = [];
+            foreach ($arrayType->iterableValueTypes() as $type) {
+                if ($type instanceof ArrayLiteral) {
+                    $possibleTypes[] = $type->typeAtOffset($index);
+                }
+            }
+
+            return new UnionType(...$possibleTypes);
+        }
+
+        if ($arrayType instanceof ArrayType) {
+            $value = $arrayType->iterableValueType();
+            if ($value instanceof IterableType) {
+                return $value->iterableValueType();
+            }
+        }
+
+        return new MixedType();
+    }
+
+    private function resolveValueType(ArrayType $type): Type
+    {
+        if ($type instanceof ArrayLiteral) {
+            return new UnionType(...$type->iterableValueTypes());
+        }
+
+        return $type->valueType;
+    }
+
+    private function resolveKeyType(IterableType $type): Type
+    {
+        if ($type instanceof ArrayLiteral) {
+            return new UnionType(...$type->iterableKeyTypes());
+        }
+
+        return $type->iterableKeyType();
     }
 }

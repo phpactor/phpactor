@@ -45,6 +45,11 @@ class ArrayType implements Type, IterableType
         return $this->valueType;
     }
 
+    public function iterableKeyType(): Type
+    {
+        return $this->keyType;
+    }
+
     public function accepts(Type $type): Trinary
     {
         return Trinary::fromBoolean($type instanceof ArrayType);

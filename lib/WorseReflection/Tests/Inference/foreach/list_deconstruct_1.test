@@ -1,0 +1,19 @@
+<?php
+
+class FileSearchIndex implements SearchIndex
+{
+    /**
+     * @var array<array{string,string}>
+     */
+    private $subjects = [];
+
+    public function search()
+    {
+        $this->open();
+
+        foreach ($this->subjects as [ $recordType, $identifier ]) {
+            wrAssertType('string', $recordType);
+        }
+    }
+}
+

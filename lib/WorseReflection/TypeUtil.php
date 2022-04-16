@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
@@ -243,5 +244,26 @@ class TypeUtil
         }
 
         return new BooleanType();
+    }
+
+    /**
+     * @param Type[] $types
+     */
+    public static function generalTypeFromTypes(array $types): Type
+    {
+        $valueType = null;
+        foreach ($types as $type) {
+            $type = TypeUtil::generalize($type);
+            if ($valueType === null) {
+                $valueType = $type;
+                continue;
+            }
+
+            if ($valueType != $type) {
+                return new MixedType();
+            }
+        }
+
+        return $valueType ?: new MissingType();
     }
 }

@@ -1,0 +1,9 @@
+<?php
+
+$items = [1, 2, 3, 4];
+
+foreach ($items as $item) {
+    wrAssertType("1|2|3|4", $item);
+}
+
+

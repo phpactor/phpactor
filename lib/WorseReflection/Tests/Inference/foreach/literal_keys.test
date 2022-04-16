@@ -1,0 +1,9 @@
+<?php
+
+$items = ["one" => 1, "two" => 2];
+
+foreach ($items as $key => $item) {
+    wrAssertType('"one"|"two"', $key);
+}
+
+
