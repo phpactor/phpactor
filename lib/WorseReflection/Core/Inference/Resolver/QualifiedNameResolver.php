@@ -57,7 +57,7 @@ class QualifiedNameResolver implements Resolver
                 ]
             );
 
-            $stub = $this->registry->get($name);
+            $stub = $this->registry->get($name->short());
 
             $arguments = $parent->argumentExpressionList;
             if ($stub && $arguments) {
