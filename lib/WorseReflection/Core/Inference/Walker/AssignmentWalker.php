@@ -176,7 +176,8 @@ class AssignmentWalker extends AbstractWalker
                     return;
                 }
 
-                $frame->locals()->add($variable->withType($type->add($rightContext->type()))->withOffset($leftOperand->getStartPosition()));;
+                $frame->locals()->add($variable->withType($type->add($rightContext->type()))->withOffset($leftOperand->getStartPosition()));
+                ;
             }
         }
 
