@@ -55,6 +55,7 @@ class NodeToTypeConverter
                 $type->replaceArgument($offset, $this->resolve($node, $gType));
             }
         }
+
         if ($type instanceof ArrayType) {
             $arrayType = $this->resolve($node, $type->valueType);
             $type->valueType = $arrayType;
@@ -101,6 +102,7 @@ class NodeToTypeConverter
             return $this->parentClass($node);
         }
 
+
         if ($importedType = $this->fromClassImports($node, $type)) {
             return $importedType;
         }
@@ -109,6 +111,7 @@ class NodeToTypeConverter
         if ($type instanceof ClassType && $namespaceDefinition && $namespaceDefinition->name instanceof QualifiedName) {
             $className = $type->name->prepend($namespaceDefinition->name->getText());
             $type->name = $className;
+
             return $type;
         }
 

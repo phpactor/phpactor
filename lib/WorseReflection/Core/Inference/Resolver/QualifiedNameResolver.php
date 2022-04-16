@@ -73,6 +73,7 @@ class QualifiedNameResolver implements Resolver
             return $context->withType($function->inferredType());
         }
 
+
         return NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
