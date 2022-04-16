@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -23,7 +24,7 @@ class GenericHelper
 
         if ($extendsType instanceof GenericClassType) {
             $arguments = $extendsType->arguments();
-            return self::resolveGenericType($templateMap, $type, $arguments);
+            return self::resolveGenericType($class->scope(), $templateMap, $type, $arguments);
         }
 
         $implements = $class->docblock()->implements();
@@ -37,7 +38,7 @@ class GenericHelper
             if ($implementsType->name()->full() === $declaringClass->name()->__toString()) {
                 $arguments = $implementsType->arguments();
 
-                return self::resolveGenericType($templateMap, $type, $arguments);
+                return self::resolveGenericType($class->scope(), $templateMap, $type, $arguments);
             }
         }
 
@@ -47,7 +48,7 @@ class GenericHelper
     /**
      * @param Type[] $arguments
      */
-    private static function resolveGenericType(TemplateMap $templateMap, Type $type, array $arguments): Type
+    private static function resolveGenericType(ReflectionScope $scope, $templateMap, Type $type, array $arguments): Type
     {
         if (!$type instanceof GenericClassType) {
             return $templateMap->get(TypeUtil::short($type), $arguments);
@@ -58,7 +59,7 @@ class GenericHelper
         // (e.g. @template T of Foo)
         foreach ($arguments as &$argument) {
             if ($templateMap->has(TypeUtil::short($argument))) {
-                $argument = $templateMap->get(TypeUtil::short($argument));
+                $argument = $scope->resolveFullyQualifiedName($templateMap->get(TypeUtil::short($argument)));
             }
         }
 
