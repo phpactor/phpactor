@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
+use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -33,6 +34,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -83,6 +85,10 @@ class TypeConverter
 
         if ($type instanceof CallableNode) {
             return $this->convertCallable($type, $scope);
+        }
+
+        if ($type instanceof ParenthesizedType) {
+            return $this->convertParenthesized($type, $scope);
         }
 
         return new MissingType();
@@ -241,5 +247,10 @@ class TypeConverter
         }
 
         return new ArrayShapeType($typeMap);
+    }
+
+    private function convertParenthesized(ParenthesizedType $type, ?ReflectionScope $scope): Type
+    {
+        return new PhpactorParenthesizedType($this->convert($type->node));
     }
 }

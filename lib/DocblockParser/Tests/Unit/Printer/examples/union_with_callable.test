@@ -1,0 +1,27 @@
+/**
+ * @param array<int> $arrayOfInt
+ * @param null|callable(int):string $callableOrNull
+ */
+
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   GenericNode: = 
+    ArrayNode: = <
+    TypeList: = 
+     ScalarNode: = int>
+   VariableNode: = $arrayOfInt
+ * 
+  ParamTag: = @param
+   UnionNode: = 
+    TypeList: = 
+     NullNode: = null|
+     CallableNode: = callable(
+      TypeList: = 
+       ScalarNode: = int):
+      ScalarNode: = string
+   VariableNode: = $callableOrNull
+ */
+

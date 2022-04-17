@@ -25,14 +25,14 @@ class TypeCombinator
         $type = UnionType::toUnion($type);
         $from = UnionType::toUnion($from);
 
-        return new UnionType(...array_filter($from->types, function (Type $t) use ($type) {
+        return (new UnionType(...array_filter($from->types, function (Type $t) use ($type) {
             foreach ($type->types as $subtract) {
                 if ($t->__toString() === $subtract->__toString()) {
                     return false;
                 }
             }
             return true;
-        }));
+        })))->reduce();
     }
 
     /**
