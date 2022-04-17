@@ -21,8 +21,10 @@ class RpcExtension implements Extension
 {
     const TAG_RPC_HANDLER = 'rpc.handler';
     public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
+    private const STORE_REPLAY = 'rpc.store_replay';
+    private const REPLAY_PATH = 'rpc.replay_path';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register('rpc.command.rpc', function (Container $container) {
@@ -62,12 +64,16 @@ class RpcExtension implements Extension
         $this->registerHandlers($container);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            'rpc.store_replay' => false,
-            'rpc.replay_path' => '%cache%/replay.json',
+            self::STORE_REPLAY => false,
+            self::REPLAY_PATH => '%cache%/replay.json',
+        ]);
+        $schema->setDescriptions([
+            self::STORE_REPLAY => 'Should replays be stored?',
+            self::REPLAY_PATH => 'Path where the replays should be stored',
         ]);
     }
 

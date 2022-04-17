@@ -29,6 +29,7 @@ use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\ListNode;
 use Phpactor\DocblockParser\Ast\Type\NullNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
+use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\ThisNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
@@ -225,6 +226,14 @@ final class Parser
         if ($this->tokens->current->type === Token::T_NULLABLE) {
             $nullable = $this->tokens->chomp();
             return new NullableNode($nullable, $this->parseTypes());
+        }
+
+        if ($this->tokens->current->type === Token::T_PAREN_OPEN) {
+            $open = $this->tokens->chomp();
+            $type = $this->parseTypes();
+            $close = $this->tokens->chompIf(Token::T_PAREN_CLOSE);
+
+            return new ParenthesizedType($open, $type, $close);
         }
 
         $type = $this->tokens->chomp(Token::T_LABEL);
@@ -465,7 +474,9 @@ final class Parser
 
     private function ifType(): bool
     {
-        return $this->tokens->if(Token::T_LABEL) || $this->tokens->if(Token::T_NULLABLE);
+        return $this->tokens->if(Token::T_LABEL) ||
+            $this->tokens->if(Token::T_NULLABLE) ||
+            $this->tokens->if(Token::T_PAREN_OPEN);
     }
 
     private function parseValue(): ?ValueNode
