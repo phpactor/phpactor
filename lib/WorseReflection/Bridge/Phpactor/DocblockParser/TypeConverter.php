@@ -296,6 +296,9 @@ class TypeConverter
 
     private function convertConstant(ConstantNode $type, ?ReflectionScope $scope): Type
     {
+        // TODO: We cannot get the FQN here because we have no context
+        //       Need to refactor this class to be able to always convert
+        //       the types relative to the declaring class
         $classNode = $this->convert($type->name);
 
         if (!$classNode instanceof ReflectedClassType) {
