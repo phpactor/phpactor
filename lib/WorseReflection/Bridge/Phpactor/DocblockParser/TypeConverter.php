@@ -34,6 +34,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -250,6 +251,6 @@ class TypeConverter
 
     private function convertParenthesized(ParenthesizedType $type, ?ReflectionScope $scope): Type
     {
-        return $this->convert($type->node);
+        return new PhpactorParenthesizedType($this->convert($type->node));
     }
 }
