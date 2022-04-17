@@ -63,7 +63,7 @@ class Docblock extends Node
                 if (in_array($token->type, [
                     Token::T_PHPDOC_OPEN,
                     Token::T_PHPDOC_CLOSE,
-                    Token::T_PHPDOC_LEADING
+                    Token::T_ASTERISK
                 ])) {
                     return '';
                 }

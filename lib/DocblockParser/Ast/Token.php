@@ -5,7 +5,7 @@ namespace Phpactor\DocblockParser\Ast;
 final class Token implements Element
 {
     public const T_PHPDOC_OPEN = 'PHPDOC_OPEN';
-    public const T_PHPDOC_LEADING = 'PHPDOC_LEADING';
+    public const T_ASTERISK = 'PHPDOC_LEADING';
     public const T_PHPDOC_CLOSE = 'PHPDOC_CLOSE';
     public const T_VARIABLE = 'VARIABLE';
     public const T_UNKNOWN = 'UNKNOWN';
