@@ -29,6 +29,8 @@ final class Lexer
         self::PATTERN_LABEL, // label
         '"' . self::PATTERN_LABEL . '"',
         '\'' . self::PATTERN_LABEL . '\'',
+        '[0-9]+\.[0-9]+',
+        '[0-9]+',
     ];
     private const TOKEN_VALUE_MAP = [
         ']' => Token::T_BRACKET_SQUARE_CLOSE,
@@ -110,6 +112,13 @@ final class Lexer
 
         if (array_key_exists($value, self::TOKEN_VALUE_MAP)) {
             return self::TOKEN_VALUE_MAP[$value];
+        }
+
+        if (is_numeric($value)) {
+            if (false !== strpos($value, '.')) {
+                return Token::T_FLOAT;
+            }
+            return Token::T_INTEGER;
         }
 
         if ($value[0] === '"' || $value[0] == '\'') {

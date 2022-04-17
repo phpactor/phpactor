@@ -17,6 +17,8 @@ final class Token implements Element
     public const T_COMMA = 'COMMA';
     public const T_LIST = 'LIST';
     public const T_LABEL = 'LABEL';
+    public const T_INTEGER = 'INTEGER';
+    public const T_FLOAT = 'FLOAT';
     public const T_WHITESPACE = 'WHITESPACE';
     public const T_BRACKET_SQUARE_OPEN = 'BRACKET_SQUARE_OPEN';
     public const T_BRACKET_SQUARE_CLOSE = 'BRACKET_SQUARE_CLOSE';

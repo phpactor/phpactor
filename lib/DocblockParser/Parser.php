@@ -27,6 +27,8 @@ use Phpactor\DocblockParser\Ast\TagNode;
 use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\ListNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\NullNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
@@ -332,6 +334,12 @@ final class Parser
         if ($type->type === Token::T_QUOTED_STRING) {
             return new LiteralStringNode($type);
         }
+        if ($type->type === Token::T_FLOAT) {
+            return new LiteralFloatNode($type);
+        }
+        if ($type->type === Token::T_INTEGER) {
+            return new LiteralIntegerNode($type);
+        }
 
         return new ClassNode($type);
     }
@@ -480,6 +488,9 @@ final class Parser
     {
         return $this->tokens->if(Token::T_LABEL) ||
             $this->tokens->if(Token::T_NULLABLE) ||
+            $this->tokens->if(Token::T_QUOTED_STRING) ||
+            $this->tokens->if(Token::T_INTEGER) ||
+            $this->tokens->if(Token::T_FLOAT) ||
             $this->tokens->if(Token::T_PAREN_OPEN);
     }
 
