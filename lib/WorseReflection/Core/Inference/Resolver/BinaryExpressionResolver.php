@@ -59,6 +59,13 @@ class BinaryExpressionResolver implements Resolver
             $left = $resolver->resolveNode($frame, $leftOperand);
         }
 
+        if (!$leftOperand instanceof Node) {
+            return $context->withIssue(sprintf('Left operand was not a node, got "%s"', get_class($leftOperand)));
+        }
+        if (!$node->rightOperand instanceof Node) {
+            return $context->withIssue(sprintf('Right operand was not a node, got "%s"', get_class($node->rightOperand)));
+        }
+
         // apply any type assertiosn (e.g. ===, instanceof, etc)
         $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
 

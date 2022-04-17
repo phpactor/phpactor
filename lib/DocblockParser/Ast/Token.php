@@ -14,6 +14,7 @@ final class Token implements Element
     public const T_TAG = 'TAG';
     public const T_EQUALS = 'EQUALS';
     public const T_COLON = 'COLON';
+    public const T_DOUBLE_COLON = 'DOUBLE_COLON';
     public const T_COMMA = 'COMMA';
     public const T_LIST = 'LIST';
     public const T_LABEL = 'LABEL';
