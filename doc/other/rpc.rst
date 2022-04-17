@@ -283,6 +283,13 @@ Example response:
 ``class_search``
 ~~~~~~~~~~~~~~~~
 
+Searches for a class with a given class name. No need for the fully qualified class name.
+
+- **Name**: ``class_search``
+- **Parameters**:
+
+   -  ``short_name``: Name of the class that you want to find
+
 .. code::
 
    $ echo '{"actions": [ {"action": "class_search", "parameters": { "short_name": "InputInterface" } }] }' | ./bin/phpactor rpc
@@ -441,7 +448,7 @@ Will return an action to replace the file with the updated code.
 Generate (or update) a method from the **method call** at the given
 offset in the given source.
 
--  **Name**: ``extract_constant``
+-  **Name**: ``generate_method``
 -  **Parameters**:
 
    -  ``source``: Source code as a string
@@ -455,7 +462,7 @@ Will return an action to replace the file with the updated code.
 
 Generate (or update) an accessor for the property under the cursor.
 
--  **Name**: ``extract_constant``
+-  **Name**: ``generate_accessor``
 -  **Parameters**:
 
    -  ``source``: Source code as a string
