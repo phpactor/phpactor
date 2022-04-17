@@ -74,12 +74,13 @@ final class Tokens implements IteratorAggregate
 
         if (null !== $type && $token->type !== $type) {
             throw new RuntimeException(sprintf(
-                'Expected type "%s" at position "%s": "%s"',
+                'Expected type "%s" at position "%s": "%s" got "%s"',
                 $type,
                 $this->position,
                 implode('', array_map(function (Token $token) {
                     return $token->value;
-                }, $this->tokens))
+                }, $this->tokens)),
+                $token->type,
             ));
         }
 

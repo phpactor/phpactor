@@ -1,0 +1,9 @@
+/** @var 123|123.3 */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   UnionNode: = 
+    TypeList: = 
+     LiteralIntegerNode: = 123|
+     LiteralFloatNode: = 123.3 */

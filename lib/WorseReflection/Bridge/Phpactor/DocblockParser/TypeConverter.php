@@ -3,6 +3,9 @@
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
@@ -26,8 +29,10 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
+use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -39,6 +44,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -89,6 +95,15 @@ class TypeConverter
 
         if ($type instanceof ParenthesizedType) {
             return $this->convertParenthesized($type, $scope);
+        }
+        if ($type instanceof LiteralStringNode) {
+            return $this->convertLiteralString($type, $scope);
+        }
+        if ($type instanceof LiteralIntegerNode) {
+            return $this->convertLiteralInteger($type, $scope);
+        }
+        if ($type instanceof LiteralFloatNode) {
+            return $this->convertLiteralFloat($type, $scope);
         }
 
         return new MissingType();
@@ -252,5 +267,23 @@ class TypeConverter
     private function convertParenthesized(ParenthesizedType $type, ?ReflectionScope $scope): Type
     {
         return new PhpactorParenthesizedType($this->convert($type->node));
+    }
+
+    private function convertLiteralString(LiteralStringNode $type, ?ReflectionScope $scope): Type
+    {
+        $quote = substr($type->token->value, 0, 1);
+        $string = trim($type->token->value, $quote);
+
+        return new StringLiteralType($string);
+    }
+
+    private function convertLiteralInteger(LiteralIntegerNode $type, ?ReflectionScope $scope): Type
+    {
+        return new IntLiteralType((int)$type->token->value);
+    }
+
+    private function convertLiteralFloat(LiteralFloatNode $type, ?ReflectionScope $scope): Type
+    {
+        return new FloatLiteralType((float)$type->token->value);
     }
 }

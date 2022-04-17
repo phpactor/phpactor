@@ -101,5 +101,24 @@ class LexerTest extends TestCase
                 [Token::T_BRACKET_CURLY_CLOSE, '}'],
             ]
         ];
+        yield [
+            '"foobar"',
+            [
+                [Token::T_QUOTED_STRING, '"foobar"'],
+            ]
+        ];
+        yield [
+            '123',
+            [
+                [Token::T_INTEGER, '123'],
+            ]
+        ];
+
+        yield [
+            '123.4',
+            [
+                [Token::T_FLOAT, '123.4'],
+            ]
+        ];
     }
 }
