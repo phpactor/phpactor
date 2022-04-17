@@ -152,6 +152,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             'array{foo:int,bar:string}',
         ];
 
+        yield 'parenthesized' => [
+            '/** @return null|(callable(int):string)|string|int */',
+            'null|(callable(int):string)|string|int',
+        ];
+
         yield 'multiline array shape' => [
             <<<'EOT'
                 /** 
