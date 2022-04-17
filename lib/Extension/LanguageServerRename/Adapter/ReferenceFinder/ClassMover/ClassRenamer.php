@@ -91,7 +91,7 @@ final class ClassRenamer implements Renamer
             $oldUri = $this->oldNameToUriConverter->convert($originalName->getFullyQualifiedNameText());
             $newUri = $this->newNameToUriConverter->convert($newName);
         } catch (CouldNotConvertClassToUri $error) {
-            throw new CouldNotRename($e->getMessage(), 0, $error);
+            throw new CouldNotRename($error->getMessage(), 0, $error);
         }
 
         if ($newName === $originalName->getFullyQualifiedNameText()) {

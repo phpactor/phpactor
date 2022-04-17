@@ -341,11 +341,6 @@ parameters:
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ClassReference\\:\\:fromNameAndPosition\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ClassReference.php
-
-		-
 			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ClassReference\\:\\:\\$fullName has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Reference/ClassReference.php
@@ -5546,11 +5541,6 @@ parameters:
 			path: lib/ReferenceFinder/ChainReferenceFinder.php
 
 		-
-			message: "#^Dead catch \\- Phpactor\\\\ReferenceFinder\\\\Exception\\\\UnsupportedDocument is never thrown in the try block\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/ChainTypeLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainTypeLocator\\:\\:__construct\\(\\) has parameter \\$locators with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainTypeLocator.php
@@ -5629,16 +5619,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:\\$breakingChars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorseReflectionDefinitionLocator\\:\\:gotoVariable\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorseReflectionDefinitionLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection\\:\\:get\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorseReflectionDefinitionLocator.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\Phpactor\\\\MemberProvider\\\\DocblockMemberProvider\\:\\:provideMembers\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<mixed\\>\\.$#"
