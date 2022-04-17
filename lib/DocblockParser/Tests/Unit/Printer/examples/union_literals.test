@@ -1,0 +1,10 @@
+/** @var null|"always"|"auto" */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   UnionNode: = 
+    TypeList: = 
+     NullNode: = null|
+     LiteralStringNode: = "always"|
+     LiteralStringNode: = "auto" */
