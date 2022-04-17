@@ -1,7 +1,8 @@
 /**
  * @param array<int> $arrayOfInt
- * @param null|(callable(int):string) $callableOrNull
+ * @param null|callable(int):string $callableOrNull
  */
+
 ---
 Docblock: = 
  ElementList: = /**
@@ -17,10 +18,10 @@ Docblock: =
    UnionNode: = 
     TypeList: = 
      NullNode: = null|
-     ParenthesizedType: = (
-      CallableNode: = callable(
-       TypeList: = 
-        ScalarNode: = int):
-       ScalarNode: = string)
+     CallableNode: = callable(
+      TypeList: = 
+       ScalarNode: = int):
+      ScalarNode: = string
    VariableNode: = $callableOrNull
  */
+
