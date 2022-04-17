@@ -6,5 +6,6 @@ Docblock: =
  ElementList: = /**
  * 
   VarTag: = @var
-   ConstantNode: = Foobar::BAR_*
+   ConstantNode: = 
+    ClassNode: = Foobar::BAR_*
  */

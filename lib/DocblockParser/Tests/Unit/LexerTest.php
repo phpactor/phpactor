@@ -134,7 +134,7 @@ class LexerTest extends TestCase
             [
                 [Token::T_LABEL, 'Foobar'],
                 [Token::T_DOUBLE_COLON, '::'],
-                [Token::T_LABEL, 'FOOBAR_*'],
+                [Token::T_ASTERISK, '*'],
             ]
         ];
     }
