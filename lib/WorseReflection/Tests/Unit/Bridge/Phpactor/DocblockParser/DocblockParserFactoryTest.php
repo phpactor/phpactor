@@ -182,6 +182,30 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         ];
     }
 
+    public function testClassConstant(): void
+    {
+        $reflector = $this->createReflector('<?php namespace Bar; class Foo{const BAR = "baz";}');
+        $docblock = $this->parseDocblockWithReflector($reflector, '/** @return Bar\Foo::BAR */');
+        self::assertEquals('"baz"', $docblock->returnType()->__toString());
+    }
+
+    public function testClassConstantGlob(): void
+    {
+        $reflector = $this->createReflector(<<<'EOT'
+        <?php 
+        class Foo { 
+            const BAZ = "baz";
+            const BAR = "bar";
+            const ZED = "zed";
+            const SED = "sed";
+        }
+        EOT
+        );
+        $docblock = $this->parseDocblockWithReflector($reflector, '/** @return Foo::BA* */');
+        self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
+>>>>>>> 1cbfee95 (Support constant glob)
+    }
+
     public function testMethods(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');

@@ -8,6 +8,9 @@ use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\TypeResolver;
+use Phpactor\DocblockParser\Ast\Type\ConstantNode;
+use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -107,6 +110,10 @@ class TypeConverter
         }
         if ($type instanceof LiteralFloatNode) {
             return $this->convertLiteralFloat($type);
+        }
+
+        if ($type instanceof ConstantNode) {
+            return $this->convertConstant($type, $scope);
         }
 
         return new MissingType();
@@ -268,6 +275,7 @@ class TypeConverter
         return new PhpactorParenthesizedType($this->convert($type->node));
     }
 
+<<<<<<< HEAD
     private function convertLiteralString(LiteralStringNode $type): Type
     {
         $quote = substr($type->token->value, 0, 1);
@@ -284,5 +292,31 @@ class TypeConverter
     private function convertLiteralFloat(LiteralFloatNode $type): Type
     {
         return new FloatLiteralType((float)$type->token->value);
+    }
+
+    private function convertConstant(ConstantNode $type, ?ReflectionScope $scope): Type
+    {
+        $classNode = $this->convert($type->name);
+
+        if (!$classNode instanceof ReflectedClassType) {
+            return new MissingType();
+        }
+
+        $reflection = $classNode->reflectionOrNull();
+
+        if (null === $reflection) {
+            return new MissingType();
+        }
+
+        $types = [];
+        foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_CONSTANT) as $constant) {
+            $pattern = preg_quote(str_replace('*', '__ASTERISK__', $type->constant->value));
+            $pattern = str_replace('__ASTERISK__', '.*', $pattern);
+            if (preg_match('{' . $pattern . '}', $constant->name())) {
+                $types[] = $constant->type();
+            }
+        }
+
+        return (new UnionType(...$types))->reduce();
     }
 }
