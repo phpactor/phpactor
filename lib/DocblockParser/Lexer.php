@@ -9,6 +9,7 @@ use RuntimeException;
 final class Lexer
 {
     private const PATTERN_LABEL = '[a-zA-Z\\\][-a-zA-Z0-9_\\\]*';
+
     /**
      * @var string[]
      */

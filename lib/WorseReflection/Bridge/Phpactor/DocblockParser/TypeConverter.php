@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
-use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;

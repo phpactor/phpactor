@@ -174,7 +174,6 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return null|"foo"|123|123.3 */',
             'null|"foo"|123|123.3',
         ];
-
     }
 
     public function testMethods(): void

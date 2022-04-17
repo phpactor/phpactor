@@ -18,4 +18,3 @@ class LiteralIntegerNode extends TypeNode
         $this->token = $token;
     }
 }
-

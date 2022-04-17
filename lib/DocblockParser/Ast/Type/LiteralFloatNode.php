@@ -18,4 +18,3 @@ class LiteralFloatNode extends TypeNode
         $this->token = $token;
     }
 }
-
