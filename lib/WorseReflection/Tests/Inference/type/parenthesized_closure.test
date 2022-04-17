@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * @param (Closure(string,int): string)|string $foo
+ */
+function foobar($foo) {
+    if (!is_string($foo)) {
+        wrAssertType('Closure(string,int): string', $foo);
+        wrAssertType('string', $foo());
+    }
+}

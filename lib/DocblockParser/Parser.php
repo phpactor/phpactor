@@ -474,7 +474,7 @@ final class Parser
 
     private function ifType(): bool
     {
-        return $this->tokens->if(Token::T_LABEL) || 
+        return $this->tokens->if(Token::T_LABEL) ||
             $this->tokens->if(Token::T_NULLABLE) ||
             $this->tokens->if(Token::T_PAREN_OPEN);
     }

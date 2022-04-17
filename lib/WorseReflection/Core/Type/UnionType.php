@@ -58,7 +58,13 @@ final class UnionType implements Type
         }
 
         if (count($this->types) === 1) {
-            return $this->types[array_key_first($this->types)];
+            $type = $this->types[array_key_first($this->types)];
+
+            if ($type instanceof ParenthesizedType) {
+                return $type->type;
+            }
+
+            return $type;
         }
 
         return $this;
@@ -87,7 +93,6 @@ final class UnionType implements Type
 
         // for each of these types
         foreach ($this->types as $type) {
-
             // check each narrowed to to see if any of these types accept the
             // narrowed version
             foreach ($narrowTypes->types as $narrowType) {

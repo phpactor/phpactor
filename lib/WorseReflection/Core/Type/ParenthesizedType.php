@@ -9,7 +9,8 @@ class ParenthesizedType implements Type
 {
     public Type $type;
 
-    public function __construct(Type $type) {
+    public function __construct(Type $type)
+    {
         $this->type = $type;
     }
 
