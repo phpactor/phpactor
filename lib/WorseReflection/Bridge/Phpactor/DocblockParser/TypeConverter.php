@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
+use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
@@ -28,8 +30,10 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
+use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -95,6 +99,12 @@ class TypeConverter
         }
         if ($type instanceof LiteralStringNode) {
             return $this->convertLiteralString($type, $scope);
+        }
+        if ($type instanceof LiteralIntegerNode) {
+            return $this->convertLiteralInteger($type, $scope);
+        }
+        if ($type instanceof LiteralFloatNode) {
+            return $this->convertLiteralFloat($type, $scope);
         }
 
         return new MissingType();
@@ -266,5 +276,15 @@ class TypeConverter
         $string = trim($type->token->value, $quote);
 
         return new StringLiteralType($string);
+    }
+
+    private function convertLiteralInteger(LiteralIntegerNode $type, ?ReflectionScope $scope): Type
+    {
+        return new IntLiteralType((int)$type->token->value);
+    }
+
+    private function convertLiteralFloat(LiteralFloatNode $type, ?ReflectionScope $scope): Type
+    {
+        return new FloatLiteralType((float)$type->token->value);
     }
 }
