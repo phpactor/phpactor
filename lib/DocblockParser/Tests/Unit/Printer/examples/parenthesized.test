@@ -1,0 +1,4 @@
+/**
+ * @param array<int> $arrayOfInt
+ * @param null|(callable(int):string) $callableOrNull
+ */
