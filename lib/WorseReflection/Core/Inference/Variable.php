@@ -92,4 +92,9 @@ final class Variable
     {
         return $this->wasAssigned;
     }
+
+    public function key(): string
+    {
+        return sprintf('%s-%s', $this->name(), $this->offset());
+    }
 }

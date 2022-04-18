@@ -48,6 +48,8 @@ class ServiceLocator
      */
     private array $methodProviders;
 
+    private Cache $cache;
+
     /**
      * @param list<Walker> $frameWalkers
      * @param list<ReflectionMemberProvider> $methodProviders
@@ -99,6 +101,7 @@ class ServiceLocator
             ))->createResolvers(),
         );
 
+
         $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
             $cache,
@@ -115,6 +118,7 @@ class ServiceLocator
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;
+        $this->cache = $cache;
     }
 
     public function reflector(): Reflector
@@ -159,5 +163,10 @@ class ServiceLocator
     public function methodProviders(): array
     {
         return $this->methodProviders;
+    }
+
+    public function cache(): Cache
+    {
+        return $this->cache;
     }
 }

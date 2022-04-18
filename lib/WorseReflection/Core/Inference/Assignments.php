@@ -13,18 +13,18 @@ use ArrayIterator;
 abstract class Assignments implements Countable, IteratorAggregate
 {
     /**
-     * @var array<int, Variable>-
+     * @var array<string, Variable>-
      */
     private array $variables = [];
 
     /**
-     * @param array<int,Variable> $variables
+     * @param array<string|int,Variable> $variables
      */
     final public function __construct(array $variables)
     {
-        $this->variables = array_map(function (Variable $v) {
-            return $v;
-        }, $variables);
+        foreach ($variables as $variable) {
+            $this->variables[$variable->key()] = $variable;
+        }
         $this->sort();
     }
 
@@ -38,12 +38,12 @@ abstract class Assignments implements Countable, IteratorAggregate
                 $variable->offset(),
                 $variable->type()->__toString()
             );
-        }, $this->variables));
+        }, array_values($this->variables)));
     }
 
     public function add(Variable $variable): void
     {
-        $this->variables[] = $variable;
+        $this->variables[$variable->key()] = $variable;
         $this->sort();
     }
 
@@ -185,7 +185,7 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     private function sort(): void
     {
-        usort($this->variables, function (Variable $one, Variable $two) {
+        uasort($this->variables, function (Variable $one, Variable $two) {
             return $one->offset() <=> $two->offset();
         });
     }

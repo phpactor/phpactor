@@ -58,6 +58,9 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      */
     public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
     {
+        // see https://github.com/phpactor/phpactor/issues/1445
+        $this->serviceLocator->cache()->purge();
+
         try {
             $reflection = $this->reflectNode($sourceCode, $offset);
         } catch (CouldNotResolveNode $notFound) {

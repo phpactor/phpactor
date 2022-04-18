@@ -153,16 +153,17 @@ class Frame
         foreach ($this->locals()->lessThan($before) as $local) {
             $locals[$local->name()] = $local;
         }
-        foreach ($locals as $local) {
-            $this->locals()->add($local->withOffset($after));
-        }
 
+        // find any variables that were reassigned in the range
         foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
+
+            // if it was defined before then restore it
             if (isset($locals[$extra->name()])) {
+                $this->locals()->add($locals[$extra->name()]->withOffset($after));
                 continue;
             }
 
-            // if variable was not present before $before, assign as missing
+            // otherwise set the type to undefined
             $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
         }
 
