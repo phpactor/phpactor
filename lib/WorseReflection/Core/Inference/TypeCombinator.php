@@ -52,4 +52,18 @@ class TypeCombinator
             return false;
         }));
     }
+
+    public static function acceptedByType(Type $type, Type $acceptingType): Type
+    {
+        $type = UnionType::toUnion($type);
+        $types = [];
+        foreach ($type->filter()->types as $type) {
+            if (!$acceptingType->accepts($type)->isTrue()) {
+                continue;
+            }
+            $types[] = $type;
+        }
+
+        return (new UnionType(...$types))->reduce();
+    }
 }

@@ -117,6 +117,9 @@ final class UnionType implements Type
             if ($type instanceof MissingType) {
                 continue;
             }
+            if ($type instanceof UnionType) {
+                $type = $type->reduce();
+            }
             $unique[$type->__toString()] = $type;
         }
 
