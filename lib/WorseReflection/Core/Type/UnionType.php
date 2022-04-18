@@ -152,24 +152,4 @@ final class UnionType implements Type
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
     }
-
-    public function acceptedBy(Type $accepting): Trinary
-    {
-        $isMaybe = false;
-        foreach ($this->types as $type) {
-            $accepted = $accepting->accepts($type);
-            if ($accepted->isTrue()) {
-                return Trinary::true();
-            }
-            if ($accepted->isMaybe()) {
-                $isMaybe = true;
-            }
-        }
-
-        if ($isMaybe) {
-            return Trinary::maybe();
-        }
-
-        return Trinary::false();
-    }
 }
