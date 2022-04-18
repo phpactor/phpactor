@@ -17,5 +17,5 @@ interface ReflectionScope
      */
     public function resolveFullyQualifiedName($type, ReflectionClassLike $classLike = null): Type;
 
-    public function resolveLocalType(Type $union): Type;
+    public function resolveLocalType(Type $type): Type;
 }

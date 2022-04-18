@@ -1,0 +1,42 @@
+// File: source
+<?php
+
+namespace Foo;
+
+class generateMethod
+{
+    /**
+     * @return array<string,Type>
+     */
+    public function convert(?TypeNode $type, ?ReflectionScope $scope = null): array
+    {
+        if ($type instanceof ParenthesizedType) {
+            return $this-><>convertParenthesized<>($type, $scope);
+        }
+
+        return new MissingType();
+    }
+}
+// File: expected
+<?php
+
+namespace Foo;
+
+class generateMethod
+{
+    /**
+     * @return array<string,Type>
+     */
+    public function convert(?TypeNode $type, ?ReflectionScope $scope = null): array
+    {
+        if ($type instanceof ParenthesizedType) {
+            return $this->convertParenthesized($type, $scope);
+        }
+
+        return new MissingType();
+    }
+
+    private function convertParenthesized(TypeNode|ParenthesizedType $type, ?ReflectionScope $scope): array
+    {
+    }
+}

@@ -65,9 +65,13 @@ class ReflectionScope implements CoreReflectionScope
         return $this->nameImports()->resolveLocalName($name);
     }
 
-    public function resolveLocalType(Type $union): Type
+    /**
+     * TODO: This is not complete and doesn't work with complex types.
+     *       see: https://github.com/phpactor/phpactor/issues/1453
+     */
+    public function resolveLocalType(Type $type): Type
     {
-        $union = UnionType::toUnion($union);
+        $union = UnionType::toUnion($type);
         foreach ($union->types as $type) {
             if ($type instanceof ClassType) {
                 $type->name = ClassName::fromString($this->nameImports()->resolveLocalName($type->name())->__toString());
