@@ -117,6 +117,9 @@ final class UnionType implements Type
             if ($type instanceof MissingType) {
                 continue;
             }
+            if ($type instanceof UnionType) {
+                $type = $type->reduce();
+            }
             $unique[$type->__toString()] = $type;
         }
 
@@ -148,5 +151,25 @@ final class UnionType implements Type
     private function add(Type $type): UnionType
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
+    }
+
+    public function acceptedBy(Type $accepting): Trinary
+    {
+        $isMaybe = false;
+        foreach ($this->types as $type) {
+            $accepted = $accepting->accepts($type);
+            if ($accepted->isTrue()) {
+                return Trinary::true();
+            }
+            if ($accepted->isMaybe()) {
+                $isMaybe = true;
+            }
+        }
+
+        if ($isMaybe) {
+            return Trinary::maybe();
+        }
+
+        return Trinary::false();
     }
 }

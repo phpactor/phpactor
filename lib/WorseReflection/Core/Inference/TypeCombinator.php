@@ -3,7 +3,9 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\TypeUtil;
 
 class TypeCombinator
 {
@@ -51,5 +53,19 @@ class TypeCombinator
             }
             return false;
         }));
+    }
+
+    public static function ofType(Type $type, Type $typeToFilterBy): Type
+    {
+        $type = UnionType::toUnion($type);
+        $types = [];
+        foreach ($type->filter()->types as $type) {
+            if (!$typeToFilterBy->accepts($type)->isTrue()) {
+                continue;
+            }
+            $types[] = $type;
+        }
+
+        return (new UnionType(...$types))->reduce();
     }
 }

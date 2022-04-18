@@ -1,8 +1,8 @@
 <?php
-/** @var Foobar|null */
+/** @var Foobar|string|int */
 $foobar;
 
 if ($foobar instanceof Foobar) {
     wrAssertType('Foobar', $foobar);
 }
-wrAssertType('Foobar|null', $foobar);
+wrAssertType('Foobar|string|int', $foobar);
