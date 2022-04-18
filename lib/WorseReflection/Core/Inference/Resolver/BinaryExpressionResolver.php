@@ -184,7 +184,9 @@ class BinaryExpressionResolver implements Resolver
                 return $context->withTypeAssertion(TypeAssertion::forContext(
                     $recieverContext,
                     function (Type $type) use ($transmitteContext) {
-                        return TypeCombinator::narrowTo($type, $transmitteContext->type());
+                        $narrowed = TypeCombinator::narrowTo($type, $transmitteContext->type());
+                        $narrowed = TypeCombinator::remove($narrowed, TypeFactory::unionEmpty());
+                        return $narrowed;
                     },
                     function (Type $type) use ($transmitteContext) {
                         $subtracted = TypeCombinator::subtract($transmitteContext->type(), $type);
