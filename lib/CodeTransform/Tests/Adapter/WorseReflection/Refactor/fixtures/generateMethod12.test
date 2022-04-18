@@ -1,0 +1,120 @@
+// File: source
+<?php
+
+namespace Foo;
+
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\BooleanType;
+use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
+use Phpactor\WorseReflection\Core\Type\FloatType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NullType;
+use Phpactor\WorseReflection\Core\Type\ObjectType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Type\ResourceType;
+use Phpactor\WorseReflection\Core\Type\SelfType;
+use Phpactor\WorseReflection\Core\Type\StaticType;
+use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\Core\Type\VoidType;
+
+class generateMethod
+{
+    public function convert(?TypeNode $type, ?ReflectionScope $scope = null): Type
+    {
+        if ($type instanceof ScalarNode) {
+            return $this->convertScalar($type->toString());
+        }
+        if ($type instanceof ListNode) {
+            return $this->convertList($type, $scope);
+        }
+        if ($type instanceof ArrayNode) {
+            return $this->convertArray($type);
+        }
+        if ($type instanceof ArrayShapeNode) {
+            return $this->convertArrayShape($type);
+        }
+        if ($type instanceof UnionNode) {
+            return $this->convertUnion($type);
+        }
+        if ($type instanceof GenericNode) {
+            return $this->convertGeneric($type, $scope);
+        }
+        if ($type instanceof ClassNode) {
+            return $this->convertClass($type, $scope);
+        }
+        if ($type instanceof ThisNode) {
+            return $this->convertThis($type);
+        }
+        if ($type instanceof NullNode) {
+            return new NullType();
+        }
+
+        if ($type instanceof CallableNode) {
+            return $this->convertCallable($type, $scope);
+        }
+
+        if ($type instanceof ParenthesizedType) {
+            return $this-><>convertParenthesized<>($type, $scope);
+        }
+
+        return new MissingType();
+    }
+}
+// File: expected
+<?php
+
+namespace Foo;
+
+class generateMethod
+{
+    public function convert(?TypeNode $type, ?ReflectionScope $scope = null): Type
+    {
+        if ($type instanceof ScalarNode) {
+            return $this->convertScalar($type->toString());
+        }
+        if ($type instanceof ListNode) {
+            return $this->convertList($type, $scope);
+        }
+        if ($type instanceof ArrayNode) {
+            return $this->convertArray($type);
+        }
+        if ($type instanceof ArrayShapeNode) {
+            return $this->convertArrayShape($type);
+        }
+        if ($type instanceof UnionNode) {
+            return $this->convertUnion($type);
+        }
+        if ($type instanceof GenericNode) {
+            return $this->convertGeneric($type, $scope);
+        }
+        if ($type instanceof ClassNode) {
+            return $this->convertClass($type, $scope);
+        }
+        if ($type instanceof ThisNode) {
+            return $this->convertThis($type);
+        }
+        if ($type instanceof NullNode) {
+            return new NullType();
+        }
+
+        if ($type instanceof CallableNode) {
+            return $this->convertCallable($type, $scope);
+        }
+
+        if ($type instanceof ParenthesizedType) {
+            return $this-><>convertParenthesized<>($type, $scope);
+        }
+
+        return new MissingType();
+    }
+}
