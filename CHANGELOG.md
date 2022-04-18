@@ -21,6 +21,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ct] add retutn type to generated method if it would immediately return
   - [wr] support array [] addition operator
   - [wr] support in_array type assertion
   - [wr] support for casts
