@@ -52,6 +52,7 @@ class NodeReflector
 
     private function reflectMethodCall(Frame $frame, MemberAccessExpression $node)
     {
+        dump($frame->__toString());
         return new ReflectionMethodCall(
             $this->services,
             $frame,
