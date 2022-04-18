@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as CoreReflectionScope;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\NameImports;
@@ -11,6 +12,8 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 
 class ReflectionScope implements CoreReflectionScope
@@ -60,5 +63,16 @@ class ReflectionScope implements CoreReflectionScope
     public function resolveLocalName(Name $name): Name
     {
         return $this->nameImports()->resolveLocalName($name);
+    }
+
+    public function resolveLocalType(Type $union): Type
+    {
+        $union = UnionType::toUnion($union);
+        foreach ($union->types as $type) {
+            if ($type instanceof ClassType) {
+                $type->name = ClassName::fromString($this->nameImports()->resolveLocalName($type->name())->__toString());
+            }
+        }
+        return $union->reduce();
     }
 }

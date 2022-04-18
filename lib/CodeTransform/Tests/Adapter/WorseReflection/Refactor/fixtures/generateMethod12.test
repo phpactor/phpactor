@@ -24,7 +24,7 @@ class generateMethod
     public function convert(?TypeNode $type, ?ReflectionScope $scope = null): Type
     {
         if ($type instanceof ParenthesizedType) {
-            return $this-><>convertParenthesized<>($type, $scope);
+            return $this->convertParenthesized($type, $scope);
         }
 
         return new MissingType();

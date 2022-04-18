@@ -12,5 +12,10 @@ interface ReflectionScope
 
     public function resolveLocalName(Name $type): Name;
 
+    /**
+     * @param null|Type|string $type
+     */
     public function resolveFullyQualifiedName($type, ReflectionClassLike $classLike = null): Type;
+
+    public function resolveLocalType(Type $union): Type;
 }
