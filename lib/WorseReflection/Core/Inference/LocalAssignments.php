@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 final class LocalAssignments extends Assignments
 {
-    public static function create()
+    public static function create(): self
     {
         return new self([]);
     }
