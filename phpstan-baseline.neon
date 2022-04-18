@@ -341,11 +341,6 @@ parameters:
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ClassReference\\:\\:fromNameAndPosition\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ClassReference.php
-
-		-
 			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ClassReference\\:\\:\\$fullName has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Reference/ClassReference.php
@@ -5546,11 +5541,6 @@ parameters:
 			path: lib/ReferenceFinder/ChainReferenceFinder.php
 
 		-
-			message: "#^Dead catch \\- Phpactor\\\\ReferenceFinder\\\\Exception\\\\UnsupportedDocument is never thrown in the try block\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/ChainTypeLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainTypeLocator\\:\\:__construct\\(\\) has parameter \\$locators with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainTypeLocator.php
@@ -5631,16 +5621,6 @@ parameters:
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorseReflectionDefinitionLocator\\:\\:gotoVariable\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorseReflectionDefinitionLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection\\:\\:get\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorseReflectionDefinitionLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\Phpactor\\\\MemberProvider\\\\DocblockMemberProvider\\:\\:provideMembers\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/Phpactor/MemberProvider/DocblockMemberProvider.php
@@ -5719,26 +5699,6 @@ parameters:
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionClassMember.php
-
-		-
-			message: "#^Method Microsoft\\\\PhpParser\\\\Node\\:\\:getText\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionMethodCall.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\AbstractReflectionMethodCall\\:\\:callExpression\\(\\) should return Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\CallExpression but returns Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionMethodCall.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\AbstractReflectionMethodCall\\:\\:name\\(\\) should return string but returns bool\\|string\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionMethodCall.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\AbstractReflectionMethodCall\\:\\:\\$node \\(Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\MemberAccessExpression\\|Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\ScopedPropertyAccessExpression\\) does not accept Microsoft\\\\PhpParser\\\\Node\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionMethodCall.php
 
 		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
@@ -6041,11 +6001,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionProperty.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionScope\\:\\:resolveFullyQualifiedName\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionScope.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionTrait\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionTrait.php
@@ -6199,11 +6154,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\LocalAssignments\\:\\:create\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/LocalAssignments.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\LocalAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
@@ -6429,11 +6379,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has parameter \\$symbolInformation with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionScope\\:\\:resolveFullyQualifiedName\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionScope.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionSourceCode\\:\\:findClass\\(\\) has no return type specified\\.$#"

@@ -59,6 +59,12 @@ class WorseGenerateMethodTest extends WorseTestCase
             'static public method' => [
                 'generateMethod11.test',
             ],
+            'add return type' => [
+                'generateMethod12.test',
+            ],
+            'add return type with docblock' => [
+                'generateMethod13.test',
+            ],
         ];
     }
 
