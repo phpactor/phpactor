@@ -69,10 +69,15 @@ class FrameTest extends TestCase
         ];
 
         yield 'does not restore if var not modified' => [
-            new Frame('foo', new LocalAssignments([
-                new Variable('this', 10, TypeFactory::int()),
-                new Variable('foo', 20, TypeFactory::string()),
-            ])),
+            (function () {
+                $frame =  new Frame('foo', new LocalAssignments([
+                    new Variable('this', 10, TypeFactory::int()),
+                    new Variable('foo', 20, TypeFactory::string()),
+                ]));
+                $frame->restoreToStateBefore(20, 30);
+
+                return $frame;
+            })(),
             20,
             30,
             new Frame('foo', new LocalAssignments([
