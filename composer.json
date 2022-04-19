@@ -8,7 +8,7 @@
         "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.0.0",
-        "phpactor/class-to-file": "~0.4.2",
+        "phpactor/class-to-file": "~0.4.3",
         "twig/twig": "^2.4",
         "webmozart/path-util": "^2.3",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
