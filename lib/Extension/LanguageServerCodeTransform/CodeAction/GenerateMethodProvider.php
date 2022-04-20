@@ -73,6 +73,11 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
         });
     }
 
+    public function name(): string
+    {
+        return 'generate-method';
+    }
+
     /**
      * @return array<Diagnostic>
      */
@@ -113,10 +118,5 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
         });
 
         return $diagnostics;
-    }
-
-    public function name(): string
-    {
-        return 'generate-method';
     }
 }

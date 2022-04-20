@@ -78,6 +78,11 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         });
     }
 
+    public function name(): string
+    {
+        return 'create-class';
+    }
+
     /**
      * @return array<Diagnostic>
      */
@@ -106,10 +111,5 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
     private function kind(): string
     {
         return self::KIND;
-    }
-
-    public function name(): string
-    {
-        return 'create-class';
     }
 }

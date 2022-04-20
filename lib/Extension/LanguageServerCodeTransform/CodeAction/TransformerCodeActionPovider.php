@@ -73,6 +73,11 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         });
     }
 
+    public function name(): string
+    {
+        return 'transform';
+    }
+
     /**
      * @return array<Diagnostic>
      */
@@ -94,10 +99,5 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     private function kind(): string
     {
         return 'quickfix.'.$this->name;
-    }
-
-    public function name(): string
-    {
-        return 'transform';
     }
 }

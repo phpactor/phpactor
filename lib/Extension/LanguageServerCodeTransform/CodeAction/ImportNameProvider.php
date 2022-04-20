@@ -83,6 +83,11 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         });
     }
 
+    public function name(): string
+    {
+        return 'import-name';
+    }
+
     private function diagnosticsFromUnresolvedName(NameWithByteOffset $unresolvedName, TextDocumentItem $item, ?bool $hasCandidates = null): array
     {
         $range = new Range(
@@ -175,10 +180,5 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
                 ]
             )
         ]);
-    }
-
-    public function name(): string
-    {
-        return 'import-name';
     }
 }
