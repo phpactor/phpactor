@@ -207,6 +207,7 @@ class LanguageServerExtension implements Extension
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
                 $container->get(ServerStats::class),
                 $container->get(ServiceManager::class),
+                $container->get(AggregateDiagnosticsProvider::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
@@ -386,6 +387,14 @@ class LanguageServerExtension implements Extension
     private function registerDiagnostics(ContainerBuilder $container): void
     {
         $container->register(DiagnosticsEngine::class, function (Container $container) {
+            return new DiagnosticsEngine(
+                $container->get(ClientApi::class),
+                $container->get(AggregateDiagnosticsProvider::class),
+                $container->getParameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)
+            );
+        });
+
+        $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
             $providers = [];
             foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
                 Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
@@ -412,13 +421,9 @@ class LanguageServerExtension implements Extension
                 $providers = array_intersect_key($providers, array_flip($enabled));
             }
 
-            return new DiagnosticsEngine(
-                $container->get(ClientApi::class),
-                new AggregateDiagnosticsProvider(
-                    $container->get(LoggingExtension::SERVICE_LOGGER),
-                    ...array_values($providers)
-                ),
-                $container->getParameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)
+            return new AggregateDiagnosticsProvider(
+                $container->get(LoggingExtension::SERVICE_LOGGER),
+                ...array_values($providers)
             );
         });
 
