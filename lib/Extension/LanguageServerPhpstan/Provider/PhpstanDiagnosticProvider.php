@@ -21,4 +21,9 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
     {
         return $this->linter->lint($textDocument->uri, $textDocument->text);
     }
+
+    public function name(): string
+    {
+        return 'phpstan';
+    }
 }

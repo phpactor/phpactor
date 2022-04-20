@@ -137,7 +137,8 @@ class LanguageServerExtension implements Extension
         $container->register(LanguageServerBuilder::class, function (Container $container) {
             $builder = LanguageServerBuilder::create(
                 new PhpactorDispatcherFactory($container),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $container->get(LoggingExtension::SERVICE_LOGGER),
+                $container->get(EventDispatcherInterface::class)
             );
 
             return $builder;
@@ -356,7 +357,7 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(ExitHandler::class, function (Container $container) {
-            return new ExitHandler();
+            return new ExitHandler($container->get(EventDispatcherInterface::class));
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
