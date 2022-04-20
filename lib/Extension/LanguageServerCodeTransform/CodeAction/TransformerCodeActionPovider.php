@@ -95,4 +95,9 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     {
         return 'quickfix.'.$this->name;
     }
+
+    public function name(): string
+    {
+        return 'transform';
+    }
 }

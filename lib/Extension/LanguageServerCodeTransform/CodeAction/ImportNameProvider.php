@@ -176,4 +176,9 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
             )
         ]);
     }
+
+    public function name(): string
+    {
+        return 'import-name';
+    }
 }

@@ -142,6 +142,7 @@ class IndexerHandler implements Handler, ServiceProvider
                 try {
                     $cancel->throwIfRequested();
                 } catch (CancelledException $cancelled) {
+                    $process->stop();
                     break;
                 }
 

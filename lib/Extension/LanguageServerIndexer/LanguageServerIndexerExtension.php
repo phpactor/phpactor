@@ -8,7 +8,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerIndexer\Handler\IndexerHandler;
 use Phpactor\Extension\LanguageServerIndexer\Handler\WorkspaceSymbolHandler;
-use Phpactor\Extension\LanguageServerIndexer\Listener\ReindexListener;
+use Phpactor\Extension\LanguageServerIndexer\Listener\IndexerListener;
 use Phpactor\Extension\LanguageServerIndexer\Model\WorkspaceSymbolProvider;
 use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -76,8 +76,8 @@ class LanguageServerIndexerExtension implements Extension
             LanguageServerExtension::TAG_SERVICE_PROVIDER => []
         ]);
 
-        $container->register(ReindexListener::class, function (Container $container) {
-            return new ReindexListener($container->get(ServiceManager::class));
+        $container->register(IndexerListener::class, function (Container $container) {
+            return new IndexerListener($container->get(ServiceManager::class));
         }, [
             LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
         ]);

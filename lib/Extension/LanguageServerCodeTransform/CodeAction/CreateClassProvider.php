@@ -107,4 +107,9 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
     {
         return self::KIND;
     }
+
+    public function name(): string
+    {
+        return 'create-class';
+    }
 }

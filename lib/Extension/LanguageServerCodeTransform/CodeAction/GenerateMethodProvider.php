@@ -114,4 +114,9 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 
         return $diagnostics;
     }
+
+    public function name(): string
+    {
+        return 'generate-method';
+    }
 }
