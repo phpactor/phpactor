@@ -7,6 +7,7 @@ use Amp\Success;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
@@ -29,18 +30,22 @@ class DebugHandler implements Handler
 
     private ServiceManager $serviceManager;
 
+    private DiagnosticsProvider $diagnosticProvider;
+
     public function __construct(
         Container $container,
         ClientApi $client,
         Workspace $workspace,
         ServerStats $stats,
-        ServiceManager $serviceManager
+        ServiceManager $serviceManager,
+        DiagnosticsProvider $diagnosticProvider
     ) {
         $this->container = $container;
         $this->client = $client;
         $this->workspace = $workspace;
         $this->stats = $stats;
         $this->serviceManager = $serviceManager;
+        $this->diagnosticProvider = $diagnosticProvider;
     }
 
     
@@ -131,6 +136,7 @@ class DebugHandler implements Handler
             '  mem: ' . number_format(memory_get_peak_usage()) . 'b',
             '  documents: ' . $this->workspace->count(),
             '  services: ' . (string)json_encode($this->serviceManager->runningServices()),
+            '  diagnostics: ' . (string)$this->diagnosticProvider->name(),
             '',
             'Paths',
             '-----',

@@ -31,4 +31,9 @@ class PhpLintDiagnosticProvider implements DiagnosticsProvider
             );
         });
     }
+
+    public function name(): string
+    {
+        return 'php-lint';
+    }
 }

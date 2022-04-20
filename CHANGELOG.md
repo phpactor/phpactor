@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [fw] Ensure inotify is stopped before shutting down
   - [wr] properly deconstruct array in foreach
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
   - [lsp] ensure fully qualified filename is used for generate method refactoring #1313
@@ -21,6 +22,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ls] include list of diagnostic providers in status report
   - [ct] add retutn type to generated method if it would immediately return
   - [wr] support array [] addition operator
   - [wr] support in_array type assertion

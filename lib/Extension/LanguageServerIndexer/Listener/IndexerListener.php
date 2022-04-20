@@ -2,12 +2,14 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Listener;
 
+use Generator;
 use Phpactor\Extension\LanguageServerIndexer\Event\IndexReset;
 use Phpactor\Extension\LanguageServerIndexer\Handler\IndexerHandler;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
+use Phpactor\LanguageServer\Event\WillShutdown;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-class ReindexListener implements ListenerProviderInterface
+class IndexerListener implements ListenerProviderInterface
 {
     private ServiceManager $manager;
 
@@ -17,6 +19,9 @@ class ReindexListener implements ListenerProviderInterface
     }
 
     
+    /**
+     * @return Generator<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof IndexReset) {
@@ -26,6 +31,12 @@ class ReindexListener implements ListenerProviderInterface
                 }
                 $this->manager->start(IndexerHandler::SERVICE_INDEXER);
             };
+        }
+
+        if ($event instanceof WillShutdown) {
+            if ($this->manager->isRunning(IndexerHandler::SERVICE_INDEXER)) {
+                $this->manager->stop(IndexerHandler::SERVICE_INDEXER);
+            }
         }
     }
 }

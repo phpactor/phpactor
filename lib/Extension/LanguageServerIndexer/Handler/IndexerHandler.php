@@ -21,6 +21,7 @@ use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use function Amp\asyncCall;
 
 class IndexerHandler implements Handler, ServiceProvider
 {
@@ -133,15 +134,28 @@ class IndexerHandler implements Handler, ServiceProvider
     }
 
     /**
-     * @return Generator<Promise>
+     * @return Generator<mixed>
      */
     private function watch(WatcherProcess $process, CancellationToken $cancel): Generator
     {
+        asyncCall(function () use ($process, $cancel) {
+            while (true) {
+                try {
+                    $cancel->throwIfRequested();
+                } catch (CancelledException $cancelled) {
+                    $this->logger->info('Watcher process cancelled');
+                    $process->stop();
+                    return;
+                }
+                yield new Delayed(100);
+            }
+        });
         try {
             while (null !== $file = yield $process->wait()) {
                 try {
                     $cancel->throwIfRequested();
                 } catch (CancelledException $cancelled) {
+                    $process->stop();
                     break;
                 }
 
