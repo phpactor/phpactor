@@ -75,7 +75,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
 
     public function name(): string
     {
-        return 'transform';
+        return $this->name; 
     }
 
     /**
