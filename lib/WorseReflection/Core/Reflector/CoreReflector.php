@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -187,14 +188,27 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     {
         $name = Name::fromUnknown($name);
 
-        $source = $this->sourceLocator->locate($name);
+        // if the source is not found, fallback to the global
+        // function
+        try {
+            $source = $this->sourceLocator->locate($name);
+        } catch (NotFound $notFound) {
+            $name = Name::fromString($name->short());
+            $source = $this->sourceLocator->locate($name);
+        }
+
         $functions = $this->reflectFunctionsIn($source);
 
         if (false === $functions->has((string) $name)) {
-            throw new FunctionNotFound(sprintf(
-                'Unable to locate function "%s"',
-                $name->full()
-            ));
+            $name = Name::fromString($name->short());
+            $source = $this->sourceLocator->locate($name);
+            $functions = $this->reflectFunctionsIn($source);
+            if (false === $functions->has($name)) {
+                throw new FunctionNotFound(sprintf(
+                    'Unable to locate function "%s"',
+                    $name
+                ));
+            }
         }
 
         $function = $functions->get((string) $name);

@@ -70,6 +70,17 @@ class QualifiedNameResolver implements Resolver
                 return $context->withIssue($exception->getMessage());
             }
 
+            // the function may have been resolved to a global, so create
+            // the context again with the potentially shorter name
+            $context = NodeContextFactory::create(
+                $function->name()->__toString(),
+                $node->getStartPosition(),
+                $node->getEndPosition(),
+                [
+                    'symbol_type' => Symbol::FUNCTION,
+                ]
+            );
+
             return $context->withType($function->inferredType());
         }
 

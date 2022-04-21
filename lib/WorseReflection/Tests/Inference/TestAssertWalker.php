@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\TypeUtil;
+use RuntimeException;
 
 class TestAssertWalker implements Walker
 {
@@ -120,19 +121,19 @@ class TestAssertWalker implements Walker
             $args[] = $resolver->resolveNode($frame, $expression);
         }
 
-        $expectedName = $args[0]->symbol()->name();
-        $actualName = $args[1]->type();
-        if (!$actualName instanceof StringType) {
-            return;
+        $actual = $args[1]->symbol()->name();
+        $expected = $args[0]->type();
+        if (!$expected instanceof StringType) {
+            throw new RuntimeException(sprintf('Expected symbol type must be a string got "%s"', $expected->__toString()));
         }
         $message = isset($args[2]) ? TypeUtil::valueOrNull($args[2]->type()) : null;
 
-        if ($actualName->value() !== $expectedName) {
+        if ($expected->value() !== $actual) {
             $this->testCase->fail(sprintf(
                 '%s: "%s" is not "%s"',
                 $node->getText(),
-                $actualName,
-                $expectedName
+                $expected,
+                $actual
             ));
         }
         $this->testCase->addToAssertionCount(1);

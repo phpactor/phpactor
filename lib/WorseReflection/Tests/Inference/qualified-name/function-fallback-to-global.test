@@ -1,0 +1,11 @@
+<?php
+
+function in_array(): array
+{
+}
+
+namespace Foo {
+    wrAssertType('array', in_array());
+    wrAssertSymbolName('in_array', in_array());
+}
+
