@@ -35,9 +35,9 @@ class FunctionReflectorTest extends IntegrationTestCase
     {
         yield 'reflect function' => [
             <<<'EOT'
-            // File: project/hello.php
-            <?php function hello() {}
-            EOT
+                // File: project/hello.php
+                <?php function hello() {}
+                EOT
             ,
             'hello',
             function (ReflectionFunction $function): void {
@@ -47,10 +47,10 @@ class FunctionReflectorTest extends IntegrationTestCase
 
         yield 'fallback to global function' => [
             <<<'EOT'
-            // File: project/global.php
-            <?php 
-            function hello() {}
-            EOT
+                // File: project/global.php
+                <?php 
+                function hello() {}
+                EOT
             ,
             'Foo\hello',
             function (ReflectionFunction $function): void {
@@ -60,11 +60,11 @@ class FunctionReflectorTest extends IntegrationTestCase
 
         yield 'namespaced function' => [
             <<<'EOT'
-            // File: project/global.php
-            <?php 
-            namespace Foo;
-            function hello() {}
-            EOT
+                // File: project/global.php
+                <?php 
+                namespace Foo;
+                function hello() {}
+                EOT
             ,
             'Foo\hello',
             function (ReflectionFunction $function): void {
