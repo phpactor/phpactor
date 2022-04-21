@@ -52,6 +52,7 @@ use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
+use Phpactor\LanguageServer\Middleware\ShutdownMiddleware;
 use Phpactor\LanguageServer\Service\DiagnosticsService;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
@@ -303,6 +304,7 @@ class LanguageServerExtension implements Extension
                 $container->get(EventDispatcherInterface::class)
             );
 
+            $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class));
             $stack[] = new CancellationMiddleware(
                 $container->get(MethodRunner::class)
             );
@@ -313,6 +315,7 @@ class LanguageServerExtension implements Extension
             $stack[] = new HandlerMiddleware(
                 $container->get(MethodRunner::class)
             );
+
 
             return new MiddlewareDispatcher(...$stack);
         });
@@ -355,10 +358,6 @@ class LanguageServerExtension implements Extension
                 $container->get(ClientApi::class),
                 $container->get(ServerStats::class)
             );
-        }, [ self::TAG_METHOD_HANDLER => []]);
-
-        $container->register(ExitHandler::class, function (Container $container) {
-            return new ExitHandler($container->get(EventDispatcherInterface::class));
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {

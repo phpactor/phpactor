@@ -64,7 +64,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $this->expectException(ExitSession::class);
 
         $serverTester = $this->createTester();
-        $serverTester->requestAndWait('exit', []);
+        $serverTester->notifyAndWait('exit', []);
     }
 
     public function testDebug(): void
@@ -72,7 +72,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $this->expectException(ExitSession::class);
 
         $serverTester = $this->createTester();
-        $serverTester->requestAndWait('exit', []);
+        $serverTester->notifyAndWait('exit', []);
     }
 
     public function testRegistersCommands(): void
