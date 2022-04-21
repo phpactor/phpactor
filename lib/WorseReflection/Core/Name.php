@@ -38,7 +38,7 @@ class Name
      * @param Name|string $value
      * @return static|Name
      */
-    public static function fromUnknown($value)
+    public static function fromUnknown($value): Name
     {
         if ($value instanceof Name) {
             return $value;

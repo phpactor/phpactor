@@ -1,0 +1,9 @@
+<?php
+
+function in_array(): array
+{
+}
+
+wrAssertType('array', in_array());
+wrAssertSymbolName('in_array', in_array());
+
