@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29dc5e6fdce8b352ef6b60a60d69f03e",
+    "content-hash": "657b3348581591928a5615350961e496",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1680,16 +1680,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "dev-shutdown-middleware",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "f4604f3c18d4b979ce19ef221f8044e874cea5c5"
+                "reference": "f9656685f2ad9a083b8a4b09949ef7abb56ea164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/f4604f3c18d4b979ce19ef221f8044e874cea5c5",
-                "reference": "f4604f3c18d4b979ce19ef221f8044e874cea5c5",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/f9656685f2ad9a083b8a4b09949ef7abb56ea164",
+                "reference": "f9656685f2ad9a083b8a4b09949ef7abb56ea164",
                 "shasum": ""
             },
             "require": {
@@ -1740,9 +1740,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/shutdown-middleware"
+                "source": "https://github.com/phpactor/language-server/tree/2.1.0"
             },
-            "time": "2022-04-21T20:38:00+00:00"
+            "time": "2022-04-21T21:05:09+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -7624,7 +7624,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server": 20,
         "jetbrains/phpstorm-stubs": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
