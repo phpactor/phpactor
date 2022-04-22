@@ -25,11 +25,6 @@ class FunctionReturnTypeResolver
 
     private function getDocblockTypeFromFunction(ReflectionFunction $function): Type
     {
-        return $this->resolveType($function->docblock()->returnType());
-    }
-
-    private function resolveType(Type $type): Type
-    {
-        return $this->function->scope()->resolveFullyQualifiedName($type);
+        return $function->docblock()->returnType();
     }
 }

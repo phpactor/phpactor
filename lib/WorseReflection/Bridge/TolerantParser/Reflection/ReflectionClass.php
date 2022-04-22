@@ -30,6 +30,7 @@ use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
@@ -342,7 +343,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function docblock(): DocBlock
     {
-        return $this->serviceLocator->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
+        return $this->serviceLocator->docblockFactory()->create(
+            new ClassLikeTypeResolver($this),
+            $this->node()->getLeadingCommentAndWhitespaceText()
+        );
     }
 
     /**

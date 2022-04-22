@@ -24,7 +24,7 @@ class PropertyTypeResolver
         }
 
         if (TypeUtil::isDefined($docblockType)) {
-            return $this->property->scope()->resolveFullyQualifiedName($docblockType, $this->property->class());
+            return $docblockType;
         }
 
         return $this->property->type();

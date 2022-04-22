@@ -7,6 +7,7 @@ use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
+use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -20,7 +21,6 @@ use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\ThisNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -54,18 +54,21 @@ class TypeConverter
 {
     private Reflector $reflector;
 
-    public function __construct(Reflector $reflector)
+    private TypeResolver $resolver;
+
+    public function __construct(Reflector $reflector, TypeResolver $resolver)
     {
         $this->reflector = $reflector;
+        $this->resolver = $resolver;
     }
 
-    public function convert(?TypeNode $type, ?ReflectionScope $scope = null): Type
+    public function convert(?TypeNode $type): Type
     {
         if ($type instanceof ScalarNode) {
             return $this->convertScalar($type->toString());
         }
         if ($type instanceof ListNode) {
-            return $this->convertList($type, $scope);
+            return $this->convertList($type);
         }
         if ($type instanceof ArrayNode) {
             return $this->convertArray($type);
@@ -77,10 +80,10 @@ class TypeConverter
             return $this->convertUnion($type);
         }
         if ($type instanceof GenericNode) {
-            return $this->convertGeneric($type, $scope);
+            return $this->convertGeneric($type);
         }
         if ($type instanceof ClassNode) {
-            return $this->convertClass($type, $scope);
+            return $this->convertClass($type);
         }
         if ($type instanceof ThisNode) {
             return $this->convertThis($type);
@@ -90,20 +93,20 @@ class TypeConverter
         }
 
         if ($type instanceof CallableNode) {
-            return $this->convertCallable($type, $scope);
+            return $this->convertCallable($type);
         }
 
         if ($type instanceof ParenthesizedType) {
-            return $this->convertParenthesized($type, $scope);
+            return $this->convertParenthesized($type);
         }
         if ($type instanceof LiteralStringNode) {
-            return $this->convertLiteralString($type, $scope);
+            return $this->convertLiteralString($type);
         }
         if ($type instanceof LiteralIntegerNode) {
-            return $this->convertLiteralInteger($type, $scope);
+            return $this->convertLiteralInteger($type);
         }
         if ($type instanceof LiteralFloatNode) {
-            return $this->convertLiteralFloat($type, $scope);
+            return $this->convertLiteralFloat($type);
         }
 
         return new MissingType();
@@ -149,26 +152,26 @@ class TypeConverter
         ));
     }
 
-    private function convertGeneric(GenericNode $type, ?ReflectionScope $scope): Type
+    private function convertGeneric(GenericNode $type): Type
     {
         if ($type->type instanceof ArrayNode) {
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
             if (count($parameters) === 1) {
                 return new ArrayType(
                     new ArrayKeyType(),
-                    $this->convert($parameters[0], $scope)
+                    $this->convert($parameters[0])
                 );
             }
             if (count($parameters) === 2) {
                 return new ArrayType(
-                    $this->convert($parameters[0], $scope),
-                    $this->convert($parameters[1], $scope),
+                    $this->convert($parameters[0]),
+                    $this->convert($parameters[1]),
                 );
             }
             return new MissingType();
         }
 
-        $classType = $this->convert($type->type, $scope);
+        $classType = $this->convert($type->type);
 
         if (!$classType instanceof ClassType) {
             return new MissingType();
@@ -180,26 +183,26 @@ class TypeConverter
             $this->reflector,
             $classType->name(),
             array_map(
-                fn (TypeNode $node) => $this->convert($node, $scope),
+                fn (TypeNode $node) => $this->convert($node),
                 $parameters
             )
         );
     }
 
-    private function convertClass(ClassNode $typeNode, ?ReflectionScope $scope): Type
+    private function convertClass(ClassNode $typeNode): Type
     {
         $name = $typeNode->name()->toString();
 
         if ($name === 'static') {
-            return new StaticType();
+            return $this->resolver->resolve(new StaticType());
+        }
+
+        if ($name === 'self') {
+            return $this->resolver->resolve(new SelfType());
         }
 
         if ($name === 'iterable') {
             return new IterablePrimitiveType();
-        }
-
-        if ($name === 'self') {
-            return new SelfType();
         }
 
         if ($name === 'object') {
@@ -221,24 +224,20 @@ class TypeConverter
             )
         );
 
-        if ($scope) {
-            return $scope->resolveFullyQualifiedName($type);
-        }
-
-        return $type;
+        return $this->resolver->resolve($type);
     }
 
-    private function convertList(ListNode $type, ?ReflectionScope $scope): Type
+    private function convertList(ListNode $type): Type
     {
-        return new ArrayType($this->convert($type->type, $scope));
+        return new ArrayType($this->convert($type->type));
     }
 
     private function convertThis(ThisNode $type): Type
     {
-        return new SelfType();
+        return $this->resolver->resolve(new StaticType());
     }
 
-    private function convertCallable(CallableNode $callableNode, ?ReflectionScope $scope): CallableType
+    private function convertCallable(CallableNode $callableNode): CallableType
     {
         $parameters = array_map(function (TypeNode $type) {
             return $this->convert($type);
@@ -264,12 +263,12 @@ class TypeConverter
         return new ArrayShapeType($typeMap);
     }
 
-    private function convertParenthesized(ParenthesizedType $type, ?ReflectionScope $scope): Type
+    private function convertParenthesized(ParenthesizedType $type): Type
     {
         return new PhpactorParenthesizedType($this->convert($type->node));
     }
 
-    private function convertLiteralString(LiteralStringNode $type, ?ReflectionScope $scope): Type
+    private function convertLiteralString(LiteralStringNode $type): Type
     {
         $quote = substr($type->token->value, 0, 1);
         $string = trim($type->token->value, $quote);
@@ -277,12 +276,12 @@ class TypeConverter
         return new StringLiteralType($string);
     }
 
-    private function convertLiteralInteger(LiteralIntegerNode $type, ?ReflectionScope $scope): Type
+    private function convertLiteralInteger(LiteralIntegerNode $type): Type
     {
         return new IntLiteralType((int)$type->token->value);
     }
 
-    private function convertLiteralFloat(LiteralFloatNode $type, ?ReflectionScope $scope): Type
+    private function convertLiteralFloat(LiteralFloatNode $type): Type
     {
         return new FloatLiteralType((float)$type->token->value);
     }

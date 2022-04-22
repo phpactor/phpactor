@@ -142,7 +142,7 @@ class ParsedDocblock implements DocBlock
         $properties = [];
         foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
             assert($propertyTag instanceof PropertyTag);
-            $type = $this->typeConverter->convert($propertyTag->type, $declaringClass->scope());
+            $type = $this->typeConverter->convert($propertyTag->type);
             $method = new VirtualReflectionProperty(
                 $declaringClass->position(),
                 $declaringClass,
@@ -177,7 +177,7 @@ class ParsedDocblock implements DocBlock
                 $this,
                 $declaringClass->scope(),
                 Visibility::public(),
-                $this->typeConverter->convert($methodTag->type, $declaringClass->scope()),
+                $this->typeConverter->convert($methodTag->type),
                 $this->typeConverter->convert($methodTag->type),
                 $params,
                 NodeText::fromString(''),

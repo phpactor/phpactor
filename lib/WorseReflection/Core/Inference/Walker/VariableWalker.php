@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
@@ -10,12 +11,13 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 use Phpactor\WorseReflection\TypeUtil;
 
 class VariableWalker extends AbstractWalker
@@ -27,14 +29,10 @@ class VariableWalker extends AbstractWalker
      */
     private array $injectedTypes = [];
     
-    private NodeToTypeConverter $nameResolver;
-
     public function __construct(
         DocBlockFactory $docblockFactory,
-        NodeToTypeConverter $nameResolver
     ) {
         $this->docblockFactory = $docblockFactory;
-        $this->nameResolver = $nameResolver;
     }
 
     
@@ -45,7 +43,8 @@ class VariableWalker extends AbstractWalker
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        $docblockType = $this->injectVariablesFromComment($frame, $node);
+        $scope = new ReflectionScope($resolver->reflector(), $node);
+        $docblockType = $this->injectVariablesFromComment($scope, $frame, $node);
 
         if (!$node instanceof Variable) {
             return $frame;
@@ -89,10 +88,10 @@ class VariableWalker extends AbstractWalker
         return $frame;
     }
 
-    private function injectVariablesFromComment(Frame $frame, Node $node): Type
+    private function injectVariablesFromComment(PhpactorReflectionScope $scope, Frame $frame, Node $node): Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
-        $docblock = $this->docblockFactory->create($comment);
+        $docblock = $this->docblockFactory->create(new DefaultTypeResolver($scope), $comment);
 
         if (false === $docblock->isDefined()) {
             return TypeFactory::undefined();
@@ -103,10 +102,7 @@ class VariableWalker extends AbstractWalker
 
         /** @var DocBlockVar $var */
         foreach ($docblock->vars() as $var) {
-            $type = $this->nameResolver->resolve(
-                $node,
-                $var->type()
-            );
+            $type = $var->type();
 
             if (empty($var->name())) {
                 return $type;

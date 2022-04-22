@@ -80,8 +80,8 @@ class ReflectedClassType extends ClassType
         $scope = $class->scope();
 
         assert($class instanceof ReflectionClassLike);
-        $implements = array_map(fn (Type $t) => $scope->resolveFullyQualifiedName($t), $class->docblock()->implements());
-        $extendsType = $scope->resolveFullyQualifiedName($class->docblock()->extends());
+        $implements = $class->docblock()->implements();
+        $extendsType = $class->docblock()->extends();
         if (TypeUtil::isDefined($extendsType)) {
             $implements[] = $extendsType;
         }

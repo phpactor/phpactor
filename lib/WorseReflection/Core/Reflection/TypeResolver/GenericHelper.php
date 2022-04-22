@@ -19,7 +19,6 @@ class GenericHelper
         }
 
         $extendsType = $class->docblock()->extends();
-        $extendsType = $class->scope()->resolveFullyQualifiedName($extendsType);
         $templateMap = $declaringClass->templateMap();
 
         if ($extendsType instanceof GenericClassType) {
@@ -30,7 +29,6 @@ class GenericHelper
         $implements = $class->docblock()->implements();
 
         foreach ($implements as $implementsType) {
-            $implementsType = $class->scope()->resolveFullyQualifiedName($implementsType);
             if (!$implementsType instanceof GenericClassType) {
                 continue;
             }
@@ -59,7 +57,7 @@ class GenericHelper
         // (e.g. @template T of Foo)
         foreach ($arguments as &$argument) {
             if ($templateMap->has(TypeUtil::short($argument))) {
-                $argument = $scope->resolveFullyQualifiedName($templateMap->get(TypeUtil::short($argument)));
+                $argument = $templateMap->get(TypeUtil::short($argument));
             }
         }
 

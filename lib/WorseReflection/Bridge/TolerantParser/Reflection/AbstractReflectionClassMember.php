@@ -11,6 +11,7 @@ use Microsoft\PhpParser\ClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\TokenKind;
+use Phpactor\WorseReflection\Core\TypeResolver\MemberTypeResolver as PhpactorMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Util\OriginalMethodResolver;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -20,7 +21,7 @@ use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use InvalidArgumentException;
 
-abstract class AbstractReflectionClassMember extends AbstractReflectedNode
+abstract class AbstractReflectionClassMember extends AbstractReflectedNode implements ReflectionMember
 {
     public function declaringClass(): ReflectionClassLike
     {
@@ -52,7 +53,10 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode
 
     public function docblock(): DocBlock
     {
-        return $this->serviceLocator()->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
+        return $this->serviceLocator()->docblockFactory()->create(
+            new PhpactorMemberTypeResolver($this),
+            $this->node()->getLeadingCommentAndWhitespaceText()
+        );
     }
 
     public function visibility(): Visibility
@@ -78,6 +82,4 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode
     }
 
     abstract protected function serviceLocator(): ServiceLocator;
-
-    abstract protected function name(): string;
 }

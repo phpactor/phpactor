@@ -41,8 +41,8 @@ class ScopedPropertyAccessResolver implements Resolver
             $name = $node->scopeResolutionQualifier->getText();
         }
 
-        $parent = $this->nodeTypeConverter->resolve($node, (string)$name);
+        $classType = $this->nodeTypeConverter->resolve($node, (string)$name);
 
-        return MemberAccessExpressionResolver::infoFromMemberAccess($resolver, $frame, $parent, $node);
+        return MemberAccessExpressionResolver::infoFromMemberAccess($resolver, $frame, $classType, $node);
     }
 }
