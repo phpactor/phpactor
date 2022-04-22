@@ -6,7 +6,6 @@ use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
-use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
@@ -113,7 +112,7 @@ class TypeConverter
         }
 
         if ($type instanceof ConstantNode) {
-            return $this->convertConstant($type, $scope);
+            return $this->convertConstant($type);
         }
 
         return new MissingType();
@@ -275,7 +274,6 @@ class TypeConverter
         return new PhpactorParenthesizedType($this->convert($type->node));
     }
 
-<<<<<<< HEAD
     private function convertLiteralString(LiteralStringNode $type): Type
     {
         $quote = substr($type->token->value, 0, 1);
@@ -294,7 +292,7 @@ class TypeConverter
         return new FloatLiteralType((float)$type->token->value);
     }
 
-    private function convertConstant(ConstantNode $type, ?ReflectionScope $scope): Type
+    private function convertConstant(ConstantNode $type): Type
     {
         // TODO: We cannot get the FQN here because we have no context
         //       Need to refactor this class to be able to always convert

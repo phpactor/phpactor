@@ -203,7 +203,6 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         );
         $docblock = $this->parseDocblockWithReflector($reflector, '/** @return Foo::BA* */');
         self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
->>>>>>> 1cbfee95 (Support constant glob)
     }
 
     public function testMethods(): void
