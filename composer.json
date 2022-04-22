@@ -4,6 +4,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
+        "ext-pcntl": "*",
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",

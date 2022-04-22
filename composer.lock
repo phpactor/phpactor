@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "657b3348581591928a5615350961e496",
+    "content-hash": "01209ea3288c8925a5060b8ba20b0d21",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1213,12 +1213,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "ef3d725bf1bf35473444778b8f5c161deee6858b"
+                "reference": "4b95f4f68c050574d4f448223e2643ddf06d45da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/ef3d725bf1bf35473444778b8f5c161deee6858b",
-                "reference": "ef3d725bf1bf35473444778b8f5c161deee6858b",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/4b95f4f68c050574d4f448223e2643ddf06d45da",
+                "reference": "4b95f4f68c050574d4f448223e2643ddf06d45da",
                 "shasum": ""
             },
             "require-dev": {
@@ -1254,7 +1254,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2022-04-14T13:08:58+00:00"
+            "time": "2022-04-22T10:30:48+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -7630,6 +7630,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
+        "ext-pcntl": "*",
         "php": "^7.4 || ^8.0"
     },
     "platform-dev": [],
