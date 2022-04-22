@@ -23,6 +23,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] handle static properly #967
   - [ls] include list of diagnostic providers in status report
   - [ct] add retutn type to generated method if it would immediately return
   - [wr] support array [] addition operator
@@ -47,6 +48,7 @@ Improvements:
 
 Features:
 
+  - [wr] Handle constant glob to union types (`@return Foo::BAR_*`).
   - [lsp] show class category in offset hover info 
   - [lsp] jump to types in a union type
   - [wr] Type combination
