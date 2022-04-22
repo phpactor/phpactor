@@ -51,19 +51,25 @@ class BinaryExpressionResolver implements Resolver
         // resolve the type of the expression
         $context = $context->withType($this->walkBinaryExpression($left->type(), $right->type(), $operator));
 
+        $leftOperand = $node->leftOperand;
+        $rightOperand = $node->rightOperand;
+
         // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
         // the left hand side of instanceof should be parsed as a variable but it's not.
-        $leftOperand = $node->leftOperand;
         if ($leftOperand instanceof UnaryExpression) {
             $leftOperand = $leftOperand->operand;
             $left = $resolver->resolveNode($frame, $leftOperand);
         }
 
-        // apply any type assertiosn (e.g. ===, instanceof, etc)
-        $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
+        // https://github.com/phpactor/phpactor/issues/1460
+        // both right and left operand should be Node instances
+        if ($leftOperand instanceof Node && $rightOperand instanceof Node) {
+            // apply any type assertiosn (e.g. ===, instanceof, etc)
+            $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
 
-        // negate if there is a boolean comparison against an expression
-        $context = $this->negate($context, $node->leftOperand, $node->rightOperand, $operator);
+            // negate if there is a boolean comparison against an expression
+            $context = $this->negate($context, $node->leftOperand, $node->rightOperand, $operator);
+        }
 
         return $context;
     }
