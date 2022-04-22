@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
@@ -207,7 +208,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         $methods = $docblock->properties($reflector->reflectClass('Bar\Foobar'));
 
         self::assertEquals('foobar', $methods->first()->name());
-        self::assertEquals('Bar\Barfoo', $methods->first()->type()->__toString());
+        self::assertEquals('Barfoo', $methods->first()->type()->__toString());
     }
 
     public function testVars(): void
@@ -252,6 +253,6 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create($docblock);
+        return (new DocblockParserFactory($reflector))->create(new PassthroughTypeResolver(), $docblock);
     }
 }

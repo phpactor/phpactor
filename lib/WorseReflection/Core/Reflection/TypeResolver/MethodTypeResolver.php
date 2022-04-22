@@ -49,7 +49,6 @@ class MethodTypeResolver
 
     private function resolveType(Type $type): Type
     {
-        $type = $this->method->scope()->resolveFullyQualifiedName($type, $this->method->class());
         if (false === TypeUtil::isDefined($type)) {
             return $type;
         }

@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as CoreReflectionInterface;
@@ -144,7 +145,10 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     public function docblock(): DocBlock
     {
-        return $this->serviceLocator->docblockFactory()->create($this->node()->getLeadingCommentAndWhitespaceText());
+        return $this->serviceLocator->docblockFactory()->create(
+            new ClassLikeTypeResolver($this),
+            $this->node()->getLeadingCommentAndWhitespaceText()
+        );
     }
 
     /**

@@ -108,7 +108,7 @@ class ServiceLocator
             array_merge([
                 new AssertFrameWalker(),
                 new FunctionLikeWalker(),
-                new VariableWalker($this->docblockFactory, $nameResolver),
+                new VariableWalker($this->docblockFactory),
                 new AssignmentWalker($this->logger),
                 new CatchWalker(),
                 new ForeachWalker(),

@@ -17,7 +17,7 @@ abstract class SystemTestCase extends IntegrationTestCase
             $bin,
             $args
         ), null, [
-            'XDG_CACHE_HOME' => $this->workspaceDir(),
+            'XDG_CACHE_HOME' => __DIR__ . '/../Assets/Cache',
         ]);
 
         if ($stdin) {
