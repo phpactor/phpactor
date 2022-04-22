@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
-use PhpParser\Node\Expr\ArrowFunction;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\FunctionLike;
