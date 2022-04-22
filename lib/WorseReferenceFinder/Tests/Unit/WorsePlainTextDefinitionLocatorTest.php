@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Generator;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\WorseReferenceFinder\Tests\DefinitionLocatorTestCase;
@@ -32,13 +33,17 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->locate('', 'Hello this i<>s ');
     }
 
-    public function provideGotoWord()
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideGotoWord(): Generator
     {
         yield 'property docblock' => [ '/** @var Foob<>ar */', 'Foobar.php' ];
         yield 'fully qualified' => [ '/** @var \Barfoo\Barf<>oo */', 'Barfoo.php' ];
         yield 'qualified' => [ '/** @var Barfoo\Barf<>oo */', 'Barfoo.php' ];
         yield 'xml attribute' => [ '<element class="Foob<>ar">', 'Foobar.php' ];
         yield 'array access' => [ '[Foob<>ar::class]', 'Foobar.php' ];
+        yield 'list' => [ '/** @return <>Foobar[]', 'Foobar.php' ];
         yield 'solid block of text' => [ 'Foob<>ar', 'Foobar.php' ];
         yield 'imported class 1' => [ <<<'EOT'
             <?php 
