@@ -411,6 +411,9 @@ RpcExtension
 
 
 
+Should replays be stored?
+
+
 **Default**: ``false``
 
 
@@ -421,6 +424,9 @@ RpcExtension
 """""""""""""""""""
 
 
+
+
+Path where the replays should be stored
 
 
 **Default**: ``"%cache%\/replay.json"``
