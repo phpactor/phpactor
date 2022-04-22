@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [dl] Fixed off-by-one error with plain text goto definition
   - [fw] Ensure inotify is stopped before shutting down
   - [wr] properly deconstruct array in foreach
   - [lsp] import unresolved classes refactoring: Ensure only unique names are shown when asking user to select an import candidate
