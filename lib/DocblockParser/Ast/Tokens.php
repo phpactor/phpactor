@@ -132,7 +132,7 @@ final class Tokens implements IteratorAggregate
         while ($peek = $this->peek($offset)) {
             if (
                 $peek->type === Token::T_WHITESPACE ||
-                $peek->type === Token::T_PHPDOC_LEADING
+                $peek->type === Token::T_ASTERISK
             ) {
                 $offset++;
                 continue;

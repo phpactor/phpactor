@@ -5,7 +5,9 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
 use Generator;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
@@ -22,6 +24,7 @@ use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class DocblockParserFactoryTest extends IntegrationTestCase
@@ -177,6 +180,41 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         ];
     }
 
+    public function testClassConstant(): void
+    {
+        $source = <<<'EOT'
+            <?php 
+            namespace Bar;
+
+            class Foo { 
+                const BAR = "baz";
+            }
+            EOT;
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $class = $reflector->reflectClassesIn(
+            $source
+        )->first();
+        $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return self::BAR */');
+        self::assertEquals('"baz"', $docblock->returnType()->__toString());
+    }
+
+    public function testClassConstantGlob(): void
+    {
+        $source = <<<'EOT'
+            <?php 
+            class Foo { 
+                const BAZ = "baz";
+                const BAR = "bar";
+                const ZED = "zed";
+                const SED = "sed";
+            }
+            EOT;
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $class = $reflector->reflectClassesIn($source)->first();
+        $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
+        self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
+    }
+
     public function testMethods(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
@@ -254,5 +292,10 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
         return (new DocblockParserFactory($reflector))->create(new PassthroughTypeResolver(), $docblock);
+    }
+
+    private function parseDocblockWithClass(Reflector $reflector, ReflectionClassLike $classLike, string $docblock): DocBlock
+    {
+        return (new DocblockParserFactory($reflector))->create(new ClassLikeTypeResolver($classLike), $docblock);
     }
 }

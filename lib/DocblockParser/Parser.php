@@ -25,6 +25,7 @@ use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\TagNode;
 use Phpactor\DocblockParser\Ast\TypeNode;
+use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\ListNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
@@ -341,7 +342,20 @@ final class Parser
             return new LiteralIntegerNode($type);
         }
 
-        return new ClassNode($type);
+        $classNode = new ClassNode($type);
+
+        if (
+            $this->tokens->peekIs(0, Token::T_DOUBLE_COLON) &&
+            $this->tokens->peekIs(1, Token::T_LABEL)
+        ) {
+            return new ConstantNode(
+                $classNode,
+                $this->tokens->chomp(),
+                $this->tokens->chomp(),
+            );
+        }
+
+        return $classNode;
     }
 
     private function parseVariable(): ?VariableNode
@@ -468,7 +482,7 @@ final class Parser
             if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
                 break;
             }
-            if ($this->tokens->current->type === Token::T_PHPDOC_LEADING) {
+            if ($this->tokens->current->type === Token::T_ASTERISK) {
                 break;
             }
             if (false !== strpos($this->tokens->current->value, "\n")) {

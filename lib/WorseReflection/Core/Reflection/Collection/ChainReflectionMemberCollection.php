@@ -215,6 +215,9 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
         );
     }
     
+    /**
+     * @param ReflectionMember::TYPE_* $type
+     */
     public function byMemberType(string $type): ReflectionMemberCollection
     {
         $collections = [];

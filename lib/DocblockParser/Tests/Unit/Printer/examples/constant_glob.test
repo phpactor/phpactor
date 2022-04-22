@@ -1,0 +1,11 @@
+/**
+ * @var Foobar::BAR_*
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   ConstantNode: = 
+    ClassNode: = Foobar::BAR_*
+ */
