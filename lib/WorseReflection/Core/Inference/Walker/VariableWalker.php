@@ -30,7 +30,7 @@ class VariableWalker extends AbstractWalker
     private array $injectedTypes = [];
     
     public function __construct(
-        DocBlockFactory $docblockFactory,
+        DocBlockFactory $docblockFactory
     ) {
         $this->docblockFactory = $docblockFactory;
     }
