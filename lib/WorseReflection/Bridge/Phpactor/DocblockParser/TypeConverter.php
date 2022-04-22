@@ -294,12 +294,7 @@ class TypeConverter
 
     private function convertConstant(ConstantNode $type): Type
     {
-        // TODO: We cannot get the FQN here because we have no context
-        //       Need to refactor this class to be able to always convert
-        //       the types relative to the declaring class
         $classType = $this->convert($type->name);
-        dump($type->name);
-        dump($classType->__toString());
 
         if (!$classType instanceof ReflectedClassType) {
             return new MissingType();

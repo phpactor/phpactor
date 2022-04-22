@@ -14,7 +14,9 @@ class ConstantNode extends TypeNode
     ];
 
     public TypeNode $name;
+
     public Token $doubleColon;
+
     public Token $constant;
 
     public function __construct(TypeNode $name, Token $doubleColon, Token $constant)

@@ -183,15 +183,16 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstant(): void
     {
         $source = <<<'EOT'
-        <?php 
-        namespace Bar;
+            <?php 
+            namespace Bar;
 
-        class Foo { 
-            const BAR = "baz";
-        }
-        EOT;
+            class Foo { 
+                const BAR = "baz";
+            }
+            EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
-        $class = $reflector->reflectClassesIn($source
+        $class = $reflector->reflectClassesIn(
+            $source
         )->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return self::BAR */');
         self::assertEquals('"baz"', $docblock->returnType()->__toString());
@@ -199,17 +200,17 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
     public function testClassConstantGlob(): void
     {
-        $reflector = ReflectorBuilder::create()->build();
-        $class = $reflector->reflectClassesIn(<<<'EOT'
-        <?php 
-        class Foo { 
-            const BAZ = "baz";
-            const BAR = "bar";
-            const ZED = "zed";
-            const SED = "sed";
-        }
-        EOT
-        )->first();
+        $source = <<<'EOT'
+            <?php 
+            class Foo { 
+                const BAZ = "baz";
+                const BAR = "bar";
+                const ZED = "zed";
+                const SED = "sed";
+            }
+            EOT;
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
         self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
     }
