@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [wr] Fix arrow function completion #1303
   - [dl] Fixed off-by-one error with plain text goto definition
   - [fw] Ensure inotify is stopped before shutting down
   - [wr] properly deconstruct array in foreach
