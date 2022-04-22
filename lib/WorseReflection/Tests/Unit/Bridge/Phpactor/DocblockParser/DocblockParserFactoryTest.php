@@ -5,7 +5,9 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
 use Generator;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
@@ -22,6 +24,7 @@ use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class DocblockParserFactoryTest extends IntegrationTestCase
@@ -175,23 +178,29 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return null|"foo"|123|123.3 */',
             'null|"foo"|123|123.3',
         ];
-
-        yield 'constant' => [
-            '/** @return Foobar::FOO */',
-            'Foobar::FOO',
-        ];
     }
 
     public function testClassConstant(): void
     {
-        $reflector = $this->createReflector('<?php namespace Bar; class Foo{const BAR = "baz";}');
-        $docblock = $this->parseDocblockWithReflector($reflector, '/** @return Bar\Foo::BAR */');
+        $source = <<<'EOT'
+        <?php 
+        namespace Bar;
+
+        class Foo { 
+            const BAR = "baz";
+        }
+        EOT;
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $class = $reflector->reflectClassesIn($source
+        )->first();
+        $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return self::BAR */');
         self::assertEquals('"baz"', $docblock->returnType()->__toString());
     }
 
     public function testClassConstantGlob(): void
     {
-        $reflector = $this->createReflector(<<<'EOT'
+        $reflector = ReflectorBuilder::create()->build();
+        $class = $reflector->reflectClassesIn(<<<'EOT'
         <?php 
         class Foo { 
             const BAZ = "baz";
@@ -200,8 +209,8 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             const SED = "sed";
         }
         EOT
-        );
-        $docblock = $this->parseDocblockWithReflector($reflector, '/** @return Foo::BA* */');
+        )->first();
+        $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
         self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
     }
 
@@ -282,5 +291,10 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
         return (new DocblockParserFactory($reflector))->create(new PassthroughTypeResolver(), $docblock);
+    }
+
+    private function parseDocblockWithClass(Reflector $reflector, ReflectionClassLike $classLike, string $docblock): DocBlock
+    {
+        return (new DocblockParserFactory($reflector))->create(new ClassLikeTypeResolver($classLike), $docblock);
     }
 }

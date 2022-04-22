@@ -297,13 +297,15 @@ class TypeConverter
         // TODO: We cannot get the FQN here because we have no context
         //       Need to refactor this class to be able to always convert
         //       the types relative to the declaring class
-        $classNode = $this->convert($type->name);
+        $classType = $this->convert($type->name);
+        dump($type->name);
+        dump($classType->__toString());
 
-        if (!$classNode instanceof ReflectedClassType) {
+        if (!$classType instanceof ReflectedClassType) {
             return new MissingType();
         }
 
-        $reflection = $classNode->reflectionOrNull();
+        $reflection = $classType->reflectionOrNull();
 
         if (null === $reflection) {
             return new MissingType();
