@@ -52,7 +52,7 @@ class FunctionLikeWalker extends AbstractWalker
     }
 
     /**
-     * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression $node
+     * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
     private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
