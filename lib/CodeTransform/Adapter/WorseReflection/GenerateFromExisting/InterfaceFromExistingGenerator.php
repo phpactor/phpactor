@@ -67,9 +67,8 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
                 if ($parameter->type()->isDefined()) {
                     $parameterBuilder->type($parameterType->short());
 
-                    $parameterType = TypeUtil::unwrapNullableType($parameterType);
-                    if ($parameterType instanceof ClassType) {
-                        $useClasses[$parameterType->name->__toString()] = true;
+                    foreach ($parameterType->classTypes() as $classType) {
+                        $useClasses[$classType->name->__toString()] = true;
                     }
 
                     if ($parameter->default()->isDefined()) {
