@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -45,6 +46,11 @@ abstract class Type
     public function isClass(): bool
     {
         return $this instanceof ClassType;
+    }
+
+    public function isArray(): bool
+    {
+        return $this instanceof ArrayType;
     }
 
     public function isNullable(): bool

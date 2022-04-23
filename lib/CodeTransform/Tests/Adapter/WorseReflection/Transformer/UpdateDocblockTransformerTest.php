@@ -74,7 +74,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-                    public function baz(): void
+                    public function baz(): array
                     {
                         return [
                             'foo' => 'bar',
@@ -92,7 +92,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     /**
                      * @return array<string,string>
                      */
-                    public function baz(): void
+                    public function baz(): array
                     {
                         return [
                             'foo' => 'bar',
@@ -108,7 +108,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-                    public function baz(): void
+                    public function baz(): array
                     {
                         if ($foo) {
                             return [
@@ -132,7 +132,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     /**
                      * @return array<string,string>
                      */
-                    public function baz(): void
+                    public function baz(): array
                     {
                         if ($foo) {
                             return [
@@ -263,8 +263,9 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
+
                     /**
-                     * @return array<asd>
+                     * @return null[]
                      */
                     public function baz(): array
                     {
