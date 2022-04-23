@@ -70,7 +70,7 @@ class TypeUtilTest extends TestCase
     {
         self::assertEquals(
             $expected,
-            TypeUtil::short($type),
+            $type->short(),
         );
     }
 

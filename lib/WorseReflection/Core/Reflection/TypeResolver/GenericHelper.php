@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\TypeUtil;
 
 class GenericHelper
 {
@@ -49,15 +48,15 @@ class GenericHelper
     private static function resolveGenericType(ReflectionScope $scope, TemplateMap $templateMap, Type $type, array $arguments): Type
     {
         if (!$type instanceof GenericClassType) {
-            return $templateMap->get(TypeUtil::short($type), $arguments);
+            return $templateMap->get($type->short(), $arguments);
         }
 
         // replace any unresolved template parameters with any
         // type constraint defined by the parameter declaration
         // (e.g. @template T of Foo)
         foreach ($arguments as &$argument) {
-            if ($templateMap->has(TypeUtil::short($argument))) {
-                $argument = $templateMap->get(TypeUtil::short($argument));
+            if ($templateMap->has($argument->short())) {
+                $argument = $templateMap->get($argument->short());
             }
         }
 

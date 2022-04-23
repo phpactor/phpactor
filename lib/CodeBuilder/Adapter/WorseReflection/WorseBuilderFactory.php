@@ -100,7 +100,7 @@ class WorseBuilderFactory implements BuilderFactory
         $type = $property->inferredType();
         if (($type->isDefined())) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
-            $propertyBuilder->type(TypeUtil::short($type));
+            $propertyBuilder->type(($type->short()));
             $propertyBuilder->docType((string)$type);
         }
     }
@@ -113,7 +113,7 @@ class WorseBuilderFactory implements BuilderFactory
         if ($method->returnType()->isDefined()) {
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
-            $typeName = TypeUtil::short($type);
+            $typeName = $type->short();
             $methodBuilder->returnType($typeName);
         }
 
@@ -178,7 +178,7 @@ class WorseBuilderFactory implements BuilderFactory
         if ($type instanceof MissingType) {
             return '';
         }
-        $typeName = TypeUtil::short($type);
+        $typeName = $type->short();
 
         foreach ($imports as $alias => $import) {
             if ($typeName == $import->head()) {
