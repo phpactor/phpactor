@@ -3,14 +3,16 @@
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 /**
- * @method \Phpactor\CodeBuilder\Domain\Prototype\Method first()
- * @method \Phpactor\CodeBuilder\Domain\Prototype\Method get(string $name)
+ * @extends Collection<Method>
  */
 class Methods extends Collection
 {
-    public static function fromMethods(array $methods)
+    /**
+     * @param Method[] $methods
+     */
+    public static function fromMethods(array $methods): self
     {
-        return new static(array_reduce($methods, function ($acc, $method) {
+        return new self(array_reduce($methods, function ($acc, $method) {
             $acc[$method->name()] = $method;
             return $acc;
         }, []));

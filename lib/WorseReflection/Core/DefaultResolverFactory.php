@@ -5,8 +5,10 @@ namespace Phpactor\WorseReflection\Core;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
@@ -33,14 +35,17 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayMapStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\InArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IteratorToArrayStub;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\AnonymousFunctionCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArgumentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ArrayCreationExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ArrowFunctionCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\AssignmentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CastExpressionResolver;
@@ -121,6 +126,8 @@ final class DefaultResolverFactory
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
             CastExpression::class => new CastExpressionResolver(),
+            ArrowFunctionCreationExpression::class => new ArrowFunctionCreationExpressionResolver(),
+            AnonymousFunctionCreationExpression::class => new AnonymousFunctionCreationExpressionResolver(),
         ];
     }
 
@@ -135,6 +142,7 @@ final class DefaultResolverFactory
             'is_int' => new IsSomethingStub(TypeFactory::int()),
             'is_string' => new IsSomethingStub(TypeFactory::string()),
             'is_callable' => new IsSomethingStub(TypeFactory::callable()),
+            'array_map' => new ArrayMapStub(),
         ]);
     }
 }

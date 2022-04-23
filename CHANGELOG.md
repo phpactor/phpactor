@@ -50,6 +50,8 @@ Improvements:
 
 Features:
 
+  - [wr] Support for inference for `array_map`, and arrow and anonymous functions
+  - [ct] Add missing @return type docblocks code transformation
   - [cmp] Explicitly enable/disable completors and disable `keyword` completor by default.
   - [wr] Support `iterator_to_array`
   - [wr] Handle constant glob to union types (`@return Foo::BAR_*`).

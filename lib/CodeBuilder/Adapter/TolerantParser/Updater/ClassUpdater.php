@@ -114,6 +114,7 @@ class ClassUpdater extends ClassLikeUpdater
         }
 
         $additionalNames = $classPrototype->implementsInterfaces()->notIn($existingNames);
+        assert($additionalNames instanceof ImplementsInterfaces);
 
         if (0 === count($additionalNames)) {
             return;

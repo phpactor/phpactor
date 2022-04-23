@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
-class ArrayShapeType extends ArrayType
+class ArrayShapeType extends ArrayType implements Generalizable
 {
     /**
      * @var array<array-key,Type>
@@ -48,5 +48,10 @@ class ArrayShapeType extends ArrayType
     public function isList(): bool
     {
         return range(0, count($this->typeMap) - 1) === array_keys($this->typeMap);
+    }
+
+    public function generalize(): Type
+    {
+        return new ArrayType($this->keyType, $this->valueType);
     }
 }

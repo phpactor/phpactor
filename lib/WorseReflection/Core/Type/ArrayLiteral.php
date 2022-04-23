@@ -77,7 +77,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
 
     public function generalize(): Type
     {
-        return new ArrayType(new ArrayKeyType(), new MixedType());
+        return new ArrayType($this->keyType, $this->valueType);
     }
 
     /**

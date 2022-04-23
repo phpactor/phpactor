@@ -686,11 +686,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:__toString\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
-
-		-
 			message: "#^PHPDoc tag @var for variable \\$memberNode contains unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ConstDeclaration\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
@@ -936,11 +931,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/ClassLikePrototype.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Classes\\:\\:fromClasses\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Classes.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Classes\\:\\:fromClasses\\(\\) has parameter \\$classes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Classes.php
@@ -951,42 +941,7 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Classes.php
 
 		-
-			message: "#^Class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:__construct\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:empty\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:first\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:in\\(\\) has parameter \\$names with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:isLast\\(\\) has parameter \\$item with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
@@ -996,13 +951,8 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Collection\\:\\:\\$items has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Collection.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 3
+			count: 2
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
 		-
@@ -1096,11 +1046,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/ImplementsInterfaces.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Interfaces\\:\\:fromInterfaces\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Interfaces.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Interfaces\\:\\:fromInterfaces\\(\\) has parameter \\$interfaces with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Interfaces.php
@@ -1154,21 +1099,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\MethodBody\\:\\:none\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/MethodBody.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Methods\\:\\:fromMethods\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Methods.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Methods\\:\\:fromMethods\\(\\) has parameter \\$methods with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Methods.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Methods.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameters\\:\\:fromParameters\\(\\) has no return type specified\\.$#"
@@ -1409,11 +1339,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideTraits\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Classes\\:\\:get\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
 
 		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
@@ -1774,11 +1699,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeTransform\\\\CodeTransform\\:\\:transform\\(\\) has parameter \\$transformations with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/CodeTransform.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Domain\\\\AbstractCollection\\:\\:fromArray\\(\\) has parameter \\$elements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Domain/AbstractCollection.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Domain\\\\AbstractCollection\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"

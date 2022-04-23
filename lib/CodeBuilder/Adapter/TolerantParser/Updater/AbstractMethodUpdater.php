@@ -62,6 +62,10 @@ abstract class AbstractMethodUpdater
             /** @var MethodDeclaration $methodDeclaration */
             $methodDeclaration = $existingMethods[$methodPrototype->name()];
 
+            if ($methodPrototype->docblock()->notNone()) {
+                $this->updateDocblock($edits, $methodPrototype, $methodDeclaration);
+            }
+
             if ($methodPrototype->body()->lines()->count()) {
                 $bodyNode = $methodDeclaration->compoundStatementOrSemicolon;
                 $this->appendLinesToMethod($edits, $methodPrototype, $bodyNode);
@@ -72,6 +76,7 @@ abstract class AbstractMethodUpdater
                 continue;
             }
 
+            /** @phpstan-ignore-next-line */
             if ($methodPrototype->applyUpdate()) {
                 $this->updateOrAddParameters($edits, $methodPrototype->parameters(), $methodDeclaration);
                 $this->updateOrAddReturnType($edits, $methodPrototype->returnType(), $methodDeclaration);
@@ -253,5 +258,14 @@ abstract class AbstractMethodUpdater
         }
 
         return true;
+    }
+
+    private function updateDocblock(Edits $edits, Method $methodPrototype, MethodDeclaration $methodDeclaration): void
+    {
+        $edits->add(TextEdit::create(
+            $methodDeclaration->getFullStartPosition(),
+            $methodDeclaration->getStartPosition() - $methodDeclaration->getFullStartPosition(),
+            $methodPrototype->docblock()->__toString()
+        ));
     }
 }

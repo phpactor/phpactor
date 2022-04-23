@@ -21,6 +21,9 @@ class CollectionTest extends TestCase
     }
 }
 
+/**
+ * @extends Collection<stdClass>
+ */
 class TestCollection extends Collection
 {
     public static function fromArray(array $items)

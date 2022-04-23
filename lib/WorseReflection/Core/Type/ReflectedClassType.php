@@ -96,35 +96,32 @@ class ReflectedClassType extends ClassType
         return new MissingType();
     }
 
-    public function instanceof(Type $right): BooleanType
+    public function instanceof(Type $type): Trinary
     {
-        $resolve = function (Type $right): void {
-        };
-
-        if ($right instanceof MissingType) {
-            return new BooleanType();
+        if ($type instanceof MissingType) {
+            return Trinary::maybe();
         }
 
         if (
-            !$right instanceof StringType &&
-            !$right instanceof ClassType
+            !$type instanceof StringType &&
+            !$type instanceof ClassType
         ) {
-            return new BooleanLiteralType(false);
+            return Trinary::false();
         }
 
         $reflection = $this->reflectionOrNull();
 
         if (!$reflection) {
-            return new BooleanType();
+            return Trinary::maybe();
         }
 
-        if ($right instanceof StringLiteralType) {
-            return new BooleanLiteralType($reflection->isInstanceOf(ClassName::fromString($right->value())));
+        if ($type instanceof StringLiteralType) {
+            return Trinary::fromBoolean($reflection->isInstanceOf(ClassName::fromString($type->value())));
         }
-        if ($right instanceof ClassType) {
-            return new BooleanLiteralType($reflection->isInstanceOf($right->name()));
+        if ($type instanceof ClassType) {
+            return Trinary::fromBoolean($reflection->isInstanceOf($type->name()));
         }
 
-        return new BooleanType();
+        return Trinary::maybe();
     }
 }

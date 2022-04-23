@@ -48,8 +48,10 @@ class CodeTransformTest extends TestCase
         $this->assertEquals($expectedCode, $code);
     }
 
+
     public function create(array $transformers): CodeTransform
     {
+        /** @phpstan-ignore-next-line */
         return CodeTransform::fromTransformers(Transformers::fromArray($transformers));
     }
 }

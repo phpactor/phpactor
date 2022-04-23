@@ -95,7 +95,11 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
     {
         $return = $this->node->getFirstAncestor(ReturnStatement::class);
         if ($return) {
-            return $this->class()->scope()->resolveLocalType($this->functionLike()->inferredType());
+            $functionLike = $this->functionLike();
+            if (null === $functionLike) {
+                return new MissingType();
+            }
+            return $this->class()->scope()->resolveLocalType($functionLike->inferredType());
         }
 
         return new MissingType();

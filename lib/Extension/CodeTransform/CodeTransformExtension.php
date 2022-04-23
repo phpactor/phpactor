@@ -29,6 +29,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingPropert
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
@@ -393,6 +394,15 @@ class CodeTransformExtension implements Extension
                 $container->get('class_to_file.file_to_class')
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'fix_namespace_class_name' ]]);
+
+        $container->register('code_transform.transformer.update_docblock', function (Container $container) {
+            return new UpdateDocblockTransformer(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                $container->get(BuilderFactory::class),
+                $container->get(TextFormat::class),
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'update_docblock' ]]);
 
         $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
