@@ -71,7 +71,7 @@ final class TypeAssertion
                 $context->symbol()->position()->start(),
                 $true,
                 $false,
-                $context->containerType() ?: new MissingType(),
+                $context->containerType(),
             );
         }
 

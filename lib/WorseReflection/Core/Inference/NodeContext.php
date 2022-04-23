@@ -115,17 +115,9 @@ final class NodeContext
         return $this->symbol;
     }
 
-    public function hasContainerType(): bool
+    public function containerType(): Type
     {
-        return null !== $this->containerType;
-    }
-
-    /**
-     * @return Type|null
-     */
-    public function containerType()
-    {
-        return $this->containerType;
+        return $this->containerType ?: new MissingType();
     }
 
     /**

@@ -166,7 +166,7 @@ class ContextMenuHandler implements Handler
                     // this to be the current path but it is not. It is used
                     // when we want to act on the file in the "type" under the
                     // cursor. this shouldn't be a thing.
-                    $type = $symbolContext->hasContainerType() ? $symbolContext->containerType() : $symbolContext->type();
+                    $type = $symbolContext->containerType()->isDefined() ? $symbolContext->containerType() : $symbolContext->type();
                     $parameterValue = $this->classFileNormalizer->classToFile(TypeUtil::generalize($type));
                     break;
                 case '%offset%':
