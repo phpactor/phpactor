@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
+use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -82,7 +83,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
-
+    public const PARAM_PROFILE = 'language_server.profile';
     
     public function configure(Resolver $schema): void
     {
@@ -97,6 +98,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
+            self::PARAM_PROFILE => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
@@ -294,6 +296,10 @@ class LanguageServerExtension implements Extension
         $container->register(MiddlewareDispatcher::class, function (Container $container) {
             $stack = [];
 
+            if ($container->getParameter(self::PARAM_PROFILE)) {
+                $stack[] = new ProfilerMiddleware($container->get(LoggingExtension::SERVICE_LOGGER));
+            }
+
             if ($container->getParameter(self::PARAM_CATCH_ERRORS)) {
                 $stack[] = new ErrorHandlingMiddleware($container->get(LoggingExtension::SERVICE_LOGGER));
             }
@@ -304,9 +310,7 @@ class LanguageServerExtension implements Extension
             );
 
             $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class));
-            $stack[] = new CancellationMiddleware(
-                $container->get(MethodRunner::class)
-            );
+            $stack[] = new CancellationMiddleware($container->get(MethodRunner::class));
 
             $stack[] = new MethodAliasMiddleware($container->getParameter(self::PARAM_METHOD_ALIAS_MAP));
             $stack[] = new ResponseHandlingMiddleware($container->get(ResponseWatcher::class));

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CompletionWorse;
 
+use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
@@ -51,7 +52,6 @@ use RuntimeException;
 class CompletionWorseExtension implements Extension
 {
     public const TAG_TOLERANT_COMPLETOR = 'completion_worse.tolerant_completor';
-    public const PARAM_DISABLED_COMPLETORS = 'completion_worse.disabled_completors';
     public const PARAM_CLASS_COMPLETOR_LIMIT = 'completion_worse.completor.class.limit';
     public const PARAM_NAME_COMPLETION_PRIORITY = 'completion_worse.name_completion_priority';
     public const SERVICE_COMPLETOR_MAP = 'completion_worse.completor_map';
@@ -71,29 +71,60 @@ class CompletionWorseExtension implements Extension
     
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
+        $completors = $this->getCompletors();
+        $defaults = array_combine(array_map(
+            fn (string $key) => $this->completorEnabledKey($key),
+            array_keys($completors)
+        ), array_map(
+            fn (string $key) => true,
+            array_keys($completors)
+        ));
+
+        /** @phpstan-ignore-next-line */
+        $defaults['completion_worse.completor.keyword.enabled'] = false;
+
+        $schema->setDefaults(array_merge($defaults, [
             self::PARAM_CLASS_COMPLETOR_LIMIT => 100,
-            self::PARAM_DISABLED_COMPLETORS => [],
             self::PARAM_NAME_COMPLETION_PRIORITY => self::NAME_SEARCH_STRATEGY_PROXIMITY,
             self::PARAM_SNIPPETS => true,
             self::PARAM_EXPERIMENTAL => false,
-        ]);
-        $schema->setDescriptions([
+        ]));
+
+        $descriptions = array_combine(array_map(
+            fn (string $key) => sprintf('completion_worse.completor.%s.enabled', $key),
+            array_keys($this->getCompletors())
+        ), array_map(
+            fn (string $key, array $pair) => sprintf(
+                "Enable or disable the ``%s`` completor.\n\n%s.",
+                $key,
+                $pair[0]
+            ),
+            array_keys($completors),
+            $completors
+        ));
+
+        /** @phpstan-ignore-next-line */
+        $schema->setDescriptions(array_merge($descriptions, [
             self::PARAM_SNIPPETS => 'Enable or disable completion snippets',
             self::PARAM_EXPERIMENTAL => 'Enable experimental functionality',
             self::PARAM_CLASS_COMPLETOR_LIMIT => 'Suggestion limit for the filesystem based SCF class_completor',
-            self::PARAM_DISABLED_COMPLETORS => 'List of completors to disable (e.g. ``scf_class`` and ``declared_function``)',
             self::PARAM_NAME_COMPLETION_PRIORITY => <<<EOT
                 Strategy to use when ordering completion results for classes and functions:
 
                 - `proximity`: Classes and functions will be ordered by their proximity to the text document being edited.
                 - `none`: No ordering will be applied.
                 EOT
-        ]);
+        ]));
     }
 
     private function registerCompletion(ContainerBuilder $container): void
     {
+        foreach ($this->getCompletors() as $name => [$_, $completor]) {
+            $container->register(sprintf('worse_completion.completor.%s', $name), $completor, [
+                self::TAG_TOLERANT_COMPLETOR => [ 'name' => $name ]
+            ]);
+        }
+
         $container->register(ChainTolerantCompletor::class, function (Container $container) {
             return new ChainTolerantCompletor(
                 array_map(function (string $serviceId) use ($container) {
@@ -130,146 +161,15 @@ class CompletionWorseExtension implements Extension
                     ));
                 }
 
+                if (false === $container->getParameter($this->completorEnabledKey($name))) {
+                    continue;
+                }
                 $completors[$name] = $serviceId;
             }
-            if ($diff = array_diff(
-                $container->getParameter(self::PARAM_DISABLED_COMPLETORS),
-                array_keys($completors)
-            )) {
-                throw new RuntimeException(sprintf(
-                    'Unknown completors specified "%s", known completors: "%s"',
-                    implode('", "', $diff),
-                    implode('", "', array_keys($completors))
-                ));
-            }
 
-            $enabledNames = array_diff(
-                array_keys($completors),
-                $container->getParameter(self::PARAM_DISABLED_COMPLETORS)
-            );
-
-            return array_filter(array_map(function (string $name, string $serviceId) use ($enabledNames) {
-                if (!in_array($name, $enabledNames)) {
-                    return false;
-                }
-                return $serviceId;
-            }, array_keys($completors), $completors));
+            return $completors;
         });
 
-
-        $container->register('completion_worse.completor.parameter', function (Container $container) {
-            return new WorseParameterCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_parameter',
-        ]]);
-        $container->register('completion_worse.completor.named_parameter', function (Container $container) {
-            return new WorseNamedParameterCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_named_parameter',
-        ]]);
-        $container->register('completion_worse.completor.constructor', function (Container $container) {
-            return new WorseConstructorCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_constructor',
-        ]]);
-
-        $container->register('completion_worse.completor.constructor', function (Container $container) {
-            return new WorseConstructorCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_constructor',
-        ]]);
-
-        $container->register('completion_worse.completor.tolerant.class_member', function (Container $container) {
-            return new WorseClassMemberCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER),
-                $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_class_member',
-        ]]);
-
-        $container->register('completion_worse.completor.tolerant.class', function (Container $container) {
-            return new LimitingCompletor(new ScfClassCompletor(
-                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)->get('composer'),
-                $container->get('class_to_file.file_to_class')
-            ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'scf_class',
-        ]]);
-
-        $container->register('completion_worse.completor.local_variable', function (Container $container) {
-            return new WorseLocalVariableCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_local_variable',
-        ]]);
-
-        $container->register('completion_worse.completor.function', function (Container $container) {
-            return new WorseFunctionCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER),
-                $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'declared_function',
-        ]]);
-
-        $container->register('completion_worse.completor.constant', function (Container $container) {
-            return new WorseConstantCompletor();
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'declared_constant',
-        ]]);
-
-        $container->register('completion_worse.completor.class_alias', function (Container $container) {
-            return new WorseClassAliasCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'worse_class_alias',
-        ]]);
-
-        $container->register('completion_worse.completor.declared_class', function (Container $container) {
-            return new WorseDeclaredClassCompletor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'declared_class',
-        ]]);
-
-        $container->register('completion_worse.completor.name_search', function (Container $container) {
-            return new LimitingCompletor(new NameSearcherCompletor(
-                $container->get(NameSearcher::class),
-                new ObjectFormatter(
-                    $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
-                ),
-                $container->get(DocumentPrioritizer::class)
-            ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'name_search',
-        ]]);
-
-        $container->register('completion_worse.completor.keyword', function (Container $container) {
-            return new KeywordCompletor(
-            );
-        }, [ self::TAG_TOLERANT_COMPLETOR => [
-            'name' => 'keyword',
-        ]]);
 
         $container->register(DocumentPrioritizer::class, function (Container $container) {
             switch ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
@@ -333,6 +233,122 @@ class CompletionWorseExtension implements Extension
         );
     }
 
+    /**
+     * @return array<string,array{string,Closure(Container): mixed}>
+     */
+    private function getCompletors(): array
+    {
+        return [
+            'worse_parameter' => [
+                'Completion for method or function parameters',
+                function (Container $container) {
+                    return new WorseParameterCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                }, 
+            ],
+            'named_parameter' => [
+                'Completion for named parameters',
+                function (Container $container) {
+                    return new WorseNamedParameterCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                },
+            ],
+            'constructor' => [
+                'Completion for constructors',
+                function (Container $container) {
+                    return new WorseConstructorCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                },
+            ],
+            'class_member' => [
+                'Completion for class members',
+                function (Container $container) {
+                    return new WorseClassMemberCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER),
+                        $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER)
+                    );
+                },
+            ],
+            'scf_class' => [
+                'Brute force completion for class names (not recommended)',
+                function (Container $container) {
+                    return new LimitingCompletor(new ScfClassCompletor(
+                        $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)->get('composer'),
+                        $container->get('class_to_file.file_to_class')
+                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                },
+            ],
+            'local_variable' => [
+                'Completion for local variables',
+                function (Container $container) {
+                    return new WorseLocalVariableCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                },
+            ],
+            'declared_function' => [
+                'Completion for functions defined in the Phpactor runtime',
+                function (Container $container) {
+                    return new WorseFunctionCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER),
+                        $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER)
+                    );
+                },
+            ],
+            'constant' => [
+                'Completion for constants',
+                function (Container $container) {
+                    return new WorseConstantCompletor();
+                },
+            ],
+            'class_alias' => [
+                'Completion for class aliases',
+                function (Container $container) {
+                    return new WorseClassAliasCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                    );
+                },
+            ],
+            'declared_class' => [
+                'Completion for classes defined in the Phpactor runtime',
+                function (Container $container) {
+                    return new WorseDeclaredClassCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                },
+            ],
+            'name_search' => [
+                'Completion for class names, constants and functions located in the index',
+                function (Container $container) {
+                    return new LimitingCompletor(new NameSearcherCompletor(
+                        $container->get(NameSearcher::class),
+                        new ObjectFormatter(
+                            $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
+                        ),
+                        $container->get(DocumentPrioritizer::class)
+                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                },
+            ],
+            'keyword' => [
+                'Completion for keywords (not very accurate)',
+                function (Container $container) {
+                    return new KeywordCompletor();
+                },
+            ],
+        ];
+    }
+
+
     private function registerSignatureHelper(ContainerBuilder $container): void
     {
         $container->register('completion_worse.signature_helper', function (Container $container) {
@@ -341,5 +357,10 @@ class CompletionWorseExtension implements Extension
                 $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
             );
         }, [ CompletionExtension::TAG_SIGNATURE_HELPER => []]);
+    }
+
+    private function completorEnabledKey(string $key): string
+    {
+        return sprintf('completion_worse.completor.%s.enabled', $key);
     }
 }

@@ -39,25 +39,11 @@ class CompletionWorseExtensionTest extends TestCase
     public function testDisableCompletors(): void
     {
         $container = $this->buildContainer([
-            CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
-                'worse_constructor',
-            ],
+            'completion_worse.completor.worse_parameter.enabled' => false,
         ]);
         $completors = $container->get('completion_worse.completor_map');
 
         self::assertFalse(in_array('completion_worse.completor.constructor', $completors), 'Completor disabled');
-    }
-
-    public function testExceptionWhenDisabledCompletorNotExisting(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unknown completors');
-        $container = $this->buildContainer([
-            CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
-                'foobar',
-            ],
-        ]);
-        $container->get('completion_worse.completor_map');
     }
 
     public function testExceptionWhenSelectingUnknownSearchPriotityStrategy(): void
@@ -70,6 +56,9 @@ class CompletionWorseExtensionTest extends TestCase
         $container->get(DocumentPrioritizer::class);
     }
 
+    /**
+     * @param array<string,mixed> $config
+     */
     private function buildContainer(array $config = []): Container
     {
         return PhpactorContainer::fromExtensions(

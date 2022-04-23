@@ -234,6 +234,210 @@ CompletionWorseExtension
 ------------------------
 
 
+.. _param_completion_worse.completor.worse_parameter.enabled:
+
+
+``completion_worse.completor.worse_parameter.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``worse_parameter`` completor.
+
+Completion for method or function parameters
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.named_parameter.enabled:
+
+
+``completion_worse.completor.named_parameter.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``named_parameter`` completor.
+
+Completion for named parameters
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.constructor.enabled:
+
+
+``completion_worse.completor.constructor.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``constructor`` completor.
+
+Completion for constructors
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.class_member.enabled:
+
+
+``completion_worse.completor.class_member.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``class_member`` completor.
+
+Completion for class members
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.scf_class.enabled:
+
+
+``completion_worse.completor.scf_class.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``scf_class`` completor.
+
+Brute force completion for class names (not recommended)
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.local_variable.enabled:
+
+
+``completion_worse.completor.local_variable.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``local_variable`` completor.
+
+Completion for local variables
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.declared_function.enabled:
+
+
+``completion_worse.completor.declared_function.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``declared_function`` completor.
+
+Completion for functions defined in the Phpactor runtime
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.constant.enabled:
+
+
+``completion_worse.completor.constant.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``constant`` completor.
+
+Completion for constants
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.class_alias.enabled:
+
+
+``completion_worse.completor.class_alias.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``class_alias`` completor.
+
+Completion for class aliases
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.declared_class.enabled:
+
+
+``completion_worse.completor.declared_class.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``declared_class`` completor.
+
+Completion for classes defined in the Phpactor runtime
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.name_search.enabled:
+
+
+``completion_worse.completor.name_search.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``name_search`` completor.
+
+Completion for class names, constants and functions located in the index
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.keyword.enabled:
+
+
+``completion_worse.completor.keyword.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``keyword`` completor.
+
+Completion for keywords (not very accurate)
+
+
+**Default**: ``false``
+
+
 .. _param_completion_worse.completor.class.limit:
 
 
@@ -247,21 +451,6 @@ Suggestion limit for the filesystem based SCF class_completor
 
 
 **Default**: ``100``
-
-
-.. _param_completion_worse.disabled_completors:
-
-
-``completion_worse.disabled_completors``
-""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-List of completors to disable (e.g. ``scf_class`` and ``declared_function``)
-
-
-**Default**: ``[]``
 
 
 .. _param_completion_worse.name_completion_priority:
@@ -972,6 +1161,18 @@ Register to recieve file events
 
 
 **Default**: ``["**\/*.php"]``
+
+
+.. _param_language_server.profile:
+
+
+``language_server.profile``
+"""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
 
 
 .. _LanguageServerCompletionExtension:
