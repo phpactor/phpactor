@@ -93,4 +93,16 @@ abstract class Type
     {
         return $mapper($this);
     }
+
+    public static function fromTypes(Type ...$types): Type
+    {
+        if (count($types) === 0) {
+            return new MissingType();
+        }
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        return new UnionType(...$types);
+    }
 }

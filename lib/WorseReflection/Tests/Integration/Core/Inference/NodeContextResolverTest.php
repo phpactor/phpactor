@@ -1186,7 +1186,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     continue 2;
                 case 'types':
                     $this->assertEquals(
-                        TypeUtil::combine(...$value)->__toString(),
+                        Type::fromTypes(...$value)->__toString(),
                         $information->type()->__toString(),
                         $name,
                     );

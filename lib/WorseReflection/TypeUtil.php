@@ -18,18 +18,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function combine(Type ...$types): Type
-    {
-        if (count($types) === 0) {
-            return new MissingType();
-        }
-        if (count($types) === 1) {
-            return $types[0];
-        }
-
-        return new UnionType(...$types);
-    }
-
     /**
      * @return Type[]
      */
