@@ -111,6 +111,10 @@ class WorseExtractMethodTest extends WorseTestCase
                 'extractMethod16A.test',
                 'newMethod',
             ],
+            'adds return type and import for nullable class' => [
+                'extractMethod16B.test',
+                'newMethod',
+            ],
             'adds return type for class' => [
                 'extractMethod17.test',
                 'newMethod',

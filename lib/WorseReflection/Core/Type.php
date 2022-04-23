@@ -16,6 +16,23 @@ abstract class Type
 
     abstract public function accepts(Type $type): Trinary;
 
+    /**
+     * @return ClassType[]
+     */
+    public function classTypes(): array
+    {
+        return array_filter($this->toTypes(), fn(Type $type) => $type instanceof ClassType);
+    }
+
+    /**
+     * @return Type[]
+     */
+    public function toTypes(): array
+    {
+        return [$this];
+    }
+
+
     public function isDefined(): bool
     {
         return !$this instanceof MissingType;
@@ -26,9 +43,9 @@ abstract class Type
         return $this instanceof ClassType;
     }
 
-    public function isNullable(Type $type): bool
+    public function isNullable(): bool
     {
-        return $type instanceof NullableType;
+        return $this instanceof NullableType;
     }
 
     public function isPrimitive(): bool
@@ -56,5 +73,9 @@ abstract class Type
         }
 
         return $type->toPhpString();
+    }
+
+    private static function unwrapClassTypes(Type $type): array
+    {
     }
 }

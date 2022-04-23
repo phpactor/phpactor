@@ -32,4 +32,9 @@ class NullableType extends Type
 
         return $this->type->accepts($type);
     }
+
+    public function toTypes(): array
+    {
+        return [new NullType(), $this->type];
+    }
 }
