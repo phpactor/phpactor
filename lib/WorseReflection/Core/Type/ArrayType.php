@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class ArrayType implements Type, IterableType
+class ArrayType extends Type implements IterableType
 {
     public Type $valueType;
 

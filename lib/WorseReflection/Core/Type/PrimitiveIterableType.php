@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class PrimitiveIterableType implements Type, IterableType
+class PrimitiveIterableType extends Type implements IterableType
 {
     public function __toString(): string
     {

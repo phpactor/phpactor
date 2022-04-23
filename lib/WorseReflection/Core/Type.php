@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core;
 
-interface Type
+abstract class Type
 {
-    public function __toString(): string;
+    abstract public function __toString(): string;
 
-    public function toPhpString(): string;
+    abstract public function toPhpString(): string;
 
-    public function accepts(Type $type): Trinary;
+    abstract public function accepts(Type $type): Trinary;
 }

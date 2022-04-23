@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class ClassType implements Type
+class ClassType extends Type
 {
     public ClassName $name;
 

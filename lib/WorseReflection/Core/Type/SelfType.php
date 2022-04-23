@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-final class SelfType implements Type
+final class SelfType extends Type
 {
     public function __toString(): string
     {

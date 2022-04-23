@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
-final class UnionType implements Type
+final class UnionType extends Type
 {
     /**
      * @var Type[]

@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class ParenthesizedType implements Type
+class ParenthesizedType extends Type
 {
     public Type $type;
 
