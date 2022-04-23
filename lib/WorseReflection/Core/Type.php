@@ -87,14 +87,6 @@ abstract class Type
         return $this->map(fn (Type $type) => $scope->resolveLocalType($type));
     }
 
-    /**
-     * @param Closure(Type): self $mapper
-     */
-    protected function map(Closure $mapper): Type
-    {
-        return $mapper($this);
-    }
-
     public static function fromTypes(Type ...$types): Type
     {
         if (count($types) === 0) {
@@ -110,13 +102,20 @@ abstract class Type
     /**
      * If the given type is a literal, return the general type
      */
-    public static function generalize(Type $type): Type
+    public function generalize(): Type
     {
-        if ($type instanceof Generalizable) {
-            return $type->generalize();
+        if ($this instanceof Generalizable) {
+            return $this->generalize();
         }
 
-        return $type;
+        return $this;
     }
 
+    /**
+     * @param Closure(Type): self $mapper
+     */
+    protected function map(Closure $mapper): Type
+    {
+        return $mapper($this);
+    }
 }

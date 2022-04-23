@@ -30,7 +30,6 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\TypeUtil;
 
 class AddMissingProperties implements Transformer
 {
@@ -78,7 +77,7 @@ class AddMissingProperties implements Transformer
                 if ($type->isDefined()) {
                     $type = $type->toLocalType($class->scope());
                     $propertyBuilder->type($type->toPhpString());
-                    $propertyBuilder->docType((string)TypeUtil::generalize($type));
+                    $propertyBuilder->docType((string)$type->generalize());
                 }
             }
         }

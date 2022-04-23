@@ -25,7 +25,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {

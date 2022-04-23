@@ -20,7 +20,6 @@ use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Container\Container;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ContextMenuHandler implements Handler
 {
