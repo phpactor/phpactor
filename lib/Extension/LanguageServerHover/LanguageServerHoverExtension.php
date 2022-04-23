@@ -63,6 +63,7 @@ class LanguageServerHoverExtension implements Extension
             $builder = ObjectRendererBuilder::create()
                 ->setLogger($container->get(LoggingExtension::SERVICE_LOGGER))
                 ->enableInterfaceCandidates()
+                ->enableAncestoralCandidates()
                 ->configureTwig(function (Environment $env) {
                     $env = TwigFunctions::add($env);
                     return $env;
