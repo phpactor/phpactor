@@ -11,7 +11,7 @@ class TypeShortName
     public function __invoke(Type $type): string
     {
         if ($type instanceof ReflectedClassType) {
-            return TypeUtil::toLocalType($type)->__toString();
+            return $type->toLocalType()->__toString();
         }
 
         return $type->__toString();
