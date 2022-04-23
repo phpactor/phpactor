@@ -14,7 +14,7 @@ class ReflectedClassType extends ClassType
 {
     public ClassName $name;
 
-    private ClassReflector $reflector;
+    protected ClassReflector $reflector;
 
     public function __construct(ClassReflector $reflector, ClassName $name)
     {
