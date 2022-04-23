@@ -18,8 +18,7 @@ class IteratorToArrayStub implements FunctionStub
         Frame $frame,
         NodeContext $context,
         ArgumentExpressionList $node
-    ): NodeContext
-    {
+    ): NodeContext {
         $context = $context->withType(TypeFactory::array());
         $args = [];
         foreach ($node->getChildNodes() as $expression) {

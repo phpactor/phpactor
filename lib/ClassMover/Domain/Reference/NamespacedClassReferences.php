@@ -7,12 +7,21 @@ use IteratorAggregate;
 use ArrayIterator;
 use Traversable;
 
+/**
+ * @implements IteratorAggregate<ClassReference>
+ */
 final class NamespacedClassReferences implements IteratorAggregate
 {
-    private $classRefs = [];
+    /**
+     * @var ClassReference[]
+     */
+    private array $classRefs = [];
 
-    private $namespaceRef;
+    private NamespaceReference $namespaceRef;
 
+    /**
+     * @param ClassReference[] $classRefs
+     */
     private function __construct(NamespaceReference $namespaceRef, array $classRefs)
     {
         $this->namespaceRef = $namespaceRef;
@@ -21,12 +30,15 @@ final class NamespacedClassReferences implements IteratorAggregate
         }
     }
 
+    /**
+     * @param ClassReference[] $classRefs
+     */
     public static function fromNamespaceAndClassRefs(NamespaceReference $namespace, array $classRefs): NamespacedClassReferences
     {
         return new self($namespace, $classRefs);
     }
 
-    public static function empty()
+    public static function empty(): self
     {
         return new self(NamespaceReference::forRoot(), []);
     }
