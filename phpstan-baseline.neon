@@ -81,11 +81,6 @@ parameters:
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:attachClassInfoToReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:collectMemberReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
@@ -386,11 +381,6 @@ parameters:
 			path: lib/ClassMover/Domain/Reference/ImportedNameReference.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReference\\:\\:withClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/MemberReference.php
-
-		-
 			message: "#^Class Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: lib/ClassMover/Domain/Reference/MemberReferences.php
@@ -424,31 +414,6 @@ parameters:
 			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespaceReference\\:\\:\\$position has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Reference/NamespaceReference.php
-
-		-
-			message: "#^Class Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespacedClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\:\\:__construct\\(\\) has parameter \\$classRefs with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespacedClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\:\\:empty\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespacedClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\:\\:fromNamespaceAndClassRefs\\(\\) has parameter \\$classRefs with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespacedClassReferences.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespacedClassReferences\\:\\:\\$classRefs has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespacedClassReferences.php
 
 		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\Position\\:\\:fromStartAndEnd\\(\\) has no return type specified\\.$#"
@@ -2916,11 +2881,6 @@ parameters:
 			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:defaultReplacement\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:doPerformFindOrReplaceReferences\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
@@ -3449,16 +3409,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Extension\\\\CompletionRpc\\\\Tests\\\\Unit\\\\Handler\\\\CompleteHandlerTest\\:\\:\\$completor with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
 			count: 1
 			path: lib/Extension/CompletionRpc/Tests/Unit/Handler/CompleteHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(int\\|string, string\\)\\: mixed\\)\\|null, Closure\\(string, string\\)\\: string\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CompletionWorse\\\\Tests\\\\Unit\\\\CompletionWorseExtensionTest\\:\\:buildContainer\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CompletionWorse/Tests/Unit/CompletionWorseExtensionTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ComposerAutoloader\\\\ClassLoaderFactory\\:\\:resolveMap\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -5581,11 +5531,6 @@ parameters:
 			path: lib/WorseReferenceFinder/Tests/DefinitionLocatorTestCase.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\Tests\\\\Unit\\\\WorsePlainTextDefinitionLocatorTest\\:\\:provideGotoWord\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/WorsePlainTextDefinitionLocatorTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
 			count: 2
 			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionDefinitionLocatorTest.php
@@ -5689,11 +5634,6 @@ parameters:
 			message: "#^Variable \\$resolvedName on left side of \\?\\? always exists and is always null\\.$#"
 			count: 2
 			path: lib/WorseReflection/Bridge/TolerantParser/Patch/TolerantQualifiedNameResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$method of method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\OriginalMethodResolver\\:\\:resolveOriginalMember\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember, \\$this\\(Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\AbstractReflectionClassMember\\) given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionClassMember.php
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"

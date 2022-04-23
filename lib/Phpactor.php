@@ -271,11 +271,14 @@ class Phpactor
             ],
             WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION => false,
             ClassToFileExtension::PARAM_BRUTE_FORCE_CONVERSION => false,
-            CompletionWorseExtension::PARAM_DISABLED_COMPLETORS => [
-                'scf_class',
-                'declared_class',
-                'declared_function',
-            ],
+
+            // these completors are not appropriate for the language server SCF
+            // is a brute force, blocking completor. the declared completors
+            // use the functions declared in the Phpactor runtime and not the
+            // project.
+            'completion_worse.completor.scf_class.enabled' => false,
+            'completion_worse.completor.declared_class.enabled' => false,
+            'completion_worse.completor.declared_function.enabled' => false,
         ];
 
         return $config;
