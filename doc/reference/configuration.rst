@@ -245,7 +245,7 @@ CompletionWorseExtension
 
 Enable or disable the ``worse_parameter`` completor.
 
-Completion for method or function parameters
+Completion for method or function parameters.
 
 
 **Default**: ``true``
@@ -262,7 +262,7 @@ Completion for method or function parameters
 
 Enable or disable the ``named_parameter`` completor.
 
-Completion for named parameters
+Completion for named parameters.
 
 
 **Default**: ``true``
@@ -279,7 +279,7 @@ Completion for named parameters
 
 Enable or disable the ``constructor`` completor.
 
-Completion for constructors
+Completion for constructors.
 
 
 **Default**: ``true``
@@ -296,7 +296,7 @@ Completion for constructors
 
 Enable or disable the ``class_member`` completor.
 
-Completion for class members
+Completion for class members.
 
 
 **Default**: ``true``
@@ -313,7 +313,7 @@ Completion for class members
 
 Enable or disable the ``scf_class`` completor.
 
-Brute force completion for class names (not recommended)
+Brute force completion for class names (not recommended).
 
 
 **Default**: ``true``
@@ -330,7 +330,7 @@ Brute force completion for class names (not recommended)
 
 Enable or disable the ``local_variable`` completor.
 
-Completion for local variables
+Completion for local variables.
 
 
 **Default**: ``true``
@@ -347,7 +347,7 @@ Completion for local variables
 
 Enable or disable the ``declared_function`` completor.
 
-Completion for functions defined in the Phpactor runtime
+Completion for functions defined in the Phpactor runtime.
 
 
 **Default**: ``true``
@@ -364,7 +364,7 @@ Completion for functions defined in the Phpactor runtime
 
 Enable or disable the ``constant`` completor.
 
-Completion for constants
+Completion for constants.
 
 
 **Default**: ``true``
@@ -381,7 +381,7 @@ Completion for constants
 
 Enable or disable the ``class_alias`` completor.
 
-Completion for class aliases
+Completion for class aliases.
 
 
 **Default**: ``true``
@@ -398,7 +398,7 @@ Completion for class aliases
 
 Enable or disable the ``declared_class`` completor.
 
-Completion for classes defined in the Phpactor runtime
+Completion for classes defined in the Phpactor runtime.
 
 
 **Default**: ``true``
@@ -415,7 +415,7 @@ Completion for classes defined in the Phpactor runtime
 
 Enable or disable the ``name_search`` completor.
 
-Completion for class names, constants and functions located in the index
+Completion for class names, constants and functions located in the index.
 
 
 **Default**: ``true``
@@ -432,7 +432,7 @@ Completion for class names, constants and functions located in the index
 
 Enable or disable the ``keyword`` completor.
 
-Completion for keywords (not very accurate)
+Completion for keywords (not very accurate).
 
 
 **Default**: ``false``
