@@ -1,0 +1,6 @@
+<?php
+
+wrAssertType(
+    'array<array-key,string>',
+    array_map(fn () => 'hello', [10, 20, 30])
+);

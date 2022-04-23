@@ -22,7 +22,7 @@ abstract class AbstractCollection implements IteratorAggregate, Countable
     /**
      * @param T[] $elements
      */
-    public function __construct(array $elements)
+    final public function __construct(array $elements)
     {
         foreach ($elements as $name => $element) {
             $type = $this->type();
@@ -42,7 +42,6 @@ abstract class AbstractCollection implements IteratorAggregate, Countable
      */
     public static function fromArray(array $elements)
     {
-        /** @phpstan-ignore-next-line */
         return new static($elements);
     }
 

@@ -246,6 +246,33 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+
+        yield 'adds docblock for array' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz(): array
+                    {
+                        return array_map(fn () => null, []);
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    /**
+                     * @return array<asd>
+                     */
+                    public function baz(): array
+                    {
+                        return array_map(fn () => null, []);
+                    }
+                }
+                EOT
+        ];
     }
 
     /**

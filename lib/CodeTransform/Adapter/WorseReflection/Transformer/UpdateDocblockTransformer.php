@@ -116,7 +116,7 @@ class UpdateDocblockTransformer implements Transformer
                     }
                 }
 
-                // docblock is exacvtly the same as native return type
+                // docblock is exactly the same as native return type
                 // fix it!
                 if (
                     $docblockType->isDefined() &&
@@ -126,15 +126,6 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
-                // docblock is defined and it is accepting the actual
-                // it's OK
-                if (
-                    $docblockType->isDefined() &&
-                    $docblockType->accepts($actualReturnType)->isTrue()
-                ) {
-                    continue;
-                }
-        
                 // the docblock matches the generalized return type
                 // it's OK
                 if (

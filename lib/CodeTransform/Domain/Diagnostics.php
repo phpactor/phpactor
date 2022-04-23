@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Domain;
 
 /**
- * @method static Diagnostics fromArray(array $diagnostics)
  * @extends AbstractCollection<Diagnostic>
  */
 class Diagnostics extends AbstractCollection
