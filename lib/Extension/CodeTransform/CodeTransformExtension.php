@@ -399,7 +399,8 @@ class CodeTransformExtension implements Extension
             return new UpdateDocblockTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
-                $container->get(BuilderFactory::class)
+                $container->get(BuilderFactory::class),
+                $container->get(TextFormat::class),
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'update_docblock' ]]);
 

@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -23,11 +24,14 @@ class UpdateDocblockTransformer implements Transformer
 
     private BuilderFactory $builderFactory;
 
-    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory)
+    private TextFormat $format;
+
+    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory, TextFormat $format)
     {
         $this->reflector = $reflector;
         $this->updater = $updater;
         $this->builderFactory = $builderFactory;
+        $this->format = $format;
     }
 
     public function transform(SourceCode $code): TextEdits
@@ -42,16 +46,13 @@ class UpdateDocblockTransformer implements Transformer
             $replacement = $method->frame()->returnType()->toLocalType($method->scope())->generalize();
 
             if (!$method->docblock()->isDefined()) {
-                $methodBuilder->docblock(
+                $methodBuilder->docblock("\n\n".$this->format->indent(
                     <<<EOT
-
-
-                            /**
-                             * @return {$replacement->__toString()}
-                             */
-                            
-                        EOT
-                );
+                    /**
+                     * @return {$replacement->__toString()}
+                     */
+                    EOT
+                , 1). "\n".$this->format->indent('', 1));
                 continue;
             }
         }
