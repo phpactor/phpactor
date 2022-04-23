@@ -267,7 +267,7 @@ class LanguageServerCodeTransformExtension implements Extension
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
                 'update_docblock',
-                'Fix docblocks'
+                'Add missing docblocks'
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
