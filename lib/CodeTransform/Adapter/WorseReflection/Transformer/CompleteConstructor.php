@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\WorseReflection\TypeUtil;
 
 class CompleteConstructor implements Transformer
 {

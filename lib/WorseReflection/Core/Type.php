@@ -81,7 +81,7 @@ abstract class Type
     /**
      * @returnc self
      */
-    public function toLocalType(?ReflectionScope $scope = null): self
+    public function toLocalType(ReflectionScope $scope): self
     {
         return $this->map(fn (Type $type) => $scope->resolveLocalType($type));
     }

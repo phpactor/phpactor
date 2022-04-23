@@ -25,46 +25,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function toLocalType(Type $type, ?ReflectionScope $scope = null): Type
-    {
-        if (null === $scope) {
-            if (!$type instanceof ReflectedClassType) {
-                return $type;
-            }
-            $reflection = $type->reflectionOrNull();
-            if (null === $reflection) {
-                return $type;
-            }
-            $scope = $reflection->scope();
-        }
-
-        if ($type instanceof NullableType) {
-            return new NullableType(self::toLocalType($type->type, $scope));
-        }
-        if ($type instanceof GenericClassType) {
-            $typeName = $scope->resolveLocalName($type->name());
-            $newType = clone $type;
-            $newType->name = ClassName::fromString($typeName);
-            $newType->arguments = array_map(fn (Type $type) => self::toLocalType($type, $scope), $type->arguments);
-
-            return $newType;
-        }
-        if ($type instanceof ClassType) {
-            $typeName = $scope->resolveLocalName($type->name());
-            $type = clone $type;
-            $type->name = ClassName::fromString($typeName);
-            return $type;
-        }
-        if ($type instanceof ArrayType) {
-            $newType = clone $type;
-            $newType->keyType = self::toLocalType($type->keyType, $scope);
-            $newType->valueType = self::toLocalType($type->valueType, $scope);
-            return $newType;
-        }
-
-        return $type;
-    }
-
     public static function combine(Type ...$types): Type
     {
         if (count($types) === 0) {

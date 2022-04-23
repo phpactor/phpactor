@@ -76,7 +76,7 @@ class AddMissingProperties implements Transformer
 
                 $type = $offset->symbolContext()->type();
                 if ($type->isDefined()) {
-                    $type = TypeUtil::toLocalType($type, $class->scope());
+                    $type = $type->toLocalType($class->scope());
                     $propertyBuilder->type($type->toPhpString());
                     $propertyBuilder->docType((string)TypeUtil::generalize($type));
                 }

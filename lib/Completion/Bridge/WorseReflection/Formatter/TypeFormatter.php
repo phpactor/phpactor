@@ -18,6 +18,6 @@ class TypeFormatter implements Formatter
     {
         assert($type instanceof Type);
 
-        return $type->toLocalType();
+        return $type->__toString();
     }
 }

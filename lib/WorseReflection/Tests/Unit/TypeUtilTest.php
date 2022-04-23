@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\WorseReflection\TypeUtil;
 
 class TypeUtilTest extends TestCase
 {
