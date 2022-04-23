@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Closure;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -74,5 +76,21 @@ abstract class Type
         }
 
         return $type->toPhpString();
+    }
+
+    /**
+     * @returnc self
+     */
+    public function toLocalType(?ReflectionScope $scope = null): self
+    {
+        return $this->map(fn (Type $type) => $scope->resolveLocalType($type));
+    }
+
+    /**
+     * @param Closure(Type): Type $mapper
+     */
+    private function map(Closure $mapper): Type
+    {
+        return $mapper($this);
     }
 }
