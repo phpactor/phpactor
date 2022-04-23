@@ -48,11 +48,13 @@ class UpdateDocblockTransformer implements Transformer
             if (!$method->docblock()->isDefined()) {
                 $methodBuilder->docblock("\n\n".$this->format->indent(
                     <<<EOT
-                    /**
-                     * @return {$replacement->__toString()}
-                     */
-                    EOT
-                , 1). "\n".$this->format->indent('', 1));
+                        /**
+                         * @return {$replacement->__toString()}
+                         */
+                        EOT
+                ,
+                    1
+                ). "\n".$this->format->indent('', 1));
                 continue;
             }
         }
