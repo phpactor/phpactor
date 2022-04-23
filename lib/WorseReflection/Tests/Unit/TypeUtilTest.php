@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\WorseReflection\TypeUtil;
 
 class TypeUtilTest extends TestCase
 {
@@ -22,7 +21,7 @@ class TypeUtilTest extends TestCase
         $class = $reflector->reflectClassLike('Foo');
         self::assertEquals(
             $expected,
-            (string)TypeUtil::toLocalType($type, $class->scope())
+            (string)$type->toLocalType($class->scope())
         );
     }
 
@@ -70,7 +69,7 @@ class TypeUtilTest extends TestCase
     {
         self::assertEquals(
             $expected,
-            TypeUtil::short($type),
+            $type->short(),
         );
     }
 

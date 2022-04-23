@@ -8,7 +8,6 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -17,7 +16,6 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ImplementContracts implements Transformer
 {
@@ -85,18 +83,15 @@ class ImplementContracts implements Transformer
                 )->method($missingMethod->name());
 
                 $missingMethodReturnType = $missingMethod->returnType();
-                foreach (TypeUtil::unwrapClassTypes($missingMethodReturnType) as $type) {
+                foreach ($missingMethodReturnType->classTypes() as $type) {
                     $sourceCodeBuilder->use($type->name());
                 }
 
                 foreach ($missingMethod->parameters() as $parameter) {
                     $parameterType = $parameter->type();
-                    if (TypeUtil::isDefined($parameterType)) {
-                        $parameterType = TypeUtil::unwrapNullableType($parameterType);
-                        if (
-                             $parameterType instanceof ClassType && $parameterType->name()->namespace() != $class->name()->namespace()
-                        ) {
-                            $sourceCodeBuilder->use($parameterType->name());
+                    foreach ($parameterType->classTypes() as $classType) {
+                        if ($classType->name()->namespace() != $class->name()->namespace()) {
+                            $sourceCodeBuilder->use($classType->name());
                         }
                     }
                 }

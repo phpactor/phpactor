@@ -60,7 +60,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
     {
         $info = $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
 
-        if (!$info->containerType()) {
+        if (!$info->containerType()->isDefined()) {
             throw new CouldNotResolveNode(sprintf(
                 'Class for member "%s" could not be determined',
                 $this->name()

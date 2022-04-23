@@ -5,7 +5,6 @@ namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterFormatter implements Formatter
 {
@@ -20,7 +19,7 @@ class ParameterFormatter implements Formatter
 
         $paramInfo = [];
         $type = $object->inferredType();
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             $paramInfo[] = $formatter->format($object->inferredType());
         }
         $paramInfo[] = '$' . $object->name();

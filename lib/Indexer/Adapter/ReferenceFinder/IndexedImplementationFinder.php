@@ -78,7 +78,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $methodName = $symbolContext->symbol()->name();
         $containerType = $this->containerTypeResolver->resolveDeclaringContainerType('method', $methodName, $container);
 
-        if (null === $containerType) {
+        if (!$containerType) {
             return new Locations([]);
         }
 

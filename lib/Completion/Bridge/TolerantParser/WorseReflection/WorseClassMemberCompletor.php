@@ -25,7 +25,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {
@@ -84,7 +83,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $type = $symbolContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach (TypeUtil::unwrapUnion($type) as $type) {
+        foreach ($type->toTypes() as $type) {
             foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;
@@ -99,11 +98,11 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
     private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
     {
-        if (false === TypeUtil::isDefined($type)) {
+        if (false === ($type->isDefined())) {
             return;
         }
 
-        $type = TypeUtil::unwrapNullableType($type);
+        $type = $type->classTypes()->firstOrNull();
 
         if (!$type instanceof ReflectedClassType) {
             return;

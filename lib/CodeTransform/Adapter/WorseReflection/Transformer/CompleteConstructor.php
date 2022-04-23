@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\WorseReflection\TypeUtil;
 
 class CompleteConstructor implements Transformer
 {
@@ -67,8 +66,8 @@ class CompleteConstructor implements Transformer
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);
                 $parameterType = $parameter->inferredType();
-                if (TypeUtil::isDefined($parameterType)) {
-                    $parameterType = TypeUtil::toLocalType($parameterType, $class->scope());
+                if ($parameterType->isDefined()) {
+                    $parameterType = $parameterType->toLocalType($class->scope());
                     $propertyBuilder->type($parameterType->toPhpString());
                     $propertyBuilder->docType((string)$parameterType);
                 }

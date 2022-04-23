@@ -40,6 +40,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         $this->renderer = ObjectRendererBuilder::create()
              ->addTemplatePath(__DIR__ .'/../../../../../templates/help/markdown')
              ->enableInterfaceCandidates()
+             ->enableAncestoralCandidates()
              ->configureTwig(function (Environment $env) {
                  $env = TwigFunctions::add($env);
                  return $env;

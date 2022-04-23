@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
-use Phpactor\WorseReflection\TypeUtil;
 
 class MethodTypeResolver
 {
@@ -23,13 +22,13 @@ class MethodTypeResolver
     {
         $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method);
 
-        if (TypeUtil::isDefined($resolvedType)) {
+        if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
         $resolvedType = $this->getTypesFromParentClass($this->method->class());
 
-        if (TypeUtil::isDefined($resolvedType)) {
+        if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
@@ -40,7 +39,7 @@ class MethodTypeResolver
     {
         $classMethodOverride = $method->class()->docblock()->methodType($method->name());
 
-        if (TypeUtil::isDefined($classMethodOverride)) {
+        if (($classMethodOverride->isDefined())) {
             return $this->resolveType($classMethodOverride);
         }
 
@@ -49,7 +48,7 @@ class MethodTypeResolver
 
     private function resolveType(Type $type): Type
     {
-        if (false === TypeUtil::isDefined($type)) {
+        if (false === ($type->isDefined())) {
             return $type;
         }
 

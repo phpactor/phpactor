@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -23,7 +22,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\WorseReflection\Core\NameImports;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseBuilderFactory implements BuilderFactory
 {
@@ -98,9 +96,9 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder->visibility((string) $property->visibility());
 
         $type = $property->inferredType();
-        if (TypeUtil::isDefined($type)) {
-            $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
-            $propertyBuilder->type(TypeUtil::short($type));
+        if (($type->isDefined())) {
+            $this->importClassesForMemberType($classBuilder, $property->class()->name(), $type);
+            $propertyBuilder->type(($type->short()));
             $propertyBuilder->docType((string)$type);
         }
     }
@@ -110,10 +108,10 @@ class WorseBuilderFactory implements BuilderFactory
         $methodBuilder = $classBuilder->method($method->name());
         $methodBuilder->visibility((string) $method->visibility());
 
-        if (TypeUtil::isDefined($method->returnType())) {
+        if ($method->returnType()->isDefined()) {
             $type = $method->returnType();
-            $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
-            $typeName = TypeUtil::short($type);
+            $this->importClassesForMemberType($classBuilder, $method->class()->name(), $type);
+            $typeName = $type->short();
             $methodBuilder->returnType($typeName);
         }
 
@@ -130,11 +128,11 @@ class WorseBuilderFactory implements BuilderFactory
     {
         $parameterBuilder = $methodBuilder->parameter($parameter->name());
 
-        if (TypeUtil::isDefined($parameter->type())) {
+        if ($parameter->type()->isDefined()) {
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
-            $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
+            $this->importClassesForMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
             if ($parameter->isVariadic()) {
                 if ($type instanceof ArrayType) {
@@ -158,19 +156,15 @@ class WorseBuilderFactory implements BuilderFactory
         }
     }
 
-    private function resolveClassMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
+    private function importClassesForMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        $type = TypeUtil::unwrapNullableType($type);
+        foreach ($type->classTypes() as $type) {
+            if ($classType->namespace() == $type->name()->namespace()) {
+                return;
+            }
 
-        if (!$type instanceof ClassType) {
-            return;
+            $classBuilder->end()->use($type->name()->full());
         }
-
-        if ($classType->namespace() == $type->name()->namespace()) {
-            return;
-        }
-
-        $classBuilder->end()->use($type->name()->full());
     }
 
     private function resolveTypeNameFromNameImports(Type $type, NameImports $imports): string
@@ -178,7 +172,7 @@ class WorseBuilderFactory implements BuilderFactory
         if ($type instanceof MissingType) {
             return '';
         }
-        $typeName = TypeUtil::short($type);
+        $typeName = $type->short();
 
         foreach ($imports as $alias => $import) {
             if ($typeName == $import->head()) {

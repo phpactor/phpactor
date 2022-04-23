@@ -5,7 +5,6 @@ namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
-use Phpactor\WorseReflection\TypeUtil;
 
 class PropertyFormatter implements Formatter
 {
@@ -29,8 +28,8 @@ class PropertyFormatter implements Formatter
         $info[] = ' ';
         $info[] = '$' . $object->name();
 
-        if (TypeUtil::isDefined($object->inferredType())) {
-            $info[] = ': ' . TypeUtil::short($object->inferredType());
+        if (($object->inferredType()->isDefined())) {
+            $info[] = ': ' . $object->inferredType()->short();
         }
 
         return implode('', $info);

@@ -26,7 +26,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseSignatureHelper implements SignatureHelper
 {
@@ -137,7 +136,7 @@ class WorseSignatureHelper implements SignatureHelper
                 ));
             }
         
-            $containerType = TypeUtil::unwrapNullableType($symbolContext->containerType());
+            $containerType = $symbolContext->containerType()->classTypes()->firstOrNull();
         
             if (!$containerType instanceof ClassType) {
                 throw new CouldNotHelpWithSignature(sprintf(

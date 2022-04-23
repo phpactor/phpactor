@@ -21,7 +21,6 @@ use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\TypeUtil;
 
 abstract class AbstractParameterCompletor
 {
@@ -58,7 +57,7 @@ abstract class AbstractParameterCompletor
 
         foreach ($variables as $variable) {
             if (
-                TypeUtil::isDefined($variable->type()) &&
+                $variable->type()->isDefined() &&
                 false === $this->isVariableValidForParameter($variable, $parameter)
             ) {
                 // parameter has no types and is not valid for this position, ignore it
@@ -118,13 +117,11 @@ abstract class AbstractParameterCompletor
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if (false === TypeUtil::isDefined($parameter->inferredType())) {
+        if (false === ($parameter->inferredType()->isDefined())) {
             return true;
         }
 
-        foreach (TypeUtil::unwrapUnion($variable->type()) as $variableType) {
-            $variableType = TypeUtil::unwrapNullableType($variableType);
-
+        foreach ($variable->type()->toTypes() as $variableType) {
             if ($parameter->inferredType()->accepts($variableType)->isTrue()) {
                 return true;
             }

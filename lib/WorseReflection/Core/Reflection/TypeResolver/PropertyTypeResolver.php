@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\TypeUtil;
 
 class PropertyTypeResolver
 {
@@ -19,11 +18,11 @@ class PropertyTypeResolver
     {
         $docblockType = $this->getDocblockType();
 
-        if (false === TypeUtil::isDefined($docblockType)) {
+        if (false === ($docblockType->isDefined())) {
             $docblockType = $this->getDocblockTypesFromClass();
         }
 
-        if (TypeUtil::isDefined($docblockType)) {
+        if (($docblockType->isDefined())) {
             return $docblockType;
         }
 

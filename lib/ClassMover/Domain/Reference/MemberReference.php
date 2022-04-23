@@ -55,7 +55,7 @@ class MemberReference
         return null !== $this->class;
     }
 
-    public function withClass(Class_ $class)
+    public function withClass(Class_ $class): self
     {
         return new self($this->method, $this->position, $class);
     }

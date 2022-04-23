@@ -2,10 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class ArrayType implements Type, IterableType
+class ArrayType extends Type implements IterableType
 {
     public Type $valueType;
 
@@ -53,5 +54,10 @@ class ArrayType implements Type, IterableType
     public function accepts(Type $type): Trinary
     {
         return Trinary::fromBoolean($type instanceof ArrayType);
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
     }
 }

@@ -17,9 +17,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {
@@ -49,7 +47,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         )->symbolContext()->type();
 
         $typeLocations = [];
-        foreach (TypeUtil::unwrapUnion($type) as $type) {
+        foreach ($type->toTypes() as $type) {
             if ($type instanceof ArrayType) {
                 $type = $type->valueType;
             }
@@ -83,29 +81,14 @@ class WorseReflectionTypeLocator implements TypeLocator
 
     private function resolveClassName(Type $type): ClassName
     {
-        $type = TypeUtil::unwrapNullableType($type);
-
-        if ($type instanceof UnionType) {
-            foreach ($type->types as $type) {
-                if (!$type instanceof ClassType) {
-                    continue;
-                }
-                return $this->resolveClassName($type);
-            }
+        foreach ($type->classTypes() as $type) {
+            return $type->name();
         }
 
-        if ($type instanceof ArrayType) {
-            return $this->resolveClassName($type->valueType);
-        }
-
-        if (!$type instanceof ClassType) {
-            throw new CouldNotLocateType(sprintf(
-                'Cannot goto to primitive type %s "%s"',
-                get_class($type),
-                $type->__toString()
-            ));
-        }
-        
-        return $type->name();
+        throw new CouldNotLocateType(sprintf(
+            'Cannot goto to primitive type %s "%s"',
+            get_class($type),
+            $type->__toString()
+        ));
     }
 }

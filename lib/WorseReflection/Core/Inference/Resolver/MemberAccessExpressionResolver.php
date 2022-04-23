@@ -19,7 +19,6 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\TypeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
 {
@@ -74,11 +73,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
-        foreach (TypeUtil::unwrapUnion($classType) as $classType) {
-            if (!$classType instanceof ClassType) {
-                continue;
-            }
-
+        foreach ($classType->classTypes() as $classType) {
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($classType->name());
             } catch (NotFound $e) {

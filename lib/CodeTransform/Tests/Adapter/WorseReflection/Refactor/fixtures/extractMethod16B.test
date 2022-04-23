@@ -1,0 +1,47 @@
+// File: Foo.php
+<?php
+
+namespace Foobar;
+
+class Foo {
+    public function bar(): ?Bar {}
+}
+// File: source
+<?php
+
+use Foobar\Foo;
+
+class One {
+    private function foo(): Foo
+    {
+    }
+
+    public function hello() {
+        <>$car = $this->foo()->bar();<>
+
+        return $car;
+    }
+}
+// File: expected
+<?php
+
+use Foobar\Bar;
+use Foobar\Foo;
+
+class One {
+    private function foo(): Foo
+    {
+    }
+
+    public function hello() {
+        $car = $this->newMethod();
+
+        return $car;
+    }
+
+    private function newMethod(): ?Bar
+    {
+        $car = $this->foo()->bar();
+        return $car;
+    }
+}

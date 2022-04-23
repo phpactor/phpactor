@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
-class IterablePrimitiveType implements Type
+class IterablePrimitiveType extends Type
 {
     public function __toString(): string
     {

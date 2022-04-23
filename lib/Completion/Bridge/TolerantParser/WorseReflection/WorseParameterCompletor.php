@@ -14,7 +14,6 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseParameterCompletor extends AbstractParameterCompletor implements TolerantCompletor
 {
@@ -75,8 +74,8 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         $offset = $this->reflector->reflectOffset($source, $callableExpression->getEndPosition());
 
         $containerType = $offset->symbolContext()->containerType();
-        if ($containerType) {
-            $containerType = TypeUtil::unwrapNullableType($containerType);
+        if ($containerType->isDefined()) {
+            $containerType = $containerType->classTypes()->firstOrNull();
             if (!$containerType instanceof ReflectedClassType) {
                 return null;
             }

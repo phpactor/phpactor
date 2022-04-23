@@ -259,7 +259,7 @@ class CompleteConstructorTest extends WorseTestCase
                 class Foobar
                 {
                     /**
-                     * @var ?string
+                     * @var string|null
                      */
                     private $foo;
 

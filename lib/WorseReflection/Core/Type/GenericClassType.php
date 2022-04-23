@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
@@ -82,5 +83,14 @@ class GenericClassType extends ReflectedClassType implements IterableType
     public function iterableKeyType(): Type
     {
         return new MissingType();
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self(
+            $this->reflector,
+            ClassName::fromString((new ReflectedClassType($this->reflector, $this->name))->map($mapper)->__toString()),
+            array_map(fn (Type $type) => $type->map($mapper), $this->arguments)
+        );
     }
 }

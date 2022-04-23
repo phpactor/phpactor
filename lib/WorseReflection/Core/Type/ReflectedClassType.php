@@ -9,13 +9,12 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectedClassType extends ClassType
 {
     public ClassName $name;
 
-    private ClassReflector $reflector;
+    protected ClassReflector $reflector;
 
     public function __construct(ClassReflector $reflector, ClassName $name)
     {
@@ -82,7 +81,7 @@ class ReflectedClassType extends ClassType
         assert($class instanceof ReflectionClassLike);
         $implements = $class->docblock()->implements();
         $extendsType = $class->docblock()->extends();
-        if (TypeUtil::isDefined($extendsType)) {
+        if (($extendsType->isDefined())) {
             $implements[] = $extendsType;
         }
 

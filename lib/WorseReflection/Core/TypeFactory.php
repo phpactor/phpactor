@@ -261,11 +261,6 @@ class TypeFactory
         );
     }
 
-    public static function subtract(Type $from, Type $type): Type
-    {
-        return new SubtractType($from, $type);
-    }
-
     /**
      * @param mixed[] $values
      * @return Type[]

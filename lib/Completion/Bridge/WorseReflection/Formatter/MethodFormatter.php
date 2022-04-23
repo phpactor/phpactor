@@ -6,7 +6,6 @@ use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\TypeUtil;
 
 class MethodFormatter implements Formatter
 {
@@ -43,7 +42,7 @@ class MethodFormatter implements Formatter
 
         $returnType = $method->inferredType();
 
-        if (TypeUtil::isDefined($returnType)) {
+        if (($returnType->isDefined())) {
             $info[] = ': ' . $formatter->format($returnType);
         }
 

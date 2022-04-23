@@ -5,8 +5,9 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Types;
 
-final class UnionType implements Type
+final class UnionType extends Type
 {
     /**
      * @var Type[]
@@ -146,6 +147,11 @@ final class UnionType implements Type
         }
 
         return new self($type);
+    }
+
+    public function toTypes(): Types
+    {
+        return new Types($this->types);
     }
 
     private function add(Type $type): UnionType

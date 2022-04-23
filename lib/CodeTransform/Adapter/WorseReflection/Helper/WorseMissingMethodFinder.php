@@ -38,7 +38,7 @@ class WorseMissingMethodFinder implements MissingMethodFinder
             $offset = $this->reflector->reflectOffset($sourceCode, $name->start);
             $containerType = $offset->symbolContext()->containerType();
 
-            if (!$containerType) {
+            if (!$containerType->isDefined()) {
                 continue;
             }
 

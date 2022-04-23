@@ -1,0 +1,36 @@
+// File: union.php
+<?php
+use Baz\Foo;
+use Baz\Bar;
+
+function union(): string|Foo|Bar {}
+// File: source
+<?php
+
+class One {
+    public function hello(?Foobar $foobar) {
+        $union = union();
+        <>$car = $union;<>
+        return $car;
+    }
+}
+// File: expected
+<?php
+
+use Baz\Bar;
+use Baz\Foo;
+
+class One {
+    public function hello(?Foobar $foobar) {
+        $union = union();
+        $car = $this->newMethod($union);
+        return $car;
+    }
+
+    private function newMethod(string|Foo|Bar $union): string|Foo|Bar
+    {
+        $car = $union;
+        return $car;
+    }
+}
+

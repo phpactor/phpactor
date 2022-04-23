@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Visibility;
 use InvalidArgumentException;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionPromotedProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
@@ -72,7 +71,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     {
         $type = $this->typeResolver->resolve();
 
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             return $type;
         }
 

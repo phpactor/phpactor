@@ -7,7 +7,6 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -65,20 +64,15 @@ class WorseExtractConstant implements ExtractConstant
         $symbol = $symbolInformation->symbol();
 
         $builder = SourceCodeBuilder::create();
-        $containerType = $symbolInformation->containerType();
+        $classType = $symbolInformation->containerType()->classTypes()->firstOrNull();
 
-        if (!TypeUtil::isDefined($containerType)) {
+        if (!$classType) {
             throw new TransformException(sprintf('Node does not belong to a class'));
         }
 
-        $containerType = TypeUtil::unwrapNullableType($containerType);
-        if (!$containerType instanceof ClassType) {
-            throw new TransformException(sprintf('Could not find container class'));
-        }
-
-        $builder->namespace($containerType->name()->namespace());
+        $builder->namespace($classType->name()->namespace());
         $builder
-            ->class($containerType->name()->short())
+            ->class($classType->name()->short())
                 ->constant($constantName, TypeUtil::valueOrNull($symbolInformation->type()))
             ->end();
 

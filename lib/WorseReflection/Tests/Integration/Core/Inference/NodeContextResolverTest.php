@@ -17,7 +17,6 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\TestUtils\ExtractOffset;
-use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 class NodeContextResolverTest extends IntegrationTestCase
@@ -1186,7 +1185,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     continue 2;
                 case 'types':
                     $this->assertEquals(
-                        TypeUtil::combine(...$value)->__toString(),
+                        Type::fromTypes(...$value)->__toString(),
                         $information->type()->__toString(),
                         $name,
                     );
