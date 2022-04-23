@@ -101,6 +101,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_PROFILE => false,
         ]);
         $schema->setDescriptions([
+            self::PARAM_PROFILE => 'Logs timing information for incoming LSP requests',
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
             self::PARAM_SESSION_PARAMETERS => 'Phpactor parameters (config) that apply only to the language server session',
             self::PARAM_ENABLE_WORKPACE => <<<'EOT'

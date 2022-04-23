@@ -1172,6 +1172,9 @@ Register to recieve file events
 
 
 
+Logs timing information for incoming LSP requests
+
+
 **Default**: ``false``
 
 
