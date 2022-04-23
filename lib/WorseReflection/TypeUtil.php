@@ -20,22 +20,11 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
-use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function isPrimitive(Type $type): bool
-    {
-        return $type instanceof PrimitiveType;
-    }
-
-    public static function isClass(Type $type): bool
-    {
-        return $type instanceof ClassType;
-    }
-
     public static function isNullable(Type $type): bool
     {
         return $type instanceof NullableType;

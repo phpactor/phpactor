@@ -72,8 +72,8 @@ final class OffsetInfo
             return $return;
         }
 
-        $return['type_path'] = TypeUtil::isClass($symbolContext->type()) ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
-        $return['class_type_path'] = $symbolContext->containerType()->isDefined() && false === TypeUtil::isPrimitive($symbolContext->containerType()) ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['type_path'] = $symbolContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
+        $return['class_type_path'] = $symbolContext->containerType()->isDefined() && $symbolContext->containerType()->isClass() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }

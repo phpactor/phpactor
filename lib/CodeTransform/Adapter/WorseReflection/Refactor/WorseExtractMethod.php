@@ -330,7 +330,7 @@ class WorseExtractMethod implements ExtractMethod
         });
 
         $returnVariables = array_filter($returnVariables, function (Variable $variable) use ($args) {
-            if (TypeUtil::isPrimitive($variable->type())) {
+            if ($variable->type()->isPrimitive()) {
                 return true;
             }
 

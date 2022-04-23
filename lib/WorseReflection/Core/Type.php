@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
+use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 abstract class Type
@@ -18,6 +19,16 @@ abstract class Type
     public function isDefined(): bool
     {
         return !$this instanceof MissingType;
+    }
+
+    public function isClass(): bool
+    {
+        return $this instanceof ClassType;
+    }
+
+    public function isPrimitive(): bool
+    {
+        return $this instanceof PrimitiveType;
     }
 
     public function short(): string
