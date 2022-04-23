@@ -19,11 +19,11 @@ class PropertyTypeResolver
     {
         $docblockType = $this->getDocblockType();
 
-        if (false === TypeUtil::isDefined($docblockType)) {
+        if (false === ($docblockType->isDefined())) {
             $docblockType = $this->getDocblockTypesFromClass();
         }
 
-        if (TypeUtil::isDefined($docblockType)) {
+        if (($docblockType->isDefined())) {
             return $docblockType;
         }
 

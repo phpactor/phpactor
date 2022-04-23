@@ -82,7 +82,7 @@ class ReflectedClassType extends ClassType
         assert($class instanceof ReflectionClassLike);
         $implements = $class->docblock()->implements();
         $extendsType = $class->docblock()->extends();
-        if (TypeUtil::isDefined($extendsType)) {
+        if (($extendsType->isDefined())) {
             $implements[] = $extendsType;
         }
 

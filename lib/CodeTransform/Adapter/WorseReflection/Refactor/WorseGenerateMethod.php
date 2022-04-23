@@ -114,7 +114,7 @@ class WorseGenerateMethod implements GenerateMethod
 
             $argumentBuilder = $methodBuilder->parameter($argument->guessName());
 
-            if (TypeUtil::isDefined($type)) {
+            if ($type->isDefined()) {
                 $argumentBuilder->type(TypeUtil::short($type));
 
                 foreach (TypeUtil::unwrapClassTypes($type) as $classType) {
@@ -124,7 +124,7 @@ class WorseGenerateMethod implements GenerateMethod
         }
 
         $inferredType = $methodCall->inferredReturnType();
-        if (TypeUtil::isDefined($inferredType)) {
+        if ($inferredType->isDefined()) {
             $methodBuilder->returnType($inferredType->toPhpString());
             // this will not render localized types see https://github.com/phpactor/phpactor/issues/1453
             // if ($inferredType->__toString() !== $inferredType->toPhpString()) {

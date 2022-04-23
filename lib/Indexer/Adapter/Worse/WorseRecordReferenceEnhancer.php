@@ -62,7 +62,7 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 
         $containerType = $offset->symbolContext()->containerType();
 
-        if (!TypeUtil::isDefined($containerType)) {
+        if (!($containerType->isDefined())) {
             return $reference;
         }
 

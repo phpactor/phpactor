@@ -75,7 +75,7 @@ class AddMissingProperties implements Transformer
                     ->visibility('private');
 
                 $type = $offset->symbolContext()->type();
-                if (TypeUtil::isDefined($type)) {
+                if ($type->isDefined()) {
                     $type = TypeUtil::toLocalType($type, $class->scope());
                     $propertyBuilder->type($type->toPhpString());
                     $propertyBuilder->docType((string)TypeUtil::generalize($type));

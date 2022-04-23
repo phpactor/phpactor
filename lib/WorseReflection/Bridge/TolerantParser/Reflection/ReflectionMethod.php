@@ -83,7 +83,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             return $type;
         }
 
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             return $type;
         }
 

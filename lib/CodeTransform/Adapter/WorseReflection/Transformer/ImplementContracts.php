@@ -91,7 +91,7 @@ class ImplementContracts implements Transformer
 
                 foreach ($missingMethod->parameters() as $parameter) {
                     $parameterType = $parameter->type();
-                    if (TypeUtil::isDefined($parameterType)) {
+                    if ($parameterType->isDefined()) {
                         $parameterType = TypeUtil::unwrapNullableType($parameterType);
                         if (
                              $parameterType instanceof ClassType && $parameterType->name()->namespace() != $class->name()->namespace()

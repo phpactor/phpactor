@@ -138,7 +138,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $symbolName = $symbolContext->symbol()->name();
         $symbolType = $symbolContext->symbol()->symbolType();
 
-        if (false === TypeUtil::isDefined($symbolContext->containerType())) {
+        if (false === ($symbolContext->containerType()->isDefined())) {
             throw new CouldNotLocateDefinition(sprintf('Containing class for member "%s" could not be determined', $symbolName));
         }
 

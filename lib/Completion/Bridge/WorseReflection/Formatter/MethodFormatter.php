@@ -43,7 +43,7 @@ class MethodFormatter implements Formatter
 
         $returnType = $method->inferredType();
 
-        if (TypeUtil::isDefined($returnType)) {
+        if (($returnType->isDefined())) {
             $info[] = ': ' . $formatter->format($returnType);
         }
 

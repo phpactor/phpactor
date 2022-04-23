@@ -66,7 +66,7 @@ class VariableWalker extends AbstractWalker
 
         $symbolName = $context->symbol()->name();
 
-        if (!isset($this->injectedTypes[$symbolName]) && !TypeUtil::isDefined($docblockType)) {
+        if (!isset($this->injectedTypes[$symbolName]) && !($docblockType->isDefined())) {
             return $frame;
         }
 

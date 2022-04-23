@@ -64,7 +64,7 @@ class ClassReflector
                 $parameterType = $parameter->type();
                 // build parameter synopsis
                 $paramInfo = [];
-                if (TypeUtil::isDefined($parameter->type())) {
+                if (($parameter->type()->isDefined())) {
                     $paramInfo[] = $parameter->type()->__toString();
                 }
                 $paramInfo[] = '$' . $parameter->name();
@@ -75,7 +75,7 @@ class ClassReflector
 
                 $return['methods'][$method->name()]['parameters'][$parameter->name()] = [
                     'name' => $parameter->name(),
-                    'has_type' => TypeUtil::isDefined($parameter->type()),
+                    'has_type' => ($parameter->type()->isDefined()),
                     'type' => $parameter->type()->__toString(),
                     'has_default' => $parameter->default()->isDefined(),
                     'default' => $parameter->default()->value(),
@@ -85,7 +85,7 @@ class ClassReflector
             $methodInfo[] = '(' . implode(', ', $paramInfos) . ')';
             $methodType = $method->returnType();
 
-            if (TypeUtil::isDefined($methodType)) {
+            if (($methodType->isDefined())) {
                 $methodInfo[] = ': ' . $methodType->__toString();
             }
 

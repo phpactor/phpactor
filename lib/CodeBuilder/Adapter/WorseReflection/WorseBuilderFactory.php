@@ -98,7 +98,7 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder->visibility((string) $property->visibility());
 
         $type = $property->inferredType();
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type(TypeUtil::short($type));
             $propertyBuilder->docType((string)$type);
@@ -110,7 +110,7 @@ class WorseBuilderFactory implements BuilderFactory
         $methodBuilder = $classBuilder->method($method->name());
         $methodBuilder->visibility((string) $method->visibility());
 
-        if (TypeUtil::isDefined($method->returnType())) {
+        if ($method->returnType()->isDefined()) {
             $type = $method->returnType();
             $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
             $typeName = TypeUtil::short($type);
@@ -130,7 +130,7 @@ class WorseBuilderFactory implements BuilderFactory
     {
         $parameterBuilder = $methodBuilder->parameter($parameter->name());
 
-        if (TypeUtil::isDefined($parameter->type())) {
+        if ($parameter->type()->isDefined()) {
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 

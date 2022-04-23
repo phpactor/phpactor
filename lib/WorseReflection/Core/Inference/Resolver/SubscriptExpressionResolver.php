@@ -56,7 +56,7 @@ class SubscriptExpressionResolver implements Resolver
             $string = $resolver->resolveNode($frame, $node);
 
             $type = $arrayLiteralType->typeAtOffset(TypeUtil::valueOrNull($string->type()));
-            if (TypeUtil::isDefined($type)) {
+            if (($type->isDefined())) {
                 return $string->withType($type);
             }
         }

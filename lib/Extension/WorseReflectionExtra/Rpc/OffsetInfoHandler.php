@@ -84,7 +84,7 @@ class OffsetInfoHandler implements Handler
         }
         $return['frame'] = $frame;
 
-        if (false === TypeUtil::isDefined($symbolContext->type())) {
+        if (false === ($symbolContext->type()->isDefined())) {
             return $return;
         }
 

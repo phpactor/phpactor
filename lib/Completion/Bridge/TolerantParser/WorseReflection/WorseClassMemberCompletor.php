@@ -99,7 +99,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
     private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
     {
-        if (false === TypeUtil::isDefined($type)) {
+        if (false === ($type->isDefined())) {
             return;
         }
 

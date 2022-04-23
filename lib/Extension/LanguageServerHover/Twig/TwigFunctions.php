@@ -16,7 +16,7 @@ final class TwigFunctions
         $env->addFunction(new TwigFunction('typeShortName', new TypeShortName()));
 
         $env->addFunction(new TwigFunction('typeDefined', function (Type $type) {
-            return TypeUtil::isDefined($type);
+            return ($type->isDefined());
         }));
         $env->addFunction(new TwigFunction('class', function (Type $type) {
             return get_class($type);

@@ -72,7 +72,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     {
         $type = $this->typeResolver->resolve();
 
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             return $type;
         }
 

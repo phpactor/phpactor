@@ -51,7 +51,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
                 $methodBuilder->docblock($method->docblock()->formatted());
             }
 
-            if (TypeUtil::isDefined($method->returnType())) {
+            if ($method->returnType()->isDefined()) {
                 $methodBuilder->returnType(TypeUtil::short($method->returnType()));
 
                 foreach (TypeUtil::unwrapClassTypes($method->returnType()) as $classType) {
@@ -64,7 +64,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
                 $parameterBuilder = $methodBuilder->parameter($parameter->name());
                 $parameterType = $parameter->type();
 
-                if (TypeUtil::isDefined($parameter->type())) {
+                if ($parameter->type()->isDefined()) {
                     $parameterBuilder->type(TypeUtil::short($parameterType));
 
                     $parameterType = TypeUtil::unwrapNullableType($parameterType);

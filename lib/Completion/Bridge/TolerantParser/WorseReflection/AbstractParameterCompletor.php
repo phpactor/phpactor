@@ -58,7 +58,7 @@ abstract class AbstractParameterCompletor
 
         foreach ($variables as $variable) {
             if (
-                TypeUtil::isDefined($variable->type()) &&
+                $variable->type()->isDefined() &&
                 false === $this->isVariableValidForParameter($variable, $parameter)
             ) {
                 // parameter has no types and is not valid for this position, ignore it
@@ -118,7 +118,7 @@ abstract class AbstractParameterCompletor
 
     private function isVariableValidForParameter(WorseVariable $variable, ReflectionParameter $parameter): bool
     {
-        if (false === TypeUtil::isDefined($parameter->inferredType())) {
+        if (false === ($parameter->inferredType()->isDefined())) {
             return true;
         }
 

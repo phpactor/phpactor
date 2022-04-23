@@ -72,7 +72,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
     {
         $type = $this->typeResolver->resolve();
 
-        if (TypeUtil::isDefined($type)) {
+        if (($type->isDefined())) {
             return $type;
         }
 

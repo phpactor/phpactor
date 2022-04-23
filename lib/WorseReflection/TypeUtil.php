@@ -26,14 +26,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function isDefined(?Type $type): bool
-    {
-        if (null === $type) {
-            return false;
-        }
-        return !$type instanceof MissingType;
-    }
-
     public static function short(Type $type): string
     {
         if ($type instanceof UnionType) {
@@ -178,7 +170,7 @@ class TypeUtil
         }
 
         foreach ($types as $type) {
-            if (self::isDefined($type)) {
+            if ($type->isDefined()) {
                 return $type;
             }
         }
