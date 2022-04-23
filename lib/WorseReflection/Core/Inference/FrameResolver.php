@@ -6,6 +6,7 @@ use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
@@ -157,7 +158,7 @@ final class FrameResolver
 
         // if this is an anonymous functoin, traverse the parent scope to
         // resolve any potential variable imports.
-        if ($scopeNode instanceof AnonymousFunctionCreationExpression) {
+        if ($scopeNode instanceof AnonymousFunctionCreationExpression || $scopeNode instanceof ArrowFunctionCreationExpression) {
             return $this->resolveScopeNode($scopeNode->parent);
         }
 

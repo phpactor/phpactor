@@ -57,12 +57,14 @@ class TestAssertWalker implements Walker
     {
         $list = $node->argumentExpressionList->getElements();
         $args = [];
+        $exprs = [];
         foreach ($list as $expression) {
             if (!$expression instanceof ArgumentExpression) {
                 continue;
             }
 
             $args[] = $resolver->resolveNode($frame, $expression);
+            $exprs[] = $expression;
         }
 
         // get string to compare against
@@ -79,6 +81,7 @@ class TestAssertWalker implements Walker
                 $message ? ': ' . $message : '',
             ));
         }
+
         $this->testCase->addToAssertionCount(1);
     }
 

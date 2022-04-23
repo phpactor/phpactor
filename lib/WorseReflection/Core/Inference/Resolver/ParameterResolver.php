@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
@@ -25,7 +26,12 @@ class ParameterResolver implements Resolver
     {
         assert($node instanceof Parameter);
 
-        $method = $node->getFirstAncestor(AnonymousFunctionCreationExpression::class, MethodDeclaration::class, FunctionDeclaration::class);
+        $method = $node->getFirstAncestor(
+            ArrowFunctionCreationExpression::class,
+            AnonymousFunctionCreationExpression::class,
+            MethodDeclaration::class,
+            FunctionDeclaration::class
+        );
 
         if ($method instanceof MethodDeclaration) {
             return $this->resolveParameterFromMethodReflection($resolver->reflector(), $method, $node);
