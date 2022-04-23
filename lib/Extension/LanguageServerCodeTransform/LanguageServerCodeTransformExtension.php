@@ -263,10 +263,10 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(TransformerCodeActionPovider::class.'update_docblock', function (Container $container) {
+        $container->register(TransformerCodeActionPovider::class.'add_missing_docblocks', function (Container $container) {
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
-                'update_docblock',
+                'add_missing_docblocks',
                 'Add missing docblocks'
             );
         }, [

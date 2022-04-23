@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -32,6 +33,8 @@ interface ReflectionMember
     public function class(): ReflectionClassLike;
 
     public function name(): string;
+
+    public function nameRange(): ByteOffsetRange;
 
     public function frame(): Frame;
 

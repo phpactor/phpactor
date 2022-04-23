@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -97,6 +98,14 @@ abstract class VirtualReflectionMember implements ReflectionMember
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromInts(
+            $this->position()->start(),
+            $this->position()->end(),
+        );
     }
 
     public function withName(string $name): self

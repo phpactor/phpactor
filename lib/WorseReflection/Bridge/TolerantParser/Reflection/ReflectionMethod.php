@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -48,6 +49,12 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     public function name(): string
     {
         return $this->node->getName();
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        $name = $this->node->name;
+        return ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition());
     }
 
     public function declaringClass(): ReflectionClassLike

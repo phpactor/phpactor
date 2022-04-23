@@ -395,14 +395,14 @@ class CodeTransformExtension implements Extension
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'fix_namespace_class_name' ]]);
 
-        $container->register('code_transform.transformer.update_docblock', function (Container $container) {
+        $container->register('code_transform.transformer.add_missing_docblocks', function (Container $container) {
             return new UpdateDocblockTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),
                 $container->get(TextFormat::class),
             );
-        }, [ 'code_transform.transformer' => [ 'name' => 'update_docblock' ]]);
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks' ]]);
 
         $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\TokenKind;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -65,6 +66,14 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     public function name(): string
     {
         return (string) $this->parameter->getName();
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromInts(
+            $this->parameter->getStartPosition(),
+            $this->parameter->getEndPosition(),
+        );
     }
 
     public function inferredType(): Type
