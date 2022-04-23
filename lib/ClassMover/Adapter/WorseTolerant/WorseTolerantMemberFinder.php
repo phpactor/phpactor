@@ -361,15 +361,15 @@ class WorseTolerantMemberFinder implements MemberFinder
         return $queryClassReflection;
     }
 
-    private function attachClassInfoToReference(MemberReference $reference, ClassMemberQuery $query, ReflectionOffset $offset)
+    private function attachClassInfoToReference(MemberReference $reference, ClassMemberQuery $query, ReflectionOffset $offset): ?MemberReference
     {
-        $type = TypeUtil::unwrapNullableType($offset->symbolContext()->type());
+        $type = $offset->symbolContext()->type()->classTypes()->firstOrNull();
 
-        if ($query->hasMember() && TypeFactory::unknown() == $type) {
+        if ($query->hasMember() && !$type) {
             return $reference;
         }
         if (!$type instanceof ReflectedClassType) {
-            return;
+            return null;
         }
 
         if (false === $query->hasClass()) {
@@ -384,7 +384,7 @@ class WorseTolerantMemberFinder implements MemberFinder
             return $reference;
         }
         if ($accepts->isFalse()) {
-            return;
+            return null;
         }
 
         return $reference->withClass(Class_::fromString((string) $type->name()->full()));
