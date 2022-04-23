@@ -63,6 +63,7 @@ class BinaryExpressionResolver implements Resolver
 
         // https://github.com/phpactor/phpactor/issues/1460
         // both right and left operand should be Node instances
+        // @phpstan-ignore-next-line TODO: [TP] wrong type hints
         if ($leftOperand instanceof Node && $rightOperand instanceof Node) {
             // apply any type assertiosn (e.g. ===, instanceof, etc)
             $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
