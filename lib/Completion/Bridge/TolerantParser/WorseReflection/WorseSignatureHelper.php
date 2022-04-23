@@ -137,7 +137,7 @@ class WorseSignatureHelper implements SignatureHelper
                 ));
             }
         
-            $containerType = TypeUtil::unwrapNullableType($symbolContext->containerType());
+            $containerType = $symbolContext->containerType()->classTypes()->firstOrNull();
         
             if (!$containerType instanceof ClassType) {
                 throw new CouldNotHelpWithSignature(sprintf(

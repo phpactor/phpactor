@@ -338,9 +338,9 @@ class ReferencesHandler extends AbstractHandler
         ));
     }
 
-    private function defaultReplacement(NodeContext $symbolContext)
+    private function defaultReplacement(NodeContext $symbolContext): string
     {
-        $type = TypeUtil::unwrapNullableType($symbolContext->type());
+        $type = $symbolContext->type()->classTypes()->firstOrNull();
         if ($type instanceof ClassType) {
             return $type->name()->__toString();
         }

@@ -103,7 +103,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        $type = TypeUtil::unwrapNullableType($type);
+        $type = $type->classTypes()->firstOrNull();
 
         if (!$type instanceof ReflectedClassType) {
             return;
