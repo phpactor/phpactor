@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
@@ -105,4 +106,17 @@ abstract class Type
 
         return new UnionType(...$types);
     }
+
+    /**
+     * If the given type is a literal, return the general type
+     */
+    public static function generalize(Type $type): Type
+    {
+        if ($type instanceof Generalizable) {
+            return $type->generalize();
+        }
+
+        return $type;
+    }
+
 }

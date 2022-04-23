@@ -18,27 +18,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    /**
-     * @return Type[]
-     */
-    public static function unwrapUnion(Type $type): array
-    {
-        if (!$type instanceof UnionType) {
-            return [$type];
-        }
-
-        $types = [];
-        foreach ($type->types as $type) {
-            if ($type instanceof UnionType) {
-                $types = array_merge(self::unwrapUnion($type));
-                continue;
-            }
-            $types[] = $type;
-        }
-
-        return $types;
-    }
-
     public static function firstDefined(Type ...$types): Type
     {
         if (empty($types)) {
@@ -49,18 +28,6 @@ class TypeUtil
             if ($type->isDefined()) {
                 return $type;
             }
-        }
-
-        return $type;
-    }
-
-    /**
-     * If the given type is a literal, return the general type
-     */
-    public static function generalize(Type $type): Type
-    {
-        if ($type instanceof Generalizable) {
-            return $type->generalize();
         }
 
         return $type;
@@ -121,7 +88,7 @@ class TypeUtil
     {
         $valueType = null;
         foreach ($types as $type) {
-            $type = TypeUtil::generalize($type);
+            $type = $type->generalize();
             if ($valueType === null) {
                 $valueType = $type;
                 continue;

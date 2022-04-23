@@ -167,7 +167,7 @@ class ContextMenuHandler implements Handler
                     // when we want to act on the file in the "type" under the
                     // cursor. this shouldn't be a thing.
                     $type = $symbolContext->containerType()->isDefined() ? $symbolContext->containerType() : $symbolContext->type();
-                    $parameterValue = $this->classFileNormalizer->classToFile(TypeUtil::generalize($type));
+                    $parameterValue = $this->classFileNormalizer->classToFile($type->generalize());
                     break;
                 case '%offset%':
                     $parameterValue = $arguments[self::PARAMETER_OFFSET];
