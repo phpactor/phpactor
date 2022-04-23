@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerHover\Twig\Functions;
 
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type;
 
 class TypeShortName
