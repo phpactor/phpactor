@@ -99,7 +99,7 @@ class WorseBuilderFactory implements BuilderFactory
 
         $type = $property->inferredType();
         if (($type->isDefined())) {
-            $this->resolveClassMemberType($classBuilder, $property->class()->name(), $type);
+            $this->importClassesForMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type(($type->short()));
             $propertyBuilder->docType((string)$type);
         }
@@ -112,7 +112,7 @@ class WorseBuilderFactory implements BuilderFactory
 
         if ($method->returnType()->isDefined()) {
             $type = $method->returnType();
-            $this->resolveClassMemberType($classBuilder, $method->class()->name(), $type);
+            $this->importClassesForMemberType($classBuilder, $method->class()->name(), $type);
             $typeName = $type->short();
             $methodBuilder->returnType($typeName);
         }
@@ -134,7 +134,7 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $parameter->type();
             $imports = $parameter->scope()->nameImports();
 
-            $this->resolveClassMemberType($methodBuilder->end(), $method->class()->name(), $type);
+            $this->importClassesForMemberType($methodBuilder->end(), $method->class()->name(), $type);
 
             if ($parameter->isVariadic()) {
                 if ($type instanceof ArrayType) {
@@ -158,19 +158,15 @@ class WorseBuilderFactory implements BuilderFactory
         }
     }
 
-    private function resolveClassMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
+    private function importClassesForMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        $type = TypeUtil::unwrapNullableType($type);
+        foreach ($type->classTypes() as $type) {
+            if ($classType->namespace() == $type->name()->namespace()) {
+                return;
+            }
 
-        if (!$type instanceof ClassType) {
-            return;
+            $classBuilder->end()->use($type->name()->full());
         }
-
-        if ($classType->namespace() == $type->name()->namespace()) {
-            return;
-        }
-
-        $classBuilder->end()->use($type->name()->full());
     }
 
     private function resolveTypeNameFromNameImports(Type $type, NameImports $imports): string
