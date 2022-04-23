@@ -13,7 +13,7 @@ Completors
 
 .. note::
 
-    Completors can be disabled using the :ref:`param_completion_worse.disabled_completors` configuration.
+    Completors can be enabled or disabled in configuration f.e. :ref:`param_completion_worse.completor.worse_parameter.enabled` configuration.
 
 ``worse_parameter``
 ~~~~~~~~~~~~~~~~~~~
