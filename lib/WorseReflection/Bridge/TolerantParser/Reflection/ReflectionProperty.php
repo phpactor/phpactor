@@ -17,7 +17,6 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Type;
 use InvalidArgumentException;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {

@@ -19,7 +19,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
 {

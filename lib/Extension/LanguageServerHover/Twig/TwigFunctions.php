@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerHover\Twig;
 use Phpactor\Extension\LanguageServerHover\Twig\Functions\TypeShortName;
 use Phpactor\Extension\LanguageServerHover\Twig\Functions\TypeType;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\TypeUtil;
 use Twig\Environment;
 use Twig\TwigFunction;
 

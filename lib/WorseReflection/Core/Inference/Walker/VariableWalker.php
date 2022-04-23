@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflecti
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
-use Phpactor\WorseReflection\TypeUtil;
 
 class VariableWalker extends AbstractWalker
 {

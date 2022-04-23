@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {

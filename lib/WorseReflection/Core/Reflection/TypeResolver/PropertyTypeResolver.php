@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\TypeUtil;
 
 class PropertyTypeResolver
 {
