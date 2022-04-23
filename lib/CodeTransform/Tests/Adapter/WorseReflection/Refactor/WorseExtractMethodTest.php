@@ -179,6 +179,10 @@ class WorseExtractMethodTest extends WorseTestCase
                 'extractMethod31.test',
                 'newMethod',
             ],
+            'union argument' => [
+                'extractMethod32.test',
+                'newMethod',
+            ],
         ];
     }
 }

@@ -152,4 +152,9 @@ final class UnionType extends Type
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
     }
+
+    public function toTypes(): array
+    {
+        return $this->types;
+    }
 }
