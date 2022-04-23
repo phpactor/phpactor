@@ -148,13 +148,13 @@ final class UnionType extends Type
         return new self($type);
     }
 
-    private function add(Type $type): UnionType
-    {
-        return (new self(...array_merge($this->types, [$type])))->filter();
-    }
-
     public function toTypes(): array
     {
         return $this->types;
+    }
+
+    private function add(Type $type): UnionType
+    {
+        return (new self(...array_merge($this->types, [$type])))->filter();
     }
 }

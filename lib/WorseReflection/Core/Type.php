@@ -21,7 +21,7 @@ abstract class Type
      */
     public function classTypes(): array
     {
-        return array_filter($this->toTypes(), fn(Type $type) => $type instanceof ClassType);
+        return array_filter($this->toTypes(), fn (Type $type) => $type instanceof ClassType);
     }
 
     /**
@@ -73,9 +73,5 @@ abstract class Type
         }
 
         return $type->toPhpString();
-    }
-
-    private static function unwrapClassTypes(Type $type): array
-    {
     }
 }
