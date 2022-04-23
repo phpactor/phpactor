@@ -7,7 +7,6 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTra
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
-use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformerTest extends WorseTestCase
@@ -51,6 +50,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
+
                     /**
                      * @return array<string,Baz>
                      */
@@ -68,83 +68,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
-        yield 'update docblock' => [
-            <<<'EOT'
-                <?php
-
-                class Foobar {
-                    /**
-                     * @return array
-                     */
-                    public function baz(): array
-                    {
-                        return $this->array();
-                    }
-
-                    /** @return array<string,Baz> */
-                    private function array(): array
-                    {
-                        return ['string' => new Baz'];
-                    }
-                }
-                EOT
-            ,
-            <<<'EOT'
-                <?php
-
-                class Foobar {
-                    /**
-                     * @return array<string,Baz>
-                     */
-                    public function baz(): array
-                    {
-                        return $this->array();
-                    }
-
-                    /** @return array<string,Baz> */
-                    private function array(): array
-                    {
-                        return ['string' => new Baz'];
-                    }
-                }
-                EOT
-        ];
-
-        yield 'no update missing' => [
-            <<<'EOT'
-                <?php
-
-                class Foobar {
-                    public function baz(): void
-                    {
-                    }
-
-                    /** @return array<string,Baz> */
-                    private function array(): array
-                    {
-                        return ['string' => new Baz'];
-                    }
-                }
-                EOT
-            ,
-            <<<'EOT'
-                <?php
-
-                class Foobar {
-                    public function baz(): void
-                    {
-                    }
-
-                    /** @return array<string,Baz> */
-                    private function array(): array
-                    {
-                        return ['string' => new Baz'];
-                    }
-                }
-                EOT
-        ];
-
-        yield 'update array literal' => [
+        yield 'add array literal' => [
             <<<'EOT'
                 <?php
 
@@ -163,6 +87,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
+
                     /**
                      * @return array<string,string>
                      */
@@ -177,7 +102,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
  
-        yield 'update union of array literals' => [
+        yield 'add union of array literals' => [
             <<<'EOT'
                 <?php
 
@@ -202,6 +127,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
+
                     /**
                      * @return array<string,string>
                      */
@@ -276,6 +202,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 class ConcreteFoo extends Foo {}
 
                 class Foobar {
+
                     /**
                      * @return ConcreteFoo<Baz>
                      */
@@ -385,7 +312,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
             ,
             [
-                'Method "baz" returns `array<string,Baz>` but return type is `array`',
+                'Missing @return array<string,Baz>',
             ]
         ];
     }
@@ -395,8 +322,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
         return new UpdateDocblockTransformer(
             $reflector,
             $this->updater(),
-            $this->builderFactory($reflector),
-            DocblockParser::create()
+            $this->builderFactory($reflector)
         );
     }
 }

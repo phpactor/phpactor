@@ -9,10 +9,7 @@ use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
-use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
-use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -22,16 +19,13 @@ class UpdateDocblockTransformer implements Transformer
 {
     private Reflector $reflector;
 
-    private DocblockParser $parser;
-
     private Updater $updater;
 
     private BuilderFactory $builderFactory;
 
-    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory, DocblockParser $parser)
+    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory)
     {
         $this->reflector = $reflector;
-        $this->parser = $parser;
         $this->updater = $updater;
         $this->builderFactory = $builderFactory;
     }
@@ -51,6 +45,7 @@ class UpdateDocblockTransformer implements Transformer
                 $methodBuilder->docblock(
                     <<<EOT
 
+
                             /**
                              * @return {$replacement->__toString()}
                              */
@@ -59,23 +54,11 @@ class UpdateDocblockTransformer implements Transformer
                 );
                 continue;
             }
-
-            $node = $this->parser->parse($method->docblock()->raw());
-            foreach ($node->descendantElements(ReturnTag::class) as $returnTag) {
-                $methodBuilder->docblock(
-                    TextEdits::fromTextEdits([
-                        TextEdit::create(
-                            $returnTag->start(),
-                            $returnTag->end() - $returnTag->start(),
-                            sprintf('@return %s', $method->frame()->returnType()->__toString())
-                        )
-                    ])->apply($node->toString())
-                );
-            }
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
     }
+
     /**
      * @return Diagnostics<Diagnostic>
      */
@@ -89,10 +72,8 @@ class UpdateDocblockTransformer implements Transformer
             $diagnostics[] = new Diagnostic(
                 ByteOffsetRange::fromInts($method->position()->start(), $method->position()->start() + strlen($method->name())),
                 sprintf(
-                    'Method "%s" returns `%s` but return type is `%s`',
-                    $method->name(),
-                    $method->frame()->returnType(),
-                    $method->inferredType(),
+                    'Missing @return %s',
+                    $method->frame()->returnType()->toLocalType($method->scope())->generalize(),
                 ),
                 Diagnostic::WARNING
             );
@@ -100,6 +81,7 @@ class UpdateDocblockTransformer implements Transformer
 
         return Diagnostics::fromArray($diagnostics);
     }
+
     /**
      * @return array<int,ReflectionMethod>
      */
@@ -112,6 +94,11 @@ class UpdateDocblockTransformer implements Transformer
                 $actualReturnType = $method->frame()->returnType()->generalize();
                 $claimedReturnType = $method->inferredType();
                 $phpReturnType = $method->type();
+
+                // if there is already a docblock, ignore
+                if ($method->docblock()->isDefined()) {
+                    continue;
+                }
 
                 // it's void
                 if (false === $actualReturnType->isDefined()) {
