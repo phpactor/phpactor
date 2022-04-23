@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 class NullableType extends Type
 {
@@ -33,8 +34,8 @@ class NullableType extends Type
         return $this->type->accepts($type);
     }
 
-    public function toTypes(): array
+    public function toTypes(): Types
     {
-        return [new NullType(), $this->type];
+        return new Types([new NullType(), $this->type]);
     }
 }

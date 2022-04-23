@@ -122,7 +122,7 @@ abstract class AbstractParameterCompletor
             return true;
         }
 
-        foreach (TypeUtil::unwrapUnion($variable->type()) as $variableType) {
+        foreach ($variable->type()->toTypes() as $variableType) {
             $variableType = TypeUtil::unwrapNullableType($variableType);
 
             if ($parameter->inferredType()->accepts($variableType)->isTrue()) {

@@ -3,9 +3,8 @@
 namespace Phpactor\WorseReflection\Core;
 
 use ArrayIterator;
+use Closure;
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Traversable;
 
 /**
@@ -22,7 +21,8 @@ class Types implements IteratorAggregate
     /**
      * @param T[] $types
      */
-    public function __construct(array $types) {
+    public function __construct(array $types)
+    {
         $this->types = $types;
     }
 
@@ -41,5 +41,13 @@ class Types implements IteratorAggregate
         }
 
         return reset($this->types);
+    }
+
+    /**
+     * @return Types<T>
+     */
+    public function filter(Closure $predicate): self
+    {
+        return new self(array_filter($this->types, $predicate));
     }
 }

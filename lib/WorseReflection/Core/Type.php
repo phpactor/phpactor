@@ -21,15 +21,16 @@ abstract class Type
      */
     public function classTypes(): Types
     {
-        return new Types(array_filter($this->toTypes(), fn (Type $type) => $type instanceof ClassType));
+        // @phpstan-ignore-next-line no support for conditional types https://github.com/phpstan/phpstan/issues/3853
+        return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassType);
     }
 
     /**
-     * @return Type[]
+     * @return Types<Type>
      */
-    public function toTypes(): array
+    public function toTypes(): Types
     {
-        return [$this];
+        return new Types([$this]);
     }
 
 

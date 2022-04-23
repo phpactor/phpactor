@@ -17,7 +17,6 @@ use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseOverrideMethod implements OverrideMethod
 {
@@ -94,9 +93,8 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $usedClasses = [];
 
-        $returnType = TypeUtil::unwrapNullableType($method->returnType());
-        if ($returnType instanceof ClassType) {
-            $usedClasses[] = $returnType;
+        foreach ($method->returnType()->classTypes() as $classType) {
+            $usedClasses[] = $classType;
         }
 
         /**

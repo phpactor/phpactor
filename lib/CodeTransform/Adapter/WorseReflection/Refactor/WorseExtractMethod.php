@@ -14,7 +14,6 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -28,7 +27,6 @@ use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Utils\TextUtils;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\TypeUtil;
 use function iterator_to_array;
 use function prev;
 
@@ -231,9 +229,9 @@ class WorseExtractMethod implements ExtractMethod
             throw new TransformException('Cannot extract method, not in class scope');
         }
 
-        $type = TypeUtil::unwrapNullableType($thisVariable->last()->type());
+        $type = $thisVariable->last()->type()->classTypes()->firstOrNull();
 
-        if (!$type instanceof ClassType) {
+        if (!$type) {
             throw new TransformException('Cannot extract method, not in class scope');
         }
         $className = $type->name();
@@ -428,9 +426,9 @@ class WorseExtractMethod implements ExtractMethod
         if ($expressionType->isDefined()) {
             $methodBuilder->returnType($expressionType->short());
         }
-        $type = TypeUtil::unwrapNullableType($expressionType);
-        if ($type instanceof ClassType) {
-            $methodBuilder->end()->end()->use($type->name()->full());
+
+        foreach ($expressionType->classTypes() as $classType) {
+            $methodBuilder->end()->end()->use($classType->name()->full());
         }
 
         return $newMethodBody;

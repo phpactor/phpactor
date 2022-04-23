@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -23,7 +22,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\WorseReflection\Core\NameImports;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseBuilderFactory implements BuilderFactory
 {

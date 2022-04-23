@@ -8,7 +8,6 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -17,7 +16,6 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\WorseReflection\TypeUtil;
 
 class ImplementContracts implements Transformer
 {
@@ -91,12 +89,9 @@ class ImplementContracts implements Transformer
 
                 foreach ($missingMethod->parameters() as $parameter) {
                     $parameterType = $parameter->type();
-                    if ($parameterType->isDefined()) {
-                        $parameterType = TypeUtil::unwrapNullableType($parameterType);
-                        if (
-                             $parameterType instanceof ClassType && $parameterType->name()->namespace() != $class->name()->namespace()
-                        ) {
-                            $sourceCodeBuilder->use($parameterType->name());
+                    foreach ($parameterType->classTypes() as $classType) {
+                        if ($classType->name()->namespace() != $class->name()->namespace()) {
+                            $sourceCodeBuilder->use($classType->name());
                         }
                     }
                 }
