@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseGenerateMethod implements GenerateMethod
 {
@@ -117,7 +116,7 @@ class WorseGenerateMethod implements GenerateMethod
             if ($type->isDefined()) {
                 $argumentBuilder->type($type->short());
 
-                foreach (TypeUtil::unwrapClassTypes($type) as $classType) {
+                foreach ($type->classTypes() as $classType) {
                     $builder->use($classType->toPhpString());
                 }
             }

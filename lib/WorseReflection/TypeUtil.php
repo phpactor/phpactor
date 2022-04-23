@@ -25,22 +25,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    /**
-     * @return ClassType[]
-     */
-    public static function unwrapClassTypes(Type $type): array
-    {
-        if ($type instanceof ClassType) {
-            return [$type];
-        }
-
-        if ($type instanceof NullableType) {
-            return self::unwrapClassTypes($type->type);
-        }
-
-        return [];
-    }
-
     public static function unwrapNullableType(?Type $type): Type
     {
         if (null === $type) {

@@ -102,7 +102,7 @@ class WorseOverrideMethod implements OverrideMethod
         /**
          * @var ReflectionParameter $parameter */
         foreach ($method->parameters() as $parameter) {
-            foreach (TypeUtil::unwrapClassTypes($parameter->type()) as $classType) {
+            foreach ($parameter->type()->classTypes() as $classType) {
                 $usedClasses[] = $parameter->type();
             }
         }

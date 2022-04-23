@@ -85,7 +85,7 @@ class ImplementContracts implements Transformer
                 )->method($missingMethod->name());
 
                 $missingMethodReturnType = $missingMethod->returnType();
-                foreach (TypeUtil::unwrapClassTypes($missingMethodReturnType) as $type) {
+                foreach ($missingMethodReturnType->classTypes() as $type) {
                     $sourceCodeBuilder->use($type->name());
                 }
 
