@@ -1,6 +1,13 @@
 <?php
 
 wrAssertType(
-    'array<array-key,string>',
+    'string[]',
     array_map(fn () => 'hello', [10, 20, 30])
+);
+
+wrAssertType(
+    'string[]',
+    array_map(function (): string {
+        return 'hello';
+    }, [10, 20, 30])
 );

@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ArrayMapStub implements FunctionStub
 {
@@ -31,6 +32,6 @@ class ArrayMapStub implements FunctionStub
             return $context;
         }
 
-        return $context->withType($args[0]->type());
+        return $context->withType(TypeFactory::array($args[0]->type()));
     }
 }
