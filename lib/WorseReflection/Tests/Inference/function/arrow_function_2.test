@@ -1,0 +1,8 @@
+<?php
+
+namespace Foo;
+
+array_map(
+    fn (TypeNode $node) => $this->convert(wrAssertType('Foo\TypeNode', $node)),
+    $parameters
+);

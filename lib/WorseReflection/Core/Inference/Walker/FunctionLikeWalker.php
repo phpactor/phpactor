@@ -45,7 +45,9 @@ class FunctionLikeWalker extends AbstractWalker
             $node instanceof ArrowFunctionCreationExpression
         );
 
-        $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
+        if (!$node instanceof ArrowFunctionCreationExpression) {
+            $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
+        }
         $this->walkFunctionLike($resolver, $frame, $node);
 
         return $frame;
