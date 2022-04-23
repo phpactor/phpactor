@@ -17,8 +17,7 @@ class ArrayMapStub implements FunctionStub
         Frame $frame,
         NodeContext $context,
         ArgumentExpressionList $node
-    ): NodeContext
-    {
+    ): NodeContext {
         $args = [];
         foreach ($node->getChildNodes() as $expression) {
             if (!$expression instanceof ArgumentExpression) {

@@ -4,15 +4,12 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
-use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\TypeUtil;
 
 class AnonymousFunctionCreationExpressionResolver implements Resolver
 {
