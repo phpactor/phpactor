@@ -24,6 +24,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] require `ext-pnctl` (language server would crash otherwise)
   - [wr] handle static properly #967
   - [ls] include list of diagnostic providers in status report
   - [ct] add retutn type to generated method if it would immediately return
