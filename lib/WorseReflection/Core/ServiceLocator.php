@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IfStatementWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\ReturnTypeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -107,6 +108,7 @@ class ServiceLocator
             $cache,
             array_merge([
                 new AssertFrameWalker(),
+                new ReturnTypeWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory),
                 new AssignmentWalker($this->logger),

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -154,8 +155,13 @@ final class UnionType extends Type
         return new Types($this->types);
     }
 
-    private function add(Type $type): UnionType
+    public function add(Type $type): UnionType
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self(...array_map($mapper, $this->types));
     }
 }

@@ -52,6 +52,15 @@ abstract class Type
         return $this instanceof NullableType;
     }
 
+    public function addToUnion(Type $type): UnionType
+    {
+        if (!$this instanceof UnionType) {
+            return new UnionType($this, $type);
+        }
+
+        return $this->add($type);
+    }
+
     public function isPrimitive(): bool
     {
         return $this instanceof PrimitiveType;
@@ -104,11 +113,17 @@ abstract class Type
      */
     public function generalize(): Type
     {
-        if ($this instanceof Generalizable) {
-            return $this->generalize();
-        }
+        return $this->map(fn (Type $type) => $type instanceof Generalizable ? $type->generalize() : $type);
+    }
 
-        return $this;
+    public function equals(Type $type): bool
+    {
+        return $this->__toString() === $type->__toString();
+    }
+
+    public function instanceof(Type $type): Trinary
+    {
+        return Trinary::fromBoolean($type->equals($this));
     }
 
     /**

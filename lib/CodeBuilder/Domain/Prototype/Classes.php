@@ -3,12 +3,11 @@
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 /**
- * @method \Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype first()
- * @method \Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype get()
+ * @extends Collection<ClassPrototype>
  */
 class Classes extends Collection
 {
-    public static function fromClasses(array $classes)
+    public static function fromClasses(array $classes): self
     {
         return new static(array_reduce($classes, function ($acc, $class) {
             $acc[$class->name()] = $class;

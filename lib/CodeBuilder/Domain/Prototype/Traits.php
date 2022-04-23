@@ -2,6 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
+/**
+ * @extends Collection<TraitPrototype>
+ */
 class Traits extends Collection
 {
     public static function fromTraits(array $traits)

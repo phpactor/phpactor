@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Closure;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -26,6 +27,8 @@ class Frame
     private array $children = [];
     
     private string $name;
+
+    private ?Type $returnType = null;
 
     public function __construct(
         string $name,
@@ -117,6 +120,12 @@ class Frame
         return $new;
     }
 
+    public function withReturnType(Type $type): self
+    {
+        $this->returnType = $type;
+        return $this;
+    }
+
     public function applyTypeAssertions(TypeAssertions $typeAssertions, int $offset, bool $createNew = false): void
     {
         foreach ([
@@ -174,5 +183,10 @@ class Frame
         foreach ($properties as $property) {
             $this->properties()->add($property);
         }
+    }
+
+    public function returnType(): Type
+    {
+        return $this->returnType ?: new MissingType();
     }
 }

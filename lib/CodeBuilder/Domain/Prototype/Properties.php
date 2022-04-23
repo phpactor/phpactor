@@ -3,8 +3,7 @@
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 /**
- * @method \Phpactor\CodeBuilder\Domain\Prototype\Property first()
- * @method \Phpactor\CodeBuilder\Domain\Prototype\Property get()
+ * @extends Collection<Property>
  */
 class Properties extends Collection
 {

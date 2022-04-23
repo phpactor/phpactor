@@ -56,8 +56,11 @@ class ClassType extends Type
         return Trinary::false();
     }
 
-    public function instanceof(Type $right): BooleanType
+    public function instanceof(Type $right): Trinary
     {
-        return new BooleanType();
+        if ($right->equals($this)) {
+            return Trinary::true();
+        }
+        return Trinary::maybe();
     }
 }

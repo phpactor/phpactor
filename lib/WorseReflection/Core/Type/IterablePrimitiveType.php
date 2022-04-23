@@ -25,7 +25,7 @@ class IterablePrimitiveType extends Type
         }
 
         if ($type instanceof ReflectedClassType) {
-            return $type->instanceof(TypeFactory::class('Iterable'))->toTrinary();
+            return $type->instanceof(TypeFactory::class('Iterable'));
         }
 
         return Trinary::false();

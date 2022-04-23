@@ -2,6 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
+/**
+ * @extends Collection<UseStatement>
+ */
 class UseStatements extends Collection
 {
     public static function fromUseStatements(array $useStatements)

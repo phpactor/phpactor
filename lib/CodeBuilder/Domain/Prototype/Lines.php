@@ -2,6 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
+/**
+ * @extends Collection<Line>
+ */
 class Lines extends Collection
 {
     public function __toString()

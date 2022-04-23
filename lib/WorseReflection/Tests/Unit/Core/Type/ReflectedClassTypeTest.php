@@ -70,19 +70,19 @@ class ReflectedClassTypeTest extends TestCase
         self::assertTrinaryTrue($this->createType(
             '<?php class Bar{}; class Foobar extends Bar {};',
             'Foobar'
-        )->instanceof(TypeFactory::class('Bar'))->toTrinary());
+        )->instanceof(TypeFactory::class('Bar')));
 
         // is not instance of
         self::assertTrinaryFalse($this->createType(
             '<?php class Bar{}; class Foobar extends Bar {};',
             'Foobar'
-        )->instanceof(TypeFactory::class('Baz'))->toTrinary());
+        )->instanceof(TypeFactory::class('Baz')));
 
         // is possibly instance of because we can't reflect the class
         self::assertTrinaryMaybe($this->createType(
             '',
             'Foobar'
-        )->instanceof(TypeFactory::class('Baz'))->toTrinary());
+        )->instanceof(TypeFactory::class('Baz')));
     }
 
     private function createType(string $source, string $name): ReflectedClassType

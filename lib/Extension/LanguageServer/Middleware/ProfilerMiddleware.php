@@ -24,12 +24,12 @@ class ProfilerMiddleware implements Middleware
     {
         return call(function () use ($request, $handler) {
             if ($request instanceof NotificationMessage) {
-                $this->logger->info(sprintf('PROFILER >> notification [%s]', $request->method));
+                $this->info(sprintf('       PROF >> notification [%s]', $request->method));
             }
 
             if ($request instanceof RequestMessage) {
-                $this->logger->info(sprintf(
-                    'PROFILER >> request #%d [%s]',
+                $this->info(sprintf(
+                    '       PROF >> request #%d [%s]',
                     $request->id,
                     $request->method,
                 ));
@@ -40,19 +40,25 @@ class ProfilerMiddleware implements Middleware
             $elapsed = microtime(true) - $start;
 
             if ($request instanceof NotificationMessage) {
-                $this->logger->info(sprintf('PROFILER << notification [%s] %ss', $request->method, number_format($elapsed, 4)));
+                $this->info(sprintf('%-6s PROF << notification [%s]', number_format($elapsed, 4), $request->method));
             }
 
             if ($request instanceof RequestMessage) {
-                $this->logger->info(sprintf(
-                    'PROFILER << request #%d [%s] %ss',
+                $this->info(sprintf(
+                    '%-6s PROF << request #%d [%s]',
+                    number_format($elapsed, 4),
                     $request->id,
                     $request->method,
-                    number_format($elapsed, 4)
                 ));
             }
 
             return $response;
         });
+    }
+
+    private function info(string $format, string ...$args): void
+    {
+        $message = sprintf($format, ...$args);
+        $this->logger->info(sprintf('[%-15s] %s', microtime(true), $message));
     }
 }

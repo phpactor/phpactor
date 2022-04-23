@@ -2,6 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
+/**
+ * @extends Collection<Constant>
+ */
 class Constants extends Collection
 {
     public static function fromConstants(array $constants)

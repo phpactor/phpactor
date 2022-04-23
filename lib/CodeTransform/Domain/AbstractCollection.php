@@ -37,7 +37,8 @@ abstract class AbstractCollection implements IteratorAggregate, Countable
     }
 
     /**
-     * @return static
+     * @return static<T>
+     * @param T[] $elements
      */
     public static function fromArray(array $elements)
     {

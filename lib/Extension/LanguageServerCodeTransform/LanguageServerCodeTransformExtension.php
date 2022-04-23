@@ -45,7 +45,6 @@ class LanguageServerCodeTransformExtension implements Extension
 {
     public const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     public const PARAM_REPORT_NON_EXISTING_NAMES = 'language_server_code_transform.import_name.report_non_existing_names';
-
     
     public function load(ContainerBuilder $container): void
     {
@@ -263,6 +262,18 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
+
+        $container->register(TransformerCodeActionPovider::class.'update_docblock', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'update_docblock',
+                'Fix docblocks'
+            );
+        }, [
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
 
         $container->register(GenerateMethodProvider::class, function (Container $container) {
             return new GenerateMethodProvider(

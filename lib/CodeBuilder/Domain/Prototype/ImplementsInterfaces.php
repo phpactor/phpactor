@@ -2,6 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
+/**
+ * @extends Collection<Type>
+ */
 class ImplementsInterfaces extends Collection
 {
     public function __toString()
