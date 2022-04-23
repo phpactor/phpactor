@@ -17,11 +17,11 @@ abstract class Type
     abstract public function accepts(Type $type): Trinary;
 
     /**
-     * @return ClassType[]
+     * @return Types<ClassType>
      */
-    public function classTypes(): array
+    public function classTypes(): Types
     {
-        return array_filter($this->toTypes(), fn (Type $type) => $type instanceof ClassType);
+        return new Types(array_filter($this->toTypes(), fn (Type $type) => $type instanceof ClassType));
     }
 
     /**
