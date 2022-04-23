@@ -84,7 +84,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $type = $symbolContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach (TypeUtil::unwrapUnion($type) as $type) {
+        foreach ($type->toTypes() as $type) {
             foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;

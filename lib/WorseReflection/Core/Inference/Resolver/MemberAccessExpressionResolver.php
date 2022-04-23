@@ -74,11 +74,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
-        foreach (TypeUtil::unwrapUnion($classType) as $classType) {
-            if (!$classType instanceof ClassType) {
-                continue;
-            }
-
+        foreach ($classType->classTypes() as $classType) {
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($classType->name());
             } catch (NotFound $e) {
