@@ -246,7 +246,7 @@ class CompletionWorseExtension implements Extension
                         $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                         $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
                     );
-                }, 
+                },
             ],
             'named_parameter' => [
                 'Completion for named parameters',

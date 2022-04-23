@@ -50,6 +50,7 @@ Improvements:
 
 Features:
 
+  - [cmp] Explicitly enable/disable completors and disable `keyword` completor by default.
   - [wr] Support `iterator_to_array`
   - [wr] Handle constant glob to union types (`@return Foo::BAR_*`).
   - [lsp] show class category in offset hover info 
