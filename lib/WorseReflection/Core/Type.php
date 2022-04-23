@@ -26,6 +26,11 @@ abstract class Type
         return $this instanceof ClassType;
     }
 
+    public function isNullable(Type $type): bool
+    {
+        return $type instanceof NullableType;
+    }
+
     public function isPrimitive(): bool
     {
         return $this instanceof PrimitiveType;

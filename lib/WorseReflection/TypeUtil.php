@@ -25,11 +25,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function isNullable(Type $type): bool
-    {
-        return $type instanceof NullableType;
-    }
-
     /**
      * @return ClassType[]
      */
