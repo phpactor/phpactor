@@ -1,0 +1,6 @@
+<?php
+
+/** @var IteratorAggregate<Foobar> $iterable */
+$iterable;
+
+wrAssertType('Foobar[]', iterator_to_array($iterable));

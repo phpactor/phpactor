@@ -12,13 +12,13 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -104,10 +104,6 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         $type = $type->classTypes()->firstOrNull();
 
-        if (!$type instanceof ReflectedClassType) {
-            return;
-        }
-
         if ($static) {
             yield Suggestion::createWithOptions('class', [
                 'type' => Suggestion::TYPE_CONSTANT,
@@ -116,9 +112,9 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             ]);
         }
 
-        $classReflection = $type->reflectionOrNull();
-
-        if (null === $classReflection) {
+        try {
+            $classReflection = $this->reflector->reflectClassLike($type->name());
+        } catch (NotFound $notFound) {
             return;
         }
 

@@ -1,0 +1,18 @@
+<?php
+
+namespace Foo;
+
+class Suggestion {
+    public function foo(): string {}
+}
+
+/**
+ * @return \Generator<int, Suggestion>
+ */
+function suggestions(): Generator {}
+
+$array = iterator_to_array(suggestions());
+
+wrAssertType('Foo\Suggestion[]', iterator_to_array($array));
+wrAssertType('Foo\Suggestion', iterator_to_array($array)[0]);
+wrAssertType('string', iterator_to_array($array)[0]->foo());

@@ -19,6 +19,7 @@ class TolerantClassFinderTest extends TestCase
         $source = TextDocumentBuilder::fromUri(__DIR__ . '/examples/Example1.php')->build();
         $names = iterator_to_array($tolerantRefFinder->findIn($source));
 
+
         $this->assertCount(8, $names);
 
         $this->assertEquals('Acme\\Foobar\\Warble', $names[0]->__toString());

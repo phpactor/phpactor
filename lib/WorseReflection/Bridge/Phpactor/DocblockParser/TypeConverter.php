@@ -82,7 +82,8 @@ class TypeConverter
             return $this->convertUnion($type);
         }
         if ($type instanceof GenericNode) {
-            return $this->convertGeneric($type);
+            $node = $this->convertGeneric($type);
+            return $node;
         }
         if ($type instanceof ClassNode) {
             return $this->convertClass($type);
@@ -230,7 +231,9 @@ class TypeConverter
             )
         );
 
-        return $this->resolver->resolve($type);
+        $resolved = $this->resolver->resolve($type);
+
+        return $resolved;
     }
 
     private function convertList(ListNode $type): Type
