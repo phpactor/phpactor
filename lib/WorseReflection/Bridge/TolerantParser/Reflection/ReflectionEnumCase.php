@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Token;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
@@ -40,6 +41,12 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
             return $name->getText($this->node->getFileContents());
         }
         return $this->node->name->__toString();
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        $name = $this->node->name;
+        return ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition());
     }
 
     public function type(): Type

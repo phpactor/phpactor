@@ -80,6 +80,40 @@ Becomes:
        }
    }
 
+.. _refactoring_add_missing_docblock:
+
+Add Missing Docblock
+--------------------
+
+This refactoring will add docblocks:
+
+- If there is an array return type and an iterator value can be inferred from
+  the function's return statement.
+- If there is an class return type and a generic type can be inferred from the
+  function's return statement.
+
+.. tabs::
+
+   .. tab:: CLI
+
+       .. code-block::
+
+           $ phpactor class:transform path/to/Class.php --transform=add_missing_docblocks
+
+   .. tab:: VIM Context Menu
+
+       *Class context menu > Transform > Add missing docblocks*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorTransform
+
+   .. tab:: Language Server
+
+       Request code actions when there is a candidate
+
 .. _refactoring_complete_constructor:
 
 Complete Constructor

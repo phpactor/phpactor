@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -65,6 +66,14 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
     public function name(): string
     {
         return (string) $this->variable->getName();
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromInts(
+            $this->variable->getStartPosition(),
+            $this->variable->getEndPosition(),
+        );
     }
 
     public function inferredType(): Type

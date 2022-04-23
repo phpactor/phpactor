@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -39,6 +40,14 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     public function name(): string
     {
         return $this->node->getName();
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromInts(
+            $this->node->name->getStartPosition(),
+            $this->node->name->getEndPosition()
+        );
     }
 
     public function type(): Type

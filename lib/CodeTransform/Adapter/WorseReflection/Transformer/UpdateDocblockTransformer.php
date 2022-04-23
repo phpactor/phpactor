@@ -10,7 +10,6 @@ use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -73,7 +72,7 @@ class UpdateDocblockTransformer implements Transformer
 
         foreach ($methods as $method) {
             $diagnostics[] = new Diagnostic(
-                ByteOffsetRange::fromInts($method->position()->start(), $method->position()->start() + strlen($method->name())),
+                $method->nameRange(),
                 sprintf(
                     'Missing @return %s',
                     $method->frame()->returnType()->toLocalType($method->scope())->generalize(),
