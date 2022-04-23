@@ -28,7 +28,6 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;

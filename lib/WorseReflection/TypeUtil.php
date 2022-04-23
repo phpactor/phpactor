@@ -25,18 +25,6 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeUtil
 {
-    public static function unwrapNullableType(?Type $type): Type
-    {
-        if (null === $type) {
-            return new MissingType();
-        }
-        if (!$type instanceof NullableType) {
-            return $type;
-        }
-
-        return $type->type;
-    }
-
     public static function toLocalType(Type $type, ?ReflectionScope $scope = null): Type
     {
         if (null === $scope) {

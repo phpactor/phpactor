@@ -14,7 +14,6 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseParameterCompletor extends AbstractParameterCompletor implements TolerantCompletor
 {

@@ -17,9 +17,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\TypeUtil;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {

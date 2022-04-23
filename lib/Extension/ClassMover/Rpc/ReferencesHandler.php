@@ -23,7 +23,6 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use InvalidArgumentException;
-use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 /**
