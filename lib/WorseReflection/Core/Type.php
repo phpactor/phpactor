@@ -156,4 +156,9 @@ abstract class Type
     {
         return $mapper($this);
     }
+
+    public function reduce(): Type
+    {
+        return $this;
+    }
 }

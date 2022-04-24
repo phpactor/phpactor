@@ -12,7 +12,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateReturnTypeTransformer implements Transformer
@@ -23,14 +23,11 @@ class UpdateReturnTypeTransformer implements Transformer
 
     private BuilderFactory $builderFactory;
 
-    private TextFormat $format;
-
-    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory, TextFormat $format)
+    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory)
     {
         $this->reflector = $reflector;
         $this->updater = $updater;
         $this->builderFactory = $builderFactory;
-        $this->format = $format;
     }
 
     public function transform(SourceCode $code): TextEdits
@@ -42,14 +39,20 @@ class UpdateReturnTypeTransformer implements Transformer
         foreach ($methods as $method) {
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
+            $replacement = $method->frame()->returnType();
+            $localReplacement = $replacement->toLocalType($method->scope())->generalize();
+            $notNullReplacement = $replacement->stripNullable();
+
+            if ($notNullReplacement instanceof ClassType) {
+                $builder->use($notNullReplacement->name());
+            }
+
+            $methodBuilder->returnType($localReplacement->reduce()->toPhpString());
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
     }
 
-    /**
-     * @return Diagnostics<Diagnostic>
-     */
     public function diagnostics(SourceCode $code): Diagnostics
     {
         $diagnostics = [];
@@ -57,11 +60,14 @@ class UpdateReturnTypeTransformer implements Transformer
         $methods = $this->methodsThatNeedFixing($code);
 
         foreach ($methods as $method) {
+            if ($method->name() === '__construct') {
+                continue;
+            }
             $diagnostics[] = new Diagnostic(
                 $method->nameRange(),
                 sprintf(
-                    'Missing @return %s',
-                    $method->frame()->returnType()->toLocalType($method->scope())->generalize(),
+                    'Missing return type `%s`',
+                    $method->frame()->returnType()->toLocalType($method->scope())->toPhpString(),
                 ),
                 Diagnostic::WARNING
             );
