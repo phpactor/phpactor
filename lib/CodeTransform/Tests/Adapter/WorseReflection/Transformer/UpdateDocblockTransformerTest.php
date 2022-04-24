@@ -179,6 +179,44 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'permit wider return types in union' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Foo {}
+                class ConcreteFoo extends Foo {}
+                class Baz extends Foo {}
+
+                class Foobar {
+                    public function baz(): Foo
+                    {
+                        if ($bar) {
+                            return new Baz();
+                        }
+                        return new ConcreteFoo();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                abstract class Foo {}
+                class ConcreteFoo extends Foo {}
+                class Baz extends Foo {}
+
+                class Foobar {
+                    public function baz(): Foo
+                    {
+                        if ($bar) {
+                            return new Baz();
+                        }
+                        return new ConcreteFoo();
+                    }
+                }
+                EOT
+        ];
+
         yield 'but adds generic types' => [
             <<<'EOT'
                 <?php
@@ -270,6 +308,34 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     public function baz(): array
                     {
                         return array_map(fn () => null, []);
+                    }
+                }
+                EOT
+        ];
+
+        yield 'adds docblock for closure' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz(): Closure
+                    {
+                        return function (string $foo): int {};
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @return Closure(string): int
+                     */
+                    public function baz(): Closure
+                    {
+                        return function (string $foo): int {};
                     }
                 }
                 EOT

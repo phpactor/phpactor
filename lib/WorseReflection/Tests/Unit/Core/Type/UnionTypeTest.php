@@ -214,6 +214,37 @@ class UnionTypeTest extends TestCase
         )->__toString());
     }
 
+    public function testDedupesNullOnConstruct(): void
+    {
+        self::assertEquals('null|One|Two', TypeFactory::union(
+            TypeFactory::nullable(TypeFactory::class('One')),
+            TypeFactory::class('Two'),
+            TypeFactory::class('One'),
+            TypeFactory::null(),
+            TypeFactory::null(),
+        )->__toString());
+    }
+
+    public function testMergeUnionts(): void
+    {
+        self::assertEquals(
+            TypeFactory::union(
+                TypeFactory::class('Two'),
+                TypeFactory::class('One'),
+                TypeFactory::string(),
+                TypeFactory::int()
+            ),
+            TypeFactory::union(
+                TypeFactory::class('Two'),
+                TypeFactory::class('One'),
+                TypeFactory::union(
+                    TypeFactory::string(),
+                    TypeFactory::int()
+                )
+            )
+        );
+    }
+
     /**
      * @return Type[]
      */

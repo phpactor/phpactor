@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 
 class ArrayMapStub implements FunctionStub
 {
@@ -31,6 +32,11 @@ class ArrayMapStub implements FunctionStub
             return $context;
         }
 
-        return $context->withType(TypeFactory::array($args[0]->type()));
+        $closureType = $args[0]->type();
+        if (!$closureType instanceof ClosureType) {
+            return $context;
+        }
+
+        return $context->withType(TypeFactory::array($closureType->returnType));
     }
 }

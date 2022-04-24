@@ -80,6 +80,9 @@ class BinaryExpressionResolver implements Resolver
         Type $right,
         int $operator
     ): Type {
+        if ($operator === TokenKind::QuestionQuestionToken) {
+            return $this->nullCoalesce($left, $right);
+        }
         if ($left instanceof Concatable) {
             switch ($operator) {
             case TokenKind::DotToken:
@@ -87,7 +90,6 @@ class BinaryExpressionResolver implements Resolver
                 return $left->concat($right);
             }
         }
-
         if ($left instanceof Comparable) {
             switch ($operator) {
             case TokenKind::EqualsEqualsEqualsToken:
@@ -230,5 +232,18 @@ class BinaryExpressionResolver implements Resolver
         }
 
         return $context;
+    }
+
+    private function nullCoalesce(Type $left, Type $right): Type
+    {
+        if ($left->isNullable()) {
+            return TypeFactory::union($left->stripNullable(), $right);
+        }
+
+        if (!$left->isNull()) {
+            return $left;
+        }
+
+        return $right;
     }
 }

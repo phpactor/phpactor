@@ -1,0 +1,7 @@
+<?php
+
+$foo = 'string';
+$bar = 123;
+$baz = $foo ?? $bar;
+
+wrAssertType('"string"', $baz, 'assumes left if type left is not null');

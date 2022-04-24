@@ -1,0 +1,9 @@
+<?php
+
+$bar = 123;
+/** @var null|string $nullable */
+$nullable;
+
+$baz = $nullable ?? $bar;
+
+wrAssertType('string|123', $baz, 'assumes union if left is nullable');
