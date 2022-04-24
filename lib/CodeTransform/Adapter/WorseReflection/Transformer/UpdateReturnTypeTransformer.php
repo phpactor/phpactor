@@ -12,7 +12,9 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateReturnTypeTransformer implements Transformer
@@ -39,12 +41,15 @@ class UpdateReturnTypeTransformer implements Transformer
         foreach ($methods as $method) {
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
-            $replacement = $method->frame()->returnType();
+            $replacement = $this->returnType($method);
+            if (!$replacement->isDefined()) {
+                $replacement = new VoidType();
+            }
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();
             $notNullReplacement = $replacement->stripNullable();
 
-            if ($notNullReplacement instanceof ClassType) {
-                $builder->use($notNullReplacement->name());
+            foreach ($replacement->classTypes() as $classType) {
+                $builder->use($classType->name());
             }
 
             $methodBuilder->returnType($localReplacement->reduce()->toPhpString());
@@ -63,11 +68,13 @@ class UpdateReturnTypeTransformer implements Transformer
             if ($method->name() === '__construct') {
                 continue;
             }
+
+            $returnType = $this->returnType($method);
             $diagnostics[] = new Diagnostic(
                 $method->nameRange(),
                 sprintf(
                     'Missing return type `%s`',
-                    $method->frame()->returnType()->toLocalType($method->scope())->toPhpString(),
+                    $returnType->toLocalType($method->scope())->toPhpString(),
                 ),
                 Diagnostic::WARNING
             );
@@ -94,5 +101,14 @@ class UpdateReturnTypeTransformer implements Transformer
         }
 
         return $methods;
+    }
+
+    private function returnType(ReflectionMethod $method): Type
+    {
+        $returnType = $method->frame()->returnType();
+        if (!$returnType->isDefined()) {
+            return new VoidType();
+        }
+        return $returnType;
     }
 }
