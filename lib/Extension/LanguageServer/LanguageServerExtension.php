@@ -12,6 +12,7 @@ use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
+use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -145,8 +146,7 @@ class LanguageServerExtension implements Extension
         $container->register(LanguageServerBuilder::class, function (Container $container) {
             $builder = LanguageServerBuilder::create(
                 new PhpactorDispatcherFactory($container),
-                $this->logger($container),
-                $container->get(EventDispatcherInterface::class)
+                $this->logger($container)
             );
 
             return $builder;
@@ -301,7 +301,10 @@ class LanguageServerExtension implements Extension
             $stack = [];
 
             if ($container->getParameter(self::PARAM_PROFILE)) {
-                $stack[] = new ProfilerMiddleware($this->logger($container), $container->getParameter(self::PARAM_TRACE));
+                $stack[] = new ProfilerMiddleware($this->logger($container));
+            }
+            if ($container->getParameter(self::PARAM_TRACE)) {
+                $stack[] = new TraceMiddleware($this->logger($container));
             }
 
             if ($container->getParameter(self::PARAM_CATCH_ERRORS)) {
