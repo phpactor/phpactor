@@ -66,7 +66,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
                     $parameterBuilder->type($parameterType->short());
 
                     foreach ($parameterType->classNamedTypes() as $classType) {
-                        $useClasses[$classType->name->__toString()] = true;
+                        $useClasses[$classType->name()->__toString()] = true;
                     }
 
                     if ($parameter->default()->isDefined()) {
