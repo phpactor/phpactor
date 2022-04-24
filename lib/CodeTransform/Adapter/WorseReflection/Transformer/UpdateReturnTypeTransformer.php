@@ -40,9 +40,6 @@ class UpdateReturnTypeTransformer implements Transformer
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
             $replacement = $this->returnType($method);
-            if (!$replacement->isDefined()) {
-                $replacement = new VoidType();
-            }
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();
             $notNullReplacement = $replacement->stripNullable();
 
