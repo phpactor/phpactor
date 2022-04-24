@@ -57,13 +57,13 @@ class ArrayType extends Type implements IterableType
         return Trinary::fromBoolean($type instanceof ArrayType);
     }
 
-    protected function map(Closure $mapper): Type
-    {
-        return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
-    }
-
     public function toTypes(): Types
     {
         return new Types([$this->valueType]);
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
     }
 }

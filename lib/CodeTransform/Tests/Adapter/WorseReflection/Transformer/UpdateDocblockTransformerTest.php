@@ -345,7 +345,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
-        yield 'imports classe' => [
+        yield 'imports classes' => [
             <<<'EOT'
                 <?php
 
@@ -373,6 +373,44 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     public function baz(): array
                     {
                         return (new NsTest())->bazes();
+                    }
+                }
+                EOT
+        ];
+
+        yield 'inherited type' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Foobag {
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array {}
+                }
+
+                class Foobar extends Foobag {
+                    public function baz(): array
+                    {
+                        return [new Baz()];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                abstract class Foobag {
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array {}
+                }
+
+                class Foobar extends Foobag {
+                    public function baz(): array
+                    {
+                        return [new Baz()];
                     }
                 }
                 EOT

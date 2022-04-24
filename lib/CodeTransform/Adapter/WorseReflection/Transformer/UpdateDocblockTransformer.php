@@ -108,6 +108,11 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
+                // do not try it for overriden methods
+                if ($method->original()->declaringClass()->name() != $class->name()) {
+                    continue;
+                }
+
                 // it's void
                 if (false === $actualReturnType->isDefined()) {
                     continue;
@@ -130,9 +135,7 @@ class UpdateDocblockTransformer implements Transformer
 
                 // the docblock matches the generalized return type
                 // it's OK
-                if (
-                    $claimedReturnType->equals($actualReturnType)
-                ) {
+                if ($claimedReturnType->equals($actualReturnType)) {
                     continue;
                 }
         
