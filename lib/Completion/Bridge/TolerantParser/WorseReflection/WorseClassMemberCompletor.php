@@ -102,7 +102,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        $type = $type->classTypes()->firstOrNull();
+        $type = $type->classNamedTypes()->firstOrNull();
 
         if ($static) {
             yield Suggestion::createWithOptions('class', [

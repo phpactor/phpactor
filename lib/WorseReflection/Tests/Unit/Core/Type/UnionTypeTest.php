@@ -245,6 +245,17 @@ class UnionTypeTest extends TestCase
         );
     }
 
+    public function testToPhpString(): void
+    {
+        self::assertEquals(
+            'Foobar|array',
+            TypeFactory::union(
+                TypeFactory::class('Foobar'),
+                TypeFactory::array('string')
+            )->toPhpString()
+        );
+    }
+
     /**
      * @return Type[]
      */

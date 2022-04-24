@@ -339,7 +339,7 @@ class ReferencesHandler extends AbstractHandler
 
     private function defaultReplacement(NodeContext $symbolContext): string
     {
-        $type = $symbolContext->type()->classTypes()->firstOrNull();
+        $type = $symbolContext->type()->classNamedTypes()->firstOrNull();
         if ($type instanceof ClassType) {
             return $type->name()->__toString();
         }

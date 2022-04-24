@@ -116,6 +116,33 @@ This refactoring will add docblocks:
 
 .. _refactoring_complete_constructor:
 
+Add Missing Return Types
+------------------------
+
+This refactoring add missing return types.
+
+.. tabs::
+
+   .. tab:: CLI
+
+       .. code-block::
+
+           $ phpactor class:transform path/to/Class.php --transform=add_missing_return_types
+
+   .. tab:: VIM Context Menu
+
+       *Class context menu > Transform > Add missing return types*.
+
+   .. tab:: VIM Plugin
+
+       .. code-block::
+
+           :PhpactorTransform
+
+   .. tab:: Language Server
+
+       Request code actions when there is a candidate
+
 Complete Constructor
 --------------------
 

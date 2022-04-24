@@ -45,8 +45,8 @@ class UpdateDocblockTransformer implements Transformer
             $replacement = $method->frame()->returnType();
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();
 
-            foreach ($replacement->classTypes() as $classType) {
-                $builder->use($classType->__toString());
+            foreach ($replacement->classNamedTypes() as $classType) {
+                $builder->use($classType->toPhpString());
             }
 
             if (!$method->docblock()->isDefined()) {

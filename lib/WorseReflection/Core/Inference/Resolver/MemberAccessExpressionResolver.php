@@ -73,7 +73,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
-        foreach ($classType->classTypes() as $classType) {
+        foreach ($classType->classNamedTypes() as $classType) {
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($classType->name());
             } catch (NotFound $e) {

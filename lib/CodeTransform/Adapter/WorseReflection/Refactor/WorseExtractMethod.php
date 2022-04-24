@@ -229,7 +229,7 @@ class WorseExtractMethod implements ExtractMethod
             throw new TransformException('Cannot extract method, not in class scope');
         }
 
-        $type = $thisVariable->last()->type()->classTypes()->firstOrNull();
+        $type = $thisVariable->last()->type()->classNamedTypes()->firstOrNull();
 
         if (!$type) {
             throw new TransformException('Cannot extract method, not in class scope');
@@ -267,7 +267,7 @@ class WorseExtractMethod implements ExtractMethod
             $variableType = $freeVariable->type();
             if ($variableType->isDefined()) {
                 $parameterBuilder->type($variableType->short());
-                foreach ($variableType->classTypes() as $classType) {
+                foreach ($variableType->classNamedTypes() as $classType) {
                     $builder->use($classType->toPhpString());
                 }
             }
@@ -346,7 +346,7 @@ class WorseExtractMethod implements ExtractMethod
             $type = $variable->type();
             if ($type->isDefined()) {
                 $methodBuilder->returnType($type->short());
-                foreach ($type->classTypes() as $classType) {
+                foreach ($type->classNamedTypes() as $classType) {
                     $methodBuilder->end()->end()->use($classType->name()->full());
                 }
             }
@@ -427,7 +427,7 @@ class WorseExtractMethod implements ExtractMethod
             $methodBuilder->returnType($expressionType->short());
         }
 
-        foreach ($expressionType->classTypes() as $classType) {
+        foreach ($expressionType->classNamedTypes() as $classType) {
             $methodBuilder->end()->end()->use($classType->name()->full());
         }
 

@@ -178,7 +178,8 @@ abstract class AbstractMethodUpdater
 
         $returnType = (string) $returnType;
 
-        if (!$methodDeclaration->returnTypeList) {
+        if (!$methodDeclaration->returnTypeList && trim($returnType)) {
+            $edits->after($methodDeclaration->closeParen, ': ' . $returnType);
             return;
         }
 

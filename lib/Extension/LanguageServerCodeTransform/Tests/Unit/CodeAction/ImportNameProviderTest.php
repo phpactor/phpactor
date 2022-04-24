@@ -137,7 +137,7 @@ class ImportNameProviderTest extends IntegrationTestCase
 
                 class Test
                 {
-                    public function testBar()
+                    public function testBar(): Bar
                     {
                         new Bar();
                     }
