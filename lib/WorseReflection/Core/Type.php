@@ -6,6 +6,7 @@ use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -48,6 +49,11 @@ abstract class Type
         return $this instanceof ClassType;
     }
 
+    public function isClosure(): bool
+    {
+        return $this instanceof ClosureType;
+    }
+
     public function isArray(): bool
     {
         return $this instanceof ArrayType;
@@ -55,7 +61,7 @@ abstract class Type
 
     public function isNullable(): bool
     {
-        return $this instanceof NullableType;
+        return false;
     }
 
     public function addToUnion(Type $type): UnionType
@@ -99,7 +105,8 @@ abstract class Type
      */
     public function toLocalType(ReflectionScope $scope): self
     {
-        return $this->map(fn (Type $type) => $scope->resolveLocalType($type));
+        // TODO: do not modify type by reference
+        return $this->map(fn (Type $type) => $scope->resolveLocalType(clone $type));
     }
 
     public static function fromTypes(Type ...$types): Type
@@ -132,8 +139,18 @@ abstract class Type
         return Trinary::fromBoolean($type->equals($this));
     }
 
+    public function isNull(): bool
+    {
+        return false;
+    }
+
+    public function stripNullable(): Type
+    {
+        return $this;
+    }
+
     /**
-     * @param Closure(Type): self $mapper
+     * @param Closure(Type): Type $mapper
      */
     protected function map(Closure $mapper): Type
     {

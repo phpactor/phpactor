@@ -38,4 +38,19 @@ class NullableType extends Type
     {
         return new Types([new NullType(), $this->type]);
     }
+
+    public function isNull(): bool
+    {
+        return true;
+    }
+
+    public function isNullable(): bool
+    {
+        return true;
+    }
+
+    public function stripNullable(): Type
+    {
+        return $this->type;
+    }
 }

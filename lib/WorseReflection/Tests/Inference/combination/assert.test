@@ -5,7 +5,7 @@ function stringOrNull(): null|string {}
 function fooOrNull(): Foo|null {}
 
 $foo = stringOrNull();
-wrAssertType('null|string', $foo); 
+wrAssertType('?string', $foo); 
 
 // empty: 0|0|""|"0"|array{}|false|null
 //

@@ -18,6 +18,10 @@ class UpdateDocblockTransformerTest extends WorseTestCase
     public function testTransform(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
+        $this->workspace()->put(
+            'Example.php',
+            '<?php namespace Namespaced; class NsTest { /** @return Baz[] */public function bazes(): array {}} class Baz{}'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = $transformer->transform($source)->apply($source);
@@ -179,6 +183,44 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'permit wider return types in union' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Foo {}
+                class ConcreteFoo extends Foo {}
+                class Baz extends Foo {}
+
+                class Foobar {
+                    public function baz(): Foo
+                    {
+                        if ($bar) {
+                            return new Baz();
+                        }
+                        return new ConcreteFoo();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                abstract class Foo {}
+                class ConcreteFoo extends Foo {}
+                class Baz extends Foo {}
+
+                class Foobar {
+                    public function baz(): Foo
+                    {
+                        if ($bar) {
+                            return new Baz();
+                        }
+                        return new ConcreteFoo();
+                    }
+                }
+                EOT
+        ];
+
         yield 'but adds generic types' => [
             <<<'EOT'
                 <?php
@@ -270,6 +312,105 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     public function baz(): array
                     {
                         return array_map(fn () => null, []);
+                    }
+                }
+                EOT
+        ];
+
+        yield 'adds docblock for closure' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz(): Closure
+                    {
+                        return function (string $foo): int {};
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @return Closure(string): int
+                     */
+                    public function baz(): Closure
+                    {
+                        return function (string $foo): int {};
+                    }
+                }
+                EOT
+        ];
+
+        yield 'imports classes' => [
+            <<<'EOT'
+                <?php
+
+                use Namespaced\NsTest;
+
+                class Foobar {
+                    public function baz(): array
+                    {
+                        return (new NsTest())->bazes();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Namespaced\Baz;
+                use Namespaced\NsTest;
+
+                class Foobar {
+
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array
+                    {
+                        return (new NsTest())->bazes();
+                    }
+                }
+                EOT
+        ];
+
+        yield 'inherited type' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Foobag {
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array {}
+                }
+
+                class Foobar extends Foobag {
+                    public function baz(): array
+                    {
+                        return [new Baz()];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                abstract class Foobag {
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array {}
+                }
+
+                class Foobar extends Foobag {
+                    public function baz(): array
+                    {
+                        return [new Baz()];
                     }
                 }
                 EOT

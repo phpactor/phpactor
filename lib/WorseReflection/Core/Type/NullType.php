@@ -21,4 +21,9 @@ final class NullType extends PrimitiveType
     {
         return Trinary::fromBoolean($type instanceof MixedType || $type instanceof NullType);
     }
+
+    public function isNull(): bool
+    {
+        return true;
+    }
 }

@@ -2,12 +2,14 @@
 
 wrAssertType(
     'string[]',
-    array_map(fn () => 'hello', [10, 20, 30])
+    array_map(fn () => 'hello', [10, 20, 30]),
+    'arrow',
 );
 
 wrAssertType(
     'string[]',
     array_map(function (): string {
         return 'hello';
-    }, [10, 20, 30])
+    }, [10, 20, 30]),
+    'anonymous'
 );

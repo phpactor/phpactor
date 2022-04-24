@@ -42,13 +42,18 @@ class UpdateDocblockTransformer implements Transformer
         foreach ($methods as $method) {
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
-            $replacement = $method->frame()->returnType()->toLocalType($method->scope())->generalize();
+            $replacement = $method->frame()->returnType();
+            $localReplacement = $replacement->toLocalType($method->scope())->generalize();
+
+            foreach ($replacement->classTypes() as $classType) {
+                $builder->use($classType->__toString());
+            }
 
             if (!$method->docblock()->isDefined()) {
                 $methodBuilder->docblock("\n\n".$this->format->indent(
                     <<<EOT
                         /**
-                         * @return {$replacement->__toString()}
+                         * @return {$localReplacement->__toString()}
                          */
                         EOT
                 ,
@@ -103,26 +108,34 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
+                // do not try it for overriden methods
+                if ($method->original()->declaringClass()->name() != $class->name()) {
+                    continue;
+                }
+
                 // it's void
                 if (false === $actualReturnType->isDefined()) {
                     continue;
                 }
 
-                if (!$claimedReturnType->isClass() && !$claimedReturnType->isArray()) {
+                if (
+                    !$claimedReturnType->isClass() && !$claimedReturnType->isArray() && !$claimedReturnType->isClosure()
+                ) {
                     continue;
                 }
 
-                if ($actualReturnType->instanceof($claimedReturnType)->isTrue()) {
-                    if (!$actualReturnType instanceof GenericClassType) {
-                        continue;
-                    }
+                if ($actualReturnType->isClosure()) {
+                    $methods[] = $method;
+                    continue;
+                }
+
+                if ($claimedReturnType->isClass() && !$actualReturnType instanceof GenericClassType) {
+                    continue;
                 }
 
                 // the docblock matches the generalized return type
                 // it's OK
-                if (
-                    $claimedReturnType->equals($actualReturnType)
-                ) {
+                if ($claimedReturnType->equals($actualReturnType)) {
                     continue;
                 }
         

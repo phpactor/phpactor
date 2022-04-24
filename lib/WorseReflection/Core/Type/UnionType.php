@@ -18,7 +18,21 @@ final class UnionType extends Type
     public function __construct(Type ...$types)
     {
         $unique = [];
+        $toMerge = [];
+        $hasNull = false;
         foreach ($types as $type) {
+            if ($type instanceof UnionType) {
+                foreach ($type->types as $utype) {
+                    $unique[$utype->__toString()] = $utype;
+                }
+                continue;
+            }
+            if ($type instanceof NullableType) {
+                $type = $type->type;
+                $null = TypeFactory::null();
+                $unique[$null->__toString()] = $null;
+            }
+
             $unique[$type->__toString()] = $type;
         }
         $this->types = array_values($unique);
@@ -67,6 +81,10 @@ final class UnionType extends Type
             }
 
             return $type;
+        }
+
+        if (count($this->types) === 2 && $this->isNullable()) {
+            return TypeFactory::nullable($this->stripNullable());
         }
 
         return $this;
@@ -158,6 +176,30 @@ final class UnionType extends Type
     public function add(Type $type): UnionType
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
+    }
+
+    public function isNull(): bool
+    {
+        $reduced = $this->reduce();
+        return $reduced instanceof NullType;
+    }
+
+    public function isNullable(): bool
+    {
+        foreach ($this->types as $type) {
+            if ($type->isNull()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function stripNullable(): Type
+    {
+        return (new self(...array_filter($this->types, function (Type $type) {
+            return !$type instanceof NullType;
+        })))->reduce();
     }
 
     protected function map(Closure $mapper): Type
