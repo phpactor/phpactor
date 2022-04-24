@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
-use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -228,8 +227,7 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
         return new UpdateReturnTypeTransformer(
             $reflector,
             $this->updater(),
-            $this->builderFactory($reflector),
-            new TextFormat()
+            $this->builderFactory($reflector)
         );
     }
 }

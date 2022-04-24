@@ -409,8 +409,7 @@ class CodeTransformExtension implements Extension
             return new UpdateReturnTypeTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
-                $container->get(BuilderFactory::class),
-                $container->get(TextFormat::class),
+                $container->get(BuilderFactory::class)
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_return_types' ]]);
 

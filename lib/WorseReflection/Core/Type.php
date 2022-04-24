@@ -149,16 +149,16 @@ abstract class Type
         return $this;
     }
 
+    public function reduce(): Type
+    {
+        return $this;
+    }
+
     /**
      * @param Closure(Type): Type $mapper
      */
     protected function map(Closure $mapper): Type
     {
         return $mapper($this);
-    }
-
-    public function reduce(): Type
-    {
-        return $this;
     }
 }
