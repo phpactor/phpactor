@@ -44,6 +44,7 @@ use Phpactor\Indexer\Model\Indexer;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webmozart\PathUtil\Path;
 
@@ -220,7 +221,7 @@ class IndexerExtension implements Extension
         $container->register(WorseRecordReferenceEnhancer::class, function (Container $container) {
             return new WorseRecordReferenceEnhancer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             );
         });
     }
@@ -318,7 +319,7 @@ class IndexerExtension implements Extension
             }
 
             return new PatternMatchingWatcher(
-                new FallbackWatcher($watchers, $container->get(LoggingExtension::SERVICE_LOGGER)),
+                new FallbackWatcher($watchers, $this->logger($container)),
                 $container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS),
                 $container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS)
             );
@@ -342,7 +343,7 @@ class IndexerExtension implements Extension
         $container->register(WatchmanWatcher::class, function (Container $container) {
             return new BufferedWatcher(new WatchmanWatcher(
                 $container->get(WatcherConfig::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             ), $container->getParameter(self::PARAM_INDEXER_BUFFER_TIME));
         }, [
             self::TAG_WATCHER => [
@@ -353,7 +354,7 @@ class IndexerExtension implements Extension
         $container->register(InotifyWatcher::class, function (Container $container) {
             return new BufferedWatcher(new InotifyWatcher(
                 $container->get(WatcherConfig::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             ), $container->getParameter(self::PARAM_INDEXER_BUFFER_TIME));
         }, [
             self::TAG_WATCHER => [
@@ -364,7 +365,7 @@ class IndexerExtension implements Extension
         $container->register(FsWatchWatcher::class, function (Container $container) {
             return new FsWatchWatcher(
                 $container->get(WatcherConfig::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             );
         }, [
             self::TAG_WATCHER => [
@@ -375,7 +376,7 @@ class IndexerExtension implements Extension
         $container->register(FindWatcher::class, function (Container $container) {
             return new FindWatcher(
                 $container->get(WatcherConfig::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             );
         }, [
             self::TAG_WATCHER => [
@@ -386,7 +387,7 @@ class IndexerExtension implements Extension
         $container->register(PhpPollWatcher::class, function (Container $container) {
             return new PhpPollWatcher(
                 $container->get(WatcherConfig::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             );
         }, [
             self::TAG_WATCHER => [
@@ -400,5 +401,10 @@ class IndexerExtension implements Extension
         return $container->get(
             FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
         )->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+    }
+
+    private function logger(Container $container): LoggerInterface
+    {
+        return LoggingExtension::channelLogger($container, 'indexer');
     }
 }

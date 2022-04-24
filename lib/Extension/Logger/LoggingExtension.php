@@ -15,6 +15,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class LoggingExtension implements Extension
@@ -45,6 +46,11 @@ class LoggingExtension implements Extension
     {
         $this->registerInfrastructure($container);
         $this->registerFormatters($container);
+    }
+
+    public static function channelLogger(Container $container, string $name): LoggerInterface
+    {
+        return (new LoggerFactory($container->get(self::SERVICE_LOGGER)))->get($name);
     }
 
     private function registerInfrastructure(ContainerBuilder $container): void

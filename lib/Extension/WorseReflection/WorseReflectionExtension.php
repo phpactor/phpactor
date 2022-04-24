@@ -91,7 +91,7 @@ class WorseReflectionExtension implements Extension
             }
         
             $builder->withLogger(
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'wr')
             );
         
             return $builder->build();

@@ -35,7 +35,7 @@ class ReferenceFinderExtension implements Extension
                 $locators[] = $container->get($serviceId);
             }
 
-            return new ChainDefinitionLocationProvider($locators, $container->get(LoggingExtension::SERVICE_LOGGER));
+            return new ChainDefinitionLocationProvider($locators, LoggingExtension::channelLogger($container, 'LSP-REF'));
         });
 
         $container->register(self::SERVICE_TYPE_LOCATOR, function (Container $container) {
@@ -44,7 +44,7 @@ class ReferenceFinderExtension implements Extension
                 $locators[] = $container->get($serviceId);
             }
 
-            return new ChainTypeLocator($locators, $container->get(LoggingExtension::SERVICE_LOGGER));
+            return new ChainTypeLocator($locators, LoggingExtension::channelLogger($container, 'LSP-REF'));
         });
 
         $container->register(self::SERVICE_IMPLEMENTATION_FINDER, function (Container $container) {

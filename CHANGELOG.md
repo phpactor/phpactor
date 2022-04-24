@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [cb] Fix rendering of array values in generated code
   - [wr] Fix arrow function completion #1303
   - [dl] Fixed off-by-one error with plain text goto definition
   - [fw] Ensure inotify is stopped before shutting down

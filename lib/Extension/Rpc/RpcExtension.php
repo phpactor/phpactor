@@ -40,7 +40,7 @@ class RpcExtension implements Extension
                 new ExceptionCatchingHandler(
                     new RequestHandler($container->get('rpc.handler_registry'))
                 ),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'rpc'),
             );
         });
 

@@ -15,50 +15,62 @@ class ProfilerMiddleware implements Middleware
 {
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger)
+    private bool $trace;
+
+    public function __construct(LoggerInterface $logger, bool $trace = false)
     {
         $this->logger = $logger;
+        $this->trace = $trace;
     }
 
     public function process(Message $request, RequestHandler $handler): Promise
     {
         return call(function () use ($request, $handler) {
+            $context = [];
+            if ($this->trace) {
+                $context['trace'] = true;
+                $context['body'] = json_encode($request);
+            }
             if ($request instanceof NotificationMessage) {
-                $this->info(sprintf('       PROF >> notification [%s]', $request->method));
+                $this->info(sprintf('PROF        >> notification [%s]', $request->method), $context);
             }
 
             if ($request instanceof RequestMessage) {
                 $this->info(sprintf(
-                    '       PROF >> request #%d [%s]',
+                    'PROF        >> request #%d [%s]',
                     $request->id,
                     $request->method,
-                ));
+                ), $context);
             }
 
             $start = microtime(true);
             $response = yield $handler->handle($request);
             $elapsed = microtime(true) - $start;
 
+            if ($this->trace) {
+                $context['trace'] = true;
+                $context['body'] = json_encode($response);
+            }
+
             if ($request instanceof NotificationMessage) {
-                $this->info(sprintf('%-6s PROF << notification [%s]', number_format($elapsed, 4), $request->method));
+                $this->info(sprintf('PROF %-6s << notification [%s]', number_format($elapsed, 4), $request->method), $context);
             }
 
             if ($request instanceof RequestMessage) {
                 $this->info(sprintf(
-                    '%-6s PROF << request #%d [%s]',
+                    'PROF %-6s << request #%d [%s]',
                     number_format($elapsed, 4),
                     $request->id,
                     $request->method,
-                ));
+                ), $context);
             }
 
             return $response;
         });
     }
 
-    private function info(string $format, string ...$args): void
+    private function info(string $message, array $context): void
     {
-        $message = sprintf($format, ...$args);
-        $this->logger->info(sprintf('[%-15s] %s', microtime(true), $message));
+        $this->logger->info($message, $context);
     }
 }

@@ -31,6 +31,22 @@ class DefaultValueTest extends TestCase
             'It returns lowercase null' => [
                 null,
                 'null',
+            ],
+            'It returns new array syntax' => [
+                [],
+                '[]',
+            ],
+            'list 1' => [
+                ['foobar'],
+                '["foobar"]',
+            ],
+            'list 2' => [
+                ['foobar', 'bazbar'],
+                '["foobar", "bazbar"]',
+            ],
+            'array syntax 2' => [
+                ['assoc' => 'foobar'],
+                '["assoc" => "foobar"]',
             ]
         ];
     }

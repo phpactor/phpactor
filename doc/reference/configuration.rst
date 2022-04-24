@@ -1178,6 +1178,21 @@ Logs timing information for incoming LSP requests
 **Default**: ``false``
 
 
+.. _param_language_server.trace:
+
+
+``language_server.trace``
+"""""""""""""""""""""""""
+
+
+
+
+Log incoming and outgoing messages (needs log formatter to be set to ``json``)
+
+
+**Default**: ``false``
+
+
 .. _LanguageServerCompletionExtension:
 
 

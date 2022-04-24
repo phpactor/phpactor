@@ -73,7 +73,7 @@ class CodeTransformExtraExtension implements Extension
             return new ClassInflect(
                 $container->get('application.helper.class_file_normalizer'),
                 $container->get('code_transform.from_existing_generators'),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'CT'),
             );
         });
     }

@@ -12,6 +12,7 @@ use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
+use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -57,6 +58,7 @@ use Phpactor\LanguageServer\Service\DiagnosticsService;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webmozart\Assert\Assert;
 
@@ -84,6 +86,8 @@ class LanguageServerExtension implements Extension
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
     public const PARAM_PROFILE = 'language_server.profile';
+    public const PARAM_TRACE = 'language_server.trace';
+    public const LOG_CHANNEL = 'LSP';
     
     public function configure(Resolver $schema): void
     {
@@ -99,8 +103,10 @@ class LanguageServerExtension implements Extension
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
+            self::PARAM_TRACE => false,
         ]);
         $schema->setDescriptions([
+            self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
             self::PARAM_PROFILE => 'Logs timing information for incoming LSP requests',
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
             self::PARAM_SESSION_PARAMETERS => 'Phpactor parameters (config) that apply only to the language server session',
@@ -140,8 +146,7 @@ class LanguageServerExtension implements Extension
         $container->register(LanguageServerBuilder::class, function (Container $container) {
             $builder = LanguageServerBuilder::create(
                 new PhpactorDispatcherFactory($container),
-                $container->get(LoggingExtension::SERVICE_LOGGER),
-                $container->get(EventDispatcherInterface::class)
+                $this->logger($container)
             );
 
             return $builder;
@@ -150,7 +155,7 @@ class LanguageServerExtension implements Extension
         $container->register(ClientLogger::class, function (Container $container) {
             return new ClientLogger(
                 $container->get(ClientApi::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER),
+                $this->logger($container),
             );
         });
     }
@@ -169,9 +174,7 @@ class LanguageServerExtension implements Extension
     private function registerSession(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_SESSION_WORKSPACE, function (Container $container) {
-            return new Workspace(
-                $container->get(LoggingExtension::SERVICE_LOGGER)
-            );
+            return new Workspace($this->logger($container));
         });
 
         $container->register(WorkspaceListener::class, function (Container $container) {
@@ -298,11 +301,14 @@ class LanguageServerExtension implements Extension
             $stack = [];
 
             if ($container->getParameter(self::PARAM_PROFILE)) {
-                $stack[] = new ProfilerMiddleware($container->get(LoggingExtension::SERVICE_LOGGER));
+                $stack[] = new ProfilerMiddleware($this->logger($container));
+            }
+            if ($container->getParameter(self::PARAM_TRACE)) {
+                $stack[] = new TraceMiddleware($this->logger($container));
             }
 
             if ($container->getParameter(self::PARAM_CATCH_ERRORS)) {
-                $stack[] = new ErrorHandlingMiddleware($container->get(LoggingExtension::SERVICE_LOGGER));
+                $stack[] = new ErrorHandlingMiddleware($this->logger($container));
             }
 
             $stack[] = new InitializeMiddleware(
@@ -337,7 +343,7 @@ class LanguageServerExtension implements Extension
             return new HandlerMethodRunner(
                 $container->get(Handlers::class),
                 $container->get(ArgumentResolver::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                $this->logger($container)
             );
         });
 
@@ -425,7 +431,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new AggregateDiagnosticsProvider(
-                $container->get(LoggingExtension::SERVICE_LOGGER),
+                $this->logger($container, 'LSPDIAG'),
                 ...array_values($providers)
             );
         });
@@ -461,5 +467,10 @@ class LanguageServerExtension implements Extension
             }
             return true;
         });
+    }
+
+    private function logger(Container $container, string $name = self::LOG_CHANNEL): LoggerInterface
+    {
+        return LoggingExtension::channelLogger($container, $name);
     }
 }

@@ -46,7 +46,7 @@ class LanguageServerPsalmExtension implements Extension
             return new PsalmProcess(
                 $root,
                 new PsalmConfig($binPath),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'PSALM')
             );
         });
     }

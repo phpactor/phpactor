@@ -112,22 +112,10 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
-                if (
-                    $actualReturnType->instanceof($claimedReturnType)->isTrue()
-                ) {
+                if ($actualReturnType->instanceof($claimedReturnType)->isTrue()) {
                     if (!$actualReturnType instanceof GenericClassType) {
                         continue;
                     }
-                }
-
-                // docblock is exactly the same as native return type
-                // fix it!
-                if (
-                    $docblockType->isDefined() &&
-                    $docblockType->equals($phpReturnType)
-                ) {
-                    $methods[] = $method;
-                    continue;
                 }
 
                 // the docblock matches the generalized return type
