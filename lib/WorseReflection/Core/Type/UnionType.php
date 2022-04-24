@@ -45,7 +45,7 @@ final class UnionType extends Type
 
     public function toPhpString(): string
     {
-        return $this->__toString();
+        return implode('|', array_map(fn (Type $type) => $type->toPhpString(), $this->types));
     }
 
     public function accepts(Type $type): Trinary
