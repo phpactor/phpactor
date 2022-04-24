@@ -46,7 +46,7 @@ class UpdateReturnTypeTransformer implements Transformer
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();
             $notNullReplacement = $replacement->stripNullable();
 
-            foreach ($replacement->classTypes() as $classType) {
+            foreach ($replacement->classNamedTypes() as $classType) {
                 $builder->use($classType->name());
             }
 

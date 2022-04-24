@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
@@ -22,12 +23,12 @@ abstract class Type
     abstract public function accepts(Type $type): Trinary;
 
     /**
-     * @return Types<ClassType>
+     * @return Types<Type&ClassNamedType>
      */
-    public function classTypes(): Types
+    public function classNamedTypes(): Types
     {
         // @phpstan-ignore-next-line no support for conditional types https://github.com/phpstan/phpstan/issues/3853
-        return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassType);
+        return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassNamedType);
     }
 
     /**

@@ -81,7 +81,7 @@ class WorseReflectionTypeLocator implements TypeLocator
 
     private function resolveClassName(Type $type): ClassName
     {
-        foreach ($type->classTypes() as $type) {
+        foreach ($type->classNamedTypes() as $type) {
             return $type->name();
         }
 
