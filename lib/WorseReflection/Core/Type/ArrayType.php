@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 class ArrayType extends Type implements IterableType
 {
@@ -59,5 +60,10 @@ class ArrayType extends Type implements IterableType
     protected function map(Closure $mapper): Type
     {
         return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
+    }
+
+    public function toTypes(): Types
+    {
+        return new Types([$this->valueType]);
     }
 }

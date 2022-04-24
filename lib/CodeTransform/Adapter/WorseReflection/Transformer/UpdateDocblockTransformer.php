@@ -42,16 +42,18 @@ class UpdateDocblockTransformer implements Transformer
         foreach ($methods as $method) {
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
-            $replacement = $method->frame()->returnType()->toLocalType($method->scope())->generalize();
+            $replacement = $method->frame()->returnType();
+            $localReplacement = $replacement->toLocalType($method->scope())->generalize();
 
             foreach ($replacement->classTypes() as $classType) {
+                $builder->use($classType->__toString());
             }
 
             if (!$method->docblock()->isDefined()) {
                 $methodBuilder->docblock("\n\n".$this->format->indent(
                     <<<EOT
                         /**
-                         * @return {$replacement->__toString()}
+                         * @return {$localReplacement->__toString()}
                          */
                         EOT
                 ,

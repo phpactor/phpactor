@@ -105,7 +105,8 @@ abstract class Type
      */
     public function toLocalType(ReflectionScope $scope): self
     {
-        return $this->map(fn (Type $type) => $scope->resolveLocalType($type));
+        // TODO: do not modify type by reference
+        return $this->map(fn (Type $type) => $scope->resolveLocalType(clone $type));
     }
 
     public static function fromTypes(Type ...$types): Type
