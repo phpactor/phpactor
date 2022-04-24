@@ -44,6 +44,9 @@ class UpdateDocblockTransformer implements Transformer
             $methodBuilder = $classBuilder->method($method->name());
             $replacement = $method->frame()->returnType()->toLocalType($method->scope())->generalize();
 
+            foreach ($replacement->classTypes() as $classType) {
+            }
+
             if (!$method->docblock()->isDefined()) {
                 $methodBuilder->docblock("\n\n".$this->format->indent(
                     <<<EOT

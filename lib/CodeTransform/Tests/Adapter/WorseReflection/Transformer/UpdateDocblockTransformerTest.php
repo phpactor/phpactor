@@ -18,6 +18,10 @@ class UpdateDocblockTransformerTest extends WorseTestCase
     public function testTransform(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
+        $this->workspace()->put(
+            'Example.php',
+            '<?php namespace Namespaced; class NsTest { /** @return Baz[] */public function bazes(): array {}} class Baz{}'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = $transformer->transform($source)->apply($source);
@@ -336,6 +340,39 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     public function baz(): Closure
                     {
                         return function (string $foo): int {};
+                    }
+                }
+                EOT
+        ];
+
+        yield 'imports classe' => [
+            <<<'EOT'
+                <?php
+
+                use Namespaced\NsTest;
+
+                class Foobar {
+                    public function baz(): array
+                    {
+                        return (new NsTest())->bazes();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Namespaced\Baz;
+                use Namespaced\NsTest;
+
+                class Foobar {
+
+                    /**
+                     * @return Baz[]
+                     */
+                    public function baz(): array
+                    {
+                        return (new NsTest())->bazes();
                     }
                 }
                 EOT
