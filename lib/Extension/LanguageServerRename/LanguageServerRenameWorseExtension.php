@@ -93,7 +93,7 @@ class LanguageServerRenameWorseExtension implements Extension
             );
             return new LoggingFileRenamer(
                 $renamer,
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'LSP-RENAME')
             );
         });
     }

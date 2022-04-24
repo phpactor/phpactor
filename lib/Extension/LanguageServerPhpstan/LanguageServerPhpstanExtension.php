@@ -49,7 +49,7 @@ class LanguageServerPhpstanExtension implements Extension
             return new PhpstanProcess(
                 $root,
                 new PhpstanConfig($binPath, $container->getParameter(self::PARAM_LEVEL)),
-                $container->get(LoggingExtension::SERVICE_LOGGER)
+                LoggingExtension::channelLogger($container, 'phpstan'),
             );
         });
     }

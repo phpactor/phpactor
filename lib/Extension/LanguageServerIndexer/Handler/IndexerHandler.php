@@ -143,6 +143,10 @@ class IndexerHandler implements Handler, ServiceProvider
                 try {
                     $cancel->throwIfRequested();
                 } catch (CancelledException $cancelled) {
+                    $previous = $cancelled->getPrevious();
+                    if ($previous) {
+                        $this->logger->warning(sprintf('Watcher process cancelled: %s', $previous->getMessage()));
+                    }
                     $this->logger->info('Watcher process cancelled');
                     $process->stop();
                     return;
@@ -160,6 +164,7 @@ class IndexerHandler implements Handler, ServiceProvider
                 }
 
                 try {
+                    $this->logger->debug(sprintf('Indexing %s', $file->path()));
                     $this->indexer->index(TextDocumentBuilder::fromUri($file->path())->build());
                 } catch (TextDocumentNotFound $error) {
                     $this->logger->warning(sprintf(

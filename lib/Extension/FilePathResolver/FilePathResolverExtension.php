@@ -33,6 +33,7 @@ class FilePathResolverExtension implements Extension
     const PARAM_ENABLE_CACHE = 'file_path_resolver.enable_cache';
     const PARAM_ENABLE_LOGGING = 'file_path_resolver.enable_logging';
     const PARAM_APPLICATION_ROOT = 'file_path_resolver.application_root';
+    const LOG_CHANNEL = 'FPR';
 
     
     public function configure(Resolver $schema): void
@@ -85,7 +86,7 @@ class FilePathResolverExtension implements Extension
             if ($container->getParameter(self::PARAM_ENABLE_LOGGING)) {
                 $resolver = new LoggingPathResolver(
                     $resolver,
-                    $container->get(LoggingExtension::SERVICE_LOGGER),
+                    LoggingExtension::channelLogger($container, self::LOG_CHANNEL),
                     LogLevel::DEBUG
                 );
             }

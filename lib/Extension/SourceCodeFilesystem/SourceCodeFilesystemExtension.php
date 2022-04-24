@@ -50,7 +50,7 @@ class SourceCodeFilesystemExtension implements Extension
                 try {
                     $filesystems[$attributes['name']] = $container->get($serviceId);
                 } catch (NotSupported $exception) {
-                    $container->get(LoggingExtension::SERVICE_LOGGER)->warning(sprintf(
+                    LoggingExtension::channelLogger($container, 'scf')->warning(sprintf(
                         'Filesystem "%s" not supported: "%s"',
                         $attributes['name'],
                         $exception->getMessage()

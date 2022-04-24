@@ -68,7 +68,7 @@ class LanguageServerIndexerExtension implements Extension
                 $container->get(Indexer::class),
                 $container->get(Watcher::class),
                 $container->get(ClientApi::class),
-                $container->get(LoggingExtension::SERVICE_LOGGER),
+                LoggingExtension::channelLogger($container, 'lspindexer'),
                 $container->get(EventDispatcherInterface::class)
             );
         }, [

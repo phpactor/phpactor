@@ -61,7 +61,7 @@ class LanguageServerHoverExtension implements Extension
             $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
 
             $builder = ObjectRendererBuilder::create()
-                ->setLogger($container->get(LoggingExtension::SERVICE_LOGGER))
+                ->setLogger(LoggingExtension::channelLogger($container, 'LSP-HOVER'))
                 ->enableInterfaceCandidates()
                 ->enableAncestoralCandidates()
                 ->configureTwig(function (Environment $env) {

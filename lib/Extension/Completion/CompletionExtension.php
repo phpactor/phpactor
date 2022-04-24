@@ -121,7 +121,7 @@ class CompletionExtension implements Extension
             }
 
             return new ChainSignatureHelper(
-                $container->get(LoggingExtension::SERVICE_LOGGER),
+                LoggingExtension::channelLogger($container, 'CT'),
                 $helpers
             );
         });

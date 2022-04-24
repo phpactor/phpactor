@@ -20,6 +20,7 @@ class ComposerAutoloaderExtension implements Extension
     const PARAM_AUTOLOAD_DEREGISTER = 'composer.autoload_deregister';
     const PARAM_COMPOSER_ENABLE = 'composer.enable';
     const PARAM_CLASS_MAPS_ONLY = 'composer.class_maps_only';
+    const LOG_CHANNEL = 'COMPOSER';
 
     
     public function configure(Resolver $resolver): void
@@ -60,7 +61,7 @@ class ComposerAutoloaderExtension implements Extension
             }, $autoloaderPaths));
 
             if ($container->getParameter(self::PARAM_CLASS_MAPS_ONLY)) {
-                return $this->classMapsOnly($container->get(LoggingExtension::SERVICE_LOGGER), $autoloaderPaths);
+                return $this->classMapsOnly(LoggingExtension::channelLogger($container, self::LOG_CHANNEL), $autoloaderPaths);
             }
 
             $currentAutoloaders = spl_autoload_functions();
@@ -87,7 +88,7 @@ class ComposerAutoloaderExtension implements Extension
 
     private function logAutoloaderNotFound(Container $container, $autoloaderPath): void
     {
-        $container->get(LoggingExtension::SERVICE_LOGGER)->warning(
+        LoggingExtension::channelLogger($container, self::LOG_CHANNEL)->warning(
             sprintf(
                 'Could not find autoloader "%s"',
                 $autoloaderPath
