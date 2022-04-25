@@ -220,6 +220,24 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
             [
             ]
         ];
+
+        yield 'ignores missing return type with mixed' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    /**
+                     * @return mixed
+                     */
+                    public function foo()
+                    {
+                    }
+                }
+                EOT
+            ,
+            [
+            ]
+        ];
     }
 
     private function createTransformer(Reflector $reflector): UpdateReturnTypeTransformer

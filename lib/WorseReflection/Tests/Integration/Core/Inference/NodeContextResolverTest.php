@@ -918,16 +918,6 @@ class NodeContextResolverTest extends IntegrationTestCase
                 , [], ['type' => '"string"', ]
                 ];
 
-        yield 'It returns unknown for ternary expressions with unknown condition values' => [
-                <<<'EOT'
-                    <?php
-
-                    $barfoo ?:<> new \stdClass();
-                    EOT
-                , [], ['type' => '<missing>']
-                ];
-
-
         yield 'It shows the symbol name for a method declartion' => [
                 <<<'EOT'
                     <?php

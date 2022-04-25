@@ -6,9 +6,9 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class TernaryExpressionResolver implements Resolver
 {
@@ -16,22 +16,39 @@ class TernaryExpressionResolver implements Resolver
     {
         assert($node instanceof TernaryExpression);
 
-        // @phpstan-ignore-next-line
+        $condition = $resolver->resolveNode($frame, $node->condition);
+        $context = NodeContextFactory::create('trinary', $node->getStartPosition(), $node->getEndPosition());
+        $left = NodeContext::none();
+        $right = NodeContext::none();
+
+
+        /** @phpstan-ignore-next-line */
         if ($node->ifExpression) {
-            $ifValue = $resolver->resolveNode($frame, $node->ifExpression);
-
-            if (!$ifValue->type() instanceof MissingType) {
-                return $ifValue;
-            }
+            $frame->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
+            $left = $resolver->resolveNode($frame, $node->ifExpression);
+        }
+        
+        /** @phpstan-ignore-next-line */
+        if (!$node->ifExpression) {
+            $left = $condition;
         }
 
-        // if expression was not defined, fallback to condition
-        $conditionValue = $resolver->resolveNode($frame, $node->condition);
-
-        if (!$conditionValue->type() instanceof MissingType) {
-            return $conditionValue;
+        /** @phpstan-ignore-next-line */
+        if ($node->elseExpression) {
+            $frame->applyTypeAssertions($condition->typeAssertions()->negate(), $node->elseExpression->getStartPosition());
+            $right = $resolver->resolveNode($frame, $node->elseExpression);
         }
 
-        return NodeContext::none();
+        $empty = $condition->type()->isEmpty();
+
+        if ($empty->isFalse()) {
+            return $context->withType($left->type());
+        }
+
+        if ($empty->isTrue()) {
+            return $context->withType($right->type());
+        }
+
+        return $context->withType($left->type()->addToUnion($right->type()));
     }
 }

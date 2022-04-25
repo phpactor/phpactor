@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
 class IntLiteralType extends IntType implements Literal, Generalizable
@@ -48,5 +49,17 @@ class IntLiteralType extends IntType implements Literal, Generalizable
         $new = clone $this;
         $new->value = $value;
         return $new;
+    }
+
+    public function accepts(Type $type): Trinary
+    {
+        if ($type instanceof IntLiteralType) {
+            return Trinary::fromBoolean($type->equals($this));
+        }
+        if ($type instanceof IntType) {
+            return Trinary::maybe();
+        }
+
+        return parent::accepts($type);
     }
 }

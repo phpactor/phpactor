@@ -9,7 +9,9 @@ use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
+use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -20,6 +22,16 @@ abstract class Type
 
     abstract public function toPhpString(): string;
 
+    /**
+     * As in a parameter can accept an argument.
+     *
+     * - string         < string
+     * - string|null    < null || string
+     * - "hello"|string < hello || string
+     * - string         < "hello" or any string literal (which narrow the string type)
+     * - "hello"        < does not accept string
+     * - ""             - does not accept string
+     */
     abstract public function accepts(Type $type): Trinary;
 
     /**
@@ -153,6 +165,30 @@ abstract class Type
     public function reduce(): Type
     {
         return $this;
+    }
+
+    public function isTrue(): bool
+    {
+        return false;
+    }
+
+    public function isEmpty(): Trinary
+    {
+        $empty = TypeFactory::unionEmpty()->accepts($this);
+
+        if ($empty->isTrue() || $empty->isFalse()) {
+            return $empty;
+        }
+
+        if ($this instanceof Literal) {
+            return Trinary::false();
+        }
+        return Trinary::maybe();
+    }
+
+    public function isMixed(): bool
+    {
+        return $this instanceof MixedType;
     }
 
     /**

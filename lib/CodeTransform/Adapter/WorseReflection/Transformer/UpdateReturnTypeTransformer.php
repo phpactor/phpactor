@@ -60,10 +60,6 @@ class UpdateReturnTypeTransformer implements Transformer
         $methods = $this->methodsThatNeedFixing($code);
 
         foreach ($methods as $method) {
-            if ($method->name() === '__construct') {
-                continue;
-            }
-
             $returnType = $this->returnType($method);
             $diagnostics[] = new Diagnostic(
                 $method->nameRange(),
@@ -71,7 +67,7 @@ class UpdateReturnTypeTransformer implements Transformer
                     'Missing return type `%s`',
                     $returnType->toLocalType($method->scope())->toPhpString(),
                 ),
-                Diagnostic::WARNING
+                Diagnostic::HINT
             );
         }
 
@@ -87,10 +83,18 @@ class UpdateReturnTypeTransformer implements Transformer
         $methods = [];
         foreach ($this->reflector->reflectClassesIn($code->__toString()) as $class) {
             foreach ($class->methods()->belongingTo($class->name()) as $method) {
+                if ($method->name() === '__construct') {
+                    continue;
+                }
+
                 if ($method->type()->isDefined()) {
                     continue;
                 }
-        
+
+                if ($method->docblock()->returnType()->isMixed()) {
+                    continue;
+                }
+
                 $methods[] = $method;
             }
         }

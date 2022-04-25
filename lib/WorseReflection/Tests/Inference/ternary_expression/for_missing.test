@@ -1,0 +1,3 @@
+<?php
+
+wrAssertType('<missing>|stdClass', $barfoo ?: new \stdClass());

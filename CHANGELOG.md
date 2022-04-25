@@ -25,6 +25,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] improved ternary support
   - [log] Include a channel prefxi in log messages
   - [wr] require `ext-pnctl` (language server would crash otherwise)
   - [wr] handle static properly #967
