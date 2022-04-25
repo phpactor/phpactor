@@ -35,7 +35,11 @@ class JsonSchemaBuilderTest extends TestCase
                         "type": [
                             "string"
                         ],
-                        "default": 1234
+                        "default": 1234,
+                        "enum": [
+                            "one",
+                            "two"
+                        ]
                     },
                     "foo.bar": {
                         "description": null,
@@ -68,6 +72,9 @@ class JsonSchemaBuilderTest extends TestCase
                 ]);
                 $resolver->setDescriptions([
                     'bar.foo' => 'This does something',
+                ]);
+                $resolver->setEnums([
+                    'bar.foo' => ['one', 'two'],
                 ]);
             }
 
