@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use Phpactor\WorseReflection\TypeUtil;
 
 abstract class Type
 {
@@ -157,14 +156,6 @@ abstract class Type
         return $this;
     }
 
-    /**
-     * @param Closure(Type): Type $mapper
-     */
-    protected function map(Closure $mapper): Type
-    {
-        return $mapper($this);
-    }
-
     public function isTrue(): bool
     {
         return false;
@@ -182,5 +173,13 @@ abstract class Type
             return Trinary::false();
         }
         return Trinary::maybe();
+    }
+
+    /**
+     * @param Closure(Type): Type $mapper
+     */
+    protected function map(Closure $mapper): Type
+    {
+        return $mapper($this);
     }
 }

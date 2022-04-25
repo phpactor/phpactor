@@ -276,7 +276,7 @@ class UnionTypeTest extends TestCase
             Trinary::maybe(),
         ];
         yield 'string literal maybe string' => [
-            TypeFactory::union(TypeFactory::stringLiteral("foo")),
+            TypeFactory::union(TypeFactory::stringLiteral('foo')),
             TypeFactory::string(),
             Trinary::maybe(),
         ];

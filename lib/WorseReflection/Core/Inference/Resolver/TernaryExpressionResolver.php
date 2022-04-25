@@ -8,8 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class TernaryExpressionResolver implements Resolver
 {
@@ -22,13 +20,18 @@ class TernaryExpressionResolver implements Resolver
         $right = NodeContext::none();
 
 
+        /** @phpstan-ignore-next-line */
         if ($node->ifExpression) {
             $frame->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
             $left = $resolver->resolveNode($frame, $node->ifExpression);
-        } else {
+        }
+        
+        /** @phpstan-ignore-next-line */
+        if (!$node->ifExpression) {
             $left = $condition;
         }
 
+        /** @phpstan-ignore-next-line */
         if ($node->elseExpression) {
             $frame->applyTypeAssertions($condition->typeAssertions()->negate(), $node->elseExpression->getStartPosition());
             $right = $resolver->resolveNode($frame, $node->elseExpression);
