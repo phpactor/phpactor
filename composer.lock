@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6f785cfcd92040673f16d474500083f",
+    "content-hash": "66f7b52e58f64a17096496e3a1b82297",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1626,21 +1626,21 @@
         },
         {
             "name": "phpactor/container",
-            "version": "2.0.0",
+            "version": "dev-allow-enums",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpactor/container.git",
-                "reference": "61608993ac39ee7e45943f1b8f050c68e3ead515"
+                "url": "https://github.com/przepompownia/container",
+                "reference": "6eb207de43ffd9e4e55e9dfafa6f790d993ea772"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/61608993ac39ee7e45943f1b8f050c68e3ead515",
-                "reference": "61608993ac39ee7e45943f1b8f050c68e3ead515",
+                "url": "https://api.github.com/repos/przepompownia/container/zipball/6eb207de43ffd9e4e55e9dfafa6f790d993ea772",
+                "reference": "6eb207de43ffd9e4e55e9dfafa6f790d993ea772",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3 || ^8.0",
-                "phpactor/map-resolver": "^1.3.2",
+                "phpactor/map-resolver": "dev-allow-enums",
                 "psr/container": "^1.0"
             },
             "require-dev": {
@@ -1661,7 +1661,18 @@
                     "Phpactor\\Container\\": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\Container\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "integrate": [
+                    "vendor/bin/php-cs-fixer fix",
+                    "vendor/bin/phpstan analyse lib -c phpstan.neon",
+                    "vendor/bin/phpunit"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -1672,11 +1683,7 @@
                 }
             ],
             "description": "Phpactor's DI Container",
-            "support": {
-                "issues": "https://github.com/phpactor/container/issues",
-                "source": "https://github.com/phpactor/container/tree/2.0.0"
-            },
-            "time": "2021-02-06T14:38:57+00:00"
+            "time": "2022-04-25T22:48:19+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -1798,16 +1805,16 @@
         },
         {
             "name": "phpactor/map-resolver",
-            "version": "1.4.0",
+            "version": "dev-allow-enums",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpactor/map-resolver.git",
-                "reference": "0a1b591fc7d059717fa93bfef97417e4c375be74"
+                "url": "https://github.com/przepompownia/map-resolver",
+                "reference": "e966f414033557aef1b0ad6e0baa17e9f0e8bb7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/0a1b591fc7d059717fa93bfef97417e4c375be74",
-                "reference": "0a1b591fc7d059717fa93bfef97417e4c375be74",
+                "url": "https://api.github.com/repos/przepompownia/map-resolver/zipball/e966f414033557aef1b0ad6e0baa17e9f0e8bb7d",
+                "reference": "e966f414033557aef1b0ad6e0baa17e9f0e8bb7d",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1838,18 @@
                     "Phpactor\\MapResolver\\": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\MapResolver\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "integrate": [
+                    "./vendor/bin/phpunit",
+                    "./vendor/bin/phpstan analyze",
+                    "./vendor/bin/php-cs-fixer fix --allow-risky=yes"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -1842,11 +1860,7 @@
                 }
             ],
             "description": "Map Resolver",
-            "support": {
-                "issues": "https://github.com/phpactor/map-resolver/issues",
-                "source": "https://github.com/phpactor/map-resolver/tree/1.4.0"
-            },
-            "time": "2021-05-05T19:22:46+00:00"
+            "time": "2022-04-25T22:34:00+00:00"
         },
         {
             "name": "phpactor/phly-event-dispatcher",
@@ -7624,6 +7638,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/container": 20,
         "jetbrains/phpstorm-stubs": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
@@ -7637,5 +7652,5 @@
     "platform-overrides": {
         "php": "7.4.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
