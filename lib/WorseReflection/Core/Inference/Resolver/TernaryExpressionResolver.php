@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
@@ -16,6 +17,7 @@ class TernaryExpressionResolver implements Resolver
         assert($node instanceof TernaryExpression);
 
         $condition = $resolver->resolveNode($frame, $node->condition);
+        $context = NodeContextFactory::create('trinary', $node->getStartPosition(), $node->getEndPosition());
         $left = NodeContext::none();
         $right = NodeContext::none();
 
@@ -40,13 +42,13 @@ class TernaryExpressionResolver implements Resolver
         $empty = $condition->type()->isEmpty();
 
         if ($empty->isFalse()) {
-            return $left;
+            return $context->withType($left->type());
         }
 
         if ($empty->isTrue()) {
-            return $right;
+            return $context->withType($right->type());
         }
 
-        return $left->withType($left->type()->addToUnion($right->type()));
+        return $context->withType($left->type()->addToUnion($right->type()));
     }
 }
