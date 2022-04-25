@@ -9,10 +9,12 @@ use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
+use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\TypeUtil;
 
 abstract class Type
 {
@@ -161,5 +163,24 @@ abstract class Type
     protected function map(Closure $mapper): Type
     {
         return $mapper($this);
+    }
+
+    public function isTrue(): bool
+    {
+        return false;
+    }
+
+    public function isEmpty(): Trinary
+    {
+        $empty = TypeFactory::unionEmpty()->accepts($this);
+
+        if ($empty->isTrue() || $empty->isFalse()) {
+            return $empty;
+        }
+
+        if ($this instanceof Literal) {
+            return Trinary::false();
+        }
+        return Trinary::maybe();
     }
 }

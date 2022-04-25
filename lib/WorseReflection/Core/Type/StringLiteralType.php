@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
 class StringLiteralType extends StringType implements Literal, Generalizable, Concatable
@@ -38,5 +39,14 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
         }
 
         return new StringType();
+    }
+
+    public function accepts(Type $type): Trinary
+    {
+        if ($type instanceof StringLiteralType) {
+            return Trinary::fromBoolean($type->equals($this));
+        }
+
+        return parent::accepts($type);
     }
 }

@@ -16,8 +16,12 @@ abstract class ScalarType extends PrimitiveType implements Comparable
 
     public function accepts(Type $type): Trinary
     {
-        if ($type instanceof $this) {
+        if ($type->equals($this)) {
             return Trinary::true();
+        }
+
+        if ($this instanceof $type) {
+            return Trinary::maybe();
         }
 
         if ($type instanceof MixedType) {

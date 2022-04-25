@@ -21,7 +21,7 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
         return $this->value ? 'true' : 'false';
     }
 
-    public function value()
+    public function value(): bool
     {
         return $this->value;
     }
@@ -66,5 +66,13 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
     public function toTrinary(): Trinary
     {
         return Trinary::fromBoolean($this->value);
+    }
+
+    public function accepts(Type $type): Trinary
+    {
+        if ($type instanceof BooleanLiteralType) {
+            return Trinary::fromBoolean($type->equals($this));
+        }
+        return parent::accepts($type);
     }
 }

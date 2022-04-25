@@ -1,0 +1,10 @@
+<?php
+
+class Foo {}
+class Bar {}
+
+function bar(Bar $one, ?Foo $two) {
+    $true = ($two && $two->cost <= 10) ? $two : $one;
+
+    wrAssertType('Foo|Bar', $true);
+}

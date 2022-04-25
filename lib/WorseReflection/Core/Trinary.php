@@ -2,13 +2,19 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Closure;
+
 class Trinary
 {
     private ?bool $true;
+    private bool $maybe;
 
     private function __construct(?bool $true)
     {
         $this->true = $true;
+        // when using === comparison null and false equate
+        // to the same thing :/
+        $this->maybe = null === $true;
     }
 
     public static function true(): self
@@ -47,6 +53,18 @@ class Trinary
 
     public function isMaybe(): bool
     {
-        return $this->true === null;
+        return $this->maybe === true;
+    }
+
+    /**
+     * @param Closure(Trinary): Trinary
+     */
+    public function or(Closure $closure): Trinary
+    {
+        if ($this->isTrue()) {
+            return $this;
+        }
+
+        return $closure($this);
     }
 }

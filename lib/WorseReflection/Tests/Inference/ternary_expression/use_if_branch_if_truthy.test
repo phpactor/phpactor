@@ -1,0 +1,7 @@
+<?php
+
+wrAssertType('stdClass', 0 ?: new \stdClass());
+wrAssertType('"string"', true ? 'string' : new \stdClass());
+wrAssertType('"string"', 'string' ?: new \stdClass(), 'one');
+wrAssertType('1', 1 ?: new \stdClass());
+wrAssertType('stdClass', false ? 'foo' : new \stdClass());

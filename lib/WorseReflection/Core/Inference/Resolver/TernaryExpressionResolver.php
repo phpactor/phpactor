@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class TernaryExpressionResolver implements Resolver
@@ -16,22 +17,33 @@ class TernaryExpressionResolver implements Resolver
     {
         assert($node instanceof TernaryExpression);
 
-        // @phpstan-ignore-next-line
+        $condition = $resolver->resolveNode($frame, $node->condition);
+        $left = NodeContext::none();
+        $right = NodeContext::none();
+
+
         if ($node->ifExpression) {
-            $ifValue = $resolver->resolveNode($frame, $node->ifExpression);
-
-            if (!$ifValue->type() instanceof MissingType) {
-                return $ifValue;
-            }
+            $frame->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
+            $left = $resolver->resolveNode($frame, $node->ifExpression);
+        } else {
+            $left = $condition;
         }
 
-        // if expression was not defined, fallback to condition
-        $conditionValue = $resolver->resolveNode($frame, $node->condition);
-
-        if (!$conditionValue->type() instanceof MissingType) {
-            return $conditionValue;
+        if ($node->elseExpression) {
+            $frame->applyTypeAssertions($condition->typeAssertions()->negate(), $node->elseExpression->getStartPosition());
+            $right = $resolver->resolveNode($frame, $node->elseExpression);
         }
 
-        return NodeContext::none();
+        $empty = $condition->type()->isEmpty();
+
+        if ($empty->isFalse()) {
+            return $left;
+        }
+
+        if ($empty->isTrue()) {
+            return $right;
+        }
+
+        return $left->withType($left->type()->addToUnion($right->type()));
     }
 }
