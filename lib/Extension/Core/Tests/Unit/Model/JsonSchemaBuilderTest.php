@@ -19,7 +19,7 @@ class JsonSchemaBuilderTest extends TestCase
         file_put_contents('foo', $schema);
         self::assertEquals(<<<'EOT'
             {
-                "$schema": "https =>\/\/json-schema.org\/draft\/2020-12\/schema",
+                "$schema": "https:\/\/json-schema.org\/draft-07\/schema",
                 "title": "test",
                 "type": "object",
                 "properties": {
@@ -34,13 +34,15 @@ class JsonSchemaBuilderTest extends TestCase
                         "description": "This does something",
                         "type": [
                             "string"
-                        ]
+                        ],
+                        "default": 1234
                     },
                     "foo.bar": {
                         "description": null,
                         "type": [
                             "string"
-                        ]
+                        ],
+                        "default": "bar"
                     }
                 }
             }
