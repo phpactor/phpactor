@@ -73,6 +73,9 @@ final class BooleanLiteralType extends BooleanType implements Literal, Generaliz
         if ($type instanceof BooleanLiteralType) {
             return Trinary::fromBoolean($type->equals($this));
         }
+        if ($type instanceof BooleanType) {
+            return Trinary::maybe();
+        }
         return parent::accepts($type);
     }
 }

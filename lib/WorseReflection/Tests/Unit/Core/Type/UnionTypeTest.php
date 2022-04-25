@@ -270,7 +270,7 @@ class UnionTypeTest extends TestCase
             TypeFactory::class('Foobar'),
             Trinary::false(),
         ];
-        yield 'int literal accepts int' => [
+        yield 'int literal maybe accepts int' => [
             TypeFactory::union(TypeFactory::intLiteral(12), TypeFactory::string()),
             TypeFactory::int(),
             Trinary::maybe(),

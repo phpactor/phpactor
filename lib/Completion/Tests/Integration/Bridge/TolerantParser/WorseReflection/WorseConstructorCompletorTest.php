@@ -32,7 +32,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
             , [],
         ];
 
-        yield 'parameter' => [
+        yield 'parameter 1' => [
             <<<'EOT'
                 <?php 
                 class Foobar { public function __construct(string $foo) {} }

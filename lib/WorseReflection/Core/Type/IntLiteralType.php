@@ -56,6 +56,9 @@ class IntLiteralType extends IntType implements Literal, Generalizable
         if ($type instanceof IntLiteralType) {
             return Trinary::fromBoolean($type->equals($this));
         }
+        if ($type instanceof IntType) {
+            return Trinary::maybe();
+        }
 
         return parent::accepts($type);
     }

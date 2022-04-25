@@ -53,6 +53,9 @@ final class FloatLiteralType extends FloatType implements Literal, Generalizable
         if ($type instanceof FloatLiteralType) {
             return Trinary::fromBoolean($type->equals($this));
         }
+        if ($type instanceof FloatType) {
+            return Trinary::maybe();
+        }
 
         return parent::accepts($type);
     }

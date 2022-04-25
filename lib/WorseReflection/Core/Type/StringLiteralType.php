@@ -20,8 +20,10 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
     {
         return sprintf('"%s"', $this->value);
     }
-
     
+    /**
+     * @return mixed
+     */
     public function value()
     {
         return $this->value;
@@ -37,7 +39,6 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
         if ($right instanceof StringLiteralType) {
             return new self(sprintf('%s%s', $this->value, (string)$right->value()));
         }
-
         return new StringType();
     }
 
@@ -45,6 +46,10 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
     {
         if ($type instanceof StringLiteralType) {
             return Trinary::fromBoolean($type->equals($this));
+        }
+
+        if ($type instanceof StringType) {
+            return Trinary::maybe();
         }
 
         return parent::accepts($type);
