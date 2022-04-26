@@ -8,7 +8,7 @@
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^2.0",
         "symfony/yaml": "^5.1",
-        "phpactor/container": "dev-allow-enums",
+        "phpactor/container": "^2.0.0",
         "phpactor/class-to-file": "~0.4.3",
         "twig/twig": "^2.4",
         "webmozart/path-util": "^2.3",
@@ -27,7 +27,8 @@
         "symfony/filesystem": "^5.4",
         "symfony/process": "^5.4",
         "jetbrains/phpstorm-stubs": "dev-master",
-        "microsoft/tolerant-php-parser": "^0.1.0"
+        "microsoft/tolerant-php-parser": "^0.1.0",
+        "phpactor/map-resolver": "^1.5.0"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
@@ -78,18 +79,6 @@
         "phpactor/worse-reference-finder": "0.2.6",
         "phpactor/worse-reflection-extension": "0.2.5"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "no-api": true,
-            "url": "https://github.com/przepompownia/container"
-    },
-        {
-            "type": "vcs",
-            "no-api": true,
-            "url": "https://github.com/przepompownia/map-resolver"
-        }
-    ],
     "config": {
         "platform": {
             "php": "7.4.0"
