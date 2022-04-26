@@ -27,7 +27,8 @@
         "symfony/filesystem": "^5.4",
         "symfony/process": "^5.4",
         "jetbrains/phpstorm-stubs": "dev-master",
-        "microsoft/tolerant-php-parser": "^0.1.0"
+        "microsoft/tolerant-php-parser": "^0.1.0",
+        "phpactor/map-resolver": "^1.5.0"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6f785cfcd92040673f16d474500083f",
+    "content-hash": "ad2df8d8137915496207a05297b707cb",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1798,16 +1798,16 @@
         },
         {
             "name": "phpactor/map-resolver",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/map-resolver.git",
-                "reference": "0a1b591fc7d059717fa93bfef97417e4c375be74"
+                "reference": "091c3e9233099126bed12b51dd545d05dda53163"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/0a1b591fc7d059717fa93bfef97417e4c375be74",
-                "reference": "0a1b591fc7d059717fa93bfef97417e4c375be74",
+                "url": "https://api.github.com/repos/phpactor/map-resolver/zipball/091c3e9233099126bed12b51dd545d05dda53163",
+                "reference": "091c3e9233099126bed12b51dd545d05dda53163",
                 "shasum": ""
             },
             "require": {
@@ -1844,9 +1844,9 @@
             "description": "Map Resolver",
             "support": {
                 "issues": "https://github.com/phpactor/map-resolver/issues",
-                "source": "https://github.com/phpactor/map-resolver/tree/1.4.0"
+                "source": "https://github.com/phpactor/map-resolver/tree/1.5.0"
             },
-            "time": "2021-05-05T19:22:46+00:00"
+            "time": "2022-04-26T08:51:55+00:00"
         },
         {
             "name": "phpactor/phly-event-dispatcher",
@@ -7637,5 +7637,5 @@
     "platform-overrides": {
         "php": "7.4.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

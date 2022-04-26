@@ -40,6 +40,27 @@ class LoggingExtension implements Extension
             self::PARAM_NAME => 'logger',
             self::PARAM_FORMATTER => null,
         ]);
+
+        $schema->setTypes([
+            self::PARAM_ENABLED => 'boolean',
+            self::PARAM_FINGERS_CROSSED => 'boolean',
+            self::PARAM_PATH => 'string',
+            self::PARAM_LEVEL => 'string',
+            self::PARAM_NAME => 'string',
+        ]);
+
+        $schema->setEnums([
+            self::PARAM_LEVEL => [
+                LogLevel::EMERGENCY,
+                LogLevel::ALERT,
+                LogLevel::CRITICAL,
+                LogLevel::ERROR,
+                LogLevel::WARNING,
+                LogLevel::NOTICE,
+                LogLevel::INFO,
+                LogLevel::DEBUG,
+            ],
+        ]);
     }
 
     public function load(ContainerBuilder $container): void
@@ -57,17 +78,17 @@ class LoggingExtension implements Extension
     {
         $container->register(self::SERVICE_LOGGER, function (Container $container) {
             $logger = new Logger('phpactor');
-        
+
             if (false === $container->getParameter(self::PARAM_ENABLED)) {
                 $logger->pushHandler(new NullHandler());
                 return $logger;
             }
-        
+
             $handler = new StreamHandler(
                 $container->getParameter(self::PARAM_PATH),
                 $container->getParameter(self::PARAM_LEVEL)
             );
-        
+
             if ($formatter = $container->getParameter(self::PARAM_FORMATTER)) {
                 $handler->setFormatter(
                     $container->get(
@@ -75,17 +96,17 @@ class LoggingExtension implements Extension
                     )->get($formatter)
                 );
             }
-        
+
             if ($container->getParameter(self::PARAM_FINGERS_CROSSED)) {
                 $handler = new FingersCrossedHandler($handler);
             }
-        
+
             $logger->pushHandler($handler);
-        
-        
+
+
             return $logger;
         });
-        
+
         $container->register(self::SERVICE_FORMATTER_REGISTRY, function (Container $container) {
             $serviceMap = [];
             foreach ($container->getServiceIdsForTag(self::TAG_FORMATTER) as $serviceId => $attrs) {
@@ -97,7 +118,7 @@ class LoggingExtension implements Extension
                 }
                 $serviceMap[$attrs['alias']] = $serviceId;
             }
-        
+
             return new FormatterRegistry($container, $serviceMap);
         });
     }

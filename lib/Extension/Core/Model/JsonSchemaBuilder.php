@@ -28,7 +28,7 @@ class JsonSchemaBuilder
     public function dump(): string
     {
         $schema = [
-          '$schema' => 'https =>//json-schema.org/draft/2020-12/schema',
+          '$schema' => 'https://json-schema.org/draft-07/schema',
           'title' => $this->title,
           'type' => 'object',
           'properties' => [
@@ -55,6 +55,12 @@ class JsonSchemaBuilder
                 ];
                 if ($definition->types()) {
                     $meta['type'] = $this->mapTypes($definition->types());
+                }
+                if ($definition->defaultValue()) {
+                    $meta['default'] = $definition->defaultValue();
+                }
+                if ([] !== $definition->enum()) {
+                    $meta['enum'] = $definition->enum();
                 }
 
                 $schema['properties'][$definition->name()] = $meta;
