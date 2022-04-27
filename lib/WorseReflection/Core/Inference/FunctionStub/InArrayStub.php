@@ -26,20 +26,16 @@ class InArrayStub implements FunctionStub
             return $context;
         }
 
-        foreach ($arg0->typeAssertions() as $typeAssertion) {
-            $context = $context->withTypeAssertion(
-                TypeAssertion::forContext(
-                    $args->at(0),
-                    function (Type $type) use ($arrayType) {
-                        return TypeFactory::union(...$arrayType->iterableValueTypes());
-                    },
-                    function (Type $type) {
-                        return $type;
-                    }
-                )
-            );
-        }
-
-        return $context;
+        return $context->withTypeAssertion(
+            TypeAssertion::forContext(
+                $args->at(0),
+                function (Type $type) use ($arrayType) {
+                    return TypeFactory::union(...$arrayType->iterableValueTypes());
+                },
+                function (Type $type) {
+                    return $type;
+                }
+            )
+        );
     }
 }
