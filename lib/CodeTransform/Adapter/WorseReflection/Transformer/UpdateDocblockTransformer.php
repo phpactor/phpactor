@@ -133,6 +133,10 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
+                if ($claimedReturnType->isArray() && $actualReturnType->isMixed()) {
+                    continue;
+                }
+
                 // the docblock matches the generalized return type
                 // it's OK
                 if ($claimedReturnType->equals($actualReturnType)) {
