@@ -771,6 +771,32 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ]
             ];
         }
+
+        yield 'nullable' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                class Barfoo {
+                    public function not(): string {}
+                }
+
+                function create(): ?Barfoo {}
+
+                $f = create();
+                $f-><>;
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'not',
+                    'short_description' => 'pub not(): string',
+                    'snippet' => 'not()',
+                ],
+            ]
+        ];
     }
 
     /**
