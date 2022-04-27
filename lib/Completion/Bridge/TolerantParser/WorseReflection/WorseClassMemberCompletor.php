@@ -112,6 +112,10 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             ]);
         }
 
+        if (!$type) {
+            return;
+        }
+
         try {
             $classReflection = $this->reflector->reflectClassLike($type->name());
         } catch (NotFound $notFound) {
