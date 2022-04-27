@@ -26,7 +26,7 @@ final class ChainDefinitionLocationProvider implements DefinitionLocator
         }
     }
 
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
+    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         $messages = [];
         foreach ($this->providers as $provider) {

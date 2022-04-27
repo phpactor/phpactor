@@ -4,13 +4,15 @@ namespace Phpactor\WorseReferenceFinder\Tests;
 
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 abstract class DefinitionLocatorTestCase extends IntegrationTestCase
 {
-    protected function locate(string $manifset, string $source): DefinitionLocation
+    protected function locate(string $manifset, string $source): TypeLocations
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
@@ -18,7 +20,7 @@ abstract class DefinitionLocatorTestCase extends IntegrationTestCase
         $this->workspace->loadManifest($manifset);
         return $this->locator()->locateDefinition(
             TextDocumentBuilder::create($source)->uri($documentUri)->language('php')->build(),
-            ByteOffset::fromInt($offset)
+            ByteOffset::fromInt((int)$offset)
         );
     }
 

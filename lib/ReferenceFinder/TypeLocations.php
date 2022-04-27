@@ -5,6 +5,7 @@ namespace Phpactor\ReferenceFinder;
 use ArrayIterator;
 use IteratorAggregate;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
+use Phpactor\TextDocument\Location;
 use Traversable;
 
 /**
@@ -69,5 +70,10 @@ class TypeLocations implements IteratorAggregate
             'Unknown type name "%s"',
             $typeName
         ));
+    }
+
+    public static function forLocation(TypeLocation $location): self
+    {
+        return new self([$location]);
     }
 }

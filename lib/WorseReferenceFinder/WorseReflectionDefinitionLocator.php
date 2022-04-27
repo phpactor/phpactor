@@ -2,10 +2,12 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
@@ -33,7 +35,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     }
 
     
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
+    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {
             throw new CouldNotLocateDefinition('I only work with PHP files');
@@ -56,10 +58,16 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($notFound->getMessage(), 0, $notFound);
         }
 
-        return $this->gotoDefinition($document, $offset);
+        $typeLocations = [];
+        foreach ($offset->symbolContext()->type()->classNamedTypes() as $namedClassType) {
+            $location = $this->gotoDefinition($document, $offset);
+            $typeLocations[] = new TypeLocation($namedClassType, $location);
+        }
+
+        return new TypeLocations($typeLocations);
     }
 
-    private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): DefinitionLocation
+    private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): Location
     {
         $symbolContext = $offset->symbolContext();
         switch ($symbolContext->symbol()->symbolType()) {
@@ -80,7 +88,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ));
     }
 
-    private function gotoClass(NodeContext $symbolContext): DefinitionLocation
+    private function gotoClass(NodeContext $symbolContext): Location
     {
         $className = $symbolContext->type();
 
@@ -101,13 +109,13 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new DefinitionLocation(
+        return new Location(
             TextDocumentUri::fromString($path),
             ByteOffset::fromInt($class->position()->start())
         );
     }
 
-    private function gotoFunction(NodeContext $symbolContext): DefinitionLocation
+    private function gotoFunction(NodeContext $symbolContext): Location
     {
         $functionName = $symbolContext->symbol()->name();
 
@@ -126,13 +134,13 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new DefinitionLocation(
+        return new Location(
             TextDocumentUri::fromString($path),
             ByteOffset::fromInt($function->position()->start())
         );
     }
 
-    private function gotoMember(NodeContext $symbolContext): DefinitionLocation
+    private function gotoMember(NodeContext $symbolContext): Location
     {
         $symbolName = $symbolContext->symbol()->name();
         $symbolType = $symbolContext->symbol()->symbolType();
@@ -195,7 +203,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         $member = $members->get($symbolName);
 
-        return new DefinitionLocation(
+        return new Location(
             TextDocumentUri::fromString($path),
             ByteOffset::fromInt($member->position()->start())
         );

@@ -17,5 +17,5 @@ interface DefinitionLocator
      *
      * @throws CouldNotLocateDefinition
      */
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation;
+    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations;
 }
