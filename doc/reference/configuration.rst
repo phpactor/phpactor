@@ -805,6 +805,7 @@ LoggingExtension
 """""""""""""""""""
 
 
+Type: boolean
 
 
 **Default**: ``false``
@@ -817,6 +818,7 @@ LoggingExtension
 """""""""""""""""""""""""""
 
 
+Type: boolean
 
 
 **Default**: ``false``
@@ -829,6 +831,7 @@ LoggingExtension
 """"""""""""""""
 
 
+Type: string
 
 
 **Default**: ``"application.log"``
@@ -841,9 +844,13 @@ LoggingExtension
 """""""""""""""""
 
 
+Type: string
 
 
 **Default**: ``"warning"``
+
+
+**Allowed values**: "emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"
 
 
 .. _param_logger.name:
@@ -853,6 +860,7 @@ LoggingExtension
 """""""""""""""
 
 
+Type: string
 
 
 **Default**: ``"logger"``

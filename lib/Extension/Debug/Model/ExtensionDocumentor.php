@@ -98,6 +98,15 @@ class ExtensionDocumentor
                 json_encode($definition->defaultValue())
             );
             $help[] = "\n";
+
+            $enum = $definition->enum();
+            if ($enum) {
+                $help[] = sprintf(
+                    '**Allowed values**: %s',
+                    implode(', ', array_map(fn ($v) => json_encode($v), $enum))
+                );
+                $help[] = "\n";
+            }
         }
 
         if (!$hasDefinitions) {
