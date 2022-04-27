@@ -36,6 +36,8 @@ use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayMapStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayPopStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayShiftStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\InArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
@@ -145,6 +147,8 @@ final class DefaultResolverFactory
             'is_callable' => new IsSomethingStub(TypeFactory::callable()),
             'array_map' => new ArrayMapStub(),
             'reset' => new ResetStub(),
+            'array_shift' => new ArrayShiftStub(),
+            'array_pop' => new ArrayPopStub(),
         ]);
     }
 }
