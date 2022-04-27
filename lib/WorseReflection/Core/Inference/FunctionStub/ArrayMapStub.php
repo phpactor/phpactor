@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -14,25 +15,14 @@ use Phpactor\WorseReflection\Core\Type\ClosureType;
 class ArrayMapStub implements FunctionStub
 {
     public function resolve(
-        NodeContextResolver $resolver,
-        Frame $frame,
         NodeContext $context,
-        ArgumentExpressionList $node
+        FunctionArguments $args
     ): NodeContext {
-        $args = [];
-        foreach ($node->getChildNodes() as $expression) {
-            if (!$expression instanceof ArgumentExpression) {
-                continue;
-            }
-
-            $args[] = $resolver->resolveNode($frame, $expression);
-        }
-
-        if (!isset($args[0]) || !isset($args[1])) {
+        if (!$args->at(0)->type()->isDefined()) {
             return $context;
         }
 
-        $closureType = $args[0]->type();
+        $closureType = $args->at(0)->type();
         if (!$closureType instanceof ClosureType) {
             return $context;
         }

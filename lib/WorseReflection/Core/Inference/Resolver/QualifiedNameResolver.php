@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -59,9 +60,13 @@ class QualifiedNameResolver implements Resolver
 
             $stub = $this->registry->get($name->short());
 
-            $arguments = $parent->argumentExpressionList;
-            if ($stub && $arguments) {
-                return $stub->resolve($resolver, $frame, $context, $arguments);
+            if ($stub && $parent->argumentExpressionList) {
+                $arguments = FunctionArguments::fromList(
+                    $resolver,
+                    $frame,
+                    $parent->argumentExpressionList
+                );
+                return $stub->resolve($context, $arguments);
             }
 
             try {

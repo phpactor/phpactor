@@ -6,9 +6,11 @@ use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
@@ -24,37 +26,26 @@ class IsSomethingStub implements FunctionStub
     }
 
     public function resolve(
-        NodeContextResolver $resolver,
-        Frame $frame,
         NodeContext $context,
-        ArgumentExpressionList $node
+        FunctionArguments $args
     ): NodeContext {
-        $context = NodeContext::none();
 
-        foreach ($node->getChildNodes() as $expression) {
-            if (!$expression instanceof ArgumentExpression) {
-                continue;
-            }
+        $arg0 = $args->at(0);
 
-            $expression = $expression->expression;
-
-            if ($expression instanceof Variable) {
-                $variable = $expression->getName();
-                $context = $context->withTypeAssertion(TypeAssertion::variable(
-                    $variable,
-                    $expression->getStartPosition(),
-                    fn (Type $type) => $this->isType,
-                    fn (Type $type) => TypeCombinator::subtract($this->isType, $type),
-                ));
-            }
-
-            $arg = $resolver->resolveNode($frame, $expression)->type();
-
-            // extract to a variabe as it will not otherwise work with PHP 7.4
-            $type = $this->isType;
-            return $context->withType(new BooleanLiteralType($arg instanceof $type));
+        $symbol = $arg0->symbol();
+        if ($symbol->symbolType() === Symbol::VARIABLE) {
+            $context = $context->withTypeAssertion(TypeAssertion::variable(
+                $symbol->name(),
+                $symbol->position()->start(),
+                fn (Type $type) => $this->isType,
+                fn (Type $type) => TypeCombinator::subtract($this->isType, $type),
+            ));
         }
 
-        return $context;
+        $argType = $arg0->type();
+
+        // extract to a variabe as it will not otherwise work with PHP 7.4
+        $type = $this->isType;
+        return $context->withType(new BooleanLiteralType($argType instanceof $type));
     }
 }

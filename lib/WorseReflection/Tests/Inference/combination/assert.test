@@ -1,5 +1,9 @@
 <?php
 
+$foo = notype();
+assert(is_null($foo));
+wrAssertType('null', $foo);
+
 function notype() {}
 function stringOrNull(): null|string {}
 function fooOrNull(): Foo|null {}
@@ -24,10 +28,6 @@ $bar = fooOrNull(); // Foo|null
 assert(!$bar); // Foo
 
 
-$foo = notype();
-assert(is_null($foo));
-
-wrAssertType('null', $foo);
 
 assert(!is_null($foo));
 

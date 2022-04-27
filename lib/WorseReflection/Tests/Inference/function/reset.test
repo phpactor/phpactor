@@ -1,0 +1,28 @@
+<?php
+
+namespace Foo;
+
+if (in_array($foo, ['foo', 'bar'])) {
+    wrAssertType('"foo"|"bar"', $foo, '1');
+}
+
+/** @var string */
+$foo;
+
+$bars = ['foo', 'bar'];
+if (in_array($foo, $bars)) {
+    wrAssertType('"foo"|"bar"', $foo);
+    die();
+}
+wrAssertType('string', $foo);
+
+
+class Foo {
+    const TYPE_CLASS = 'class';
+    const TYPE_FUNCTION = 'function';
+    public function bar(string $type) {
+        if (in_array($type, [ self::TYPE_CLASS, self::TYPE_FUNCTION ])) {
+            wrAssertType('"class"|"function"', $type);
+        }
+    }
+}
