@@ -40,6 +40,7 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\InArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IteratorToArrayStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ResetStub;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\AnonymousFunctionCreationExpressionResolver;
@@ -143,6 +144,7 @@ final class DefaultResolverFactory
             'is_string' => new IsSomethingStub(TypeFactory::string()),
             'is_callable' => new IsSomethingStub(TypeFactory::callable()),
             'array_map' => new ArrayMapStub(),
+            'reset' => new ResetStub(),
         ]);
     }
 }
