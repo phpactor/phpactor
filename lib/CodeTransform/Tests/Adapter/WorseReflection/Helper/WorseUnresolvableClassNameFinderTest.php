@@ -444,6 +444,28 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
             [
             ]
         ];
+
+        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            yield 'attributes' => [
+                <<<'EOT'
+                    // File: test.php
+                    <?php
+
+                    namespace Foobar;
+
+                    #[NotResolvable()]
+                    class Barfoo { 
+                    }
+                    EOT
+                ,
+                [
+                    new NameWithByteOffset(
+                        QualifiedName::fromString('Foobar\NotResolvable'),
+                        ByteOffset::fromInt(28)
+                    ),
+                ]
+            ];
+        }
     }
 
     public function provideReturnsUnresolableFunctions(): Generator
