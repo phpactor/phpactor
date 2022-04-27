@@ -2,14 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
@@ -29,7 +24,6 @@ class IsSomethingStub implements FunctionStub
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {
-
         $arg0 = $args->at(0);
 
         $symbol = $arg0->symbol();

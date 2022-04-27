@@ -2,13 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -21,6 +18,11 @@ class InArrayStub implements FunctionStub
         FunctionArguments $args
     ): NodeContext {
         $arg0 = $args->at(0);
+
+        if ($arg0->symbol()->symbolType() !== Symbol::VARIABLE) {
+            return $context;
+        }
+
         $arrayType = $args->at(1)->type();
         if (!$arrayType instanceof ArrayLiteral) {
             return $context;

@@ -4,8 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class FunctionArguments
 {
@@ -13,7 +11,9 @@ class FunctionArguments
      * @var ArgumentExpression[]
      */
     private array $arguments;
+
     private NodeContextResolver $resolver;
+
     private Frame $frame;
 
     /**
@@ -41,7 +41,5 @@ class FunctionArguments
         }
 
         return $this->resolver->resolveNode($this->frame, $this->arguments[$index]);
-
     }
-
 }
