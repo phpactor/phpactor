@@ -1,0 +1,13 @@
+<?php
+
+
+$foo = ['bar', 'boo'];
+wrAssertType('"bar"', array_shift($foo));
+
+// TODO: resolvers cannot currently modify the frame
+wrAssertType('array{"bar","boo"}', $foo);
+
+/** @var string[] */
+$foo;
+
+wrAssertType('string|null', array_shift($foo));

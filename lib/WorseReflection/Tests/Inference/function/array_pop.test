@@ -1,0 +1,10 @@
+<?php
+
+
+$foo = ['bar', 'boo'];
+wrAssertType('"boo"', array_pop($foo));
+
+/** @var string[] */
+$foo;
+
+wrAssertType('string|null', array_pop($foo));

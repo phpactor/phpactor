@@ -1,0 +1,10 @@
+<?php
+
+
+$foo = ['bar', 'boo'];
+wrAssertType('"bar"', reset($foo));
+/** @var string[] */
+$foo;
+wrAssertType('string|false', reset($foo));
+$foo = [];
+wrAssertType('false', reset($foo));
