@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
@@ -100,7 +101,6 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             return $unresolvedNames;
         }
 
-
         // if the tolerant parser did not provide the resolved name (because of
         // bug) then use the namespaced name.
         if (!$resolvedName) {
@@ -130,7 +130,8 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             !$name->parent instanceof FunctionDeclaration &&
             !$name->parent instanceof MethodDeclaration &&
             !$name->parent instanceof Expression &&
-            !$name->parent instanceof Parameter
+            !$name->parent instanceof Parameter &&
+            !$name->parent instanceof Attribute
         ) {
             return $unresolvedNames;
         }
