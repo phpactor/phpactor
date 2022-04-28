@@ -75,6 +75,7 @@ class CodeTransformExtension implements Extension
     public const PARAM_INDENTATION = 'code_transform.indentation';
     public const PARAM_GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    public const PARAM_IMPORT_GLOBALS = 'code_transform.import_globals';
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
     private const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
 
@@ -90,6 +91,7 @@ class CodeTransformExtension implements Extension
             self::PARAM_INDENTATION => '    ',
             self::PARAM_GENERATE_ACCESSOR_PREFIX => '',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
+            self::PARAM_IMPORT_GLOBALS => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_NEW_CLASS_VARIANTS => 'Variants which should be suggested when class-create is invoked',
@@ -97,6 +99,7 @@ class CodeTransformExtension implements Extension
             self::PARAM_INDENTATION => 'Indentation chars to use in code generation and transformation',
             self::PARAM_GENERATE_ACCESSOR_PREFIX => 'Prefix to use for generated accessors',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => 'If the first letter of a generated accessor should be made uppercase',
+            self::PARAM_IMPORT_GLOBALS => 'Import functions even if they are in the global namespace',
         ]);
     }
 
@@ -218,7 +221,9 @@ class CodeTransformExtension implements Extension
 
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
-                $container->get(Updater::class)
+                $container->get(Updater::class),
+                null,
+                $container->getParameter(self::PARAM_IMPORT_GLOBALS),
             );
         });
 

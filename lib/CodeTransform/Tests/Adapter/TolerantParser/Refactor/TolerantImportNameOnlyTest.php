@@ -76,9 +76,9 @@ class TolerantImportNameOnlyTest extends AbstractTolerantImportNameTest
         ];
     }
 
-    protected function importName($source, int $offset, NameImport $nameImport): TextEdits
+    protected function importName($source, int $offset, NameImport $nameImport, bool $importGlobals = true): TextEdits
     {
-        $importClass = (new TolerantImportName($this->updater(), $this->parser()));
+        $importClass = (new TolerantImportName($this->updater(), $this->parser(), $importGlobals));
         return $importClass->importNameOnly(SourceCode::fromString($source), ByteOffset::fromInt($offset), $nameImport);
     }
 }

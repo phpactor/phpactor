@@ -31,15 +31,22 @@ class TolerantImportName implements ImportName
 
     private Updater $updater;
 
-    public function __construct(Updater $updater, Parser $parser = null)
+    private bool $importGlobals;
+
+    public function __construct(Updater $updater, Parser $parser = null, bool $importGlobals = false)
     {
         $this->parser = $parser ?: new Parser();
         ;
         $this->updater = $updater;
+        $this->importGlobals = $importGlobals;
     }
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits
     {
+        if ($this->isGlobalFunction($nameImport)) {
+            return TextEdits::none();
+        }
+
         $sourceNode = $this->parser->parseSourceFile($source);
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
@@ -56,6 +63,10 @@ class TolerantImportName implements ImportName
 
     public function importNameOnly(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits
     {
+        if ($this->isGlobalFunction($nameImport)) {
+            return TextEdits::none();
+        }
+
         $sourceNode = $this->parser->parseSourceFile($source);
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
@@ -224,5 +235,10 @@ class TolerantImportName implements ImportName
         }
 
         return $node;
+    }
+
+    private function isGlobalFunction(NameImport $nameImport): bool
+    {
+        return $this->importGlobals === false && $nameImport->isFunction() && $nameImport->name()->count() === 1;
     }
 }
