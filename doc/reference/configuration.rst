@@ -227,11 +227,43 @@ If the first letter of a generated accessor should be made uppercase
 **Default**: ``false``
 
 
+.. _param_code_transform.import_globals:
+
+
+``code_transform.import_globals``
+"""""""""""""""""""""""""""""""""
+
+
+
+
+Import functions even if they are in the global namespace
+
+
+**Default**: ``false``
+
+
 .. _CompletionWorseExtension:
 
 
 CompletionWorseExtension
 ------------------------
+
+
+.. _param_completion_worse.completor.class_alias.enabled:
+
+
+``completion_worse.completor.class_alias.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``class_alias`` completor.
+
+Completion for class aliases.
+
+
+**Default**: ``true``
 
 
 .. _param_completion_worse.completor.worse_parameter.enabled:
@@ -365,23 +397,6 @@ Completion for functions defined in the Phpactor runtime.
 Enable or disable the ``constant`` completor.
 
 Completion for constants.
-
-
-**Default**: ``true``
-
-
-.. _param_completion_worse.completor.class_alias.enabled:
-
-
-``completion_worse.completor.class_alias.enabled``
-""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-Enable or disable the ``class_alias`` completor.
-
-Completion for class aliases.
 
 
 **Default**: ``true``

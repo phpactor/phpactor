@@ -202,7 +202,7 @@ abstract class AbstractTolerantImportNameTest extends TolerantTestCase
 
     abstract public function provideImportFunction(): Generator;
 
-    abstract protected function importName(string $source, int $offset, NameImport $nameImport): TextEdits;
+    abstract protected function importName(string $source, int $offset, NameImport $nameImport, bool $importGlobals = true): TextEdits;
 
     private function importNameFromTestFile(string $type, string $test, string $name, string $alias = null)
     {

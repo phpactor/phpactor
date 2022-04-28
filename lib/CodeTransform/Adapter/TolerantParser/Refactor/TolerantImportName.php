@@ -43,9 +43,10 @@ class TolerantImportName implements ImportName
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits
     {
-        if ($this->importGlobals === false && $nameImport->isFunction() && $nameImport->name()->count() === 1) {
+        if ($this->isGlobalFunction($nameImport)) {
             return TextEdits::none();
         }
+
         $sourceNode = $this->parser->parseSourceFile($source);
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
@@ -62,6 +63,10 @@ class TolerantImportName implements ImportName
 
     public function importNameOnly(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits
     {
+        if ($this->isGlobalFunction($nameImport)) {
+            return TextEdits::none();
+        }
+
         $sourceNode = $this->parser->parseSourceFile($source);
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
@@ -230,5 +235,10 @@ class TolerantImportName implements ImportName
         }
 
         return $node;
+    }
+
+    private function isGlobalFunction(NameImport $nameImport): bool
+    {
+        return $this->importGlobals === false && $nameImport->isFunction() && $nameImport->name()->count() === 1;
     }
 }

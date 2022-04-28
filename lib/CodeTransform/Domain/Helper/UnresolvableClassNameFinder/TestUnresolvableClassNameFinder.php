@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 
 use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
-use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\TextDocument\TextDocument;
 
