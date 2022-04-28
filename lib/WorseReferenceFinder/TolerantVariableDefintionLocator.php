@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\PotentialLocation;

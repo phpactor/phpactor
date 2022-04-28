@@ -5,7 +5,6 @@ namespace Phpactor\ReferenceFinder;
 use ArrayIterator;
 use IteratorAggregate;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
-use Phpactor\TextDocument\Location;
 use Traversable;
 
 /**

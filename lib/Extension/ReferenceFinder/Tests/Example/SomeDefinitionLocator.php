@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\ReferenceFinder\Tests\Example;
 
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
