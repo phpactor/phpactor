@@ -26,6 +26,7 @@ Bug fixes:
 Improvements:
 
   - [ct] Add option to disable importing global functions
+  - [cmp] (Better) support for completing imported names #1490
   - [wr] reset,array_shift and array_pop stubs
   - [wr] improved ternary support
   - [log] Include a channel prefxi in log messages
@@ -55,6 +56,7 @@ Improvements:
 
 Features:
 
+  - [rf] Union type support for goto definition
   - [ct] Add missing PHP return types
   - [wr] Support for inference for `array_map`, and arrow and anonymous functions
   - [ct] Add missing @return type docblocks code transformation
