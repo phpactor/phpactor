@@ -12,17 +12,13 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Reflector;
 
-class WorseClassAliasCompletor implements TolerantCompletor, TolerantQualifiable
+class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    private Reflector $reflector;
-
     private ClassQualifier $qualifier;
 
-    public function __construct(Reflector $reflector, ?ClassQualifier $qualifier = null)
+    public function __construct(?ClassQualifier $qualifier = null)
     {
-        $this->reflector = $reflector;
         $this->qualifier = $qualifier ?: new ClassQualifier(0);
     }
 
@@ -32,22 +28,11 @@ class WorseClassAliasCompletor implements TolerantCompletor, TolerantQualifiable
 
         /** @var ResolvedName $resolvedName */
         foreach ($namespaceImports as $alias => $resolvedName) {
-            $parts = $resolvedName->getNameParts();
-            if (empty($parts)) {
-                continue;
-            }
-
-            $lastPart = array_pop($parts);
-
-            if ($alias === $lastPart) {
-                continue;
-            }
-
             yield Suggestion::createWithOptions(
                 $alias,
                 [
                     'type' => Suggestion::TYPE_CLASS,
-                    'short_description' => sprintf('Alias for: %s', (string) $resolvedName)
+                    'short_description' => sprintf('%s', $resolvedName->__toString()),
                 ]
             );
         }

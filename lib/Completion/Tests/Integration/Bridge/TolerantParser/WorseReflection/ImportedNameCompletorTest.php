@@ -5,16 +5,17 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseRefle
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassAliasCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\ImportedNameCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
-class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
+class ImportedNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     * @param array<string,mixed> $expected
      */
     public function testComplete(string $source, array $expected): void
     {
@@ -33,7 +34,7 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
             []
         ];
 
-        yield 'import with no aliases' => [
+        yield 'import local' => [
             <<<'EOT'
                 <?php
 
@@ -42,7 +43,13 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
                 $class = new B<>
                 EOT
         ,
-            []
+        [
+                [
+                    'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barfoo',
+                    'short_description' => 'Barfoo',
+                ]
+        ]
         ];
 
         yield 'import with aliased class' => [
@@ -58,7 +65,7 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'BarfooThis',
-                    'short_description' => 'Alias for: Barfoo',
+                    'short_description' => 'Barfoo',
                 ]
             ]
         ];
@@ -76,8 +83,13 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
             [
                 [
                     'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barbar',
+                    'short_description' => 'Barbar',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CLASS,
                     'name' => 'BarfooThis',
-                    'short_description' => 'Alias for: Barfoo',
+                    'short_description' => 'Barfoo',
                 ]
             ]
         ];
@@ -94,6 +106,16 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
                 EOT
         ,
             [
+                [
+                    'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barbar',
+                    'short_description' => 'Foo\\Bar\\Barbar',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barfoo',
+                    'short_description' => 'Foo\\Bar\\Barfoo',
+                ]
             ]
         ];
     }
@@ -101,6 +123,6 @@ class WorseClassAliasCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
-        return new WorseClassAliasCompletor($reflector, new ClassQualifier(0));
+        return new ImportedNameCompletor(new ClassQualifier(0));
     }
 }
