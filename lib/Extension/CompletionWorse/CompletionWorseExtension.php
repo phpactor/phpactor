@@ -239,6 +239,13 @@ class CompletionWorseExtension implements Extension
     private function getCompletors(): array
     {
         return [
+            'class_alias' => [
+                'Completion for class aliases',
+                function (Container $container) {
+                    return new WorseClassAliasCompletor(
+                    );
+                },
+            ],
             'worse_parameter' => [
                 'Completion for method or function parameters',
                 function (Container $container) {
@@ -308,14 +315,6 @@ class CompletionWorseExtension implements Extension
                 'Completion for constants',
                 function (Container $container) {
                     return new WorseConstantCompletor();
-                },
-            ],
-            'class_alias' => [
-                'Completion for class aliases',
-                function (Container $container) {
-                    return new WorseClassAliasCompletor(
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-                    );
                 },
             ],
             'declared_class' => [
