@@ -76,9 +76,23 @@ class TolerantImportNameTest extends AbstractTolerantImportNameTest
         ];
     }
 
-    protected function importName($source, int $offset, NameImport $nameImport): TextEdits
+    public function testImportsGlobal(): void
     {
-        $importClass = (new TolerantImportName($this->updater(), $this->parser()));
+        $source = '<?php namespace Foobar;';
+        $edits = $this->importName($source, 10, NameImport::forFunction('array_map', null), true);
+        self::assertStringContainsString('array_map', $edits->apply($source));
+    }
+
+    public function testNotImportGlobalWhenDisabled(): void
+    {
+        $source = '<?php namespace Foobar;';
+        $edits = $this->importName($source, 10, NameImport::forFunction('array_map', null), false);
+        self::assertStringNotContainsString('array_map', $edits->apply($source));
+    }
+
+    protected function importName($source, int $offset, NameImport $nameImport, bool $importGlobals = false): TextEdits
+    {
+        $importClass = (new TolerantImportName($this->updater(), $this->parser(), $importGlobals));
         return $importClass->importName(SourceCode::fromString($source), ByteOffset::fromInt($offset), $nameImport);
     }
 }
