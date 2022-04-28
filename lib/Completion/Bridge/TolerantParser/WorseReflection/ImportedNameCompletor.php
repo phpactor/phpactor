@@ -12,9 +12,8 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Reflector;
 
-class WorseClassAliasCompletor implements TolerantCompletor, TolerantQualifiable
+class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 {
     private ClassQualifier $qualifier;
 

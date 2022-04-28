@@ -8,7 +8,7 @@ use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherComple
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassAliasCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\ImportedNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseDeclaredClassCompletor;
@@ -242,7 +242,7 @@ class CompletionWorseExtension implements Extension
             'class_alias' => [
                 'Completion for class aliases',
                 function (Container $container) {
-                    return new WorseClassAliasCompletor(
+                    return new ImportedNameCompletor(
                     );
                 },
             ],
