@@ -25,6 +25,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ct] Add option to disable importing global functions
   - [wr] reset,array_shift and array_pop stubs
   - [wr] improved ternary support
   - [log] Include a channel prefxi in log messages
