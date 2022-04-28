@@ -43,6 +43,9 @@ class TolerantImportName implements ImportName
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits
     {
+        if ($this->importGlobals === false && $nameImport->isFunction() && $nameImport->name()->count() === 1) {
+            return TextEdits::none();
+        }
         $sourceNode = $this->parser->parseSourceFile($source);
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
