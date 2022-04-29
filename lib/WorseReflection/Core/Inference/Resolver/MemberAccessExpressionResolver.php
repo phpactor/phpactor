@@ -18,7 +18,9 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Psalm\Type\Union;
 
 class MemberAccessExpressionResolver implements Resolver
 {
@@ -73,6 +75,7 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
 
+        $types = $memberTypes = [];
         foreach ($classType->classNamedTypes() as $classType) {
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($classType->name());
@@ -95,11 +98,16 @@ class MemberAccessExpressionResolver implements Resolver
                     }
                 }
 
-                return $information->withContainerType($declaringClass)->withType($member->inferredType());
+                $types[] = $declaringClass;
+                $memberTypes[] = $member->inferredType();
+
             }
         }
-
-        return $information->withContainerType($classType);
+        return $information->withContainerType(
+            UnionType::fromTypes(...$types)->reduce()
+        )->withType(
+            UnionType::fromTypes(...$memberTypes)->reduce()
+        );
     }
 
     private static function getFrameTypesForPropertyAtPosition(
@@ -108,20 +116,20 @@ class MemberAccessExpressionResolver implements Resolver
         Type $classType,
         int $position
     ): ?Type {
-        if (!$classType instanceof ClassType) {
-            return null;
-        }
+    if (!$classType instanceof ClassType) {
+        return null;
+    }
 
-        $variable = $frame->properties()
-            ->lessThanOrEqualTo($position)
-            ->byName($propertyName)
-            ->lastOrNull()
-        ;
+    $variable = $frame->properties()
+        ->lessThanOrEqualTo($position)
+        ->byName($propertyName)
+        ->lastOrNull()
+    ;
 
-        if (null === $variable) {
-            return null;
-        }
+    if (null === $variable) {
+        return null;
+    }
 
-        return $variable->type();
+    return $variable->type();
     }
 }

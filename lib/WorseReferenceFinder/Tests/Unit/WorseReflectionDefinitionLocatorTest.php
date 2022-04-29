@@ -125,7 +125,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
-    public function testLocatesToMethodOnUnionTypeReversed(): void
+    public function testLocatesToMethodOnUnionTypeWithOneTypeMissingTheMethod(): void
     {
         $location = $this->locate(<<<'EOT'
             // File: Factory.php
@@ -137,9 +137,22 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
-        self::assertCount(2, $location);
+        self::assertCount(1, $location);
         $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
+    }
+
+    public function testLocatesToMethodOnUnionTypeFromParam(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public function bar() {} }
+            // File: Barfoo.php
+            <?php class Barfoo { }
+            EOT
+        , '<?php class F { function foo(Foobar|Barfoo $bar) { $bar->b<>ar(); }');
+
+        self::assertCount(2, $location);
     }
 
     public function testLocatesToMethodOnUnionType(): void
@@ -150,7 +163,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             // File: Foobar.php
             <?php class Foobar { public function bar() {} }
             // File: Barfoo.php
-            <?php class Barfoo { }
+            <?php class Barfoo { public function bar() {} }
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
