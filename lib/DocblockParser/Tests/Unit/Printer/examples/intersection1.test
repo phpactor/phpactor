@@ -1,0 +1,11 @@
+/** @var Foo&Bar */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   IntersectionNode: = 
+    TypeList: = 
+     ScalarNode: = string|
+     ScalarNode: = bool|
+     NullableNode: = ?
+      ClassNode: = Bar */
