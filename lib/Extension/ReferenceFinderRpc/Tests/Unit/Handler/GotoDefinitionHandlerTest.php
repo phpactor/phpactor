@@ -6,9 +6,10 @@ use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\ReferenceFinder\DefinitionLocation;
-use Phpactor\ReferenceFinder\DefinitionLocator;
+use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class GotoDefinitionHandlerTest extends TestCase
 {
@@ -32,12 +33,14 @@ class GotoDefinitionHandlerTest extends TestCase
 
     public function create(): HandlerTester
     {
-        $locator = new class implements DefinitionLocator {
-            public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
-            {
-                return new DefinitionLocation($document->uri(), $byteOffset);
-            }
-        };
-        return new HandlerTester(new GotoDefinitionHandler($locator));
+        $location = new DefinitionLocation(TextDocumentUri::fromString(self::EXAMPLE_PATH), ByteOffset::fromInt(1));
+        return new HandlerTester(
+            new GotoDefinitionHandler(
+                TestDefinitionLocator::fromSingleLocation(
+                    TypeFactory::unknown(),
+                    $location
+                )
+            )
+        );
     }
 }

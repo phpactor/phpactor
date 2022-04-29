@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Amp\Promise;
+use LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\DefinitionParams;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
@@ -36,9 +37,11 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
-    public function definition(
-        DefinitionParams $params
-    ): Promise {
+    /**
+     * @return Promise<Location>
+     */
+    public function definition(DefinitionParams $params): Promise
+    {
         return \Amp\call(function () use ($params) {
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
@@ -55,7 +58,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
                 return null;
             }
 
-            return $this->locationConverter->toLspLocation($location);
+            return $this->locationConverter->toLspLocation($location->first()->location());
         });
     }
 

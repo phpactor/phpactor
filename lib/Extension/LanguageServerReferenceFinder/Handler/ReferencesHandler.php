@@ -81,7 +81,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $locations = [];
             if ($context->includeDeclaration) {
                 try {
-                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset);
+                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->location();
                     $locations[] = new Location($potentialLocation->uri(), $potentialLocation->offset());
                 } catch (CouldNotLocateDefinition $notFound) {
                 }

@@ -12,6 +12,7 @@ use Phpactor\Extension\ReferenceFinder\Tests\Example\SomeTypeLocator;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\ReferenceFinder\ChainTypeLocator;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
+use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -38,9 +39,11 @@ class ReferenceFinderExtensionTest extends TestCase
         ]);
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);
+        assert($locator instanceof DefinitionLocator);
         $this->assertInstanceOf(ChainDefinitionLocationProvider::class, $locator);
 
         $location = $locator->locateDefinition(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
+        $location = $location->first()->location();
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_OFFSET, $location->offset()->toInt());
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri()->path());
     }

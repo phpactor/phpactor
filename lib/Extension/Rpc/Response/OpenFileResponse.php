@@ -39,7 +39,7 @@ class OpenFileResponse implements Response
         return new self($path);
     }
 
-    public static function fromPathAndOffset(string $path, int $offset)
+    public static function fromPathAndOffset(string $path, int $offset): self
     {
         return new self($path, $offset);
     }

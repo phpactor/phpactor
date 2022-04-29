@@ -14,6 +14,7 @@ use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class GotoDefinitionHandlerTest extends TestCase
 {
@@ -27,7 +28,8 @@ class GotoDefinitionHandlerTest extends TestCase
 
         $tester = $builder->addHandler(new GotoDefinitionHandler(
             $builder->workspace(),
-            TestDefinitionLocator::fromLocation(
+            TestDefinitionLocator::fromSingleLocation(
+                TypeFactory::class('Foo'),
                 new DefinitionLocation($document->uri(), ByteOffset::fromInt(2))
             ),
             new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace()))

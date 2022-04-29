@@ -24,7 +24,7 @@ class DefinitionAndReferenceFinder implements ReferenceFinder
     {
         try {
             $location = $this->locator->locateDefinition($document, $byteOffset);
-            yield PotentialLocation::surely($location);
+            yield PotentialLocation::surely($location->first()->location());
         } catch (CouldNotLocateDefinition $notFound) {
         }
 

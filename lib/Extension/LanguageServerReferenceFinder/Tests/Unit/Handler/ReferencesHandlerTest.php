@@ -20,10 +20,13 @@ use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ReferencesHandlerTest extends TestCase
@@ -115,7 +118,14 @@ class ReferencesHandlerTest extends TestCase
         $this->locator->locateDefinition(
             $document,
             ByteOffset::fromInt(0)
-        )->willReturn(new DefinitionLocation($document->uri(), ByteOffset::fromInt(2)))->shouldBeCalled();
+        )->willReturn(
+            TypeLocations::forLocation(
+                new TypeLocation(
+                    TypeFactory::class('Foo'),
+                    new DefinitionLocation($document->uri(), ByteOffset::fromInt(2))
+                )
+            )
+        )->shouldBeCalled();
 
         $response = $this->createTester()->requestAndWait(ReferencesRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),

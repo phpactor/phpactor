@@ -80,8 +80,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php foob<>ar();');
 
-        $this->assertEquals($this->workspace->path('file1.php'), (string) $location->uri()->path());
-        $this->assertEquals(7, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('file1.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(7, $location->first()->location()->offset()->toInt());
     }
 
     public function testExceptionForFunctionWithNoDefinition(): void
@@ -121,8 +121,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $foo = new Foobar(); $foo->b<>ar();');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     public function testLocatesToMethodOnUnionTypeReversed(): void
@@ -137,8 +137,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     public function testLocatesToMethodOnUnionType(): void
@@ -153,8 +153,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     public function testLocatesConstant(): void
@@ -165,8 +165,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php Foobar::FOO<>BAR;');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     public function testLocatesProperty(): void
@@ -177,8 +177,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $foo = new Foobar(); $foo->foo<>bar;');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     public function testLocatesCase(): void
@@ -192,8 +192,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php FoobarEnum::B<>AR;');
 
-        $this->assertEquals($this->workspace->path('FoobarEnum.php'), $location->uri()->path());
-        $this->assertEquals(24, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('FoobarEnum.php'), $location->first()->location()->uri()->path());
+        $this->assertEquals(24, $location->first()->location()->offset()->toInt());
     }
 
     public function testExceptionIfPropertyIsInterface(): void
@@ -206,8 +206,8 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $foo = new Foobar(); $foo->foo<>bar;');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), $location->uri()->path());
-        $this->assertEquals(21, $location->offset()->toInt());
+        $this->assertEquals($this->workspace->path('Foobar.php'), $location->first()->location()->uri()->path());
+        $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
     protected function locator(): DefinitionLocator

@@ -54,7 +54,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 
         $path = $reflectionClass->sourceCode()->path();
 
-        return new TypeLocations(
+        return new TypeLocations([
             new TypeLocation(
                 $reflectionClass->type(),
                 new Location(
@@ -62,7 +62,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
                     ByteOffset::fromInt($reflectionClass->position()->start())
                 )
             )
-        );
+        ]);
     }
 
     private function extractWord(TextDocument $document, ByteOffset $byteOffset): string

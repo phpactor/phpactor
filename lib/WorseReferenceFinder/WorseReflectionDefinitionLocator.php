@@ -59,9 +59,13 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         $typeLocations = [];
-        foreach ($offset->symbolContext()->type()->classNamedTypes() as $namedClassType) {
+        foreach ($offset->symbolContext()->type()->toTypes() as $namedClassType) {
             $location = $this->gotoDefinition($document, $offset);
             $typeLocations[] = new TypeLocation($namedClassType, $location);
+        }
+
+        if (empty($typeLocations)) {
+            throw new CouldNotLocateDefinition('No definition(s) found');
         }
 
         return new TypeLocations($typeLocations);
