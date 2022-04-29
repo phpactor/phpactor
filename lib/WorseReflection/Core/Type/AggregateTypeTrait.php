@@ -21,7 +21,7 @@ trait AggregateTypeTrait
         $toMerge = [];
         $hasNull = false;
         foreach ($types as $type) {
-            if ($type instanceof UnionType) {
+            if ($type instanceof self) {
                 foreach ($type->types as $utype) {
                     $unique[$utype->__toString()] = $utype;
                 }
@@ -80,7 +80,7 @@ trait AggregateTypeTrait
         return $this;
     }
 
-    public function merge(UnionType $type): self
+    public function merge(self $type): self
     {
         $types = $this->types;
         foreach ($type->types as $type) {
@@ -92,7 +92,7 @@ trait AggregateTypeTrait
 
     public function narrowTo(Type $narrowTypes): Type
     {
-        $narrowTypes = self::toUnion($narrowTypes);
+        $narrowTypes = UnionType::toUnion($narrowTypes);
 
         if (count($narrowTypes->types) === 0) {
             return $this;
@@ -127,7 +127,7 @@ trait AggregateTypeTrait
             if ($type instanceof MissingType) {
                 continue;
             }
-            if ($type instanceof UnionType) {
+            if ($type instanceof self) {
                 $type = $type->reduce();
             }
             $unique[$type->__toString()] = $type;
@@ -138,7 +138,7 @@ trait AggregateTypeTrait
 
     public function remove(Type $remove): Type
     {
-        $remove = self::toUnion($remove);
+        $remove = UnionType::toUnion($remove);
         $removeStrings = array_map(fn (Type $t) => $t->__toString(), $remove->types);
 
         return (new self(...array_filter($this->types, function (Type $type) use ($removeStrings) {
@@ -146,24 +146,12 @@ trait AggregateTypeTrait
         })))->reduce();
     }
 
-    public static function toUnion(Type $type): UnionType
-    {
-        if ($type instanceof NullableType) {
-            return self::toUnion($type->type)->add(TypeFactory::null());
-        }
-        if ($type instanceof UnionType) {
-            return $type;
-        }
-
-        return new self($type);
-    }
-
     public function toTypes(): Types
     {
         return new Types($this->types);
     }
 
-    public function add(Type $type): UnionType
+    public function add(Type $type): self
     {
         return (new self(...array_merge($this->types, [$type])))->filter();
     }

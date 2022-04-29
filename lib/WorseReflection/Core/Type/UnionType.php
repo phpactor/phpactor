@@ -2,11 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-use Closure;
-use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 
 final class UnionType extends Type
 {
@@ -20,5 +17,17 @@ final class UnionType extends Type
     public function toPhpString(): string
     {
         return implode('|', array_map(fn (Type $type) => $type->toPhpString(), $this->types));
+    }
+
+    public static function toUnion(Type $type): UnionType
+    {
+        if ($type instanceof NullableType) {
+            return self::toUnion($type->type)->add(TypeFactory::null());
+        }
+        if ($type instanceof UnionType) {
+            return $type;
+        }
+
+        return new self($type);
     }
 }
