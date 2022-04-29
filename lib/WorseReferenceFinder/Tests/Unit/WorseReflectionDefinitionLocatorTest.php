@@ -216,7 +216,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
     public function testExceptionIfPropertyIsInterface(): void
     {
         $this->expectException(CouldNotLocateDefinition::class);
-        $this->expectExceptionMessage('No definition(s) found');
+        $this->expectExceptionMessage('is an interface');
         $location = $this->locate(<<<'EOT'
             // File: Foobar.php
             <?php interface Foobar { public $foobar; }

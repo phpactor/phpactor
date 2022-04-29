@@ -100,8 +100,13 @@ class MemberAccessExpressionResolver implements Resolver
                 $memberTypes[] = $member->inferredType();
             }
         }
+
+        $containerType = UnionType::fromTypes(...$types)->reduce();
+        if (!$containerType->isDefined()) {
+            $containerType = $classType;
+        }
         return $information->withContainerType(
-            $classType,
+            $containerType
         )->withType(
             UnionType::fromTypes(...$memberTypes)->reduce()
         );

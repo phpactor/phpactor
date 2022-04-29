@@ -151,8 +151,8 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $containerType = $symbolContext->containerType();
 
         $locations = [];
+        dump($containerType->__toString());
         foreach ($containerType->classNamedTypes() as $namedType) {
-
             try {
                 $containingClass = $this->reflector->reflectClassLike((string) $namedType);
             } catch (NotFound $e) {
@@ -196,13 +196,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             }
 
             if (false === $members->has($symbolName)) {
-                throw new CouldNotLocateDefinition(sprintf(
-                    'Class "%s" has no %s named "%s", has: "%s"',
-                    $containingClass->name(),
-                    $symbolType,
-                    $symbolName,
-                    implode('", "', $members->keys())
-                ));
+                continue;
             }
 
             $member = $members->get($symbolName);
