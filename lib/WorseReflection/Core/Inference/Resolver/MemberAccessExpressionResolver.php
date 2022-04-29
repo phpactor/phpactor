@@ -82,7 +82,9 @@ class MemberAccessExpressionResolver implements Resolver
             } catch (NotFound $e) {
                 continue;
             }
-            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+
+            // TODO: we cannot tell the different between enums and constants here
+            foreach ($reflection->members()->byName($memberName) as $member) {
                 $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
 
                 if ($member instanceof ReflectionProperty) {

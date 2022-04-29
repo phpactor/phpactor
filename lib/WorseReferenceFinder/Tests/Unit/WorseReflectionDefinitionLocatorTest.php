@@ -43,7 +43,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
     public function testExceptionWhenNoContainingClass(): void
     {
         $this->expectException(CouldNotLocateDefinition::class);
-        $this->expectExceptionMessage('Containing class');
+        $this->expectExceptionMessage('No definition(s) found');
 
         [$source, $offset] = ExtractOffset::fromSource('<?php $foo->fo<>');
 
@@ -101,7 +101,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
     public function testExceptionIfMethodNotFound(): void
     {
         $this->expectException(CouldNotLocateDefinition::class);
-        $this->expectExceptionMessage('Class "Foobar" has no property');
+        $this->expectExceptionMessage('No definition(s) found');
         $location = $this->locate(<<<'EOT'
             // File: Foobar.php
             <?php 
@@ -148,11 +148,13 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             // File: Foobar.php
             <?php class Foobar { public function bar() {} }
             // File: Barfoo.php
-            <?php class Barfoo { }
+            <?php class Barfoo { public function bar() {} }
             EOT
-        , '<?php class F { function foo(Foobar|Barfoo $bar) { $bar->b<>ar(); }');
+        , '<?php class F { function foo(Foobar|Barfoo $bar) { $bar->b<>ar(); }}');
 
         self::assertCount(2, $location);
+        self::assertEquals('Foobar', $location->atIndex(0)->type()->__toString());
+        self::assertEquals('Barfoo', $location->atIndex(1)->type()->__toString());
     }
 
     public function testLocatesToMethodOnUnionType(): void
@@ -214,7 +216,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
     public function testExceptionIfPropertyIsInterface(): void
     {
         $this->expectException(CouldNotLocateDefinition::class);
-        $this->expectExceptionMessage('is an interface');
+        $this->expectExceptionMessage('No definition(s) found');
         $location = $this->locate(<<<'EOT'
             // File: Foobar.php
             <?php interface Foobar { public $foobar; }
