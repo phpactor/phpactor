@@ -124,44 +124,49 @@ class HoverHandler implements Handler, CanRegisterCapabilities
     {
         $name = $symbolContext->symbol()->name();
         $container = $symbolContext->containerType();
+        $infos = [];
 
-        try {
-            $class = $this->reflector->reflectClassLike((string) $container);
-            $member = null;
-            $sep = '#';
+        foreach ($container->classNamedTypes() as $namedType) {
+            try {
+                $class = $this->reflector->reflectClassLike((string) $namedType);
+                $member = null;
+                $sep = '#';
 
-            // note that all class-likes (classes, traits and interfaces) have
-            // methods but not all have constants or properties, so we play safe
-            // with members() which is first-come-first-serve, rather than risk
-            // a fatal error because of a non-existing method.
-            $symbolType = $symbolContext->symbol()->symbolType();
-            switch ($symbolType) {
-                case Symbol::METHOD:
-                    $member = $class->methods()->get($name);
-                    $sep = '#';
-                    break;
-                case Symbol::CONSTANT:
-                    $sep = '::';
-                    $member = $class->members()->get($name);
-                    break;
-                case Symbol::PROPERTY:
-                    $sep = '$';
-                    $member = $class->members()->get($name);
-                    break;
-                default:
-                    return sprintf('Unknown symbol type "%s"', $symbolType);
+                // note that all class-likes (classes, traits and interfaces) have
+                // methods but not all have constants or properties, so we play safe
+                // with members() which is first-come-first-serve, rather than risk
+                // a fatal error because of a non-existing method.
+                $symbolType = $symbolContext->symbol()->symbolType();
+                switch ($symbolType) {
+                    case Symbol::METHOD:
+                        $member = $class->methods()->get($name);
+                        $sep = '#';
+                        break;
+                    case Symbol::CONSTANT:
+                        $sep = '::';
+                        $member = $class->members()->get($name);
+                        break;
+                    case Symbol::PROPERTY:
+                        $sep = '$';
+                        $member = $class->members()->get($name);
+                        break;
+                    default:
+                        return sprintf('Unknown symbol type "%s"', $symbolType);
+                }
+
+                $infos[] = $this->renderer->render(new HoverInformation(
+                    $namedType->short() .' '.$sep.' '.(string)$member->name(),
+                    $this->renderer->render(
+                        new MemberDocblock($member)
+                    ),
+                    $member
+                ));
+            } catch (NotFound $e) {
+                continue;
             }
-
-            return $this->renderer->render(new HoverInformation(
-                (string)$container.' '.$sep.' '.(string)$member->name(),
-                $this->renderer->render(
-                    new MemberDocblock($member)
-                ),
-                $member
-            ));
-        } catch (NotFound $e) {
-            return $e->getMessage();
         }
+
+        return implode("\n", $infos);
     }
 
     private function renderFunction(NodeContext $symbolContext): string
@@ -180,7 +185,11 @@ class HoverHandler implements Handler, CanRegisterCapabilities
     {
         try {
             $class = $this->reflector->reflectClassLike((string) $type);
-            return $this->renderer->render(new HoverInformation((string)$type, $class->docblock()->formatted(), $class));
+            return $this->renderer->render(new HoverInformation(
+                $type->short(),
+                $class->docblock()->formatted(),
+                $class
+            ));
         } catch (NotFound $e) {
             return $e->getMessage();
         }

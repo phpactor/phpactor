@@ -27,6 +27,11 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
                 continue;
             }
 
+            /** @phpstan-ignore-next-line TP: lie */
+            if (!$member->constElements) {
+                continue;
+            }
+
             foreach ($member->constElements->getElements() as $constElement) {
                 $items[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionClass, $member, $constElement);
             }

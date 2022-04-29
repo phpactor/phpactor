@@ -23,7 +23,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , $text);
 
-        $this->assertEquals($this->workspace->path($expectedPath), $location->uri()->path());
+        $this->assertEquals($this->workspace->path($expectedPath), $location->first()->location()->uri()->path());
     }
 
     public function testExceptionIfCannotFindClass(): void

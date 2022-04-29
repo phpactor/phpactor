@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
@@ -72,10 +73,12 @@ class MemberAccessExpressionResolver implements Resolver
             }
         }
 
+        $types = $memberTypes = [];
 
-        foreach ($classType->classNamedTypes() as $classType) {
+        // this could be a union or a nullable
+        foreach ($classType->classNamedTypes() as $subType) {
             try {
-                $reflection = $resolver->reflector()->reflectClassLike($classType->name());
+                $reflection = $resolver->reflector()->reflectClassLike($subType->name());
             } catch (NotFound $e) {
                 continue;
             }
@@ -86,20 +89,31 @@ class MemberAccessExpressionResolver implements Resolver
                     $type = self::getFrameTypesForPropertyAtPosition(
                         $frame,
                         (string) $memberName,
-                        $classType,
+                        $subType,
                         $node->getEndPosition(),
                     );
 
                     if ($type) {
-                        return $information->withContainerType($classType)->withType($type);
+                        return $information->withContainerType($subType)->withType($type);
                     }
                 }
 
-                return $information->withContainerType($declaringClass)->withType($member->inferredType());
+                $types[] = $declaringClass;
+                $memberTypes[] = $member->inferredType();
             }
         }
 
-        return $information->withContainerType($classType);
+        $containerType = UnionType::fromTypes(...$types)->reduce();
+
+        if (!$containerType->isDefined()) {
+            $containerType = $classType;
+        }
+
+        return $information->withContainerType(
+            $containerType
+        )->withType(
+            UnionType::fromTypes(...$memberTypes)->reduce()
+        );
     }
 
     private static function getFrameTypesForPropertyAtPosition(
@@ -113,10 +127,10 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         $variable = $frame->properties()
-            ->lessThanOrEqualTo($position)
-            ->byName($propertyName)
-            ->lastOrNull()
-        ;
+        ->lessThanOrEqualTo($position)
+        ->byName($propertyName)
+        ->lastOrNull()
+    ;
 
         if (null === $variable) {
             return null;

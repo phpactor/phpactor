@@ -2,10 +2,12 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
@@ -18,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
@@ -33,7 +36,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     }
 
     
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
+    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {
             throw new CouldNotLocateDefinition('I only work with PHP files');
@@ -56,10 +59,17 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($notFound->getMessage(), 0, $notFound);
         }
 
-        return $this->gotoDefinition($document, $offset);
+        $typeLocations = [];
+        $typeLocations = $this->gotoDefinition($document, $offset);
+
+        if ($typeLocations->count() === 0) {
+            throw new CouldNotLocateDefinition('No definition(s) found');
+        }
+
+        return $typeLocations;
     }
 
-    private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): DefinitionLocation
+    private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): TypeLocations
     {
         $symbolContext = $offset->symbolContext();
         switch ($symbolContext->symbol()->symbolType()) {
@@ -80,7 +90,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ));
     }
 
-    private function gotoClass(NodeContext $symbolContext): DefinitionLocation
+    private function gotoClass(NodeContext $symbolContext): TypeLocations
     {
         $className = $symbolContext->type();
 
@@ -101,13 +111,13 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new DefinitionLocation(
+        return new TypeLocations([new TypeLocation($className, new Location(
             TextDocumentUri::fromString($path),
             ByteOffset::fromInt($class->position()->start())
-        );
+        ))]);
     }
 
-    private function gotoFunction(NodeContext $symbolContext): DefinitionLocation
+    private function gotoFunction(NodeContext $symbolContext): TypeLocations
     {
         $functionName = $symbolContext->symbol()->name();
 
@@ -126,41 +136,43 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new DefinitionLocation(
-            TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($function->position()->start())
-        );
+        return new TypeLocations([
+            new TypeLocation(TypeFactory::unknown(), new Location(
+                TextDocumentUri::fromString($path),
+                ByteOffset::fromInt($function->position()->start())
+            ))
+        ]);
     }
 
-    private function gotoMember(NodeContext $symbolContext): DefinitionLocation
+    private function gotoMember(NodeContext $symbolContext): TypeLocations
     {
         $symbolName = $symbolContext->symbol()->name();
         $symbolType = $symbolContext->symbol()->symbolType();
+        $containerType = $symbolContext->containerType();
 
-        if (false === ($symbolContext->containerType()->isDefined())) {
-            throw new CouldNotLocateDefinition(sprintf('Containing class for member "%s" could not be determined', $symbolName));
-        }
+        $locations = [];
+        dump($containerType->__toString());
+        foreach ($containerType->classNamedTypes() as $namedType) {
+            try {
+                $containingClass = $this->reflector->reflectClassLike((string) $namedType);
+            } catch (NotFound $e) {
+                continue;
+            }
 
-        try {
-            $containingClass = $this->reflector->reflectClassLike((string) $symbolContext->containerType());
-        } catch (NotFound $e) {
-            throw new CouldNotLocateDefinition($e->getMessage());
-        }
+            if ($symbolType === Symbol::PROPERTY && $containingClass instanceof ReflectionInterface) {
+                throw new CouldNotLocateDefinition(sprintf('Symbol is a property and class "%s" is an interface', (string) $containingClass->name()));
+            }
 
-        if ($symbolType === Symbol::PROPERTY && $containingClass instanceof ReflectionInterface) {
-            throw new CouldNotLocateDefinition(sprintf('Symbol is a property and class "%s" is an interface', (string) $containingClass->name()));
-        }
+            $path = $containingClass->sourceCode()->path();
 
-        $path = $containingClass->sourceCode()->path();
+            if (null === $path) {
+                throw new CouldNotLocateDefinition(sprintf(
+                    'The source code for class "%s" has no path associated with it.',
+                    (string) $containingClass->name()
+                ));
+            }
 
-        if (null === $path) {
-            throw new CouldNotLocateDefinition(sprintf(
-                'The source code for class "%s" has no path associated with it.',
-                (string) $containingClass->name()
-            ));
-        }
-
-        switch ($symbolType) {
+            switch ($symbolType) {
             case Symbol::METHOD:
                 $members = $containingClass->methods();
                 break;
@@ -181,23 +193,20 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                     'Unhandled symbol type "%s"',
                     $symbolType
                 ));
-        }
+            }
 
-        if (false === $members->has($symbolName)) {
-            throw new CouldNotLocateDefinition(sprintf(
-                'Class "%s" has no %s named "%s", has: "%s"',
-                $containingClass->name(),
-                $symbolType,
-                $symbolName,
-                implode('", "', $members->keys())
+            if (false === $members->has($symbolName)) {
+                continue;
+            }
+
+            $member = $members->get($symbolName);
+
+            $locations[] = new TypeLocation($namedType, new Location(
+                TextDocumentUri::fromString($path),
+                ByteOffset::fromInt($member->position()->start())
             ));
         }
 
-        $member = $members->get($symbolName);
-
-        return new DefinitionLocation(
-            TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($member->position()->start())
-        );
+        return new TypeLocations($locations);
     }
 }

@@ -70,4 +70,9 @@ class TypeLocations implements IteratorAggregate
             $typeName
         ));
     }
+
+    public static function forLocation(TypeLocation $location): self
+    {
+        return new self([$location]);
+    }
 }

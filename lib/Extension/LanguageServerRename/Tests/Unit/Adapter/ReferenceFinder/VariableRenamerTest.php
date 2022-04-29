@@ -9,11 +9,11 @@ use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\VariableRena
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdits;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
-use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefinedDefinitionLocator;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefinedReferenceFinder;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\PotentialLocation;
+use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
@@ -21,6 +21,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class VariableRenamerTest extends TestCase
 {
@@ -195,7 +196,7 @@ class VariableRenamerTest extends TestCase
     {
         $variableRenamer = new VariableRenamer(
             new DefinitionAndReferenceFinder(
-                new PredefinedDefinitionLocator($defintionLocation),
+                TestDefinitionLocator::fromSingleLocation(TypeFactory::unknown(), $defintionLocation),
                 new PredefinedReferenceFinder(...$references),
             ),
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),

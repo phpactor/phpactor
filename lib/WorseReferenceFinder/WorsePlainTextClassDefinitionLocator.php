@@ -7,10 +7,12 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\WordAtOffset;
@@ -36,7 +38,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
     }
 
     
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): DefinitionLocation
+    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         $word = $this->extractWord($document, $byteOffset);
         $word = $this->resolveClassName($document, $byteOffset, $word);
@@ -52,10 +54,15 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 
         $path = $reflectionClass->sourceCode()->path();
 
-        return new DefinitionLocation(
-            TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($reflectionClass->position()->start())
-        );
+        return new TypeLocations([
+            new TypeLocation(
+                $reflectionClass->type(),
+                new Location(
+                    TextDocumentUri::fromString($path),
+                    ByteOffset::fromInt($reflectionClass->position()->start())
+                )
+            )
+        ]);
     }
 
     private function extractWord(TextDocument $document, ByteOffset $byteOffset): string

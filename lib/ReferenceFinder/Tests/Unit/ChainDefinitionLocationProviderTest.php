@@ -8,10 +8,13 @@ use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
+use Phpactor\ReferenceFinder\TypeLocation;
+use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -85,8 +88,11 @@ class ChainDefinitionLocationProviderTest extends TestCase
         $locator->locateDefinition($this->document, $this->offset);
     }
 
-    private function createLocation()
+    private function createLocation(): TypeLocations
     {
-        return new DefinitionLocation(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+        return new TypeLocations([new TypeLocation(TypeFactory::unknown(), new DefinitionLocation(
+            TextDocumentUri::fromString('/path/to.php'),
+            ByteOffset::fromInt(1234)
+        ))]);
     }
 }

@@ -12,6 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use function iterator_to_array;
 
 class DefinitionAndReferenceFinderTest extends TestCase
@@ -19,7 +20,10 @@ class DefinitionAndReferenceFinderTest extends TestCase
     public function testReturnsBothDefinitionAndReference(): void
     {
         $finder = new DefinitionAndReferenceFinder(
-            new TestDefinitionLocator(new DefinitionLocation(TextDocumentUri::fromString('/path'), ByteOffset::fromInt(1))),
+            TestDefinitionLocator::fromSingleLocation(
+                TypeFactory::unknown(),
+                new DefinitionLocation(TextDocumentUri::fromString('/path'), ByteOffset::fromInt(1))
+            ),
             new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffset('/path', 2)))
         );
         $document = TextDocumentBuilder::create('asd')->build();
