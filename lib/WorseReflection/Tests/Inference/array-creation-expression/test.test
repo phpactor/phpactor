@@ -1,0 +1,9 @@
+<?php
+
+/** @var array{One,Two} */
+$a;
+
+[$b, $c] = $a;
+
+wrAssertType('One', $b);
+wrAssertType('Two', $c);
