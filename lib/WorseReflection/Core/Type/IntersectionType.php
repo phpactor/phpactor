@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 
-final class UnionType extends Type
+final class IntersectionType extends Type
 {
     use AggregateTypeTrait;
 }
