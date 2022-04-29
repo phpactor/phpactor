@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Psalm\Type\Union;
 
 class MemberAccessExpressionResolver implements Resolver
 {
@@ -74,39 +73,35 @@ class MemberAccessExpressionResolver implements Resolver
             }
         }
 
-
         $types = $memberTypes = [];
-        foreach ($classType->classNamedTypes() as $classType) {
+        foreach ($classType->classNamedTypes() as $subType) {
             try {
-                $reflection = $resolver->reflector()->reflectClassLike($classType->name());
+                $reflection = $resolver->reflector()->reflectClassLike($subType->name());
             } catch (NotFound $e) {
                 continue;
             }
-
-            // TODO: we cannot tell the different between enums and constants here
-            foreach ($reflection->members()->byName($memberName) as $member) {
+            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
 
                 if ($member instanceof ReflectionProperty) {
                     $type = self::getFrameTypesForPropertyAtPosition(
                         $frame,
                         (string) $memberName,
-                        $classType,
+                        $subType,
                         $node->getEndPosition(),
                     );
 
                     if ($type) {
-                        return $information->withContainerType($classType)->withType($type);
+                        return $information->withContainerType($subType)->withType($type);
                     }
                 }
 
                 $types[] = $declaringClass;
                 $memberTypes[] = $member->inferredType();
-
             }
         }
         return $information->withContainerType(
-            UnionType::fromTypes(...$types)->reduce()
+            $classType,
         )->withType(
             UnionType::fromTypes(...$memberTypes)->reduce()
         );
@@ -118,20 +113,20 @@ class MemberAccessExpressionResolver implements Resolver
         Type $classType,
         int $position
     ): ?Type {
-    if (!$classType instanceof ClassType) {
-        return null;
-    }
+        if (!$classType instanceof ClassType) {
+            return null;
+        }
 
-    $variable = $frame->properties()
+        $variable = $frame->properties()
         ->lessThanOrEqualTo($position)
         ->byName($propertyName)
         ->lastOrNull()
     ;
 
-    if (null === $variable) {
-        return null;
-    }
+        if (null === $variable) {
+            return null;
+        }
 
-    return $variable->type();
+        return $variable->type();
     }
 }
