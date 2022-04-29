@@ -7,6 +7,8 @@ use Phpactor\LanguageServerProtocol\DefinitionRequest;
 use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
+use Phpactor\LanguageServerProtocol\TypeDefinitionRequest;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -20,6 +22,7 @@ use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use function Amp\Promise\wait;
 
 class GotoDefinitionHandlerTest extends TestCase
 {
@@ -67,7 +70,18 @@ class GotoDefinitionHandlerTest extends TestCase
                 )
             )
         ];
-        [$tester, $watcher] = $this->createTester($locations);
+        [$tester, $builder] = $this->createTester($locations);
+        $watcher = $builder->responseWatcher();
+        $promise = $tester->request(TypeDefinitionRequest::METHOD, [
+            'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
+            'position' => ProtocolFactory::position(0, 0),
+        ]);
+        $watcher->resolveLastResponse(new MessageActionItem('Foobar'));
+        $response = wait($promise);
+        $location = $response->result;
+        $this->assertInstanceOf(Location::class, $location);
+        $this->assertEquals(self::EXAMPLE_URI, $location->uri);
+        $this->assertEquals(2, $location->range->start->character);
     }
 
     /**
