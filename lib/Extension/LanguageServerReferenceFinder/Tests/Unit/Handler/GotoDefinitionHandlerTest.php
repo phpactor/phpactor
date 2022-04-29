@@ -8,7 +8,6 @@ use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
 use Phpactor\LanguageServerProtocol\MessageActionItem;
-use Phpactor\LanguageServerProtocol\TypeDefinitionRequest;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;

@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
@@ -59,10 +60,8 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         $typeLocations = [];
-        foreach ($offset->symbolContext()->type()->toTypes() as $namedClassType) {
-            $location = $this->gotoDefinition($document, $offset);
-            $typeLocations[] = new TypeLocation($namedClassType, $location);
-        }
+        $location = $this->gotoDefinition($document, $offset);
+        $typeLocations[] = new TypeLocation(TypeFactory::unknown(), $location);
 
         if (empty($typeLocations)) {
             throw new CouldNotLocateDefinition('No definition(s) found');

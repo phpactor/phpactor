@@ -33,8 +33,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
         DefinitionLocator $definitionLocator,
         LocationConverter $locationConverter,
         ClientApi $clientApi
-    )
-    {
+    ) {
         $this->definitionLocator = $definitionLocator;
         $this->workspace = $workspace;
         $this->locationConverter = $locationConverter;
