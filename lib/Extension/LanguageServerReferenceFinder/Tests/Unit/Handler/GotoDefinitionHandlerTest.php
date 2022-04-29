@@ -72,7 +72,7 @@ class GotoDefinitionHandlerTest extends TestCase
         ];
         [$tester, $builder] = $this->createTester($locations);
         $watcher = $builder->responseWatcher();
-        $promise = $tester->request(TypeDefinitionRequest::METHOD, [
+        $promise = $tester->request(DefinitionRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
             'position' => ProtocolFactory::position(0, 0),
         ]);
@@ -95,7 +95,8 @@ class GotoDefinitionHandlerTest extends TestCase
         $tester = $builder->addHandler(new GotoDefinitionHandler(
             $builder->workspace(),
             new TestDefinitionLocator(new TypeLocations($locations)),
-            new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace()))
+            new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace())),
+            $builder->clientApi()
         ))->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_TEXT);
         return [$tester, $builder];
