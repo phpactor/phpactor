@@ -54,4 +54,16 @@ class ArrayShapeType extends ArrayType implements Generalizable
     {
         return new ArrayType($this->keyType, $this->valueType);
     }
+
+    /**
+     * @param array-key $offset $offset
+     */
+    public function typeAtOffset($offset): Type
+    {
+        if (isset($this->typeMap[$offset])) {
+            return $this->typeMap[$offset];
+        }
+
+        return new MissingType();
+    }
 }

@@ -24,6 +24,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -235,6 +236,10 @@ class AssignmentWalker extends AbstractWalker
                     'symbol_type' => Symbol::VARIABLE,
                 ]
             );
+
+            if ($type instanceof ArrayShapeType) {
+                $variableContext = $variableContext->withType($type->typeAtOffset($index));
+            }
         
             if ($type instanceof ArrayLiteral) {
                 $variableContext = $variableContext->withType($type->typeAtOffset($index));
