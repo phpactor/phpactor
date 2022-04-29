@@ -1,7 +1,8 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerHover\Tests\Unit\Handler;
+namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Handler;
 
+use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Hover;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
@@ -32,7 +33,7 @@ class HoverHandlerTest extends IntegrationTestCase
         $this->assertInstanceOf(Hover::class, $result);
     }
 
-    public function provideHover()
+    public function provideHover(): Generator
     {
         yield 'var' => [
             '<?php $foo = "foo"; $f<>oo;',
@@ -80,6 +81,31 @@ class HoverHandlerTest extends IntegrationTestCase
                      */
                     private function f<>oo():string {} 
                 }
+                EOT
+            ,
+        ];
+
+        yield 'method on a union' => [
+            <<<'EOT'
+                <?php 
+
+                class Barfoo {
+                    /** 
+                     * The original documentation
+                     */
+                    private function foo():string {} 
+                }
+                class Foobar {
+                    /** 
+                     * The original documentation
+                     */
+                    private function foo():string {} 
+                }
+
+                function foo(Barfoo|Foobar $foo) {
+                    $foo->fo<>o();
+                }
+
                 EOT
             ,
         ];
