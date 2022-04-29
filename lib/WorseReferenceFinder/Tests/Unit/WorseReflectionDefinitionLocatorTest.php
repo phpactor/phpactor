@@ -137,6 +137,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
+        self::assertCount(2, $location);
         $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
@@ -153,6 +154,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , '<?php $f = Factory::create(); $f->b<>ar();');
 
+        self::assertCount(2, $location);
         $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
