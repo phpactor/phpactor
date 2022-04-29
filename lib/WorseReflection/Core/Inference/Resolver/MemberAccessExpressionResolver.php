@@ -74,6 +74,8 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         $types = $memberTypes = [];
+
+        // this could be a union or a nullable
         foreach ($classType->classNamedTypes() as $subType) {
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($subType->name());
@@ -102,9 +104,11 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         $containerType = UnionType::fromTypes(...$types)->reduce();
+
         if (!$containerType->isDefined()) {
             $containerType = $classType;
         }
+
         return $information->withContainerType(
             $containerType
         )->withType(
