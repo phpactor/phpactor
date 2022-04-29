@@ -239,8 +239,8 @@ class CompletionWorseExtension implements Extension
     private function getCompletors(): array
     {
         return [
-            'class_alias' => [
-                'Completion for class aliases',
+            'imported_names' => [
+                'Completion for names imported into the current namespace',
                 function (Container $container) {
                     return new ImportedNameCompletor(
                     );

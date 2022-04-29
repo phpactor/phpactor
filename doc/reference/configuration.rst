@@ -249,18 +249,18 @@ CompletionWorseExtension
 ------------------------
 
 
-.. _param_completion_worse.completor.class_alias.enabled:
+.. _param_completion_worse.completor.imported_names.enabled:
 
 
-``completion_worse.completor.class_alias.enabled``
-""""""""""""""""""""""""""""""""""""""""""""""""""
+``completion_worse.completor.imported_names.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
 
-Enable or disable the ``class_alias`` completor.
+Enable or disable the ``imported_names`` completor.
 
-Completion for class aliases.
+Completion for names imported into the current namespace.
 
 
 **Default**: ``true``
