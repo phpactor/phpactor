@@ -8,7 +8,6 @@ use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
@@ -77,7 +76,6 @@ class CodeTransformExtension implements Extension
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
     public const PARAM_IMPORT_GLOBALS = 'code_transform.import_globals';
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
-    private const SERVICE_TOLERANT_PARSER = 'code_transform.tolerant_parser';
 
     
     public function configure(Resolver $schema): void
@@ -222,7 +220,7 @@ class CodeTransformExtension implements Extension
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
                 $container->get(Updater::class),
-                null,
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->getParameter(self::PARAM_IMPORT_GLOBALS),
             );
         });
@@ -270,15 +268,11 @@ class CodeTransformExtension implements Extension
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
                 $container->get(TextFormat::class),
-                $container->get(self::SERVICE_TOLERANT_PARSER)
+                $container->get(WorseReflectionExtension::SERVICE_PARSER)
             );
         });
         $container->register(BuilderFactory::class, function (Container $container) {
             return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
-        });
-
-        $container->register(self::SERVICE_TOLERANT_PARSER, function (Container $container) {
-            return new Parser();
         });
     }
 
@@ -292,7 +286,7 @@ class CodeTransformExtension implements Extension
         $container->register(MissingMethodFinder::class, function (Container $container) {
             return new WorseMissingMethodFinder(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(self::SERVICE_TOLERANT_PARSER)
+                $container->get(WorseReflectionExtension::SERVICE_PARSER)
             );
         });
     }
