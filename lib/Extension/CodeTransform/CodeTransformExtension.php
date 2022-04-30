@@ -222,7 +222,7 @@ class CodeTransformExtension implements Extension
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
                 $container->get(Updater::class),
-                null,
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->getParameter(self::PARAM_IMPORT_GLOBALS),
             );
         });
