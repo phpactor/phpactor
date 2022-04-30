@@ -30,6 +30,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
+    const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
 
     
     public function configure(Resolver $schema): void
@@ -66,7 +67,7 @@ class WorseReflectionExtension implements Extension
     {
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->get('worse_reflection.tolerant_parser')))
+                ->withSourceReflectorFactory(new TolerantFactory($container->get(self::SERVICE_PARSER)))
                 ->cacheLifetime($container->getParameter(self::PARAM_CACHE_LIFETIME));
 
             if ($container->getParameter(self::PARAM_ENABLE_CONTEXT_LOCATION)) {
@@ -97,7 +98,7 @@ class WorseReflectionExtension implements Extension
             return $builder->build();
         });
 
-        $container->register('worse_reflection.tolerant_parser', function (Container $container) {
+        $container->register(self::SERVICE_PARSER, function (Container $container) {
             return new CachedParser();
         });
 
