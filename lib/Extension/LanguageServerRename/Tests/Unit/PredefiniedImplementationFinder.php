@@ -11,7 +11,8 @@ class PredefiniedImplementationFinder implements ClassImplementationFinder
 {
     private Locations $locations;
 
-    public function __construct(Locations $locations) {
+    public function __construct(Locations $locations)
+    {
         $this->locations = $locations;
     }
 

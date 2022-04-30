@@ -33,18 +33,6 @@ class MemberRenamer extends AbstractReferenceRenamer
         $this->implementationFinder = $implementationFinder;
     }
 
-    /**
-     * @return Generator<LocatedTextEdit>
-     */
-    protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
-    {
-        foreach ($this->implementationFinder->findImplementations($textDocument, $offset) as $location) {
-            yield $this->renameEdit($location, $range, $originalName, $newName);
-        }
-
-        yield from parent::doRename($textDocument, $offset, $range, $originalName, $newName);
-    }
-
     public function getRenameRangeForNode(Node $node): ?ByteOffsetRange
     {
         if ($node instanceof MethodDeclaration) {
@@ -94,5 +82,17 @@ class MemberRenamer extends AbstractReferenceRenamer
         }
 
         return null;
+    }
+
+    /**
+     * @return Generator<LocatedTextEdit>
+     */
+    protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
+    {
+        foreach ($this->implementationFinder->findImplementations($textDocument, $offset) as $location) {
+            yield $this->renameEdit($location, $range, $originalName, $newName);
+        }
+
+        yield from parent::doRename($textDocument, $offset, $range, $originalName, $newName);
     }
 }

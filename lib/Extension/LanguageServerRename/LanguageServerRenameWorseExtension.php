@@ -25,7 +25,6 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\TextDocumentLocator;

@@ -9,8 +9,6 @@ use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
-use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
-use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -82,15 +80,6 @@ abstract class AbstractReferenceRenamer implements Renamer
         return ByteOffsetRange::fromInts($tokenOrNode->start, $tokenOrNode->getEndPosition());
     }
 
-    private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string
-    {
-        return substr(
-            $textDocument->__toString(),
-            $range->start()->toInt(),
-            $range->end()->toInt() - $range->start()->toInt()
-        );
-    }
-
     protected function renameEdit(Location $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
     {
         $referenceDocument = $this->locator->get($location->uri());
@@ -123,6 +112,15 @@ abstract class AbstractReferenceRenamer implements Renamer
                 $range->end()->toInt() - $range->start()->toInt(),
                 $newName
             )
+        );
+    }
+
+    private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string
+    {
+        return substr(
+            $textDocument->__toString(),
+            $range->start()->toInt(),
+            $range->end()->toInt() - $range->start()->toInt()
         );
     }
 }
