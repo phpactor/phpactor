@@ -219,6 +219,22 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
             2, 4 // total number is multipled due to implementation recursion
         ];
 
+        yield 'inherited members' => [
+            <<<'EOT'
+                // File: project/subject.php
+                <?php namespace Bar;class Foo1 {public function ba<>r(){}}
+
+                // File: project/class2.php
+                <?php namespace Bar;class Foo2 extends Foo1 {public function bar(){}}
+
+                // File: project/class3.php
+                <?php namespace Bar;class Foo3 extends Foo1 {public function bar(){}}
+
+                EOT
+        ,
+            3, 3
+        ];
+
         yield 'static properties' => [
             <<<'EOT'
                 // File: project/foobar.php
