@@ -25,6 +25,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ls] Fixed class completion performance
   - [ct] Add option to disable importing global functions
   - [cmp] (Better) support for completing imported names #1490
   - [wr] reset,array_shift and array_pop stubs
