@@ -21,9 +21,11 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\TextDocumentLocator;
@@ -53,7 +55,8 @@ class LanguageServerRenameWorseExtension implements Extension
             return new MemberRenamer(
                 $container->get(DefinitionAndReferenceFinder::class),
                 $container->get(TextDocumentLocator::class),
-                $container->get('worse_reflection.tolerant_parser')
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(IndexedImplementationFinder::class),
             );
         }, [
             LanguageServerRenameExtension::TAG_RENAMER => []

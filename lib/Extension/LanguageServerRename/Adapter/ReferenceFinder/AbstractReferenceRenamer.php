@@ -9,6 +9,8 @@ use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerRename\Model\Exception\CouldNotRename;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Model\Renamer;
+use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
+use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -41,12 +43,18 @@ abstract class AbstractReferenceRenamer implements Renamer
         return $this->getRenameRangeForNode($node);
     }
 
-    
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         $range = $this->getRenameRange($textDocument, $offset);
         $originalName = $this->rangeText($textDocument, $range);
+        yield from $this->doRename($textDocument, $offset, $range, $originalName, $newName);
+    }
 
+    /**
+     * @return Generator<LocatedTextEdit>
+     */
+    protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
+    {
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
             if (!$reference->isSurely()) {
                 continue;
@@ -54,7 +62,6 @@ abstract class AbstractReferenceRenamer implements Renamer
 
             yield $this->renameEdit($reference->location(), $range, $originalName, $newName);
         }
-
     }
 
     abstract protected function getRenameRangeForNode(Node $node): ?ByteOffsetRange;
@@ -84,7 +91,7 @@ abstract class AbstractReferenceRenamer implements Renamer
         );
     }
 
-    private function renameEdit(Location $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
+    protected function renameEdit(Location $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
     {
         $referenceDocument = $this->locator->get($location->uri());
         

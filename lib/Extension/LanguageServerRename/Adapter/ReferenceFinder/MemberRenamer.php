@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder;
 
+use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\ConstElement;
@@ -10,10 +11,40 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Parser;
+use Phpactor\ReferenceFinder\ClassImplementationFinder;
+use Phpactor\ReferenceFinder\ReferenceFinder;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentLocator;
 
 class MemberRenamer extends AbstractReferenceRenamer
 {
+    private ClassImplementationFinder $implementationFinder;
+
+    public function __construct(
+        ReferenceFinder $referenceFinder,
+        TextDocumentLocator $locator,
+        Parser $parser,
+        ClassImplementationFinder $implementationFinder
+    ) {
+        parent::__construct($referenceFinder, $locator, $parser);
+        $this->implementationFinder = $implementationFinder;
+    }
+
+    /**
+     * @return Generator<LocatedTextEdit>
+     */
+    protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
+    {
+        yield from parent::doRename($textDocument, $offset, $range, $originalName, $newName);
+
+        foreach ($this->implementationFinder->findImplementations($textDocument, $offset) as $location) {
+            yield $this->renameEdit($location, $range, $originalName, $newName);
+        }
+    }
+
     public function getRenameRangeForNode(Node $node): ?ByteOffsetRange
     {
         if ($node instanceof MethodDeclaration) {
