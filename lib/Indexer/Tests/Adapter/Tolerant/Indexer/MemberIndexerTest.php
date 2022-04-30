@@ -113,6 +113,12 @@ class MemberIndexerTest extends TolerantIndexerTestCase
             MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'bar'),
             [ 0, 0, 1 ]
         ];
+
+        yield 'property with invalid access' => [
+            "// File: src/file1.php\n<?php \$json = json_encode(['some#hash' => 'value']);\$object = json_decode(\$json);echo \$object->{'some#hash'};",
+            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'bar'),
+            [ 0, 0, 0 ]
+        ];
     }
 
     /**

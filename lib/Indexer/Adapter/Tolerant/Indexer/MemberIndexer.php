@@ -122,6 +122,10 @@ class MemberIndexer implements TolerantIndexer
             return;
         }
 
+        if (!$memberName instanceof Token) {
+            return;
+        }
+
         $memberName = $memberName->getText($node->getFileContents());
 
         if (empty($memberName)) {
