@@ -65,6 +65,9 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
+    /**
+     * @return Promise<CompletionList>
+     */
     public function completion(CompletionParams $params, CancellationToken $token): Promise
     {
         return \Amp\call(function () use ($params, $token) {
@@ -85,15 +88,11 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                 assert($suggestion instanceof Suggestion);
 
                 $name = $this->suggestionNameFormatter->format($suggestion);
-                $nameImporterResult = $this->importClassOrFunctionName($suggestion, $params);
 
                 list($insertText, $insertTextFormat) = $this->determineInsertTextAndFormat(
                     $name,
                     $suggestion,
-                    $nameImporterResult
                 );
-
-                $textEdits = $nameImporterResult->getTextEdits();
 
                 $items[] = CompletionItem::fromArray([
                          'label' => $name,
@@ -103,7 +102,6 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                          'insertText' => $insertText,
                          'sortText' => $this->sortText($suggestion),
                          'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
-                         'additionalTextEdits' => $textEdits,
                          'insertTextFormat' => $insertTextFormat
                      ]);
 
@@ -128,10 +126,12 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         $capabilities->signatureHelpProvider = new SignatureHelpOptions(['(', ',']);
     }
 
+    /**
+     * @return array{string,InsertTextFormat::*}
+     */
     private function determineInsertTextAndFormat(
         string $name,
-        Suggestion $suggestion,
-        NameImporterResult $nameImporterResult
+        Suggestion $suggestion
     ): array {
         $insertText = $name;
         $insertTextFormat = InsertTextFormat::PLAIN_TEXT;
@@ -144,40 +144,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             ;
         }
 
-        if ($nameImporterResult->isSuccessAndHasAliasedNameImport()) {
-            $alias = $nameImporterResult->getNameImport()->alias();
-            $insertText = str_replace($name, $alias, $insertText);
-        }
-
         return [$insertText, $insertTextFormat];
-    }
-
-    private function importClassOrFunctionName(
-        Suggestion $suggestion,
-        CompletionParams $params
-    ): NameImporterResult {
-        $suggestionNameImport = $suggestion->nameImport();
-
-        if (!$suggestionNameImport) {
-            return NameImporterResult::createEmptyResult();
-        }
-
-        $suggestionType = $suggestion->type();
-
-        if (!in_array($suggestionType, [ 'class', 'function'])) {
-            return NameImporterResult::createEmptyResult();
-        }
-
-        $textDocument = $this->workspace->get($params->textDocument->uri);
-        $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
-
-        return ($this->nameImporter)(
-            $textDocument,
-            $offset->toInt(),
-            $suggestionType,
-            $suggestionNameImport,
-            false
-        );
     }
 
     private function textEdit(
