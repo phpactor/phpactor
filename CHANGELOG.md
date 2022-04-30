@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [idx] Do not try and use non-tokens for property names #1317
   - [cb] Fix rendering of array values in generated code
   - [wr] Fix arrow function completion #1303
   - [dl] Fixed off-by-one error with plain text goto definition
