@@ -8,6 +8,8 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCompletion\Handler\SignatureHelpHandler;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer\AggregateCompletionItemEnhancer;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer\ImportNameEnhancer;
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
@@ -42,7 +44,9 @@ class LanguageServerCompletionExtension implements Extension
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(CompletionExtension::SERVICE_REGISTRY),
                 $container->get(SuggestionNameFormatter::class),
-                $container->get(NameImporter::class),
+                new AggregateCompletionItemEnhancer([
+                    new ImportNameEnhancer($container->get(NameImporter::class)),
+                ]),
                 $this->clientCapabilities($container)->textDocument->completion->completionItem['snippetSupport'] ?? false
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [

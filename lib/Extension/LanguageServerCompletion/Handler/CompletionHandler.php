@@ -9,6 +9,8 @@ use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer\EnhancerContext;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\CompletionOptions;
@@ -40,13 +42,13 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
     private bool $supportSnippets;
 
-    private NameImporter $nameImporter;
+    private CompletionItemEnhancer $enhancer;
 
     public function __construct(
         Workspace $workspace,
         TypedCompletorRegistry $registry,
         SuggestionNameFormatter $suggestionNameFormatter,
-        NameImporter $nameImporter,
+        CompletionItemEnhancer $enhancer,
         bool $supportSnippets,
         bool $provideTextEdit = false
     ) {
@@ -54,8 +56,8 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         $this->provideTextEdit = $provideTextEdit;
         $this->workspace = $workspace;
         $this->suggestionNameFormatter = $suggestionNameFormatter;
-        $this->nameImporter = $nameImporter;
         $this->supportSnippets = $supportSnippets;
+        $this->enhancer = $enhancer;
     }
 
     public function methods(): array
@@ -94,16 +96,21 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                     $suggestion,
                 );
 
-                $items[] = CompletionItem::fromArray([
-                         'label' => $name,
-                         'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
-                         'detail' => $this->formatShortDescription($suggestion),
-                         'documentation' => $suggestion->documentation(),
-                         'insertText' => $insertText,
-                         'sortText' => $this->sortText($suggestion),
-                         'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
-                         'insertTextFormat' => $insertTextFormat
-                     ]);
+                $item = CompletionItem::fromArray([
+                    'label' => $name,
+                    'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
+                    'detail' => $this->formatShortDescription($suggestion),
+                    'documentation' => $suggestion->documentation(),
+                    'insertText' => $insertText,
+                    'sortText' => $this->sortText($suggestion),
+                    'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
+                    'insertTextFormat' => $insertTextFormat
+                ]);
+
+                $items[] = $this->enhancer->enhance(
+                    $item,
+                    EnhancerContext::fromParamsAndSuggestion($textDocument, $params->position, $suggestion)
+                );
 
                 try {
                     $token->throwIfRequested();
@@ -141,7 +148,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             $insertTextFormat = $suggestion->snippet()
                 ? InsertTextFormat::SNIPPET
                 : InsertTextFormat::PLAIN_TEXT
-            ;
+                ;
         }
 
         return [$insertText, $insertTextFormat];
@@ -152,22 +159,19 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         string $insertText,
         TextDocumentItem $textDocument
     ): ?TextEdit {
-        if (false === $this->provideTextEdit) {
-            return null;
-        }
+    $range = $suggestion->range();
 
-        $range = $suggestion->range();
+    if (!$range) {
+        return null;
+    }
 
-        if (!$range) {
-            return null;
-        }
-        return new TextEdit(
-            new Range(
-                PositionConverter::byteOffsetToPosition($range->start(), $textDocument->text),
-                PositionConverter::byteOffsetToPosition($range->end(), $textDocument->text),
-            ),
-            $insertText
-        );
+    return new TextEdit(
+        new Range(
+            PositionConverter::byteOffsetToPosition($range->start(), $textDocument->text),
+            PositionConverter::byteOffsetToPosition($range->end(), $textDocument->text),
+        ),
+        $insertText
+    );
     }
 
     private function formatShortDescription(Suggestion $suggestion): string

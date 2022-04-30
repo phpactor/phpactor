@@ -8,6 +8,8 @@ use Generator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer\AggregateCompletionItemEnhancer;
+use Phpactor\Extension\LanguageServerCompletion\Model\CompletionItemEnhancer\ImportNameEnhancer;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\Position;
@@ -388,7 +390,9 @@ class CompletionHandlerTest extends TestCase
             $builder->workspace(),
             $registry,
             new SuggestionNameFormatter(true),
-            $this->createNameImporter($suggestions, $aliases, $importNameTextEdits),
+            new AggregateCompletionItemEnhancer([
+                new ImportNameEnhancer($this->createNameImporter($suggestions, $aliases, $importNameTextEdits)),
+            ]),
             $supportSnippets,
             true
         ))->build();
