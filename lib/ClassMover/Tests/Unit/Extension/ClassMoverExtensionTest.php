@@ -10,6 +10,7 @@ use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 
 class ClassMoverExtensionTest extends TestCase
 {
@@ -21,6 +22,7 @@ class ClassMoverExtensionTest extends TestCase
             FilePathResolverExtension::class,
             LoggingExtension::class,
             PhpExtension::class,
+            WorseReflectionExtension::class,
         ], [
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => realpath(__DIR__ .'/..'),
             CodeTransformExtension::PARAM_TEMPLATE_PATHS => [],
