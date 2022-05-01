@@ -311,11 +311,11 @@ class LanguageServerExtension implements Extension
                 $stack[] = new ErrorHandlingMiddleware($this->logger($container));
             }
 
-            $packageName = \Composer\InstalledVersions::getRootPackage()["name"];
+            $packageName = \Composer\InstalledVersions::getRootPackage()['name'];
             $stack[] = new InitializeMiddleware(
                 $container->get(Handlers::class),
                 $container->get(EventDispatcherInterface::class),
-                ["name" => $packageName]
+                ['name' => $packageName]
             );
 
             $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class));
