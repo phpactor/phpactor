@@ -1,8 +1,10 @@
 <?php
 
-namespace Phpactor\Completion\Bridge\WorseReflection\Completor;
+namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Completor;
 
 use Generator;
+use Microsoft\PhpParser\Node;
+use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -10,7 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
 
-class DocblockCompletor implements Completor
+class DocblockCompletor implements TolerantCompletor
 {
     const SUPPORTED_TAGS = [
         '@property',
@@ -41,7 +43,7 @@ class DocblockCompletor implements Completor
         $this->nameSearcher = $nameSearcher;
     }
 
-    public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
+    public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator
     {
         [$tag, $rest] = $this->extractTag($source, $byteOffset);
 

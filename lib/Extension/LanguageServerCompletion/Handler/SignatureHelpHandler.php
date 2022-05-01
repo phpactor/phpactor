@@ -59,7 +59,7 @@ class SignatureHelpHandler implements Handler, CanRegisterCapabilities
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
         $options = new SignatureHelpOptions();
-        $options->triggerCharacters = [ '(', ',' ];
+        $options->triggerCharacters = [ '(', ',', '@' ];
         $capabilities->signatureHelpProvider = $options;
     }
 }
