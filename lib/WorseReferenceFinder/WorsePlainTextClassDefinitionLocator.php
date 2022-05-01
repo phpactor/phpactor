@@ -17,6 +17,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\WordAtOffset;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
@@ -78,9 +79,8 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             return $word;
         }
 
-        $node = $this->parser->parseSourceFile(
-            $document->__toString()
-        )->getDescendantNodeAtPosition($byteOffset->toInt());
+        $node = $this->parser->parseSourceFile($document->__toString());
+        $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         if ($node instanceof SourceFileNode) {
             $node = $node->getFirstDescendantNode(NamespaceUseClause::class) ?? $node;

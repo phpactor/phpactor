@@ -20,6 +20,8 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             <?php class Foobar {}
             // File: Barfoo.php
             <?php namespace Barfoo { class Barfoo {} }
+            // File: Boo.php
+            <?php namespace Baz { class Boo {} }
             EOT
         , $text);
 
@@ -74,6 +76,19 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             /** @var Ba<>rfoo */
             EOT
         , 'Barfoo.php' ];
+        yield 'imported class' => [ <<<'EOT'
+            <?php 
+
+            namespace Barfoo;
+
+            use Baz\Boo;
+
+            /**
+             * @property B<>oo
+             */
+            class Baz {}
+            EOT
+        , 'Boo.php' ];
     }
 
     protected function locator(): DefinitionLocator
