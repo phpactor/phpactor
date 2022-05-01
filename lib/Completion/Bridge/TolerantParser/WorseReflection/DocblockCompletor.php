@@ -6,16 +6,13 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
-use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
 
 class DocblockCompletor implements TolerantCompletor
 {
-    private TypeSuggestionProvider $typeSuggestionProvider;
     const SUPPORTED_TAGS = [
         '@property',
         '@var',
@@ -37,6 +34,8 @@ class DocblockCompletor implements TolerantCompletor
         '@implements',
         '@extends',
     ];
+
+    private TypeSuggestionProvider $typeSuggestionProvider;
 
     public function __construct(TypeSuggestionProvider $typeSuggestionProvider)
     {

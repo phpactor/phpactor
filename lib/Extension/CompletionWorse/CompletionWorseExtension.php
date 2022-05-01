@@ -6,6 +6,7 @@ use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\ImportedNameCompletor;
@@ -237,14 +238,6 @@ class CompletionWorseExtension implements Extension
     private function getOtherCompletors(): array
     {
         return [
-            'docblock' => [
-                'Basic docblock completion',
-                function (Container $container) {
-                    return new DocblockCompletor(
-                        $container->get(NameSearcher::class),
-                    );
-                },
-            ],
             'doctrine_annotation' => [
                 'Completion for annotations provided by the Doctrine annotation library',
                 function (Container $container) {
@@ -366,6 +359,14 @@ class CompletionWorseExtension implements Extension
                 'Completion for keywords (not very accurate)',
                 function (Container $container) {
                     return new KeywordCompletor();
+                },
+            ],
+            'docblock' => [
+                'Basic docblock completion',
+                function (Container $container) {
+                    return new DocblockCompletor(
+                        new TypeSuggestionProvider($container->get(NameSearcher::class)),
+                    );
                 },
             ],
         ];

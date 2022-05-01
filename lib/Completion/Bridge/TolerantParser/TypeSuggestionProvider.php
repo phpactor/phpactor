@@ -4,8 +4,6 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\ResolvedName;
-use Phpactor\Completion\Core\NameSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
 
@@ -19,6 +17,7 @@ class TypeSuggestionProvider
         'callable',
         'array',
     ];
+
     private NameSearcher $nameSearcher;
 
     public function __construct(NameSearcher $nameSearcher)
