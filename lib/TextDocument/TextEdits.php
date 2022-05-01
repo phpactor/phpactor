@@ -127,7 +127,7 @@ class TextEdits implements IteratorAggregate
         $deduped = [];
 
         foreach ($textEdits as $textEdit) {
-            $deduped[sprintf('%d#%d', $textEdit->start()->toInt(),$textEdit->end()->toInt())] = $textEdit;
+            $deduped[sprintf('%d#%d', $textEdit->start()->toInt(), $textEdit->end()->toInt())] = $textEdit;
         }
 
         return array_values($deduped);
