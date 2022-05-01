@@ -198,4 +198,18 @@ class NodeUtil
 
         return false;
     }
+
+    /**
+     * Return the descendant first node after the given offset
+     */
+    public static function firstDescendantNodeAfterOffset(Node $node, int $offset): Node
+    {
+        foreach ($node->getDescendantNodes() as $node) {
+            if ($node->getStartPosition() > $offset) {
+                return $node;
+            }
+        }
+
+        return $node;
+    }
 }
