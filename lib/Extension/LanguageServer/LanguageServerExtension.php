@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer;
 
+use Composer\InstalledVersions;
 use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
@@ -311,11 +312,10 @@ class LanguageServerExtension implements Extension
                 $stack[] = new ErrorHandlingMiddleware($this->logger($container));
             }
 
-            $packageName = \Composer\InstalledVersions::getRootPackage()['name'];
             $stack[] = new InitializeMiddleware(
                 $container->get(Handlers::class),
                 $container->get(EventDispatcherInterface::class),
-                ['name' => $packageName]
+                $this->serverInfo()
             );
 
             $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class));
@@ -449,6 +449,9 @@ class LanguageServerExtension implements Extension
         ]);
     }
 
+    /**
+     * @return array<int,mixed>
+     */
     private function taggedServices(Container $container, string $tag): array
     {
         $providers = [];
@@ -474,5 +477,18 @@ class LanguageServerExtension implements Extension
     private function logger(Container $container, string $name = self::LOG_CHANNEL): LoggerInterface
     {
         return LoggingExtension::channelLogger($container, $name);
+    }
+
+    /**
+     * @return array{name:string,version:string,reference:string,version:string}
+     */
+    private function serverInfo(): array
+    {
+        $package = InstalledVersions::getRootPackage();
+        return [
+            'name' => $package['name'],
+            'version' => $package['pretty_version'],
+            'reference' => $package['reference'],
+        ];
     }
 }
