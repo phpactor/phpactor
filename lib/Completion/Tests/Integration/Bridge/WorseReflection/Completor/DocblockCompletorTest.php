@@ -8,7 +8,6 @@ use Phpactor\Completion\Bridge\WorseReflection\Completor\DocblockCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
-use Phpactor\ReferenceFinder\Search\NameSearchResultType;
 use Phpactor\ReferenceFinder\Search\PredefinedNameSearcher;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
@@ -18,6 +17,7 @@ class DocblockCompletorTest extends TestCase
 {
     /**
      * @dataProvider provideComplete
+     * @param array<string> $expected
      */
     public function testComplete(string $source, array $expected): void
     {
@@ -31,7 +31,7 @@ class DocblockCompletorTest extends TestCase
         [$source, $offset] = ExtractOffset::fromSource($source);
         $suggestions = iterator_to_array((new DocblockCompletor(new PredefinedNameSearcher($results)))->complete(
             TextDocumentBuilder::create($source)->build(),
-            ByteOffset::fromInt($offset)
+            ByteOffset::fromInt((int)$offset)
         ));
         self::assertEquals($expected, array_map(fn (Suggestion $s) => $s->name(), $suggestions));
     }

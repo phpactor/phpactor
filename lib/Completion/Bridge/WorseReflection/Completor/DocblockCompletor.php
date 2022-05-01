@@ -24,7 +24,6 @@ class DocblockCompletor implements Completor
         '@template',
         '@template-extends',
     ];
-
     const TAGS_WITH_TYPE_ARG = [
         '@param',
         '@var',
@@ -47,14 +46,14 @@ class DocblockCompletor implements Completor
         [$tag, $rest] = $this->extractTag($source, $byteOffset);
 
         if (null === $tag) {
-            return;
+            return false;
         }
 
         $tag = '@' . $tag;
 
         if (in_array($tag, self::SUPPORTED_TAGS)) {
             yield from $this->completeType($tag, $rest);
-            return;
+            return false;
         }
 
         foreach (self::SUPPORTED_TAGS as $supportedTag) {
@@ -67,19 +66,19 @@ class DocblockCompletor implements Completor
                 );
             }
         }
-
+        return true;
     }
 
     /**
-     * @return null|array{string.string}
+     * @return array{string|null,string}
      */
-    private function extractTag(TextDocument $source, ByteOffset $byteOffset): ?array
+    private function extractTag(TextDocument $source, ByteOffset $byteOffset): array
     {
         $source = substr($source->__toString(), 0, $byteOffset->toInt());
         $line = LineAtOffset::lineAtByteOffset($source, $byteOffset);
 
         if (!preg_match('{^\s*/?\*{1,2}\s*@([a-z-]*)\s*([^\s]*)}', $line, $matches)) {
-            return null;
+            return [null, ''];
         }
 
         return [$matches[1], $matches[2]];

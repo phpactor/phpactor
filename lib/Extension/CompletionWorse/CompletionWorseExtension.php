@@ -13,6 +13,7 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompl
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseDeclaredClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSignatureHelper;
+use Phpactor\Completion\Bridge\WorseReflection\Completor\DocblockCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ConstantFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\EnumCaseFormatter;
@@ -71,7 +72,7 @@ class CompletionWorseExtension implements Extension
     
     public function configure(Resolver $schema): void
     {
-        $completors = $this->getCompletors();
+        $completors = array_merge($this->getOtherCompletors(), $this->getTolerantCompletors());
         $defaults = array_combine(array_map(
             fn (string $key) => $this->completorEnabledKey($key),
             array_keys($completors)
@@ -92,7 +93,7 @@ class CompletionWorseExtension implements Extension
 
         $descriptions = array_combine(array_map(
             fn (string $key) => sprintf('completion_worse.completor.%s.enabled', $key),
-            array_keys($this->getCompletors())
+            array_keys($completors)
         ), array_map(
             fn (string $key, array $pair) => sprintf(
                 "Enable or disable the ``%s`` completor.\n\n%s.",
@@ -119,9 +120,14 @@ class CompletionWorseExtension implements Extension
 
     private function registerCompletion(ContainerBuilder $container): void
     {
-        foreach ($this->getCompletors() as $name => [$_, $completor]) {
+        foreach ($this->getTolerantCompletors() as $name => [$_, $completor]) {
             $container->register(sprintf('worse_completion.completor.%s', $name), $completor, [
                 self::TAG_TOLERANT_COMPLETOR => [ 'name' => $name ]
+            ]);
+        }
+        foreach ($this->getOtherCompletors() as $name => [$_, $completor]) {
+            $container->register(sprintf('worse_completion.completor.%s', $name), $completor, [
+                CompletionExtension::TAG_COMPLETOR => [ 'name' => $name ]
             ]);
         }
 
@@ -131,13 +137,6 @@ class CompletionWorseExtension implements Extension
                     return $container->get($serviceId);
                 }, $container->get(self::SERVICE_COMPLETOR_MAP)),
                 $container->get('worse_reflection.tolerant_parser')
-            );
-        }, [ CompletionExtension::TAG_COMPLETOR => []]);
-
-        $container->register(DoctrineAnnotationCompletor::class, function (Container $container) {
-            return new DoctrineAnnotationCompletor(
-                $container->get(NameSearcher::class),
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 
@@ -232,11 +231,36 @@ class CompletionWorseExtension implements Extension
             [ CompletionExtension::TAG_SNIPPET_FORMATTER => []]
         );
     }
+    /**
+     * @return array<string,array{string,Closure(Container): mixed}>
+     */
+    private function getOtherCompletors(): array
+    {
+        return [
+            'docblock' => [
+                'Basic docblock completion',
+                function (Container $container) {
+                    return new DocblockCompletor(
+                        $container->get(NameSearcher::class),
+                    );
+                },
+            ],
+            'doctrine_annotation' => [
+                'Completion for annotations provided by the Doctrine annotation library',
+                function (Container $container) {
+                    return new DoctrineAnnotationCompletor(
+                        $container->get(NameSearcher::class),
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                    );
+                },
+            ],
+        ];
+    }
 
     /**
      * @return array<string,array{string,Closure(Container): mixed}>
      */
-    private function getCompletors(): array
+    private function getTolerantCompletors(): array
     {
         return [
             'imported_names' => [

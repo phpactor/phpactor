@@ -249,6 +249,40 @@ CompletionWorseExtension
 ------------------------
 
 
+.. _param_completion_worse.completor.docblock.enabled:
+
+
+``completion_worse.completor.docblock.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``docblock`` completor.
+
+Basic docblock completion.
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.doctrine_annotation.enabled:
+
+
+``completion_worse.completor.doctrine_annotation.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``doctrine_annotation`` completor.
+
+Completion for annotations provided by the Doctrine annotation library.
+
+
+**Default**: ``true``
+
+
 .. _param_completion_worse.completor.imported_names.enabled:
 
 
@@ -755,7 +789,7 @@ FilePathResolverExtension
 
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor2"``
 
 
 .. _param_file_path_resolver.app_name:

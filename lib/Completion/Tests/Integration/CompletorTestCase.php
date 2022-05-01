@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TestUtils\ExtractOffset;
@@ -10,6 +11,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 abstract class CompletorTestCase extends IntegrationTestCase
 {
+    use ArraySubsetAsserts;
+
     public function assertCouldNotComplete(string $source): void
     {
         list($source, $offset) = ExtractOffset::fromSource($source);
@@ -32,7 +35,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
         $completor = $this->createCompletor($source);
         $suggestionGenerator = $completor->complete(
             TextDocumentBuilder::create($source)->language('php')->uri('file:///tmp/test')->build(),
-            ByteOffset::fromInt($offset)
+            ByteOffset::fromInt((int)$offset)
         );
         $suggestions = iterator_to_array($suggestionGenerator);
         usort($suggestions, function (Suggestion $suggestion1, Suggestion $suggestion2) {
@@ -42,6 +45,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
         $this->assertCount(count($expected), $suggestions);
         foreach ($expected as $index => $expectedSuggestion) {
             $actual = $suggestions[$index]->toArray();
+            /** @phpstan-ignore-next-line */
             $this->assertArraySubset($expectedSuggestion, $actual);
             if (array_key_exists('snippet', $expectedSuggestion) === false) {
                 self::assertEmpty($actual['snippet'], 'got unexpected snippet "' . $actual['snippet'] . '"');

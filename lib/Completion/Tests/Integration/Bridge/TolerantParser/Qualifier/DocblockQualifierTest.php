@@ -4,7 +4,6 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\Qualifier;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\DocblockQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 
