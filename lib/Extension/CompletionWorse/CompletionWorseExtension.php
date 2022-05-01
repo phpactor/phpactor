@@ -234,8 +234,6 @@ class CompletionWorseExtension implements Extension
     }
     /**
      * @return array<string,array{string,Closure(Container): mixed}>
-     *
-     * @return array<string,array{string,Closure(Container): mixed)>
      */
     private function getOtherCompletors(): array
     {
