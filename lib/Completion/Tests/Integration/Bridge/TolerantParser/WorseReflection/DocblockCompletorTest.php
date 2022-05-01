@@ -108,10 +108,16 @@ class DocblockCompletorTest extends TestCase
             ],
         ];
 
-        yield 'parameter' => [
-            '   *    @param Foobar $a<> */function bar($aardvark, $foo)',
+        yield 'param variable' => [
+            '<?php /*    @param Foobar $a<> */function bar($aardvark, $foo)',
             [
-                '$arrdvark',
+                '$aardvark',
+            ],
+        ];
+
+        yield 'no var if not param' => [
+            '<?php /*    @var Foobar $a<> */function bar($aardvark, $foo)',
+            [
             ],
         ];
     }

@@ -4,6 +4,9 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
@@ -11,6 +14,7 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class DocblockCompletor implements TolerantCompletor
 {
@@ -25,6 +29,9 @@ class DocblockCompletor implements TolerantCompletor
         '@implements',
         '@template',
         '@template-extends',
+    ];
+    const TAGS_WITH_VAR = [
+        '@param',
     ];
     const TAGS_WITH_TYPE_ARG = [
         '@param',
@@ -52,13 +59,18 @@ class DocblockCompletor implements TolerantCompletor
         // doc, which will often (if not always) result in a SourceFileNode
         // with no namespace context
         $node = $this->parser->parseSourceFile($source->__toString())->getDescendantNodeAtPosition($byteOffset->toInt());
-        [$tag, $type] = $this->extractTag($source, $byteOffset);
+        [$tag, $type, $var] = $this->extractTag($source, $byteOffset);
 
         if (null === $tag) {
             return false;
         }
 
         $tag = '@' . $tag;
+
+        if ($var) {
+            yield from $this->varCompletion($node, $byteOffset, $tag, $var);
+            return;
+        }
 
         if (in_array($tag, self::SUPPORTED_TAGS)) {
             yield from $this->completeType($node, $tag, $type);
@@ -79,22 +91,54 @@ class DocblockCompletor implements TolerantCompletor
     }
 
     /**
-     * @return array{string|null,string}
+     * @return array{string|null,string,string|null}
      */
     private function extractTag(TextDocument $source, ByteOffset $byteOffset): array
     {
         $source = substr($source->__toString(), 0, $byteOffset->toInt());
         $line = LineAtOffset::lineAtByteOffset($source, $byteOffset);
 
-        if (!preg_match('{^\s*/?\*{1,2}\s*@([a-z-]*)\s*([^\s]*)}', $line, $matches)) {
-            return [null, ''];
+        if (!preg_match('{/?\*{1,2}\s*@([a-z-]*)\s*([^\s]*)\s*(\$[^\s]*)?}', $line, $matches)) {
+            return [null, '', ''];
         }
 
-        return [$matches[1], $matches[2]];
+        return [$matches[1], $matches[2], $matches[3] ?? null];
     }
 
     private function completeType(Node $node, string $tag, string $search): Generator
     {
         yield from $this->typeSuggestionProvider->provide($node, $search);
+    }
+
+    private function varCompletion(Node $node, ByteOffset $offset, string $tag, string $var): Generator
+    {
+        if (!in_array($tag, self::TAGS_WITH_VAR)) {
+            return;
+        }
+        foreach ($node->getDescendantNodes() as $node) {
+            if ($node->getStartPosition() > $offset->toInt()) {
+                break;
+            }
+        }
+        if (!$node instanceof FunctionDeclaration && !$node instanceof MethodDeclaration) {
+            return;
+        }
+
+        /** @phpstan-ignore-next-line */
+        if (!$node->parameters) {
+            return;
+        }
+
+        foreach ($node->parameters->getElements() as $parameter) {
+            if (!$parameter instanceof Parameter) {
+                continue;
+            }
+            yield Suggestion::createWithOptions(
+                '$' . $parameter->getName(),
+                [
+                    'type' => Suggestion::TYPE_VARIABLE,
+                ]
+            );
+        }
     }
 }
