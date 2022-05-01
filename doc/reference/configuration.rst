@@ -249,23 +249,6 @@ CompletionWorseExtension
 ------------------------
 
 
-.. _param_completion_worse.completor.docblock.enabled:
-
-
-``completion_worse.completor.docblock.enabled``
-"""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-Enable or disable the ``docblock`` completor.
-
-Basic docblock completion.
-
-
-**Default**: ``true``
-
-
 .. _param_completion_worse.completor.doctrine_annotation.enabled:
 
 
@@ -485,6 +468,23 @@ Completion for keywords (not very accurate).
 
 
 **Default**: ``false``
+
+
+.. _param_completion_worse.completor.docblock.enabled:
+
+
+``completion_worse.completor.docblock.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``docblock`` completor.
+
+Basic docblock completion.
+
+
+**Default**: ``true``
 
 
 .. _param_completion_worse.completor.class.limit:
@@ -789,7 +789,7 @@ FilePathResolverExtension
 
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor2"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:

@@ -14,7 +14,6 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class DocblockCompletor implements TolerantCompletor
 {

@@ -55,6 +55,7 @@ class TypeSuggestionProvider
         }
     }
 
+    
     private function nameImports(Node $node): Generator
     {
         $namespaceImports = $node->getImportTablesForCurrentScope()[0];
@@ -83,7 +84,6 @@ class TypeSuggestionProvider
             );
         }
     }
-
     private function resolveSingleType(string $search): string
     {
         $split = preg_split('{[|&<>]}', $search);

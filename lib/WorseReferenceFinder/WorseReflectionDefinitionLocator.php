@@ -151,7 +151,6 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $containerType = $symbolContext->containerType();
 
         $locations = [];
-        dump($containerType->__toString());
         foreach ($containerType->classNamedTypes() as $namedType) {
             try {
                 $containingClass = $this->reflector->reflectClassLike((string) $namedType);

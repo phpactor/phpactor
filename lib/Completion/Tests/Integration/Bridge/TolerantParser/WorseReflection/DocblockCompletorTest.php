@@ -115,6 +115,22 @@ class DocblockCompletorTest extends TestCase
             ],
         ];
 
+        yield 'param variable for method' => [
+            <<<'EOT'
+                <?php
+                class Bar
+                {
+                    /**
+                     * @param string $s<>
+                     */
+                    private function resolveSingleType(string $search): string
+                }
+                EOT
+            , [
+                '$search',
+            ],
+        ];
+
         yield 'no var if not param' => [
             '<?php /*    @var Foobar $a<> */function bar($aardvark, $foo)',
             [
