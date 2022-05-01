@@ -38,7 +38,7 @@ class DocblockCompletorTest extends TestCase
         $suggestions = iterator_to_array((new DocblockCompletor(
             new TypeSuggestionProvider(new PredefinedNameSearcher($results)),
             new Parser(),
-        ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)));
+        ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)), false);
         $actualNames = array_map(fn (Suggestion $s) => $s->name(), $suggestions);
         foreach ($expected as $expectedName) {
             if (!in_array($expectedName, $actualNames)) {
@@ -134,6 +134,25 @@ class DocblockCompletorTest extends TestCase
         yield 'no var if not param' => [
             '<?php /*    @var Foobar $a<> */function bar($aardvark, $foo)',
             [
+            ],
+        ];
+
+        yield 'property docblock for class' => [
+            <<<'EOT'
+                <?php
+
+                use Foobar;
+
+                /**
+                 * @property A<>
+                 */
+                class Bar
+                {
+                    private function resolveSingleType(string $search): string
+                }
+                EOT
+            , [
+                'Foobar',
             ],
         ];
     }

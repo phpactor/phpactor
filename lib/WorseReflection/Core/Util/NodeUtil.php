@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -197,5 +198,19 @@ class NodeUtil
         }
 
         return false;
+    }
+
+    /**
+     * Return the descendant first node after the given offset
+     */
+    public static function firstDescendantNodeAfterOffset(Node $node, int $offset): Node
+    {
+        foreach ($node->getDescendantNodes() as $node) {
+            if ($node->getStartPosition() > $offset) {
+                return $node;
+            }
+        }
+
+        return $node;
     }
 }

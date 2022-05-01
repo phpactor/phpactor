@@ -68,6 +68,9 @@ class Phpactor
         '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
     ];
 
+    /**
+     * @property Resolver
+     */
     public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
     {
         $config = [];

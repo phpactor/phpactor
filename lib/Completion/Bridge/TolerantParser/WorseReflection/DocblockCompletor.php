@@ -14,6 +14,7 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class DocblockCompletor implements TolerantCompletor
 {
@@ -57,7 +58,9 @@ class DocblockCompletor implements TolerantCompletor
         // we re-parse the document because the above node is for the truncated
         // doc, which will often (if not always) result in a SourceFileNode
         // with no namespace context
-        $node = $this->parser->parseSourceFile($source->__toString())->getDescendantNodeAtPosition($byteOffset->toInt());
+        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
+
         [$tag, $type, $var] = $this->extractTag($source, $byteOffset);
 
         if (null === $tag) {
@@ -114,11 +117,7 @@ class DocblockCompletor implements TolerantCompletor
         if (!in_array($tag, self::TAGS_WITH_VAR)) {
             return;
         }
-        foreach ($node->getDescendantNodes() as $node) {
-            if ($node->getStartPosition() > $offset->toInt()) {
-                break;
-            }
-        }
+
         if (!$node instanceof FunctionDeclaration && !$node instanceof MethodDeclaration) {
             return;
         }
