@@ -24,7 +24,7 @@ class ChannelLogger extends AbstractLogger
             $message,
             array_merge([
                 'channel' => $this->name,
-            ]),
+            ], $context),
         );
     }
 }

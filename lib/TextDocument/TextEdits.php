@@ -22,7 +22,7 @@ class TextEdits implements IteratorAggregate
         usort($textEdits, function (TextEdit $a, TextEdit $b) {
             return $a->start() <=> $b->start();
         });
-        $this->textEdits = $textEdits;
+        $this->textEdits = self::deduplicate($textEdits);
     }
 
     public static function one(TextEdit $textEdit): self
@@ -116,5 +116,20 @@ class TextEdits implements IteratorAggregate
                 str_replace("\n", '\n', $otherEdit->replacement())
             );
         }, $edits));
+    }
+
+    /**
+     * @param TextEdit[] $textEdits
+     * @return TextEdit[]
+     */
+    private static function deduplicate(array $textEdits): array
+    {
+        $deduped = [];
+
+        foreach ($textEdits as $textEdit) {
+            $deduped[sprintf('%d#%d', $textEdit->start()->toInt(),$textEdit->end()->toInt())] = $textEdit;
+        }
+
+        return array_values($deduped);
     }
 }
