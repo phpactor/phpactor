@@ -362,7 +362,7 @@ class CompletionWorseExtension implements Extension
                 },
             ],
             'docblock' => [
-                'Basic docblock completion',
+                'Docblock completion',
                 function (Container $container) {
                     return new DocblockCompletor(
                         new TypeSuggestionProvider($container->get(NameSearcher::class)),
