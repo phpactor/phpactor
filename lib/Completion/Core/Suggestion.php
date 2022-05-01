@@ -77,6 +77,19 @@ class Suggestion
         return new self($name);
     }
 
+    /**
+     * @param array{
+     *   short_description?:string|null,
+     *   documentation?:string|null,
+     *   type?:string|null,
+     *   class_import?:string|null,
+     *   name_import?:string|null,
+     *   label?:string|null,
+     *   range?:Range|null,
+     *   snippet?:string|null,
+     *   priority?:int|null
+     * } $options
+     */
     public static function createWithOptions(string $name, array $options): self
     {
         $defaults = [
