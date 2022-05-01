@@ -25,7 +25,7 @@ class generateMethod
      */
     public function convert(string $foo): void
     {
-        return $this->generate($type);
+        return $this->generate($foo);
     }
 
     private function generate(string $foo): void
