@@ -13,7 +13,7 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompl
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseDeclaredClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSignatureHelper;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Completor\DocblockCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DocblockCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ConstantFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\EnumCaseFormatter;

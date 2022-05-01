@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Completor;
+namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -14,6 +15,7 @@ use Phpactor\TextDocument\Util\LineAtOffset;
 
 class DocblockCompletor implements TolerantCompletor
 {
+    private TypeSuggestionProvider $typeSuggestionProvider;
     const SUPPORTED_TAGS = [
         '@property',
         '@var',
@@ -36,16 +38,14 @@ class DocblockCompletor implements TolerantCompletor
         '@extends',
     ];
 
-    private NameSearcher $nameSearcher;
-
-    public function __construct(NameSearcher $nameSearcher)
+    public function __construct(TypeSuggestionProvider $typeSuggestionProvider)
     {
-        $this->nameSearcher = $nameSearcher;
+        $this->typeSuggestionProvider = $typeSuggestionProvider;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator
     {
-        [$tag, $rest] = $this->extractTag($source, $byteOffset);
+        [$tag, $type] = $this->extractTag($source, $byteOffset);
 
         if (null === $tag) {
             return false;
@@ -54,7 +54,7 @@ class DocblockCompletor implements TolerantCompletor
         $tag = '@' . $tag;
 
         if (in_array($tag, self::SUPPORTED_TAGS)) {
-            yield from $this->completeType($tag, $rest);
+            yield from $this->completeType($node, $tag, $type);
             return false;
         }
 
@@ -86,24 +86,8 @@ class DocblockCompletor implements TolerantCompletor
         return [$matches[1], $matches[2]];
     }
 
-    private function completeType(string $tag, string $rest): Generator
+    private function completeType(Node $node, string $tag, string $search): Generator
     {
-        if (in_array($tag, self::TAGS_WITH_TYPE_ARG)) {
-            yield from $this->nameResults($rest);
-        }
-    }
-
-    private function nameResults(string $rest): Generator
-    {
-        foreach ($this->nameSearcher->search($rest) as $result) {
-            if (!$result->type()->isClass()) {
-                continue;
-            }
-
-            yield Suggestion::createWithOptions($result->name()->head(), [
-                'name_import' => $result->name()->__toString(),
-                'type' => Suggestion::TYPE_CLASS,
-            ]);
-        }
+        yield from $this->typeSuggestionProvider->provide($node, $search);
     }
 }

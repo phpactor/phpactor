@@ -5,7 +5,8 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseRefle
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Completor\DocblockCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DocblockCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
@@ -31,11 +32,9 @@ class DocblockCompletorTest extends TestCase
 
         [$source, $offset] = ExtractOffset::fromSource($source);
         $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
-        $suggestions = iterator_to_array((new DocblockCompletor(new PredefinedNameSearcher($results)))->complete(
-            $node,
-            TextDocumentBuilder::create($source)->build(),
-            ByteOffset::fromInt((int)$offset)
-        ));
+        $suggestions = iterator_to_array((new DocblockCompletor(
+            new TypeSuggestionProvider(new PredefinedNameSearcher($results))
+        ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)));
         self::assertEquals($expected, array_map(fn (Suggestion $s) => $s->name(), $suggestions));
     }
 
