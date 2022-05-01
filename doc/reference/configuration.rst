@@ -481,7 +481,7 @@ Completion for keywords (not very accurate).
 
 Enable or disable the ``docblock`` completor.
 
-Basic docblock completion.
+Docblock completion.
 
 
 **Default**: ``true``
