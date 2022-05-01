@@ -9,11 +9,13 @@ use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\MemberRename
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdits;
 use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefinedReferenceFinder;
+use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefiniedImplementationFinder;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
@@ -46,7 +48,8 @@ class MemberRenamerTest extends TestCase
         $variableRenamer = new MemberRenamer(
             new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
-            new Parser()
+            new Parser(),
+            new PredefiniedImplementationFinder(new Locations([])),
         );
 
         $actualRange = $variableRenamer->getRenameRange($document, $selection);
@@ -90,11 +93,13 @@ class MemberRenamerTest extends TestCase
         $extractor = OffsetExtractor::create()
             ->registerOffset('selection', '<>')
             ->registerOffset('references', '<r>')
+            ->registerOffset('implementations', '<i>')
             ->registerRange('resultEditRanges', '{{', '}}')
             ->parse($source);
 
         $selection = $extractor->offset('selection');
         $references = $extractor->offsets('references');
+        $implementations = $extractor->offsets('implementations');
         $resultEditRanges = $extractor->ranges('resultEditRanges');
         $newSource = $extractor->source();
         
@@ -110,6 +115,9 @@ class MemberRenamerTest extends TestCase
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),
+            new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
+                return new Location($textDocument->uri(), $reference);
+            }, $implementations))),
         );
 
         $resultEdits = [];

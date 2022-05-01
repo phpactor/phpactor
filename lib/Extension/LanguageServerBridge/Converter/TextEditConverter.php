@@ -21,9 +21,15 @@ class TextEditConverter
                 PositionConverter::byteOffsetToPosition($textEdit->start(), $text),
                 PositionConverter::byteOffsetToPosition($textEdit->end(), $text),
             );
-            $edits[] = new LspTextEdit($range, $textEdit->replacement());
+
+            // deduplicate text edits
+            $edits[sprintf(
+                '%d#%d',
+                $textEdit->start()->toInt(),
+                $textEdit->end()->toInt(),
+            )] = new LspTextEdit($range, $textEdit->replacement());
         }
 
-        return $edits;
+        return array_values($edits);
     }
 }
