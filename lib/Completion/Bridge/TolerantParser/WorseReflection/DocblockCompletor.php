@@ -4,6 +4,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
@@ -36,14 +37,20 @@ class DocblockCompletor implements TolerantCompletor
     ];
 
     private TypeSuggestionProvider $typeSuggestionProvider;
+    private Parser $parser;
 
-    public function __construct(TypeSuggestionProvider $typeSuggestionProvider)
+    public function __construct(TypeSuggestionProvider $typeSuggestionProvider, Parser $parser)
     {
         $this->typeSuggestionProvider = $typeSuggestionProvider;
+        $this->parser = $parser;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator
     {
+        // we re-parse the document because the above node is for the truncated
+        // doc, which will often (if not always) result in a SourceFileNode
+        // with no namespace context
+        $node = $this->parser->parseSourceFile($source->__toString())->getDescendantNodeAtPosition($byteOffset->toInt());
         [$tag, $type] = $this->extractTag($source, $byteOffset);
 
         if (null === $tag) {

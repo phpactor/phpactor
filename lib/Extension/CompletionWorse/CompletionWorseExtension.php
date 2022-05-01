@@ -366,6 +366,7 @@ class CompletionWorseExtension implements Extension
                 function (Container $container) {
                     return new DocblockCompletor(
                         new TypeSuggestionProvider($container->get(NameSearcher::class)),
+                        $container->get(WorseReflectionExtension::SERVICE_PARSER)
                     );
                 },
             ],

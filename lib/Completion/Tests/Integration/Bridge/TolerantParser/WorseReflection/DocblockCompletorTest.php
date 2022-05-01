@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +18,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class DocblockCompletorTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider provideComplete
      * @param array<string> $expected
@@ -33,9 +36,20 @@ class DocblockCompletorTest extends TestCase
         [$source, $offset] = ExtractOffset::fromSource($source);
         $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
         $suggestions = iterator_to_array((new DocblockCompletor(
-            new TypeSuggestionProvider(new PredefinedNameSearcher($results))
+            new TypeSuggestionProvider(new PredefinedNameSearcher($results)),
+            new Parser(),
         ))->complete($node, TextDocumentBuilder::create($source)->build(), ByteOffset::fromInt((int)$offset)));
-        self::assertEquals($expected, array_map(fn (Suggestion $s) => $s->name(), $suggestions));
+        $actualNames = array_map(fn (Suggestion $s) => $s->name(), $suggestions);
+        foreach ($expected as $expectedName) {
+            if (!in_array($expectedName, $actualNames)) {
+                self::fail(sprintf(
+                    'Expected "%s" to be in set of completion results: "%s"',
+                    $expectedName,
+                    implode('", "', $actualNames)
+                ));
+            }
+        }
+        $this->addToAssertionCount(1);
     }
 
     /**

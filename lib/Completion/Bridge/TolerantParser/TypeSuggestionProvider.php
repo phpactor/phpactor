@@ -4,6 +4,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\StatementNode;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
 
@@ -50,6 +51,7 @@ class TypeSuggestionProvider
             yield Suggestion::createWithOptions($result->name()->head(), [
                 'name_import' => $result->name()->__toString(),
                 'type' => Suggestion::TYPE_CLASS,
+                'priority' => Suggestion::PRIORITY_MEDIUM,
             ]);
         }
     }
@@ -64,6 +66,7 @@ class TypeSuggestionProvider
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'short_description' => sprintf('%s', $resolvedName->__toString()),
+                    'priority' => Suggestion::PRIORITY_HIGH,
                 ]
             );
         }
@@ -76,6 +79,7 @@ class TypeSuggestionProvider
                 $type,
                 [
                     'type' => Suggestion::TYPE_KEYWORD,
+                    'priority' => Suggestion::PRIORITY_HIGH,
                 ]
             );
         }
