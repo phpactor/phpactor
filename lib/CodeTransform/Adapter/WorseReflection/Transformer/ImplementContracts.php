@@ -123,6 +123,13 @@ class ImplementContracts implements Transformer
                 continue;
             }
 
+            foreach ($class->traits() as $trait) {
+                if ($trait->methods()->has($method->name())) {
+                    continue 2;
+                }
+            }
+
+
             $methods[] = $method;
         }
 

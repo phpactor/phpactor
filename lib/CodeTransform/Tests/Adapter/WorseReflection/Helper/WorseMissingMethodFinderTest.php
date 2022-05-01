@@ -89,5 +89,17 @@ class WorseMissingMethodFinderTest extends WorseTestCase
                 EOT
             , 0
         ];
+        yield 'methods from trait' => [
+            <<<'EOT'
+                <?php
+                trait Baz { public function boo(): void }
+                {
+                }
+                class Bar { use Baz; function zed() {} }
+                $new = new Bar();
+                $new->boo();
+                EOT
+            , 0
+        ];
     }
 }

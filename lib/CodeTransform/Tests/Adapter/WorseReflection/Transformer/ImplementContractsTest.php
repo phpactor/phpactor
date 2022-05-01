@@ -527,5 +527,23 @@ class ImplementContractsTest extends WorseTestCase
                 EOT
         , 0
         ];
+
+        yield 'not missing method with trait' => [
+            <<<'EOT'
+                <?php
+
+                abstract class A { abstract public function barfoo(): void; }
+
+                trait Foo {
+                    public function barfoo() {};
+                }
+
+                class B extends A
+                {
+                    use Foo;
+                }
+                EOT
+        , 0
+        ];
     }
 }
