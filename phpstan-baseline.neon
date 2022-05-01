@@ -1776,11 +1776,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\AbstractTolerantImportNameTest\\:\\:importName\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/AbstractTolerantImportNameTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\AbstractTolerantImportNameTest\\:\\:importNameFromTestFile\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/AbstractTolerantImportNameTest.php
@@ -1794,11 +1789,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantImportNameOnlyTest\\:\\:importName\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantImportNameOnlyTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantImportNameTest\\:\\:importName\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantImportNameTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantRenameVariableTest\\:\\:provideRenameMethod\\(\\) has no return type specified\\.$#"
@@ -1981,11 +1971,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/Helper/VariableCompletionHelper.php
 
 		-
-			message: "#^Property Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassAliasCompletor\\:\\:\\$reflector is never read, only written\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseClassAliasCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseFunctionCompletor\\:\\:definedNamesFor\\(\\) has parameter \\$reflectedFunctions with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
@@ -2054,11 +2039,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\SignatureInformation\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/SignatureInformation.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:createWithOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/Suggestion.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2144,11 +2124,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\KeywordCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/KeywordCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassAliasCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseClassAliasCompletorTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
@@ -2237,7 +2212,7 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 2
+			count: 1
 			path: lib/Completion/Tests/Integration/CompletorTestCase.php
 
 		-
@@ -4291,11 +4266,6 @@ parameters:
 			path: lib/Extension/Rpc/Response/InputCallbackResponse.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\OpenFileResponse\\:\\:fromPathAndOffset\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/OpenFileResponse.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\OpenFileResponse\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/OpenFileResponse.php
@@ -5416,11 +5386,6 @@ parameters:
 			path: lib/ReferenceFinder/ChainTypeLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainDefinitionLocationProviderTest\\:\\:createLocation\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainDefinitionLocationProviderTest.php
-
-		-
 			message: "#^Class Phpactor\\\\TextDocument\\\\Locations constructor invoked with 2 parameters, 1 required\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/Tests/Unit/ChainImplementationFinderTest.php
@@ -5444,11 +5409,6 @@ parameters:
 			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainReferenceFinderTest\\:\\:\\$locator2 has unknown class Phpactor\\\\ReferenceFinder\\\\ClassReferenceFinder as its type\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/DefinitionLocatorTestCase.php
 
 		-
 			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"

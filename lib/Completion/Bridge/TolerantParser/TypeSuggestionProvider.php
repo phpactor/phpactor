@@ -6,7 +6,6 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class TypeSuggestionProvider
 {
