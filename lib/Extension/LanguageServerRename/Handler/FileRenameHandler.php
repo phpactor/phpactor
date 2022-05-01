@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerRename\Handler;
 
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerRename\Model\FileRenamer;
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\FileRenamer;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;

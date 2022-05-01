@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerRename\Util;
 
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Model\RenameResult;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameResult;
 use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\LanguageServerProtocol\TextDocumentEdit;
 use Phpactor\LanguageServerProtocol\VersionedTextDocumentIdentifier;
