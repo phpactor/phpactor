@@ -37,6 +37,7 @@ class DocblockCompletor implements TolerantCompletor
     ];
 
     private TypeSuggestionProvider $typeSuggestionProvider;
+
     private Parser $parser;
 
     public function __construct(TypeSuggestionProvider $typeSuggestionProvider, Parser $parser)

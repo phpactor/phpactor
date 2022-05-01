@@ -4,7 +4,6 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\StatementNode;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
 
