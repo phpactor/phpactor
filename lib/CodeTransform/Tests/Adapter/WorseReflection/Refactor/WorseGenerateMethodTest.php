@@ -65,6 +65,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'add return type with docblock' => [
                 'generateMethod13.test',
             ],
+            'add param type multiple literals' => [
+                'generateMethod14.test',
+            ],
         ];
     }
 

@@ -95,7 +95,8 @@ abstract class Type
     {
         $type = $this;
         if ($type instanceof UnionType) {
-            $type = $type->reduce();
+            // generalize literal types in order to de-duplicate them
+            $type = $type->generalize()->reduce();
         }
 
         if ($type instanceof UnionType) {
