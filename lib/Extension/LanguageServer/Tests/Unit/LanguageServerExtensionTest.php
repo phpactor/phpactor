@@ -20,6 +20,8 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testInitializesLanguageServer(): void
     {
         $serverTester = $this->createTester();
+        $result = $serverTester->initialize();
+        self::assertEquals('phpactor/phpactor', $result->serverInfo['name']);
     }
 
     public function testLoadsTextDocuments(): void
