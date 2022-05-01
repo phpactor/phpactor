@@ -107,5 +107,12 @@ class DocblockCompletorTest extends TestCase
                 'Aardvark',
             ],
         ];
+
+        yield 'parameter' => [
+            '   *    @param Foobar $a<> */function bar($aardvark, $foo)',
+            [
+                '$arrdvark',
+            ],
+        ];
     }
 }
