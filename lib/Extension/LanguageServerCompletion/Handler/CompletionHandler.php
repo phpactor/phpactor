@@ -87,7 +87,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                 $name = $this->suggestionNameFormatter->format($suggestion);
                 $nameImporterResult = $this->importClassOrFunctionName($suggestion, $params);
 
-                list($insertText, $insertTextFormat) = $this->determineInsertTextAndFormat(
+                [$insertText, $insertTextFormat] = $this->determineInsertTextAndFormat(
                     $name,
                     $suggestion,
                     $nameImporterResult
@@ -128,6 +128,9 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         $capabilities->signatureHelpProvider = new SignatureHelpOptions(['(', ',']);
     }
 
+    /**
+     * @return array{string,InsertTextFormat::*}
+     */
     private function determineInsertTextAndFormat(
         string $name,
         Suggestion $suggestion,

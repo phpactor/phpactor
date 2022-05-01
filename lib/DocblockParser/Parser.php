@@ -346,7 +346,7 @@ final class Parser
 
         if (
             $this->tokens->peekIs(0, Token::T_DOUBLE_COLON) &&
-            $this->tokens->peekIs(1, Token::T_LABEL)
+            ($this->tokens->peekIs(1, Token::T_LABEL) || $this->tokens->peekIs(1, Token::T_ASTERISK))
         ) {
             return new ConstantNode(
                 $classNode,

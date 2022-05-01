@@ -215,6 +215,23 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
     }
 
+    public function testClassConstantGlobInArrayShape(): void
+    {
+        $source = <<<'EOT'
+            <?php 
+            class Foo { 
+                const BAZ = "baz";
+                const BAR = "bar";
+                const ZED = "zed";
+                const SED = "sed";
+            }
+            EOT;
+        $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $class = $reflector->reflectClassesIn($source)->first();
+        $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
+        self::assertEquals('array{string,"baz"|"bar"|"zed"|"sed"}', $docblock->returnType()->__toString());
+    }
+
     public function testMethods(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
