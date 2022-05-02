@@ -45,6 +45,6 @@ class DocumentSymbolProviderHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
-        $capabilities->documentSymbolProvider = new DocumentSymbolOptions();
+        $capabilities->documentSymbolProvider = true;
     }
 }

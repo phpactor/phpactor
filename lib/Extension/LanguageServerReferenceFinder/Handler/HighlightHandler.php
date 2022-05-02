@@ -48,7 +48,6 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
-        $options = new DocumentHighlightOptions();
-        $capabilities->documentHighlightProvider = $options;
+        $capabilities->documentHighlightProvider = true;
     }
 }
