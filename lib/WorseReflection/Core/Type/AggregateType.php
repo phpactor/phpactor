@@ -24,6 +24,15 @@ abstract class AggregateType extends Type
         return UnionType::toUnion($type);
     }
 
+    public static function toAggregateOrIntersection(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return IntersectionType::toIntersection($type);
+    }
+
     public function __construct(Type ...$types)
     {
         $unique = [];

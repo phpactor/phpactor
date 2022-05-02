@@ -18,7 +18,7 @@ class TypeCombinator
 
     public static function narrowTo(Type $originalType, Type $type): Type
     {
-        $originalType = IntersectionType::toIntersection($originalType);
+        $originalType = AggregateType::toAggregateOrIntersection($originalType);
         return $originalType->narrowTo($type);
     }
 

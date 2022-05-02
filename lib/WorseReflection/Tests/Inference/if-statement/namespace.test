@@ -3,6 +3,7 @@
 namespace Barfoo;
 
 if ($foo instanceof Baz || $foo instanceof \Boo) {
+
     wrAssertType('Barfoo\Baz|Boo', $foo);
 }
 wrAssertType('<missing>', $foo);
