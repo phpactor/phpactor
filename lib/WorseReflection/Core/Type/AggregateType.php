@@ -107,7 +107,10 @@ abstract class AggregateType extends Type
      */
     abstract protected function new(Type ...$types): AggregateType;
 
-    public function filter(): self
+    /**
+     * @return T
+     */
+    public function filter(): AggregateType
     {
         $types = $this->types;
         $unique = [];
@@ -145,6 +148,7 @@ abstract class AggregateType extends Type
      */
     public function add(Type $type): AggregateType
     {
+        /** @phpstan-ignore-next-line */
         return ($this->new(...array_merge($this->types, [$type])))->filter();
     }
 
