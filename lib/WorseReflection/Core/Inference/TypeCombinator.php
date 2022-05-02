@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
@@ -17,7 +18,7 @@ class TypeCombinator
 
     public static function narrowTo(Type $originalType, Type $type): Type
     {
-        $originalType = UnionType::toUnion($originalType);
+        $originalType = IntersectionType::toIntersection($originalType);
         return $originalType->narrowTo($type);
     }
 
