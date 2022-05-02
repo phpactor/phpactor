@@ -37,6 +37,7 @@ use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -165,7 +166,7 @@ class TypeConverter
 
     private function convertIntersection(IntersectionNode $type): Type
     {
-        return new UnionType(...array_map(
+        return new IntersectionType(...array_map(
             fn (Node $node) => $this->convert($node),
             iterator_to_array($type->types->types())
         ));

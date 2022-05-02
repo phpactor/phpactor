@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -81,7 +82,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
         yield [
             '/** @return array&string */',
-            new UnionType(new ArrayType(new MissingType()), new StringType())
+            new IntersectionType(new ArrayType(new MissingType()), new StringType())
         ];
 
         yield [
