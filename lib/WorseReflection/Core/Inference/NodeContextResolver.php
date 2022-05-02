@@ -63,7 +63,7 @@ class NodeContextResolver
      */
     private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
     {
-        $key = 'sc:'.spl_object_hash($node);
+        $key = 'sc:'.spl_object_hash($node).$frame->__toString();
 
         return $this->cache->getOrSet($key, function () use ($frame, $node) {
             if (false === $node instanceof Node) {
