@@ -24,6 +24,11 @@ final class IntersectionType extends AggregateType
         return new IntersectionType($type);
     }
 
+    public function short(): string
+    {
+        return implode('&', array_map(fn (Type $t) => $t->short(), $this->types));
+    }
+
     public function new(Type ...$types): AggregateType
     {
         return new self(...$types);

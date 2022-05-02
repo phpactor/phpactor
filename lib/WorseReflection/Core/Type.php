@@ -4,11 +4,13 @@ namespace Phpactor\WorseReflection\Core;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -90,13 +92,17 @@ abstract class Type
     public function short(): string
     {
         $type = $this;
-        if ($type instanceof UnionType) {
+        if ($type instanceof AggregateType) {
             // generalize literal types in order to de-duplicate them
             $type = $type->generalize()->reduce();
         }
 
         if ($type instanceof UnionType) {
             return implode('|', array_map(fn (Type $t) => $t->short(), $type->types));
+        }
+
+        if ($type instanceof IntersectionType) {
+            return implode('&', array_map(fn (Type $t) => $t->short(), $type->types));
         }
 
         if ($type instanceof NullableType) {
