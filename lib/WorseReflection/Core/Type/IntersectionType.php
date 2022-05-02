@@ -24,6 +24,18 @@ final class IntersectionType extends AggregateType
         return new IntersectionType($type);
     }
 
+    public static function fromTypes(Type ...$types): Type
+    {
+        if (count($types) === 0) {
+            return new MissingType();
+        }
+        if (count($types) === 1) {
+            return $types[0];
+        }
+
+        return new IntersectionType(...$types);
+    }
+
     public function short(): string
     {
         return implode('&', array_map(fn (Type $t) => $t->short(), $this->types));
