@@ -5,6 +5,8 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use ArrayIterator;
 use Closure;
 use IteratorAggregate;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Traversable;
 
 /**
@@ -82,6 +84,40 @@ final class TypeAssertions implements IteratorAggregate
         }
 
         return new self($assertions);
+    }
+
+    /**
+     * Return union of the two type assertions
+     * (e.g. $left || $right)
+     */
+    public function union(TypeAssertions $typeAssertions): self
+    {
+        $resolved = [];
+        foreach ($this->typeAssertions as $typeAssertion) {
+            $resolved[$typeAssertion->name()] = $typeAssertion;
+        }
+
+        foreach ($typeAssertions as $typeAssertion) {
+            if (!isset($resolved[$typeAssertion->name()])) {
+                $resolved[$typeAssertion->name()] = $typeAssertion;
+                continue;
+            }
+
+            $left = $resolved[$typeAssertion->name()];
+            $right = $typeAssertion;
+            $resolved[$typeAssertion->name()] = TypeAssertion::variable(
+                $typeAssertion->name(),
+                $typeAssertion->offset(),
+                fn (Type $type) => UnionType::fromTypes($left->apply($type), $right->apply($type)),
+                function (Type $type) use ($left, $right) {
+                    $type = $left->negate()->apply($type);
+                    $type = $right->negate()->apply($type);
+                    return $type;
+                }
+            );
+        }
+
+        return new self($resolved);
     }
 
     private function key(TypeAssertion $assertion): string

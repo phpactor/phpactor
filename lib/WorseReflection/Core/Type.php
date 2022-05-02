@@ -79,11 +79,7 @@ abstract class Type
 
     public function addToUnion(Type $type): UnionType
     {
-        if (!$this instanceof UnionType) {
-            return new UnionType($this, $type);
-        }
-
-        return $this->add($type);
+        return new UnionType($this, $type);
     }
 
     public function isPrimitive(): bool

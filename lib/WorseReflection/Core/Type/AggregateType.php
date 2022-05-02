@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Closure;
-use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
@@ -14,24 +13,6 @@ abstract class AggregateType extends Type
      * @var Type[]
      */
     public array $types;
-
-    public static function toAggregateOrUnion(Type $type): AggregateType
-    {
-        if ($type instanceof AggregateType) {
-            return $type;
-        }
-
-        return UnionType::toUnion($type);
-    }
-
-    public static function toAggregateOrIntersection(Type $type): AggregateType
-    {
-        if ($type instanceof AggregateType) {
-            return $type;
-        }
-
-        return IntersectionType::toIntersection($type);
-    }
 
     public function __construct(Type ...$types)
     {
@@ -59,6 +40,24 @@ abstract class AggregateType extends Type
     public function __toString(): string
     {
         return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
+    }
+
+    public static function toAggregateOrUnion(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return UnionType::toUnion($type);
+    }
+
+    public static function toAggregateOrIntersection(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return IntersectionType::toIntersection($type);
     }
 
     public function toPhpString(): string

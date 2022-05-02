@@ -2,14 +2,24 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Types;
 
 final class UnionType extends AggregateType
 {
+    public function __toString(): string
+    {
+        return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
+    }
+
+    public function addToUnion(Type $type): UnionType
+    {
+        $types = $this->types;
+        $tyoes[] = $type;
+        return new UnionType(...$types);
+    }
+
     public static function toUnion(Type $type): AggregateType
     {
         if ($type instanceof NullableType) {
@@ -30,11 +40,6 @@ final class UnionType extends AggregateType
     public function new(Type ...$types): AggregateType
     {
         return new self(...$types);
-    }
-
-    public function __toString(): string
-    {
-        return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
     }
 
     public function toPhpString(): string

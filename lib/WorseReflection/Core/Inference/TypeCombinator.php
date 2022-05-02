@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
-use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
