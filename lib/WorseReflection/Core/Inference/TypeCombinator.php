@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
@@ -22,17 +23,18 @@ class TypeCombinator
 
     public static function subtract(Type $type, Type $from): Type
     {
-        $type = UnionType::toUnion($type);
-        $from = UnionType::toUnion($from);
+        $from = AggregateType::toAggregateOrUnion($from);
+        $type = AggregateType::toAggregateOrUnion($type);
 
-        return (new UnionType(...array_filter($from->types, function (Type $t) use ($type) {
+        $f = $from->new(...array_filter($from->types, function (Type $t) use ($type) {
             foreach ($type->types as $subtract) {
                 if ($t->__toString() === $subtract->__toString()) {
                     return false;
                 }
             }
             return true;
-        })))->reduce();
+        }))->reduce();
+        return $f;
     }
 
     /**

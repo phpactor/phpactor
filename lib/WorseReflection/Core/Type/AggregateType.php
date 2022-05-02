@@ -8,15 +8,21 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 
-/**
- * @template T of AggregateType
- */
 abstract class AggregateType extends Type
 {
     /**
      * @var Type[]
      */
     public array $types;
+
+    public static function toAggregateOrUnion(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return UnionType::toUnion($type);
+    }
 
     public function __construct(Type ...$types)
     {
@@ -102,14 +108,8 @@ abstract class AggregateType extends Type
         return $this->add($narrowTypes)->remove($this->new(...$toRemove));
     }
 
-    /**
-     * @return T
-     */
-    abstract protected function new(Type ...$types): AggregateType;
+    abstract public function new(Type ...$types): AggregateType;
 
-    /**
-     * @return T
-     */
     public function filter(): AggregateType
     {
         $types = $this->types;
@@ -143,12 +143,8 @@ abstract class AggregateType extends Type
         return new Types($this->types);
     }
 
-    /**
-     * @return T
-     */
     public function add(Type $type): AggregateType
     {
-        /** @phpstan-ignore-next-line */
         return ($this->new(...array_merge($this->types, [$type])))->filter();
     }
 

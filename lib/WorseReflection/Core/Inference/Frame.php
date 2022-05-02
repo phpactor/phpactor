@@ -5,6 +5,8 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Closure;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -142,7 +144,7 @@ class Frame
                 $variable = new Variable(
                     $typeAssertion->name(),
                     $createNew  ? $offset : $typeAssertion->offset(),
-                    UnionType::toUnion($typeAssertion->apply(
+                    AggregateType::toAggregateOrUnion($typeAssertion->apply(
                         $original ? $original->type() : new MissingType(),
                     ))->reduce(),
                     $typeAssertion->classType(),

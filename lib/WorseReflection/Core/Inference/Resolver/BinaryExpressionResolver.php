@@ -167,11 +167,6 @@ class BinaryExpressionResolver implements Resolver
         Node $rightOperand,
         int $operator
     ): NodeContext {
-        switch ($operator) {
-            case TokenKind::OrKeyword:
-            case TokenKind::BarBarToken:
-
-        }
         if (!NodeUtil::canAcceptTypeAssertion($leftOperand, $rightOperand)) {
             return $context;
         }

@@ -8,12 +8,9 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Types;
 
-/**
- * @extends AggregateType<UnionType>
- */
 final class UnionType extends AggregateType
 {
-    public static function toUnion(Type $type): UnionType
+    public static function toUnion(Type $type): AggregateType
     {
         if ($type instanceof NullableType) {
             return self::toUnion($type->type)->add(TypeFactory::null());
@@ -25,7 +22,12 @@ final class UnionType extends AggregateType
         return new UnionType($type);
     }
 
-    protected function new(Type ...$types): AggregateType
+    public function withTypes(Type ...$types): AggregateType
+    {
+        return new self(...$types);
+    }
+
+    public function new(Type ...$types): AggregateType
     {
         return new self(...$types);
     }
