@@ -38,16 +38,6 @@ trait AggregateTypeTrait
         $this->types = array_values($unique);
     }
 
-    public function __toString(): string
-    {
-        return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
-    }
-
-    public function toPhpString(): string
-    {
-        return implode('|', array_map(fn (Type $type) => $type->toPhpString(), $this->types));
-    }
-
     public function accepts(Type $type): Trinary
     {
         $maybe = false;
