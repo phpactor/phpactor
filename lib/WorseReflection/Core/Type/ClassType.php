@@ -63,4 +63,14 @@ class ClassType extends Type implements ClassNamedType
         }
         return Trinary::maybe();
     }
+
+    public function isInterface(): Trinary
+    {
+        return Trinary::maybe();
+    }
+
+    public function isUnknown(): Trinary
+    {
+        return Trinary::true();
+    }
 }

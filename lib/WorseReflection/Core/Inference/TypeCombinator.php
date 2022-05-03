@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -17,36 +18,48 @@ class TypeCombinator
         return $from->remove($type);
     }
 
-    // - filter out any types not accepted by the narrow type(s)
+    // if it's a:
+    //
+    // - union then remove any types the narrow type does not accept
+    //
+    // - class and we narrow to an unknown class or interface : add an intersection
+    //   Foobar => BazInterface => Foobar&BazInterface
+    //
+    // - class and we narrow to a narrower class: adopt the narrow
+    //   AbstractFoobar => Foobar => Foobar
+    //
+    // - type that accepts the narrow type: accept the narrow type
+    //   mixed => string => string
+    //
     public static function narrowTo(Type $type, Type $narrowTo): Type
     {
-        $narrowTo = AggregateType::toAggregateOrUnion($narrowTo);
-        $type = AggregateType::toAggregateOrUnion($type);
-        $keeps = [];
+        $narrowTo = UnionType::toUnion($narrowTo);
+        $type = UnionType::toUnion($type);
 
-        if (empty($narrowTo->types)) {
-            return $type;
-        }
+        // filter any types not accepted by the narrow
+        // $types = array_filter(
+        //     $type->types,
+        //     fn (Type $type) => !$narrowTo->accepts($type)->isFalse(),
+        // );
+        $types = $type->types;
 
-        foreach ($type->types as $type) {
-
-            // narrow type is wider, keep the original
-            if ($narrowTo->accepts($type)->isTrue()) {
-                $keeps[] = $type;
-                continue;
-            }
-
-            // if the type accepts the narrow type
-            // e.g. Foobar accepts Bar
+        $resolved = [];
+        // narrow the remaining ones
+        foreach ($types as $type) {
             foreach ($narrowTo->types as $narrowType) {
-                dump($narrowType->__toString());
-                if ($narrowType->accepts($type)->isTrue()) {
-                    $keeps[] = $type;
+
+                if ($narrowType instanceof ClassType) {
+
+                    if ($narrowType->isInterface()->isMaybeOrTrue() || $narrowType->isUnknown()->isTrue()) {
+                        $resolved[] = TypeFactory::intersection($type, $narrowType);
+                        continue;
+                    }
                 }
             }
         }
 
-        return UnionType::fromTypes(...$keeps)->reduce();
+
+        return UnionType::fromTypes(...$resolved)->reduce();
     }
 
 

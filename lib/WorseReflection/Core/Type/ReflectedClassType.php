@@ -138,4 +138,21 @@ class ReflectedClassType extends ClassType
 
         return Trinary::maybe();
     }
+
+    public function isInterface(): Trinary
+    {
+        if (!$reflection = $this->reflectionOrNull()) {
+            return Trinary::maybe();
+        }
+        return Trinary::fromBoolean($reflection->isInterface());
+    }
+
+    public function isUnknown(): Trinary
+    {
+        if (!$this->reflectionOrNull()) {
+            return Trinary::true();
+        }
+
+        return Trinary::false();
+    }
 }

@@ -20,11 +20,14 @@ abstract class AggregateType extends Type
         $toMerge = [];
         $hasNull = false;
         foreach ($types as $type) {
-            if ($type instanceof AggregateType) {
+            if ($type instanceof AggregateType && $type instanceof $this) {
                 foreach ($type->types as $utype) {
                     $unique[$utype->__toString()] = $utype;
                 }
                 continue;
+            }
+            if ($type instanceof AggregateType) {
+                $type = new ParenthesizedType($type);
             }
             if ($type instanceof NullableType) {
                 $type = $type->type;

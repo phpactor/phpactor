@@ -109,13 +109,13 @@ class TypeCombinatorTest extends TestCase
         ];
 
         $classTypes = $this->classTypes(
-            '<?php interface Bar {} abstract class Foobar implements Bar {} class Barfoo extends Foobar {}',
+            '<?php interface Bar {} class Foobar {} class Barfoo {}',
             'Foobar',
             'Barfoo',
             'Bar',
         );
 
-        yield 'remove types not implementing interface' => [
+        yield 'intersection' => [
             [
                 $classTypes[0],
                 $classTypes[1],
@@ -123,7 +123,7 @@ class TypeCombinatorTest extends TestCase
             [
                 $classTypes[2],
             ],
-            'Foobar|Barfoo',
+            '(Foobar&Bar)|(Barfoo&Bar)',
         ];
 
         yield 'narrow union type' => [
