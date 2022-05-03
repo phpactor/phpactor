@@ -7,7 +7,6 @@ use Amp\Success;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
-use Phpactor\LanguageServerProtocol\DocumentHighlightOptions;
 use Phpactor\LanguageServerProtocol\DocumentHighlightParams;
 use Phpactor\LanguageServerProtocol\DocumentHighlightRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
@@ -48,7 +47,6 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
-        $options = new DocumentHighlightOptions();
-        $capabilities->documentHighlightProvider = $options;
+        $capabilities->documentHighlightProvider = true;
     }
 }
