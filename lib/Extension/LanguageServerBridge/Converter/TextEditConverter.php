@@ -23,11 +23,7 @@ class TextEditConverter
             );
 
             // deduplicate text edits
-            $edits[sprintf(
-                '%d#%d',
-                $textEdit->start()->toInt(),
-                $textEdit->end()->toInt(),
-            )] = new LspTextEdit($range, $textEdit->replacement());
+            $edits[] = new LspTextEdit($range, $textEdit->replacement());
         }
 
         return array_values($edits);
