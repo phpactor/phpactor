@@ -79,11 +79,8 @@ abstract class Type
         return false;
     }
 
-    public function addToUnion(Type $type): UnionType
+    public function addType(Type $type): AggregateType
     {
-        if ($this instanceof UnionType) {
-            return $this->addToUnion($type);
-        }
         return new UnionType($this, $type);
     }
 

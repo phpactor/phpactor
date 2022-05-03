@@ -13,17 +13,10 @@ final class UnionType extends AggregateType
         return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
     }
 
-    public function addToUnion(Type $type): UnionType
-    {
-        $types = $this->types;
-        $tyoes[] = $type;
-        return new UnionType(...$types);
-    }
-
     public static function toUnion(Type $type): AggregateType
     {
         if ($type instanceof NullableType) {
-            return self::toUnion($type->type)->add(TypeFactory::null());
+            return self::toUnion($type->type)->addType(TypeFactory::null());
         }
         if ($type instanceof UnionType) {
             return $type;

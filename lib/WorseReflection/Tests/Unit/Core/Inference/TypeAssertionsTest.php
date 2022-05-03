@@ -36,16 +36,16 @@ class TypeAssertionsTest extends TestCase
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => $t->addToUnion(TypeFactory::string()),
-                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
+                fn (Type $t) => $t->addType(TypeFactory::string()),
+                fn (Type $t) => $t->addType(TypeFactory::null()),
             ),
 
             // assert foo is STRING positively and int NULL negatively
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => $t->addToUnion(TypeFactory::int()),
-                fn (Type $t) => $t->addToUnion(TypeFactory::float()),
+                fn (Type $t) => $t->addType(TypeFactory::int()),
+                fn (Type $t) => $t->addType(TypeFactory::float()),
             ),
 
             // it's either mixed, int or string
@@ -83,20 +83,20 @@ class TypeAssertionsTest extends TestCase
         yield [
             TypeFactory::mixed(),
 
-            // both assertions should be applied
+            // both assertions should be applied on positive
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => $t->addToUnion(TypeFactory::string()),
-                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
+                fn (Type $t) => $t->addType(TypeFactory::string()),
+                fn (Type $t) => $t->addType(TypeFactory::null()),
             ),
 
-            // both assertions should be applied
+            // both assertions should be applied on negative
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => $t->addToUnion(TypeFactory::int()),
-                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
+                fn (Type $t) => $t->addType(TypeFactory::int()),
+                fn (Type $t) => $t->addType(TypeFactory::float()),
             ),
 
             TypeFactory::union(
@@ -104,7 +104,11 @@ class TypeAssertionsTest extends TestCase
                 TypeFactory::string(),
                 TypeFactory::int(),
             ),
-            TypeFactory::null(),
+            TypeFactory::union(
+                TypeFactory::mixed(),
+                TypeFactory::null(),
+                TypeFactory::float(),
+            ),
         ];
     }
 }
