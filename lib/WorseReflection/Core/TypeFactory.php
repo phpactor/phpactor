@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NotType;
@@ -99,6 +100,11 @@ class TypeFactory
     public static function union(Type ...$types): UnionType
     {
         return new UnionType(...$types);
+    }
+
+    public static function intersection(Type ...$types): IntersectionType
+    {
+        return new IntersectionType(...$types);
     }
 
     public static function null(): NullType

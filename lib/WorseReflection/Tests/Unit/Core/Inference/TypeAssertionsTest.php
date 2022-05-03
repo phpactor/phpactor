@@ -31,6 +31,57 @@ class TypeAssertionsTest extends TestCase
     {
         yield [
             TypeFactory::mixed(),
+
+            // assert foo is STRING positively and NULL negatively
+            TypeAssertion::variable(
+                'foo',
+                0,
+                fn (Type $t) => $t->addToUnion(TypeFactory::string()),
+                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
+            ),
+
+            // assert foo is STRING positively and int NULL negatively
+            TypeAssertion::variable(
+                'foo',
+                0,
+                fn (Type $t) => $t->addToUnion(TypeFactory::int()),
+                fn (Type $t) => $t->addToUnion(TypeFactory::float()),
+            ),
+
+            // it's either mixed, int or string
+            TypeFactory::union(
+                TypeFactory::mixed(),
+                TypeFactory::string(),
+                TypeFactory::int()
+            ),
+
+            // it's either mixed, int or string
+            TypeFactory::union(
+                TypeFactory::mixed(),
+                TypeFactory::null(),
+                TypeFactory::float()
+            ),
+        ];
+    }
+
+    /**
+     * @dataProvider provideAnd
+     */
+    public function testAnd(Type $type, TypeAssertion $a, TypeAssertion $b, Type $expected, Type $negated): void
+    {
+        $assertions = new TypeAssertions([$a]);
+        $assertions = $assertions->and(new TypeAssertions([$b]));
+        $assertion = $assertions->variables()->firstForName('foo');
+
+        self::assertEquals($expected->__toString(), $assertion->apply($type)->__toString());
+        self::assertEquals($negated->__toString(), $assertion->negate()->apply($type)->__toString());
+
+    }
+
+    public function provideAnd(): Generator
+    {
+        yield [
+            TypeFactory::mixed(),
             TypeAssertion::variable(
                 'foo',
                 0,
@@ -43,7 +94,7 @@ class TypeAssertionsTest extends TestCase
                 fn (Type $t) => TypeFactory::bool(),
                 fn (Type $t) => TypeFactory::null()
             ),
-            TypeFactory::union(
+            TypeFactory::intersection(
                 TypeFactory::string(),
                 TypeFactory::bool()
             ),

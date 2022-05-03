@@ -111,9 +111,7 @@ final class TypeAssertions implements IteratorAggregate
                return UnionType::fromTypes($left->apply($type), $right->apply($type));
             },
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
-                $type = $left->negate()->apply($type);
-                $type = $right->negate()->apply($type);
-                return $type;
+               return UnionType::fromTypes($left->negate()->apply($type), $right->negate()->apply($type));
             }
         );
     }
