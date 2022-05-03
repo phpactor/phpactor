@@ -17,33 +17,36 @@ class TypeCombinator
         return $from->remove($type);
     }
 
-    public static function narrowTo(Type $originalType, Type $narrowTo): Type
+    // - filter out any types not accepted by the narrow type(s)
+    public static function narrowTo(Type $type, Type $narrowTo): Type
     {
-        $originalType = AggregateType::toAggregateOrIntersection($originalType);
-        $narrowTo = UnionType::toUnion($narrowTo);
+        $narrowTo = AggregateType::toAggregateOrUnion($narrowTo);
+        $type = AggregateType::toAggregateOrUnion($type);
+        $keeps = [];
 
-        if (count($narrowTo->types) === 0) {
-            return $originalType;
+        if (empty($narrowTo->types)) {
+            return $type;
         }
 
-        $toRemove = [];
-        $toAdd = [];
+        foreach ($type->types as $type) {
 
-        // for each of these types
-        foreach ($originalType->types as $type) {
-            // check each narrowed to to see if any of these types accept the
-            // narrowed version
+            // narrow type is wider, keep the original
+            if ($narrowTo->accepts($type)->isTrue()) {
+                $keeps[] = $type;
+                continue;
+            }
+
+            // if the type accepts the narrow type
+            // e.g. Foobar accepts Bar
             foreach ($narrowTo->types as $narrowType) {
-                // if an existing type accepts the narrowed type, remove
-                // the existing type
-                if ($type->accepts($narrowType)->isTrue() && $type->__toString() !== $narrowType->__toString()) {
-                    $toRemove[] = $type;
-                    continue;
+                dump($narrowType->__toString());
+                if ($narrowType->accepts($type)->isTrue()) {
+                    $keeps[] = $type;
                 }
             }
         }
 
-        return $originalType->add($narrowTo)->remove($originalType->new(...$toRemove));
+        return UnionType::fromTypes(...$keeps)->reduce();
     }
 
 

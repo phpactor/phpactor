@@ -37,14 +37,14 @@ class TypeCombinatorTest extends TestCase
             'string'
         ];
 
-        yield 'narrow to mixed' => [
+        yield 'cannot narrow from smaller to wider (e.g. string to mixed)' => [
             [
                 TypeFactory::string(),
             ],
             [
                 TypeFactory::mixed(),
             ],
-            'string|mixed'
+            'string'
         ];
 
         yield 'mixed narrows to int' => [
@@ -65,7 +65,7 @@ class TypeCombinatorTest extends TestCase
             [
                 TypeFactory::int(),
             ],
-            'string|int'
+            'int'
         ];
 
         yield 'empty narrow with classes' => [
@@ -105,19 +105,38 @@ class TypeCombinatorTest extends TestCase
             [
                 TypeFactory::class('Barfoo'),
             ],
-            'Barfoo|string',
+            'Barfoo',
         ];
 
-        yield 'narrow abstract with interface' => [
+        $classTypes = $this->classTypes(
+            '<?php interface Bar {} abstract class Foobar implements Bar {} class Barfoo extends Foobar {}',
+            'Foobar',
+            'Barfoo',
+            'Bar',
+        );
+
+        yield 'remove types not implementing interface' => [
+            [
+                $classTypes[0],
+                $classTypes[1],
+            ],
+            [
+                $classTypes[2],
+            ],
+            'Foobar|Barfoo',
+        ];
+
+        yield 'narrow union type' => [
             $this->classTypes(
-                '<?php interface Bar {} abstract class Foobar implements Bar {} class Barfoo extends Foobar {}',
+                '<?php class Foobar {} class Barfoo {} class Bazboo {}',
                 'Foobar',
                 'Barfoo',
+                'Bazboo',
             ),
             [
-                TypeFactory::class('Bar'),
+                TypeFactory::class('Barfoo'),
             ],
-            'Foobar|Barfoo|Bar',
+            'Barfoo',
         ];
     }
 
