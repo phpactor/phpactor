@@ -96,6 +96,32 @@ class UnionTypeTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider provideReduce
+     * @param Type[] $types
+     */
+    public function testReduce(array $types, string $expected): void
+    {
+        self::assertEquals($expected, TypeFactory::union(...$types)->reduce()->__toString());
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideReduce(): Generator
+    {
+        yield [[], '<missing>'];
+        yield [[TypeFactory::undefined()], '<missing>'];
+        yield [[TypeFactory::string(), ], 'string'];
+
+        yield 'strips parenthesis' => [
+            [
+                TypeFactory::parenthesized(TypeFactory::string()),
+            ],
+            'string'
+        ];
+    }
+
     public function testDeduplicatesTypesOnConstruct(): void
     {
         self::assertEquals('One|Two', TypeFactory::union(
@@ -114,6 +140,24 @@ class UnionTypeTest extends TestCase
             TypeFactory::class('One'),
             TypeFactory::null(),
             TypeFactory::null(),
+        )->__toString());
+    }
+
+    public function testRemovesPointlessParenthesisForIntersection(): void
+    {
+        self::assertEquals('null|One|Two', TypeFactory::union(
+            TypeFactory::null(),
+            TypeFactory::intersection(TypeFactory::class('One')),
+            TypeFactory::class('Two')
+        )->__toString());
+    }
+
+    public function testAddsParenthesisForIntersection(): void
+    {
+        self::assertEquals('null|One&string|Two', TypeFactory::union(
+            TypeFactory::null(),
+            TypeFactory::intersection(TypeFactory::class('One'),TypeFactory::string()),
+            TypeFactory::class('Two')
         )->__toString());
     }
 

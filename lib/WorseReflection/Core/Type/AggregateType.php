@@ -26,8 +26,8 @@ abstract class AggregateType extends Type
                 }
                 continue;
             }
-            if ($type instanceof AggregateType) {
-                $type = new ParenthesizedType($type);
+            if ($type instanceof AggregateType && count($type->types) > 1) {
+                $type = TypeFactory::parenthesized($type);
             }
             if ($type instanceof NullableType) {
                 $type = $type->type;

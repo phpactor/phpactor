@@ -26,6 +26,7 @@ use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\OctalLiteralType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
@@ -370,5 +371,10 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
+    }
+
+    public static function parenthesized(Type $type): ParenthesizedType
+    {
+        return new ParenthesizedType($type);
     }
 }
