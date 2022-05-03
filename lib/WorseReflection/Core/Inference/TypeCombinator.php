@@ -55,7 +55,7 @@ class TypeCombinator
                 if ($narrowType instanceof ClassType) {
 
                     if ($narrowType->isInterface()->isMaybeOrTrue() || $narrowType->isUnknown()->isTrue()) {
-                        $resolved[] = TypeFactory::intersection($type, $narrowType);
+                        $resolved[] = TypeFactory::intersection($type, $narrowType)->filter();
                         continue;
                     }
                 }
@@ -68,7 +68,7 @@ class TypeCombinator
         }
 
 
-        return UnionType::fromTypes(...$resolved)->reduce();
+        return TypeFactory::union(...$resolved)->reduce();
     }
 
 

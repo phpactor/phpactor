@@ -147,6 +147,17 @@ class TypeCombinatorTest extends TestCase
             ],
             'Barfoo',
         ];
+
+        yield 'strips unknown types' => [
+            [
+                TypeFactory::unknown(),
+                TypeFactory::string(),
+            ],
+            [
+                TypeFactory::string(),
+            ],
+            'string',
+        ];
     }
 
     /**
