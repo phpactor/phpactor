@@ -17,11 +17,35 @@ class TypeCombinator
         return $from->remove($type);
     }
 
-    public static function narrowTo(Type $originalType, Type $type): Type
+    public static function narrowTo(Type $originalType, Type $narrowTo): Type
     {
-        $originalType = IntersectionType::toIntersection($originalType);
-        return $originalType->narrowTo($type);
+        $originalType = AggregateType::toAggregateOrIntersection($originalType);
+        $narrowTo = UnionType::toUnion($narrowTo);
+
+        if (count($narrowTo->types) === 0) {
+            return $originalType;
+        }
+
+        $toRemove = [];
+        $toAdd = [];
+
+        // for each of these types
+        foreach ($originalType->types as $type) {
+            // check each narrowed to to see if any of these types accept the
+            // narrowed version
+            foreach ($narrowTo->types as $narrowType) {
+                // if an existing type accepts the narrowed type, remove
+                // the existing type
+                if ($type->accepts($narrowType)->isTrue() && $type->__toString() !== $narrowType->__toString()) {
+                    $toRemove[] = $type;
+                    continue;
+                }
+            }
+        }
+
+        return $originalType->add($narrowTo)->remove($originalType->new(...$toRemove));
     }
+
 
     public static function subtract(Type $type, Type $from): Type
     {

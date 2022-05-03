@@ -11,7 +11,8 @@ class Foo {
             return;
         }
 
-        wrAssertType('Foo|Bar', $foo, 'two');
+        wrAssertType('Foo&Bar', $foo, 'two');
+        \PHPStan\dumpType($foo);
 
         if ($foo instanceof Baz) {
             wrAssertType('Foo|Bar|Baz', $foo);

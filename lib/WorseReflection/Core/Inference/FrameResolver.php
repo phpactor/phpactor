@@ -100,7 +100,6 @@ final class FrameResolver
     {
         $key = 'frame:'.spl_object_hash($targetNode);
 
-        return $this->cache->getOrSet($key, function () use ($node, $targetNode, $frame) {
             if ($frame === null) {
                 $frame = new Frame($node->getNodeKindName());
             }
@@ -133,7 +132,6 @@ final class FrameResolver
             }
 
             return null;
-        });
     }
 
     private function resolveScopeNode(Node $node): Node

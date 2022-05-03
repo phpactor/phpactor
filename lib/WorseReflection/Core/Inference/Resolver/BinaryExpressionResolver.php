@@ -212,9 +212,7 @@ class BinaryExpressionResolver implements Resolver
                         return $type;
                     },
                     function (Type $type) use ($transmittingContext) {
-                        dump($type->__toString());
                         $subtracted = TypeCombinator::subtract($transmittingContext->type(), $type);
-                        dump($subtracted->__toString());
                         return $subtracted;
                     }
                 ));

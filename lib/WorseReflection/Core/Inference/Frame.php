@@ -139,12 +139,12 @@ class Frame
                 ) as $variable) {
                     $original = $variable;
                 }
+                $originalType = $original ? $original->type() : new MissingType();
+
                 $variable = new Variable(
                     $typeAssertion->name(),
                     $createNew  ? $offset : $typeAssertion->offset(),
-                    $typeAssertion->apply(
-                        $original ? $original->type() : new MissingType(),
-                    ),
+                    $typeAssertion->apply($originalType),
                     $typeAssertion->classType(),
                 );
 
