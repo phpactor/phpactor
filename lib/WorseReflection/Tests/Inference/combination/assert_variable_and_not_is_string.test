@@ -3,5 +3,7 @@
 function objectOrNull(): null|Foo|string {}
 
 $foo = objectOrNull();
+
 assert($foo && !is_string($foo));
+
 wrAssertType('Foo', $foo);

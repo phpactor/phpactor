@@ -6,7 +6,9 @@ use ArrayIterator;
 use Closure;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use RuntimeException;
 use Traversable;
 
 /**
@@ -87,10 +89,68 @@ final class TypeAssertions implements IteratorAggregate
     }
 
     /**
-     * Return union of the two type assertions
-     * (e.g. $left || $right)
+     * Combine incoming type assertions with logical OR
+     *
+     *   is_string($foobar)    => string
+     *   ||
+     *   is_bool($foobar)      => string|bool
+     *
+     *   $foobar               => mixed
+     *   ||
+     *   is_string($foobar)    => mixed|string
+     *
+     *   $foobar instanceof A  => A
+     *   ||
+     *   $foobar instanceof B  => A|B
      */
-    public function union(TypeAssertions $typeAssertions): self
+    public function or(TypeAssertions $typeAssertions): self
+    {
+        return $this->aggregate(
+            $typeAssertions,
+            function (Type $type, TypeAssertion $left, TypeAssertion $right) {
+               return UnionType::fromTypes($left->apply($type), $right->apply($type));
+            },
+            function (Type $type, TypeAssertion $left, TypeAssertion $right) {
+                $type = $left->negate()->apply($type);
+                $type = $right->negate()->apply($type);
+                return $type;
+            }
+        );
+    }
+
+    /**
+     * Combine incoming type assertions with logical AND
+     *
+     *   is_string($foobar)    => string
+     *   &&  
+     *   is_bool($foobar)      => string&bool # impossible but not our problem
+     *
+     *   $foobar               => mixed
+     *   &&
+     *   is_string($foobar)    => string
+     *
+     *   $foobar instanceof A  => A
+     *   &&
+     *   $foobar instanceof B  => A&B
+     */
+    public function and(TypeAssertions $typeAssertions): self
+    {
+        return $this->aggregate(
+            $typeAssertions,
+            function (Type $type, TypeAssertion $left, TypeAssertion $right) {
+                $left = $left->apply($type);
+                $right = $right->apply($left);
+                return $right;
+            },
+            function (Type $type, TypeAssertion $left, TypeAssertion $right) {
+                $type = $left->negate()->apply($type);
+                $type = $right->negate()->apply($type);
+                return $type;
+            }
+        );
+    }
+
+    private function aggregate(TypeAssertions $typeAssertions, Closure $true, Closure $false): self
     {
         $resolved = [];
         foreach ($this->typeAssertions as $typeAssertion) {
@@ -108,12 +168,8 @@ final class TypeAssertions implements IteratorAggregate
             $resolved[$typeAssertion->name()] = TypeAssertion::variable(
                 $typeAssertion->name(),
                 $typeAssertion->offset(),
-                fn (Type $type) => UnionType::fromTypes($left->apply($type), $right->apply($type)),
-                function (Type $type) use ($left, $right) {
-                    $type = $left->negate()->apply($type);
-                    $type = $right->negate()->apply($type);
-                    return $type;
-                }
+                fn (Type $type) => $true($type, $left, $right),
+                fn (Type $type) => $false($type, $left, $right),
             );
         }
 
@@ -124,5 +180,20 @@ final class TypeAssertions implements IteratorAggregate
     {
         $key = $assertion->variableType().$assertion->name().$assertion->offset();
         return $key;
+    }
+
+    public function firstForName(string $name): TypeAssertion
+    {
+        foreach ($this->typeAssertions as $assertion) {
+            if ($assertion->name() === $name) {
+                return $assertion;
+            }
+        }
+
+        throw new RuntimeException(sprintf(
+            'Type assertion collection has no assertion for name "%s"',
+            $name
+        ));
+
     }
 }

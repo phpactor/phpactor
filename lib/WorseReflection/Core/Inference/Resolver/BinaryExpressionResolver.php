@@ -171,7 +171,12 @@ class BinaryExpressionResolver implements Resolver
             case TokenKind::OrKeyword:
             case TokenKind::BarBarToken:
                 return $context->withTypeAssertions(
-                    $leftContext->typeAssertions()->union($rightContext->typeAssertions())
+                    $leftContext->typeAssertions()->or($rightContext->typeAssertions())
+                );
+            case TokenKind::AndKeyword:
+            case TokenKind::AmpersandAmpersandToken:
+                return $context->withTypeAssertions(
+                    $leftContext->typeAssertions()->and($rightContext->typeAssertions())
                 );
 
         }

@@ -53,7 +53,9 @@ class VariableResolver implements Resolver
         )->withTypeAssertion(TypeAssertion::variable(
             $variableName,
             $node->getStartPosition(),
-            function (Type $type) {return TypeCombinator::subtract(TypeFactory::unionEmpty(), $type);},
+            function (Type $type) {
+                return TypeCombinator::subtract(TypeFactory::unionEmpty(), $type);
+            },
             fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
         ));
     }
