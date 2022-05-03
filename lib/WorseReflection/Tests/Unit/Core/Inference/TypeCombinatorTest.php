@@ -44,7 +44,7 @@ class TypeCombinatorTest extends TestCase
             [
                 TypeFactory::mixed(),
             ],
-            'string'
+            '<missing>'
         ];
 
         yield 'mixed narrows to int' => [
@@ -79,31 +79,35 @@ class TypeCombinatorTest extends TestCase
             'Foobar|Barfoo',
         ];
 
+        $classTypes = $this->classTypes(
+            '<?php abstract class Foobar {} class Barfoo extends Foobar {}',
+            'Foobar',
+            'Barfoo',
+        );
+
         yield 'narrow abstract class to concerete' => [
-            $this->classTypes(
-                '<?php abstract class Foobar {} class Barfoo extends Foobar {}',
-                'Foobar',
-                'Barfoo',
-            ),
             [
-                TypeFactory::class('Barfoo'),
+                $classTypes[0],
+                $classTypes[1],
+            ],
+            [
+                $classTypes[1],
             ],
             'Barfoo',
         ];
 
         yield 'narrow abstract class to concerete with other types' => [
             array_merge(
-                $this->classTypes(
-                    '<?php abstract class Foobar {} class Barfoo extends Foobar {}',
-                    'Foobar',
-                    'Barfoo',
-                ),
+                [
+                    $classTypes[0],
+                    $classTypes[1],
+                ],
                 [
                     TypeFactory::string(),
                 ],
             ),
             [
-                TypeFactory::class('Barfoo'),
+                $classTypes[1],
             ],
             'Barfoo',
         ];
@@ -125,16 +129,21 @@ class TypeCombinatorTest extends TestCase
             ],
             '(Foobar&Bar)|(Barfoo&Bar)',
         ];
+        $classTypes = $this->classTypes(
+            '<?php class Foobar {} class Barfoo {} class Bazboo {}',
+            'Foobar',
+            'Barfoo',
+            'Bazboo',
+        );
 
         yield 'narrow union type' => [
-            $this->classTypes(
-                '<?php class Foobar {} class Barfoo {} class Bazboo {}',
-                'Foobar',
-                'Barfoo',
-                'Bazboo',
-            ),
             [
-                TypeFactory::class('Barfoo'),
+                $classTypes[0],
+                $classTypes[1],
+                $classTypes[2],
+            ],
+            [
+                $classTypes[1],
             ],
             'Barfoo',
         ];

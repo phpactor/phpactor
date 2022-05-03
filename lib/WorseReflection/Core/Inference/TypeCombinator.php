@@ -34,7 +34,11 @@ class TypeCombinator
     public static function narrowTo(Type $type, Type $narrowTo): Type
     {
         $narrowTo = UnionType::toUnion($narrowTo);
+        if (empty($narrowTo->types)) {
+            return $type;
+        }
         $type = UnionType::toUnion($type);
+
 
         // filter any types not accepted by the narrow
         // $types = array_filter(
@@ -54,6 +58,11 @@ class TypeCombinator
                         $resolved[] = TypeFactory::intersection($type, $narrowType);
                         continue;
                     }
+                }
+
+                if ($type->accepts($narrowType)->isTrue()) {
+                    $resolved[] = $narrowType;
+                    continue;
                 }
             }
         }

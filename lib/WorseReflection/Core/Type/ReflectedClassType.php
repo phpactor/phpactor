@@ -149,7 +149,7 @@ class ReflectedClassType extends ClassType
 
     public function isUnknown(): Trinary
     {
-        if (!$this->reflectionOrNull()) {
+        if (null === $this->reflectionOrNull()) {
             return Trinary::true();
         }
 
