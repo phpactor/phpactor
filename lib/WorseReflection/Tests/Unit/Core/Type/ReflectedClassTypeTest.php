@@ -50,7 +50,7 @@ class ReflectedClassTypeTest extends TestCase
                 'Bar'
             ),
             function (Type $type): void {
-                self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
+                self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isTrue());
             }
         ];
         yield 'rejects class which is not it' => [
@@ -62,6 +62,7 @@ class ReflectedClassTypeTest extends TestCase
                 self::assertTrue($type->accepts(TypeFactory::class('Foobar'))->isFalse());
             }
         ];
+
         yield 'interface accepts class which implements it' => [
             $this->createType(
                 '<?php interface Bar{}; class Foobar implements Bar {};',

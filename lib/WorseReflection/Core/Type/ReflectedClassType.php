@@ -4,7 +4,9 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
@@ -41,21 +43,33 @@ class ReflectedClassType extends ClassType
             return Trinary::false();
         }
 
+        $reflectedThis = $this->reflectionOrNull();
+
+        if (null === $reflectedThis) {
+            return Trinary::maybe();
+        }
+
         try {
-            $reflectedThat = $this->reflector->reflectClass($type->name());
+            $reflectedThat = $this->reflector->reflectClassLike($type->name());
         } catch (NotFound $e) {
             return Trinary::maybe();
+        }
+
+        if ($reflectedThis instanceof ReflectionInterface) {
+            return Trinary::fromBoolean($reflectedThat->isInstanceOf($reflectedThis->name()));
         }
 
         if ($reflectedThat->name() == $this->name()) {
             return Trinary::true();
         }
 
-        while ($parent = $reflectedThat->parent()) {
-            if ($parent->name() == $this->name()) {
-                return Trinary::true();
+        if ($reflectedThat instanceof ReflectionClass) {
+            while ($parent = $reflectedThat->parent()) {
+                if ($parent->name() == $this->name()) {
+                    return Trinary::true();
+                }
+                $reflectedThat = $parent;
             }
-            $reflectedThat = $parent;
         }
 
         return Trinary::false();
