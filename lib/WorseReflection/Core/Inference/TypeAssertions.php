@@ -136,9 +136,10 @@ final class TypeAssertions implements IteratorAggregate
         return $this->aggregate(
             $typeAssertions,
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
-                $left = $left->apply($type);
-                $right = $right->apply($left);
-                return $right;
+
+                dump($right->apply($left->apply($type))->__toString());
+
+                return $right->apply($left->apply($type));
             },
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
                 $type = $left->negate()->apply($type);

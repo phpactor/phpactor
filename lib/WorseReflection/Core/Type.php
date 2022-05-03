@@ -81,6 +81,9 @@ abstract class Type
 
     public function addToUnion(Type $type): UnionType
     {
+        if ($this instanceof UnionType) {
+            return $this->addToUnion($type);
+        }
         return new UnionType($this, $type);
     }
 

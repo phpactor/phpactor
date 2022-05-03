@@ -82,21 +82,27 @@ class TypeAssertionsTest extends TestCase
     {
         yield [
             TypeFactory::mixed(),
+
+            // both assertions should be applied
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => TypeFactory::string(),
-                fn (Type $t) => TypeFactory::null(),
+                fn (Type $t) => $t->addToUnion(TypeFactory::string()),
+                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
             ),
+
+            // both assertions should be applied
             TypeAssertion::variable(
                 'foo',
                 0,
-                fn (Type $t) => TypeFactory::bool(),
-                fn (Type $t) => TypeFactory::null()
+                fn (Type $t) => $t->addToUnion(TypeFactory::int()),
+                fn (Type $t) => $t->addToUnion(TypeFactory::null()),
             ),
-            TypeFactory::intersection(
+
+            TypeFactory::union(
+                TypeFactory::mixed(),
                 TypeFactory::string(),
-                TypeFactory::bool()
+                TypeFactory::int(),
             ),
             TypeFactory::null(),
         ];
