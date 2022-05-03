@@ -142,9 +142,9 @@ class Frame
                 $variable = new Variable(
                     $typeAssertion->name(),
                     $createNew  ? $offset : $typeAssertion->offset(),
-                    AggregateType::toAggregateOrUnion($typeAssertion->apply(
+                    $typeAssertion->apply(
                         $original ? $original->type() : new MissingType(),
-                    ))->reduce(),
+                    ),
                     $typeAssertion->classType(),
                 );
 
