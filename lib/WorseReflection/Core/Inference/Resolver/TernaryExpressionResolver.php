@@ -49,6 +49,6 @@ class TernaryExpressionResolver implements Resolver
             return $context->withType($right->type());
         }
 
-        return $context->withType($left->type()->addToUnion($right->type()));
+        return $context->withType($left->type()->addType($right->type()));
     }
 }

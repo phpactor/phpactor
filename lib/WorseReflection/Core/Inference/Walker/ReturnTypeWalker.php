@@ -30,7 +30,7 @@ class ReturnTypeWalker implements Walker
         $type = $resolver->resolveNode($frame, $node->expression)->type();
 
         if ($frame->returnType()->isDefined()) {
-            return $frame->withReturnType($frame->returnType()->addToUnion($type));
+            return $frame->withReturnType($frame->returnType()->addType($type));
         }
 
         return $frame->withReturnType($type);
