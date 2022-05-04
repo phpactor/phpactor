@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use PHPUnit\Framework\TestCase;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -71,14 +72,16 @@ class TestAssertWalker implements Walker
         $expectedType = TypeUtil::valueOrNull($args[0]->type());
         $actualType = $args[1]->type();
         $message = isset($args[2]) ? TypeUtil::valueOrNull($args[2]->type()) : null;
-
+        $position = PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $node->getFileContents());
         if ($actualType->__toString() !== $expectedType) {
             $this->testCase->fail(sprintf(
-                '%s: %s is not %s%s',
+                '%s: %s is not %s%s on line %s char %s',
                 $node->getText(),
                 $actualType->__toString(),
                 $expectedType,
                 $message ? ': ' . $message : '',
+                $position->line + 1,
+                $position->character + 1,
             ));
         }
 
