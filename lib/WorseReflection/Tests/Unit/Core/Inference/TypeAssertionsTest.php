@@ -1,13 +1,11 @@
 <?php
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
+
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertions;
-use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
@@ -24,7 +22,6 @@ class TypeAssertionsTest extends TestCase
 
         self::assertEquals($expected->__toString(), $assertion->apply($type)->__toString());
         self::assertEquals($negated->__toString(), $assertion->negate()->apply($type)->__toString());
-
     }
 
     public function provideOr(): Generator
@@ -75,7 +72,6 @@ class TypeAssertionsTest extends TestCase
 
         self::assertEquals($expected->__toString(), $assertion->apply($type)->__toString());
         self::assertEquals($negated->__toString(), $assertion->negate()->apply($type)->__toString());
-
     }
 
     public function provideAnd(): Generator

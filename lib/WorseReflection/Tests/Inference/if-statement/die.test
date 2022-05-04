@@ -11,6 +11,5 @@ if (is_null($foo)) {
     die();
 }
 
-wrFrame();
 wrAssertType('string|int', $foo);
 

@@ -3,7 +3,7 @@
 function foo(Foobar | Barfoo | Bazboo $foobar) {
 
     if ($foobar instanceof Foobar && $foobar instanceof Barfoo) {
-        wrAssertType('Foobar&Barfoo&Bazboo', $foobar);
+        wrAssertType('Foobar&Barfoo', $foobar);
         return;
     }
 

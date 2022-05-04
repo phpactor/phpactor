@@ -6,7 +6,6 @@ use ArrayIterator;
 use Closure;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use RuntimeException;
 use Traversable;
@@ -108,10 +107,10 @@ final class TypeAssertions implements IteratorAggregate
         return $this->aggregate(
             $typeAssertions,
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
-               return UnionType::fromTypes($left->apply($type), $right->apply($type));
+                return UnionType::fromTypes($left->apply($type), $right->apply($type));
             },
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
-               return UnionType::fromTypes($left->negate()->apply($type), $right->negate()->apply($type));
+                return UnionType::fromTypes($left->negate()->apply($type), $right->negate()->apply($type));
             }
         );
     }
@@ -120,7 +119,7 @@ final class TypeAssertions implements IteratorAggregate
      * Combine incoming type assertions with logical AND
      *
      *   is_string($foobar)    => string
-     *   &&  
+     *   &&
      *   is_bool($foobar)      => string&bool # impossible but not our problem
      *
      *   $foobar               => mixed
@@ -144,6 +143,20 @@ final class TypeAssertions implements IteratorAggregate
                 return $type;
             }
         );
+    }
+
+    public function firstForName(string $name): TypeAssertion
+    {
+        foreach ($this->typeAssertions as $assertion) {
+            if ($assertion->name() === $name) {
+                return $assertion;
+            }
+        }
+
+        throw new RuntimeException(sprintf(
+            'Type assertion collection has no assertion for name "%s"',
+            $name
+        ));
     }
 
     private function aggregate(TypeAssertions $typeAssertions, Closure $true, Closure $false): self
@@ -176,20 +189,5 @@ final class TypeAssertions implements IteratorAggregate
     {
         $key = $assertion->variableType().$assertion->name().$assertion->offset();
         return $key;
-    }
-
-    public function firstForName(string $name): TypeAssertion
-    {
-        foreach ($this->typeAssertions as $assertion) {
-            if ($assertion->name() === $name) {
-                return $assertion;
-            }
-        }
-
-        throw new RuntimeException(sprintf(
-            'Type assertion collection has no assertion for name "%s"',
-            $name
-        ));
-
     }
 }

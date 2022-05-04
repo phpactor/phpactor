@@ -82,9 +82,7 @@ class IfStatementWalker implements Walker
 
         $context->typeAssertions()->negate();
         if ($terminates) {
-            dump($frame->__toString());
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
-            dump($frame->__toString());
         }
 
         if ($node instanceof IfStatementNode && $node->elseClause) {

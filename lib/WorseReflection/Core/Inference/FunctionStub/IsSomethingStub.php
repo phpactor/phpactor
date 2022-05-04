@@ -33,7 +33,7 @@ class IsSomethingStub implements FunctionStub
                 $symbol->position()->start(),
                 fn (Type $type) => $this->isType,
                 function (Type $type) {
-                   return TypeCombinator::subtract($this->isType, $type);
+                    return TypeCombinator::subtract($this->isType, $type);
                 }
             ));
         }

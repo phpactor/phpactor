@@ -277,6 +277,11 @@ class TypeFactory
         return array_map(fn ($value) => self::fromValue($value), $values);
     }
 
+    public static function parenthesized(Type $type): ParenthesizedType
+    {
+        return new ParenthesizedType($type);
+    }
+
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
         if ('' === $type) {
@@ -371,10 +376,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function parenthesized(Type $type): ParenthesizedType
-    {
-        return new ParenthesizedType($type);
     }
 }

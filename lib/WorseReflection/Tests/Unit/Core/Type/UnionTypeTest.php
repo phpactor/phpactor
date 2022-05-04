@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use Phpactor\WorseReflection\ReflectorBuilder;
 
 class UnionTypeTest extends TestCase
 {
@@ -154,9 +153,9 @@ class UnionTypeTest extends TestCase
 
     public function testAddsParenthesisForIntersection(): void
     {
-        self::assertEquals('null|One&string|Two', TypeFactory::union(
+        self::assertEquals('null|(One&string)|Two', TypeFactory::union(
             TypeFactory::null(),
-            TypeFactory::intersection(TypeFactory::class('One'),TypeFactory::string()),
+            TypeFactory::intersection(TypeFactory::class('One'), TypeFactory::string()),
             TypeFactory::class('Two')
         )->__toString());
     }

@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
@@ -41,19 +40,13 @@ class TypeCombinator
 
 
         // filter any types not accepted by the narrow
-        // $types = array_filter(
-        //     $type->types,
-        //     fn (Type $type) => !$narrowTo->accepts($type)->isFalse(),
-        // );
         $types = $type->types;
 
         $resolved = [];
         // narrow the remaining ones
         foreach ($types as $type) {
             foreach ($narrowTo->types as $narrowType) {
-
                 if ($narrowType instanceof ClassType) {
-
                     if ($narrowType->isInterface()->isMaybeOrTrue() || $narrowType->isUnknown()->isTrue()) {
                         $resolved[] = TypeFactory::intersection($type, $narrowType)->filter();
                         continue;
@@ -66,7 +59,6 @@ class TypeCombinator
                 }
             }
         }
-
 
         return TypeFactory::union(...$resolved)->reduce();
     }

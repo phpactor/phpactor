@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
+
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
@@ -157,6 +158,23 @@ class TypeCombinatorTest extends TestCase
                 TypeFactory::string(),
             ],
             'string',
+        ];
+
+        $classTypes = $this->classTypes(
+            '<?php class Foo {}',
+            'Foo',
+            'Bar',
+        );
+
+        yield 'narrow union to unknown type ' => [
+            [
+                $classTypes[0],
+                $classTypes[1],
+            ],
+            [
+                $classTypes[1],
+            ],
+            '(Foo&Bar)|Bar',
         ];
     }
 

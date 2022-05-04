@@ -9,7 +9,6 @@ class Foo {
         if ($left instanceof Concatable) {
             wrAssertType('Type&Concatable', $left);
         }
-        \PHPStan\dumpType($left);
 
         wrAssertType('Type', $left);
     }
