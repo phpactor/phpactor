@@ -19,10 +19,12 @@ class TypeCombinator
 
     // if it's a:
     //
-    // - union then remove any types the narrow type does not accept
-    //
-    // - class and we narrow to an unknown class or interface : add an intersection
+    // 
+    // ??? - class and we narrow to an unknown class or interface : add an intersection
     //   Foobar => BazInterface => Foobar&BazInterface
+    //
+    // - type in a union type: accept the type
+    // - type in a intersection type: preserve the type
     //
     // - class and we narrow to a narrower class: adopt the narrow
     //   AbstractFoobar => Foobar => Foobar
@@ -36,19 +38,16 @@ class TypeCombinator
         if (empty($narrowTo->types)) {
             return $type;
         }
-        $type = UnionType::toUnion($type);
-
-
-        // filter any types not accepted by the narrow
-        $types = $type->types;
+        $types = UnionType::toUnion($type)->types;
+        $narrowTypes = $narrowTo->types;
 
         $resolved = [];
         // narrow the remaining ones
         foreach ($types as $type) {
-            foreach ($narrowTo->types as $narrowType) {
+            foreach ($narrowTypes as $narrowType) {
                 if ($narrowType instanceof ClassType) {
-                    if ($narrowType->isInterface()->isMaybeOrTrue() || $narrowType->isUnknown()->isTrue()) {
-                        $resolved[] = TypeFactory::intersection($type, $narrowType)->filter();
+                    if ($narrowType->isInterface()->isTrue()) {
+                        $resolved[] = TypeFactory::intersection($type, $narrowType)->clean();
                         continue;
                     }
                 }

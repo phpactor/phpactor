@@ -1,0 +1,19 @@
+<?php
+
+function t1($f)
+{
+     assert(is_string($f));
+     wrAssertType('string', $f);
+}
+function t2($f)
+{
+     assert(is_string($f) || is_int($f));
+     wrAssertType('string|int', $f);
+}
+function t3($f)
+{
+     assert(is_string($f) && is_int($f));
+     wrAssertType('string&int', $f);
+}
+
+

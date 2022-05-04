@@ -93,7 +93,7 @@ abstract class AggregateType extends Type
 
     abstract public function new(Type ...$types): AggregateType;
 
-    public function filter(): AggregateType
+    public function clean(): AggregateType
     {
         $types = $this->types;
         $unique = [];
@@ -128,7 +128,7 @@ abstract class AggregateType extends Type
 
     public function add(Type $type): AggregateType
     {
-        return ($this->new(...array_merge($this->types, [$type])))->filter();
+        return ($this->new(...array_merge($this->types, [$type])))->clean();
     }
 
     public function isNull(): bool
@@ -158,5 +158,10 @@ abstract class AggregateType extends Type
     protected function map(Closure $mapper): Type
     {
         return $this->new(...array_map($mapper, $this->types));
+    }
+
+    public function filter(Closure $closure): AggregateType
+    {
+        return $this->new(...array_filter($this->types, $closure));
     }
 }

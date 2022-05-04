@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -57,18 +58,18 @@ class UnionTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider provideFilter
+     * @dataProvider provideClean
      * @param Type[] $types
      */
-    public function testFilter(array $types, string $expected): void
+    public function testClean(array $types, string $expected): void
     {
-        self::assertEquals($expected, TypeFactory::union(...$types)->filter()->__toString());
+        self::assertEquals($expected, TypeFactory::union(...$types)->clean()->__toString());
     }
 
     /**
      * @return Generator<mixed>
      */
-    public function provideFilter(): Generator
+    public function provideClean(): Generator
     {
         yield [[], ''];
         yield [[TypeFactory::undefined()], ''];
@@ -93,6 +94,16 @@ class UnionTypeTest extends TestCase
             ],
             'string|int'
         ];
+    }
+
+    public function testFilter(): void
+    {
+        $types = TypeFactory::union(
+            TypeFactory::int(),
+            TypeFactory::float(),
+        )->filter(fn (Type $type) => $type instanceof FloatType);
+
+        self::assertEquals(TypeFactory::union(TypeFactory::float()), $types);
     }
 
     /**

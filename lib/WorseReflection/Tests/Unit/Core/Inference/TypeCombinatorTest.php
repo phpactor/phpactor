@@ -174,7 +174,7 @@ class TypeCombinatorTest extends TestCase
             [
                 $classTypes[1],
             ],
-            '(Foo&Bar)|Bar',
+            'Bar',
         ];
     }
 

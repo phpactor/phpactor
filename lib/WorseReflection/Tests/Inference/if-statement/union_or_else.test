@@ -1,9 +1,23 @@
 <?php
 
+interface Foobar {}
+interface Barfoo {}
+class Foobar {}
+
+function a($a) {
+    assert(is_string($a);
+    wrAssertType('string', $a);
+}
+
 function foo(Foobar | Barfoo | Bazboo $foobar) {
 
-    if ($foobar instanceof Foobar || $foobar instanceof Barfoo) {
+    wrAssertType('Foobar|Barfoo|Bazboo', $foobar);
+    \PHPStan\dumpType($foobar);
+    if (
+        $foobar instanceof Barfoo
+    ) {
         wrAssertType('Foobar|Barfoo|Bazboo', $foobar);
+        \PHPStan\dumpType($foobar);
         return;
     }
 
