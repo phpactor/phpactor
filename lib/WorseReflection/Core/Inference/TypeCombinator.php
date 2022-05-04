@@ -36,9 +36,11 @@ class TypeCombinator
     //
     public static function narrowTo(Type $type, Type $narrowTo): Type
     {
+        $narrowTo = $narrowTo->reduce();
+
         $resolved = [];
         $types = UnionType::toUnion($type);
-        $isInTypes = $types->contains($narrowTo);
+        $asIntersection = !$types->contains($narrowTo) && $narrowTo instanceof ClassType;
 
         foreach ($types->types as $type) {
             if ($type->accepts($narrowTo)->isTrue()) {
@@ -46,8 +48,8 @@ class TypeCombinator
                 continue;
             }
 
-            if (!$isInTypes) {
-                $resolved[] = TypeFactory::intersection($type ,$narrowTo);
+            if ($asIntersection) {
+                $resolved[] = TypeFactory::intersection($type ,$narrowTo)->clean();
             }
         }
 
