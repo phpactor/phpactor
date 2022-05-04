@@ -193,14 +193,6 @@ abstract class Type
     {
         return $this instanceof MixedType;
     }
-
-    /**
-     * @param Closure(Type): Type $mapper
-     */
-    protected function map(Closure $mapper): Type
-    {
-        return $mapper($this);
-    }
     public function mergeType(Type $type): Type
     {
         if ($this instanceof MissingType) {
@@ -212,5 +204,13 @@ abstract class Type
         }
 
         return TypeFactory::intersection($this, $type);
+    }
+
+    /**
+     * @param Closure(Type): Type $mapper
+     */
+    protected function map(Closure $mapper): Type
+    {
+        return $mapper($this);
     }
 }

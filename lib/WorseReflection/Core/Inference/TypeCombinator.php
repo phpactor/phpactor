@@ -6,9 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
-use function Phpactor\WorseReflection\Core\Type\IntersectionType;
 
 class TypeCombinator
 {
@@ -21,7 +19,7 @@ class TypeCombinator
 
     // if it's a:
     //
-    // 
+    //
     // ??? - class and we narrow to an unknown class or interface : add an intersection
     //   Foobar => BazInterface => Foobar&BazInterface
     //
@@ -49,12 +47,11 @@ class TypeCombinator
             }
 
             if ($asIntersection) {
-                $resolved[] = TypeFactory::intersection($type ,$narrowTo)->clean();
+                $resolved[] = TypeFactory::intersection($type, $narrowTo)->clean();
             }
         }
 
         return TypeFactory::union(...$resolved)->reduce();
-
     }
 
 
@@ -77,19 +74,19 @@ class TypeCombinator
     /**
      * Return only those types in type2 that are in type1
      */
-    public static function intersection(Type $type1, Type $type2): UnionType
+    public static function intersection(Type $type1, Type $type2): Type
     {
         $type1 = UnionType::toUnion($type1);
         $type2 = UnionType::toUnion($type2);
 
-        return new UnionType(...array_filter($type2->types, function (Type $t) use ($type1) {
+        return TypeFactory::union(...array_filter($type2->types, function (Type $t) use ($type1) {
             foreach ($type1->types as $subtract) {
                 if ($t->__toString() === $subtract->__toString()) {
                     return true;
                 }
             }
             return false;
-        }));
+        }))->reduce();
     }
 
     public static function acceptedByType(Type $type, Type $acceptingType): Type

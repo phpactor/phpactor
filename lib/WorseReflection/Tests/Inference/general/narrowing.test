@@ -12,7 +12,7 @@ function t2($f) {
 }
 function t3($f) {
      assert(is_string($f) && is_int($f));
-     wrAssertType('string&int', $f);
+     wrAssertType('<missing>', $f, 'impossible to be string and int');
 }
 function t4($f) {
      assert($f instanceof Bar);

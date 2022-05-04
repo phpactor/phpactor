@@ -40,7 +40,7 @@ class ReflectedClassType extends ClassType
     public function accepts(Type $type): Trinary
     {
         if ($type->equals($this)) {
-                    return Trinary::true();
+            return Trinary::true();
         }
         if ($type instanceof IntersectionType) {
             foreach ($type->types as $type) {

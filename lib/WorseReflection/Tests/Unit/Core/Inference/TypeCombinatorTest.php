@@ -29,15 +29,6 @@ class TypeCombinatorTest extends TestCase
      */
     public function provideNarrow(): Generator
     {
-        //yield [
-        //    [
-        //        TypeFactory::string(),
-        //    ],
-        //    [
-        //    ],
-        //    'string'
-        //];
-
         yield 'cannot narrow from smaller to wider (e.g. string to mixed)' => [
             [
                 TypeFactory::string(),
@@ -68,17 +59,6 @@ class TypeCombinatorTest extends TestCase
             ],
             'int'
         ];
-
-        // yield 'empty narrow with classes' => [
-        //     $this->classTypes(
-        //         '<?php abstract class Foobar {} class Barfoo extends Foobar {}',
-        //         'Foobar',
-        //         'Barfoo',
-        //     ),
-        //     [
-        //     ],
-        //     'Foobar|Barfoo',
-        // ];
 
         $classTypes = $this->classTypes(
             '<?php abstract class Foobar {} class Barfoo extends Foobar {}',
