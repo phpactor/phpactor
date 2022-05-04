@@ -101,7 +101,7 @@ class TypeCombinator
     {
         $type = UnionType::toUnion($type);
         $types = [];
-        foreach ($type->filter()->types as $type) {
+        foreach ($type->clean()->types as $type) {
             if (!$acceptingType->accepts($type)->isTrue()) {
                 continue;
             }

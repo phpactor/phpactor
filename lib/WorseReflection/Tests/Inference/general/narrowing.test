@@ -15,5 +15,12 @@ function t3($f)
      assert(is_string($f) && is_int($f));
      wrAssertType('string&int', $f);
 }
+function t4($f)
+{
+     assert($foo instanceof Bar);
+     wrAssertType('Bar', $f);
+}
+
+
 
 
