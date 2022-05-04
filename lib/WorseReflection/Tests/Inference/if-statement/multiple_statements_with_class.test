@@ -12,10 +12,9 @@ class Foo {
         }
 
         wrAssertType('Foo&Bar', $foo, 'two');
-        \PHPStan\dumpType($foo);
 
         if ($foo instanceof Baz) {
-            wrAssertType('Foo|Bar|Baz', $foo);
+            wrAssertType('Baz', $foo);
             return;
         }
     }

@@ -35,6 +35,10 @@ class TestAssertWalker implements Walker
         assert($node instanceof CallExpression);
         $name = $node->callableExpression->getText();
 
+        if ($name === 'wrFrame') {
+            dump($frame->__toString());
+            return $frame;
+        }
         if ($node->argumentExpressionList === null) {
             return $frame;
         }
@@ -75,11 +79,12 @@ class TestAssertWalker implements Walker
         $position = PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $node->getFileContents());
         if ($actualType->__toString() !== $expectedType) {
             $this->testCase->fail(sprintf(
-                '%s: %s is not %s%s on line %s char %s',
+                '%s: %s is not %s%s on offset %s line %s char %s',
                 $node->getText(),
                 $actualType->__toString(),
                 $expectedType,
                 $message ? ': ' . $message : '',
+                $node->getStartPosition(),
                 $position->line + 1,
                 $position->character + 1,
             ));

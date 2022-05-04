@@ -15,7 +15,6 @@ if (in_array($foo, $bars)) {
     die();
 }
 
-wrFrame();
 wrAssertType('string', $foo);
 
 class Foo {
