@@ -5,7 +5,7 @@ interface Barfoo {}
 class Foobar {}
 
 function a($a) {
-    assert(is_string($a);
+    assert(is_string($a));
     wrAssertType('string', $a);
 }
 
@@ -16,11 +16,11 @@ function foo(Foobar | Barfoo | Bazboo $foobar) {
     if (
         $foobar instanceof Barfoo
     ) {
-        wrAssertType('Foobar|Barfoo|Bazboo', $foobar);
+        wrAssertType('Barfoo', $foobar);
         \PHPStan\dumpType($foobar);
         return;
     }
 
-    wrAssertType('Bazboo', $foobar);
+    wrAssertType('Foobar|Bazboo', $foobar);
 }
 

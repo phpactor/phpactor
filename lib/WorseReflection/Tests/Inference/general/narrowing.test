@@ -1,26 +1,44 @@
 <?php
 
-function t1($f)
-{
+function t1($f) {
+     // string is narrower than <missing>
      assert(is_string($f));
      wrAssertType('string', $f);
 }
-function t2($f)
-{
+function t2($f) {
+     // int and string are narrower than <missing>
      assert(is_string($f) || is_int($f));
      wrAssertType('string|int', $f);
 }
-function t3($f)
-{
+function t3($f) {
      assert(is_string($f) && is_int($f));
      wrAssertType('string&int', $f);
 }
-function t4($f)
-{
-     assert($foo instanceof Bar);
+function t4($f) {
+     assert($f instanceof Bar);
      wrAssertType('Bar', $f);
 }
-
-
-
-
+function t5($f) {
+     assert($f instanceof Bar || $f instanceof Baz);
+     wrAssertType('Bar|Baz', $f);
+}
+function t6($f) {
+     assert($f instanceof Bar || $f instanceof Baz);
+     wrAssertType('Bar|Baz', $f);
+}
+function t7(Bar|Baz $f) {
+     assert($f instanceof Bar);
+     wrAssertType('Bar', $f);
+}
+function t8(Bar|Baz $f) {
+     assert($f instanceof Bar || $f  instanceof Baz);
+     wrAssertType('Bar|Baz', $f);
+}
+function t9(Bar $f) {
+     assert($f instanceof Bar || $f  instanceof Baz);
+     wrAssertType('Bar|(Bar&Baz)', $f, 'can never be Baz');
+}
+function t10(Bar|Boo $f) {
+     assert($f instanceof Baz);
+     wrAssertType('(Bar&Baz)|(Boo&Baz)', $f, 'intersection');
+}

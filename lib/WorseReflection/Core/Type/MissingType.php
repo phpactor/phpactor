@@ -19,6 +19,6 @@ final class MissingType extends Type
 
     public function accepts(Type $type): Trinary
     {
-        return Trinary::maybe();
+        return Trinary::true();
     }
 }

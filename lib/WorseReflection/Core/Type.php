@@ -201,4 +201,16 @@ abstract class Type
     {
         return $mapper($this);
     }
+    public function mergeType(Type $type): Type
+    {
+        if ($this instanceof MissingType) {
+            return $type;
+        }
+
+        if ($this instanceof AggregateType) {
+            return $this->add($type);
+        }
+
+        return TypeFactory::intersection($this, $type);
+    }
 }

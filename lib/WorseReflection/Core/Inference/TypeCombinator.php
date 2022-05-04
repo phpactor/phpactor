@@ -6,7 +6,9 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use function Phpactor\WorseReflection\Core\Type\IntersectionType;
 
 class TypeCombinator
 {
@@ -34,32 +36,23 @@ class TypeCombinator
     //
     public static function narrowTo(Type $type, Type $narrowTo): Type
     {
-        $narrowTo = UnionType::toUnion($narrowTo);
-        if (empty($narrowTo->types)) {
-            return $type;
-        }
-        $types = UnionType::toUnion($type)->types;
-        $narrowTypes = $narrowTo->types;
-
         $resolved = [];
-        // narrow the remaining ones
-        foreach ($types as $type) {
-            foreach ($narrowTypes as $narrowType) {
-                if ($narrowType instanceof ClassType) {
-                    if ($narrowType->isInterface()->isTrue()) {
-                        $resolved[] = TypeFactory::intersection($type, $narrowType)->clean();
-                        continue;
-                    }
-                }
+        $types = UnionType::toUnion($type);
+        $isInTypes = $types->contains($narrowTo);
 
-                if ($type->accepts($narrowType)->isTrue()) {
-                    $resolved[] = $narrowType;
-                    continue;
-                }
+        foreach ($types->types as $type) {
+            if ($type->accepts($narrowTo)->isTrue()) {
+                $resolved[] = $narrowTo;
+                continue;
+            }
+
+            if (!$isInTypes) {
+                $resolved[] = TypeFactory::intersection($type ,$narrowTo);
             }
         }
 
         return TypeFactory::union(...$resolved)->reduce();
+
     }
 
 

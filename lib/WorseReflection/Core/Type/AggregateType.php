@@ -155,7 +155,7 @@ abstract class AggregateType extends Type
         })))->reduce();
     }
 
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         return $this->new(...array_map($mapper, $this->types));
     }
@@ -163,5 +163,20 @@ abstract class AggregateType extends Type
     public function filter(Closure $closure): AggregateType
     {
         return $this->new(...array_filter($this->types, $closure));
+    }
+    public function count(): int
+    {
+        return count($this->types);
+    }
+
+    public function contains(Type $narrowTo): bool
+    {
+        foreach ($this->types as $type) {
+            if ($type->equals($narrowTo)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

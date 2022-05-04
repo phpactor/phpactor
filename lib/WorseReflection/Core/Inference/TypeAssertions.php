@@ -6,7 +6,6 @@ use ArrayIterator;
 use Closure;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use RuntimeException;
 use Traversable;
@@ -136,7 +135,7 @@ final class TypeAssertions implements IteratorAggregate
         return $this->aggregate(
             $typeAssertions,
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
-                return IntersectionType::fromTypes($left->apply($type), $right->apply($type));
+                return $right->apply($left->apply($type));
             },
             function (Type $type, TypeAssertion $left, TypeAssertion $right) {
                 $type = $left->negate()->apply($type);
