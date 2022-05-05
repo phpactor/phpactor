@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\Walker\YieldWalker;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -117,6 +118,7 @@ class ServiceLocator
                 new IfStatementWalker(),
                 new IncludeWalker($logger),
                 new BinaryExpressionWalker(),
+                new YieldWalker(),
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
@@ -299,6 +300,19 @@ class TypeFactory
         }
 
         return IntersectionType::toIntersection($type);
+    }
+
+    public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
+    {
+        if ((!$keyType->isDefined() || $keyType instanceof ArrayKeyType) && $valueType->isDefined()) {
+            return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $valueType ]);
+        }
+        return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
+    }
+
+    public static function arrayKey(): ArrayKeyType
+    {
+        return new ArrayKeyType();
     }
 
 

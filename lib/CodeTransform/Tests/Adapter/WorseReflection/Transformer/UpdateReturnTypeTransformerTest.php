@@ -56,6 +56,30 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'add generator return type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function array()
+                    {
+                        yield 'foo';
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function array(): Generator
+                    {
+                        yield 'foo';
+                    }
+                }
+                EOT
+        ];
+
         yield 'add nullable return type' => [
             <<<'EOT'
                 <?php
