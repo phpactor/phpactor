@@ -45,24 +45,6 @@ abstract class AggregateType extends Type
         return implode('|', array_map(fn (Type $type) => $type->__toString(), $this->types));
     }
 
-    public static function toAggregateOrUnion(Type $type): AggregateType
-    {
-        if ($type instanceof AggregateType) {
-            return $type;
-        }
-
-        return UnionType::toUnion($type);
-    }
-
-    public static function toAggregateOrIntersection(Type $type): AggregateType
-    {
-        if ($type instanceof AggregateType) {
-            return $type;
-        }
-
-        return IntersectionType::toIntersection($type);
-    }
-
     public function toPhpString(): string
     {
         return implode('|', array_map(fn (Type $type) => $type->toPhpString(), $this->types));

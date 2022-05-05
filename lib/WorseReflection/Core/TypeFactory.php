@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
@@ -281,6 +282,25 @@ class TypeFactory
     {
         return new ParenthesizedType($type);
     }
+
+    public static function toAggregateOrUnion(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return UnionType::toUnion($type);
+    }
+
+    public static function toAggregateOrIntersection(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return IntersectionType::toIntersection($type);
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {

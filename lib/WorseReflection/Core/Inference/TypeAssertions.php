@@ -88,19 +88,11 @@ final class TypeAssertions implements IteratorAggregate
     }
 
     /**
-     * Combine incoming type assertions with logical OR
+     * Combine incoming type assertions with logical OR (union)
      *
      *   is_string($foobar)    => string
      *   ||
      *   is_bool($foobar)      => string|bool
-     *
-     *   $foobar               => mixed
-     *   ||
-     *   is_string($foobar)    => mixed|string
-     *
-     *   $foobar instanceof A  => A
-     *   ||
-     *   $foobar instanceof B  => A|B
      */
     public function or(TypeAssertions $typeAssertions): self
     {
@@ -116,15 +108,7 @@ final class TypeAssertions implements IteratorAggregate
     }
 
     /**
-     * Combine incoming type assertions with logical AND
-     *
-     *   is_string($foobar)    => string
-     *   &&
-     *   is_bool($foobar)      => string&bool # impossible but not our problem
-     *
-     *   $foobar               => mixed
-     *   &&
-     *   is_string($foobar)    => string
+     * Combine incoming type assertions with logical AND (intersection)
      *
      *   $foobar instanceof A  => A
      *   &&

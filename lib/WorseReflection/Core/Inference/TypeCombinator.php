@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -57,8 +56,8 @@ class TypeCombinator
 
     public static function subtract(Type $type, Type $from): Type
     {
-        $from = AggregateType::toAggregateOrUnion($from);
-        $type = AggregateType::toAggregateOrUnion($type);
+        $from = TypeFactory::toAggregateOrUnion($from);
+        $type = TypeFactory::toAggregateOrUnion($type);
 
         $f = $from->withTypes(...array_filter($from->types, function (Type $t) use ($type) {
             foreach ($type->types as $subtract) {
