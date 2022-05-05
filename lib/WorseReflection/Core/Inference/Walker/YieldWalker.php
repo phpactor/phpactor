@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Variable;
 use Microsoft\PhpParser\Node\CatchClause;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class YieldWalker extends AbstractWalker
 {
@@ -29,12 +30,21 @@ class YieldWalker extends AbstractWalker
             return $frame;
         }
 
-        $value = $resolver->resolveNode($frame, $arrayElement->elementValue);
+        $key = new MissingType();
+        if ($arrayElement->elementKey) {
+            $key = $resolver->resolveNode($frame, $arrayElement->elementKey)->type();
+        }
+        $value = new MissingType();
+        /** @phpstan-ignore-next-line No trust */
+        if ($arrayElement->elementValue) {
+            $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
+        }
+
         return $frame->withReturnType(
             TypeFactory::generator(
                 $resolver->reflector(),
-                TypeFactory::arrayKey(),
-                $value->type()->generalize()
+                $key->generalize(),
+                $value->generalize(),
             )
         );
     }

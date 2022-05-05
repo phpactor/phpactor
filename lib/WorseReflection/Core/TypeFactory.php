@@ -402,6 +402,9 @@ class TypeFactory
 
     public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
     {
+        if ((!$keyType->isDefined() || $keyType instanceof ArrayKeyType) && $valueType->isDefined()) {
+            return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $valueType ]);
+        }
         return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
     }
 

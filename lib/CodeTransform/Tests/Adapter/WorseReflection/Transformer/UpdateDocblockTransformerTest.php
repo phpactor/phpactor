@@ -289,6 +289,64 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'add generator' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz()
+                    {
+                        yield 'foo';
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @return Generator<string>
+                     */
+                    public function baz()
+                    {
+                        yield 'foo';
+                    }
+                }
+                EOT
+        ];
+
+        yield 'add generator with array key' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz()
+                    {
+                        yield 'foo' => 12;
+                        yield 'bar' => 32;
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @return Generator<string,int>
+                     */
+                    public function baz()
+                    {
+                        yield 'foo' => 12;
+                        yield 'bar' => 32;
+                    }
+                }
+                EOT
+        ];
+
         yield 'adds docblock for array' => [
             <<<'EOT'
                 <?php
