@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
-use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NotType;
@@ -303,6 +302,19 @@ class TypeFactory
         return IntersectionType::toIntersection($type);
     }
 
+    public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
+    {
+        if ((!$keyType->isDefined() || $keyType instanceof ArrayKeyType) && $valueType->isDefined()) {
+            return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $valueType ]);
+        }
+        return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
+    }
+
+    public static function arrayKey(): ArrayKeyType
+    {
+        return new ArrayKeyType();
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -398,18 +410,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
-    {
-        if ((!$keyType->isDefined() || $keyType instanceof ArrayKeyType) && $valueType->isDefined()) {
-            return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $valueType ]);
-        }
-        return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
-    }
-
-    public static function arrayKey(): ArrayKeyType
-    {
-        return new ArrayKeyType();
     }
 }
