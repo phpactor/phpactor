@@ -4,12 +4,10 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class AggregateTypeTest extends TestCase
 {
