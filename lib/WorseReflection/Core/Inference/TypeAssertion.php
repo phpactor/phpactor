@@ -111,9 +111,10 @@ final class TypeAssertion
         return $this->classType ?: new MissingType();
     }
 
-    public function negate(): void
+    public function negate(): TypeAssertion
     {
         $this->polarity = !$this->polarity;
+        return $this;
     }
 
     public function offset(): int

@@ -1,9 +1,11 @@
 <?php
 
+class Bar {}
+
 class Foo {
     function foo(Foo|Bar $foo)
     {
-        wrAssertType('Foo|Bar', $foo);
+        wrAssertType('Foo|Bar', $foo, 'one');
 
         if (!$foo instanceof Bar) {
 
@@ -11,10 +13,10 @@ class Foo {
             return;
         }
 
-        wrAssertType('Foo|Bar', $foo);
+        wrAssertType('Bar', $foo, 'two');
 
         if ($foo instanceof Baz) {
-            wrAssertType('Foo|Bar|Baz', $foo);
+            wrAssertType('Bar&Baz', $foo);
             return;
         }
     }

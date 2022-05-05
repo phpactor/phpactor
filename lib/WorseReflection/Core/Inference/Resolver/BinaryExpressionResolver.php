@@ -167,6 +167,20 @@ class BinaryExpressionResolver implements Resolver
         Node $rightOperand,
         int $operator
     ): NodeContext {
+        switch ($operator) {
+            case TokenKind::OrKeyword:
+            case TokenKind::BarBarToken:
+                return $context->withTypeAssertions(
+                    $leftContext->typeAssertions()->or($rightContext->typeAssertions())
+                );
+            case TokenKind::AndKeyword:
+            case TokenKind::AmpersandAmpersandToken:
+                return $context->withTypeAssertions(
+                    $leftContext->typeAssertions()->and($rightContext->typeAssertions())
+                );
+
+        }
+
         if (!NodeUtil::canAcceptTypeAssertion($leftOperand, $rightOperand)) {
             return $context;
         }
@@ -174,7 +188,7 @@ class BinaryExpressionResolver implements Resolver
         [$reciever, $recieverContext ] = NodeUtil::canAcceptTypeAssertion(
             $leftOperand
         ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
-        [$transmitter, $transmitteContext ]  = NodeUtil::canAcceptTypeAssertion(
+        [$transmitter, $transmittingContext ]  = NodeUtil::canAcceptTypeAssertion(
             $rightOperand
         ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
 
@@ -186,19 +200,19 @@ class BinaryExpressionResolver implements Resolver
             case TokenKind::EqualsEqualsEqualsToken:
                 return $context->withTypeAssertion(TypeAssertion::forContext(
                     $recieverContext,
-                    fn (Type $type) => $transmitteContext->type(),
-                    fn (Type $type) => TypeCombinator::subtract($transmitteContext->type(), $recieverContext->type()),
+                    fn (Type $type) => $transmittingContext->type(),
+                    fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $recieverContext->type()),
                 ));
             case TokenKind::InstanceOfKeyword:
                 return $context->withTypeAssertion(TypeAssertion::forContext(
                     $recieverContext,
-                    function (Type $type) use ($transmitteContext) {
+                    function (Type $type) use ($transmittingContext) {
                         $type = TypeCombinator::acceptedByType($type, TypeFactory::object());
-                        $type = TypeCombinator::narrowTo($type, $transmitteContext->type());
+                        $type = TypeCombinator::narrowTo($type, $transmittingContext->type());
                         return $type;
                     },
-                    function (Type $type) use ($transmitteContext) {
-                        $subtracted = TypeCombinator::subtract($transmitteContext->type(), $type);
+                    function (Type $type) use ($transmittingContext) {
+                        $subtracted = TypeCombinator::subtract($transmittingContext->type(), $type);
                         return $subtracted;
                     }
                 ));

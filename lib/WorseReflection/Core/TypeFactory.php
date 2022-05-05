@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
@@ -17,6 +18,7 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NotType;
@@ -25,6 +27,7 @@ use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\OctalLiteralType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
@@ -99,6 +102,11 @@ class TypeFactory
     public static function union(Type ...$types): UnionType
     {
         return new UnionType(...$types);
+    }
+
+    public static function intersection(Type ...$types): IntersectionType
+    {
+        return new IntersectionType(...$types);
     }
 
     public static function null(): NullType
@@ -269,6 +277,30 @@ class TypeFactory
     {
         return array_map(fn ($value) => self::fromValue($value), $values);
     }
+
+    public static function parenthesized(Type $type): ParenthesizedType
+    {
+        return new ParenthesizedType($type);
+    }
+
+    public static function toAggregateOrUnion(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return UnionType::toUnion($type);
+    }
+
+    public static function toAggregateOrIntersection(Type $type): AggregateType
+    {
+        if ($type instanceof AggregateType) {
+            return $type;
+        }
+
+        return IntersectionType::toIntersection($type);
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {

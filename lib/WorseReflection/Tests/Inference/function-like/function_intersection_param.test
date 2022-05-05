@@ -1,0 +1,6 @@
+<?php
+
+function foo(Foo&Bar&Baz $foo): void
+{
+    wrAssertType('Foo&Bar&Baz', $foo);
+}

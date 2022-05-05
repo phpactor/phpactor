@@ -71,7 +71,6 @@ class ParameterResolver implements Resolver
         $function = $reflector->reflectFunction($name->getFullyQualifiedNameText());
         $parameter = $function->parameters()->get($node->getName());
 
-
         return NodeContextFactory::create(
             (string)$node->variableName->getText($node->getFileContents()),
             $node->variableName->getStartPosition(),

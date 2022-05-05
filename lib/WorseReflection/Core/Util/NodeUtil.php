@@ -19,7 +19,9 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 
 class NodeUtil
@@ -173,12 +175,19 @@ class NodeUtil
         }
 
         if ($nodeOrToken instanceof QualifiedNameList) {
-            return TypeFactory::union(...array_map(function ($name) use ($node, $reflector) {
+            $isIntersection = false;
+            $types = array_filter(array_map(function ($name) use ($node, $reflector, &$isIntersection) {
+                if ($name instanceof Token && $name->kind === TokenKind::AmpersandToken) {
+                    $isIntersection = true;
+                    return false;
+                }
                 if (null === $name) {
                     return new MissingType();
                 }
                 return self::typeFromQualfiedNameLike($reflector, $node, $name);
-            }, iterator_to_array($nodeOrToken->getElements(), true)))->reduce();
+            }, iterator_to_array($nodeOrToken->getElements(), true)), fn ($name) => $name !== false);
+
+            return ($isIntersection ? IntersectionType::fromTypes(...$types) : UnionType::fromTypes(...$types))->reduce();
         }
 
         return TypeFactory::unknown();

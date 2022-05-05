@@ -27,6 +27,7 @@ use Phpactor\DocblockParser\Ast\TagNode;
 use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
+use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
 use Phpactor\DocblockParser\Ast\Type\ListNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
@@ -200,10 +201,23 @@ final class Parser
             return $type;
         }
         $elements = [$type];
+        $mode = null;
 
         while (true) {
-            if ($this->tokens->if(Token::T_BAR)) {
-                $elements[] = $this->tokens->chomp();
+            if (
+                $this->tokens->if(Token::T_BAR) ||
+                $this->tokens->if(Token::T_AMPERSAND)
+            ) {
+                $delimiter = $this->tokens->chomp();
+                if (!$mode) {
+                    $mode = $delimiter->type;
+                }
+
+                if ($mode !== $delimiter->type) {
+                    continue;
+                }
+
+                $elements[] = $delimiter;
                 $elements[] = $this->parseType();
                 if (null !== $type) {
                     continue;
@@ -218,6 +232,9 @@ final class Parser
             return $list->types()->first();
         }
 
+        if ($mode && $mode === Token::T_AMPERSAND) {
+            return new IntersectionNode($list);
+        }
         return new UnionNode($list);
     }
 

@@ -1,0 +1,9 @@
+/** @var Foo&Bar */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   IntersectionNode: = 
+    TypeList: = 
+     ClassNode: = Foo&
+     ClassNode: = Bar */

@@ -75,15 +75,18 @@ class IfStatementWalker implements Walker
         $terminates = $this->branchTerminates($node);
 
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
-        $frame->restoreToStateBefore($node->getStartPosition(), $end);
+
+        if (!$terminates) {
+            $frame->restoreToStateBefore($node->getStartPosition(), $end);
+        }
 
         $context->typeAssertions()->negate();
         if ($terminates) {
-            $frame->applyTypeAssertions($context->typeAssertions(), $end, true);
+            $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
         }
 
         if ($node instanceof IfStatementNode && $node->elseClause) {
-            $frame->applyTypeAssertions($context->typeAssertions(), $node->elseClause->getStartPosition(), true);
+            $frame->applyTypeAssertions($context->typeAssertions(), $start, $node->elseClause->getStartPosition());
             $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition());
         }
 

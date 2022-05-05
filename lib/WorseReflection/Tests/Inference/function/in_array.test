@@ -14,8 +14,8 @@ if (in_array($foo, $bars)) {
     wrAssertType('"foo"|"bar"', $foo);
     die();
 }
-wrAssertType('string', $foo);
 
+wrAssertType('string', $foo);
 
 class Foo {
     const TYPE_CLASS = 'class';

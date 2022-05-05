@@ -30,7 +30,7 @@ class generateMethod
         return new MissingType();
     }
 
-    private function convertParenthesized(TypeNode|ParenthesizedType $type, ?ReflectionScope $scope): Type
+    private function convertParenthesized(TypeNode&ParenthesizedType $type, ?ReflectionScope $scope): Type
     {
     }
 }

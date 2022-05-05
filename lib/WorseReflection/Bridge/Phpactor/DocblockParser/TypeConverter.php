@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
+use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
@@ -36,6 +37,7 @@ use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -80,6 +82,9 @@ class TypeConverter
         }
         if ($type instanceof UnionNode) {
             return $this->convertUnion($type);
+        }
+        if ($type instanceof IntersectionNode) {
+            return $this->convertIntersection($type);
         }
         if ($type instanceof GenericNode) {
             $node = $this->convertGeneric($type);
@@ -156,6 +161,14 @@ class TypeConverter
         return new UnionType(...array_map(
             fn (Node $node) => $this->convert($node),
             iterator_to_array($union->types->types())
+        ));
+    }
+
+    private function convertIntersection(IntersectionNode $type): Type
+    {
+        return new IntersectionType(...array_map(
+            fn (Node $node) => $this->convert($node),
+            iterator_to_array($type->types->types())
         ));
     }
 

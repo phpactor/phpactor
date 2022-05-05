@@ -4,11 +4,13 @@ namespace Phpactor\WorseReflection\Core;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -77,13 +79,9 @@ abstract class Type
         return false;
     }
 
-    public function addToUnion(Type $type): UnionType
+    public function addType(Type $type): AggregateType
     {
-        if (!$this instanceof UnionType) {
-            return new UnionType($this, $type);
-        }
-
-        return $this->add($type);
+        return new UnionType($this, $type);
     }
 
     public function isPrimitive(): bool
@@ -94,13 +92,17 @@ abstract class Type
     public function short(): string
     {
         $type = $this;
-        if ($type instanceof UnionType) {
+        if ($type instanceof AggregateType) {
             // generalize literal types in order to de-duplicate them
             $type = $type->generalize()->reduce();
         }
 
         if ($type instanceof UnionType) {
             return implode('|', array_map(fn (Type $t) => $t->short(), $type->types));
+        }
+
+        if ($type instanceof IntersectionType) {
+            return implode('&', array_map(fn (Type $t) => $t->short(), $type->types));
         }
 
         if ($type instanceof NullableType) {
@@ -190,6 +192,18 @@ abstract class Type
     public function isMixed(): bool
     {
         return $this instanceof MixedType;
+    }
+    public function mergeType(Type $type): Type
+    {
+        if ($this instanceof MissingType) {
+            return $type;
+        }
+
+        if ($this instanceof AggregateType) {
+            return $this->add($type);
+        }
+
+        return TypeFactory::intersection($this, $type);
     }
 
     /**

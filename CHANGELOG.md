@@ -62,6 +62,7 @@ Improvements:
 Features:
 
   - [compl] Docblock completion
+  - [wr] Support for intersection types
   - [rf] Union type support for goto definition
   - [ct] Add missing PHP return types
   - [wr] Support for inference for `array_map`, and arrow and anonymous functions

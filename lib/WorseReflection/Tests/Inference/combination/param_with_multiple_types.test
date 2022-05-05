@@ -7,7 +7,7 @@ class Foo {
         int $operator
     ): Type {
         if ($left instanceof Concatable) {
-            wrAssertType('Type|Concatable', $left);
+            wrAssertType('Type&Concatable', $left);
         }
 
         wrAssertType('Type', $left);

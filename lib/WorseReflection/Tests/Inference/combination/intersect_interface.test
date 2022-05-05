@@ -10,9 +10,8 @@ function foo(AbstractFoo $foo) {
     assert($foo instanceof Foobar);
     wrAssertType('Foobar', $$foo);
 
-    // TODO: implement intersection types
     assert($foo instanceof Baz);
-    wrAssertType('Foobar|Baz', $$foo);
+    wrAssertType('Foobar&Baz', $$foo);
 }
 
 
