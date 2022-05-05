@@ -18,6 +18,7 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Reflector;
@@ -104,12 +105,44 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         }
     }
 
+    private function fromFunction(ReflectionFunction $function): Generator
+    {
+        foreach ($function->parameters() as $parameter) {
+            yield Suggestion::createWithOptions(
+                sprintf('%s: ', $parameter->name()),
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'priority' => Suggestion::PRIORITY_HIGH,
+                    'short_description' => $this->formatter->format($parameter),
+                ]
+            );
+        }
+    }
+
     private function fromCallExpression(CallExpression $creation): Generator
     {
         $callableExpression = $creation->callableExpression;
-        if (!$callableExpression instanceof MemberAccessExpression && !$callableExpression instanceof ScopedPropertyAccessExpression) {
+        if (
+            !$callableExpression instanceof MemberAccessExpression && 
+            !$callableExpression instanceof QualifiedName && 
+            !$callableExpression instanceof ScopedPropertyAccessExpression
+        ) {
             return true;
         }
+
+        if ($callableExpression instanceof QualifiedName) {
+            try {
+                $function = $this->reflector->reflectFunction(
+                    $callableExpression->getNamespacedName()->__toString()
+                );
+                yield from $this->fromFunction($function);
+            } catch (NotFound $e) {
+                return true;
+            }
+
+            return true;
+        }
+
         try {
             $classLike = $this->reflector->reflectMethodCall(
                 $creation->getFileContents(),

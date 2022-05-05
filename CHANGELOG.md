@@ -28,6 +28,7 @@ Bug fixes:
 
 Improvements:
 
+  - [compl] Allow named param completion on functions
   - [lsp] Show Phpactor version info in initialize result @lalanikarim
   - [ls] Fixed class completion performance
   - [ct] Add option to disable importing global functions
