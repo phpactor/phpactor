@@ -119,7 +119,7 @@ class UpdateDocblockTransformer implements Transformer
                 }
 
                 if (
-                    !$claimedReturnType->isClass() && !$claimedReturnType->isArray() && !$claimedReturnType->isClosure()
+                    $claimedReturnType->isDefined() && !$claimedReturnType->isClass() && !$claimedReturnType->isArray() && !$claimedReturnType->isClosure()
                 ) {
                     continue;
                 }

@@ -47,7 +47,7 @@ class IntLiteralType extends IntType implements Literal, Generalizable
     public function withValue($value)
     {
         $new = clone $this;
-        $new->value = $value;
+        $new->value = (int)$value;
         return $new;
     }
 
