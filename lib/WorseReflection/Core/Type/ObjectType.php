@@ -19,11 +19,24 @@ final class ObjectType extends Type
 
     public function accepts(Type $type): Trinary
     {
+        if ($type instanceof ParenthesizedType) {
+            return $this->accepts($type->type);
+        }
         if ($type instanceof ClassType) {
             return Trinary::true();
         }
         if ($type instanceof ObjectType) {
             return Trinary::true();
+        }
+        if ($type instanceof IntersectionType) {
+            return Trinary::true();
+        }
+        if ($type instanceof UnionType) {
+            foreach ($type->types as $type) {
+                if ($this->accepts($type)->isTrue()) {
+                    return Trinary::true();
+                }
+            }
         }
         if ($type instanceof MixedType) {
             return Trinary::maybe();

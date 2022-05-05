@@ -389,8 +389,8 @@ class ReflectionPropertyTest extends IntegrationTestCase
                 function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         TypeFactory::intersection(
-                            TypeFactory::class('Foo'),
-                            TypeFactory::class('Bar'),
+                            TypeFactory::class('Test\Foo'),
+                            TypeFactory::class('Test\Bar'),
                         )->__toString(),
                         $properties->get('foo')->type()->__toString()
                     );

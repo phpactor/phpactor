@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver
 
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Token;
-use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node;
@@ -30,7 +29,7 @@ class DeclaredMemberTypeResolver
             return TypeFactory::undefined();
         }
 
-        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes, $nullable);
+        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes);
 
         if (!$nullable) {
             return $type;

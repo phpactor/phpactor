@@ -42,3 +42,7 @@ function t10(Bar|Boo $f) {
      assert($f instanceof Baz);
      wrAssertType('(Bar&Baz)|(Boo&Baz)', $f, 'intersection');
 }
+function t11(Foo $f) {
+     assert($f instanceof Baz && $f instanceof Boo);
+     wrAssertType('Foo&Baz&Boo', $f, 'intersection');
+}
