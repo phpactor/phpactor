@@ -18,9 +18,9 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseNamedParameterCompletor implements TolerantCompletor
@@ -121,10 +121,11 @@ class WorseNamedParameterCompletor implements TolerantCompletor
 
     private function fromCallExpression(CallExpression $creation): Generator
     {
+        /** @var Node */
         $callableExpression = $creation->callableExpression;
         if (
-            !$callableExpression instanceof MemberAccessExpression && 
-            !$callableExpression instanceof QualifiedName && 
+            !$callableExpression instanceof MemberAccessExpression &&
+            !$callableExpression instanceof QualifiedName &&
             !$callableExpression instanceof ScopedPropertyAccessExpression
         ) {
             return true;
