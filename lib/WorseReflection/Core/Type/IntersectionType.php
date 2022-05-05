@@ -41,7 +41,7 @@ final class IntersectionType extends AggregateType
         return implode('&', array_map(fn (Type $t) => $t->short(), $this->types));
     }
 
-    public function new(Type ...$types): AggregateType
+    public function withTypes(Type ...$types): AggregateType
     {
         return new self(...$types);
     }

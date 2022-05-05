@@ -91,7 +91,7 @@ abstract class AggregateType extends Type
         return $this;
     }
 
-    abstract public function new(Type ...$types): AggregateType;
+    abstract public function withTypes(Type ...$types): AggregateType;
 
     public function clean(): AggregateType
     {
@@ -108,7 +108,7 @@ abstract class AggregateType extends Type
             $unique[$type->__toString()] = $type;
         }
 
-        return $this->new(...array_values($unique));
+        return $this->withTypes(...array_values($unique));
     }
 
     public function remove(Type $remove): Type
@@ -116,7 +116,7 @@ abstract class AggregateType extends Type
         $remove = UnionType::toUnion($remove);
         $removeStrings = array_map(fn (Type $t) => $t->__toString(), $remove->types);
 
-        return ($this->new(...array_filter($this->types, function (Type $type) use ($removeStrings) {
+        return ($this->withTypes(...array_filter($this->types, function (Type $type) use ($removeStrings) {
             return !in_array($type->__toString(), $removeStrings);
         })))->reduce();
     }
@@ -128,7 +128,7 @@ abstract class AggregateType extends Type
 
     public function add(Type $type): AggregateType
     {
-        return ($this->new(...array_merge($this->types, [$type])))->clean();
+        return ($this->withTypes(...array_merge($this->types, [$type])))->clean();
     }
 
     public function isNull(): bool
@@ -150,19 +150,19 @@ abstract class AggregateType extends Type
 
     public function stripNullable(): Type
     {
-        return ($this->new(...array_filter($this->types, function (Type $type) {
+        return ($this->withTypes(...array_filter($this->types, function (Type $type) {
             return !$type instanceof NullType;
         })))->reduce();
     }
 
     public function map(Closure $mapper): Type
     {
-        return $this->new(...array_map($mapper, $this->types));
+        return $this->withTypes(...array_map($mapper, $this->types));
     }
 
     public function filter(Closure $closure): AggregateType
     {
-        return $this->new(...array_filter($this->types, $closure));
+        return $this->withTypes(...array_filter($this->types, $closure));
     }
     public function count(): int
     {

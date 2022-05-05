@@ -30,11 +30,6 @@ final class UnionType extends AggregateType
         return new self(...$types);
     }
 
-    public function new(Type ...$types): AggregateType
-    {
-        return new self(...$types);
-    }
-
     public function toPhpString(): string
     {
         return implode('|', array_map(fn (Type $type) => $type->toPhpString(), $this->types));

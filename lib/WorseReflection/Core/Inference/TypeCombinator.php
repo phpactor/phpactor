@@ -60,7 +60,7 @@ class TypeCombinator
         $from = AggregateType::toAggregateOrUnion($from);
         $type = AggregateType::toAggregateOrUnion($type);
 
-        $f = $from->new(...array_filter($from->types, function (Type $t) use ($type) {
+        $f = $from->withTypes(...array_filter($from->types, function (Type $t) use ($type) {
             foreach ($type->types as $subtract) {
                 if ($t->__toString() === $subtract->__toString()) {
                     return false;
