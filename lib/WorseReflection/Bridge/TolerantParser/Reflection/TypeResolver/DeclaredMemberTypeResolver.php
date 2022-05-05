@@ -30,12 +30,13 @@ class DeclaredMemberTypeResolver
             return TypeFactory::undefined();
         }
 
-        return TypeFactory::union(...array_filter(array_map(function ($tolerantType = null) use ($tolerantNode, $className, $nullable) {
-            if ($tolerantType instanceof Token && $tolerantType->kind === TokenKind::BarToken) {
-                return false;
-            }
-            return $this->resolve($tolerantNode, $tolerantType, $className, $nullable);
-        }, $declaredTypes->children)))->reduce();
+        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes, $nullable);
+
+        if (!$nullable) {
+            return $type;
+        }
+
+        return TypeFactory::nullable($type);
     }
 
     /**

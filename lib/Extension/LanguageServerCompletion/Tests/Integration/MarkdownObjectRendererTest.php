@@ -683,6 +683,16 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'type2.md',
         ];
+        yield 'intersection' => [
+            '',
+            function (Reflector $reflector) {
+                return TypeFactory::intersection(
+                    TypeFactory::class('Foobar'),
+                    TypeFactory::class('Barfoo'),
+                );
+            },
+            'type3.md',
+        ];
     }
 
     /**
