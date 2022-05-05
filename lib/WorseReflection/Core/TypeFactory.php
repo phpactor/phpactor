@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
@@ -19,6 +20,7 @@ use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
+use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NotType;
@@ -396,5 +398,15 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
+    }
+
+    public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
+    {
+        return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
+    }
+
+    public static function arrayKey(): ArrayKeyType
+    {
+        return new ArrayKeyType();
     }
 }
