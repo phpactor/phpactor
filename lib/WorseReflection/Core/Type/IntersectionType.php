@@ -53,18 +53,21 @@ final class IntersectionType extends AggregateType
 
     public function accepts(Type $type): Trinary
     {
-        $maybe = false;
-        foreach ($this->types as $uType) {
-            if ($uType->accepts($type)->isTrue()) {
-                return Trinary::true();
-            }
-            if ($uType->accepts($type)->isMaybe()) {
-                $maybe = true;
-            }
+        if (!$type instanceof ClassType && !$type instanceof IntersectionType) {
+            return Trinary::false();
         }
 
-        if ($maybe) {
-            return Trinary::maybe();
+        if ($type->equals($this)) {
+            return Trinary::true();
+        }
+
+        if ($type instanceof ReflectedClassType) {
+            foreach ($this->types as $type) {
+                if ($type->instanceof($type)->isFalse()) {
+                    return Trinary::false();
+                }
+            }
+            return Trinary::true();
         }
 
         return Trinary::false();
