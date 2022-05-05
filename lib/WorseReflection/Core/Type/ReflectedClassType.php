@@ -42,13 +42,6 @@ class ReflectedClassType extends ClassType
         if ($type->equals($this)) {
             return Trinary::true();
         }
-        if ($type instanceof IntersectionType) {
-            foreach ($type->types as $type) {
-                if ($this->accepts($type)->isTrue()) {
-                    return Trinary::true();
-                }
-            }
-        }
 
         if (!$type instanceof ClassType) {
             return Trinary::false();
