@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class TypeCombinator
@@ -16,24 +17,14 @@ class TypeCombinator
         return $from->remove($type);
     }
 
-    // if it's a:
-    //
-    //
-    // ??? - class and we narrow to an unknown class or interface : add an intersection
-    //   Foobar => BazInterface => Foobar&BazInterface
-    //
-    // - type in a union type: accept the type
-    // - type in a intersection type: preserve the type
-    //
-    // - class and we narrow to a narrower class: adopt the narrow
-    //   AbstractFoobar => Foobar => Foobar
-    //
-    // - type that accepts the narrow type: accept the narrow type
-    //   mixed => string => string
-    //
     public static function narrowTo(Type $type, Type $narrowTo): Type
     {
+        $type = $type->reduce();
         $narrowTo = $narrowTo->reduce();
+
+        if ($type instanceof IntersectionType) {
+            return $type->add($narrowTo);
+        }
 
         $resolved = [];
         $types = UnionType::toUnion($type);

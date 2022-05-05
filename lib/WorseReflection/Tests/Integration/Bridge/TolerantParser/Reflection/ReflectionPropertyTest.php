@@ -371,6 +371,30 @@ class ReflectionPropertyTest extends IntegrationTestCase
                         $properties->get('foo')->type()
                     );
                 },
+        ];
+
+        yield 'Property with intersection' => [
+                <<<'EOT'
+                    <?php
+
+                    namespace Test;
+
+                    class Barfoo
+                    {
+                         public Foo&Bar $foo;
+                    }
+                    EOT
+                ,
+                'Test\Barfoo',
+                function (ReflectionPropertyCollection $properties): void {
+                    $this->assertEquals(
+                        TypeFactory::intersection(
+                            TypeFactory::class('Test\Foo'),
+                            TypeFactory::class('Test\Bar'),
+                        )->__toString(),
+                        $properties->get('foo')->type()->__toString()
+                    );
+                },
             ];
     }
 }

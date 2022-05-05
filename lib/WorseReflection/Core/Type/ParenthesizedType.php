@@ -28,4 +28,9 @@ class ParenthesizedType extends Type
     {
         return $this->type->accepts($type);
     }
+
+    public function reduce(): Type
+    {
+        return $this->type;
+    }
 }
