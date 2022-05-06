@@ -32,3 +32,19 @@ function t4()
     yield 52 => new stdClass();
     wrReturnType('Generator<"string"|52,"foo"|123|12|stdClass>');
 }
+function t5()
+{
+    yield 'foo' => [
+        'string',
+        new stdClass(),
+    ];
+    yield 'bar' => [
+        'string',
+        new stdClass(),
+    ];
+    yield 'baz' => [
+        'string',
+        new stdClass(),
+    ];
+    wrReturnType('Generator<"foo"|"bar"|"baz",array{"string",stdClass}>');
+}

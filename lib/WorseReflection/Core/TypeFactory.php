@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
@@ -408,5 +409,10 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
+    }
+
+    public static function arrayShape(array $typeMap): ArrayShapeType
+    {
+        return new ArrayShapeType($typeMap);
     }
 }

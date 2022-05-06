@@ -7,16 +7,17 @@ use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 
-class ArrayLiteralTypeTest extends TestCase
+class ArrayShapeTypeTest extends TestCase
 {
     /**
      * @dataProvider provideGeneralize
      */
-    public function testGeneralize(ArrayLiteral $type, string $expected): void
+    public function testGeneralize(ArrayShapeType $type, string $expected): void
     {
         self::assertEquals($expected, $type->generalize()->__toString());
     }
@@ -27,36 +28,22 @@ class ArrayLiteralTypeTest extends TestCase
     public function provideGeneralize(): Generator
     {
         yield [
-            // ['foo','bar']
-            TypeFactory::arrayLiteral([
+            TypeFactory::arrayShape([
                 TypeFactory::stringLiteral('foo'),
                 TypeFactory::stringLiteral('bar')
             ]),
-            'array<int,string>',
+            'array{string,string}',
         ];
+
         yield [
-            TypeFactory::arrayLiteral([
-                TypeFactory::arrayLiteral([
-                    TypeFactory::stringLiteral('one'),
-                    TypeFactory::stringLiteral('two'),
-                ]),
-                TypeFactory::arrayLiteral([
-                    TypeFactory::stringLiteral('one'),
-                    TypeFactory::stringLiteral('two'),
-                ]),
-            ]),
-            'array<int,array<int,string>>',
-        ];
-        yield [
-            // ['foo','bar']
-            TypeFactory::arrayLiteral([
+            TypeFactory::arrayShape([
                 TypeFactory::stringLiteral('foo'),
                 TypeFactory::arrayShape([
                     'foo' => TypeFactory::intLiteral(12),
                     'bar' => TypeFactory::intLiteral(12),
                 ])
             ]),
-            'array<int,array{foo:int,bar:int}>',
+            'array{string,array{foo:int,bar:int}}',
         ];
     }
 }
