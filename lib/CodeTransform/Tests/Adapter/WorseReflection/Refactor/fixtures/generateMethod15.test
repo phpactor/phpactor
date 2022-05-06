@@ -1,0 +1,32 @@
+// File: source
+<?php
+
+namespace Foo;
+
+class generateMethod
+{
+    public function convert(string $foo): void
+    {
+        return $this-><>generate<>($this->ba());
+    }
+
+    public function ba(): ?string {}
+}
+// File: expected
+<?php
+
+namespace Foo;
+
+class generateMethod
+{
+    public function convert(string $foo): void
+    {
+        return $this->generate($this->ba());
+    }
+
+    public function ba(): ?string {}
+
+    private function generate(?string $string): void
+    {
+    }
+}

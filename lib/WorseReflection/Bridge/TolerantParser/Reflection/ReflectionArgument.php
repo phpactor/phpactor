@@ -47,6 +47,7 @@ class ReflectionArgument implements CoreReflectionArgument
         $type = $this->type();
 
         if (!$type instanceof MissingType) {
+            $type = $type->stripNullable();
             if ($type instanceof ClassType) {
                 return lcfirst($type->name->short());
             }

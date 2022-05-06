@@ -68,6 +68,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'add param type multiple literals' => [
                 'generateMethod14.test',
             ],
+            'nullable parameter inference' => [
+                'generateMethod15.test',
+            ],
         ];
     }
 
