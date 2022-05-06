@@ -1,7 +1,34 @@
 <?php
 
-function foo()
+function t0()
 {
     yield 'foo';
-    wrFrame();
+    wrReturnType('Generator<"foo">');
+}
+function t1()
+{
+    yield 'foo';
+    yield 12;
+    wrReturnType('Generator<"foo"|12>');
+}
+function t2()
+{
+    yield 'string' => 'foo';
+    yield 52 => 12;
+    wrReturnType('Generator<"string"|52,"foo"|12>');
+}
+function t3()
+{
+    yield 'string' => 'foo';
+    yield 'string' => 123;
+    yield 52 => 12;
+    wrReturnType('Generator<"string"|52,"foo"|123|12>');
+}
+function t4()
+{
+    yield 'string' => 'foo';
+    yield 'string' => 123;
+    yield 52 => 12;
+    yield 52 => new stdClass();
+    wrReturnType('Generator<"string"|52,"foo"|123|12|stdClass>');
 }
