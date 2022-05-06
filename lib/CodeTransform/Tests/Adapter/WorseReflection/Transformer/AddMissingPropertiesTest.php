@@ -14,6 +14,9 @@ class AddMissingPropertiesTest extends WorseTestCase
      */
     public function testAddMissingProperties(string $example, string $expected): void
     {
+        $this->workspace()->put('Bag.php', '<?php namespace Test; class Bag { public function bar(): Boo {} }');
+        $this->workspace()->put('Boo.php', '<?php namespace Test; class Boo{}');
+
         $source = SourceCode::fromString($example);
         $transformer = new AddMissingProperties($this->reflectorForWorkspace($example), $this->updater());
         $transformed = $transformer->transform(SourceCode::fromString($source));
@@ -458,8 +461,6 @@ class AddMissingPropertiesTest extends WorseTestCase
                 EOT
         ];
 
-        $this->workspace()->put('Bag.php', '<?php namespace Test; class Bag { public function bar(): Boo {} }');
-        $this->workspace()->put('Boo.php', '<?php namespace Test; class Boo{}');
         yield 'It imports classes' => [
             <<<'EOT'
                 <?php
