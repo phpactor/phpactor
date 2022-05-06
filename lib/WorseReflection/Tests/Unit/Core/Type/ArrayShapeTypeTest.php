@@ -5,12 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 use Generator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
-use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
-use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\IntType;
-use Phpactor\WorseReflection\Core\Type\StringType;
 
 class ArrayShapeTypeTest extends TestCase
 {

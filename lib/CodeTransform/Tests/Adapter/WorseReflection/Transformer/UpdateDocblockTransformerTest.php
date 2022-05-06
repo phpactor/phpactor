@@ -317,15 +317,21 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
-        yield 'add generator with array key' => [
+        yield 'add generator with array value' => [
             <<<'EOT'
                 <?php
 
                 class Foobar {
-                    public function baz()
+                    public function t5()
                     {
-                        yield 'foo' => 12;
-                        yield 'bar' => 32;
+                        yield 'foo' => [
+                            'val',
+                            new stdClass(),
+                        ];
+                        yield 'bar' => [
+                            'lav',
+                            new stdClass(),
+                        ];
                     }
                 }
                 EOT
@@ -336,12 +342,18 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 class Foobar {
 
                     /**
-                     * @return Generator<string,int>
+                     * @return Generator<string,array{string,stdClass}>
                      */
-                    public function baz()
+                    public function t5()
                     {
-                        yield 'foo' => 12;
-                        yield 'bar' => 32;
+                        yield 'foo' => [
+                            'val',
+                            new stdClass(),
+                        ];
+                        yield 'bar' => [
+                            'lav',
+                            new stdClass(),
+                        ];
                     }
                 }
                 EOT

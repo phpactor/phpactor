@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
@@ -38,7 +39,8 @@ class GeneratorType extends GenericClassType
         return new MissingType();
     }
 
-    public function withValue(Type $type): GeneratorType {
+    public function withValue(Type $type): GeneratorType
+    {
         $new = clone $this;
         if (count($new->arguments) === 1) {
             $new->replaceArgument(0, $type);
@@ -52,7 +54,8 @@ class GeneratorType extends GenericClassType
         return $new;
     }
 
-    public function withKey(Type $type): GeneratorType {
+    public function withKey(Type $type): GeneratorType
+    {
         $new = clone $this;
         if (count($this->arguments) === 2) {
             $new->replaceArgument(0, $type);
@@ -65,5 +68,14 @@ class GeneratorType extends GenericClassType
             return $new;
         }
         return $new;
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self(
+            $this->reflector,
+            $this->keyType()->map($mapper),
+            $this->valueType()->map($mapper),
+        );
     }
 }

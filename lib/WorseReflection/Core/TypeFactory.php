@@ -314,6 +314,14 @@ class TypeFactory
         return new ArrayKeyType();
     }
 
+    /**
+     * @param array<array-key,Type> $typeMap
+     */
+    public static function arrayShape(array $typeMap): ArrayShapeType
+    {
+        return new ArrayShapeType($typeMap);
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -409,10 +417,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function arrayShape(array $typeMap): ArrayShapeType
-    {
-        return new ArrayShapeType($typeMap);
     }
 }

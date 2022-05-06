@@ -16,7 +16,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
-use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
