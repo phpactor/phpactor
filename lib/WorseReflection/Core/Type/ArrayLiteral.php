@@ -111,4 +111,9 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         $map[] = $type;
         return new self($map);
     }
+
+    public function toShape(): ArrayShapeType
+    {
+        return new ArrayShapeType($this->typeMap);
+    }
 }

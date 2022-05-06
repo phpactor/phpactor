@@ -52,7 +52,7 @@ class ArrayShapeType extends ArrayType implements Generalizable
 
     public function generalize(): Type
     {
-        return new ArrayType($this->keyType, $this->valueType);
+        return new self(array_map(fn (Type $type) => $type->generalize(), $this->typeMap));
     }
 
     /**

@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BinLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
@@ -15,6 +16,7 @@ use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
+use Phpactor\WorseReflection\Core\Type\GeneratorType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
@@ -304,15 +306,20 @@ class TypeFactory
 
     public static function generator(Reflector $reflector, Type $keyType, Type $valueType): GenericClassType
     {
-        if ((!$keyType->isDefined() || $keyType instanceof ArrayKeyType) && $valueType->isDefined()) {
-            return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $valueType ]);
-        }
-        return new GenericClassType($reflector, ClassName::fromString('Generator'), [ $keyType, $valueType ]);
+        return new GeneratorType($reflector, $keyType, $valueType);
     }
 
     public static function arrayKey(): ArrayKeyType
     {
         return new ArrayKeyType();
+    }
+
+    /**
+     * @param array<array-key,Type> $typeMap
+     */
+    public static function arrayShape(array $typeMap): ArrayShapeType
+    {
+        return new ArrayShapeType($typeMap);
     }
 
 

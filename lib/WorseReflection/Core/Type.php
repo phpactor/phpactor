@@ -137,12 +137,11 @@ abstract class Type
         return new UnionType(...$types);
     }
 
-    /**
-     * If the given type is a literal, return the general type
-     */
     public function generalize(): Type
     {
-        return $this->map(fn (Type $type) => $type instanceof Generalizable ? $type->generalize() : $type);
+        return $this->map(function (Type $type) {
+            return $type instanceof Generalizable ? $type->generalize() : $type;
+        });
     }
 
     public function equals(Type $type): bool
