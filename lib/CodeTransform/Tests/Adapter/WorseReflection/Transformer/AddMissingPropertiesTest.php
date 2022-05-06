@@ -22,432 +22,481 @@ class AddMissingPropertiesTest extends WorseTestCase
 
     public function provideCompleteConstructor()
     {
-        return [
-            'It does nothing on source with no classes' => [
-                <<<'EOT'
-                    <?php
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-                    EOT
+        yield 'It does nothing on source with no classes' => [
+            <<<'EOT'
+                <?php
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+                EOT
 
-            ],
-            'It adds missing properties' => [
-                <<<'EOT'
-                    <?php
+        ];
+        yield 'It adds missing properties' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    private $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        private $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It adds missing properties with documented type' => [
-                <<<'EOT'
-                    <?php
+        ];
 
-                    class Foobar
+        yield 'It adds missing properties with documented type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param array<string,mixed> $bar
+                     */
+                    public function hello(array $bar)
                     {
-                        /**
-                         * @param array<string,mixed> $bar
-                         */
-                        public function hello(array $bar)
-                        {
-                            $this->hello = $bar;
-                        }
+                        $this->hello = $bar;
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var array<string,mixed>
+                     */
+                    private $hello;
+
+                    /**
+                     * @param array<string,mixed> $bar
+                     */
+                    public function hello(array $bar)
                     {
-                        /**
-                         * @var array<string,mixed>
-                         */
-                        private $hello;
-
-                        /**
-                         * @param array<string,mixed> $bar
-                         */
-                        public function hello(array $bar)
-                        {
-                            $this->hello = $bar;
-                        }
+                        $this->hello = $bar;
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It ignores existing properties' => [
-                <<<'EOT'
-                    <?php
+        ];
 
-                    class Foobar
+        yield 'It ignores existing properties' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    private $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        private $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    private $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        private $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It ignores existing properties of a different visibility' => [
-                <<<'EOT'
-                    <?php
+        ];
 
-                    class Foobar
+        yield 'It ignores existing properties of a different visibility' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'Hello';
-                        }
+                        $this->hello = 'Hello';
                     }
-                    EOT
-            ],
-            'It appends new properties' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
 
-                    class Foobar
+        yield 'It appends new properties' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    /**
+                     * @var int
+                     */
+                    private $foobar;
+
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        /**
-                         * @var int
-                         */
-                        private $foobar;
-
-
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-            ],
-            'It appends new properties in a namespaced class' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
 
-                    namespace Hello;
+        yield 'It appends new properties in a namespaced class' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                namespace Hello;
+
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    namespace Hello;
+                namespace Hello;
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    public $hello;
+
+                    /**
+                     * @var int
+                     */
+                    private $foobar;
+
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        public $hello;
-
-                        /**
-                         * @var int
-                         */
-                        private $foobar;
-
-
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-            ],
-            'Properties should only be taken from current class' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
 
-                    namespace Hello;
+        yield 'Properties should only be taken from current class' => [
+            <<<'EOT'
+                <?php
 
-                    class Dodo
+                namespace Hello;
+
+                class Dodo
+                {
+                    public function goodbye()
                     {
-                        public function goodbye()
-                        {
-                            $this->dodo = 'string';
-                        }
+                        $this->dodo = 'string';
                     }
+                }
 
-                    class Foobar extends Dodo
+                class Foobar extends Dodo
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    namespace Hello;
+                namespace Hello;
 
-                    class Dodo
+                class Dodo
+                {
+                    /**
+                     * @var string
+                     */
+                    private $dodo;
+
+                    public function goodbye()
                     {
-                        /**
-                         * @var string
-                         */
-                        private $dodo;
-
-                        public function goodbye()
-                        {
-                            $this->dodo = 'string';
-                        }
+                        $this->dodo = 'string';
                     }
+                }
 
-                    class Foobar extends Dodo
+                class Foobar extends Dodo
+                {
+                    /**
+                     * @var int
+                     */
+                    private $foobar;
+
+                    public function hello()
                     {
-                        /**
-                         * @var int
-                         */
-                        private $foobar;
-
-                        public function hello()
-                        {
-                            $this->foobar = 1234;
-                        }
+                        $this->foobar = 1234;
                     }
-                    EOT
-            ],
-            'It adds missing properties using the imported type' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
 
-                    use MyLibrary\Hello;
+        yield 'It adds missing properties using the imported type' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                use MyLibrary\Hello;
+
+                class Foobar
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->hello = new Hello();
-                        }
+                        $this->hello = new Hello();
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    use MyLibrary\Hello;
+                use MyLibrary\Hello;
 
-                    class Foobar
+                class Foobar
+                {
+                    /**
+                     * @var Hello
+                     */
+                    private $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var Hello
-                         */
-                        private $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = new Hello();
-                        }
+                        $this->hello = new Hello();
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It missing properties with an untyped parameter' => [
-                <<<'EOT'
-                    <?php
+        ];
 
-                    use MyLibrary\Hello;
+        yield 'It missing properties with an untyped parameter' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                use MyLibrary\Hello;
+
+                class Foobar
+                {
+                    public function hello($string)
                     {
-                        public function hello($string)
-                        {
-                            $this->hello = $string;
-                        }
+                        $this->hello = $string;
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    use MyLibrary\Hello;
+                use MyLibrary\Hello;
 
-                    class Foobar
+                class Foobar
+                {
+                    private $hello;
+
+                    public function hello($string)
                     {
-                        private $hello;
-
-                        public function hello($string)
-                        {
-                            $this->hello = $string;
-                        }
+                        $this->hello = $string;
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It adds missing trait properties within the Trait' => [
-                <<<'EOT'
-                    <?php
+        ];
 
-                    trait Foobar
+        yield 'It adds missing trait properties within the Trait' => [
+            <<<'EOT'
+                <?php
+
+                trait Foobar
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->hello = 'goodbye';
-                        }
+                        $this->hello = 'goodbye';
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    trait Foobar
+                trait Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    private $hello;
+
+                    public function hello()
                     {
-                        /**
-                         * @var string
-                         */
-                        private $hello;
-
-                        public function hello()
-                        {
-                            $this->hello = 'goodbye';
-                        }
+                        $this->hello = 'goodbye';
                     }
-                    EOT
-            ],
-            'It adds missing property from call expression' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
 
-                    class Foobar
+        yield 'It adds missing property from call expression' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->bar = $this->bar();
-                        }
-
-                        public function bar(): string
-                        {
-                        }
+                        $this->bar = $this->bar();
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
 
-                    class Foobar
+                    public function bar(): string
                     {
-                        /**
-                         * @var string
-                         */
-                        private $bar;
-
-                        public function hello()
-                        {
-                            $this->bar = $this->bar();
-                        }
-
-                        public function bar(): string
-                        {
-                        }
                     }
-                    EOT
-            ]
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var string
+                     */
+                    private $bar;
+
+                    public function hello()
+                    {
+                        $this->bar = $this->bar();
+                    }
+
+                    public function bar(): string
+                    {
+                    }
+                }
+                EOT
+        ];
+
+        $this->workspace()->put('Bag.php', '<?php namespace Test; class Bag { public function bar(): Boo {} }');
+        $this->workspace()->put('Boo.php', '<?php namespace Test; class Boo{}');
+        yield 'It imports classes' => [
+            <<<'EOT'
+                <?php
+
+                use Test\Bag;
+
+                class Foobar
+                {
+                    public function hello()
+                    {
+                        $foo = new Bag();
+                        $this->foo = $foo->bar();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Test\Bag;
+                use Test\Boo;
+
+                class Foobar
+                {
+                    /**
+                     * @var Boo
+                     */
+                    private $foo;
+
+                    public function hello()
+                    {
+                        $foo = new Bag();
+                        $this->foo = $foo->bar();
+                    }
+                }
+                EOT
+
         ];
     }
 
