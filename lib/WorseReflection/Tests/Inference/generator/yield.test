@@ -5,6 +5,7 @@ function t0()
     yield 'foo';
     wrReturnType('Generator<"foo">');
 }
+
 function t1()
 {
     yield 'foo';
