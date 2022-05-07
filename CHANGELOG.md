@@ -66,7 +66,7 @@ Improvements:
 
 Features:
 
-  - [rf] Support for constants and properties
+  - [rf] Support for constants, properties and promoted properties
   - [compl] Docblock completion
   - [wr] Support for intersection types
   - [rf] Union type support for goto definition

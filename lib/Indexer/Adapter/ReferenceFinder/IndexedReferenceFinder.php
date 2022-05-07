@@ -88,6 +88,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::METHOD,
             Symbol::CONSTANT,
             Symbol::PROPERTY,
+            Symbol::VARIABLE,
             Symbol::CASE,
         ])) {
             $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
@@ -150,6 +151,9 @@ class IndexedReferenceFinder implements ReferenceFinder
         if ($symbolType === Symbol::PROPERTY) {
             return ReflectionMember::TYPE_PROPERTY;
         }
+        if ($symbolType === Symbol::VARIABLE) {
+            return ReflectionMember::TYPE_PROPERTY;
+        }
         if ($symbolType === Symbol::CONSTANT) {
             return ReflectionMember::TYPE_CONSTANT;
         }
@@ -176,12 +180,15 @@ class IndexedReferenceFinder implements ReferenceFinder
         if ($symbolType === Symbol::PROPERTY) {
             return MemberRecord::TYPE_PROPERTY;
         }
+        if ($symbolType === Symbol::VARIABLE) {
+            return MemberRecord::TYPE_PROPERTY;
+        }
         if ($symbolType === Symbol::CONSTANT) {
             return MemberRecord::TYPE_CONSTANT;
         }
 
         throw new RuntimeException(sprintf(
-            'Could not convert symbol type "%s" to member type',
+            'Could not convert symbol type "%s" to reference type',
             $symbolType
         ));
     }

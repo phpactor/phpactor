@@ -54,10 +54,14 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             $symbolType === Symbol::METHOD ||
             $symbolType === Symbol::CONSTANT ||
             $symbolType === Symbol::CASE ||
+            $symbolType === Symbol::VARIABLE ||
             $symbolType === Symbol::PROPERTY
         ) {
             if ($symbolType === Symbol::CASE) {
                 $symbolType = 'enum';
+            }
+            if ($symbolType === Symbol::VARIABLE) {
+                $symbolType = Symbol::PROPERTY;
             }
             return $this->memberImplementations($symbolContext, $symbolType, $includeDefinition);
         }
