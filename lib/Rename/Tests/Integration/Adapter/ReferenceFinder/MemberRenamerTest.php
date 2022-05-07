@@ -157,6 +157,32 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
+        yield 'property promoted declaration public' => [
+            'member_renamer/property_promoted_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = $reflector->navigate(
+                    $this->workspace()->getContents('project/ClassTwo.php')
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+                $propertyAccesses = $reflector->navigate(
+                    $this->workspace()->getContents('project/test.php')
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+            }
+        ];
+
         yield 'property declaration public does not rename other members' => [
             'member_renamer/property_declaration_public_does_not_rename_others',
             function (Reflector $reflector, Renamer $renamer): Generator {

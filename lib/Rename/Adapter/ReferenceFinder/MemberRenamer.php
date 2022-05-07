@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
@@ -49,6 +50,14 @@ class MemberRenamer extends AbstractReferenceRenamer
                 return null;
             }
             return $this->offsetRangeFromToken($variable->name, true);
+        }
+
+        if ($node instanceof Parameter) {
+            if ($node->visibilityToken === null) {
+                return null;
+            }
+
+            return $this->offsetRangeFromToken($node->variableName, true);
         }
 
         // hack because the WR property deefinition locator returns the

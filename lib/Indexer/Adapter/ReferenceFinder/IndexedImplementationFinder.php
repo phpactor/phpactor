@@ -49,6 +49,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         )->symbolContext();
 
         $symbolType = $symbolContext->symbol()->symbolType();
+
         if (
             $symbolType === Symbol::METHOD ||
             $symbolType === Symbol::CONSTANT ||

@@ -71,8 +71,8 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     public function nameRange(): ByteOffsetRange
     {
         return ByteOffsetRange::fromInts(
-            $this->parameter->getStartPosition(),
-            $this->parameter->getEndPosition(),
+            $this->parameter->variableName->getStartPosition(),
+            $this->parameter->variableName->getEndPosition(),
         );
     }
 
