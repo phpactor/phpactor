@@ -50,6 +50,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $symbolType = $symbolContext->symbol()->symbolType();
         if (
             $symbolType === Symbol::METHOD ||
+            $symbolType === Symbol::CONSTANT ||
             $symbolType === Symbol::PROPERTY
         ) {
             return $this->memberImplementations($symbolContext, $symbolType);
