@@ -31,6 +31,7 @@ class MemberRenamerTest extends RenamerTestCase
     {
         yield from $this->methodRenames();
         yield from $this->propertyRenames();
+        yield from $this->constantRenames();
     }
 
     /**
@@ -164,6 +165,31 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->properties()->has('newName'));
             }
         ];
+    }
+
+    /**
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
+     */
+    private function constantRenames(): Generator
+    {
+        yield 'constant declaration private' => [
+            'member_renamer/constant_declaration_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $constant = $reflection->constants()->get('BAR');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->properties()->has('newName'));
+            }
+        ];
+
     }
 
     protected function createRenamer(): Renamer
