@@ -21,6 +21,10 @@ class VariableRenamer extends AbstractReferenceRenamer
             return $this->offsetRangeFromToken($node->name, true);
         }
 
+        if ($node instanceof Parameter && $node->visibilityToken) {
+            return null;
+        }
+
         if (
             (
                 $node instanceof Parameter ||

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
@@ -179,6 +180,11 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
+    }
+
+    public function navigate($sourceCode): ReflectionNavigation
+    {
+        return $this->sourceReflector->navigate($sourceCode);
     }
 
     /**

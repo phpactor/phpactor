@@ -129,6 +129,7 @@ class ParameterResolver implements Resolver
             [
                 'symbol_type' => Symbol::VARIABLE,
                 'type' => $reflectionParameter->inferredType(),
+                'container_type' => $reflectionClass->type(),
             ]
         );
     }

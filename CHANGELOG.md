@@ -29,6 +29,8 @@ Bug fixes:
 
 Improvements:
 
+  - [rn] Fixed numerous issues
+  - [rename] Fixed numerous issues
   - [compl] Allow named param completion on functions
   - [wr] Infer return type for generators
   - [lsp] Show Phpactor version info in initialize result @lalanikarim
@@ -64,6 +66,7 @@ Improvements:
 
 Features:
 
+  - [rf] Support for constants, properties and promoted properties
   - [compl] Docblock completion
   - [wr] Support for intersection types
   - [rf] Union type support for goto definition

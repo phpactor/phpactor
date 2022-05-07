@@ -41,6 +41,22 @@ final class LocatedTextEditConverter
             );
         }
 
+        // deduplicate the edits: with renaming we currently have multiple
+        // references to the declaration.
+        $documentEdits = array_map(function (TextDocumentEdit $documentEdit) {
+            $new = [];
+            foreach ($documentEdit->edits as $edit) {
+                $new[sprintf(
+                    '%s-%s-%s',
+                    $edit->range->start->line,
+                    $edit->range->start->character,
+                    $edit->newText
+                )] = $edit;
+            }
+            $documentEdit->edits = array_values($new);
+            return $documentEdit;
+        }, $documentEdits);
+
         if (null !== $renameResult) {
             $documentEdits[] = new RenameFile(
                 'rename',

@@ -15,6 +15,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
@@ -39,15 +41,29 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     /**
      * @return Locations<Location>
      */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations
+    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
     {
         $symbolContext = $this->reflector->reflectOffset(
             $document->__toString(),
             $byteOffset->toInt()
         )->symbolContext();
 
-        if ($symbolContext->symbol()->symbolType() === Symbol::METHOD) {
-            return $this->methodImplementations($symbolContext);
+        $symbolType = $symbolContext->symbol()->symbolType();
+
+        if (
+            $symbolType === Symbol::METHOD ||
+            $symbolType === Symbol::CONSTANT ||
+            $symbolType === Symbol::CASE ||
+            $symbolType === Symbol::VARIABLE ||
+            $symbolType === Symbol::PROPERTY
+        ) {
+            if ($symbolType === Symbol::CASE) {
+                $symbolType = 'enum';
+            }
+            if ($symbolType === Symbol::VARIABLE) {
+                $symbolType = Symbol::PROPERTY;
+            }
+            return $this->memberImplementations($symbolContext, $symbolType, $includeDefinition);
         }
 
         $locations = [];
@@ -71,12 +87,13 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
     /**
      * @return Locations<Location>
+     * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function methodImplementations(NodeContext $symbolContext): Locations
+    private function memberImplementations(NodeContext $symbolContext, string $symbolType, bool $includeDefinition): Locations
     {
         $container = $symbolContext->containerType();
         $methodName = $symbolContext->symbol()->name();
-        $containerType = $this->containerTypeResolver->resolveDeclaringContainerType('method', $methodName, $container);
+        $containerType = $this->containerTypeResolver->resolveDeclaringContainerType($symbolType, $methodName, $container);
 
         if (!$containerType) {
             return new Locations([]);
@@ -91,21 +108,33 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
+
+            if (null === $record) {
+                continue;
+            }
+
             try {
-                $reflection = $this->reflector->reflectClass($implementation->__toString());
-                $method = $reflection->methods()->belongingTo($reflection->name())->get($methodName);
+                $reflection = $this->reflector->reflectClassLike($implementation->__toString());
+                $member = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
             } catch (NotFound $notFound) {
                 continue;
             }
 
-            assert($method instanceof ReflectionMethod);
-            if ($method->isAbstract()) {
-                continue;
+            if (false === $includeDefinition) {
+                if (!$reflection instanceof ReflectionClass) {
+                    continue;
+                }
+
+                if ($member instanceof ReflectionMethod) {
+                    if ($member->isAbstract()) {
+                        continue;
+                    }
+                }
             }
 
             $locations[] = Location::fromPathAndOffset(
                 $record->filePath(),
-                $method->position()->start()
+                $member->position()->start()
             );
         }
 

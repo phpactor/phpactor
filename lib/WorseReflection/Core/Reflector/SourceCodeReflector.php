@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -43,4 +44,9 @@ interface SourceCodeReflector
      * @param Offset|ByteOffset|int $offset
      */
     public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall;
+
+    /**
+     * @param TextDocument|string $sourceCode
+     */
+    public function navigate($sourceCode): ReflectionNavigation;
 }

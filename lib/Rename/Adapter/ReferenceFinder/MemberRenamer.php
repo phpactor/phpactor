@@ -6,10 +6,12 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
@@ -50,6 +52,14 @@ class MemberRenamer extends AbstractReferenceRenamer
             return $this->offsetRangeFromToken($variable->name, true);
         }
 
+        if ($node instanceof Parameter) {
+            if ($node->visibilityToken === null) {
+                return null;
+            }
+
+            return $this->offsetRangeFromToken($node->variableName, true);
+        }
+
         // hack because the WR property deefinition locator returns the
         // property declaration and not the variable
         if ($node instanceof ClassConstDeclaration) {
@@ -58,6 +68,9 @@ class MemberRenamer extends AbstractReferenceRenamer
                 return null;
             }
             return $this->offsetRangeFromToken($constElement->name, false);
+        }
+        if ($node instanceof EnumCaseDeclaration) {
+            return $this->offsetRangeFromToken($node->name, false);
         }
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {
@@ -90,7 +103,7 @@ class MemberRenamer extends AbstractReferenceRenamer
      */
     protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
     {
-        foreach ($this->implementationFinder->findImplementations($textDocument, $offset) as $location) {
+        foreach ($this->implementationFinder->findImplementations($textDocument, $offset, true) as $location) {
             yield $this->renameEdit($location, $range, $originalName, $newName);
         }
 

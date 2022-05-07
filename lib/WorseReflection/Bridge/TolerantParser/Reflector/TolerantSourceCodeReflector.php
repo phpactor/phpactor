@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
@@ -82,6 +83,11 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionFunctionCollection::fromNode($this->serviceLocator, $sourceCode, $node);
+    }
+
+    public function navigate($sourceCode): ReflectionNavigation
+    {
+        return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(SourceCode::fromUnknown($sourceCode)));
     }
 
     private function reflectNode($sourceCode, $offset)

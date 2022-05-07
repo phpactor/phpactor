@@ -50,10 +50,10 @@ class ChainImplementationFinderTest extends TestCase
         ]);
 
         $location1 = $this->createLocation();
-        $this->locator1->findImplementations($this->document, $this->offset)->willReturn(new Locations([$location1]));
+        $this->locator1->findImplementations($this->document, $this->offset, false)->willReturn(new Locations([$location1]));
 
         $location2 = $this->createLocation();
-        $this->locator2->findImplementations($this->document, $this->offset)->willReturn(new Locations([$location2]));
+        $this->locator2->findImplementations($this->document, $this->offset, false)->willReturn(new Locations([$location2]));
 
         $locations = $locator->findImplementations($this->document, $this->offset);
         $this->assertEquals(new Locations([$location1, $location2], $locations), $locations);

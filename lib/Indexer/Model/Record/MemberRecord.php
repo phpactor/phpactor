@@ -15,12 +15,18 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     public const TYPE_PROPERTY = 'property';
     private const ID_DELIMITER = '#';
 
+    /**
+     * @var MemberRecord::TYPE_*
+     */
     private string $type;
 
     private string $memberName;
 
     private ?string $containerType;
 
+    /**
+     * @param MemberRecord::TYPE_* $type
+     */
     public function __construct(string $type, string $memberName, string $containerType = null)
     {
         if (!in_array($type, [
@@ -71,6 +77,7 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
         $parts = explode(self::ID_DELIMITER, $identifier);
         [$type, $memberName] = $parts;
 
+        /** @phpstan-ignore-next-line */
         return new self($type, $memberName);
     }
 
@@ -84,6 +91,9 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
         return $this->containerType;
     }
 
+    /**
+     * @return MemberRecord::TYPE_*
+     */
     public function type(): string
     {
         return $this->type;

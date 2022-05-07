@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -76,6 +77,11 @@ class CompositeReflector implements Reflector
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceCodeReflector->reflectFunctionsIn($sourceCode);
+    }
+
+    public function navigate($sourceCode): ReflectionNavigation
+    {
+        return $this->sourceCodeReflector->navigate($sourceCode);
     }
 
     public function reflectFunction($name): ReflectionFunction

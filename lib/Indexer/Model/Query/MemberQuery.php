@@ -39,6 +39,7 @@ class MemberQuery implements IndexQuery
     }
 
     /**
+     * @param MemberRecord::TYPE_* $type
      * @return Generator<LocationConfidence>
      */
     public function referencesTo(string $type, string $memberName, ?string $containerType = null): Generator

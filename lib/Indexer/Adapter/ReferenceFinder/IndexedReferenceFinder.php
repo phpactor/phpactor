@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
+use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -87,6 +88,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::METHOD,
             Symbol::CONSTANT,
             Symbol::PROPERTY,
+            Symbol::VARIABLE,
             Symbol::CASE,
         ])) {
             $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
@@ -97,7 +99,7 @@ class IndexedReferenceFinder implements ReferenceFinder
 
             if (null === $containerType) {
                 yield from $this->query->member()->referencesTo(
-                    $symbolContext->symbol()->symbolType(),
+                    $this->symbolTypeToReferenceType($symbolContext),
                     $symbolContext->symbol()->name(),
                     null
                 );
@@ -108,7 +110,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             // the number of NOT and MAYBE matches
             foreach ($this->implementationsOf($containerType) as $containerType) {
                 yield from $this->query->member()->referencesTo(
-                    $symbolContext->symbol()->symbolType(),
+                    $this->symbolTypeToReferenceType($symbolContext),
                     $symbolContext->symbol()->name(),
                     $containerType
                 );
@@ -149,12 +151,44 @@ class IndexedReferenceFinder implements ReferenceFinder
         if ($symbolType === Symbol::PROPERTY) {
             return ReflectionMember::TYPE_PROPERTY;
         }
+        if ($symbolType === Symbol::VARIABLE) {
+            return ReflectionMember::TYPE_PROPERTY;
+        }
         if ($symbolType === Symbol::CONSTANT) {
             return ReflectionMember::TYPE_CONSTANT;
         }
 
         throw new RuntimeException(sprintf(
             'Could not convert symbol type "%s" to member type',
+            $symbolType
+        ));
+    }
+
+    /**
+     * @return MemberRecord::TYPE_*
+     */
+    private function symbolTypeToReferenceType(NodeContext $symbolContext): string
+    {
+        $symbolType = $symbolContext->symbol()->symbolType();
+
+        if ($symbolType === Symbol::CASE) {
+            return MemberRecord::TYPE_CONSTANT;
+        }
+        if ($symbolType === Symbol::METHOD) {
+            return MemberRecord::TYPE_METHOD;
+        }
+        if ($symbolType === Symbol::PROPERTY) {
+            return MemberRecord::TYPE_PROPERTY;
+        }
+        if ($symbolType === Symbol::VARIABLE) {
+            return MemberRecord::TYPE_PROPERTY;
+        }
+        if ($symbolType === Symbol::CONSTANT) {
+            return MemberRecord::TYPE_CONSTANT;
+        }
+
+        throw new RuntimeException(sprintf(
+            'Could not convert symbol type "%s" to reference type',
             $symbolType
         ));
     }

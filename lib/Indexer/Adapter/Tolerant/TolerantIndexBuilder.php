@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassLikeReferenceIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ConstantDeclarationIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\Indexer\EnumDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\FunctionDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\FunctionReferenceIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\InterfaceDeclarationIndexer;
@@ -54,6 +55,7 @@ final class TolerantIndexBuilder implements IndexBuilder
             $index,
             [
                 new ClassDeclarationIndexer(),
+                new EnumDeclarationIndexer(),
                 new FunctionDeclarationIndexer(),
                 new InterfaceDeclarationIndexer(),
                 new TraitDeclarationIndexer(),

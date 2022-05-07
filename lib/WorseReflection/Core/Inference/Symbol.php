@@ -20,12 +20,18 @@ final class Symbol
     public const ARRAY = 'array';
     public const UNKNOWN = '<unknown>';
     
+    /**
+     * @var Symbol::*
+     */
     private string $symbolType;
     
     private string $name;
     
     private Position $position;
 
+    /**
+     * @param Symbol::* $symbolType
+     */
     private function __construct(string $symbolType, string $name, Position $position)
     {
         $this->symbolType = $symbolType;
@@ -48,7 +54,10 @@ final class Symbol
         return $this->symbolType !== self::UNKNOWN;
     }
 
-    public static function assertValidSymbolType(string $symbolType): void
+    /**
+     * @return self::*
+     */
+    public static function castSymbolType(string $symbolType): string
     {
         if (false === in_array($symbolType, self::validSymbols())) {
             throw new InvalidArgumentException(sprintf(
@@ -57,14 +66,20 @@ final class Symbol
                 implode('", "', self::validSymbols())
             ));
         }
+
+        /** @phpstan-ignore-next-line */
+        return $symbolType;
     }
 
     public static function fromTypeNameAndPosition(string $symbolType, string $name, Position $position): Symbol
     {
-        self::assertValidSymbolType($symbolType);
+        $symbolType = self::castSymbolType($symbolType);
         return new self($symbolType, $name, $position);
     }
 
+    /**
+     * @return Symbol::*
+     */
     public function symbolType(): string
     {
         return $this->symbolType;

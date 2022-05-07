@@ -68,7 +68,7 @@ class GotoImplementationHandlerTest extends TestCase
                 $this->locations = $locations;
             }
 
-            public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations
+            public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
             {
                 return new Locations($this->locations);
             }
