@@ -2,10 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Traversable;
 
-class FunctionArguments
+/**
+ * @implements IteratorAggregate<NodeContext>
+ */
+class FunctionArguments implements IteratorAggregate
 {
     /**
      * @var ArgumentExpression[]
@@ -41,5 +46,12 @@ class FunctionArguments
         }
 
         return $this->resolver->resolveNode($this->frame, $this->arguments[$index]);
+    }
+
+    public function getIterator(): Traversable
+    {
+        foreach ($this->arguments as $argument) {
+            yield $this->resolver->resolveNode($this->frame, $argument);
+        }
     }
 }
