@@ -1,0 +1,25 @@
+<?php
+
+wrAssertType(
+    'array{10,20,30}',
+    array_merge([10, 20], [30]),
+);
+
+/** @var array<string,int> */
+$arr1;
+/** @var array<string,string> */
+$arr2;
+
+wrAssertType(
+    'array<string,int|string>',
+    array_merge($arr1, $arr2, $arr1),
+);
+
+function childNames(): array
+{
+    return array_merge(['methods'], [
+        'properties',
+        'constants',
+    ]);
+    wrReturnType('array{"methods","properties","constants"}');
+}
