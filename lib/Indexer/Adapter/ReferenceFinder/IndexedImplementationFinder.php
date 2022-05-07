@@ -91,6 +91,11 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
+
+            if (null === $record) {
+                continue;
+            }
+
             try {
                 $reflection = $this->reflector->reflectClass($implementation->__toString());
                 $method = $reflection->methods()->belongingTo($reflection->name())->get($methodName);

@@ -26,4 +26,25 @@ class LocatedTextEdits
     {
         return $this->documentUri;
     }
+
+    /**
+     * @return array<int,LocatedTextEdits>
+     * @param LocatedTextEdit[] $edits
+     */
+    public static function fromLocatedEditsToCollection(array $edits): array
+    {
+        $byPath = [];
+        $locatedEdits = [];
+        foreach ($edits as $edit) {
+            if (!isset($byPath[$edit->documentUri()->__toString()])) {
+                $byPath[$edit->documentUri()->__toString()] = [];
+            }
+            $byPath[$edit->documentUri()->__toString()][] = $edit->textEdit();
+        }
+        foreach ($byPath as $path => $edits) {
+            $locatedEdits[] = new self(TextEdits::fromTextEdits($edits), TextDocumentUri::fromString($path));
+        }
+
+        return $locatedEdits;
+    }
 }
