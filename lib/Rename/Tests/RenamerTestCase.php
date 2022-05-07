@@ -41,7 +41,6 @@ abstract class RenamerTestCase extends TestCase
             $this->reflector,
             new NullLogger()
         ))->buildAgent();
-
     }
 
     /**
@@ -60,7 +59,7 @@ abstract class RenamerTestCase extends TestCase
         $this->indexAgent->indexer()->getJob()->run();
 
         $generator = $operation($this->reflector, $this->createRenamer());
-        $edits = LocatedTextEdits::fromLocatedEditsToCollection(iterator_to_array($generator));
+        $edits = LocatedTextEdits::fromLocatedEditsToCollection(iterator_to_array($generator, false));
         foreach ($edits as $documentEdits) {
             file_put_contents(
                 $documentEdits->documentUri()->path(),
@@ -70,6 +69,7 @@ abstract class RenamerTestCase extends TestCase
 
         $process = Process::fromShellCommandline('php ' . $this->workspace()->path('project/test.php'));
         $process->mustRun();
+        $this->addToAssertionCount(1);
         
     }
 
