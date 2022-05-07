@@ -160,7 +160,7 @@ class MemberRenamerTest extends RenamerTestCase
         yield 'property promoted declaration public' => [
             'member_renamer/property_promoted_declaration_public',
             function (Reflector $reflector, Renamer $renamer): Generator {
-                $reflection = $reflector->reflectClass('ClassOne');
+                $reflection = $reflector->reflectClass('Test\ClassOne');
                 $property = $reflection->properties()->get('foobar');
 
                 return $renamer->rename(

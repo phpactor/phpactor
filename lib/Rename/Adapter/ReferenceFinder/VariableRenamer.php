@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class VariableRenamer extends AbstractReferenceRenamer
 {
@@ -19,6 +20,10 @@ class VariableRenamer extends AbstractReferenceRenamer
             !$node->getFirstAncestor(PropertyDeclaration::class)
         ) {
             return $this->offsetRangeFromToken($node->name, true);
+        }
+
+        if ($node instanceof Parameter && $node->visibilityToken) {
+            return null;
         }
 
         if (

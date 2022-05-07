@@ -1,6 +1,6 @@
 <?php
 
-class ClassTwo extends ClassOne
+class ClassTwo extends Test\ClassOne
 {
     public function barfoo(): string
     {

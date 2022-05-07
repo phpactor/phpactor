@@ -47,9 +47,9 @@ abstract class RenamerTestCase extends TestCase
     public function testRename(string $path, Closure $operation, Closure $assertion): void
     {
         $basePath = __DIR__ . '/Cases/' . $path;
-        foreach ((array)glob($basePath . '/**.phpt') as $path) {
+        foreach ((array)glob($basePath . '/**.ph') as $path) {
             $this->workspace()->put(
-                'project/' . (string)substr((string)substr((string)$path, strlen($basePath)), 0, -1),
+                'project/' . ((string)substr((string)$path, strlen($basePath))) . 'p',
                 (string)file_get_contents((string)$path)
             );
         }
