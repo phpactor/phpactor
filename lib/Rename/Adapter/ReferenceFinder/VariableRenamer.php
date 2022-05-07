@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class VariableRenamer extends AbstractReferenceRenamer
 {

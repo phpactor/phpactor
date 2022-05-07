@@ -21,7 +21,6 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MemberRenamer extends AbstractReferenceRenamer
 {
