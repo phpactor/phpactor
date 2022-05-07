@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -58,6 +59,9 @@ class MemberRenamer extends AbstractReferenceRenamer
                 return null;
             }
             return $this->offsetRangeFromToken($constElement->name, false);
+        }
+        if ($node instanceof EnumCaseDeclaration) {
+            return $this->offsetRangeFromToken($node->name, false);
         }
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {

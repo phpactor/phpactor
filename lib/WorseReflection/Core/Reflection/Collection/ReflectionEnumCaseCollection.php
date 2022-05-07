@@ -5,9 +5,9 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass get(string $name)
+ * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase first()
+ * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase last()
+ * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase get(string $name)
  *
  * @extends ReflectionMemberCollection<ReflectionEnumCase>
  */

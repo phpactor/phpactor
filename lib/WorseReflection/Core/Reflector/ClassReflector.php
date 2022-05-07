@@ -31,7 +31,7 @@ interface ClassReflector
     public function reflectTrait($className): ReflectionTrait;
 
     /**
-     * Reflect a trait
+     * Reflect an enum
      *
      * @param Name|string $className
      */

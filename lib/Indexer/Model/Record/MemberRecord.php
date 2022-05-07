@@ -13,6 +13,7 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     public const TYPE_METHOD = 'method';
     public const TYPE_CONSTANT = 'constant';
     public const TYPE_PROPERTY = 'property';
+    public const TYPE_ENUM_CASE = 'case';
     private const ID_DELIMITER = '#';
 
     private string $type;
@@ -27,9 +28,10 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
             self::TYPE_PROPERTY,
             self::TYPE_CONSTANT,
             self::TYPE_METHOD,
+            self::TYPE_ENUM_CASE,
         ])) {
             throw new RuntimeException(sprintf(
-                'Invalid member type "%s" use one of MemberType::TYPE_*',
+                'Invalid member type "%s" use one of MemberRecord::TYPE_*',
                 $type
             ));
         }

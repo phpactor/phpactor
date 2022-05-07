@@ -104,11 +104,13 @@ class IndexedReferenceFinder implements ReferenceFinder
                 return;
             }
 
+            $symbolType = $symbolContext->symbol()->symbolType();
+
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
             foreach ($this->implementationsOf($containerType) as $containerType) {
                 yield from $this->query->member()->referencesTo(
-                    $symbolContext->symbol()->symbolType(),
+                    $symbolType,
                     $symbolContext->symbol()->name(),
                     $containerType
                 );

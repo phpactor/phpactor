@@ -241,11 +241,11 @@ class MemberRenamerTest extends RenamerTestCase
             'member_renamer/enum_case_declaration_private',
             function (Reflector $reflector, Renamer $renamer): Generator {
                 $reflection = $reflector->reflectEnum('ClassOne');
-                $constant = $reflection->cases()->get('BAR');
+                $enum = $reflection->cases()->get('BAR');
 
                 return $renamer->rename(
                     $reflection->sourceCode(),
-                    $constant->nameRange()->start(),
+                    $enum->nameRange()->start(),
                     'newName'
                 );
             },

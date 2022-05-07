@@ -51,8 +51,12 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         if (
             $symbolType === Symbol::METHOD ||
             $symbolType === Symbol::CONSTANT ||
+            $symbolType === Symbol::CASE ||
             $symbolType === Symbol::PROPERTY
         ) {
+            if ($symbolType === Symbol::CASE) {
+                $symbolType = 'enum';
+            }
             return $this->memberImplementations($symbolContext, $symbolType);
         }
 
