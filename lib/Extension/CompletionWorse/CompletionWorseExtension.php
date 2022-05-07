@@ -84,6 +84,7 @@ class CompletionWorseExtension implements Extension
 
         /** @phpstan-ignore-next-line */
         $defaults['completion_worse.completor.keyword.enabled'] = false;
+        $defaults['completion_worse.completor.constant.enabled'] = false;
 
         $schema->setDefaults(array_merge($defaults, [
             self::PARAM_CLASS_COMPLETOR_LIMIT => 100,
@@ -328,8 +329,8 @@ class CompletionWorseExtension implements Extension
                     );
                 },
             ],
-            'constant' => [
-                'Completion for constants',
+            'declared_constant' => [
+                'Completion for constants defined in the Phpactor runtime',
                 function (Container $container) {
                     return new WorseConstantCompletor();
                 },

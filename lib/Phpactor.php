@@ -278,6 +278,7 @@ class Phpactor
             // project.
             'completion_worse.completor.scf_class.enabled' => false,
             'completion_worse.completor.declared_class.enabled' => false,
+            'completion_worse.completor.declared_constant.enabled' => false,
             'completion_worse.completor.declared_function.enabled' => false,
         ];
 
@@ -289,8 +290,8 @@ class Phpactor
         $paths = [ __DIR__ . '/..', __DIR__ .'/../../../..' ];
 
         foreach ($paths as $path) {
-            if (is_dir(realpath($path.'/vendor'))) {
-                return realpath($path);
+            if (is_dir((string)realpath($path.'/vendor'))) {
+                return (string)realpath($path);
             }
         }
 
