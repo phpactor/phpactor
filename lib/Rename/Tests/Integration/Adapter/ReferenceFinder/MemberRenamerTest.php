@@ -29,6 +29,15 @@ class MemberRenamerTest extends RenamerTestCase
      */
     public function provideRename(): Generator
     {
+        yield from $this->methodRenames();
+        yield from $this->propertyRenames();
+    }
+
+    /**
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
+     */
+    private function methodRenames(): Generator
+    {
         yield 'method declaration' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
@@ -66,7 +75,13 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertEquals('newName', $first->name());
             }
         ];
+    }
 
+    /**
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
+     */
+    private function propertyRenames(): Generator
+    {
         yield 'property declaration private' => [
             'member_renamer/property_declaration_private',
             function (Reflector $reflector, Renamer $renamer): Generator {
