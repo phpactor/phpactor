@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdit;
-use Phpactor\Extension\LanguageServerRename\Model\Renamer\InMemoryRenamer;
+use Phpactor\Rename\Model\LocatedTextEdit;
+use Phpactor\Rename\Model\Renamer\InMemoryRenamer;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;

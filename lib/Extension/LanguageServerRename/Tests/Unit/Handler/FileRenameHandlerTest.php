@@ -4,8 +4,8 @@ namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
-use Phpactor\Extension\LanguageServerRename\Model\FileRenamer\TestFileRenamer;
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
