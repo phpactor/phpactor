@@ -57,6 +57,7 @@ class MemberRenamerTest extends RenamerTestCase
             },
             function (Reflector $reflector): void {
                 $reflection = $reflector->reflectClass('ClassOne');
+                $methodCalls = $reflector->navigate($reflection->sourceCode())->methodCalls();
                 self::assertTrue($reflection->methods()->has('newName'));
             }
         ];
