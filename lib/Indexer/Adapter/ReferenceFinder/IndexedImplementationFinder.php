@@ -87,7 +87,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     {
         $container = $symbolContext->containerType();
         $methodName = $symbolContext->symbol()->name();
-        $containerType = $this->containerTypeResolver->resolveDeclaringContainerType('method', $methodName, $container);
+        $containerType = $this->containerTypeResolver->resolveDeclaringContainerType($symbolType, $methodName, $container);
 
         if (!$containerType) {
             return new Locations([]);
@@ -108,7 +108,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             }
 
             try {
-                $reflection = $this->reflector->reflectClass($implementation->__toString());
+                $reflection = $this->reflector->reflectClassLike($implementation->__toString());
                 $method = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
             } catch (NotFound $notFound) {
                 continue;
