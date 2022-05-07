@@ -29,9 +29,31 @@ class ReflectionNavigation
         $calls = [];
         foreach ($this->node->getDescendantNodes() as $node) {
             if ($node instanceof MemberAccessExpression) {
+                if (!$node->parent instanceof CallExpression) {
+                    continue;
+                }
                 $calls[] = new ReflectionMethodCall($this->locator, new Frame('test'), $node);
             }
         }
         return new NavigatorElementCollection($calls);
+    }
+
+    /**
+     * @return NavigatorElementCollection<ReflectionPropertyAccess>
+     */
+    public function propertyAccesses(): NavigatorElementCollection
+    {
+        $elements = [];
+        foreach ($this->node->getDescendantNodes() as $node) {
+            if (!$node instanceof MemberAccessExpression) {
+                continue;
+            }
+            if ($node->parent instanceof CallExpression) {
+                continue;
+            }
+
+            $elements[] = new ReflectionPropertyAccess($node);
+        }
+        return new NavigatorElementCollection($elements);
     }
 }

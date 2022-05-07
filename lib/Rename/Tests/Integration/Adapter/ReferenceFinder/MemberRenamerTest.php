@@ -66,8 +66,8 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
-        yield 'property declaration' => [
-            'member_renamer/property_declaration',
+        yield 'property declaration private' => [
+            'member_renamer/property_declaration_private',
             function (Reflector $reflector, Renamer $renamer): Generator {
                 $reflection = $reflector->reflectClass('ClassOne');
                 $property = $reflection->properties()->get('foobar');
@@ -81,6 +81,25 @@ class MemberRenamerTest extends RenamerTestCase
             function (Reflector $reflector): void {
                 $reflection = $reflector->reflectClass('ClassOne');
                 self::assertTrue($reflection->properties()->has('newName'));
+            }
+        ];
+
+        yield 'property declaration protected' => [
+            'member_renamer/property_declaration_protected',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $methodCalls = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->propertyAccesses();
+                $first = $methodCalls->first();
+                self::assertEquals('newName', $first->name());
             }
         ];
     }
