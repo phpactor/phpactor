@@ -107,6 +107,6 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function navigate($sourceCode): ReflectionNavigation
     {
-        return new ReflectionNavigation($this->parseSourceCode(SourceCode::fromUnknown($sourceCode)));
+        return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(SourceCode::fromUnknown($sourceCode)));
     }
 }

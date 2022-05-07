@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
@@ -60,5 +61,10 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         $offset = $this->innerReflector->reflectFunctionsIn($sourceCode);
 
         return $offset;
+    }
+
+    public function navigate($sourceCode): ReflectionNavigation
+    {
+        return $this->innerReflector->navigate($sourceCode);
     }
 }

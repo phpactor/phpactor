@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -128,5 +129,14 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
         }
 
         return null;
+    }
+
+    public function nameRange(): ByteOffsetRange
+    {
+        $memberName = $this->node->memberName;
+        return ByteOffsetRange::fromInts(
+            $memberName->getStartPosition(),
+            $memberName->getEndPosition()
+        );
     }
 }

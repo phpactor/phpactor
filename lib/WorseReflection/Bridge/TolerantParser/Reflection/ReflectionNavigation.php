@@ -2,6 +2,36 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\SourceFileNode;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\NavigatorElementCollection;
+use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Reflector;
+
 class ReflectionNavigation
 {
+    private SourceFileNode $node;
+    private ServiceLocator $locator;
+
+    public function __construct(ServiceLocator $locator, SourceFileNode $node)
+    {
+        $this->node = $node;
+        $this->locator = $locator;
+    }
+
+    /**
+     * @return NavigatorElementCollection<ReflectionMethodCall>
+     */
+    public function methodCalls(): NavigatorElementCollection
+    {
+        $calls = [];
+        foreach ($this->node->getDescendantNodes() as $node) {
+            if ($node instanceof MemberAccessExpression) {
+                $calls[] = new ReflectionMethodCall($this->locator, new Frame('test'), $node);
+            }
+        }
+        return new NavigatorElementCollection($calls);
+    }
 }

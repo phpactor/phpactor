@@ -17,6 +17,7 @@ use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 
 class MemberRenamerTest extends RenamerTestCase
@@ -30,7 +31,6 @@ class MemberRenamerTest extends RenamerTestCase
         yield 'method declaration' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
-
                 $reflection = $reflector->reflectClass('ClassOne');
                 $method = $reflection->methods()->get('foobar');
 
@@ -49,16 +49,20 @@ class MemberRenamerTest extends RenamerTestCase
         yield 'method reference' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
+                $methodCalls = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->methodCalls();
+                $first = $methodCalls->first();
+                assert($first instanceof ReflectionMethodCall);
+
                 return $renamer->rename(
-                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build(),
-                    ByteOffset::fromInt(0),
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build(),
+                    $first->nameRange()->start(),
                     'newName'
                 );
             },
             function (Reflector $reflector): void {
-                $reflection = $reflector->reflectClass('ClassOne');
-                $methodCalls = $reflector->navigate($reflection->sourceCode())->methodCalls();
-                self::assertTrue($reflection->methods()->has('newName'));
+                $methodCalls = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->methodCalls();
+                $first = $methodCalls->first();
+                self::assertEquals('newName', $first->name());
             }
         ];
     }
