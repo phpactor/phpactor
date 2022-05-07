@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 final class BruteForceSourceLocator implements SourceCodeLocator
 {
@@ -42,6 +43,9 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         ));
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function map(): array
     {
         if (null !== $this->map) {
@@ -67,7 +71,10 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         $this->map = $map;
     }
 
-    private function fileIterator()
+    /**
+     * @return RecursiveIteratorIterator<RecursiveDirectoryIterator>
+     */
+    private function fileIterator(): RecursiveIteratorIterator
     {
         return new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($this->path, RecursiveDirectoryIterator::SKIP_DOTS),
@@ -75,7 +82,11 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         );
     }
 
-    private function buildClassMap($file, array $map): array
+    /**
+     * @param array<string,string> $map
+     * @return array<string,string>
+     */
+    private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
             SourceCode::fromPath($file)
@@ -88,7 +99,11 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         return $map;
     }
 
-    private function buildFunctionMap($file, array $map): array
+    /**
+     * @param array<string,string> $map
+     * @return array<string,string>
+     */
+    private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
             SourceCode::fromPath($file)

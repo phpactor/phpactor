@@ -94,7 +94,7 @@ class MemberRenamer extends AbstractReferenceRenamer
      */
     protected function doRename(TextDocument $textDocument, ByteOffset $offset, ByteOffsetRange $range, string $originalName, string $newName): Generator
     {
-        foreach ($this->implementationFinder->findImplementations($textDocument, $offset) as $location) {
+        foreach ($this->implementationFinder->findImplementations($textDocument, $offset, true) as $location) {
             yield $this->renameEdit($location, $range, $originalName, $newName);
         }
 

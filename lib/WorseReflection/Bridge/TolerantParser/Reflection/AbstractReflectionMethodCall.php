@@ -106,6 +106,15 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
         return new MissingType();
     }
 
+    public function nameRange(): ByteOffsetRange
+    {
+        $memberName = $this->node->memberName;
+        return ByteOffsetRange::fromInts(
+            $memberName->getStartPosition(),
+            $memberName->getEndPosition()
+        );
+    }
+
     private function callExpression(): CallExpression
     {
         if (!$this->node->parent instanceof CallExpression) {
@@ -129,14 +138,5 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
         }
 
         return null;
-    }
-
-    public function nameRange(): ByteOffsetRange
-    {
-        $memberName = $this->node->memberName;
-        return ByteOffsetRange::fromInts(
-            $memberName->getStartPosition(),
-            $memberName->getEndPosition()
-        );
     }
 }

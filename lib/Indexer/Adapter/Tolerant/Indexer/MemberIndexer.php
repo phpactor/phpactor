@@ -76,6 +76,9 @@ class MemberIndexer implements TolerantIndexer
         $this->writeIndex($index, $memberType, $containerType, $memberName, $document, $this->resolveStart($node->memberName));
     }
 
+    /**
+     * @return MemberRecord::TYPE_METHOD|MemberRecord::TYPE_PROPERTY|MemberRecord::TYPE_CONSTANT
+     */
     private function resolveScopedPropertyAccessMemberType(ScopedPropertyAccessExpression $node): string
     {
         if ($node->parent instanceof CallExpression) {
@@ -89,6 +92,9 @@ class MemberIndexer implements TolerantIndexer
         return MemberRecord::TYPE_CONSTANT;
     }
 
+    /**
+     * @return MemberRecord::TYPE_METHOD|MemberRecord::TYPE_PROPERTY
+     */
     private function resolveMemberAccessType(MemberAccessExpression $node): string
     {
         if ($node->parent instanceof CallExpression) {
@@ -137,6 +143,9 @@ class MemberIndexer implements TolerantIndexer
         $this->writeIndex($index, $memberType, null, (string)$memberName, $document, $this->resolveStart($node->memberName));
     }
 
+    /**
+     * @param MemberRecord::TYPE_* $memberType
+     */
     private function writeIndex(Index $index, string $memberType, ?string $containerFqn, string $memberName, TextDocument $document, int $offsetStart): void
     {
         $record = $index->get(MemberRecord::fromMemberReference(MemberReference::create($memberType, $containerFqn, $memberName)));

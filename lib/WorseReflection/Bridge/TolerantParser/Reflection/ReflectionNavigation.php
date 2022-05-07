@@ -9,11 +9,11 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NavigatorElementCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Reflector;
 
 class ReflectionNavigation
 {
     private SourceFileNode $node;
+
     private ServiceLocator $locator;
 
     public function __construct(ServiceLocator $locator, SourceFileNode $node)

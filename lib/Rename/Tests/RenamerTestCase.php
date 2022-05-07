@@ -12,13 +12,10 @@ use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\TestUtils\Workspace;
-use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Psr\Log\NullLogger;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 abstract class RenamerTestCase extends TestCase
@@ -70,7 +67,6 @@ abstract class RenamerTestCase extends TestCase
         $process = Process::fromShellCommandline('php ' . $this->workspace()->path('project/test.php'));
         $process->mustRun();
         $assertion($this->reflector);
-        
     }
 
     protected function workspace(): Workspace

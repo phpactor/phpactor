@@ -15,6 +15,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
@@ -40,7 +41,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     /**
      * @return Locations<Location>
      */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations
+    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
     {
         $symbolContext = $this->reflector->reflectOffset(
             $document->__toString(),
@@ -57,7 +58,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             if ($symbolType === Symbol::CASE) {
                 $symbolType = 'enum';
             }
-            return $this->memberImplementations($symbolContext, $symbolType);
+            return $this->memberImplementations($symbolContext, $symbolType, $includeDefinition);
         }
 
         $locations = [];
@@ -83,7 +84,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
      * @return Locations<Location>
      * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function memberImplementations(NodeContext $symbolContext, string $symbolType): Locations
+    private function memberImplementations(NodeContext $symbolContext, string $symbolType, bool $includeDefinition): Locations
     {
         $container = $symbolContext->containerType();
         $methodName = $symbolContext->symbol()->name();
@@ -109,20 +110,26 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
             try {
                 $reflection = $this->reflector->reflectClassLike($implementation->__toString());
-                $method = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
+                $member = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
             } catch (NotFound $notFound) {
                 continue;
             }
 
-            if ($method instanceof ReflectionMethod) {
-                if ($method->isAbstract()) {
+            if (false === $includeDefinition) {
+                if (!$reflection instanceof ReflectionClass) {
                     continue;
+                }
+
+                if ($member instanceof ReflectionMethod) {
+                    if ($member->isAbstract()) {
+                        continue;
+                    }
                 }
             }
 
             $locations[] = Location::fromPathAndOffset(
                 $record->filePath(),
-                $method->position()->start()
+                $member->position()->start()
             );
         }
 

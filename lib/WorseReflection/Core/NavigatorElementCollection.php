@@ -8,7 +8,6 @@ use IteratorAggregate;
 use RuntimeException;
 use Traversable;
 
-
 /**
  * @template T of object
  * @implements IteratorAggregate<array-key,T>

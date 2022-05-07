@@ -231,5 +231,4 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     {
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
-
 }

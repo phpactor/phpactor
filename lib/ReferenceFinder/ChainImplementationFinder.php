@@ -13,6 +13,9 @@ final class ChainImplementationFinder implements ClassImplementationFinder
      */
     private array $finders = [];
 
+    /**
+     * @param ClassImplementationFinder[] $finders
+     */
     public function __construct(array $finders)
     {
         foreach ($finders as $finder) {
@@ -20,7 +23,7 @@ final class ChainImplementationFinder implements ClassImplementationFinder
         }
     }
 
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations
+    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
     {
         $messages = [];
         $locations = [];
@@ -30,7 +33,8 @@ final class ChainImplementationFinder implements ClassImplementationFinder
                 iterator_to_array(
                     $finder->findImplementations(
                         $document,
-                        $byteOffset
+                        $byteOffset,
+                        $includeDefinition
                     )
                 )
             );

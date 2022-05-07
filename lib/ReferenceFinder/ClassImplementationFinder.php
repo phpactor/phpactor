@@ -17,5 +17,5 @@ interface ClassImplementationFinder
      * If a call for method on an interface, then return location list of the class
      * implementations but with an offset position of the method.
      */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset): Locations;
+    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations;
 }

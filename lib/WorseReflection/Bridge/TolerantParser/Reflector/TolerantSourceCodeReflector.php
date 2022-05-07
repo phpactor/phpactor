@@ -85,6 +85,11 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         return TolerantReflectionFunctionCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
+    public function navigate($sourceCode): ReflectionNavigation
+    {
+        return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(SourceCode::fromUnknown($sourceCode)));
+    }
+
     private function reflectNode($sourceCode, $offset)
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
@@ -103,10 +108,5 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     {
         $rootNode = $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->path());
         return $rootNode;
-    }
-
-    public function navigate($sourceCode): ReflectionNavigation
-    {
-        return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(SourceCode::fromUnknown($sourceCode)));
     }
 }

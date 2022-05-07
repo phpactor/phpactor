@@ -8,16 +8,10 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
-use Phpactor\Indexer\IndexAgentBuilder;
-use Phpactor\Indexer\Model\IndexBuilder;
-use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPropertyAccess;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 
@@ -35,6 +29,20 @@ class MemberRenamerTest extends RenamerTestCase
         if (defined('T_ENUM')) {
             yield from $this->enumRenames();
         }
+    }
+
+    protected function createRenamer(): Renamer
+    {
+        $finder = new IndexedReferenceFinder(
+            $this->indexAgent->query(),
+            $this->reflector
+        );
+        return new MemberRenamer(
+            $finder,
+            new FilesystemWorkspaceLocator(),
+            new Parser(),
+            new IndexedImplementationFinder($this->indexAgent->query(), $this->reflector)
+        );
     }
 
     /**
@@ -254,19 +262,5 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->cases()->has('newName'));
             }
         ];
-    }
-
-    protected function createRenamer(): Renamer
-    {
-        $finder = new IndexedReferenceFinder(
-            $this->indexAgent->query(),
-            $this->reflector
-        );
-        return new MemberRenamer(
-            $finder,
-            new FilesystemWorkspaceLocator(),
-            new Parser(),
-            new IndexedImplementationFinder($this->indexAgent->query(),$this->reflector)
-        );
     }
 }
