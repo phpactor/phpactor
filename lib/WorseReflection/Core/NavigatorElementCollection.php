@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use ArrayIterator;
+use Closure;
 use IteratorAggregate;
 use RuntimeException;
 use Traversable;
@@ -37,6 +38,23 @@ class NavigatorElementCollection implements IteratorAggregate
         }
         throw new RuntimeException(
             'Collection is empty, cannot get first'
+        );
+    }
+
+    /**
+     * @param Closure(T): bool $predicate
+     * @return T
+     */
+    public function firstBy(Closure $predicate)
+    {
+        foreach ($this->elements as $element) {
+            if ($predicate($element)) {
+                return $element;
+            }
+        }
+
+        throw new RuntimeException(
+            'No elements matched the given predicate'
         );
     }
 
