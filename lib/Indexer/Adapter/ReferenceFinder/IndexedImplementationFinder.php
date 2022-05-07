@@ -15,6 +15,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
@@ -46,8 +47,12 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             $byteOffset->toInt()
         )->symbolContext();
 
-        if ($symbolContext->symbol()->symbolType() === Symbol::METHOD) {
-            return $this->methodImplementations($symbolContext);
+        $symbolType = $symbolContext->symbol()->symbolType();
+        if (
+            $symbolType === Symbol::METHOD ||
+            $symbolType === Symbol::PROPERTY
+        ) {
+            return $this->memberImplementations($symbolContext, $symbolType);
         }
 
         $locations = [];
@@ -71,8 +76,9 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
     /**
      * @return Locations<Location>
+     * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function methodImplementations(NodeContext $symbolContext): Locations
+    private function memberImplementations(NodeContext $symbolContext, string $symbolType): Locations
     {
         $container = $symbolContext->containerType();
         $methodName = $symbolContext->symbol()->name();
@@ -98,14 +104,15 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
             try {
                 $reflection = $this->reflector->reflectClass($implementation->__toString());
-                $method = $reflection->methods()->belongingTo($reflection->name())->get($methodName);
+                $method = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
             } catch (NotFound $notFound) {
                 continue;
             }
 
-            assert($method instanceof ReflectionMethod);
-            if ($method->isAbstract()) {
-                continue;
+            if ($method instanceof ReflectionMethod) {
+                if ($method->isAbstract()) {
+                    continue;
+                }
             }
 
             $locations[] = Location::fromPathAndOffset(
