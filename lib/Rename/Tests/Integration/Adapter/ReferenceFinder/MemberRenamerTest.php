@@ -65,6 +65,24 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertEquals('newName', $first->name());
             }
         ];
+
+        yield 'property declaration' => [
+            'member_renamer/property_declaration',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->properties()->has('newName'));
+            }
+        ];
     }
 
     protected function createRenamer(): Renamer
