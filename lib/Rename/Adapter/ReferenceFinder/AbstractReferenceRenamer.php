@@ -44,6 +44,9 @@ abstract class AbstractReferenceRenamer implements Renamer
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         $range = $this->getRenameRange($textDocument, $offset);
+        if (null === $range) {
+            return;
+        }
         $originalName = $this->rangeText($textDocument, $range);
         yield from $this->doRename($textDocument, $offset, $range, $originalName, $newName);
     }

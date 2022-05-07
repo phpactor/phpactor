@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Integration\Adapter\ReferenceFinder;
 
+use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
@@ -15,26 +16,48 @@ use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 
 class MemberRenamerTest extends RenamerTestCase
 {
 
     /**
-     * @return Generator<array<int,mixed>>
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
      */
     public function provideRename(): Generator
     {
-        yield [
+        yield 'method declaration' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
+
                 $reflection = $reflector->reflectClass('ClassOne');
                 $method = $reflection->methods()->get('foobar');
+
                 return $renamer->rename(
                     $reflection->sourceCode(),
                     $method->nameRange()->start(),
                     'newName'
                 );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->methods()->has('newName'));
+            }
+        ];
+
+        yield 'method reference' => [
+            'member_renamer/method_declaration',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                return $renamer->rename(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build(),
+                    ByteOffset::fromInt(0),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->methods()->has('newName'));
             }
         ];
     }

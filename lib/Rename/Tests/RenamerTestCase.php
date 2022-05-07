@@ -47,7 +47,7 @@ abstract class RenamerTestCase extends TestCase
      * @dataProvider provideRename
      * @param Closure(Reflector,Renamer):Generator<LocatedTextEdit> $operation
      */
-    public function testRename(string $path, Closure $operation): void
+    public function testRename(string $path, Closure $operation, Closure $assertion): void
     {
         $basePath = __DIR__ . '/Cases/' . $path;
         foreach ((array)glob($basePath . '/**.phpt') as $path) {
@@ -69,11 +69,11 @@ abstract class RenamerTestCase extends TestCase
 
         $process = Process::fromShellCommandline('php ' . $this->workspace()->path('project/test.php'));
         $process->mustRun();
-        $this->addToAssertionCount(1);
+        $assertion($this->reflector);
         
     }
 
-    private function workspace(): Workspace
+    protected function workspace(): Workspace
     {
         return new Workspace(__DIR__ . '/Workspace');
     }
