@@ -36,6 +36,9 @@ class TypeSuggestionProvider
         yield from $this->nameResults($search);
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function nameResults(string $search): Generator
     {
         if (!$search) {
@@ -48,6 +51,7 @@ class TypeSuggestionProvider
             }
 
             yield Suggestion::createWithOptions($result->name()->head(), [
+                'short_description' => $result->name()->__toString(),
                 'name_import' => $result->name()->__toString(),
                 'type' => Suggestion::TYPE_CLASS,
                 'priority' => Suggestion::PRIORITY_MEDIUM,
@@ -55,7 +59,9 @@ class TypeSuggestionProvider
         }
     }
 
-    
+    /**
+     * @return Generator<Suggestion>
+     */
     private function nameImports(Node $node): Generator
     {
         $namespaceImports = $node->getImportTablesForCurrentScope()[0];
@@ -72,6 +78,9 @@ class TypeSuggestionProvider
         }
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function builtInTypes(): Generator
     {
         foreach (self::BUILT_IN_TYPES as $type) {
