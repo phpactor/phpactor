@@ -5,6 +5,7 @@ namespace Phpactor\Rename\Tests;
 use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
+use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Rename\Model\LocatedTextEdit;
@@ -16,6 +17,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Psr\Log\NullLogger;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
@@ -29,13 +31,16 @@ abstract class RenamerTestCase extends TestCase
     protected function setUp(): void
     {
         $this->workspace()->reset();
-        $this->indexAgent = IndexAgentBuilder::create(
-            $this->workspace()->path('index'),
-            $this->workspace()->path('project')
-        )->buildAgent();
         $this->reflector = ReflectorBuilder::create()
             ->addLocator(new BruteForceSourceLocator(ReflectorBuilder::create()->build(), $this->workspace()->path('project')))
             ->build();
+        $this->indexAgent = IndexAgentBuilder::create(
+            $this->workspace()->path('index'),
+            $this->workspace()->path('project')
+        )->setReferenceEnhancer(new WorseRecordReferenceEnhancer(
+            $this->reflector,
+            new NullLogger()
+        ))->buildAgent();
 
     }
 
