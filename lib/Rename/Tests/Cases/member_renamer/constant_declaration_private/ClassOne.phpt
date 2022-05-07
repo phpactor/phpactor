@@ -6,6 +6,6 @@ class ClassOne
 
     public function foobar(): string
     {
-        self::BAR;
+        return self::BAR;
     }
 }

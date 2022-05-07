@@ -1,9 +1,10 @@
 <?php
 
 require __DIR__ . '/ClassOne.php';
+require __DIR__ . '/ClassTwo.php';
 
-$one = new ClassOne();
-if ($one->foobar() !== 'bar') {
+$two = new ClassTwo();
+if ($two->barfoo() !== 'bar') {
     echo 'expected "foobar" but didn\'t get it';
     exit(127);
 }

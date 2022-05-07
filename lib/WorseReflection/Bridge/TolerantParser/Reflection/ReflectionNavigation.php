@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NavigatorElementCollection;
@@ -53,6 +54,25 @@ class ReflectionNavigation
             }
 
             $elements[] = new ReflectionPropertyAccess($node);
+        }
+        return new NavigatorElementCollection($elements);
+    }
+
+    /**
+     * @return NavigatorElementCollection<ReflectionConstantAccess>
+     */
+    public function constantAccesses(): NavigatorElementCollection
+    {
+        $elements = [];
+        foreach ($this->node->getDescendantNodes() as $node) {
+            if (!$node instanceof ScopedPropertyAccessExpression) {
+                continue;
+            }
+            if ($node->parent instanceof CallExpression) {
+                continue;
+            }
+
+            $elements[] = new ReflectionConstantAccess($node);
         }
         return new NavigatorElementCollection($elements);
     }

@@ -186,7 +186,45 @@ class MemberRenamerTest extends RenamerTestCase
             },
             function (Reflector $reflector): void {
                 $reflection = $reflector->reflectClass('ClassOne');
-                self::assertTrue($reflection->properties()->has('newName'));
+                self::assertTrue($reflection->constants()->has('newName'));
+            }
+        ];
+        yield 'constant declaration protected' => [
+            'member_renamer/constant_declaration_protected',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $constant = $reflection->constants()->get('BAR');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->constants()->has('newName'));
+
+                $propertyAccesses = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->constantAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+            }
+        ];
+        yield 'constant declaration public' => [
+            'member_renamer/constant_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $constant = $reflection->constants()->get('FOO');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->constants()->has('newName'));
             }
         ];
 
