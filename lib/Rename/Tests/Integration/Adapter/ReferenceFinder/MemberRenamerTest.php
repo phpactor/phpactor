@@ -32,6 +32,9 @@ class MemberRenamerTest extends RenamerTestCase
         yield from $this->methodRenames();
         yield from $this->propertyRenames();
         yield from $this->constantRenames();
+        if (defined('T_ENUM')) {
+            yield from $this->enumRenames();
+        }
     }
 
     /**
@@ -227,7 +230,30 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->constants()->has('newName'));
             }
         ];
+    }
 
+    /**
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
+     */
+    private function enumRenames(): Generator
+    {
+        yield 'enum case declaration private' => [
+            'member_renamer/enum_case_declaration_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                $constant = $reflection->cases()->get('BAR');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                self::assertTrue($reflection->cases()->has('newName'));
+            }
+        ];
     }
 
     protected function createRenamer(): Renamer

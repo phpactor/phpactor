@@ -21,8 +21,4 @@ class ReflectionStaticMethodCall extends AbstractReflectionMethodCall
     {
         return true;
     }
-
-    public function nameRange(): ByteOffsetRange
-    {
-    }
 }
