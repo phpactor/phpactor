@@ -14,6 +14,7 @@ use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
+use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;

@@ -13,6 +13,7 @@ class ChainRenamer implements Renamer
     /** @var Renamer[] */
     private array $renamers;
 
+    /** @param Renamer[] $renamers */
     public function __construct(array $renamers)
     {
         $this->renamers = $renamers;

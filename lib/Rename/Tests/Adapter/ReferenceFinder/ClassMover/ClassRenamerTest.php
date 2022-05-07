@@ -11,6 +11,7 @@ use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\NameToUriConverter;
 use Phpactor\Rename\Tests\Adapter\ReferenceFinder\ReferenceRenamerIntegrationTestCase;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
@@ -62,6 +63,9 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         self::assertEquals($expected, $located->textEdits()->apply($source));
     }
 
+    /**
+     * @return Generator<string,array{string,string,string,null|string,int,null|string}>
+     */
     public function provideRename(): Generator
     {
         yield 'class' => [
@@ -155,6 +159,9 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         ];
     }
 
+    /**
+     * @param ByteOffset[] $references
+     */
     private function createRenamer(
         string $namespaceRootDir,
         array $references,

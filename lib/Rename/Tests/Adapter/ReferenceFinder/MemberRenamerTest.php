@@ -5,16 +5,13 @@ namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Generator;
-use Phpactor\Extension\LanguageServerRename\Adapter\ReferenceFinder\MemberRenamer;
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEdits;
-use Phpactor\Extension\LanguageServerRename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefinedReferenceFinder;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefiniedImplementationFinder;
+use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model;
 use Phpactor\ReferenceFinder\PotentialLocation;
+use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
@@ -49,7 +46,7 @@ class MemberRenamerTest extends TestCase
             ->build();
         
         $variableRenamer = new MemberRenamer(
-            new Model(...[]),
+            new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
             new Parser(),
             new PredefiniedImplementationFinder(new Locations([])),
@@ -60,6 +57,9 @@ class MemberRenamerTest extends TestCase
         $this->assertEquals($expectedRange, $actualRange);
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideGetRenameRange(): Generator
     {
         yield 'method declaration' => [
@@ -113,7 +113,7 @@ class MemberRenamerTest extends TestCase
             ->build();
         
         $renamer = new MemberRenamer(
-            new Model(...array_map(function (ByteOffset $reference) use ($textDocument) {
+            new PredefinedReferenceFinder(...array_map(function (ByteOffset $reference) use ($textDocument) {
                 return PotentialLocation::surely(new Location($textDocument->uri(), $reference));
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
@@ -146,6 +146,9 @@ class MemberRenamerTest extends TestCase
         );
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideRename(): Generator
     {
         yield 'method declaration' => [

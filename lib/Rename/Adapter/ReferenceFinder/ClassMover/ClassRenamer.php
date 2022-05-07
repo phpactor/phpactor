@@ -127,15 +127,6 @@ final class ClassRenamer implements Renamer
         return new RenameResult($oldUri, $newUri);
     }
 
-    private function rangeText(TextDocument $textDocument, ByteOffsetRange $range): string
-    {
-        return substr(
-            $textDocument->__toString(),
-            $range->start()->toInt(),
-            $range->end()->toInt() - $range->start()->toInt()
-        );
-    }
-
     private function getFullName(Node $node): ResolvedName
     {
         if ($node instanceof MicrosoftQualifiedName) {

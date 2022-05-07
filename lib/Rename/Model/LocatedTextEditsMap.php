@@ -12,6 +12,9 @@ final class LocatedTextEditsMap
      */
     private array $map;
 
+    /**
+     * @param array<string,TextEdits> $map
+     */
     public function __construct(array $map)
     {
         $this->map = $map;
@@ -22,6 +25,9 @@ final class LocatedTextEditsMap
         return new self([]);
     }
 
+    /**
+     * @param LocatedTextEdit[] $locatedEdits
+     */
     public static function fromLocatedEdits(array $locatedEdits): self
     {
         $map = new self([]);

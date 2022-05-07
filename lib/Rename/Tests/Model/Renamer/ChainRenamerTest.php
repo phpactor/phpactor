@@ -3,14 +3,15 @@
 namespace Phpactor\Rename\Tests\Model\Renamer;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\Rename\Model\LocatedTextEdit;
+use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Model\Renamer\ChainRenamer;
-use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\Renamer\InMemoryRenamer;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\TextDocument\TextEdits;
+use Phpactor\TextDocument\TextEdit;
 use function iterator_to_array;
 
 class ChainRenamerTest extends TestCase
@@ -24,7 +25,7 @@ class ChainRenamerTest extends TestCase
     {
         $range1 = ByteOffsetRange::fromInts(0, 1);
         $results1 = [
-            new LocatedTextEdits(TextEdits::none(), TextDocumentUri::fromString('/foo/bar'))
+            new LocatedTextEdit(TextDocumentUri::fromString('/foo/bar'), TextEdit::create(1, 1, 'foo'))
         ];
         $renamer1 = new InMemoryRenamer($range1, $results1);
         $renamer2 = new InMemoryRenamer(null, []);
@@ -38,7 +39,7 @@ class ChainRenamerTest extends TestCase
         $range1 = ByteOffsetRange::fromInts(0, 1);
         $range2 = ByteOffsetRange::fromInts(0, 1);
         $results2 = [
-            new LocatedTextEdits(TextEdits::none(), TextDocumentUri::fromString('/foo/bar'))
+            new LocatedTextEdit(TextDocumentUri::fromString('/foo/bar'), TextEdit::create(1, 1, 'foo'))
         ];
         $renamer1 = new InMemoryRenamer($range1, []);
         $renamer2 = new InMemoryRenamer($range2, $results2);
@@ -46,6 +47,10 @@ class ChainRenamerTest extends TestCase
         $this->assertResolvesRangeAndResults([$renamer2, $renamer1], $range2, $results2);
     }
 
+    /**
+     * @param Renamer[] $renamers
+     * @param array<LocatedTextEdit> $expectedResults
+     */
     private function assertResolvesRangeAndResults(
         array $renamers,
         ?ByteOffsetRange $expectedRange,
@@ -66,6 +71,9 @@ class ChainRenamerTest extends TestCase
         );
     }
 
+    /**
+     * @param Renamer[] $renamers
+     */
     private function createRenamer(array $renamers): ChainRenamer
     {
         return new ChainRenamer($renamers);

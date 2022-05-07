@@ -4,6 +4,7 @@ namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Indexer\Model\Record;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
@@ -47,6 +48,10 @@ class FileRenamerTest extends IntegrationTestCase
         self::assertCount(3, $edits->toLocatedTextEdits(), 'Locates two references');
     }
 
+    /**
+     * @param TextDocument[] $textDocuments
+     * @param Record[] $records
+     */
     private function createRenamer(array $textDocuments, array $records): FileRenamer
     {
         foreach ($textDocuments as $textDocument) {

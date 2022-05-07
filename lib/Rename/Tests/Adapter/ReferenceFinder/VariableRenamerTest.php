@@ -9,14 +9,15 @@ use Phpactor\Rename\Adapter\ReferenceFinder\VariableRenamer;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
-use Phpactor\Rename\Model;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
+use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
@@ -50,6 +51,9 @@ class VariableRenamerTest extends TestCase
         $this->assertEquals($expectedRange, $actualRange);
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideGetRenameRange(): Generator
     {
         yield 'Rename argument' => [
@@ -141,6 +145,9 @@ class VariableRenamerTest extends TestCase
         );
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideRename(): Generator
     {
         yield 'Rename variable' => [
@@ -192,12 +199,16 @@ class VariableRenamerTest extends TestCase
         ];
     }
 
+    /**
+     * @param PotentialLocation[] $references
+     * @param TextDocument[] $textDocuments
+     */
     private function createRenamer(array $references, ?DefinitionLocation $defintionLocation, array $textDocuments): VariableRenamer
     {
         $variableRenamer = new VariableRenamer(
             new DefinitionAndReferenceFinder(
                 TestDefinitionLocator::fromSingleLocation(TypeFactory::unknown(), $defintionLocation),
-                new Model(...$references),
+                new PredefinedReferenceFinder(...$references),
             ),
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),
             new Parser()
