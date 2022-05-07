@@ -28,10 +28,9 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
             self::TYPE_PROPERTY,
             self::TYPE_CONSTANT,
             self::TYPE_METHOD,
-            self::TYPE_ENUM_CASE,
         ])) {
             throw new RuntimeException(sprintf(
-                'Invalid member type "%s" use one of MemberRecord::TYPE_*',
+                'Invalid member type "%s" use one of MemberType::TYPE_*',
                 $type
             ));
         }

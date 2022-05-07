@@ -65,6 +65,9 @@ final class Symbol
         return new self($symbolType, $name, $position);
     }
 
+    /**
+     * @return Symbol::*
+     */
     public function symbolType(): string
     {
         return $this->symbolType;
