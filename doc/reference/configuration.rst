@@ -518,7 +518,7 @@ Enable or disable the ``keyword`` completor.
 Completion for keywords (not very accurate).
 
 
-**Default**: ``false``
+**Default**: ``true``
 
 
 .. _param_completion_worse.completor.docblock.enabled:

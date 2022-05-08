@@ -13,7 +13,6 @@ use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MethodDeclaration;
-use Microsoft\PhpParser\Node\MissingMemberDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
@@ -21,14 +20,16 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
-use Phpactor\LanguageServerProtocol\FoldingRange;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CompletionContext
 {
-    public static function expression(Node $node): bool
+    public static function expression(?Node $node): bool
     {
+        if (null === $node) {
+            return false;
+        }
         $parent = $node->parent;
 
         if (null === $parent) {
@@ -48,13 +49,19 @@ class CompletionContext
         ;
     }
 
-    public static function useImport(Node $node): bool
+    public static function useImport(?Node $node): bool
     {
+        if (null === $node) {
+            return false;
+        }
         return $node->parent instanceof NamespaceUseClause;
     }
 
-    public static function classLike(Node $node): bool
+    public static function classLike(?Node $node): bool
     {
+        if (null === $node) {
+            return false;
+        }
         $parent = $node->parent;
         if (null === $parent) {
             return false;
@@ -68,8 +75,12 @@ class CompletionContext
         return self::isClassClause($parent);
     }
 
-    public static function type(Node $node): bool
+    public static function type(?Node $node): bool
     {
+        if (null === $node) {
+            return false;
+        }
+
         if (null === $node->parent) {
             return false;
         }
@@ -109,22 +120,18 @@ class CompletionContext
         return false;
     }
 
-    private static function isClassClause(?Node $node): bool
+    public static function classMembersBody(?Node $node): bool
     {
         if (null === $node) {
             return false;
         }
-        return
-            $node instanceof InterfaceBaseClause ||
-            $node instanceof ClassInterfaceClause ||
-            $node instanceof TraitUseClause ||
-            $node instanceof ClassBaseClause;
-    }
 
-    public static function classMembersBody(Node $node): bool
-    {
         if ($node instanceof ClassMembersNode) {
             return true;
+        }
+
+        if (null === $node->parent) {
+            return false;
         }
 
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
@@ -158,8 +165,12 @@ class CompletionContext
         return false;
     }
 
-    public static function classClause(Node $node, ByteOffset $offset): bool
+    public static function classClause(?Node $node, ByteOffset $offset): bool
     {
+        if (null === $node) {
+            return false;
+        }
+
         $prefix = substr($node->getFileContents(), 0, $offset->toInt());
         if (preg_match('{(class|interface|trait)\s+[^\s]+\s*[^\s\{]*$}', $prefix)) {
             return true;
@@ -169,5 +180,17 @@ class CompletionContext
         }
 
         return false;
+    }
+
+    private static function isClassClause(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+        return
+            $node instanceof InterfaceBaseClause ||
+            $node instanceof ClassInterfaceClause ||
+            $node instanceof TraitUseClause ||
+            $node instanceof ClassBaseClause;
     }
 }

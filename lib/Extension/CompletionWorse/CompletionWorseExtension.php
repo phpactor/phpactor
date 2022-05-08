@@ -88,7 +88,6 @@ class CompletionWorseExtension implements Extension
         ));
 
         /** @phpstan-ignore-next-line */
-        $defaults['completion_worse.completor.keyword.enabled'] = true;
         $defaults['completion_worse.completor.constant.enabled'] = false;
 
         $schema->setDefaults(array_merge($defaults, [

@@ -3,10 +3,8 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
-use Microsoft\PhpParser\TokenStringMaps;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
-use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Phpactor\TextDocument\TextDocument;
 
@@ -33,6 +31,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 
         yield 'member keyword postfix' => [
             '<?php class Foobar { private <>',
+            $this->expect(['const', 'function']),
+        ];
+        yield 'member keyword postfix 2' => [
+            '<?php class Foobar { private func<>',
             $this->expect(['const', 'function']),
         ];
 

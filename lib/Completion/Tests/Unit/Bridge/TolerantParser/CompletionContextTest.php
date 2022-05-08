@@ -50,20 +50,20 @@ class CompletionContextTest extends TestCase
         ];
 
         yield 'not class member body' => [
-            "<?php class Foo { A<>",
+            '<?php class Foo { A<>',
             false,
         ];
 
         yield 'not class member body after property' => [
-            "<?php class Foo { private \$foo; A<>",
+            '<?php class Foo { private $foo; A<>',
             false,
         ];
         yield 'not after method 1' => [
-            "<?php class Foo { public function bar() {} A<> }",
+            '<?php class Foo { public function bar() {} A<> }',
             false,
         ];
         yield 'not after method 2' => [
-            "<?php class Foo { private \$foo; public function bar() {} public function boo() {} A<> public functoin baz() {}}",
+            '<?php class Foo { private $foo; public function bar() {} public function boo() {} A<> public functoin baz() {}}',
             false,
         ];
         yield 'not after method 3' => [
@@ -72,11 +72,11 @@ class CompletionContextTest extends TestCase
         ];
 
         yield 'in class method body 1' => [
-            "<?php class Foo { public function foo() { A<> }",
+            '<?php class Foo { public function foo() { A<> }',
             true
         ];
         yield 'in class method body 2' => [
-            "<?php class Foo { public function bar() { if (true) { return false; } A<> } }",
+            '<?php class Foo { public function bar() { if (true) { return false; } A<> } }',
             true,
         ];
     }
@@ -97,29 +97,29 @@ class CompletionContextTest extends TestCase
     public function provideClassMemberBody(): Generator
     {
         yield 'property' => [
-            "<?php class Foo { pri<> }",
+            '<?php class Foo { pri<> }',
             true
         ];
         yield 'visibility 1' => [
-            "<?php class Foo { <> }",
+            '<?php class Foo { <> }',
             true
         ];
         yield 'visibility 2' => [
-            "<?php class Foo { private <> }",
+            '<?php class Foo { private <> }',
             true
         ];
         yield 'visibility 3' => [
-            "<?php class Foo { private Foob<> }",
+            '<?php class Foo { private Foob<> }',
             true,
         ];
 
         // todo...
         yield 'visibility 4' => [
-            "<?php class Foo { private Foobles <> }",
+            '<?php class Foo { private Foobles <> }',
             true,
         ];
         yield 'visibility 5' => [
-            "<?php class Foo { private Foobles $<> }",
+            '<?php class Foo { private Foobles $<> }',
             false,
         ];
     }
