@@ -68,7 +68,6 @@ class IndexedNameSearcher implements NameSearcher
             return Criteria::isClassTrait();
         }
         if ($type === NameSearcherType::ENUM) {
-            dump($type);
             return Criteria::isClassEnum();
         }
 

@@ -66,7 +66,7 @@ abstract class Criteria
         return new IsClassType(ClassRecord::TYPE_TRAIT);
     }
 
-    public static function isClassTypeUndefined()
+    public static function isClassTypeUndefined(): IsClassType
     {
         return new IsClassType(null);
     }
