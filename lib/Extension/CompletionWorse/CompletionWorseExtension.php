@@ -4,7 +4,9 @@ namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ClassLikeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\TypeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\UseNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
@@ -133,6 +135,12 @@ class CompletionWorseExtension implements Extension
                 CompletionExtension::TAG_COMPLETOR => [ 'name' => $name ]
             ]);
         }
+
+        $container->register(TypeSuggestionProvider::class, function (Container $container) {
+            return new TypeSuggestionProvider(
+                $container->get(NameSearcher::class)
+            );
+        });
 
         $container->register(ChainTolerantCompletor::class, function (Container $container) {
             return new ChainTolerantCompletor(
@@ -366,6 +374,23 @@ class CompletionWorseExtension implements Extension
                     ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
                 },
             ],
+            'class_like' => [
+                'Completion for class like contexts',
+                function (Container $container) {
+                    return new LimitingCompletor(new ClassLikeCompletor(
+                        $container->get(NameSearcher::class),
+                        $container->get(DocumentPrioritizer::class)
+                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                },
+            ],
+            'type' => [
+                'Completion for types',
+                function (Container $container) {
+                    return new LimitingCompletor(new TypeCompletor(
+                        $container->get(TypeSuggestionProvider::class)
+                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                },
+            ],
             'keyword' => [
                 'Completion for keywords (not very accurate)',
                 function (Container $container) {
@@ -376,7 +401,7 @@ class CompletionWorseExtension implements Extension
                 'Docblock completion',
                 function (Container $container) {
                     return new DocblockCompletor(
-                        new TypeSuggestionProvider($container->get(NameSearcher::class)),
+                        $container->get(TypeSuggestionProvider::class),
                         $container->get(WorseReflectionExtension::SERVICE_PARSER)
                     );
                 },

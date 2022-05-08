@@ -25,7 +25,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 
-class UseNameCompletor implements TolerantCompletor
+class ClassLikeCompletor implements TolerantCompletor
 {
     private NameSearcher $nameSearcher;
     private DocumentPrioritizer $prioritizer;
@@ -41,9 +41,7 @@ class UseNameCompletor implements TolerantCompletor
     
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        $parent = $node->parent;
-
-        if (!CompletionContext::useImport($node)) {
+        if (!CompletionContext::classLike($node)) {
             return true;
         }
 
@@ -53,12 +51,16 @@ class UseNameCompletor implements TolerantCompletor
                 continue;
             }
 
-            yield Suggestion::createWithOptions($result->name()->__toString(), [
+            yield Suggestion::createWithOptions($result->name()->head(), [
                 'type' => Suggestion::TYPE_CLASS,
-                'priority' => $this->prioritizer->priority($result->uri(), $source->uri())
+                'priority' => $this->prioritizer->priority($result->uri(), $source->uri()),
+                'short_description' => $result->name()->__toString(),
+                'class_import' => $result->name()->__toString(),
+                'name_import' => $result->name()->__toString(),
             ]);
         }
 
         return true;
     }
 }
+
