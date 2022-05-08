@@ -27,10 +27,12 @@ class KeywordCompletor implements TolerantCompletor
     {
         if (CompletionContext::classClause($node, $offset)) {
             yield from $this->keywords(['implements', 'extends']);
+            return true;
         }
 
         if (CompletionContext::classMembersBody($node)) {
             yield from $this->keywords(['private', 'protected', 'public']);
+            return true;
         }
 
         if (CompletionContext::classMembersBody($node->parent)) {
@@ -38,6 +40,7 @@ class KeywordCompletor implements TolerantCompletor
                 'function',
                 'const',
             ]);
+            return true;
         }
 
         return true;

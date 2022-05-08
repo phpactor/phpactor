@@ -10,8 +10,10 @@ use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\MissingMemberDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
@@ -19,6 +21,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Phpactor\LanguageServerProtocol\FoldingRange;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -126,6 +129,10 @@ class CompletionContext
 
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
+        if ($node instanceof Variable) {
+            return false;
+        }
+
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
         }
@@ -154,7 +161,10 @@ class CompletionContext
     public static function classClause(Node $node, ByteOffset $offset): bool
     {
         $prefix = substr($node->getFileContents(), 0, $offset->toInt());
-        if (preg_match('{(class|interface|trait)\s+[^\s]+\s+[^\s]*$}', $prefix)) {
+        if (preg_match('{(class|interface|trait)\s+[^\s]+\s*[^\s\{]*$}', $prefix)) {
+            return true;
+        }
+        if (preg_match('{(class|interface|trait)\s+[^\s]+\s*(implements|extends)\s+([^,\s\{]+[,\s]*)*$}', $prefix)) {
             return true;
         }
 

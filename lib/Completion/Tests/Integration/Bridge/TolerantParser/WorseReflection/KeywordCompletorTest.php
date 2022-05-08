@@ -38,11 +38,11 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
-            $this->expect(['implements', 'extends']),
+            $this->expect(['extends', 'implements']),
         ];
         yield 'class implements 2' => [
             '<?php class Foobar impl<>',
-            $this->expect(['implements', 'extends']),
+            $this->expect(['extends', 'implements']),
         ];
     }
 
