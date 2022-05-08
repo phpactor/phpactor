@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CompletionWorse;
 use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\UseNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
@@ -344,14 +345,23 @@ class CompletionWorseExtension implements Extension
                     );
                 },
             ],
-            'name_search' => [
-                'Completion for class names, constants and functions located in the index',
+            'expression_name_search' => [
+                'Completion for class names, constants and functions at expression positions that are located in the index',
                 function (Container $container) {
                     return new LimitingCompletor(new ExpressionNameCompletor(
                         $container->get(NameSearcher::class),
                         new ObjectFormatter(
                             $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
                         ),
+                        $container->get(DocumentPrioritizer::class)
+                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                },
+            ],
+            'use' => [
+                'Completion for use imports',
+                function (Container $container) {
+                    return new LimitingCompletor(new UseNameCompletor(
+                        $container->get(NameSearcher::class),
                         $container->get(DocumentPrioritizer::class)
                     ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
                 },

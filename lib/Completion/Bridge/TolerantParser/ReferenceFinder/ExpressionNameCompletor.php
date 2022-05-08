@@ -5,9 +5,11 @@ namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 use DTL\ArgumentResolver\ArgumentResolver;
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
@@ -39,10 +41,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     {
         $parent = $node->parent;
 
-        if (
-            !$parent instanceof Expression &&
-            !$parent instanceof ExpressionStatement
-        ) {
+        if (!CompletionContext::expression($node)) {
             return true;
         }
 
