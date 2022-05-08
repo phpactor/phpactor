@@ -104,7 +104,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
         return self::RECORD_TYPE;
     }
 
-    public function withType(mixed $type): ClassRecord
+    public function withType(string $type): ClassRecord
     {
         $clone = clone $this;
         $clone->type = $type;

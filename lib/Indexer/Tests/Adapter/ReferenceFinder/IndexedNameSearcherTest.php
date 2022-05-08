@@ -37,11 +37,14 @@ class IndexedNameSearcherTest extends IndexTestCase
             return;
         }
 
-        $this->fail('Could not find interface');
+        $this->fail('Could not find interace');
     }
 
     public function testSearcherForEnum(): void
     {
+        if (version_compare(PHP_VERSION, '8.1', '<')) {
+            $this->markTestSkipped('Not supported in less than 8.1');
+        }
         $this->workspace()->put('project/Foobar.php', '<?php enum Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
@@ -54,7 +57,7 @@ class IndexedNameSearcherTest extends IndexTestCase
             return;
         }
 
-        $this->fail('Could not find interface');
+        $this->fail('Could not find enum');
     }
 
     public function testSearcherForTrait(): void
@@ -71,6 +74,6 @@ class IndexedNameSearcherTest extends IndexTestCase
             return;
         }
 
-        $this->fail('Could not find interface');
+        $this->fail('Could not find trait');
     }
 }
