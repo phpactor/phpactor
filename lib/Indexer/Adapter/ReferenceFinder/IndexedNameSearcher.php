@@ -21,6 +21,9 @@ class IndexedNameSearcher implements NameSearcher
         $this->client = $client;
     }
 
+    /**
+     * @param null|NameSearcherType::* $type
+     */
     public function search(string $name, ?string $type = null): Generator
     {
         $criteria = Criteria::shortNameBeginsWith($name);

@@ -3,7 +3,6 @@
 namespace Phpactor\Indexer\Tests\Adapter\ReferenceFinder;
 
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
-use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\Adapter\IndexTestCase;
 use Phpactor\ReferenceFinder\NameSearcherType;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;

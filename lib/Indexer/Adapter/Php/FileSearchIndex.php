@@ -114,11 +114,16 @@ class FileSearchIndex implements SearchIndex
         $this->subjects = array_filter(array_map(function (string $line) {
             $parts = explode(self::DELIMITER, $line);
 
+            // for BC with older indexes
+            if (count($parts) === 2) {
+                return [$parts[0], $parts[1], null];
+            }
+
             if (count($parts) !== 3) {
                 return false;
             }
 
-            return $parts;
+            return [$parts[0], $parts[1], $parts[2]];
         }, explode("\n", file_get_contents($this->path))));
 
         $this->initialized = true;

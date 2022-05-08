@@ -23,7 +23,7 @@ class PredefinedNameSearcher implements NameSearcher
     /**
      * @return Generator<NameSearchResult>
      */
-    public function search(string $search): Generator
+    public function search(string $search, ?string $type = null): Generator
     {
         foreach ($this->results as $result) {
             if (0 !== strpos($result->name()->head()->__toString(), $search)) {

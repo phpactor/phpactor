@@ -60,6 +60,8 @@ class CompletionContext
             return false;
         }
 
+        // no type-completion clauses (extends, implements, use)
+        // as these are class-like only
         if ($node->parent->parent) {
             if (
                 self::isClassClause($node->parent->parent)
@@ -67,6 +69,7 @@ class CompletionContext
                 return false;
             }
         }
+
         if (
             $node->parent instanceof Parameter ||
             $node->parent instanceof QualifiedNameList
@@ -74,6 +77,21 @@ class CompletionContext
             return true;
         }
 
+        return false;
+    }
+
+    public static function nodeOrParentIs(?Node $node, string $type): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+        if ($node instanceof $type) {
+            return true;
+        }
+
+        if ($node->parent instanceof $type) {
+            return true;
+        }
         return false;
     }
 
