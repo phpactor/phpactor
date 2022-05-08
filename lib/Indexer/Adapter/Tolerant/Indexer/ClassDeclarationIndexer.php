@@ -19,7 +19,7 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
     public function index(Index $index, TextDocument $document, Node $node): void
     {
         assert($node instanceof ClassDeclaration);
-        $record = $this->getClassLikeRecord('class', $node, $index, $document);
+        $record = $this->getClassLikeRecord(ClassRecord::TYPE_CLASS, $node, $index, $document);
 
         $this->removeImplementations($index, $record);
         $record->clearImplemented();

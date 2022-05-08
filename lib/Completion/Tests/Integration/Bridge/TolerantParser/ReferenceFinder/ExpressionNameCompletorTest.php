@@ -3,7 +3,7 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
 use Generator;
-use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
@@ -12,10 +12,12 @@ use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
-class NameSearcherCompletorTest extends TolerantCompletorTestCase
+class ExpressionNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     *
+     * @param array<mixed> $expected
      */
     public function testComplete(string $source, array $expected): void
     {
@@ -74,16 +76,6 @@ class NameSearcherCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
-        yield 'import in use context' => [
-            '<?php namespace Foo; class Bar {} namespace Bar; use b<>', [
-                [
-                    'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'Foo\\Bar',
-                    'short_description' => 'Foo\\Bar',
-                    'snippet'           => null,
-                ]
-            ]
-        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -104,7 +96,7 @@ class NameSearcherCompletorTest extends TolerantCompletorTestCase
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
 
-        return new NameSearcherCompletor(
+        return new ExpressionNameCompletor(
             $searcher->reveal(),
             $this->snippetFormatter($reflector)
         );

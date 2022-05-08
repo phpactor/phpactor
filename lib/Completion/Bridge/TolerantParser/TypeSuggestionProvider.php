@@ -16,6 +16,8 @@ class TypeSuggestionProvider
         'bool',
         'callable',
         'array',
+        'void',
+        'never',
     ];
 
     private NameSearcher $nameSearcher;

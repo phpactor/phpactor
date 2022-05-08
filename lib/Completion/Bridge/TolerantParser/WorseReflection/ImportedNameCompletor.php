@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\ResolvedName;
+use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
@@ -24,6 +25,12 @@ class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
+        if (
+            !CompletionContext::expression($node)
+        ) {
+            return true;
+        }
+
         $namespaceImports = $node->getImportTablesForCurrentScope()[0];
 
         /** @var ResolvedName $resolvedName */

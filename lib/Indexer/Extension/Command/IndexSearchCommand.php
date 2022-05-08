@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Extension\Command;
 
 use Phpactor\Indexer\Model\Query\Criteria;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\SearchClient;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -84,9 +85,10 @@ class IndexSearchCommand extends Command
                 break;
             }
             $output->writeln(sprintf(
-                '<comment>%s</> <fg=cyan>#</> %s',
+                '<comment>%s</> <fg=cyan>#</> %s%s',
                 $result->recordType(),
-                $result->identifier()
+                $result->identifier(),
+                $result instanceof ClassRecord ? sprintf(' (%s)', $result->type()) : '',
             ));
         }
 

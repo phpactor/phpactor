@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
@@ -15,7 +16,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 
-class NameSearcherCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
+class ExpressionNameCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
 {
     private ObjectFormatter $snippetFormatter;
 
@@ -32,6 +33,12 @@ class NameSearcherCompletor extends CoreNameSearcherCompletor implements Toleran
     
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
+        $parent = $node->parent;
+
+        if (!CompletionContext::expression($node)) {
+            return true;
+        }
+
         $suggestions = $this->completeName($node, $source->uri(), $node);
 
         yield from $suggestions;

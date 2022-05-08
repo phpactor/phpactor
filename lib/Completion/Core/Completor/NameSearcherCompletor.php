@@ -51,11 +51,11 @@ abstract class NameSearcherCompletor
         return Suggestion::createWithOptions($result->name()->head(), $options);
     }
 
-    protected function createSuggestionOptions(
-        NameSearchResult $result,
-        ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
-    ): array {
+    /**
+     * @return array<string,mixed>
+     */
+    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null): array
+    {
         $options = [
             'short_description' => $result->name()->__toString(),
             'type' => $this->suggestionType($result),

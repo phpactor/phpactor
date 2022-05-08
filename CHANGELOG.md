@@ -29,6 +29,7 @@ Bug fixes:
 
 Improvements:
 
+  - [cmp] Improved contextual completion
   - [rn] Fixed numerous issues
   - [rename] Fixed numerous issues
   - [compl] Allow named param completion on functions

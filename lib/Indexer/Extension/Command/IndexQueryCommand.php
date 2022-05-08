@@ -62,6 +62,7 @@ class IndexQueryCommand extends Command
     {
         $output->writeln('<info>Class:</>'.$class->fqn());
         $output->writeln('<info>Path:</>'.$class->filePath());
+        $output->writeln('<info>Type:</>'.$class->type());
         $output->writeln('<info>Implements</>:');
         foreach ($class->implements() as $fqn) {
             $output->writeln(' - ' . (string)$fqn);

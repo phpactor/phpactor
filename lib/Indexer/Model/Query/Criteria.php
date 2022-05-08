@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Model\Query;
 
 use Phpactor\Indexer\Model\Query\Criteria\AndCriteria;
 use Phpactor\Indexer\Model\Query\Criteria\FileAbsolutePathBeginsWith;
+use Phpactor\Indexer\Model\Query\Criteria\IsClassType;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameContains;
 use Phpactor\Indexer\Model\Query\Criteria\ExactShortName;
 use Phpactor\Indexer\Model\Query\Criteria\FqnBeginsWith;
@@ -14,6 +15,7 @@ use Phpactor\Indexer\Model\Query\Criteria\IsMember;
 use Phpactor\Indexer\Model\Query\Criteria\OrCriteria;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 
 abstract class Criteria
 {
@@ -47,6 +49,31 @@ abstract class Criteria
     public static function isClass(): IsClass
     {
         return new IsClass();
+    }
+
+    public static function isClassConcrete(): IsClassType
+    {
+        return new IsClassType(ClassRecord::TYPE_CLASS);
+    }
+
+    public static function isClassInterface(): IsClassType
+    {
+        return new IsClassType(ClassRecord::TYPE_INTERFACE);
+    }
+
+    public static function isClassTrait(): IsClassType
+    {
+        return new IsClassType(ClassRecord::TYPE_TRAIT);
+    }
+
+    public static function isClassTypeUndefined(): IsClassType
+    {
+        return new IsClassType(null);
+    }
+
+    public static function isClassEnum(): IsClassType
+    {
+        return new IsClassType(ClassRecord::TYPE_ENUM);
     }
 
     public static function isMember(): IsMember

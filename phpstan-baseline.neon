@@ -1951,19 +1951,9 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\ReferenceFinder\\\\NameSearcherCompletor\\:\\:createSuggestionOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/NameSearcherCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletor\\:\\:getClassNameForImport\\(\\) has parameter \\$imports with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:createSuggestionOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\Helper\\\\VariableCompletionHelper\\:\\:orderedVariablesUntilOffset\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2007,11 +1997,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:createSuggestion\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:createSuggestionOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
@@ -2084,11 +2069,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$pos of method Microsoft\\\\PhpParser\\\\Node\\:\\:getDescendantNodeAtPosition\\(\\) expects int, string given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/Qualifier/TolerantQualifierTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\ReferenceFinder\\\\NameSearcherCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/NameSearcherCompletorTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletorTest\\:\\:provideImportClass\\(\\) has no return type specified\\.$#"
@@ -5136,11 +5116,6 @@ parameters:
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
-			message: "#^Property Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\FileSearchIndex\\:\\:\\$subjects \\(array\\<array\\{string, string\\}\\>\\) does not accept array\\<int, non\\-empty\\-array\\<int, string\\>\\>\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Php/FileSearchIndex.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\Serialized\\\\FileRepository\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record\\|null but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Php/Serialized/FileRepository.php
@@ -5346,16 +5321,6 @@ parameters:
 			path: lib/Phpactor.php
 
 		-
-			message: "#^Method Phpactor\\\\Phpactor\\:\\:resolveApplicationRoot\\(\\) should return string but returns string\\|false\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function is_dir expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Phpactor.php
@@ -5369,11 +5334,6 @@ parameters:
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainDefinitionLocationProvider\\:\\:__construct\\(\\) has parameter \\$providers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainDefinitionLocationProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainImplementationFinder\\:\\:__construct\\(\\) has parameter \\$finders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/ChainImplementationFinder.php
 
 		-
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainReferenceFinder\\:\\:__construct\\(\\) has parameter \\$finders with no value type specified in iterable type array\\.$#"

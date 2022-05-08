@@ -53,6 +53,9 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
         }
     }
 
+    /**
+     * @param ClassRecord::TYPE_* $type
+     */
     protected function getClassLikeRecord(string $type, Node $node, Index $index, TextDocument $document): ClassRecord
     {
         assert($node instanceof NamespacedNameInterface);
