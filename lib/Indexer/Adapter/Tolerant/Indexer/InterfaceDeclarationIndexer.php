@@ -18,7 +18,7 @@ class InterfaceDeclarationIndexer extends AbstractClassLikeIndexer
     public function index(Index $index, TextDocument $document, Node $node): void
     {
         assert($node instanceof InterfaceDeclaration);
-        $record = $this->getClassLikeRecord('interface', $node, $index, $document);
+        $record = $this->getClassLikeRecord(ClassRecord::TYPE_INTERFACE, $node, $index, $document);
 
         // remove any references to this interface and other classes before
         // updating with the current data

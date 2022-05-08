@@ -46,7 +46,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
                 self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
                 self::assertEquals('ThisClass', $record->fqn());
                 self::assertEquals(6, $record->start()->toInt());
-                self::assertEquals('class', $record->type());
+                self::assertEquals(ClassRecord::TYPE_CLASS, $record->type());
             }
         ];
 
@@ -146,7 +146,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
                 self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
                 self::assertEquals('ThisInterface', $record->fqn());
                 self::assertEquals(6, $record->start()->toInt());
-                self::assertEquals('interface', $record->type());
+                self::assertEquals(ClassRecord::TYPE_INTERFACE, $record->type());
             }
         ];
 
@@ -166,7 +166,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
                 self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
                 self::assertEquals('ThisTrait', $record->fqn());
                 self::assertEquals(6, $record->start()->toInt());
-                self::assertEquals('trait', $record->type());
+                self::assertEquals(ClassRecord::TYPE_TRAIT, $record->type());
             }
         ];
 
@@ -193,6 +193,20 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
                 self::assertCount(1, $record->implementations());
             }
         ];
+
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
+            yield 'enum' => [
+                "// File: project/test.php\n<?php enum SomeEnum {}",
+                'SomeEnum',
+                function (ClassRecord $record): void {
+                    self::assertInstanceOf(ClassRecord::class, $record);
+                    self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
+                    self::assertEquals('SomeEnum', $record->fqn());
+                    self::assertEquals(6, $record->start()->toInt());
+                    self::assertEquals(ClassRecord::TYPE_ENUM, $record->type());
+                }
+            ];
+        }
     }
 
     /**

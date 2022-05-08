@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\NameSearcher;
+use Phpactor\ReferenceFinder\NameSearcherType;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocumentUri;
 
@@ -20,9 +21,12 @@ class IndexedNameSearcher implements NameSearcher
         $this->client = $client;
     }
 
-    public function search(string $name): Generator
+    public function search(string $name, ?string $type = null): Generator
     {
-        foreach ($this->client->search(Criteria::shortNameBeginsWith($name)) as $result) {
+        $criteria = Criteria::shortNameBeginsWith($name);
+        if ($type === NameSearcherType::CLASS_) {
+        }
+        foreach ($this->client->search($criteria) as $result) {
             yield NameSearchResult::create(
                 $result->recordType(),
                 FullyQualifiedName::fromString($result->identifier()),
