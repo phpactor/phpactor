@@ -3,12 +3,14 @@
 namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
+use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ClassLikeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\TypeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\UseNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
@@ -40,6 +42,7 @@ use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnip
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultClassSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultFunctionSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\ParametersSnippetFormatter;
+use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\SimilarityResultPrioritizer;
@@ -65,6 +68,7 @@ class CompletionWorseExtension implements Extension
     public const NAME_SEARCH_STRATEGY_NONE = 'none';
     public const PARAM_EXPERIMENTAL = 'completion_worse.experimantal';
     public const PARAM_SNIPPETS = 'completion_worse.snippets';
+    public const PARAM_DEBUG = 'completion_worse.debug';
 
     
     public function load(ContainerBuilder $container): void
@@ -94,6 +98,7 @@ class CompletionWorseExtension implements Extension
             self::PARAM_NAME_COMPLETION_PRIORITY => self::NAME_SEARCH_STRATEGY_PROXIMITY,
             self::PARAM_SNIPPETS => true,
             self::PARAM_EXPERIMENTAL => false,
+            self::PARAM_DEBUG => false,
         ]));
 
         $descriptions = array_combine(array_map(
@@ -111,6 +116,7 @@ class CompletionWorseExtension implements Extension
 
         /** @phpstan-ignore-next-line */
         $schema->setDescriptions(array_merge($descriptions, [
+            self::PARAM_DEBUG => 'Include debug info in completion results',
             self::PARAM_SNIPPETS => 'Enable or disable completion snippets',
             self::PARAM_EXPERIMENTAL => 'Enable experimental functionality',
             self::PARAM_CLASS_COMPLETOR_LIMIT => 'Suggestion limit for the filesystem based SCF class_completor',
@@ -145,6 +151,9 @@ class CompletionWorseExtension implements Extension
         $container->register(ChainTolerantCompletor::class, function (Container $container) {
             return new ChainTolerantCompletor(
                 array_map(function (string $serviceId) use ($container) {
+                    if ($container->getParameter(self::PARAM_DEBUG)) {
+                        return new DebugTolerantCompletor($container->get($serviceId));
+                    }
                     return $container->get($serviceId);
                 }, $container->get(self::SERVICE_COMPLETOR_MAP)),
                 $container->get('worse_reflection.tolerant_parser')
@@ -313,10 +322,10 @@ class CompletionWorseExtension implements Extension
             'scf_class' => [
                 'Brute force completion for class names (not recommended)',
                 function (Container $container) {
-                    return new LimitingCompletor(new ScfClassCompletor(
+                    return $this->limitCompletor($container, new ScfClassCompletor(
                         $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)->get('composer'),
                         $container->get('class_to_file.file_to_class')
-                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                    ));
                 },
             ],
             'local_variable' => [
@@ -356,39 +365,39 @@ class CompletionWorseExtension implements Extension
             'expression_name_search' => [
                 'Completion for class names, constants and functions at expression positions that are located in the index',
                 function (Container $container) {
-                    return new LimitingCompletor(new ExpressionNameCompletor(
+                    return $this->limitCompletor($container, new ExpressionNameCompletor(
                         $container->get(NameSearcher::class),
                         new ObjectFormatter(
                             $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
                         ),
                         $container->get(DocumentPrioritizer::class)
-                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                    ));
                 },
             ],
             'use' => [
                 'Completion for use imports',
                 function (Container $container) {
-                    return new LimitingCompletor(new UseNameCompletor(
+                    return $this->limitCompletor($container, new UseNameCompletor(
                         $container->get(NameSearcher::class),
                         $container->get(DocumentPrioritizer::class)
-                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                    ));
                 },
             ],
             'class_like' => [
                 'Completion for class like contexts',
                 function (Container $container) {
-                    return new LimitingCompletor(new ClassLikeCompletor(
+                    return $this->limitCompletor($container, new ClassLikeCompletor(
                         $container->get(NameSearcher::class),
                         $container->get(DocumentPrioritizer::class)
-                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                    ));
                 },
             ],
             'type' => [
                 'Completion for types',
                 function (Container $container) {
-                    return new LimitingCompletor(new TypeCompletor(
+                    return $this->limitCompletor($container, new TypeCompletor(
                         $container->get(TypeSuggestionProvider::class)
-                    ), $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT));
+                    ));
                 },
             ],
             'keyword' => [
@@ -423,5 +432,15 @@ class CompletionWorseExtension implements Extension
     private function completorEnabledKey(string $key): string
     {
         return sprintf('completion_worse.completor.%s.enabled', $key);
+    }
+
+    private function limitCompletor(Container $container, TolerantCompletor $completor): TolerantCompletor
+    {
+        $limit = $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT);
+        if (null === $limit) {
+            return $completor;
+        }
+
+        return new LimitingCompletor($completor, $limit);
     }
 }

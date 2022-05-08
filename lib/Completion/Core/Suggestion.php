@@ -169,6 +169,14 @@ class Suggestion
         return $this->shortDescription;
     }
 
+    public function withShortDescription(string $description): self
+    {
+        $clone = clone $this;
+        $clone->shortDescription = $description;
+
+        return $clone;
+    }
+
     /**
      * @deprecated Use nameImport instead
      */

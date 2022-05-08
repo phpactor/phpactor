@@ -12,6 +12,7 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
+use Microsoft\PhpParser\Node\TraitUseClause;
 
 class CompletionContext
 {
@@ -35,22 +36,22 @@ class CompletionContext
     {
         $parent = $node->parent;
         if ($parent->parent) {
-            if (
-                $parent->parent instanceof ClassInterfaceClause ||
-                $parent->parent instanceof ClassBaseClause
-            ) {
+            if (self::isClassClause($parent->parent)) {
                 return true;
             }
         }
-        return
-            $parent instanceof ClassInterfaceClause ||
-            $parent instanceof ClassBaseClause
-        ;
-
+        return self::isClassClause($parent);
     }
 
     public static function type(Node $node): bool
     {
+        if ($node->parent->parent) {
+            if (
+                self::isClassClause($node->parent->parent)
+            ) {
+                return false;
+            }
+        }
         if (
             $node->parent instanceof Parameter ||
             $node->parent instanceof QualifiedNameList
@@ -59,5 +60,16 @@ class CompletionContext
         }
 
         return false;
+    }
+
+    private static function isClassClause(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+        return
+            $node instanceof ClassInterfaceClause ||
+            $node instanceof TraitUseClause ||
+            $node instanceof ClassBaseClause;
     }
 }

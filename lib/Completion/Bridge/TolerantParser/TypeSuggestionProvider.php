@@ -55,6 +55,7 @@ class TypeSuggestionProvider
             yield Suggestion::createWithOptions($result->name()->head(), [
                 'short_description' => $result->name()->__toString(),
                 'name_import' => $result->name()->__toString(),
+                'short_description' => $result->name()->__toString(),
                 'type' => Suggestion::TYPE_CLASS,
                 'priority' => Suggestion::PRIORITY_MEDIUM,
             ]);
