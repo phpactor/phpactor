@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
@@ -101,6 +102,7 @@ class CompletionContext
             return false;
         }
         return
+            $node instanceof InterfaceBaseClause ||
             $node instanceof ClassInterfaceClause ||
             $node instanceof TraitUseClause ||
             $node instanceof ClassBaseClause;
