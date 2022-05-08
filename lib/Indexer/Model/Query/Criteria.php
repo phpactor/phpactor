@@ -66,6 +66,11 @@ abstract class Criteria
         return new IsClassType(ClassRecord::TYPE_TRAIT);
     }
 
+    public static function isClassTypeUndefined()
+    {
+        return new IsClassType(null);
+    }
+
     public static function isClassEnum(): IsClassType
     {
         return new IsClassType(ClassRecord::TYPE_ENUM);

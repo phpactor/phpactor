@@ -8,9 +8,9 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class IsClassType extends Criteria
 {
-    private string $type;
+    private ?string $type;
 
-    public function __construct(string $type)
+    public function __construct(?string $type)
     {
         $this->type = $type;
     }

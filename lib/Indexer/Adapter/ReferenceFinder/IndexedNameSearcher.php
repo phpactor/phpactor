@@ -31,7 +31,15 @@ class IndexedNameSearcher implements NameSearcher
         $typeCriteria = $this->resolveTypeCriteria($type);
 
         if ($typeCriteria) {
-            $criteria = Criteria::and($criteria, $typeCriteria);
+            $criteria = Criteria::and(
+                $criteria,
+                Criteria::or(
+                    $typeCriteria,
+
+                    // B/C for old indexes
+                    Criteria::isClassTypeUndefined()
+                )
+            );
         }
 
         foreach ($this->client->search($criteria) as $result) {
