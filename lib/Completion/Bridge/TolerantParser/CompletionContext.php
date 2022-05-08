@@ -19,6 +19,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CompletionContext
@@ -31,27 +32,8 @@ class CompletionContext
             return false;
         }
 
-        $prefix = substr($node->getFileContents(), 0, $node->getStartPosition());
-
-
-        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
-
-        if ($nodeBeforeOffset->getFirstAncestor(ClassLike::class)) {
-            if ($nodeBeforeOffset instanceof ClassMembersNode) {
-                return false;
-            }
-
-            if ($nodeBeforeOffset instanceof CompoundStatementNode && $node->getStartPosition() < $nodeBeforeOffset->getEndPosition()) {
-                return true;
-            }
-
-            $methodDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class);
-            if (!$methodDeclaration) {
-                return false;
-            }
-            if ($methodDeclaration->getEndPosition() < $node->getStartPosition()) {
-                return false;
-            }
+        if (self::classMembersBody($node)) {
+            return false;
         }
 
         return
@@ -134,5 +116,48 @@ class CompletionContext
             $node instanceof ClassInterfaceClause ||
             $node instanceof TraitUseClause ||
             $node instanceof ClassBaseClause;
+    }
+
+    public static function classMembersBody(Node $node): bool
+    {
+        if ($node instanceof ClassMembersNode) {
+            return true;
+        }
+
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
+
+        if ($nodeBeforeOffset instanceof ClassMembersNode) {
+            return true;
+        }
+
+        if (!$nodeBeforeOffset->getFirstAncestor(ClassLike::class)) {
+            return false;
+        }
+
+        if ($nodeBeforeOffset instanceof CompoundStatementNode && $node->getStartPosition() < $nodeBeforeOffset->getEndPosition()) {
+            return false;
+        }
+
+        $methodDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class);
+
+        if (!$methodDeclaration) {
+            return true;
+        }
+
+        if ($methodDeclaration->getEndPosition() < $node->getStartPosition()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function classClause(Node $node, ByteOffset $offset): bool
+    {
+        $prefix = substr($node->getFileContents(), 0, $offset->toInt());
+        if (preg_match('{(class|interface|trait)\s+[^\s]+\s+[^\s]*$}', $prefix)) {
+            return true;
+        }
+
+        return false;
     }
 }
