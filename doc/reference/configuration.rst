@@ -402,18 +402,18 @@ Completion for functions defined in the Phpactor runtime.
 **Default**: ``true``
 
 
-.. _param_completion_worse.completor.constant.enabled:
+.. _param_completion_worse.completor.declared_constant.enabled:
 
 
-``completion_worse.completor.constant.enabled``
-"""""""""""""""""""""""""""""""""""""""""""""""
+``completion_worse.completor.declared_constant.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
 
-Enable or disable the ``constant`` completor.
+Enable or disable the ``declared_constant`` completor.
 
-Completion for constants.
+Completion for constants defined in the Phpactor runtime.
 
 
 **Default**: ``true``
@@ -436,18 +436,69 @@ Completion for classes defined in the Phpactor runtime.
 **Default**: ``true``
 
 
-.. _param_completion_worse.completor.name_search.enabled:
+.. _param_completion_worse.completor.expression_name_search.enabled:
 
 
-``completion_worse.completor.name_search.enabled``
-""""""""""""""""""""""""""""""""""""""""""""""""""
+``completion_worse.completor.expression_name_search.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
 
-Enable or disable the ``name_search`` completor.
+Enable or disable the ``expression_name_search`` completor.
 
-Completion for class names, constants and functions located in the index.
+Completion for class names, constants and functions at expression positions that are located in the index.
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.use.enabled:
+
+
+``completion_worse.completor.use.enabled``
+""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``use`` completor.
+
+Completion for use imports.
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.class_like.enabled:
+
+
+``completion_worse.completor.class_like.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``class_like`` completor.
+
+Completion for class like contexts.
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.type.enabled:
+
+
+``completion_worse.completor.type.enabled``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Enable or disable the ``type`` completor.
+
+Completion for types.
 
 
 **Default**: ``true``
@@ -485,6 +536,18 @@ Docblock completion.
 
 
 **Default**: ``true``
+
+
+.. _param_completion_worse.completor.constant.enabled:
+
+
+``completion_worse.completor.constant.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+**Default**: ``false``
 
 
 .. _param_completion_worse.completor.class.limit:
@@ -545,6 +608,21 @@ Enable or disable completion snippets
 
 
 Enable experimental functionality
+
+
+**Default**: ``false``
+
+
+.. _param_completion_worse.debug:
+
+
+``completion_worse.debug``
+""""""""""""""""""""""""""
+
+
+
+
+Include debug info in completion results
 
 
 **Default**: ``false``

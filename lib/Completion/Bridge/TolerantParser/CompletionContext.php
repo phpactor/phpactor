@@ -19,6 +19,11 @@ class CompletionContext
     public static function expression(Node $node): bool
     {
         $parent = $node->parent;
+
+        if (null === $parent) {
+            return false;
+        }
+
         return
             $parent instanceof Expression ||
             $parent instanceof ExpressionStatement ||
@@ -35,6 +40,9 @@ class CompletionContext
     public static function classLike(Node $node): bool
     {
         $parent = $node->parent;
+        if (null === $parent) {
+            return false;
+        }
         if ($parent->parent) {
             if (self::isClassClause($parent->parent)) {
                 return true;
@@ -45,6 +53,10 @@ class CompletionContext
 
     public static function type(Node $node): bool
     {
+        if (null === $node->parent) {
+            return false;
+        }
+
         if ($node->parent->parent) {
             if (
                 self::isClassClause($node->parent->parent)

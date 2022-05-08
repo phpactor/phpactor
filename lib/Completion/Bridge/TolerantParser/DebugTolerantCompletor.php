@@ -4,11 +4,12 @@ namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AlwaysQualfifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\ClassName;
 
-class DebugTolerantCompletor implements TolerantCompletor
+class DebugTolerantCompletor implements TolerantCompletor, TolerantQualifiable
 {
     private TolerantCompletor $innerCompletor;
 
@@ -18,7 +19,8 @@ class DebugTolerantCompletor implements TolerantCompletor
     }
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        foreach ($this->innerCompletor->complete($node, $source, $offset) as $result) {
+        $generator = $this->innerCompletor->complete($node, $source, $offset);
+        foreach ($generator as $result) {
             yield $result->withShortDescription(
                 sprintf(
                     '[c: %s,n:%s<%s<%s] %s',
@@ -31,6 +33,15 @@ class DebugTolerantCompletor implements TolerantCompletor
             );
         }
 
-        return true;
+        return $generator->getReturn();
+    }
+
+    public function qualifier(): TolerantQualifier
+    {
+        if ($this->innerCompletor instanceof TolerantQualifiable) {
+            return $this->innerCompletor->qualifier();
+        }
+
+        return new AlwaysQualfifier();
     }
 }

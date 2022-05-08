@@ -42,7 +42,6 @@ use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnip
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultClassSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultFunctionSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\ParametersSnippetFormatter;
-use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\SimilarityResultPrioritizer;

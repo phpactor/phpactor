@@ -3,6 +3,7 @@
 namespace Phpactor\Tests\System\Extension\Completion\Application;
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use Phpactor\Extension\CompletionExtra\Application\Complete;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -300,6 +301,7 @@ class CompleteTest extends SystemTestCase
     {
         list($source, $offset) = ExtractOffset::fromSource($source);
         $complete = $this->container()->get('application.complete');
+        assert($complete instanceof Complete);
         $result = $complete->complete($source, $offset);
 
         return $result;

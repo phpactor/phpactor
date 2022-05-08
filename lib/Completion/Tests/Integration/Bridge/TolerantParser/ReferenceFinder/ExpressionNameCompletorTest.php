@@ -16,6 +16,8 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     *
+     * @param array<mixed> $expected
      */
     public function testComplete(string $source, array $expected): void
     {
