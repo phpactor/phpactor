@@ -4,7 +4,7 @@ namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
-use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
@@ -347,7 +347,7 @@ class CompletionWorseExtension implements Extension
             'name_search' => [
                 'Completion for class names, constants and functions located in the index',
                 function (Container $container) {
-                    return new LimitingCompletor(new NameSearcherCompletor(
+                    return new LimitingCompletor(new ExpressionNameCompletor(
                         $container->get(NameSearcher::class),
                         new ObjectFormatter(
                             $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)

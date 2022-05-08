@@ -20,7 +20,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 
-class NameSearcherCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
+class ExpressionNameCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
 {
     private ObjectFormatter $snippetFormatter;
 

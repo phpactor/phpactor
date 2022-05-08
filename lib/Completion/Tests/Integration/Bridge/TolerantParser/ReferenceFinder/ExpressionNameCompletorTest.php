@@ -3,7 +3,7 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
 use Generator;
-use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\NameSearcherCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
@@ -12,7 +12,7 @@ use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
-class NameSearcherCompletorTest extends TolerantCompletorTestCase
+class ExpressionNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
@@ -94,7 +94,7 @@ class NameSearcherCompletorTest extends TolerantCompletorTestCase
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
 
-        return new NameSearcherCompletor(
+        return new ExpressionNameCompletor(
             $searcher->reveal(),
             $this->snippetFormatter($reflector)
         );
