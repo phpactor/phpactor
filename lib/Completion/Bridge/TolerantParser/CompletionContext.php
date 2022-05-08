@@ -12,6 +12,7 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
+use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
 
 class CompletionContext
@@ -28,6 +29,7 @@ class CompletionContext
             $parent instanceof Expression ||
             $parent instanceof ExpressionStatement ||
             $parent instanceof IfStatementNode ||
+            $parent instanceof ReturnStatement ||
             $parent instanceof ArrayElement // yield;
         ;
     }
@@ -48,6 +50,7 @@ class CompletionContext
                 return true;
             }
         }
+
         return self::isClassClause($parent);
     }
 
