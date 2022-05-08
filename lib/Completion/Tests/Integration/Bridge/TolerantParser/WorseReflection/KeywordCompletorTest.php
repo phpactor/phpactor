@@ -3,10 +3,8 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
-use Microsoft\PhpParser\TokenStringMaps;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
-use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Phpactor\TextDocument\TextDocument;
 
@@ -14,76 +12,39 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     * @param array{string,array<string,mixed>[]} $expected
      */
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
-    
+
+    /**
+     * @return Generator<string,array{string,array<string,mixed>[]}>
+     */
     public function provideComplete(): Generator
     {
-        $keywords = array_merge(array_keys(TokenStringMaps::RESERVED_WORDS), array_keys(TokenStringMaps::KEYWORDS));
-        $allKeywords = $this->createExpectedKeywords($keywords);
+        yield 'member keywords' => [
+            '<?php class Foobar { <>',
+            $this->expect(['private', 'protected', 'public']),
+        ];
 
-        yield 'all keywords' => [
-            '<?php <>',
-            $allKeywords
+        yield 'member keyword postfix' => [
+            '<?php class Foobar { private <>',
+            $this->expect(['const', 'function']),
         ];
-        yield 'member' => [
-            '<?php class C { <>',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::CLASS_MEMBERS])
+        yield 'member keyword postfix 2' => [
+            '<?php class Foobar { private func<>',
+            $this->expect(['const', 'function']),
         ];
-        yield 'member access' => [
-            '<?php function F(){ $v-><>',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::MEMBER_ACCESS])
+
+        yield 'class implements 1' => [
+            '<?php class Foobar <>',
+            $this->expect(['extends', 'implements']),
         ];
-        yield 'member access with partial name' => [
-            '<?php function F(){ $v->p<>',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::MEMBER_ACCESS])
-        ];
-        yield 'member access after name' => [
-            '<?php function F(){ $v->p <>',
-            $allKeywords
-        ];
-        yield 'scoped member access' => [
-            '<?php function F(){ joe::<>',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::MEMBER_ACCESS])
-        ];
-        yield 'scoped member access with partial name' => [
-            '<?php function F(){ joe::me<>',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::MEMBER_ACCESS])
-        ];
-        yield 'scoped member access after name' => [
-            '<?php function F(){ joe::me <>',
-            $allKeywords
-        ];
-        yield 'scoped member access after name and brace' => [
-            '<?php function F(){ joe::me(<>',
-            $allKeywords
-        ];
-        yield 'inside string' => [
-            '<?php $var ="<> ',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::STRING_LITERAL])
-        ];
-        yield 'inside string expression' => [
-            '<?php $var ="{$var->n<> ',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::MEMBER_ACCESS])
-        ];
-        yield 'var' => [
-            '<?php $var<> ',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::VARIABLE])
-        ];
-        yield 'after var' => [
-            '<?php $var <> ',
-            $allKeywords
-        ];
-        yield 'after function braces' => [
-            '<?php $func = function() <> ',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::AFTER_ANONYMOUS_FUNC_PARAMS])
-        ];
-        yield 'after function braces before return statement' => [
-            '<?php $func = function() <> :string ',
-            $this->createExpectedKeywords(KeywordCompletor::SPECIAL_SCOPES[KeywordCompletor::AFTER_ANONYMOUS_FUNC_PARAMS])
+        yield 'class implements 2' => [
+            '<?php class Foobar impl<>',
+            $this->expect(['extends', 'implements']),
         ];
     }
 
@@ -92,16 +53,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         return new KeywordCompletor();
     }
 
-    private function createExpectedKeywords(array $list): array
+    /**
+     * @return array<array<string,mixed>>
+     * @param array<string> $array
+     */
+    private function expect(array $array): array
     {
-        sort($list);
-        $keywords = [];
-        foreach ($list as $keyword) {
-            $keywords[] = [
-                'type' => Suggestion::TYPE_KEYWORD,
-                'name' => $keyword,
-            ];
-        }
-        return $keywords;
+        return array_map(fn (string $keyword) => [
+            'name' => $keyword,
+        ], $array);
     }
 }

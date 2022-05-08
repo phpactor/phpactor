@@ -69,7 +69,6 @@ class CompletionWorseExtension implements Extension
     public const PARAM_SNIPPETS = 'completion_worse.snippets';
     public const PARAM_DEBUG = 'completion_worse.debug';
 
-    
     public function load(ContainerBuilder $container): void
     {
         $this->registerCompletion($container);
@@ -89,7 +88,6 @@ class CompletionWorseExtension implements Extension
         ));
 
         /** @phpstan-ignore-next-line */
-        $defaults['completion_worse.completor.keyword.enabled'] = false;
         $defaults['completion_worse.completor.constant.enabled'] = false;
 
         $schema->setDefaults(array_merge($defaults, [

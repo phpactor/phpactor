@@ -137,7 +137,12 @@ class NodeUtil
     public static function dump(Node $node, int $level = 0): string
     {
         $out = [
-            str_repeat('  ', $level) . $node->getNodeKindName(),
+            sprintf(
+                '%s %d:%d',
+                str_repeat('  ', $level) . $node->getNodeKindName(),
+                $node->getStartPosition(),
+                $node->getEndPosition()
+            )
         ];
 
         $level++;
@@ -217,6 +222,18 @@ class NodeUtil
             if ($node->getStartPosition() > $offset) {
                 return $node;
             }
+        }
+
+        return $node;
+    }
+    public static function firstDescendantNodeBeforeOffset(Node $node, int $offset): Node
+    {
+        $lastNode = null;
+        foreach ($node->getDescendantNodes() as $node) {
+            if ($node->getStartPosition() >= $offset) {
+                return $lastNode ?? $node;
+            }
+            $lastNode = $node;
         }
 
         return $node;
