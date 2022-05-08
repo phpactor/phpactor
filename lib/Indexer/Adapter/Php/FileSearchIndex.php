@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordFactory;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\SearchIndex;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -22,7 +23,7 @@ class FileSearchIndex implements SearchIndex
     private bool $initialized = false;
 
     /**
-     * @var array<array{string,string}>
+     * @var array<array{string,string,string|null}>
      */
     private $subjects = [];
 
@@ -42,8 +43,11 @@ class FileSearchIndex implements SearchIndex
     {
         $this->open();
 
-        foreach ($this->subjects as [ $recordType, $identifier ]) {
+        foreach ($this->subjects as [ $recordType, $identifier, $type ]) {
             $record = RecordFactory::create($recordType, $identifier);
+            if ($record instanceof ClassRecord) {
+                $record = $record->withType($type);
+            }
 
             if (false === $criteria->isSatisfiedBy($record)) {
                 continue;
@@ -56,7 +60,8 @@ class FileSearchIndex implements SearchIndex
     public function write(Record $record): void
     {
         $this->open();
-        $this->subjects[$this->recordHash($record)] = [$record->recordType(), $record->identifier()];
+        $info = [$record->recordType(), $record->identifier(), $record instanceof ClassRecord ? $record->type() : null];
+        $this->subjects[$this->recordHash($record)] = $info;
         $this->dirty = true;
 
         if (++$this->counter % self::BATCH_SIZE === 0) {
@@ -109,7 +114,7 @@ class FileSearchIndex implements SearchIndex
         $this->subjects = array_filter(array_map(function (string $line) {
             $parts = explode(self::DELIMITER, $line);
 
-            if (count($parts) !== 2) {
+            if (count($parts) !== 3) {
                 return false;
             }
 

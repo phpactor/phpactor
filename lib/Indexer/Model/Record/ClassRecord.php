@@ -30,7 +30,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     /**
      * Type of "class": class, interface or trait
      */
-    private string $type;
+    private ?string $type = null;
 
     public static function fromName(string $name): self
     {
@@ -103,5 +103,12 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     public function recordType(): string
     {
         return self::RECORD_TYPE;
+    }
+
+    public function withType(mixed $type): ClassRecord
+    {
+        $clone = clone $this;
+        $clone->type = $type;
+        return $clone;
     }
 }
