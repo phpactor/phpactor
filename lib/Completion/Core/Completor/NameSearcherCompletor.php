@@ -8,6 +8,9 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
+use Phpactor\LanguageServer\Core\Middleware\RequestHandler;
+use Phpactor\LanguageServer\Core\Server\Initializer\RequestInitializer;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -51,11 +54,11 @@ abstract class NameSearcherCompletor
         return Suggestion::createWithOptions($result->name()->head(), $options);
     }
 
-    protected function createSuggestionOptions(
-        NameSearchResult $result,
-        ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
-    ): array {
+    /**
+     * @return array<string,mixed>
+     */
+    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null): array
+    {
         $options = [
             'short_description' => $result->name()->__toString(),
             'type' => $this->suggestionType($result),

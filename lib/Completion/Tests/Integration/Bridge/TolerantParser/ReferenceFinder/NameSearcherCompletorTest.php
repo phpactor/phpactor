@@ -74,16 +74,6 @@ class NameSearcherCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
-        yield 'import in use context' => [
-            '<?php namespace Foo; class Bar {} namespace Bar; use b<>', [
-                [
-                    'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'Foo\\Bar',
-                    'short_description' => 'Foo\\Bar',
-                    'snippet'           => null,
-                ]
-            ]
-        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor

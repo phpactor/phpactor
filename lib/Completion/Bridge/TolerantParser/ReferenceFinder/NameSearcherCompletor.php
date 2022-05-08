@@ -2,13 +2,18 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 
+use DTL\ArgumentResolver\ArgumentResolver;
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\ByteOffset;
@@ -32,6 +37,15 @@ class NameSearcherCompletor extends CoreNameSearcherCompletor implements Toleran
     
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
+        $parent = $node->parent;
+
+        if (
+            !$parent instanceof Expression &&
+            !$parent instanceof ExpressionStatement
+        ) {
+            return true;
+        }
+
         $suggestions = $this->completeName($node, $source->uri(), $node);
 
         yield from $suggestions;
