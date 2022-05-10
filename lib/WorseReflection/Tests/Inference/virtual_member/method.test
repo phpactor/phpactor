@@ -10,6 +10,10 @@ class ReflectionMethod {}
 
 class MemberCollection
 {
+    /**
+    * @method string set(string $name)
+    */
+
     public function get(string $name);
 }
 
@@ -31,8 +35,10 @@ $reflector;
 $reflection = $reflector->reflectClass('ClassOne');
 $methods = $reflection->methods();
 $method = $methods->get('foobar');
+$virtualMethod = $methods->set('barbaz');
 wrAssertType('Wr\Reflector', $reflector);
 wrAssertType('Wr\ReflectionClass', $reflection);
 wrAssertType('Wr\MethodCollection', $methods);
 wrAssertType('Wr\ReflectionMethod', $method);
+wrAssertType('string', $virtualMethod);
 
