@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [wr] Fix resolutin of virtual method
   - [ct] Fix missing properties refactor does not import class #1534
   - [ct] Fix false diagnostic for missing method #1500
   - [dl] Fix docblock definition location at class level docblocks
