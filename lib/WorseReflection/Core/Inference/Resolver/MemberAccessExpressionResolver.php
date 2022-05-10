@@ -82,6 +82,7 @@ class MemberAccessExpressionResolver implements Resolver
             } catch (NotFound $e) {
                 continue;
             }
+
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
 
@@ -97,7 +98,6 @@ class MemberAccessExpressionResolver implements Resolver
                         return $information->withContainerType($subType)->withType($type);
                     }
                 }
-
                 $types[] = $declaringClass;
                 $memberTypes[] = $member->inferredType();
             }
@@ -112,7 +112,7 @@ class MemberAccessExpressionResolver implements Resolver
         return $information->withContainerType(
             $containerType
         )->withType(
-            UnionType::fromTypes(...$memberTypes)->reduce()
+            (new UnionType(...$memberTypes))->clean()->reduce()
         );
     }
 

@@ -104,6 +104,6 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
 
     public function memberType(): string
     {
-        return ReflectionMember::TYPE_PROPERTY;
+        return ReflectionMember::TYPE_METHOD;
     }
 }
