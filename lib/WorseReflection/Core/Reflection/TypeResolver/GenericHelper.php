@@ -17,12 +17,14 @@ class GenericHelper
             return $type;
         }
 
-        $extendsType = $class->docblock()->extends();
+        $extendsTypes = $class->docblock()->extends();
         $templateMap = $declaringClass->templateMap();
 
-        if ($extendsType instanceof GenericClassType) {
-            $arguments = $extendsType->arguments();
-            return self::resolveGenericType($class->scope(), $templateMap, $type, $arguments);
+        foreach ($extendsTypes as $extendsType) {
+            if ($extendsType instanceof GenericClassType) {
+                $arguments = $extendsType->arguments();
+                return self::resolveGenericType($class->scope(), $templateMap, $type, $arguments);
+            }
         }
 
         $implements = $class->docblock()->implements();

@@ -97,18 +97,18 @@ class ReflectedClassType extends ClassType
         $scope = $class->scope();
 
         assert($class instanceof ReflectionClassLike);
-        $implements = $class->docblock()->implements();
-        $extendsType = $class->docblock()->extends();
-        if (($extendsType->isDefined())) {
-            $implements[] = $extendsType;
-        }
+        $genericTypes = array_merge($class->docblock()->implements(), $class->docblock()->extends());
 
-        foreach ($implements as $implementsType) {
-            if (!$implementsType instanceof GenericClassType) {
+        foreach ($genericTypes as $genericType) {
+            if (!$genericType instanceof GenericClassType) {
                 return new MissingType();
             }
 
-            return IterableTypeResolver::resolveIterable($implementsType, $implementsType->arguments());
+            $type = IterableTypeResolver::resolveIterable($genericType, $genericType->arguments());
+            if (!$type->isDefined()) {
+                continue;
+            }
+            return $type;
         }
 
         return new MissingType();

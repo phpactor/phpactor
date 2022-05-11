@@ -37,7 +37,10 @@ interface DocBlock
 
     public function templateMap(): TemplateMap;
 
-    public function extends(): Type;
+    /**
+     * @return Type[]
+     */
+    public function extends(): array;
 
     /**
      * @return Type[]
