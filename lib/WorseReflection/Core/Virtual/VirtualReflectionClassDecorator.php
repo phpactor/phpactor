@@ -91,7 +91,8 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
     public function members(): ReflectionMemberCollection
     {
         $members = $this->class->members();
-        $members->merge($this->virtualMethods());
+        $members = $members->merge($this->virtualMethods());
+
         assert($members instanceof ReflectionMemberCollection);
         return $members;
     }
@@ -117,7 +118,6 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
             $virtualMethods = $virtualMethods->merge(
                 $memberProvider->provideMembers($this->serviceLocator, $this->class)->methods()
             );
-
             foreach ($this->traits() as $trait) {
                 $virtualMethods = $virtualMethods->merge(
                     $memberProvider->provideMembers($this->serviceLocator, $trait)->methods()
