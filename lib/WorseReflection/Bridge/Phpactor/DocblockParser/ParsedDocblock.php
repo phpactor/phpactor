@@ -27,7 +27,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionParameterCollection;
@@ -212,24 +211,26 @@ class ParsedDocblock implements DocBlock
         return new TemplateMap($map);
     }
 
-    public function extends(): Type
+    public function extends(): array
     {
+        $extends = [];
         foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
             assert($extendsTag instanceof ExtendsTag);
-            return $this->typeConverter->convert($extendsTag->type);
+            $extends[] = $this->typeConverter->convert($extendsTag->type);
         }
-        return new MissingType();
+        return $extends;
     }
 
     public function implements(): array
     {
+        $implements = [];
         foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
             assert($implementsTag instanceof ImplementsTag);
-            return array_map(function (TypeNode $type) {
+            $implements = array_merge($implements, array_map(function (TypeNode $type) {
                 return $this->typeConverter->convert($type);
-            }, $implementsTag->types());
+            }, $implementsTag->types()));
         }
-        return [];
+        return $implements;
     }
 
     private function addParameters(VirtualReflectionMethod $method, VirtualReflectionParameterCollection $collection, ?ParameterList $parameterList): void

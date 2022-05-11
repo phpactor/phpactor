@@ -1,0 +1,19 @@
+<?php
+
+interface ConstraintViolationInterface
+{
+}
+
+/**
+ * @extends \ArrayAccess<int, ConstraintViolationInterface>
+ * @extends \Traversable<int, ConstraintViolationInterface>
+ */
+interface ConstraintViolationListInterface extends \Traversable, \Countable, \ArrayAccess
+{
+}
+
+function foo(ConstraintViolationListInterface $list) {
+    foreach ($list as $violation) {
+        wrAssertType('ConstraintViolationInterface', $violation);
+    }
+}
