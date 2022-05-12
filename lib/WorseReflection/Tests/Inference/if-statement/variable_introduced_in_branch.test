@@ -4,12 +4,12 @@ function create(string $source): TextDocument
 {
 }
 
-function fromSource($source): void
+function fromSource(Foobar $source): void
 {
     if (!$source instanceof TextDocument) {
 
         $source = create($source);
 
     }
-    wrAssertType('TextDocument', $source);
+    wrAssertType('Foobar|TextDocument', $source);
 }

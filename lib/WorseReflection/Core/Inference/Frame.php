@@ -165,6 +165,20 @@ class Frame
 
             // if it was defined before then restore it
             if (isset($locals[$extra->name()])) {
+
+                // it was assigned in the if block so
+                // combine it with the previous variable
+                if ($extra->wasAssigned()) {
+                    $this->locals()->add(
+                        $locals[$extra->name()]->withOffset(
+                            $after
+                        )->withType(
+                            $locals[$extra->name()]->type()->addType($extra->type())
+                        )
+                    );
+                    continue;
+                }
+
                 $this->locals()->add($locals[$extra->name()]->withOffset($after));
                 continue;
             }
