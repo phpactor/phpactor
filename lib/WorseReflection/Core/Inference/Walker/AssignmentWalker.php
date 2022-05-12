@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
@@ -24,9 +23,11 @@ use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\Literal;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -173,7 +174,6 @@ class AssignmentWalker extends AbstractWalker
     private function walkSubscriptExpression(FrameResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof Variable) {
-
             foreach ($frame->locals()->byName($leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
 
@@ -182,6 +182,7 @@ class AssignmentWalker extends AbstractWalker
                 }
 
                 // array key specified, e.g. `$foo['bar'] = `
+                // @phpstan-ignore-next-line TP lies
                 if ($leftOperand->accessExpression) {
                     $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
 
@@ -198,6 +199,7 @@ class AssignmentWalker extends AbstractWalker
                 }
 
                 // array addition `$foo[] = `
+                // @phpstan-ignore-next-line TP lies
                 $frame->locals()->add(
                     $variable->withType(
                         $type->add($rightContext->type())
@@ -261,15 +263,29 @@ class AssignmentWalker extends AbstractWalker
                 ]
             );
 
-            if ($type instanceof ArrayShapeType) {
-                $variableContext = $variableContext->withType($type->typeAtOffset($index));
-            }
-        
-            if ($type instanceof ArrayLiteral) {
-                $variableContext = $variableContext->withType($type->typeAtOffset($index));
-            }
-        
+
+            $variableContext = $variableContext->withType($this->offsetType($type, $index));
             $frame->locals()->add(WorseVariable::fromSymbolContext($variableContext));
         }
+    }
+
+    private function offsetType(Type $type, int $index): Type
+    {
+        if ($type instanceof ArrayShapeType) {
+            return $type->typeAtOffset($index);
+        }
+
+        if ($type instanceof ArrayLiteral) {
+            return $type->typeAtOffset($index);
+        }
+
+        if ($type instanceof AggregateType) {
+            $agg = [];
+            foreach ($type->types as $type) {
+                $agg[] = $this->offsetType($type, $index);
+            }
+            return $type->fromTypes(...$agg);
+        }
+        return new MissingType();
     }
 }
