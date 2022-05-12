@@ -96,7 +96,7 @@ final class FrameResolver
         return $this->nodeContextResolver->reflector();
     }
 
-    private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
+    public function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
     {
         $key = 'frame:'.spl_object_hash($targetNode);
 

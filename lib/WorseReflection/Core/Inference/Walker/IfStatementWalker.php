@@ -15,6 +15,7 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementWalker implements Walker
@@ -76,11 +77,23 @@ class IfStatementWalker implements Walker
 
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
+        $introduced = [];
+        foreach ($node->getChildNodes() as $child) {
+            if ($child instanceof CompoundStatementNode) {
+                $resolver->walkNode($child, $child, $frame);
+                $introduced = $frame->locals()->greaterThan($child->getStartPosition())->lessThan($child->getEndPosition());
+            }
+        }
+
         if (!$terminates) {
             $frame->restoreToStateBefore($node->getStartPosition(), $end);
+            foreach ($introduced as $variable) {
+                $frame->locals()->add($variable->withOffset($end));
+            }
         }
 
         $context->typeAssertions()->negate();
+
         if ($terminates) {
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
         }
