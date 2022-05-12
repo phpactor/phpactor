@@ -1,0 +1,13 @@
+<?php
+
+$options = [
+    'short_description' => 'one',
+    'type' => 'two',
+];
+
+if ($node === null || !($node->getParent() instanceof NamespaceUseClause)) {
+    $options['class_import'] = true;
+    $options['name_import'] = false;
+}
+
+wrAssertType('array{short_description:"one",type:"two"}|array{short_description:"one",type:"two",class_import:true,name_import:false}', $options);

@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
@@ -25,6 +26,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
+use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -171,14 +173,36 @@ class AssignmentWalker extends AbstractWalker
     private function walkSubscriptExpression(FrameResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof Variable) {
+
             foreach ($frame->locals()->byName($leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
+
                 if (!$type instanceof ArrayLiteral) {
                     return;
                 }
 
-                $frame->locals()->add($variable->withType($type->add($rightContext->type()))->withOffset($leftOperand->getStartPosition()));
-                ;
+                // array key specified, e.g. `$foo['bar'] = `
+                if ($leftOperand->accessExpression) {
+                    $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
+
+                    if (!$accessType instanceof Literal) {
+                        return;
+                    }
+
+                    $frame->locals()->add(
+                        $variable->withType(
+                            $type->set($accessType->value(), $rightContext->type())
+                        )->withOffset($leftOperand->getStartPosition())
+                    );
+                    continue;
+                }
+
+                // array addition `$foo[] = `
+                $frame->locals()->add(
+                    $variable->withType(
+                        $type->add($rightContext->type())
+                    )->withOffset($leftOperand->getStartPosition())
+                );
             }
         }
 
