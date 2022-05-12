@@ -76,11 +76,18 @@ class IfStatementWalker implements Walker
 
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
+        foreach ($node->getChildNodes() as $child) {
+            if ($child instanceof CompoundStatementNode) {
+                $resolver->walkNode($child, $child, $frame);
+            }
+        }
+
         if (!$terminates) {
             $frame->restoreToStateBefore($node->getStartPosition(), $end);
         }
 
         $context->typeAssertions()->negate();
+
         if ($terminates) {
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
         }

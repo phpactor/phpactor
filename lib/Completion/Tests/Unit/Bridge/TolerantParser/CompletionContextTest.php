@@ -79,6 +79,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { public function bar() { if (true) { return false; } A<> } }',
             true,
         ];
+        yield 'in foreach' => [
+            '<?php class Foo { public function bar() { if (true) { return false; } foreach(<> } }',
+            true,
+        ];
     }
 
     /**

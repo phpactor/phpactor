@@ -7,6 +7,6 @@ function foo(Foobar | Barfoo | Bazboo $foobar) {
         return;
     }
 
-    wrAssertType('Bazboo', $foobar);
+    wrAssertType('Barfoo|Bazboo|Foobar', $foobar);
 }
 

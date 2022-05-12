@@ -64,6 +64,7 @@ abstract class NameSearcherCompletor
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
 
+
         if ($node === null || !($node->getParent() instanceof NamespaceUseClause)) {
             $options['class_import'] = $this->classImport($result);
             $options['name_import'] = $result->name()->__toString();

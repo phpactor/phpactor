@@ -15,10 +15,8 @@ use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
-use Microsoft\PhpParser\Node\Statement\IfStatementNode;
-use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -42,9 +40,7 @@ class CompletionContext
 
         return
             $parent instanceof Expression ||
-            $parent instanceof ExpressionStatement ||
-            $parent instanceof IfStatementNode ||
-            $parent instanceof ReturnStatement ||
+            $parent instanceof StatementNode ||
             $parent instanceof ArrayElement // yield;
         ;
     }

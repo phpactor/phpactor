@@ -1,0 +1,15 @@
+<?php
+
+function create(string $source): TextDocument
+{
+}
+
+function fromSource(Foobar $source): void
+{
+    if (!$source instanceof TextDocument) {
+
+        $source = create($source);
+
+    }
+    wrAssertType('Foobar|TextDocument', $source);
+}

@@ -1,0 +1,10 @@
+<?php
+
+function yesOrNo(): bool
+{
+}
+
+[$transmitter, $transmittingContext ] = yesOrNo() ? ['one', 'two'] : ['three', 'four'];
+
+wrAssertType('"one"|"three"', $transmitter);
+wrAssertType('"two"|"four"', $transmittingContext);

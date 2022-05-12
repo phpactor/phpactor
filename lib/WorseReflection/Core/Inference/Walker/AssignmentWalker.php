@@ -23,8 +23,11 @@ use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
+use Phpactor\WorseReflection\Core\Type\Literal;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -173,12 +176,35 @@ class AssignmentWalker extends AbstractWalker
         if ($leftOperand->postfixExpression instanceof Variable) {
             foreach ($frame->locals()->byName($leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
+
                 if (!$type instanceof ArrayLiteral) {
                     return;
                 }
 
-                $frame->locals()->add($variable->withType($type->add($rightContext->type()))->withOffset($leftOperand->getStartPosition()));
-                ;
+                // array key specified, e.g. `$foo['bar'] = `
+                // @phpstan-ignore-next-line TP lies
+                if ($leftOperand->accessExpression) {
+                    $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
+
+                    if (!$accessType instanceof Literal) {
+                        return;
+                    }
+
+                    $frame->locals()->add(
+                        $variable->withType(
+                            $type->set($accessType->value(), $rightContext->type())
+                        )->withOffset($leftOperand->getStartPosition())
+                    );
+                    continue;
+                }
+
+                // array addition `$foo[] = `
+                // @phpstan-ignore-next-line TP lies
+                $frame->locals()->add(
+                    $variable->withType(
+                        $type->add($rightContext->type())
+                    )->withOffset($leftOperand->getStartPosition())
+                );
             }
         }
 
@@ -237,15 +263,29 @@ class AssignmentWalker extends AbstractWalker
                 ]
             );
 
-            if ($type instanceof ArrayShapeType) {
-                $variableContext = $variableContext->withType($type->typeAtOffset($index));
-            }
-        
-            if ($type instanceof ArrayLiteral) {
-                $variableContext = $variableContext->withType($type->typeAtOffset($index));
-            }
-        
+
+            $variableContext = $variableContext->withType($this->offsetType($type, $index));
             $frame->locals()->add(WorseVariable::fromSymbolContext($variableContext));
         }
+    }
+
+    private function offsetType(Type $type, int $index): Type
+    {
+        if ($type instanceof ArrayShapeType) {
+            return $type->typeAtOffset($index);
+        }
+
+        if ($type instanceof ArrayLiteral) {
+            return $type->typeAtOffset($index);
+        }
+
+        if ($type instanceof AggregateType) {
+            $agg = [];
+            foreach ($type->types as $type) {
+                $agg[] = $this->offsetType($type, $index);
+            }
+            return $type->fromTypes(...$agg);
+        }
+        return new MissingType();
     }
 }

@@ -105,6 +105,16 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable
         return $this->typeMap;
     }
 
+    /**
+     * @param array-key $key
+     */
+    public function set($key, Type $type): self
+    {
+        $map = $this->typeMap;
+        $map[$key] = $type;
+        return new self($map);
+    }
+
     public function add(Type $type): self
     {
         $map = $this->typeMap;
