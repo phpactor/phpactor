@@ -17,7 +17,7 @@ class FilePathTest extends TestCase
     public function testNotAbsolute(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('File path must be absolute, but foobar given');
+        $this->expectExceptionMessage('File path must be absolute, but "foobar" given');
         FilePath::fromString('foobar');
     }
 
