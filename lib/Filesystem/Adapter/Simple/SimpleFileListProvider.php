@@ -44,7 +44,11 @@ final class SimpleFileListProvider implements FileListProvider
         }
 
         $files = new RecursiveDirectoryIterator($path, $flags);
-        $files = new RecursiveIteratorIterator($files, RecursiveIteratorIterator::CATCH_GET_CHILD);
+        $files = new RecursiveIteratorIterator(
+            $files,
+            RecursiveIteratorIterator::LEAVES_ONLY,
+            RecursiveIteratorIterator::CATCH_GET_CHILD
+        );
 
         return $files;
     }
