@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [wr] Ignore exceptions (permission denied f.e.) when traversing files #1569
   - [wr] Fix resolutin of virtual method
   - [ct] Fix missing properties refactor does not import class #1534
   - [ct] Fix false diagnostic for missing method #1500
