@@ -118,6 +118,7 @@ class IntegrationTestCase extends TestCase
             LoggingExtension::PARAM_ENABLED=> true,
             LoggingExtension::PARAM_PATH=> 'php://stderr',
             WorseReflectionExtension::PARAM_ENABLE_CACHE=> false,
+            WorseReflectionExtension::PARAM_STUB_DIR => $this->workspace()->path(),
         ], $config)
         );
 
