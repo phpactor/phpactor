@@ -1,0 +1,10 @@
+<?php
+
+if (false === is_string($className) && false === $className instanceof Class_) {
+    throw new InvalidArgumentException(sprintf(
+        'Class must be either a string or an instanceof Class_, got: "%s"',
+        gettype($className)
+    ));
+}
+
+wrAssertType('string|Class_', $className);
