@@ -24,7 +24,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
     /**
      * @param array<T> $collections
      */
-    public function __construct(array $collections)
+    private function __construct(array $collections)
     {
         foreach ($collections as $collection) {
             $this->add($collection);

@@ -54,8 +54,7 @@ class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDeco
     public function members(): ReflectionMemberCollection
     {
         $members = $this->interface->members();
-        $members->merge($this->virtualMethods());
-        return $members;
+        return $members->merge($this->virtualMethods());
     }
 
     public function virtualMethods(): VirtualReflectionMethodCollection
