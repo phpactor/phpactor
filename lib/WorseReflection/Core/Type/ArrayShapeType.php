@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
@@ -65,5 +66,12 @@ class ArrayShapeType extends ArrayType implements Generalizable
         }
 
         return new MissingType();
+    }
+
+    protected function map(Closure $mapper): Type
+    {
+        return new self(
+            array_map(fn (Type $type) => $type->map($mapper), $this->typeMap)
+        );
     }
 }

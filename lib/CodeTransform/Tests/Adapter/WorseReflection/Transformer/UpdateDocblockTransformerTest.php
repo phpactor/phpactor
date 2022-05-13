@@ -519,6 +519,48 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+
+        yield 'namespaced array shape' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                class Foobar {
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                use Generator;
+
+                class Foobar {
+
+                    /**
+                     * @return Generator<array{string,Closure(Bar): string}>
+                     */
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+        ];
     }
 
     /**

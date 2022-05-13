@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -40,5 +41,13 @@ class CallableType extends PrimitiveType
     public function accepts(Type $type): Trinary
     {
         return Trinary::fromBoolean($type instanceof CallableType);
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        $new = clone $this;
+        $new->args = array_map(fn (Type $t) => $t->map($mapper), $this->args);
+        $new->returnType = $this->returnType->map($mapper);
+        return $new;
     }
 }
