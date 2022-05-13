@@ -72,10 +72,12 @@ class GeneratorType extends GenericClassType
 
     protected function map(Closure $mapper): Type
     {
-        return new self(
+        $t = new self(
             $this->reflector,
             $this->keyType()->map($mapper),
             $this->valueType()->map($mapper),
         );
+
+        return $t;
     }
 }
