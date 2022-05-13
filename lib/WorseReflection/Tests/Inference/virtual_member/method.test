@@ -8,12 +8,11 @@ interface ReflectionClass {
 
 class ReflectionMethod {}
 
+/**
+ * @method string set(string $name)
+ */
 class MemberCollection
 {
-    /**
-    * @method string set(string $name)
-    */
-
     public function get(string $name);
 }
 
