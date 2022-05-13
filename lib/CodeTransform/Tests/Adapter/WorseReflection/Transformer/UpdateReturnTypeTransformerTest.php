@@ -262,6 +262,33 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
             [
             ]
         ];
+
+        yield 'ignores template type' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @template T
+                 */
+                class Foobar {
+                    /**
+                     * @var T
+                     */
+                    private $item;
+
+                    /**
+                     * @return T
+                     */
+                    public function foo()
+                    {
+                        return $this->item;
+                    }
+                }
+                EOT
+            ,
+            [
+            ]
+        ];
     }
 
     private function createTransformer(Reflector $reflector): UpdateReturnTypeTransformer
