@@ -62,12 +62,12 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5), 'Foo')
             ],
             [
                 Diagnostic::fromArray([
                     'range' => ProtocolFactory::range(0, 0, 0, 5),
-                    'message' => 'Method "foobar" does not exist',
+                    'message' => 'Method "foobar" does not exist on "Foo"',
                     'severity' => DiagnosticSeverity::WARNING,
                     'source' => 'phpactor',
                 ])
@@ -100,16 +100,16 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5), 'Foo')
             ],
             [
                 CodeAction::fromArray([
-                    'title' =>  'Fix "Method "foobar" does not exist"',
+                    'title' =>  'Fix "Method "foobar" does not exist on "Foo""',
                     'kind' => GenerateMethodProvider::KIND,
                     'diagnostics' => [
                         Diagnostic::fromArray([
                             'range' => ProtocolFactory::range(0, 0, 0, 5),
-                            'message' => 'Method "foobar" does not exist',
+                            'message' => 'Method "foobar" does not exist on "Foo"',
                             'severity' => DiagnosticSeverity::WARNING,
                             'source' => 'phpactor',
                         ])

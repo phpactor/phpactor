@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\ReservedWord;
-use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -292,8 +291,7 @@ class BinaryExpressionResolver implements Resolver
         Frame $frame,
         Node $leftOperand,
         NodeContext $context
-    ): void
-    {
+    ): void {
         if (!$leftOperand instanceof Variable) {
             return;
         }

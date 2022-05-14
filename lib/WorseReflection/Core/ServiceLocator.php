@@ -6,17 +6,12 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactor
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
-use Phpactor\WorseReflection\Core\Inference\Resolver\CatchClauseResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
-use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver\YieldExpressionResolver;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;

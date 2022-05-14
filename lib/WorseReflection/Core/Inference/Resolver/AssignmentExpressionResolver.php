@@ -32,7 +32,6 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
-use Psr\Log\LoggerInterface;
 
 class AssignmentExpressionResolver implements Resolver
 {

@@ -195,5 +195,4 @@ class ForeachStatementResolver implements Resolver
 
         return $type->iterableKeyType();
     }
-
 }

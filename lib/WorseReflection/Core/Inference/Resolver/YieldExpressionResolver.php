@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
-use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -44,7 +43,8 @@ class YieldExpressionResolver implements Resolver
             $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
 
             if ($yieldFrom) {
-                return $frame->withReturnType($value);
+                $frame->withReturnType($value);
+                return $context;
             }
 
             // treat yield values as a seies of array shapes
@@ -74,5 +74,4 @@ class YieldExpressionResolver implements Resolver
         );
         return $context;
     }
-
 }
