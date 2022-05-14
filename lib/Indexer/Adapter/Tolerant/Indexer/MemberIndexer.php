@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -21,7 +22,10 @@ class MemberIndexer implements TolerantIndexer
 {
     public function canIndex(Node $node): bool
     {
-        return $node instanceof ScopedPropertyAccessExpression || $node instanceof MemberAccessExpression;
+        return
+            $node instanceof ScopedPropertyAccessExpression ||
+            $node instanceof MemberAccessExpression ||
+            $node instanceof ObjectCreationExpression;
     }
 
     public function beforeParse(Index $index, TextDocument $document): void
@@ -52,6 +56,11 @@ class MemberIndexer implements TolerantIndexer
 
         if ($node instanceof MemberAccessExpression) {
             $this->indexMemberAccessExpression($index, $document, $node);
+            return;
+        }
+
+        if ($node instanceof ObjectCreationExpression) {
+            $this->indexObjectCreationExpression($index, $document, $node);
             return;
         }
     }
@@ -143,6 +152,24 @@ class MemberIndexer implements TolerantIndexer
         $this->writeIndex($index, $memberType, null, (string)$memberName, $document, $this->resolveStart($node->memberName));
     }
 
+    private function indexObjectCreationExpression(Index $index, TextDocument $document, ObjectCreationExpression $node): void
+    {
+        $containerType = $node->classTypeDesignator;
+
+        if (!$containerType instanceof QualifiedName) {
+            return;
+        }
+
+        $this->writeIndex(
+            $index,
+            MemberRecord::TYPE_METHOD,
+            (string)$containerType->getResolvedName(),
+            '__construct',
+            $document,
+            $this->resolveStart($containerType)
+        );
+    }
+
     /**
      * @param MemberRecord::TYPE_* $memberType
      */
@@ -152,7 +179,7 @@ class MemberIndexer implements TolerantIndexer
         assert($record instanceof MemberRecord);
         $record->addReference($document->uri()->path());
         $index->write($record);
-        
+
         $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
         assert($fileRecord instanceof FileRecord);
         $fileRecord->addReference(RecordReference::fromRecordAndOffsetAndContainerType($record, $offsetStart, $containerFqn));
