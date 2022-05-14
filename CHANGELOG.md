@@ -31,6 +31,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ref] Increase reference finder timeout to 1 minute by default #1579
   - [cmp] Improved contextual completion
   - [rn] Fixed numerous issues
   - [rename] Fixed numerous issues
