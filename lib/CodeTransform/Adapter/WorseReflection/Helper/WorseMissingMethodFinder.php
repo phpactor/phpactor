@@ -62,7 +62,8 @@ class WorseMissingMethodFinder implements MissingMethodFinder
             } catch (NotFound $notFound) {
                 $missing[] = new MissingMethod(
                     $methodName,
-                    ByteOffsetRange::fromInts($name->start, $name->start + $name->length)
+                    ByteOffsetRange::fromInts($name->start, $name->start + $name->length),
+                    $class->name()->__toString(),
                 );
             }
         }

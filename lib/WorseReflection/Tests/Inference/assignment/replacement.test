@@ -1,6 +1,9 @@
 <?php
 
+namespace Test;
+
 class Bar{}
+
 class Foo {
     public function withFoo(Bar $foo): Bar
     {
@@ -9,4 +12,4 @@ class Foo {
 
 $bar = new Bar();
 $foo = new Foo();
-$foo = $foo->withFoo($bar);
+//$foo = wrAssertType('Foo', $foo->withFoo($bar));
