@@ -14,12 +14,13 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 
-class VariableWalker extends AbstractWalker
+class VariableWalker implements Walker
 {
     private DocBlockFactory $docblockFactory;
     
