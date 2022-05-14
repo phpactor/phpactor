@@ -126,7 +126,7 @@ class TestAssertWalker implements Walker
 
         if ($expected->value() !== $actual) {
             $this->testCase->fail(sprintf(
-                "%s:\n  %s\nis not\n  %s",
+                '%s: "%s" is not "%s"',
                 $node->getText(),
                 $expected,
                 $actual
@@ -179,10 +179,11 @@ class TestAssertWalker implements Walker
             return;
         }
         $this->testCase->fail(sprintf(
-            "%s: \n\n  %s\n\nis:\n\n  %s\n\non offset %s line %s char %s",
-            $message ?: 'Failed asserting that:',
+            '%s: %s is not %s%s on offset %s line %s char %s',
+            $node->getText(),
             $actualType->__toString(),
-            trim($expectedType->__toString(), '"'),
+            $expectedType,
+            $message ? ': ' . $message : '',
             $node->getStartPosition(),
             $position->line + 1,
             $position->character + 1,

@@ -1,18 +1,19 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\Walker;
+namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\ForeachValue;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
@@ -24,25 +25,21 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
-class ForeachWalker extends AbstractWalker
+class ForeachStatementResolver implements Resolver
 {
-    public function nodeFqns(): array
-    {
-        return [ForeachStatement::class];
-    }
-
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ForeachStatement);
+        $context = NodeContext::none();
         $nodeContext = $resolver->resolveNode($frame, $node->forEachCollectionName);
 
         $this->processKey($resolver, $node, $frame, $nodeContext->type());
         $this->processValue($resolver, $node, $frame, $nodeContext);
 
-        return $frame;
+        return $context;
     }
 
-    private function processValue(FrameResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $nodeContext): void
+    private function processValue(NodeContextResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $nodeContext): void
     {
         $itemName = $node->foreachValue;
         
@@ -61,7 +58,7 @@ class ForeachWalker extends AbstractWalker
         }
     }
 
-    private function processKey(FrameResolver $resolver, ForeachStatement $node, Frame $frame, Type $type): void
+    private function processKey(NodeContextResolver $resolver, ForeachStatement $node, Frame $frame, Type $type): void
     {
         $itemName = $node->foreachKey;
         
@@ -126,7 +123,7 @@ class ForeachWalker extends AbstractWalker
     }
 
     private function valueFromArrayCreation(
-        FrameResolver $resolver,
+        NodeContextResolver $resolver,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
         NodeContext $nodeContext,

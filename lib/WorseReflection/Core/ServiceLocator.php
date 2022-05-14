@@ -5,20 +5,13 @@ namespace Phpactor\WorseReflection\Core;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\WorseReflection\Core\Inference\Walker\AssertFrameWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\AssignmentWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\IfStatementWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\ReturnTypeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\Walker\YieldWalker;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -108,17 +101,10 @@ class ServiceLocator
             $this->symbolContextResolver,
             $cache,
             array_merge([
-                new AssertFrameWalker(),
-                new ReturnTypeWalker(),
                 new FunctionLikeWalker(),
+                new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
-                new AssignmentWalker($this->logger),
-                new CatchWalker(),
-                new ForeachWalker(),
-                new IfStatementWalker(),
                 new IncludeWalker($logger),
-                new BinaryExpressionWalker(),
-                new YieldWalker(),
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
@@ -22,15 +23,22 @@ use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryOpExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\ReservedWord;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
@@ -40,6 +48,7 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayMergeStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayPopStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayShiftStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\AssertStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\InArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IteratorToArrayStub;
@@ -53,10 +62,15 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ArrowFunctionCreationExpres
 use Phpactor\WorseReflection\Core\Inference\Resolver\AssignmentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CastExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\CatchClauseResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\CompoundStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ExpressionStatementResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
@@ -64,7 +78,9 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionRes
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\SourceFileNodeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
@@ -75,6 +91,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\VariableResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\BinaryExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\FunctionDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\YieldExpressionResolver;
 use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
@@ -132,6 +149,14 @@ final class DefaultResolverFactory
             CastExpression::class => new CastExpressionResolver(),
             ArrowFunctionCreationExpression::class => new ArrowFunctionCreationExpressionResolver(),
             AnonymousFunctionCreationExpression::class => new AnonymousFunctionCreationExpressionResolver(),
+            CatchClause::class => new CatchClauseResolver(),
+            ForeachStatement::class => new ForeachStatementResolver(),
+            IfStatementNode::class => new IfStatementResolver(),
+            CompoundStatementNode::class => new CompoundStatementResolver(),
+            ExpressionStatement::class => new ExpressionStatementResolver(),
+            SourceFileNode::class => new SourceFileNodeResolver(),
+            ReturnStatement::class => new ReturnStatementResolver(),
+            YieldExpression::class => new YieldExpressionResolver(),
         ];
     }
 
@@ -151,6 +176,7 @@ final class DefaultResolverFactory
             'array_shift' => new ArrayShiftStub(),
             'array_pop' => new ArrayPopStub(),
             'array_merge' => new ArrayMergeStub(),
+            'assert' => new AssertStub(),
         ]);
     }
 }

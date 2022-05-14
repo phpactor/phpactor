@@ -1,0 +1,5 @@
+<?php
+try {
+} catch (\Exception $exception) {
+    wrAssertType('Exception', $exception);
+}

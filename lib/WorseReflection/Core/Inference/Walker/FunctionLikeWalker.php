@@ -19,12 +19,13 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
-class FunctionLikeWalker extends AbstractWalker
+class FunctionLikeWalker implements Walker
 {
     public function nodeFqns(): array
     {
@@ -48,6 +49,7 @@ class FunctionLikeWalker extends AbstractWalker
         if (!$node instanceof ArrowFunctionCreationExpression) {
             $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
         }
+
         $this->walkFunctionLike($resolver, $frame, $node);
 
         return $frame;

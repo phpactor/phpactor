@@ -60,13 +60,13 @@ class QualifiedNameResolver implements Resolver
 
             $stub = $this->registry->get($name->short());
 
-            if ($stub && $parent->argumentExpressionList) {
+            if ($stub) {
                 $arguments = FunctionArguments::fromList(
                     $resolver,
                     $frame,
                     $parent->argumentExpressionList
                 );
-                return $stub->resolve($context, $arguments);
+                return $stub->resolve($frame, $context, $arguments);
             }
 
             try {

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -13,6 +14,7 @@ use Phpactor\WorseReflection\TypeUtil;
 class ArrayMergeStub implements FunctionStub
 {
     public function resolve(
+        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {
