@@ -2091,21 +2091,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\KeywordCompletorTest\\:\\:createExpectedKeywords\\(\\) has parameter \\$list with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/KeywordCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\KeywordCompletorTest\\:\\:createExpectedKeywords\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/KeywordCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\KeywordCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/KeywordCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseClassMemberCompletorTest.php
@@ -3122,11 +3107,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\)\\: mixed\\)\\|null, Closure\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionProperty\\)\\: string given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
 
@@ -4576,11 +4556,6 @@ parameters:
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\:\\:isStatic\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
@@ -5406,11 +5381,6 @@ parameters:
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\Phpactor\\\\MemberProvider\\\\DocblockMemberProvider\\:\\:provideMembers\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/MemberProvider/DocblockMemberProvider.php
-
-		-
 			message: "#^PHPDoc tag @implements contains generic type Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\ReflectionMemberProvider\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> but interface Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\ReflectionMemberProvider is not generic\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/Phpactor/MemberProvider/DocblockMemberProvider.php
@@ -5571,11 +5541,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionClassCollection.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection\\:\\:fromClassDeclaration\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionConstantCollection.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection\\:\\:fromInterfaceDeclaration\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionConstantCollection.php
@@ -5724,11 +5689,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionClass\\:\\:constants\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionClass\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
@@ -6116,11 +6076,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionMethodCollection.php
 
 		-
-			message: "#^Interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionPropertyCollection extends generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection but does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionPropertyCollection.php
-
-		-
 			message: "#^Interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionTraitCollection extends generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection but does not specify its types\\: T$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionTraitCollection.php
@@ -6421,17 +6376,7 @@ parameters:
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:properties\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionPropertyCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:virtualMethods\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\Collection\\\\VirtualReflectionMethodCollection but returns Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:virtualProperties\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
 
@@ -6447,11 +6392,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionInterfaceDecorator\\:\\:__construct\\(\\) has parameter \\$memberProviders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionInterfaceDecorator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionInterfaceDecorator\\:\\:members\\(\\) return type with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection does not specify its types\\: T$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionInterfaceDecorator.php
 
