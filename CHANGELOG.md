@@ -69,7 +69,6 @@ Improvements:
 
 Features:
 
-  - [rf] Find new objects when finding references for `__construct` #1563
   - [rf] Support for constants, properties and promoted properties
   - [compl] Docblock completion
   - [wr] Support for intersection types
