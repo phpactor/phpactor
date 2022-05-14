@@ -95,6 +95,10 @@ class UpdateReturnTypeTransformer implements Transformer
                     continue;
                 }
 
+                if ($method->class()->templateMap()->has($method->docblock()->returnType()->__toString())) {
+                    continue;
+                }
+
                 $methods[] = $method;
             }
         }
