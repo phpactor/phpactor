@@ -1,15 +1,18 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\Walker;
+namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node\ElseIfClauseNode;
 use Microsoft\PhpParser\Node\Expression\ExitIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Expression;
@@ -17,29 +20,23 @@ use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
 use Phpactor\WorseReflection\TypeUtil;
 
-class IfStatementWalker implements Walker
+class IfStatementResolver implements Resolver
 {
-    public function nodeFqns(): array
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        return [IfStatementNode::class];
-    }
-
-    /**
-     * @param IfStatementNode $node
-     */
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
-    {
-        if (null === $node->expression) {
-            return $frame;
-        }
-
+        $context = NodeContext::none();
         assert($node instanceof IfStatementNode);
 
-        if (!$node->expression instanceof Expression) {
-            return $frame;
+        if (null === $node->expression) {
+            return $context;
         }
 
-        $frame = $this->ifBranch(
+
+        if (!$node->expression instanceof Expression) {
+            return $context;
+        }
+
+        $this->ifBranch(
             $resolver,
             $frame,
             $node,
@@ -48,7 +45,7 @@ class IfStatementWalker implements Walker
         );
 
         foreach ($node->elseIfClauses as $clause) {
-            $frame = $this->ifBranch(
+            $this->ifBranch(
                 $resolver,
                 $frame,
                 $clause,
@@ -57,19 +54,19 @@ class IfStatementWalker implements Walker
             );
         }
 
-        return $frame;
+        return $context;
     }
 
     /**
      * @param IfStatementNode|ElseIfClauseNode $node
      */
     private function ifBranch(
-        FrameResolver $resolver,
+        NodeContextResolver $resolver,
         Frame $frame,
         $node,
         int $start,
         int $end
-    ): Frame {
+    ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $terminates = $this->branchTerminates($node);
@@ -77,9 +74,7 @@ class IfStatementWalker implements Walker
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
-            if ($child instanceof CompoundStatementNode) {
-                $resolver->walkNode($child, $child, $frame);
-            }
+            $resolver->resolveNode($frame, $child);
         }
 
         if (!$terminates) {
@@ -96,8 +91,6 @@ class IfStatementWalker implements Walker
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $node->elseClause->getStartPosition());
             $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition());
         }
-
-        return $frame;
     }
 
     /**
