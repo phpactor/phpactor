@@ -25,6 +25,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseSignatureHelper implements SignatureHelper
@@ -56,26 +57,12 @@ class WorseSignatureHelper implements SignatureHelper
     private function doSignatureHelp(TextDocument $textDocument, ByteOffset $offset): SignatureHelp // NOSONAR
     {
         $rootNode = $this->parser->parseSourceFile($textDocument->__toString());
-        $nodeAtPosition = $callNode = $rootNode->getDescendantNodeAtPosition($offset->toInt());
+        $nodeAtPosition = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
-        if (
-            ($nodeAtPosition instanceof CallExpression || $nodeAtPosition instanceof ObjectCreationExpression)
-            && null === $nodeAtPosition->argumentExpressionList
-            && null !== $nodeAtPosition->openParen
-            && $nodeAtPosition->openParen->getEndPosition() == $offset->toInt()
-        ) {
-            $argsNode = null;
-            $callNode = $nodeAtPosition;
-        } elseif ($nodeAtPosition instanceof ArgumentExpressionList) {
-            $argsNode = $nodeAtPosition;
-            $callNode = $argsNode->parent ?? null;
-        } elseif (!$argsNode = $nodeAtPosition->getFirstChildNode(ArgumentExpressionList::class)) {
-            $argsNode = $nodeAtPosition->getFirstAncestor(ArgumentExpressionList::class);
-            $callNode = $argsNode->parent ?? null;
-        }
+        [$argsNode, $callNode] = $this->resolveArgsAndCallNode($nodeAtPosition, $offset);
         
-        // current position not inside a call expression
-        if (!$callNode && static::isACallExpression($nodeAtPosition)) {
+        // if current position not inside a call expression
+        if (!$callNode && self::isACallExpression($nodeAtPosition)) {
             $callNode = $nodeAtPosition;
             $argsNode = null;
         }
@@ -241,5 +228,49 @@ class WorseSignatureHelper implements SignatureHelper
         $constructor = $reflectionClass->methods()->get('__construct');
 
         return $this->createSignatureHelp($constructor, $position);
+    }
+
+    /**
+     * @return array{?Node,?Node}
+     */
+    private function resolveArgsAndCallNode(Node $nodeAtPosition, ByteOffset $offset): array
+    {
+        $callNode = $nodeAtPosition;
+        if (
+            ($nodeAtPosition instanceof CallExpression || $nodeAtPosition instanceof ObjectCreationExpression)
+            && null === $nodeAtPosition->argumentExpressionList
+            && null !== $nodeAtPosition->openParen
+            && $nodeAtPosition->openParen->getEndPosition() == $offset->toInt()
+        ) {
+            return [null, $nodeAtPosition];
+        }
+        
+        if ($nodeAtPosition instanceof ArgumentExpressionList) {
+            $argsNode = $nodeAtPosition;
+            $callNode = $argsNode->parent ?? null;
+            return [$argsNode, $callNode];
+        }
+        
+        if ($argsNode = $nodeAtPosition->getFirstChildNode(ArgumentExpressionList::class)) {
+            return [$argsNode, $nodeAtPosition];
+        }
+
+        $argsNode = $nodeAtPosition->getFirstAncestor(ArgumentExpressionList::class);
+        if ($argsNode) {
+            $callNode = $argsNode->parent ?? null;
+            return [$argsNode, $callNode];
+        }
+
+        // try the first node before the position of the given offset
+        // this is needed when the parser gets confused, f.e. `($foo,   <>`
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($nodeAtPosition->getRoot(), $offset->toInt());
+        $argsNode = $nodeBeforeOffset->getFirstAncestor(ArgumentExpressionList::class);
+
+        if ($argsNode) {
+            $callNode = $argsNode->parent ?? null;
+            return [$argsNode, $callNode];
+        }
+
+        return [null, null];
     }
 }

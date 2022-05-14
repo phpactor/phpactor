@@ -385,6 +385,21 @@ class WorseSignatureHelperTest extends IntegrationTestCase
             )
         ];
 
+        yield 'class with construct 2nd pos after space' => [
+            '<?php class Foo {public function __construct(string $foo, int $bar) {}}; new Foo("asd", <>',
+            new SignatureHelp(
+                [new SignatureInformation(
+                    'pub __construct(string $foo, int $bar)',
+                    [
+                        new ParameterInformation('foo', 'string $foo'),
+                        new ParameterInformation('bar', 'int $bar'),
+                    ]
+                )],
+                0,
+                1
+            )
+        ];
+
         yield 'class with namespaced' => [
             <<<'EOT'
                 <?php
