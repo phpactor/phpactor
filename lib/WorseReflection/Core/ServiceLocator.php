@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\WorseReflection\Core\Inference\Walker\AssertFrameWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
@@ -108,11 +107,10 @@ class ServiceLocator
             $this->symbolContextResolver,
             $cache,
             array_merge([
-                new AssertFrameWalker(),
                 new ReturnTypeWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory),
-                new PassThroughWalker($this->logger),
+                new PassThroughWalker(),
                 new CatchWalker(),
                 new ForeachWalker(),
                 new IfStatementWalker(),

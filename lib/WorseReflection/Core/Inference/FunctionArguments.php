@@ -31,8 +31,11 @@ class FunctionArguments implements IteratorAggregate
         $this->frame = $frame;
     }
 
-    public static function fromList(NodeContextResolver $resolver, Frame $frame, ArgumentExpressionList $list): self
+    public static function fromList(NodeContextResolver $resolver, Frame $frame, ?ArgumentExpressionList $list): self
     {
+        if ($list === null) {
+            return new self($resolver, $frame, []);
+        }
         return new self($resolver, $frame, array_values(array_filter(
             $list->children,
             fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression

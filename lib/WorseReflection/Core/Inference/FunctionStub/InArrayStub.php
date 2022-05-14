@@ -23,12 +23,12 @@ class InArrayStub implements FunctionStub
         $arg0 = $args->at(0);
 
         if ($arg0->symbol()->symbolType() !== Symbol::VARIABLE) {
-            return $context;
+            return $context->withType(TypeFactory::array());
         }
 
         $arrayType = $args->at(1)->type();
         if (!$arrayType instanceof ArrayLiteral) {
-            return $context;
+            return $context->withType(TypeFactory::array());
         }
 
         $union = TypeFactory::union(...$arrayType->iterableValueTypes());

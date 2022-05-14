@@ -23,6 +23,9 @@ class FrameBuilderTest extends IntegrationTestCase
         $assertion($frame, $this->logger());
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,string>,Closure(Frame,LoggerInterface): void}>
+     */
     public function provideForMethod(): Generator
     {
         yield 'Tolerates missing assert arguments' => [
@@ -38,7 +41,7 @@ class FrameBuilderTest extends IntegrationTestCase
                 }
                 EOT
         , [ 'Foobar', 'hello' ], function (Frame $frame, $logger): void {
-            $this->assertEquals(0, $frame->problems()->count());
+            $this->assertEquals(0, $frame->problems()->count(), $frame->problems()->__toString());
         }];
 
         yield 'Tolerates missing tokens' => [
