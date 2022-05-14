@@ -115,7 +115,6 @@ class ServiceLocator
                 new ForeachWalker(),
                 new IfStatementWalker(),
                 new IncludeWalker($logger),
-                new BinaryExpressionWalker(),
                 new YieldWalker(),
             ], $frameWalkers)
         );

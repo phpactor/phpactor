@@ -8,14 +8,17 @@ use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\ReservedWord;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
+use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
@@ -46,10 +49,18 @@ class BinaryExpressionResolver implements Resolver
         $right = $resolver->resolveNode($frame, $node->rightOperand);
 
         // merge type assertions from left AND right
-        $context = $context->withTypeAssertions($left->typeAssertions()->merge($right->typeAssertions()));
+        $context = $context->withTypeAssertions(
+            $left->typeAssertions()->merge($right->typeAssertions())
+        );
 
         // resolve the type of the expression
-        $context = $context->withType($this->walkBinaryExpression($left->type(), $right->type(), $operator));
+        $context = $context->withType(
+            $this->walkBinaryExpression(
+                $left->type(),
+                $right->type(),
+                $operator
+            )
+        );
 
         // work around for https://github.com/Microsoft/tolerant-php-parser/issues/19#issue-201714377
         // the left hand side of instanceof should be parsed as a variable but it's not.
@@ -62,15 +73,30 @@ class BinaryExpressionResolver implements Resolver
         if (!$leftOperand instanceof Node) {
             return $context->withIssue(sprintf('Left operand was not a node, got "%s"', get_class($leftOperand)));
         }
+
         if (!$node->rightOperand instanceof Node) {
             return $context->withIssue(sprintf('Right operand was not a node, got "%s"', get_class($node->rightOperand)));
         }
 
-        // apply any type assertiosn (e.g. ===, instanceof, etc)
-        $context = $this->applyTypeAssertions($context, $left, $right, $leftOperand, $node->rightOperand, $operator);
+        // apply any type assertions (e.g. ===, instanceof, etc)
+        $context = $this->applyTypeAssertions(
+            $context,
+            $left,
+            $right,
+            $leftOperand,
+            $node->rightOperand,
+            $operator
+        );
 
         // negate if there is a boolean comparison against an expression
-        $context = $this->negate($context, $node->leftOperand, $node->rightOperand, $operator);
+        $context = $this->negate(
+            $context,
+            $node->leftOperand,
+            $node->rightOperand,
+            $operator
+        );
+
+        $this->addVariable($operator, $frame, $leftOperand, $context);
 
         return $context;
     }
@@ -259,5 +285,37 @@ class BinaryExpressionResolver implements Resolver
         }
 
         return $right;
+    }
+
+    private function addVariable(
+        int $operator,
+        Frame $frame,
+        Node $leftOperand,
+        NodeContext $context
+    ): void
+    {
+        if (!$leftOperand instanceof Variable) {
+            return;
+        }
+
+        if (!in_array($operator, [
+            TokenKind::DotEqualsToken,
+            TokenKind::DotToken,
+        ])) {
+            return;
+        }
+
+        $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
+        $context = NodeContextFactory::create(
+            $name,
+            $leftOperand->getStartPosition(),
+            $leftOperand->getEndPosition(),
+            [
+                'symbol_type' => Symbol::VARIABLE,
+                'type' => $context->type(),
+            ]
+        );
+
+        $frame->locals()->add(PhpactorVariable::fromSymbolContext($context));
     }
 }

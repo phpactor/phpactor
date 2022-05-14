@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -15,6 +16,7 @@ use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Phpactor\WorseReflection\Core\Inference\Resolver\BinaryExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
@@ -39,6 +41,7 @@ class PassThroughWalker extends AbstractWalker
     public function nodeFqns(): array
     {
         return [
+            BinaryExpression::class,
             CallExpression::class,
             AssignmentExpression::class
         ];
