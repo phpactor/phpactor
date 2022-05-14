@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 
-/** 
+/**
  * Temporary class to bridge to the node resolvers (originally all these
  * classes were "walkers") the goal is to remove the "walker" concept.
  */

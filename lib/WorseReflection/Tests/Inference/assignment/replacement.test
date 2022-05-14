@@ -12,4 +12,7 @@ class Foo {
 
 $bar = new Bar();
 $foo = new Foo();
-$foo = wrAssertType('Foo', $foo->withFoo($bar));
+
+$foo = $foo->withFoo($bar);
+
+wrAssertType('Test\Bar', $foo);

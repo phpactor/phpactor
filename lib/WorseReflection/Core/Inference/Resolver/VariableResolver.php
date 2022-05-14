@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class VariableResolver implements Resolver
@@ -44,6 +45,11 @@ class VariableResolver implements Resolver
         }
 
         $variableName = $node->getText();
+        $frameVariable = $frame->locals()->byName($variableName)->lessThanOrEqualTo($node->getStartPosition())->lastOrNull();
+        $type = new MissingType();
+        if ($frameVariable) {
+            $type = $frameVariable->type();
+        }
 
         return NodeContextFactory::forVariableAt(
             $frame,
@@ -57,7 +63,7 @@ class VariableResolver implements Resolver
                 return TypeCombinator::subtract(TypeFactory::unionEmpty(), $type);
             },
             fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
-        ));
+        ))->withType($type);
     }
 
     private function resolvePropertyVariable(NodeContextResolver $resolver, Variable $node): NodeContext
