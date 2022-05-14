@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactor
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\AssertFrameWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\AssignmentWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\CatchWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
@@ -112,7 +112,7 @@ class ServiceLocator
                 new ReturnTypeWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory),
-                new AssignmentWalker($this->logger),
+                new PassThroughWalker($this->logger),
                 new CatchWalker(),
                 new ForeachWalker(),
                 new IfStatementWalker(),

@@ -33,7 +33,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 
-class AssignmentWalker extends AbstractWalker
+class PassThroughWalker extends AbstractWalker
 {
     public function nodeFqns(): array
     {
