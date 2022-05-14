@@ -101,5 +101,21 @@ class WorseMissingMethodFinderTest extends WorseTestCase
                 EOT
             , 0
         ];
+        yield 'methods from generic' => [
+            <<<'EOT'
+                <?php
+                /**
+                 * @template 
+                 */
+                class Baz {}
+                /**
+                 * @return Baz<Foo>
+                 */
+                function foo(){}
+                $new = foo();
+                $new->boo();
+                EOT
+            , 1
+        ];
     }
 }

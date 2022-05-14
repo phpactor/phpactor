@@ -13,6 +13,7 @@ use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseMissingMethodFinder implements MissingMethodFinder
@@ -42,8 +43,12 @@ class WorseMissingMethodFinder implements MissingMethodFinder
                 continue;
             }
 
+            if (!$containerType instanceof ClassType) {
+                continue;
+            }
+
             try {
-                $class = $this->reflector->reflectClassLike($containerType->__toString());
+                $class = $this->reflector->reflectClassLike($containerType->name());
             } catch (NotFound $notFound) {
                 continue;
             }
