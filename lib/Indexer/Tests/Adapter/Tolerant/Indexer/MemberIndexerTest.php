@@ -14,6 +14,7 @@ class MemberIndexerTest extends TolerantIndexerTestCase
     /**
      * @dataProvider provideStaticAccess
      * @dataProvider provideInstanceAccess
+     * @dataProvider provideObjectCreation
      * @param array{int,int,int} $expectedCounts
      */
     public function testMembers(string $manifest, MemberReference $memberReference, array $expectedCounts): void
@@ -148,6 +149,18 @@ class MemberIndexerTest extends TolerantIndexerTestCase
             "// File: src/file1.php\n<?php class Foobar {}; \$foobar = new Foobar(); \$foobar->hello;",
             MemberReference::create(MemberRecord::TYPE_PROPERTY, 'Foobar', 'hello'),
             [ 0, 0, 1 ],
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideObjectCreation(): Generator
+    {
+        yield 'method call with wrong container type' => [
+            "// File: src/file1.php\n<?php class Foobar {}; \$foobar = new Foobar();",
+            MemberReference::create(MemberRecord::TYPE_METHOD, 'Barfoo', '__construct'),
+            [ 1, 0, 0 ],
         ];
     }
 }
