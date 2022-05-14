@@ -1,0 +1,15 @@
+<?php
+
+class Foobar {
+    public function gen(): Generator
+    {
+        yield from $this->gen2();
+        wrReturnType('Generator<string,int,Foo,Bar>');
+    }
+    /**
+     * @return Generator<string, int, Foo, Bar>
+     */
+    public function gen2(): Generator
+    {
+    }
+}
