@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\CatchClauseResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\ReturnTypeWalker;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -106,7 +106,6 @@ class ServiceLocator
             $this->symbolContextResolver,
             $cache,
             array_merge([
-                new ReturnTypeWalker(),
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory),
                 new PassThroughWalker(),

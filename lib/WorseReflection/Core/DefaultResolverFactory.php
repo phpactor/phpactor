@@ -37,6 +37,7 @@ use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
@@ -76,6 +77,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionRes
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SourceFileNodeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
@@ -151,6 +153,7 @@ final class DefaultResolverFactory
             CompoundStatementNode::class => new CompoundStatementResolver(),
             ExpressionStatement::class => new ExpressionStatementResolver(),
             SourceFileNode::class => new SourceFileNodeResolver(),
+            ReturnStatement::class => new ReturnStatementResolver(),
         ];
     }
 
