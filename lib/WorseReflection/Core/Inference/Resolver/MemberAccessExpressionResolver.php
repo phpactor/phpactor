@@ -113,7 +113,7 @@ class MemberAccessExpressionResolver implements Resolver
         return $information->withContainerType(
             $containerType
         )->withType(
-            (new UnionType(...$memberTypes))->clean()->reduce()
+            (new UnionType(...array_values($memberTypes)))->clean()->reduce()
         );
     }
 
