@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
@@ -110,6 +111,7 @@ final class FrameResolver
             }
 
             $nodeClass = get_class($node);
+
             if (isset($this->nodeWalkers[$nodeClass])) {
                 foreach ($this->nodeWalkers[$nodeClass] as $walker) {
                     $frame = $walker->walk($this, $frame, $node);
