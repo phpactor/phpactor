@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
@@ -46,6 +47,7 @@ class PassThroughWalker extends AbstractWalker
     public function nodeFqns(): array
     {
         return [
+            YieldExpression::class,
             ReturnStatement::class,
             IfStatementNode::class,
             ForeachStatement::class,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\Walker;
+namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
@@ -8,21 +8,20 @@ use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\GeneratorType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 
-class YieldWalker extends AbstractWalker
+class YieldExpressionResolver implements Resolver
 {
-    public function nodeFqns(): array
-    {
-        return [YieldExpression::class];
-    }
-
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof YieldExpression);
+        $context = NodeContext::none();
 
         $arrayElement = $node->arrayElement;
         /** @var Token */
@@ -32,9 +31,8 @@ class YieldWalker extends AbstractWalker
 
         /** @phpstan-ignore-next-line No trust */
         if (!$arrayElement) {
-            return $frame;
+            return $context;
         }
-
 
         $key = new MissingType();
         if ($arrayElement->elementKey) {
@@ -63,15 +61,18 @@ class YieldWalker extends AbstractWalker
                 $returnType = $returnType->withKey($returnType->keyType()->addType($key));
             }
 
-            return $frame->withReturnType($returnType);
+            $frame->withReturnType($returnType);
+            return $context;
         }
 
-        return $frame->withReturnType(
+        $frame->withReturnType(
             TypeFactory::generator(
                 $resolver->reflector(),
                 $key,
                 $value,
             )
         );
+        return $context;
     }
+
 }

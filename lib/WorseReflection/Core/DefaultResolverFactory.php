@@ -23,6 +23,7 @@ use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryOpExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
@@ -90,6 +91,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameListResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\VariableResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\BinaryExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\FunctionDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\YieldExpressionResolver;
 use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
@@ -154,6 +156,7 @@ final class DefaultResolverFactory
             ExpressionStatement::class => new ExpressionStatementResolver(),
             SourceFileNode::class => new SourceFileNodeResolver(),
             ReturnStatement::class => new ReturnStatementResolver(),
+            YieldExpression::class => new YieldExpressionResolver(),
         ];
     }
 

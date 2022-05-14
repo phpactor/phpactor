@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\Walker\YieldWalker;
+use Phpactor\WorseReflection\Core\Inference\Resolver\YieldExpressionResolver;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -107,10 +107,9 @@ class ServiceLocator
             $cache,
             array_merge([
                 new FunctionLikeWalker(),
-                new VariableWalker($this->docblockFactory),
                 new PassThroughWalker(),
+                new VariableWalker($this->docblockFactory),
                 new IncludeWalker($logger),
-                new YieldWalker(),
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;
