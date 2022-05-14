@@ -99,7 +99,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                     $risky++;
                 }
 
-                if ($count++ % 100 === 0 && $count > 0) {
+                if ($count++ % 100 === 0) {
                     $this->clientApi->window()->showMessage()->info(sprintf(
                         '... scanned %s references confirmed %s ...',
                         $count - 1,
@@ -119,7 +119,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                     return $this->toLocations($locations);
                 }
 
-                if ($count++ % 10) {
+                if ($count % 10) {
                     // give other co-routines a chance
                     yield new Delayed(0);
                 }
