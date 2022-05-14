@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember last()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember get(string $name)
+ * @method ReflectionMemberCollection merge(ReflectionMemberCollection $collection)
  *
  *
  * @template T of ReflectionMember

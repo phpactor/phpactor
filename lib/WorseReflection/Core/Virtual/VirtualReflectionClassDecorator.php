@@ -138,7 +138,7 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->isFinal();
     }
 
-    private function virtualProperties()
+    private function virtualProperties(): ReflectionPropertyCollection
     {
         $virtualProperties = VirtualReflectionPropertyCollection::fromReflectionProperties([]);
         if ($parentClass = $this->parent()) {
@@ -161,6 +161,7 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
             }
         }
 
+        /** @var ReflectionPropertyCollection */
         return $virtualProperties;
     }
 }

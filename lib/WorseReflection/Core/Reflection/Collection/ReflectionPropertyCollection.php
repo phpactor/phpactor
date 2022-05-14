@@ -2,10 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty get(string $name)
+ * @method ReflectionProperty first()
+ * @method ReflectionProperty last()
+ * @method ReflectionProperty get(string $name)
+ * @method ReflectionPropertyCollection merge(ReflectionPropertyCollection $collection)
+ *
+ * @extends ReflectionMemberCollection<ReflectionProperty>
  */
 interface ReflectionPropertyCollection extends ReflectionMemberCollection
 {
