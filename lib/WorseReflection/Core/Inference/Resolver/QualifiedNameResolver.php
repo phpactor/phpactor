@@ -66,7 +66,7 @@ class QualifiedNameResolver implements Resolver
                     $frame,
                     $parent->argumentExpressionList
                 );
-                return $stub->resolve($context, $arguments);
+                return $stub->resolve($frame, $context, $arguments);
             }
 
             try {

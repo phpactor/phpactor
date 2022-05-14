@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -11,6 +12,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 class ArraySumStub implements FunctionStub
 {
     public function resolve(
+        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {
