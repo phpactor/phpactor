@@ -91,7 +91,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
         foreach ($methods as $method) {
             $diagnostics[] = Diagnostic::fromArray([
                 'range' => RangeConverter::toLspRange($method->range(), $textDocument->text),
-                'message' => sprintf('Method "%s" does not exist on "%s"', $method->name(), $method->classFqn()),
+                'message' => sprintf('Method "%s" does not exist', $method->name()),
                 'severity' => DiagnosticSeverity::WARNING,
                 'source' => 'phpactor',
             ]);

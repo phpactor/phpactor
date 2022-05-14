@@ -10,13 +10,10 @@ class MissingMethod
 
     private string $name;
 
-    private string $classFqn;
-
-    public function __construct(string $name, ByteOffsetRange $range, string $classFqn)
+    public function __construct(string $name, ByteOffsetRange $range)
     {
         $this->name = $name;
         $this->range = $range;
-        $this->classFqn = $classFqn;
     }
 
     public function range(): ByteOffsetRange
@@ -27,10 +24,5 @@ class MissingMethod
     public function name(): string
     {
         return $this->name;
-    }
-
-    public function classFqn(): string
-    {
-        return $this->classFqn;
     }
 }
