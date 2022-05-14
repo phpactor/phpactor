@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
+use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -23,6 +25,9 @@ class YieldWalker extends AbstractWalker
         assert($node instanceof YieldExpression);
 
         $arrayElement = $node->arrayElement;
+        /** @var Token */
+        $from = $node->yieldOrYieldFromKeyword;
+        $yieldFrom = $from->kind === TokenKind::YieldFromKeyword;
         $returnType = $frame->returnType();
 
         /** @phpstan-ignore-next-line No trust */
@@ -39,6 +44,10 @@ class YieldWalker extends AbstractWalker
         /** @phpstan-ignore-next-line No trust */
         if ($arrayElement->elementValue) {
             $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
+
+            if ($yieldFrom) {
+                return $frame->withReturnType($value);
+            }
 
             // treat yield values as a seies of array shapes
             if ($value instanceof ArrayLiteral) {
