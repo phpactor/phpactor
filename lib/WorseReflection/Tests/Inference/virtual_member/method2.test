@@ -1,0 +1,41 @@
+<?php
+
+namespace Wr;
+
+interface ReflectionClass {
+    public function methods(): MethodCollection;
+}
+
+class ReflectionMethod {}
+
+/**
+ * @method ReflectionMember get(string $name)
+ * @template T of ReflectionMember
+ */
+interface MemberCollection
+{
+    public function get(string $name);
+}
+
+/**
+ * @method ReflectionMethod get(string $name)
+ * @extends MemberCollection<ReflectionMethod>
+ */
+interface MethodCollection extends MemberCollection
+{
+}
+
+class Reflector
+{
+    public function reflectClass(string $name): ReflectionClass;
+}
+
+/** @var Reflector $reflector */
+$reflector;
+
+$reflection = $reflector->reflectClass('ClassOne');
+$methods = $reflection->methods();
+$method = $methods->get('foobar');
+wrAssertType('Wr\Reflector', $reflector);
+wrAssertType('Wr\ReflectionMethod', $method);
+

@@ -16,10 +16,11 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollec
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant get()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant last()
+ * @method ReflectionConstantCollection merge(ReflectionConstantCollection $collection)
  */
 class ReflectionConstantCollection extends ReflectionMemberCollection implements CoreReflectionConstantCollection
 {
-    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClass $reflectionClass)
+    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClass $reflectionClass): CoreReflectionConstantCollection
     {
         $items = [];
         foreach ($class->classMembers->classMemberDeclarations as $member) {
