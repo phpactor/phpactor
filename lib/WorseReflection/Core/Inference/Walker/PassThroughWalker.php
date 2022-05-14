@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
@@ -41,6 +42,7 @@ class PassThroughWalker extends AbstractWalker
     public function nodeFqns(): array
     {
         return [
+            CatchClause::class,
             BinaryExpression::class,
             CallExpression::class,
             AssignmentExpression::class

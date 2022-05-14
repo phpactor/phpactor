@@ -1,30 +1,30 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference\Walker;
+namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Microsoft\PhpParser\Node\CatchClause;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 
-class CatchWalker extends AbstractWalker
+class CatchClauseResolver implements Resolver
 {
-    public function nodeFqns(): array
-    {
-        return [CatchClause::class];
-    }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
+        $context = NodeContextFactory::create('catch', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof CatchClause);
 
         /** @phpstan-ignore-next-line Lies */
         if (!$node->qualifiedNameList instanceof QualifiedNameList) {
-            return $frame;
+            return $context;
         }
 
         /** @phpstan-ignore-next-line Lies */
@@ -32,7 +32,7 @@ class CatchWalker extends AbstractWalker
         $variableName = $node->variableName;
 
         if (null === $variableName) {
-            return $frame;
+            return $context;
         }
 
         $context = NodeContextFactory::create(
@@ -47,6 +47,6 @@ class CatchWalker extends AbstractWalker
 
         $frame->locals()->add(Variable::fromSymbolContext($context));
 
-        return $frame;
+        return $context;
     }
 }

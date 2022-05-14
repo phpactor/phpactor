@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
@@ -54,6 +55,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ArrowFunctionCreationExpres
 use Phpactor\WorseReflection\Core\Inference\Resolver\AssignmentExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CallExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CastExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\CatchClauseResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
@@ -133,6 +135,7 @@ final class DefaultResolverFactory
             CastExpression::class => new CastExpressionResolver(),
             ArrowFunctionCreationExpression::class => new ArrowFunctionCreationExpressionResolver(),
             AnonymousFunctionCreationExpression::class => new AnonymousFunctionCreationExpressionResolver(),
+            CatchClause::class => new CatchClauseResolver(),
         ];
     }
 
