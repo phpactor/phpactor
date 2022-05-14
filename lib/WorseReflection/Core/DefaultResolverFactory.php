@@ -30,6 +30,7 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\ReservedWord;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -60,6 +61,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ClassLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CloneExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
@@ -136,6 +138,7 @@ final class DefaultResolverFactory
             ArrowFunctionCreationExpression::class => new ArrowFunctionCreationExpressionResolver(),
             AnonymousFunctionCreationExpression::class => new AnonymousFunctionCreationExpressionResolver(),
             CatchClause::class => new CatchClauseResolver(),
+            ForeachStatement::class => new ForeachStatementResolver(),
         ];
     }
 

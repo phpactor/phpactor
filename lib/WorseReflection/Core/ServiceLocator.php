@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\BinaryExpressionWalker;
 use Phpactor\WorseReflection\Core\Inference\Resolver\CatchClauseResolver;
-use Phpactor\WorseReflection\Core\Inference\Walker\ForeachWalker;
+use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IfStatementWalker;
@@ -111,7 +111,6 @@ class ServiceLocator
                 new FunctionLikeWalker(),
                 new VariableWalker($this->docblockFactory),
                 new PassThroughWalker(),
-                new ForeachWalker(),
                 new IfStatementWalker(),
                 new IncludeWalker($logger),
                 new YieldWalker(),
