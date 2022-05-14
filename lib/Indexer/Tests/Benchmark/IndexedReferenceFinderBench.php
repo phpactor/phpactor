@@ -6,7 +6,6 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Tests\Unit\ByteOffsetTest;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -17,22 +16,17 @@ class IndexedReferenceFinderBench
 
     private TextDocument $document;
 
-
-    protected function workspace(): Workspace
-    {
-        return Workspace::create(__DIR__ . '/../Workspace');
-    }
-
     public function __construct()
     {
         $this->workspace()->reset();
+        $this->workspace()->put('SyliusSpec.php', (string)file_get_contents(__DIR__ . '/fixture/SyliusSpec.test'));
         $agent = IndexAgentBuilder::create(
             $this->workspace()->path('.index'),
-            __DIR__ . '/fixture',
+            $this->workspace()->path(),
         )->buildAgent();
         $agent->indexer()->getJob()->run();
 
-        $this->document = TextDocumentBuilder::fromUri(__DIR__ . '/fixture/SyliusSpec.php')->build();
+        $this->document = TextDocumentBuilder::fromUri($this->workspace()->path('SyliusSpec.php'))->build();
         $reflector = ReflectorBuilder::create()->addSource($this->document->__toString())->build();
         $this->finder = new IndexedReferenceFinder($agent->query(), $reflector);
     }
@@ -41,5 +35,11 @@ class IndexedReferenceFinderBench
     {
         foreach ($this->finder->findReferences($this->document, ByteOffset::fromInt(6009)) as $reference) {
         }
+    }
+
+
+    protected function workspace(): Workspace
+    {
+        return Workspace::create(__DIR__ . '/../Workspace');
     }
 }
