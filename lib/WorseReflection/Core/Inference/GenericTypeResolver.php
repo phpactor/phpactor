@@ -56,7 +56,7 @@ class GenericTypeResolver
         $templateMap = $member->declaringClass()->templateMap();
 
         if ($memberType instanceof GenericClassType) {
-            return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $arguments) {
+            $type =  $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $arguments) {
                 if (!$argument instanceof ClassType) {
                     return $argument;
                 }
@@ -65,6 +65,8 @@ class GenericTypeResolver
                 }
                 return $argument;
             }, $memberType->arguments()));
+
+            return $type;
         }
 
         if ($templateMap->has($memberType->short())) {
