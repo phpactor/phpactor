@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Behat\Behat;
 
 use Behat\Behat\Definition\Exception\InvalidPatternException;
-use Behat\Behat\Definition\Pattern\Policy\RegexPatternPolicy;
-use Behat\Behat\Definition\Pattern\Policy\TurnipPatternPolicy;
+use Phpactor\Extension\Behat\Behat\Pattern\RegexPatternPolicy;
+use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
 
 class Step
 {
