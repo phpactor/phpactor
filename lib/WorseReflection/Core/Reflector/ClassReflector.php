@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Type;
 
 interface ClassReflector
 {
@@ -40,7 +39,7 @@ interface ClassReflector
 
     /**
      * Reflect a class, trait, enum or interface by its name.
-     * @param Type|Name|string $className
+     * @param Name|string $className
      */
     public function reflectClassLike($className): ReflectionClassLike;
 
