@@ -289,6 +289,19 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
             [
             ]
         ];
+
+        yield 'never on interface' => [
+            <<<'EOT'
+                <?php
+
+                interface Foobar {
+                    public function foo();
+                }
+                EOT
+            ,
+            [
+            ]
+        ];
     }
 
     private function createTransformer(Reflector $reflector): UpdateReturnTypeTransformer
