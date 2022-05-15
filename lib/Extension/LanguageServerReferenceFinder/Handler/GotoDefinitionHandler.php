@@ -61,7 +61,9 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
                 $typeLocations = $this->definitionLocator->locateDefinition(
                     TextDocumentBuilder::create(
                         $textDocument->text
-                    )->uri($textDocument->uri)->language('php')->build(),
+                    )->uri($textDocument->uri)->language(
+                        $textDocument->languageId,
+                    )->build(),
                     $offset
                 );
             } catch (CouldNotLocateDefinition $couldNotLocateDefinition) {

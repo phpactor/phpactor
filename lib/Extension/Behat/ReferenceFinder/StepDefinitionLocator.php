@@ -35,7 +35,7 @@ class StepDefinitionLocator implements DefinitionLocator
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (!$document->language()->in(['cucumber', 'behat', 'gherkin'])) {
-            throw new UnsupportedDocument(sprintf('Language must be one of cucumber, behat or gherkin'));
+            throw new UnsupportedDocument(sprintf('Language must be one of cucumber, behat or gherkin, got "%s"', $document->language()));
         }
 
         $line = (new LineAtOffset())($document->__toString(), $byteOffset->toInt());
