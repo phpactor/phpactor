@@ -32,7 +32,11 @@ class ReferenceFinderExtension implements Extension
         $container->register(self::SERVICE_DEFINITION_LOCATOR, function (Container $container) {
             $locators = [];
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_DEFINITION_LOCATOR)) as $serviceId) {
-                $locators[] = $container->get($serviceId);
+                $locator = $container->get($serviceId);
+                if (null === $locator) {
+                    continue;
+                }
+                $locators[] = $locator;
             }
 
             return new ChainDefinitionLocationProvider($locators, LoggingExtension::channelLogger($container, 'LSP-REF'));

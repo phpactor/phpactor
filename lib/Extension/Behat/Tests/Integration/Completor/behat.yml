@@ -1,0 +1,6 @@
+default:
+    suites:
+        default:
+            contexts:
+                - Phpactor\Extension\Behat\Tests\Integration\Completor\ExampleContext
+
