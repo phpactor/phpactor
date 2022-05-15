@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -23,16 +24,23 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MemberAccessExpressionResolver implements Resolver
 {
+    private GenericTypeResolver $genericResolver;
+
+    public function __construct()
+    {
+        $this->genericResolver = new GenericTypeResolver();
+    }
+
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof MemberAccessExpression);
 
         $class = $resolver->resolveNode($frame, $node->dereferencableExpression);
 
-        return self::infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        return self::infoFromMemberAccess($resolver, $frame, $class->type(), $node, $this->genericResolver);
     }
 
-    public static function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
+    public static function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node, ?GenericTypeResolver $genericResolver = null): NodeContext
     {
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 
@@ -99,8 +107,12 @@ class MemberAccessExpressionResolver implements Resolver
                 }
                 $types[] = $declaringClass;
 
+                $inferredType = $member->inferredType();
+                if ($genericResolver) {
+                    $inferredType = $genericResolver->resolveMemberType($subType, $member);
+                }
                 // if multiple classes declare a member, always take the "top" one
-                $memberTypes[$memberName] = $member->inferredType();
+                $memberTypes[$memberName] = $inferredType;
             }
         }
 
