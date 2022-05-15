@@ -10,12 +10,9 @@ use IteratorAggregate;
  */
 class StepGenerator implements IteratorAggregate
 {
-    
     private BehatConfig $config;
-
     
     private StepParser $parser;
-
     
     private StepFactory $factory;
 

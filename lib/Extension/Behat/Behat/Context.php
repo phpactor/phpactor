@@ -4,9 +4,7 @@ namespace Phpactor\Extension\Behat\Behat;
 
 class Context
 {
-    
     private string $suite;
-
     
     private string $class;
 

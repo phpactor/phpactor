@@ -15,12 +15,9 @@ use Phpactor\TextDocument\TextDocument;
 
 class FeatureStepCompletor implements Completor
 {
-    
     private StepGenerator $generator;
-
     
     private StepParser $parser;
-
     
     private StepScorer $stepSorter;
 

@@ -8,7 +8,6 @@ use Phpactor\Extension\Behat\Tests\IntegrationTestCase;
 
 class BehatConfigTest extends IntegrationTestCase
 {
-    
     private BehatConfig $config;
 
     protected function setUp(): void
