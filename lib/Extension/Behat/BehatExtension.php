@@ -25,12 +25,11 @@ class BehatExtension implements Extension
 {
     const PARAM_CONFIG_PATH = 'behat.config_path';
     const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
-
-
+    const PARAM_ENABLED = 'behat.enabled';
     
     public function load(ContainerBuilder $container): void
     {
-        $container->register('behat.step_factory', function (Container $container) {
+       $container->register('behat.step_factory', function (Container $container) {
             return new WorseStepFactory(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(ContextClassResolver::class)
@@ -54,6 +53,9 @@ class BehatExtension implements Extension
         });
 
         $container->register('behat.completion.feature_step_completor', function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_ENABLED)) {
+                return null;
+            }
             return new FeatureStepCompletor(
                 $container->get('behat.step_generator'),
                 $container->get('behat.step_parser')
@@ -61,6 +63,10 @@ class BehatExtension implements Extension
         }, [ CompletionExtension::TAG_COMPLETOR => [ CompletionExtension::KEY_COMPLETOR_TYPES => [ 'cucumber' ]]]);
 
         $container->register('behat.reference_finder.step_definition_locator', function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_ENABLED)) {
+                return null;
+            }
+
             return new StepDefinitionLocator($container->get('behat.step_generator'), $container->get('behat.step_parser'));
         }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
@@ -84,6 +90,7 @@ class BehatExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
+            self::PARAM_ENABLED => false,
             self::PARAM_CONFIG_PATH => '%project_root%/behat.yml',
             self::PARAM_SYMFONY_XML_PATH => null,
         ]);

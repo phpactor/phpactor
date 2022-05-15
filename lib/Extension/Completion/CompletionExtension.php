@@ -60,7 +60,11 @@ class CompletionExtension implements Extension
                     if (!isset($completors[$type])) {
                         $completors[$type] = [];
                     }
-                    $completors[$type][] = $container->get($serviceId);
+                    $completor = $container->get($serviceId);
+                    if (null === $completor) {
+                        continue;
+                    }
+                    $completors[$type][] = $completor;
                 }
             }
 

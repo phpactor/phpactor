@@ -26,7 +26,7 @@ class WorseStepFactoryTest extends TestCase
 
         $this->assertEquals([
             new Step($context, 'givenThatThis', 'that I visit Berlin', $path, 150),
-            new Step($context, 'shouldRun', 'I should run to Weisensee', $path, 254),
+            new Step($context, 'shouldRun', 'I should run to Weisensee', $path, 260),
         ], $steps);
     }
 }
