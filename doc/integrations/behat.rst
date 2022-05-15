@@ -1,10 +1,9 @@
 Behat
 =====
 
-`Behat <https://github.com/behat/behat>`_ is a BDD framework which makes use
-of Gherkin files.
+`Behat <https://github.com/behat/behat>`_ is a BDD framework.
 
-Phpactor can provide goto definition support within feature files.
+Phpactor can provide goto definition and some completion support within feature files.
 
 Enabling
 --------
@@ -27,3 +26,21 @@ For example:
 .. code-block:: bash
 
    $ phpactor config:set behat.symfony.di_xml_path "var/cache/test/App_KernelTestDebugContainer.xml"
+
+Language Server Support
+-----------------------
+
+This extension acts on cucumber files, you will need to configure your
+_client_ to ensure that it will call Phpactor when in the feature files.
+
+
+.. tabs::
+
+    .. tab:: Neovim LSP (via. lspconfig)
+
+        ::
+
+            require'lspconfig'.phpactor.setup{
+                -- ...
+                filetypes = { 'php', 'cucumber' },
+            }
