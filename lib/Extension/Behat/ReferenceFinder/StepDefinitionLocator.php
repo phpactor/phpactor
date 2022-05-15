@@ -19,9 +19,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class StepDefinitionLocator implements DefinitionLocator
 {
-    
     private StepGenerator $generator;
-
     
     private StepParser $parser;
 
