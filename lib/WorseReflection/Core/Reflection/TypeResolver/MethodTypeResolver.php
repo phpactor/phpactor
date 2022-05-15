@@ -52,7 +52,7 @@ class MethodTypeResolver
             return $type;
         }
 
-        return GenericHelper::resolveMethodType(
+        return StaticGenericHelper::resolveMethodType(
             $this->method->class(),
             $this->method->declaringClass(),
             $type
@@ -89,7 +89,7 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                $type = GenericHelper::resolveMethodType(
+                $type = StaticGenericHelper::resolveMethodType(
                     $this->method->class(),
                     $interface,
                     $interface->methods()->get($this->method->name())->inferredType(),

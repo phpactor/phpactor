@@ -20,12 +20,17 @@ class GenericTypeResolver
      * Resolve template type for methods declaring class:
      *  
      * - Get current class
-     * - Descend to find the declaring class _through generic annotations_
+     * - Descend to find the declaring class _through generic annotations_ an
      *   - Start with the current class's generic arguments
+     *   - return the generic type of the declaring class with resolved arguments
      *
      * If return type is generic
      *
      * - iterate over the parameters and replace them with mapped template's arguments
+     *
+     * If class extends a generic type
+     *
+     * - 
      *
      * For method using class template parameters:
      *
@@ -47,21 +52,21 @@ class GenericTypeResolver
             ));
         }
 
-        $arguments = $this->resolveTemplateArguments(
+        $genericClassType = $this->resolveDeclaringClassGenericType(
             $member->class(),
             $member->declaringClass(),
-            $classType->arguments()
+            $classType
         );
 
         $templateMap = $member->declaringClass()->templateMap();
 
         if ($memberType instanceof GenericClassType) {
-            $type =  $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $arguments) {
+            $type = $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
                 if (!$argument instanceof ClassType) {
                     return $argument;
                 }
                 if ($templateMap->has($argument->short())) {
-                    return $templateMap->get($argument->short(), $arguments);
+                    return $templateMap->get($argument->short(), $genericClassType->arguments());
                 }
                 return $argument;
             }, $memberType->arguments()));
@@ -70,25 +75,24 @@ class GenericTypeResolver
         }
 
         if ($templateMap->has($memberType->short())) {
-            return $templateMap->get($memberType->short(), $arguments);
+            return $templateMap->get($memberType->short(), $genericClassType->arguments());
         }
 
         return $memberType;
     }
 
     /**
-     * @param Type[] $arguments
-     * @return null|array<Type> $arguments
+     * @return null|GenericClassType
      */
-    private function resolveTemplateArguments(ReflectionClassLike $current, ReflectionClassLike $target, array $arguments): ?array
+    private function resolveDeclaringClassGenericType(ReflectionClassLike $current, ReflectionClassLike $target, GenericClassType $type): ?Type
     {
         if ($current->name() == $target->name()) {
-            return $arguments;
+            return $type;
         }
 
         foreach ($this->ancestors($current) as $ancestor) {
-            if (null !== $arguments = $this->resolveTemplateArguments($current, $target, [])) {
-                return $arguments;
+            if (null !== $type = $this->resolveDeclaringClassGenericType($ancestor, $target, $type)) {
+                return $type;
             }
         }
 
