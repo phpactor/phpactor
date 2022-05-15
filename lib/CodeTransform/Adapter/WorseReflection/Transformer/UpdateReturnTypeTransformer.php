@@ -82,7 +82,13 @@ class UpdateReturnTypeTransformer implements Transformer
     {
         $methods = [];
         foreach ($this->reflector->reflectClassesIn($code->__toString()) as $class) {
+            if ($class->isInterface()) {
+                continue;
+            }
             foreach ($class->methods()->belongingTo($class->name()) as $method) {
+                if ($method->isAbstract()) {
+                    continue;
+                }
                 if ($method->name() === '__construct') {
                     continue;
                 }
