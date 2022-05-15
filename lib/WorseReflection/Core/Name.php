@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core;
 
 use InvalidArgumentException;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class Name
 {
@@ -36,7 +35,7 @@ class Name
     }
 
     /**
-     * @param Name|string|Type $value
+     * @param Name|string $value
      * @return static|Name
      */
     public static function fromUnknown($value): Name
@@ -47,10 +46,6 @@ class Name
 
         if (is_string($value)) {
             return static::fromString($value);
-        }
-
-        if ($value instanceof ClassType) {
-            return $value->name();
         }
 
         /** @phpstan-ignore-next-line */
