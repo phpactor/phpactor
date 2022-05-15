@@ -36,8 +36,10 @@ interface ReflectionClassLike
 /** @var ReflectionClassLike $reflection */
 $reflection;
 foreach ($reflection->members()->byMemberType('fii')->byName('__construct') as $constructor) {
+    wrAssertType('Foo\ReflectionMemberCollection<Foo\ReflectionMember>', $reflection->members()->byName('foo')->byMemberType('asd'));
     wrAssertType('Foo\ReflectionClassLike', $reflection);
     wrAssertType('Foo\ReflectionMemberCollection', $reflection->members());
-    wrAssertType('Foo\ReflectionMemberCollection<Foo\ReflectionMember>', $reflection->members()->byName('foo')->byMemberType('asd'));
+
+
     wrAssertType('Foo\ReflectionMember', $constructor);
 }
