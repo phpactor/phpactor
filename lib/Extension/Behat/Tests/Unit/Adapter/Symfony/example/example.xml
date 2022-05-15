@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+  <services>
+    <service id="app.behat.context.setup.channel" class="App\Tests\Context\Setup\ChannelContext" public="true">
+      <argument type="service" id="sylius.behat.shared_storage"/>
+      <argument type="service" id="sylius.behat.channel_context_setter"/>
+      <argument type="service" id="app.test.factory.practice_channel"/>
+      <argument type="service" id="sylius.repository.channel"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="app.behat.context.setup.payment" class="App\Tests\Context\Setup\PaymentContext" public="true">
+      <argument type="service" id="sylius.behat.shared_storage"/>
+      <argument type="service" id="sylius.repository.payment_method"/>
+      <argument type="service" id="sylius.fixture.example_factory.payment_method"/>
+    </service>
+    <service id="app.behat.context.transform.shipping_method" class="App\Tests\Context\Transform\ShippingMethodContext" public="true">
+      <argument type="service" id="sylius.repository.shipping_method"/>
+      <argument>en_GB</argument>
+    </service>
+    <service id="app.behat.context.transform.payment_method" class="App\Tests\Context\Transform\PaymentMethodContext" public="true">
+      <argument type="service" id="sylius.repository.payment_method"/>
+      <argument>en_GB</argument>
+    </service>
+  </services>
+</container>
