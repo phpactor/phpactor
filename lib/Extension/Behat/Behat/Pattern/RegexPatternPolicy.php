@@ -10,10 +10,6 @@
 
 namespace Phpactor\Extension\Behat\Behat\Pattern;
 
-use Behat\Behat\Definition\Exception\InvalidPatternException;
-use Behat\Behat\Definition\Pattern\Pattern;
-use Behat\Transliterator\Transliterator;
-
 /**
  * Defines a way to handle regex patterns.
  *

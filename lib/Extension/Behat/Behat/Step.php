@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Behat;
 
-use Behat\Behat\Definition\Exception\InvalidPatternException;
+use Phpactor\Extension\Behat\Behat\Pattern\InvalidPatternException;
 use Phpactor\Extension\Behat\Behat\Pattern\RegexPatternPolicy;
 use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
 
