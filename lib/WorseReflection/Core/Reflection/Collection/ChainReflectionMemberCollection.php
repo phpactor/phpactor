@@ -101,7 +101,9 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
     public function first()
     {
         foreach ($this->collections as $collection) {
-            return $collection->first();
+            if ($collection->count()) {
+                return $collection->first();
+            }
         }
 
         throw new ItemNotFound(

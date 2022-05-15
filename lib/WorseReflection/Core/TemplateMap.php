@@ -19,6 +19,11 @@ final class TemplateMap
         $this->map = $map;
     }
 
+    public function __toString(): string
+    {
+        return implode("\n", array_map(fn (string $name, Type $type) => sprintf('%s: %s', $name, $type->__toString()), array_keys($this->map), $this->map));
+    }
+
     /**
      * @return array<string,Type>
      */

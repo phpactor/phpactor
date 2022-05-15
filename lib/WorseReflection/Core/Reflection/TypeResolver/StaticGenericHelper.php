@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
-class GenericHelper
+class StaticGenericHelper
 {
     public static function resolveMethodType(ReflectionClassLike $class, ReflectionClassLike $declaringClass, Type $type): Type
     {
@@ -58,7 +58,11 @@ class GenericHelper
         // (e.g. @template T of Foo)
         foreach ($arguments as &$argument) {
             if ($templateMap->has($argument->short())) {
-                $argument = $templateMap->get($argument->short());
+                $templateType = $templateMap->get($argument->short());
+                if (!$templateType->isDefined()) {
+                    continue;
+                }
+                $argument = $templateType;
             }
         }
 

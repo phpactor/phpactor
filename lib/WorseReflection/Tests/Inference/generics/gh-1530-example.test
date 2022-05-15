@@ -1,0 +1,49 @@
+<?php
+
+namespace Test;
+
+interface Foo {
+    public function bar(): void;
+}
+
+interface Foos {
+    /**
+     * @return Collection<int, Foo>
+     */
+    public function all(): Collection;
+}
+
+/**
+ * @template TKey of array-key
+ * @template T
+ * @template-extends \IteratorAggregate<TKey, T>
+ * @template-extends \ArrayAccess<TKey|null, T>
+ */
+interface Collection extends \IteratorAggregate, \ArrayAccess
+{
+    /**
+     * @return T
+     */
+    public function first();
+
+    /**
+     * @return Collection<TKey, T>
+     */
+    public function filter(\Closure $p);
+}
+
+function foobar(Foos $foos) {
+    foreach ($foos->all() as $foo) {
+        wrAssertType('void', $foo->bar()); // OK
+    }
+
+    wrAssertType('Test\Collection<int,Test\Foo>', $foos->all());
+    wrAssertType('Test\Foo', $foos->all()->first());
+    wrAssertType('void', $foos->all()->first()->bar());
+    wrAssertType('Test\Collection<Test\array-key,Test\Foo>', $foos->all()->filter(fn($foo)));
+
+    $filtered = $foos->all()->filter(fn($foo) => $foo);
+    foreach ($filtered as $foo) {
+        wrAssertType('void', $foo->bar());
+    }
+}
