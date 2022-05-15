@@ -76,12 +76,7 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                $type = StaticGenericHelper::resolveMethodType(
-                    $this->method->class(),
-                    $interface,
-                    $interface->methods()->get($this->method->name())->inferredType(),
-                );
-                return $type;
+                return $interface->methods()->get($this->method->name())->inferredType();
             }
         }
 

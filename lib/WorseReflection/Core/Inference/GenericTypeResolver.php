@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -50,39 +51,36 @@ class GenericTypeResolver
             return $memberType;
         }
 
-        $genericClassType = $this->resolveDeclaringClassGenericType(
+        $declaringClass = $this->declaringClass($member);
+        $classGenericType = $this->resolveDeclaringClassGenericType(
             $member->class(),
-            $member->declaringClass(),
+            $declaringClass,
             $classType
         );
 
-        if (!$genericClassType instanceof GenericClassType) {
+        if (!$classGenericType instanceof GenericClassType) {
             return $memberType;
         }
 
-        $templateMap = $member->declaringClass()->templateMap();
+        $templateMap = $declaringClass->templateMap();
 
-        $memberType = $this->mapTypes($memberType, $templateMap, $genericClassType);
+        $memberType = $this->mapTypes($memberType, $templateMap, $classGenericType);
 
         if ($templateMap->has($memberType->short())) {
-            return $templateMap->get($memberType->short(), $genericClassType->arguments());
+            return $templateMap->get($memberType->short(), $classGenericType->arguments());
         }
 
         return $memberType;
     }
 
-    /**
-     * @return null|ReflectedClassType
-     */
     private function resolveDeclaringClassGenericType(
         ReflectionClassLike $current,
         ReflectionClassLike $target,
-        ReflectedClassType $type
+        Type $type
     ): ?Type {
         if ($current->name() == $target->name()) {
             return $type;
         }
-
         foreach ($this->ancestors($current) as $ancestorType) {
             $reflectionClassLike = $ancestorType->reflectionOrNull();
 
@@ -92,8 +90,9 @@ class GenericTypeResolver
 
             $ancestorType = $this->mapTypes($ancestorType, $current->templateMap(), $type);
 
-            if (null !== $type = $this->resolveDeclaringClassGenericType($reflectionClassLike, $target, $ancestorType)) {
-                return $ancestorType;
+            // this looks wrong...
+            if (null !== $resolvedType = $this->resolveDeclaringClassGenericType($reflectionClassLike, $target, $ancestorType)) {
+                return $resolvedType;
             }
         }
 
@@ -133,7 +132,7 @@ class GenericTypeResolver
     private function mapTypes(
         Type $memberType,
         TemplateMap $templateMap,
-        ReflectedClassType $genericClassType
+        Type $genericClassType
     ): Type {
         return $memberType->map(function (Type $argument) use ($templateMap, $genericClassType) {
             if (!$argument instanceof ClassType) {
@@ -148,5 +147,37 @@ class GenericTypeResolver
 
             return $argument;
         });
+    }
+
+    private function declaringClass(ReflectionMember $member): ReflectionClassLike
+    {
+        $reflectionClass = $member->declaringClass();
+
+        if (!$reflectionClass instanceof ReflectionClass) {
+            return $reflectionClass;
+        }
+
+        $interface = self::searchInterfaces($reflectionClass->interfaces(), $member->name());
+
+        if (!$interface) {
+            return $reflectionClass;
+        }
+
+        return $interface;
+    }
+
+    private static function searchInterfaces(ReflectionInterfaceCollection $collection, string $memberName): ?ReflectionInterface
+    {
+        foreach ($collection as $interface) {
+            if ($interface->methods()->has($memberName)) {
+                return $interface;
+            }
+
+            if (null !== $interface = self::searchInterfaces($interface->parents(), $memberName)) {
+                return $interface;
+            }
+        }
+
+        return null;
     }
 }
