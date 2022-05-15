@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use RuntimeException;
 
 class GenericTypeResolver
@@ -29,7 +30,8 @@ class GenericTypeResolver
      *
      * If class extends a generic type
      *
-     * -
+     * - Get current class
+     * - Descend to implementing class
      *
      * For method using class template parameters:
      *
@@ -39,7 +41,7 @@ class GenericTypeResolver
     {
         $memberType = $member->inferredType();
 
-        if (!$classType instanceof GenericClassType) {
+        if (!$classType instanceof ReflectedClassType) {
             return $memberType;
         }
 
@@ -71,12 +73,12 @@ class GenericTypeResolver
     }
 
     /**
-     * @return null|GenericClassType
+     * @return null|ReflectedClassType
      */
     private function resolveDeclaringClassGenericType(
         ReflectionClassLike $current,
         ReflectionClassLike $target,
-        GenericClassType $type
+        ReflectedClassType $type
     ): ?Type {
         if ($current->name() == $target->name()) {
             return $type;
@@ -132,16 +134,19 @@ class GenericTypeResolver
     private function mapGenericType(
         GenericClassType $memberType,
         TemplateMap $templateMap,
-        GenericClassType $genericClassType
+        ReflectedClassType $genericClassType
     ): GenericClassType {
         return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
             if (!$argument instanceof ClassType) {
                 return $argument;
             }
 
-            if ($templateMap->has($argument->short())) {
-                return $templateMap->get($argument->short(), $genericClassType->arguments());
+            if ($genericClassType instanceof GenericClassType) {
+                if ($templateMap->has($argument->short())) {
+                    return $templateMap->get($argument->short(), $genericClassType->arguments());
+                }
             }
+
             return $argument;
         }, $memberType->arguments()));
     }

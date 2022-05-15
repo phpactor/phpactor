@@ -68,5 +68,26 @@ class GenericTypeResolverTest extends TestCase
             ],
             'B<string>',
         ];
+
+        yield [
+            [
+                '/** @template T */',
+                'class B {',
+                '    /** @return T */',
+                '    public function method() {}',
+                '}',
+                '/**',
+                ' * @template T',
+                ' * @extends B<int>',
+                ' */',
+                'class A extends B {',
+                '}',
+            ],
+            'A',
+            'method',
+            [
+            ],
+            'int',
+        ];
     }
 }
