@@ -62,7 +62,7 @@ class ArrayType extends Type implements IterableType
         return new Types([$this->valueType]);
     }
 
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
     }

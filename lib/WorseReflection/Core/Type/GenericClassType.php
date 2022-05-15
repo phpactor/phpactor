@@ -93,7 +93,7 @@ class GenericClassType extends ReflectedClassType implements IterableType
         return new self($this->reflector, $this->name, $arguments);
     }
 
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         return new self(
             $this->reflector,

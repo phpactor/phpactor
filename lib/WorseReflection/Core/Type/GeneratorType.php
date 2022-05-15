@@ -70,7 +70,7 @@ class GeneratorType extends GenericClassType
         return $new;
     }
 
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         $t = new self(
             $this->reflector,

@@ -68,7 +68,7 @@ class ArrayShapeType extends ArrayType implements Generalizable
         return new MissingType();
     }
 
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         return new self(
             array_map(fn (Type $type) => $type->map($mapper), $this->typeMap)

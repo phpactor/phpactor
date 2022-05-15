@@ -61,9 +61,7 @@ class GenericTypeResolver
 
         $templateMap = $member->declaringClass()->templateMap();
 
-        if ($memberType instanceof GenericClassType) {
-            $memberType = $this->mapGenericType($memberType, $templateMap, $genericClassType);
-        }
+        $memberType = $this->mapTypes($memberType, $templateMap, $genericClassType);
 
         if ($templateMap->has($memberType->short())) {
             return $templateMap->get($memberType->short(), $genericClassType->arguments());
@@ -91,7 +89,7 @@ class GenericTypeResolver
                 continue;
             }
 
-            $ancestorType = $this->mapGenericType($ancestorType, $current->templateMap(), $type);
+            $ancestorType = $this->mapTypes($ancestorType, $current->templateMap(), $type);
 
             if (null !== $type = $this->resolveDeclaringClassGenericType($reflectionClassLike, $target, $ancestorType)) {
                 return $ancestorType;
@@ -131,12 +129,12 @@ class GenericTypeResolver
         }
     }
 
-    private function mapGenericType(
-        GenericClassType $memberType,
+    private function mapTypes(
+        Type $memberType,
         TemplateMap $templateMap,
         ReflectedClassType $genericClassType
-    ): GenericClassType {
-        return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
+    ): Type {
+        return $memberType->map(function (Type $argument) use ($templateMap, $genericClassType) {
             if (!$argument instanceof ClassType) {
                 return $argument;
             }
@@ -148,6 +146,6 @@ class GenericTypeResolver
             }
 
             return $argument;
-        }, $memberType->arguments()));
+        });
     }
 }
