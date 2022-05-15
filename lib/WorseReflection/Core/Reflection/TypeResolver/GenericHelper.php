@@ -11,6 +11,17 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
 class GenericHelper
 {
+    /**
+     * Resolve template type for methods declaring class:
+     *  
+     * - Get current class
+     * - Descend to find the declaring class
+     * - ... passing through arguments as defined by @extends and @implements
+     *
+     * For method using class template parameters:
+     *
+     * - Resolve template type for methods declaring class
+     */
     public static function resolveMethodType(ReflectionClassLike $class, ReflectionClassLike $declaringClass, Type $type): Type
     {
         if (!$type instanceof ClassType) {
