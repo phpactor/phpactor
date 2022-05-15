@@ -86,6 +86,9 @@ class UpdateReturnTypeTransformer implements Transformer
                 continue;
             }
             foreach ($class->methods()->belongingTo($class->name()) as $method) {
+                if ($method->isAbstract()) {
+                    continue;
+                }
                 if ($method->name() === '__construct') {
                     continue;
                 }
