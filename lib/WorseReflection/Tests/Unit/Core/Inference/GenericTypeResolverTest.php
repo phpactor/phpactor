@@ -69,28 +69,5 @@ class GenericTypeResolverTest extends TestCase
             ],
             'B<string>',
         ];
-
-        yield [
-            [
-                '/** @template T */',
-                'class B {}',
-                '/** @template T */',
-                'class A {',
-                '    /** @return B<T> */',
-                '    public function method() {}',
-                '}',
-                '/**',
-                ' * @template TValue',
-                ' * @extends A<TValue>',
-                ' */',
-                'class C extends A {}',
-            ],
-            'C',
-            'method',
-            [
-                TypeFactory::string()
-            ],
-            'B<string>',
-        ];
     }
 }

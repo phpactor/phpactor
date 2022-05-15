@@ -53,21 +53,19 @@ class StaticGenericHelper
             return $templateMap->get($type->short(), $arguments);
         }
 
-        $typeArguments = $type->arguments();
-
         // replace any unresolved template parameters with any
         // type constraint defined by the parameter declaration
         // (e.g. @template T of Foo)
-        foreach ($arguments as $index => $argument) {
+        foreach ($arguments as &$argument) {
             if ($templateMap->has($argument->short())) {
                 $templateType = $templateMap->get($argument->short());
                 if (!$templateType->isDefined()) {
                     continue;
                 }
-                $typeArguments[$index] = $templateType;
+                $argument = $templateType;
             }
         }
 
-        return $type->setArguments($typeArguments);
+        return $type->setArguments($arguments);
     }
 }
