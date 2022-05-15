@@ -78,15 +78,18 @@ final class TemplateMap
     /**
      * @param Type[] $arguments
      */
-    public function mapArguments(array $arguments): void
+    public function withArguments(array $arguments): TemplateMap
     {
         $index = 0;
+        $mapped = [];
         foreach ($this->map as $key => $value) {
             if (!isset($arguments[$index])) {
-                return;
+                break;
             }
-            $this->map[$key] = $arguments[$index];
+            $mapped[$key] = $arguments[$index];
             $index++;
         }
+
+        return new self($mapped);
     }
 }

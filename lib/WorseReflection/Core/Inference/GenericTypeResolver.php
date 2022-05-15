@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use RuntimeException;
 use Traversable;
 
 class GenericTypeResolver
@@ -18,35 +19,57 @@ class GenericTypeResolver
      * Resolve template type for methods declaring class:
      *  
      * - Get current class
-     * - Descend to find the declaring class
-     * - ... passing through arguments as defined by @extends and @implements
+     * - Descend to find the declaring class _through generic annotations_
+     *   - Start with the current class's generic arguments
      *
      * For method using class template parameters:
      *
      * - Resolve template map for declaring class
      */
-    public function resolveMemberType(Type $subType, ReflectionMember $member): Type
+    public function resolveMemberType(Type $classType, ReflectionMember $member): Type
     {
-        $type = $member->inferredType();
+        $memberType = $member->inferredType();
 
-        if (!$subType instanceof GenericClassType) {
-            return $type;
+        if (!$classType instanceof GenericClassType) {
+            return $memberType;
         }
 
-        $declaringClass = $this->resolveDeclaringClass($member->class(), $member->declaringClass());
+        if ($classType->name() != $member->class()->name()) {
+            throw new RuntimeException(sprintf(
+                'member class-type "%s" must be same as container class type "%s"',
+                $member->class()->name(),
+                $classType->name()
+            ));
+        }
 
-        return $type;
+        $arguments = $this->resolveTemplateArguments(
+            $member->class(),
+            $member->declaringClass(),
+            $classType->arguments()
+        );
+
+        $templateMap = $member->declaringClass()->templateMap();
+
+        if ($templateMap->has($memberType->short())) {
+            return $templateMap->get($memberType->short(), $arguments);
+        }
+
+        return $memberType;
     }
 
-    private function resolveDeclaringClass(ReflectionClassLike $current, ReflectionClassLike $target): ?ReflectionClassLike
+    /**
+     * @param Type[] $arguments
+     * @return null|array<Type> $arguments
+     */
+    private function resolveTemplateArguments(ReflectionClassLike $current, ReflectionClassLike $target, array $arguments): ?array
     {
         if ($current->name() == $target->name()) {
-            return $target;
+            return $arguments;
         }
 
         foreach ($this->ancestors($current) as $ancestor) {
-            if (null !== $this->resolveDeclaringClass($current, $target)) {
-                return $target;
+            if (null !== $arguments = $this->resolveTemplateArguments($current, $target, [])) {
+                return $arguments;
             }
         }
 

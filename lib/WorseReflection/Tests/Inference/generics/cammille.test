@@ -38,7 +38,7 @@ function foobar(Foos $foos) {
     }
 
     wrAssertType('Test\Collection<int,Test\Foo>', $foos->all());
-    wrAssertType('Foo', $foos->all()->first());
+    wrAssertType('Test\Foo', $foos->all()->first());
     wrAssertType('void', $foos->all()->first()->bar());
     wrAssertType('void', $foos->all()[0]->bar()); // Not recognized
 
