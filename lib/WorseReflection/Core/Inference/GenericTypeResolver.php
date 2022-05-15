@@ -56,7 +56,7 @@ class GenericTypeResolver
             $classType
         );
 
-        if (null === $genericClassType) {
+        if (!$genericClassType instanceof GenericClassType) {
             return $memberType;
         }
 
