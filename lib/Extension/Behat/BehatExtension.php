@@ -29,7 +29,7 @@ class BehatExtension implements Extension
     
     public function load(ContainerBuilder $container): void
     {
-       $container->register('behat.step_factory', function (Container $container) {
+        $container->register('behat.step_factory', function (Container $container) {
             return new WorseStepFactory(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(ContextClassResolver::class)

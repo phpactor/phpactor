@@ -1369,7 +1369,7 @@ LanguageServerReferenceFinderExtension
 Stop searching for references after this time (in seconds) has expired
 
 
-**Default**: ``10``
+**Default**: ``60``
 
 
 .. _LanguageServerWorseReflectionExtension:
@@ -1556,6 +1556,55 @@ Path to pslam if different from vendor/bin/psalm
 
 
 **Default**: ``false``
+
+
+.. _BehatExtension:
+
+
+BehatExtension
+--------------
+
+
+.. _param_behat.enabled:
+
+
+``behat.enabled``
+"""""""""""""""""
+
+
+
+
+**Default**: ``false``
+
+
+.. _param_behat.config_path:
+
+
+``behat.config_path``
+"""""""""""""""""""""
+
+
+
+
+Path to the main behat.yml (including the filename behat.yml)
+
+
+**Default**: ``"%project_root%\/behat.yml"``
+
+
+.. _param_behat.symfony.di_xml_path:
+
+
+``behat.symfony.di_xml_path``
+"""""""""""""""""""""""""""""
+
+
+
+
+If using Symfony, set this path to the XML container dump to find contexts which are defined as services
+
+
+**Default**: ``null``
 
 
 .. _IndexerExtension:

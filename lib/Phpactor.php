@@ -4,6 +4,7 @@ namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
+use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
@@ -149,6 +150,7 @@ class Phpactor
             LanguageServerRenameWorseExtension::class,
             LanguageServerPhpstanExtension::class,
             LanguageServerPsalmExtension::class,
+            BehatExtension::class,
             IndexerExtension::class,
         ];
 
