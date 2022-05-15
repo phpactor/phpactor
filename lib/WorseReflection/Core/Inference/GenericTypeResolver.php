@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassNamedType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use RuntimeException;
 use Traversable;
@@ -21,6 +22,10 @@ class GenericTypeResolver
      * - Get current class
      * - Descend to find the declaring class _through generic annotations_
      *   - Start with the current class's generic arguments
+     *
+     * If return type is generic
+     *
+     * - iterate over the parameters and replace them with mapped template's arguments
      *
      * For method using class template parameters:
      *
@@ -49,6 +54,18 @@ class GenericTypeResolver
         );
 
         $templateMap = $member->declaringClass()->templateMap();
+
+        if ($memberType instanceof GenericClassType) {
+            return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $arguments) {
+                if (!$argument instanceof ClassType) {
+                    return $argument;
+                }
+                if ($templateMap->has($argument->short())) {
+                    return $templateMap->get($argument->short(), $arguments);
+                }
+                return $argument;
+            }, $memberType->arguments()));
+        }
 
         if ($templateMap->has($memberType->short())) {
             return $templateMap->get($memberType->short(), $arguments);

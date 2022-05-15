@@ -93,4 +93,12 @@ class GenericClassType extends ReflectedClassType implements IterableType
             array_map(fn (Type $type) => $type->map($mapper), $this->arguments)
         );
     }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function withArguments(array $arguments): self
+    {
+        return new self($this->reflector, $this->name, $arguments);
+    }
 }
