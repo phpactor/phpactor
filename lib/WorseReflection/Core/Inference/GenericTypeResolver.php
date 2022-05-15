@@ -2,11 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -61,17 +63,7 @@ class GenericTypeResolver
         $templateMap = $member->declaringClass()->templateMap();
 
         if ($memberType instanceof GenericClassType) {
-            $type = $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
-                if (!$argument instanceof ClassType) {
-                    return $argument;
-                }
-                if ($templateMap->has($argument->short())) {
-                    return $templateMap->get($argument->short(), $genericClassType->arguments());
-                }
-                return $argument;
-            }, $memberType->arguments()));
-
-            return $type;
+            $memberType = $this->mapGenericType($memberType, $templateMap, $genericClassType);
         }
 
         if ($templateMap->has($memberType->short())) {
@@ -84,15 +76,28 @@ class GenericTypeResolver
     /**
      * @return null|GenericClassType
      */
-    private function resolveDeclaringClassGenericType(ReflectionClassLike $current, ReflectionClassLike $target, GenericClassType $type): ?Type
+    private function resolveDeclaringClassGenericType(
+        ReflectionClassLike $current,
+        ReflectionClassLike $target,
+        GenericClassType $type
+    ): ?Type
     {
         if ($current->name() == $target->name()) {
             return $type;
         }
 
-        foreach ($this->ancestors($current) as $ancestor) {
-            if (null !== $type = $this->resolveDeclaringClassGenericType($ancestor, $target, $type)) {
-                return $type;
+        foreach ($this->ancestors($current) as $ancestorType) {
+
+            $reflectionClassLike = $ancestorType->reflectionOrNull();
+
+            if (!$reflectionClassLike) {
+                continue;
+            }
+
+            $ancestorType = $this->mapGenericType($ancestorType, $current->templateMap(), $type);
+
+            if (null !== $type = $this->resolveDeclaringClassGenericType($reflectionClassLike, $target, $ancestorType)) {
+                return $ancestorType;
             }
         }
 
@@ -100,26 +105,50 @@ class GenericTypeResolver
     }
 
     /**
-     * @return Iterable<ReflectionInterface|ReflectionClass>
+     * @return Generator<GenericClassType>
      */
-    private function ancestors(ReflectionClassLike $current)
+    private function ancestors(ReflectionClassLike $current): Generator
     {
         if ($current instanceof ReflectionInterface) {
-            return $current->parents();
+            foreach ($current->docblock()->extends() as $extend) {
+                if (!$extend instanceof GenericClassType) {
+                    continue;
+                }
+                yield $extend;
+            }
         }
 
         if ($current instanceof ReflectionClass) {
-            $ancestors = [];
-            $parent = $current->parent();
-            if ($parent) {
-                $ancestors[] = $parent;
+            foreach ($current->docblock()->extends() as $extend) {
+                if (!$extend instanceof GenericClassType) {
+                    continue;
+                }
+                yield $extend;
             }
-            foreach ($current->interfaces() as $interface) {
-                $ancestors[] = $interface;
+            foreach ($current->docblock()->implements() as $extend) {
+                if (!$extend instanceof GenericClassType) {
+                    continue;
+                }
+                yield $extend;
             }
-            return $ancestors;
         }
+    }
 
-        return [];
+    private function mapGenericType(
+        GenericClassType $memberType,
+        TemplateMap $templateMap,
+        GenericClassType $genericClassType
+    ): GenericClassType
+    {
+        return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
+            if (!$argument instanceof ClassType) {
+                return $argument;
+            }
+
+            if ($templateMap->has($argument->short())) {
+                return $templateMap->get($argument->short(), $genericClassType->arguments());
+            }
+            return $argument;
+        }, $memberType->arguments()));
     }
 }
