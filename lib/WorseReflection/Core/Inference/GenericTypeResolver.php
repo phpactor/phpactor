@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
-use RuntimeException;
 
 class GenericTypeResolver
 {
