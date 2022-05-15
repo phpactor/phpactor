@@ -17,7 +17,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class BehatExtensionTest extends TestCase
 {
-    public function testStepDefinitionFinder()
+    public function testStepDefinitionFinder(): void
     {
         $container = PhpactorContainer::fromExtensions([
             BehatExtension::class,
@@ -33,12 +33,12 @@ class BehatExtensionTest extends TestCase
         ]);
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);
-        $this->assertInstanceOf(DefinitionLocator::class, $locator);
+        assert($locator instanceof DefinitionLocator);
         $location = $locator->locateDefinition(
             TextDocumentBuilder::fromUri(__DIR__. '/../Integration/Completor/feature/some_feature.feature')->language('cucumber')->build(),
             ByteOffset::fromInt(69)
         );
 
-        $this->assertStringContainsString('ExampleContext.php', $location->uri()->__toString());
+        $this->assertStringContainsString('ExampleContext.php', $location->first()->location()->uri()->path());
     }
 }
