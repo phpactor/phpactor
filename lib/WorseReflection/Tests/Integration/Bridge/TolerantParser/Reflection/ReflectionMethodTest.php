@@ -637,6 +637,8 @@ class ReflectionMethodTest extends IntegrationTestCase
     }
 
     /**
+     * Note that generics are now resolved during analysis and not statically.
+     *
      * @return Generator<mixed>
      */
     public function provideGenerics(): Generator
@@ -666,7 +668,7 @@ class ReflectionMethodTest extends IntegrationTestCase
             'Foobar',
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('bar'));
-                self::assertEquals('Baz', $methods->get('bar')->inferredType()->__toString());
+                self::assertEquals('T', $methods->get('bar')->inferredType()->__toString());
             },
         ];
         yield 'return type from generic with multiple parameters' => [
@@ -700,8 +702,8 @@ class ReflectionMethodTest extends IntegrationTestCase
             function (ReflectionMethodCollection $methods): void {
                 self::assertTrue($methods->has('tee'));
                 self::assertTrue($methods->has('vee'));
-                self::assertEquals('Boo', $methods->get('tee')->inferredType()->__toString());
-                self::assertEquals('Baz', $methods->get('vee')->inferredType()->__toString());
+                self::assertEquals('T', $methods->get('tee')->inferredType()->__toString());
+                self::assertEquals('V', $methods->get('vee')->inferredType()->__toString());
             },
         ];
         yield 'return type from generic with multiple parameters at a distance' => [
@@ -748,9 +750,9 @@ class ReflectionMethodTest extends IntegrationTestCase
                 self::assertTrue($methods->has('tee'));
                 self::assertTrue($methods->has('vee'));
                 self::assertTrue($methods->has('gee'));
-                self::assertEquals('Boo', $methods->get('tee')->inferredType()->__toString());
-                self::assertEquals('Baz', $methods->get('vee')->inferredType()->__toString());
-                self::assertEquals('Bom', $methods->get('gee')->inferredType()->__toString());
+                self::assertEquals('T', $methods->get('tee')->inferredType()->__toString());
+                self::assertEquals('V', $methods->get('vee')->inferredType()->__toString());
+                self::assertEquals('G', $methods->get('gee')->inferredType()->__toString());
             },
         ];
     }

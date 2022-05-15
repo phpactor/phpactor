@@ -45,12 +45,9 @@ class GenericTypeResolver
             return $memberType;
         }
 
+        // not sure why this would happen
         if ($classType->name() != $member->class()->name()) {
-            throw new RuntimeException(sprintf(
-                'member class-type "%s" must be same as container class type "%s"',
-                $member->class()->name(),
-                $classType->name()
-            ));
+            return $memberType;
         }
 
         $genericClassType = $this->resolveDeclaringClassGenericType(
@@ -58,6 +55,10 @@ class GenericTypeResolver
             $member->declaringClass(),
             $classType
         );
+
+        if (null === $genericClassType) {
+            return $memberType;
+        }
 
         $templateMap = $member->declaringClass()->templateMap();
 
