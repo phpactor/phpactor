@@ -111,7 +111,7 @@ class GenericTypeResolverTest extends TestCase
             'int',
         ];
 
-        yield [
+        yield 'extends class' => [
             [
                 '/**',
                 ' * @template TKey',
@@ -136,7 +136,7 @@ class GenericTypeResolverTest extends TestCase
             'array<int,string>',
         ];
 
-        yield [
+        yield 'extends interface' => [
             [
                 '/**',
                 ' * @template TKey',
@@ -160,6 +160,29 @@ class GenericTypeResolverTest extends TestCase
                 TypeFactory::string(),
             ],
             'array<int,string>',
+        ];
+
+        yield [
+            [
+                '/** @template T */',
+                'class B {}',
+                '/** @template T */',
+                'class A {',
+                '    /** @return B<T> */',
+                '    public function method() {}',
+                '}',
+                '/**',
+                ' * @template TValue',
+                ' * @extends A<TValue>',
+                ' */',
+                'class C extends A {}',
+            ],
+            'C',
+            'method',
+            [
+                TypeFactory::string()
+            ],
+            'B<string>',
         ];
     }
 }
