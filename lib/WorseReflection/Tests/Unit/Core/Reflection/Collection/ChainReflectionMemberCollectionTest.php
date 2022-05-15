@@ -128,6 +128,7 @@ class ChainReflectionMemberCollectionTest extends TestCase
         ]);
 
         $this->collection1->first()->willReturn($this->member1->reveal());
+        $this->collection1->count()->willReturn(1);
 
         $member = $collection1->first();
         $this->assertSame($this->member1->reveal(), $member);
