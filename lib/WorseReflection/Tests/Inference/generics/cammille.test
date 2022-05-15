@@ -8,7 +8,7 @@ interface Foo {
 
 interface Foos {
     /**
-     * @return Collection<Foo>
+     * @return Collection<int, Foo>
      */
     public function all(): Collection;
 }
@@ -32,12 +32,12 @@ interface Collection extends \IteratorAggregate, \ArrayAccess
     public function filter(\Closure $p);
 }
 
-function (Foos $foos) {
+function foobar(Foos $foos) {
     foreach ($foos->all() as $foo) {
         wrAssertType('void', $foo->bar()); // OK
     }
 
-    wrAssertType('Test\Collection<Test\Foo>', $foos->all());
+    wrAssertType('Test\Collection<int,Test\Foo>', $foos->all());
     wrAssertType('Foo', $foos->all()->first());
     wrAssertType('void', $foos->all()->first()->bar());
     wrAssertType('void', $foos->all()[0]->bar()); // Not recognized
