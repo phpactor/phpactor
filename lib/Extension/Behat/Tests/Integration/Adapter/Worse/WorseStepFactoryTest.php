@@ -13,15 +13,15 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseStepFactoryTest extends TestCase
 {
-    public function testGeneratesSteps()
+    public function testGeneratesSteps(): void
     {
         $path = __DIR__ . '/TestContext.php';
         $reflector = ReflectorBuilder::create()->addSource(
-            SourceCode::fromPathAndString($path, file_get_contents($path))
+            SourceCode::fromPathAndString($path, (string)file_get_contents($path))
         )->build();
         $stepGenerator = new WorseStepFactory($reflector, new WorseContextClassResolver($reflector));
         $parser = new StepParser();
-        $context = new Context('default', TestContext::class, '/path/to.php');
+        $context = new Context('default', TestContext::class);
         $steps = iterator_to_array($stepGenerator->generate($parser, [ $context ]));
 
         $this->assertEquals([

@@ -27,9 +27,7 @@ class BehatExtension implements Extension
     const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
 
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function load(ContainerBuilder $container): void
     {
         $container->register('behat.step_factory', function (Container $container) {
@@ -82,9 +80,7 @@ class BehatExtension implements Extension
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

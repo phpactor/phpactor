@@ -10,15 +10,12 @@ use RuntimeException;
 
 class SymfonyDiContextClassResolver implements ContextClassResolver
 {
-    /**
-     * @var string
-     */
-    private $xmlPath;
+    private string $xmlPath;
 
     /**
      * @var array<string,string>
      */
-    private $index = null;
+    private ?array $index = null;
 
     public function __construct(string $xmlPath)
     {
@@ -57,7 +54,7 @@ class SymfonyDiContextClassResolver implements ContextClassResolver
         $query->registerNamespace('s', 'http://symfony.com/schema/dic/services');
         /** @phpstan-ignore-next-line */
         foreach ($query->query('//s:service') as $serviceEl) {
-            $this->index[$serviceEl->getAttribute('id')] = $serviceEl->getAttribute('class');
+            $this->index[(string)$serviceEl->getAttribute('id')] = (string)$serviceEl->getAttribute('class');
         }
     }
 }

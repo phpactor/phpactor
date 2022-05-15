@@ -5,9 +5,10 @@ namespace Phpactor\Extension\Behat\Behat;
 class StepScorer
 {
     /**
+     * @return array<string, int>
      * @param Step[] $steps
      */
-    public function scoreSteps(array $steps, $partial)
+    public function scoreSteps(array $steps, string $partial): array
     {
         $items = array_filter(array_map('trim', explode(' ', $partial)));
 

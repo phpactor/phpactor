@@ -5,7 +5,6 @@ namespace Phpactor\Extension\Behat\ReferenceFinder;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepGenerator;
 use Phpactor\Extension\Behat\Behat\StepParser;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
@@ -20,15 +19,11 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class StepDefinitionLocator implements DefinitionLocator
 {
-    /**
-     * @var StepGenerator
-     */
-    private $generator;
+    
+    private StepGenerator $generator;
 
-    /**
-     * @var StepParser
-     */
-    private $parser;
+    
+    private StepParser $parser;
 
     public function __construct(StepGenerator $generator, StepParser $parser)
     {
@@ -36,9 +31,7 @@ class StepDefinitionLocator implements DefinitionLocator
         $this->parser = $parser;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (!$document->language()->in(['cucumber', 'behat', 'gherkin'])) {

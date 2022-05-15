@@ -4,14 +4,11 @@ namespace Phpactor\Extension\Behat\Behat;
 
 class Context
 {
-    /**
-     * @var string
-     */
-    private $suite;
-    /**
-     * @var string
-     */
-    private $class;
+    
+    private string $suite;
+
+    
+    private string $class;
 
     public function __construct(string $suite, string $class)
     {

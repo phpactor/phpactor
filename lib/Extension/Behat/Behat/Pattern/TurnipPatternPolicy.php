@@ -10,10 +10,6 @@
 
 namespace Phpactor\Extension\Behat\Behat\Pattern;
 
-use Behat\Behat\Definition\Pattern\Pattern;
-use Behat\Behat\Definition\Exception\InvalidPatternException;
-use Behat\Transliterator\Transliterator;
-
 /**
  * Defines a way to handle turnip patterns.
  *
@@ -22,7 +18,6 @@ use Behat\Transliterator\Transliterator;
 final class TurnipPatternPolicy implements PatternPolicy
 {
     public const TOKEN_REGEX = "[\"']?(?P<%s>(?<=\")[^\"]*(?=\")|(?<=')[^']*(?=')|\-?[\w\.\,]+)['\"]?";
-
     public const PLACEHOLDER_REGEXP = "/\\\:(\w+)/";
     public const OPTIONAL_WORD_REGEXP = '/(\s)?\\\\\(([^\\\]+)\\\\\)(\s)?/';
     public const ALTERNATIVE_WORD_REGEXP = '/(\w+)\\\\\/(\w+)/';
@@ -30,7 +25,7 @@ final class TurnipPatternPolicy implements PatternPolicy
     /**
      * @var string[]
      */
-    private $regexCache = array();
+    private array $regexCache = [];
 
     public function transformPatternToRegex($pattern): string
     {
@@ -42,7 +37,6 @@ final class TurnipPatternPolicy implements PatternPolicy
 
     /**
      * @param string $pattern
-     * @return string
      */
     private function createTransformedRegex($pattern): string
     {
@@ -57,10 +51,6 @@ final class TurnipPatternPolicy implements PatternPolicy
 
     /**
      * Replaces turnip tokens with regex capture groups.
-     *
-     * @param string $regex
-     *
-     * @return string
      */
     private function replaceTokensWithRegexCaptureGroups(string $regex): string
     {
@@ -68,13 +58,12 @@ final class TurnipPatternPolicy implements PatternPolicy
 
         return preg_replace_callback(
             self::PLACEHOLDER_REGEXP,
-            array($this, 'replaceTokenWithRegexCaptureGroup'),
+            [$this, 'replaceTokenWithRegexCaptureGroup'],
             $regex
         );
     }
 
     /**
-     * @return string
      * @param string[] $tokenMatch
      */
     private function replaceTokenWithRegexCaptureGroup(array $tokenMatch): string
@@ -90,10 +79,6 @@ final class TurnipPatternPolicy implements PatternPolicy
 
     /**
      * Replaces turnip optional ending with regex non-capturing optional group.
-     *
-     * @param string $regex
-     *
-     * @return string
      */
     private function replaceTurnipOptionalEndingWithRegex(string $regex): string
     {
@@ -102,10 +87,6 @@ final class TurnipPatternPolicy implements PatternPolicy
 
     /**
      * Replaces turnip alternative words with regex non-capturing alternating group.
-     *
-     * @param string $regex
-     *
-     * @return string
      */
     private function replaceTurnipAlternativeWordsWithRegex(string $regex): string
     {
@@ -116,33 +97,10 @@ final class TurnipPatternPolicy implements PatternPolicy
     }
 
     /**
-     * Adds escaping to alternation syntax in pattern.
-     *
-     * By default, Turnip treats `/` as alternation syntax. Meaning `one/two` for Turnip
-     * means either `one` or `two`. Sometimes though you'll want to use slash character
-     * with different purpose (URL, UNIX paths). In this case, you would escape slashes
-     * with backslash.
-     *
-     * This method adds escaping to all slashes in generated snippets.
-     *
-     * @param string $pattern
-     *
-     * @return string
-     */
-    private function escapeAlternationSyntax(string $pattern): string
-    {
-        return str_replace('/', '\/', $pattern);
-    }
-
-    /**
      * Removes escaping of alternation syntax from regex.
      *
      * This method removes those escaping backslashes from your slashes, so your steps
      * could be matched against your escaped definitions.
-     *
-     * @param string $regex
-     *
-     * @return string
      */
     private function removeEscapingOfAlternationSyntax(string $regex): string
     {

@@ -46,11 +46,11 @@ class FeatureStepCompletorTest extends TestCase
     {
         yield 'all' => [
             <<<'EOT'
-Feature: Foobar
+                Feature: Foobar
 
-    Scenario: Hello
-        Given <><>
-EOT
+                    Scenario: Hello
+                        Given <><>
+                EOT
             , [
                 [
                     'type' => 'snippet',
@@ -69,11 +69,11 @@ EOT
 
         yield 'partial match' => [
             <<<'EOT'
-Feature: Foobar
+                Feature: Foobar
 
-    Scenario: Hello
-        Given <>that I visit<>
-EOT
+                    Scenario: Hello
+                        Given <>that I visit<>
+                EOT
             , [
                 [
                     'type' => 'snippet',

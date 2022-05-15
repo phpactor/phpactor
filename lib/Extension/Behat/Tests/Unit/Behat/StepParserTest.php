@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit\Behat;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\StepParser;
 
@@ -9,15 +10,19 @@ class StepParserTest extends TestCase
 {
     /**
      * @dataProvider provideSteps
+     * @param array<int,string> $expected
      */
-    public function testParsesPhpStepsDefinitions(string $docblock, array $expected)
+    public function testParsesPhpStepsDefinitions(string $docblock, array $expected): void
     {
         $parser = new StepParser();
         $steps = $parser->parseSteps($docblock);
         $this->assertEquals($expected, $steps);
     }
 
-    public function provideSteps()
+    /**
+     * @return Generator<array{string,array<int,string>}>
+     */
+    public function provideSteps(): Generator
     {
         yield [
             '* @Given I visit Berlin',
@@ -28,14 +33,14 @@ class StepParserTest extends TestCase
 
         yield [
             <<<'EOT'
-/**
- * @Given I visit Berlin
- * @And I go to Alexanderplatz
- * @When climb up the Fernsehturm
- * @Then I will see things
- * @But I will not know what they are
- */
-EOT
+                /**
+                 * @Given I visit Berlin
+                 * @And I go to Alexanderplatz
+                 * @When climb up the Fernsehturm
+                 * @Then I will see things
+                 * @But I will not know what they are
+                 */
+                EOT
             , [
                 'I visit Berlin',
                 'I go to Alexanderplatz',

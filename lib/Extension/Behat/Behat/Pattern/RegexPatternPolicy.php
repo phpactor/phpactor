@@ -17,9 +17,7 @@ namespace Phpactor\Extension\Behat\Behat\Pattern;
  */
 final class RegexPatternPolicy implements PatternPolicy
 {
-    /**
-     * {@inheritdoc}
-     */
+    
     public function transformPatternToRegex($pattern): string
     {
         if (false === @preg_match($pattern, 'anything')) {

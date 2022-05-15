@@ -10,7 +10,7 @@ class ChainContextClassResolver implements ContextClassResolver
     /**
      * @var ContextClassResolver[]
      */
-    private $contextClassResolvers;
+    private array $contextClassResolvers;
 
     /**
      * @param ContextClassResolver[] $contextClassResolvers

@@ -8,8 +8,6 @@ interface PatternPolicy
      * Transforms pattern string to regex.
      *
      * @param string $pattern
-     *
-     * @return string
      */
     public function transformPatternToRegex($pattern): string;
 }

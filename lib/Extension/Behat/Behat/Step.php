@@ -8,30 +8,15 @@ use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
 
 class Step
 {
-    /**
-     * @var Context
-     */
-    private $context;
-
-    /**
-     * @var string
-     */
-    private $method;
-
-    /**
-     * @var string
-     */
-    private $pattern;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var int
-     */
-    private $startByteOffset;
+    private Context $context;
+    
+    private string $method;
+    
+    private string $pattern;
+    
+    private string $path;
+    
+    private int $startByteOffset;
 
     public function __construct(
         Context $context,
@@ -62,7 +47,7 @@ class Step
         return $this->pattern;
     }
 
-    public function matches(string $line)
+    public function matches(string $line): bool
     {
         $policies = [
             new TurnipPatternPolicy(),

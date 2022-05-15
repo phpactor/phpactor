@@ -7,14 +7,14 @@ class TestContext
     /**
      * @Given that I visit Berlin
      */
-    public function givenThatThis()
+    public function givenThatThis(): void
     {
     }
 
     /**
      * @Then I should run to Weisensee
      */
-    public function shouldRun()
+    public function shouldRun(): void
     {
     }
 }

@@ -8,10 +8,8 @@ use Phpactor\Extension\Behat\Tests\IntegrationTestCase;
 
 class BehatConfigTest extends IntegrationTestCase
 {
-    /**
-     * @var BehatConfig
-     */
-    private $config;
+    
+    private BehatConfig $config;
 
     protected function setUp(): void
     {
@@ -19,18 +17,18 @@ class BehatConfigTest extends IntegrationTestCase
         $this->config = new BehatConfig($this->workspace()->path('/behat.yml'));
     }
 
-    public function testReturnsContexts()
+    public function testReturnsContexts(): void
     {
         $this->workspace()->put(
             'behat.yml',
             <<<'EOT'
-default:
-    suites:
-        default:
-            contexts:
-                - One
-                - Two
-EOT
+                default:
+                    suites:
+                        default:
+                            contexts:
+                                - One
+                                - Two
+                EOT
         );
 
 
@@ -42,37 +40,37 @@ EOT
         self::assertEquals('default', $context->suite());
     }
 
-    public function testReturnsContextsFromImportedFiles()
+    public function testReturnsContextsFromImportedFiles(): void
     {
         $this->workspace()->put(
             'one.yml',
             <<<'EOT'
-default:
-    suites:
-        default:
-            contexts:
-                - One
-                - Two
-EOT
+                default:
+                    suites:
+                        default:
+                            contexts:
+                                - One
+                                - Two
+                EOT
         );
         $this->workspace()->put(
             'two.yml',
             <<<'EOT'
-default:
-    suites:
-        default:
-            contexts:
-                - Three
-                - Four
-EOT
+                default:
+                    suites:
+                        default:
+                            contexts:
+                                - Three
+                                - Four
+                EOT
         );
         $this->workspace()->put(
             'behat.yml',
             <<<'EOT'
-imports:
-    - one.yml
-    - two.yml
-EOT
+                imports:
+                    - one.yml
+                    - two.yml
+                EOT
         );
 
 
@@ -80,25 +78,25 @@ EOT
         self::assertCount(4, $contexts);
     }
 
-    public function testDoesNotReturnContextsFromImportedFilesWithNoContexts()
+    public function testDoesNotReturnContextsFromImportedFilesWithNoContexts(): void
     {
         $this->workspace()->put(
             'one.yml',
             <<<'EOT'
-EOT
+                EOT
         );
         $this->workspace()->put(
             'two.yml',
             <<<'EOT'
-EOT
+                EOT
         );
         $this->workspace()->put(
             'behat.yml',
             <<<'EOT'
-imports:
-    - one.yml
-    - two.yml
-EOT
+                imports:
+                    - one.yml
+                    - two.yml
+                EOT
         );
 
 
