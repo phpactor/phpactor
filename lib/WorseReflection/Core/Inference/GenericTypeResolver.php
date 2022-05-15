@@ -17,25 +17,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 class GenericTypeResolver
 {
     /**
-     * Resolve template type for methods declaring class:
-     *
-     * - Get current class
-     * - Descend to find the declaring class _through generic annotations_ an
-     *   - Start with the current class's generic arguments
-     *   - return the generic type of the declaring class with resolved arguments
-     *
-     * If return type is generic
-     *
-     * - iterate over the parameters and replace them with mapped template's arguments
-     *
-     * If class extends a generic type
-     *
-     * - Get current class
-     * - Descend to implementing class
-     *
-     * For method using class template parameters:
-     *
-     * - Resolve template map for declaring class
+     * Resolve the templated type for a class member
      */
     public function resolveMemberType(Type $classType, ReflectionMember $member): Type
     {
@@ -89,8 +71,11 @@ class GenericTypeResolver
 
             $ancestorType = $this->mapTypes($ancestorType, $current->templateMap(), $type);
 
-            // this looks wrong...
-            if (null !== $resolvedType = $this->resolveDeclaringClassGenericType($reflectionClassLike, $target, $ancestorType)) {
+            if (null !== $resolvedType = $this->resolveDeclaringClassGenericType(
+                $reflectionClassLike,
+                $target,
+                $ancestorType
+            )) {
                 return $resolvedType;
             }
         }
