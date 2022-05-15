@@ -42,11 +42,8 @@ function foobar(Foos $foos) {
     wrAssertType('void', $foos->all()->first()->bar());
     wrAssertType('Test\Collection<Test\array-key,Test\Foo>', $foos->all()->filter(fn($foo)));
 
-    // array access
-    // wrAssertType('void', $foos->all()[0]->bar()); // Not recognized
-
     $filtered = $foos->all()->filter(fn($foo) => $foo);
     foreach ($filtered as $foo) {
-        wrAssertType('void', $foo->bar()); // Not recognized
+        wrAssertType('void', $foo->bar());
     }
 }
