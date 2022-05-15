@@ -3,24 +3,21 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use RuntimeException;
-use Traversable;
 
 class GenericTypeResolver
 {
     /**
      * Resolve template type for methods declaring class:
-     *  
+     *
      * - Get current class
      * - Descend to find the declaring class _through generic annotations_ an
      *   - Start with the current class's generic arguments
@@ -32,7 +29,7 @@ class GenericTypeResolver
      *
      * If class extends a generic type
      *
-     * - 
+     * -
      *
      * For method using class template parameters:
      *
@@ -80,14 +77,12 @@ class GenericTypeResolver
         ReflectionClassLike $current,
         ReflectionClassLike $target,
         GenericClassType $type
-    ): ?Type
-    {
+    ): ?Type {
         if ($current->name() == $target->name()) {
             return $type;
         }
 
         foreach ($this->ancestors($current) as $ancestorType) {
-
             $reflectionClassLike = $ancestorType->reflectionOrNull();
 
             if (!$reflectionClassLike) {
@@ -138,8 +133,7 @@ class GenericTypeResolver
         GenericClassType $memberType,
         TemplateMap $templateMap,
         GenericClassType $genericClassType
-    ): GenericClassType
-    {
+    ): GenericClassType {
         return $memberType->withArguments(array_map(function (Type $argument) use ($templateMap, $genericClassType) {
             if (!$argument instanceof ClassType) {
                 return $argument;

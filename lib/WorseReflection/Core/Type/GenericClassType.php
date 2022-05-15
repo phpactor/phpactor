@@ -85,6 +85,14 @@ class GenericClassType extends ReflectedClassType implements IterableType
         return new MissingType();
     }
 
+    /**
+     * @param Type[] $arguments
+     */
+    public function withArguments(array $arguments): self
+    {
+        return new self($this->reflector, $this->name, $arguments);
+    }
+
     protected function map(Closure $mapper): Type
     {
         return new self(
@@ -92,13 +100,5 @@ class GenericClassType extends ReflectedClassType implements IterableType
             ClassName::fromString((new ReflectedClassType($this->reflector, $this->name))->map($mapper)->__toString()),
             array_map(fn (Type $type) => $type->map($mapper), $this->arguments)
         );
-    }
-
-    /**
-     * @param Type[] $arguments
-     */
-    public function withArguments(array $arguments): self
-    {
-        return new self($this->reflector, $this->name, $arguments);
     }
 }

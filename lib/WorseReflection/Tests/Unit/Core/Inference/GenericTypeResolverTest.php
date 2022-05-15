@@ -28,7 +28,6 @@ class GenericTypeResolverTest extends TestCase
 
         $resolver = new GenericTypeResolver();
         self::assertEquals($expected, $resolver->resolveMemberType($classType, $member)->__toString());
-
     }
 
     /**
