@@ -40,23 +40,10 @@ class MethodTypeResolver
         $classMethodOverride = $method->class()->docblock()->methodType($method->name());
 
         if (($classMethodOverride->isDefined())) {
-            return $this->resolveType($classMethodOverride);
+            return $classMethodOverride;
         }
 
-        return $this->resolveType($method->docblock()->returnType());
-    }
-
-    private function resolveType(Type $type): Type
-    {
-        if (false === ($type->isDefined())) {
-            return $type;
-        }
-
-        return StaticGenericHelper::resolveMethodType(
-            $this->method->class(),
-            $this->method->declaringClass(),
-            $type
-        );
+        return $method->docblock()->returnType();
     }
 
     private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type
@@ -89,12 +76,7 @@ class MethodTypeResolver
         /** @var ReflectionInterface $interface */
         foreach ($reflectionClass->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
-                $type = StaticGenericHelper::resolveMethodType(
-                    $this->method->class(),
-                    $interface,
-                    $interface->methods()->get($this->method->name())->inferredType(),
-                );
-                return $type;
+                return $interface->methods()->get($this->method->name())->inferredType();
             }
         }
 

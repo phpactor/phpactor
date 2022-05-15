@@ -208,7 +208,7 @@ abstract class Type
     /**
      * @param Closure(Type): Type $mapper
      */
-    protected function map(Closure $mapper): Type
+    public function map(Closure $mapper): Type
     {
         return $mapper($this);
     }

@@ -53,6 +53,16 @@ final class TemplateMap
             return new MissingType();
         }
 
+        // if any of the arguments are template parameters replace them with
+        // any constraints (e.g. T of Foobar)
+        $arguments = array_map(function (Type $argument) {
+            if (isset($this->map[$argument->short()])) {
+                return $this->map[$argument->short()];
+            }
+
+            return $argument;
+        }, $arguments);
+
         if ($arguments) {
             $offset = array_search($key, array_keys($this->map));
 
@@ -73,5 +83,10 @@ final class TemplateMap
 
 
         return new TemplateMap($new);
+    }
+
+    public function count(): int
+    {
+        return count($this->map);
     }
 }

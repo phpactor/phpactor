@@ -40,7 +40,7 @@ function foobar(Foos $foos) {
     wrAssertType('Test\Collection<int,Test\Foo>', $foos->all());
     wrAssertType('Test\Foo', $foos->all()->first());
     wrAssertType('void', $foos->all()->first()->bar());
-    wrAssertType('Test\Collection<Test\array-key,Test\Foo>', $foos->all()->filter(fn($foo)));
+    wrAssertType('Test\Collection<int,Test\Foo>', $foos->all()->filter(fn($foo)));
 
     $filtered = $foos->all()->filter(fn($foo) => $foo);
     foreach ($filtered as $foo) {
