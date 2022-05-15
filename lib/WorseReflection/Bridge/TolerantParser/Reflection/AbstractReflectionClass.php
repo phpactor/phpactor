@@ -13,6 +13,8 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 abstract class AbstractReflectionClass extends AbstractReflectedNode implements ReflectionClassLike
 {
+    private ?TemplateMap $templateMap = null;
+
     abstract public function name(): ClassName;
     abstract public function docblock(): DocBlock;
 
@@ -57,7 +59,13 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
 
     public function templateMap(): TemplateMap
     {
-        return $this->docblock()->templateMap();
+        if ($this->templateMap) {
+            return $this->templateMap;
+        }
+
+        $this->templateMap = $this->docblock()->templateMap();
+
+        return $this->templateMap;
     }
 
     public function type(): ReflectedClassType

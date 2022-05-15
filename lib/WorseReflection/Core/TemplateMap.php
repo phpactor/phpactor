@@ -69,4 +69,24 @@ final class TemplateMap
 
         return new TemplateMap($new);
     }
+
+    public function __toString(): string
+    {
+        return implode("\n", array_map(fn (string $name, Type $type) => sprintf('%s: %s', $name, $type->__toString()), array_keys($this->map), $this->map));
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function mapArguments(array $arguments): void
+    {
+        $index = 0;
+        foreach ($this->map as $key => $value) {
+            if (!isset($arguments[$index])) {
+                return;
+            }
+            $this->map[$key] = $arguments[$index];
+            $index++;
+        }
+    }
 }

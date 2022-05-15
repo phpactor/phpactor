@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
 {
@@ -135,6 +136,10 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      */
     public function reflectClassLike($className): ReflectionClassLike
     {
+        $args = [];
+        if ($className instanceof GenericClassType) {
+            $args = $className->arguments();
+        }
         $className = ClassName::fromUnknown($className);
 
         $source = $this->sourceLocator->locate($className);
@@ -148,6 +153,10 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         }
 
         $class = $classes->get((string) $className);
+
+        if ($args) {
+            $class->templateMap()->mapArguments($args);
+        }
 
         return $class;
     }

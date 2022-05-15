@@ -78,7 +78,7 @@ class MemberAccessExpressionResolver implements Resolver
         // this could be a union or a nullable
         foreach ($classType->classNamedTypes() as $subType) {
             try {
-                $reflection = $resolver->reflector()->reflectClassLike($subType->name());
+                $reflection = $resolver->reflector()->reflectClassLike($subType);
             } catch (NotFound $e) {
                 continue;
             }
