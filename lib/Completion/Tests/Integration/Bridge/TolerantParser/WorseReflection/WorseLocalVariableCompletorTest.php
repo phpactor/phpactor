@@ -14,6 +14,7 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     * @dataProvider provideUseVariables
      */
     public function testComplete(string $source, array $expected): void
     {
@@ -28,6 +29,9 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideCouldNotComplete(): Generator
     {
         yield 'empty string' => [ '<?php  <>' ];
@@ -36,6 +40,9 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
         yield 'static variable' => ['<?php Foobar::$<>'];
     }
 
+    /**
+     * @return Generator<array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'Nothing' => [
@@ -160,6 +167,29 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
             ]
         ];
     }
+
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
+    public function provideUseVariables(): Generator
+    {
+        yield 'Use variables' => [
+            '<?php $barfoo = 12; $foobar = "hello"; $f = function () use ($<>',
+            [
+                [
+                    'type' => Suggestion::TYPE_VARIABLE,
+                    'name' => '$barfoo',
+                    'short_description' => '12',
+                ],
+                [
+                    'type' => Suggestion::TYPE_VARIABLE,
+                    'name' => '$foobar',
+                    'short_description' => '"hello"',
+                ],
+            ]
+        ];
+    }
+
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {

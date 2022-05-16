@@ -3,6 +3,7 @@
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable as ParserVariable;
 use Phpactor\TextDocument\ByteOffset;
@@ -40,6 +41,11 @@ class VariableCompletionHelper
         }
 
         $frame = $reflectionOffset->frame();
+
+        // for anonymous functions use the parent frame
+        if ($node->getFirstAncestor(AnonymousFunctionCreationExpression::class)) {
+            $frame = $frame->parent();
+        }
 
         // Get all declared variables up until the start of the current
         // expression. The most recently declared variables should be first
@@ -91,6 +97,7 @@ class VariableCompletionHelper
         if ($parentNode instanceof AssignmentExpression) {
             $offset = $parentNode->getFullStartPosition();
         }
+
         return $offset;
     }
 
