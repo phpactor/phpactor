@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
+use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
@@ -90,6 +91,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_TRACE = 'language_server.trace';
     public const LOG_CHANNEL = 'LSP';
     public const PARAM_SHUTDOWN_GRACE_PERIOD = 'language_server.shutdown_grace_period';
+    public const PARAM_SELF_DESTRUCT_TIMEOUT = 'language_server.self_destruct_timeout';
     
     public function configure(Resolver $schema): void
     {
@@ -106,7 +108,8 @@ class LanguageServerExtension implements Extension
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
             self::PARAM_TRACE => false,
-            self::PARAM_SHUTDOWN_GRACE_PERIOD => 50,
+            self::PARAM_SHUTDOWN_GRACE_PERIOD => 200,
+            self::PARAM_SELF_DESTRUCT_TIMEOUT => 2500,
         ]);
         $schema->setDescriptions([
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
@@ -123,6 +126,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
+            self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time after a shutdown request before self-destructing',
         ]);
     }
 
@@ -196,6 +200,12 @@ class LanguageServerExtension implements Extension
                 $container->get(ClientApi::class),
                 $container->has(ResolverErrors::class) ? $container->get(ResolverErrors::class) : new ResolverErrors([])
             );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(SelfDestructListener::class, function (Container $container) {
+            return new SelfDestructListener($container->getParameter(self::PARAM_SELF_DESTRUCT_TIMEOUT));
         }, [
             self::TAG_LISTENER_PROVIDER => [],
         ]);
