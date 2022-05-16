@@ -59,10 +59,15 @@ class NodeContextResolver
     }
 
     /**
-     * @param Node|Token|MissingToken $node
+     * @param Node|Token|MissingToken|array<MissingToken> $node
      */
     private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
     {
+        // somehow we can get an array of missing tokens here instead of an object...
+        if (!is_object($node)) {
+            return NodeContext::none();
+        }
+
         $key = 'sc:'.spl_object_hash($node);
 
         return $this->cache->getOrSet($key, function () use ($frame, $node) {
