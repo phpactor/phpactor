@@ -93,24 +93,23 @@ class MemberAccessExpressionResolver implements Resolver
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
+                $inferredType = $member->inferredType();
+
                 if ($member instanceof ReflectionProperty) {
-                    $type = self::getFrameTypesForPropertyAtPosition(
+                    $inferredType = self::getFrameTypesForPropertyAtPosition(
                         $frame,
                         (string) $memberName,
                         $subType,
                         $node->getEndPosition(),
                     );
-
-                    if ($type) {
-                        return $information->withContainerType($subType)->withType($type);
-                    }
                 }
+
                 $types[] = $declaringClass;
 
-                $inferredType = $member->inferredType();
                 if ($genericResolver) {
-                    $inferredType = $genericResolver->resolveMemberType($subType, $member);
+                    $inferredType = $genericResolver->resolveMemberType($subType, $member, $inferredType);
                 }
+
                 // if multiple classes declare a member, always take the "top" one
                 $memberTypes[$memberName] = $inferredType;
             }
@@ -140,10 +139,9 @@ class MemberAccessExpressionResolver implements Resolver
         }
 
         $variable = $frame->properties()
-        ->lessThanOrEqualTo($position)
-        ->byName($propertyName)
-        ->lastOrNull()
-    ;
+            ->lessThanOrEqualTo($position)
+            ->byName($propertyName)
+            ->lastOrNull();
 
         if (null === $variable) {
             return null;

@@ -142,4 +142,24 @@ class ReflectedClassType extends ClassType
 
         return Trinary::maybe();
     }
+
+    /**
+     * If the class type has a template, then upcast it
+     */
+    public function upcastToGeneric(): ReflectedClassType
+    {
+        if ($this instanceof GenericClassType) {
+            return $this;
+        }
+        $reflection = $this->reflectionOrNull();
+        if (!$reflection) {
+            return $this;
+        }
+
+        if (0 === $reflection->templateMap()->count()) {
+            return $this;
+        }
+
+        return new GenericClassType($this->reflector, $this->name(), $reflection->templateMap()->toArray());
+    }
 }

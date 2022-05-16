@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @template T of ReflectionMemberCollection
+ */
+class ChainReflectionMemberCollection
+{
+    /**
+     * @var array<T>
+     */
+    private array $collections = [];
+
+    public function foobar(){
+        wrAssertType('ReflectionMemberCollection[]', $this->collections);
+    }
+}
+
