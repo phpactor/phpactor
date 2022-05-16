@@ -89,6 +89,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_PROFILE = 'language_server.profile';
     public const PARAM_TRACE = 'language_server.trace';
     public const LOG_CHANNEL = 'LSP';
+    public const PARAM_SHUTDOWN_GRACE_PERIOD = 'language_server.shutdown_grace_period';
     
     public function configure(Resolver $schema): void
     {
@@ -105,6 +106,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
             self::PARAM_TRACE => false,
+            self::PARAM_SHUTDOWN_GRACE_PERIOD => 50,
         ]);
         $schema->setDescriptions([
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
@@ -120,6 +122,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => 'Perform diagnostics when the text document is saved',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
+            self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
         ]);
     }
 
@@ -318,7 +321,7 @@ class LanguageServerExtension implements Extension
                 $this->serverInfo()
             );
 
-            $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class));
+            $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class), $container->getParameter(self::PARAM_SHUTDOWN_GRACE_PERIOD));
             $stack[] = new CancellationMiddleware($container->get(MethodRunner::class));
 
             $stack[] = new MethodAliasMiddleware($container->getParameter(self::PARAM_METHOD_ALIAS_MAP));
