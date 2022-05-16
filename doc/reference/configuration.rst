@@ -1328,6 +1328,36 @@ Log incoming and outgoing messages (needs log formatter to be set to ``json``)
 **Default**: ``false``
 
 
+.. _param_language_server.shutdown_grace_period:
+
+
+``language_server.shutdown_grace_period``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Amount of time to wait before responding to a shutdown notification
+
+
+**Default**: ``200``
+
+
+.. _param_language_server.self_destruct_timeout:
+
+
+``language_server.self_destruct_timeout``
+"""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Wait this amount of time after a shutdown request before self-destructing
+
+
+**Default**: ``2500``
+
+
 .. _LanguageServerCompletionExtension:
 
 
