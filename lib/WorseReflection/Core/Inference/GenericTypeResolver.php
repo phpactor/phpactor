@@ -34,6 +34,7 @@ class GenericTypeResolver
             return $memberType;
         }
 
+        $classType = $classType->upcastToGeneric();
         $declaringClass = $this->declaringClass($member);
         $classGenericType = $this->resolveDeclaringClassGenericType(
             $member->class(),
@@ -64,6 +65,7 @@ class GenericTypeResolver
         if ($current->name() == $target->name()) {
             return $type;
         }
+
         foreach ($this->ancestors($current) as $ancestorType) {
             $reflectionClassLike = $ancestorType->reflectionOrNull();
 

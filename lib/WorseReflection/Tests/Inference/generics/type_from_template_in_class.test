@@ -3,7 +3,7 @@
 /**
  * @template T of ReflectionMemberCollection
  */
-class ChainReflectionMemberCollection implements ReflectionMemberCollection
+class ChainReflectionMemberCollection
 {
     /**
      * @var array<T>
