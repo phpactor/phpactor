@@ -17,11 +17,13 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 class GenericTypeResolver
 {
     /**
-     * Resolve the templated type for a class member
+     * Resolve the templated type for a class member.
+     * Allow passing of $memberType to override the type of the method
+     * (for example because the type was overridden/updated in the frame)
      */
-    public function resolveMemberType(Type $classType, ReflectionMember $member): Type
+    public function resolveMemberType(Type $classType, ReflectionMember $member, ?Type $memberType = null): Type
     {
-        $memberType = $member->inferredType();
+        $memberType = $memberType ?: $member->inferredType();
 
         if (!$classType instanceof ReflectedClassType) {
             return $memberType;
