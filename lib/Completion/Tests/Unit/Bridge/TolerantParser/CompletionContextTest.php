@@ -165,4 +165,45 @@ class CompletionContextTest extends TestCase
             true,
         ];
     }
+
+    /**
+     * @dataProvider provideAnonymousUse
+     */
+    public function testAnonymousUse(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::anonymousUse($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function provideAnonymousUse(): Generator
+    {
+        yield [
+            '<?php function () use ($<>) { ',
+            true,
+        ];
+        yield [
+            '<?php function () use ($<>) {}',
+            true,
+        ];
+        yield [
+            '<?php function () use ($foo, $<>) { ',
+            true,
+        ];
+        yield [
+            '<?php function (<>) { ',
+            false,
+        ];
+        yield [
+            '<?php function ($<>) { ',
+            false,
+        ];
+        yield [
+            '<?php function ($<>) use ($foo) { ',
+            false,
+        ];
+    }
 }

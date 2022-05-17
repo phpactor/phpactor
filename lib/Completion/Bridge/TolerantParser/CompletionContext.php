@@ -3,6 +3,7 @@
 namespace Phpactor\Completion\Bridge\TolerantParser;
 
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\ClassBaseClause;
@@ -10,6 +11,7 @@ use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MethodDeclaration;
@@ -176,6 +178,29 @@ class CompletionContext
         }
 
         return false;
+    }
+
+    public static function anonymousUse(Node $node): bool
+    {
+        if (!$node->parent) {
+            return false;
+        }
+        $compound = $node->parent->parent;
+        if (!$compound instanceof CompoundStatementNode) {
+            return false;
+        }
+        $anonymous = $compound->parent;
+        if (!$anonymous instanceof AnonymousFunctionCreationExpression) {
+            return false;
+        }
+        if (!$compound->openBrace instanceof MissingToken) {
+            return false;
+        }
+        if (!$anonymous->anonymousFunctionUseClause) {
+            return false;
+        }
+
+        return true;
     }
 
     private static function isClassClause(?Node $node): bool

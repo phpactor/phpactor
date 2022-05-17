@@ -188,6 +188,12 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                 ],
             ]
         ];
+
+        yield 'Use variables not in function body' => [
+            '<?php $barfoo = 12; $foobar = "hello"; $f = function () { $<>',
+            [
+            ]
+        ];
     }
 
 

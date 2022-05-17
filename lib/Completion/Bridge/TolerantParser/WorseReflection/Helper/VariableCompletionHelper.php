@@ -3,9 +3,9 @@
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable as ParserVariable;
+use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -42,8 +42,7 @@ class VariableCompletionHelper
 
         $frame = $reflectionOffset->frame();
 
-        // for anonymous functions use the parent frame
-        if ($node->getFirstAncestor(AnonymousFunctionCreationExpression::class)) {
+        if (CompletionContext::anonymousUse($node)) {
             $frame = $frame->parent();
         }
 
