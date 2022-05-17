@@ -751,6 +751,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ]
             ];
 
+            /** See https://github.com/phpactor/phpactor/issues/1612
             yield 'backed enum' => [
                 <<<'EOT'
                     <?php
@@ -770,6 +771,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                     ],
                 ]
             ];
+             */
         }
 
         yield 'nullable' => [

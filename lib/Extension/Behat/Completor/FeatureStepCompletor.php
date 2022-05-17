@@ -76,7 +76,7 @@ class FeatureStepCompletor implements Completor
     {
         $length = 0;
         $last = '';
-        $lines = preg_split('/$(\R?^)/m', $source, null, PREG_SPLIT_OFFSET_CAPTURE);
+        $lines = preg_split('/$(\R?^)/m', $source, -1, PREG_SPLIT_OFFSET_CAPTURE);
         if (false === $lines) {
             return $source;
         }

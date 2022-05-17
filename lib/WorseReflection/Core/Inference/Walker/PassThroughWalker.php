@@ -37,8 +37,6 @@ class PassThroughWalker implements Walker
 
     public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        assert($node instanceof AssignmentExpression);
-
         $resolver->resolveNode($frame, $node);
 
         return $frame;
