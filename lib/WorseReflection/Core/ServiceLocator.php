@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -83,6 +84,9 @@ class ServiceLocator
 
         $this->sourceLocator = $sourceLocator;
         $this->docblockFactory = new DocblockParserFactory($this->reflector);
+        if (!$cache instanceof NullCache) {
+            $this->docblockFactory = new CachedParserFactory($this->docblockFactory, $cache);
+        }
         $this->logger = $logger;
 
         $nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
