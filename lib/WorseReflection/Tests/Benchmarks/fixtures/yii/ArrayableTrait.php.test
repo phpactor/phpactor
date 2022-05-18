@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace Phpactor\WorseReflection\Tests\Benchmarks\fixtures\yii;
+namespace Phpactor\WorseReflection\Tests\Workspace;
 
 use Yii;
 use yii\helpers\ArrayHelper;
