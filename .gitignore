@@ -8,6 +8,7 @@
 /**/Tests/Workspace
 /lib/Completion/cache
 /lib/Test.php
+/lib/WorseReflection/Tests/Cache
 /lib/Extension/WorseReflection/stubs
 
 # File frequently used for testing
