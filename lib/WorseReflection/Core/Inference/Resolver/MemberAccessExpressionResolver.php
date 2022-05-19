@@ -92,7 +92,6 @@ class MemberAccessExpressionResolver implements Resolver
             }
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
-                $declaringClass = TypeFactory::reflectedClass($resolver->reflector(), $member->declaringClass()->name());
                 $inferredType = $member->inferredType();
 
                 if ($member instanceof ReflectionProperty) {
@@ -104,7 +103,7 @@ class MemberAccessExpressionResolver implements Resolver
                     );
                 }
 
-                $types[] = $declaringClass;
+                $types[] = $subType;
 
                 if ($genericResolver) {
                     $inferredType = $genericResolver->resolveMemberType($subType, $member, $inferredType);

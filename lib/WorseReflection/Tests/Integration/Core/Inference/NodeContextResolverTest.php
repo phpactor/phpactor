@@ -468,7 +468,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 'type' => 'Type3',
                 'symbol_type' => Symbol::METHOD,
                 'symbol_name' => 'type3',
-                'container_type' => 'Barfoo',
+                'container_type' => 'Foobar',
             ],
         ];
 

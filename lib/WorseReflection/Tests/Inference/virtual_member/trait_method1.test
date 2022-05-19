@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @method void sayHello()
+ */
+trait Feature {
+    public function another(): void {}
+}
+
+class UseTrait {
+    use Feature;
+
+    public function test1() {
+        wrAssertType('void', $this->sayHello());
+    }
+}

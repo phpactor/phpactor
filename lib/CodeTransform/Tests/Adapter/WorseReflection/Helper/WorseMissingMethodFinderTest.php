@@ -101,11 +101,27 @@ class WorseMissingMethodFinderTest extends WorseTestCase
                 EOT
             , 0
         ];
+        yield 'methods from trait with virtual method' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @method void boo()
+                 */
+                trait Baz {}
+                {
+                }
+                class Bar { use Baz; function zed() {} }
+                $new = new Bar();
+                $new->boo();
+                EOT
+            , 0
+        ];
         yield 'methods from generic' => [
             <<<'EOT'
                 <?php
                 /**
-                 * @template 
+                 * @template T
                  */
                 class Baz {}
                 /**
