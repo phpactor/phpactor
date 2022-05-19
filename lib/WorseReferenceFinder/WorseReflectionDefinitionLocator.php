@@ -155,6 +155,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             try {
                 $containingClass = $this->reflector->reflectClassLike((string) $namedType);
             } catch (NotFound $e) {
+                dump($e->getMessage());
                 continue;
             }
 
