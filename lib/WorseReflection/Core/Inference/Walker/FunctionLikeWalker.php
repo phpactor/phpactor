@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\FunctionLike;
@@ -67,14 +68,20 @@ class FunctionLikeWalker implements Walker
             TraitDeclaration::class
         );
 
+        if ($node instanceof AnonymousFunctionCreationExpression) {
+            $this->addAnonymousImports($frame, $node);
+
+            // if this is a static anonymous function, set classNode to NULL
+            // so that we don't add the class context
+            if ($node->staticModifier && $node->staticModifier->kind === TokenKind::StaticKeyword) {
+                $classNode = null;
+            }
+        }
+
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
             $classType = $resolver->resolveNode($frame, $classNode)->type();
             $this->addClassContext($node, $classType, $frame);
-        }
-
-        if ($node instanceof AnonymousFunctionCreationExpression) {
-            $this->addAnonymousImports($frame, $node);
         }
 
         if (null === $node->parameters) {

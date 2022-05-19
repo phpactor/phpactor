@@ -134,6 +134,27 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
                 $this->assertCount(1, $frame->locals()->byName('$bar'), 'Scoped variable exists');
                 $this->assertCount(0, $frame->locals()->byName('$foo'), 'Parent scoped variable doesnt exist');
             }
+                ];
+
+        yield 'Static anonymous function has no $this or self::' => [
+            <<<'EOT'
+                <?php
+                $foo = 'bar';
+
+                class Foo {
+                    public function baz() {
+                        $hello = static function () {
+                            $bar = 'foo';
+                            <>
+                        };
+                    }
+                }
+                EOT
+        ,
+            function (Frame $frame): void {
+                $this->assertCount(1, $frame->locals()->byName('$bar'));
+                $this->assertCount(0, $frame->locals()->byName('$this'));
+            }
         ];
 
         yield 'Injects closure parameters' => [
