@@ -219,6 +219,26 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         );
     }
 
+    public function testLocatesDeclaringClass(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public function barfoo() {} }
+            // File: Barfoo.php
+            <?php class Barfoo extends Foobar {}
+            EOT
+        , '<?php $bar = new Barfoo(); $bar->bar<>foo();');
+
+        self::assertEquals(
+            $this->workspace->path('Foobar.php'),
+            $location->first()->location()->uri()->path()
+        );
+        self::assertEquals(
+            21,
+            $location->first()->location()->offset()->toInt()
+        );
+    }
+
     public function testLocatesInstanceGeneric(): void
     {
         $location = $this->locate(<<<'EOT'
@@ -234,7 +254,10 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             $this->workspace->path('Barfoo.php'),
             $location->first()->location()->uri()->path()
         );
-        self::assertEquals(50, $location->first()->location()->offset()->toInt());
+        self::assertEquals(
+            50,
+            $location->first()->location()->offset()->toInt()
+        );
     }
 
     public function testLocatesCase(): void
