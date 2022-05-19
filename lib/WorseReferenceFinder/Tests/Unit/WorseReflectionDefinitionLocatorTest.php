@@ -198,23 +198,22 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
-    public function testLocatesStaticGeneric(): void
+    public function testLocatesGeneric(): void
     {
         $location = $this->locate(<<<'EOT'
             // File: Foobar.php
             <?php /** @template T */class Foobar { public function get() }
             // File: Barfoo.php
             <?php class Barfoo { /** @return Foobar<Barfoo> */public static function barfoo() {} }
-            <?php 
             EOT
-        , '<?php Barfoo::bar<>foo();');
+        , '<?php $f = Barfoo::barfoo(); $f->g<>et();');
 
         self::assertEquals(
-            $this->workspace->path('Barfoo.php'),
+            $this->workspace->path('Foobar.php'),
             $location->first()->location()->uri()->path()
         );
         self::assertEquals(
-            50,
+            39,
             $location->first()->location()->offset()->toInt()
         );
     }
@@ -235,27 +234,6 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         );
         self::assertEquals(
             21,
-            $location->first()->location()->offset()->toInt()
-        );
-    }
-
-    public function testLocatesInstanceGeneric(): void
-    {
-        $location = $this->locate(<<<'EOT'
-            // File: Foobar.php
-            <?php /** @template T */class Foobar { public function get() }
-            // File: Barfoo.php
-            <?php class Barfoo { /** @return Foobar<Barfoo> */public function barfoo() {} }
-            <?php 
-            EOT
-        , '<?php $bar = new Barfoo(); $bar->bar<>foo();');
-
-        self::assertEquals(
-            $this->workspace->path('Barfoo.php'),
-            $location->first()->location()->uri()->path()
-        );
-        self::assertEquals(
-            50,
             $location->first()->location()->offset()->toInt()
         );
     }

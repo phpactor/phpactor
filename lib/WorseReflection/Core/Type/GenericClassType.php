@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
-class GenericClassType extends ReflectedClassType implements IterableType
+class GenericClassType extends ReflectedClassType implements IterableType, ClassNamedType
 {
     /**
      * @var Type[]
