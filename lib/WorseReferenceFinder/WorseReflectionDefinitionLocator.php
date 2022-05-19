@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionDefinitionLocator implements DefinitionLocator
@@ -94,9 +95,16 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     {
         $className = $symbolContext->type();
 
+        if (!$className instanceof ClassType) {
+            throw new CouldNotLocateDefinition(sprintf(
+                'member container type is not a class type, it is a "%s"',
+                get_class($className)
+            ));
+        }
+
         try {
             $class = $this->reflector->reflectClassLike(
-                (string) $className
+                $className->name()
             );
         } catch (NotFound $e) {
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
@@ -153,22 +161,13 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $locations = [];
         foreach ($containerType->classNamedTypes() as $namedType) {
             try {
-                $containingClass = $this->reflector->reflectClassLike((string) $namedType);
+                $containingClass = $this->reflector->reflectClassLike($namedType->name());
             } catch (NotFound $e) {
                 continue;
             }
 
             if ($symbolType === Symbol::PROPERTY && $containingClass instanceof ReflectionInterface) {
                 throw new CouldNotLocateDefinition(sprintf('Symbol is a property and class "%s" is an interface', (string) $containingClass->name()));
-            }
-
-            $path = $containingClass->sourceCode()->path();
-
-            if (null === $path) {
-                throw new CouldNotLocateDefinition(sprintf(
-                    'The source code for class "%s" has no path associated with it.',
-                    (string) $containingClass->name()
-                ));
             }
 
             switch ($symbolType) {
@@ -199,6 +198,15 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             }
 
             $member = $members->get($symbolName);
+
+            $path = $member->declaringClass()->sourceCode()->path();
+
+            if (null === $path) {
+                throw new CouldNotLocateDefinition(sprintf(
+                    'The source code for class "%s" has no path associated with it.',
+                    (string) $containingClass->name()
+                ));
+            }
 
             $locations[] = new TypeLocation($namedType, new Location(
                 TextDocumentUri::fromString($path),

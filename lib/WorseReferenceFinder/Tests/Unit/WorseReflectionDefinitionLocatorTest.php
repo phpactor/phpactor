@@ -198,6 +198,46 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
+    public function testLocatesGeneric(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php /** @template T */class Foobar { public function get() }
+            // File: Barfoo.php
+            <?php class Barfoo { /** @return Foobar<Barfoo> */public static function barfoo() {} }
+            EOT
+        , '<?php $f = Barfoo::barfoo(); $f->g<>et();');
+
+        self::assertEquals(
+            $this->workspace->path('Foobar.php'),
+            $location->first()->location()->uri()->path()
+        );
+        self::assertEquals(
+            39,
+            $location->first()->location()->offset()->toInt()
+        );
+    }
+
+    public function testLocatesDeclaringClass(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public function barfoo() {} }
+            // File: Barfoo.php
+            <?php class Barfoo extends Foobar {}
+            EOT
+        , '<?php $bar = new Barfoo(); $bar->bar<>foo();');
+
+        self::assertEquals(
+            $this->workspace->path('Foobar.php'),
+            $location->first()->location()->uri()->path()
+        );
+        self::assertEquals(
+            21,
+            $location->first()->location()->offset()->toInt()
+        );
+    }
+
     public function testLocatesCase(): void
     {
         if (!defined('T_ENUM')) {

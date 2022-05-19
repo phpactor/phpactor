@@ -100,7 +100,7 @@ class SourceCode implements TextDocument
         return TextDocumentLanguage::fromString('php');
     }
 
-    public function path()
+    public function path(): ?string
     {
         return $this->path;
     }
