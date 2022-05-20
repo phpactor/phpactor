@@ -799,6 +799,32 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ],
             ]
         ];
+
+        yield 'No constants for instance' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    const FOOBAR = 'foobar';
+                    const BARFOO = 'barfoo';
+
+                    public function bar(): string {}
+                }
+
+                $foobar = new Foobar();
+                $foobar-><>
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'bar',
+                    'short_description' => 'pub bar(): string',
+                    'snippet' => 'bar()'
+                ],
+            ],
+        ];
     }
 
     /**

@@ -52,6 +52,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $memberStartOffset = $offset;
+        $isInstance = true;
         
         if ($node instanceof MemberAccessExpression) {
             $memberStartOffset = $node->arrowToken->getFullStartPosition();
@@ -59,6 +60,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         if ($node instanceof ScopedPropertyAccessExpression) {
             $memberStartOffset = $node->doubleColon->getFullStartPosition();
+            $isInstance = false;
         }
 
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
@@ -84,7 +86,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $static = $node instanceof ScopedPropertyAccessExpression;
 
         foreach ($type->toTypes() as $type) {
-            foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName) as $suggestion) {
+            foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;
                 }
@@ -96,7 +98,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         return true;
     }
 
-    private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName): Generator
+    private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
     {
         if (false === ($type->isDefined())) {
             return;
@@ -169,7 +171,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             }
         }
 
-        if ($classReflection instanceof ReflectionClass ||
+        if (false === $isInstance && $classReflection instanceof ReflectionClass ||
             $classReflection instanceof ReflectionInterface
         ) {
             foreach ($classReflection->constants() as $constant) {
