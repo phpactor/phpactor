@@ -194,33 +194,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
         $contextClass = $contextClass ?: $this;
         $methods = ReflectionMethodCollection::empty($this->serviceLocator);
-
         $traitImports = TraitImports::forClassDeclaration($this->node);
-
-        /** @var TraitImport $traitImport */
-        foreach ($traitImports as $traitImport) {
-            try {
-                $trait = $this->traits()->get($traitImport->name());
-            } catch (NotFound $notFound) {
-                continue;
-            }
-
-            $traitMethods = [];
-            foreach ($trait->methods($contextClass) as $method) {
-                if (false === $traitImport->hasAliasFor($method->name())) {
-                    $traitMethods[] = $method;
-                    continue;
-                }
-
-                $traitAlias = $traitImport->getAlias($method->name());
-                $virtualMethod = VirtualReflectionMethod::fromReflectionMethod($trait->methods()->get($traitAlias->originalName()))
-                    ->withName($traitAlias->newName())
-                    ->withVisibility($traitAlias->visiblity($method->visibility()));
-
-                $traitMethods[] = $virtualMethod;
-            }
-            $methods = $methods->merge(VirtualReflectionMethodCollection::fromReflectionMethods($traitMethods));
-        }
+        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
+        
+        $methods = $methods->merge($traitMethods);
 
         if ($this->parent()) {
             $methods = $methods->merge(
