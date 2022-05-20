@@ -5,8 +5,10 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Microsoft\PhpParser\TokenKind;
@@ -14,15 +16,24 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameRe
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use RuntimeException;
+use Traversable;
 
-class TraitImports implements Countable, IteratorAggregate
+/**
+ * @implements IteratorAggregate<string,TraitImport>
+ */
+final class TraitImports implements Countable, IteratorAggregate
 {
-    private $imports = [];
+    /**
+     * @var array<string,TraitImport>
+     */
+    private array $imports = [];
 
-    public function __construct(ClassDeclaration $classDeclaration)
+    /**
+     * @param Node[] $declarations
+     */
+    private function __construct(array $declarations)
     {
-        $traitImports = [];
-        foreach ($classDeclaration->classMembers->classMemberDeclarations as $memberDeclaration) {
+        foreach ($declarations as $memberDeclaration) {
             if (false === $memberDeclaration instanceof TraitUseClause) {
                 continue;
             }
@@ -79,7 +90,11 @@ class TraitImports implements Countable, IteratorAggregate
                         $memberName = (string) $clause->name;
                         $targetName = (string) $targetName;
 
-                        $aliases[$memberName] = new TraitAlias($memberName, $this->visiblity($clause), $targetName);
+                        $aliases[$memberName] = new TraitAlias(
+                            $memberName,
+                            $this->visiblity($clause),
+                            $targetName
+                        );
                     }
                 }
 
@@ -88,7 +103,17 @@ class TraitImports implements Countable, IteratorAggregate
         }
     }
 
-    public function has(string $name)
+    public static function forClassDeclaration(ClassDeclaration $classDeclaration): self
+    {
+        return new self($classDeclaration->classMembers->classMemberDeclarations);
+    }
+
+    public static function forTraitDeclaration(TraitDeclaration $traitDeclaration): self
+    {
+        return new self($traitDeclaration->traitMembers->traitMemberDeclarations);
+    }
+
+    public function has(string $name): bool
     {
         return isset($this->imports[$name]);
     }
@@ -110,7 +135,7 @@ class TraitImports implements Countable, IteratorAggregate
         return count($this->imports);
     }
     
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->imports);
     }

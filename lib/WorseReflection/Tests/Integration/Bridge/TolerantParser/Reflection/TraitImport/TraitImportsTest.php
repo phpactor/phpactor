@@ -18,7 +18,7 @@ class TraitImportsTest extends IntegrationTestCase
     {
         $rootNode = $this->parseSource($source);
         $classDeclaration = $rootNode->getFirstDescendantNode(ClassDeclaration::class);
-        $assertion(new TraitImports($classDeclaration));
+        $assertion(TraitImports::forClassDeclaration($classDeclaration));
     }
 
     public function provideTraitImports()

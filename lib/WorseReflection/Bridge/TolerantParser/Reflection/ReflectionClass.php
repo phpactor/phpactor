@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImport;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
@@ -32,8 +31,6 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -194,33 +191,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
         $contextClass = $contextClass ?: $this;
         $methods = ReflectionMethodCollection::empty($this->serviceLocator);
-
-        $traitImports = new TraitImports($this->node);
-
-        /** @var TraitImport $traitImport */
-        foreach ($traitImports as $traitImport) {
-            try {
-                $trait = $this->traits()->get($traitImport->name());
-            } catch (NotFound $notFound) {
-                continue;
-            }
-
-            $traitMethods = [];
-            foreach ($trait->methods($contextClass) as $method) {
-                if (false === $traitImport->hasAliasFor($method->name())) {
-                    $traitMethods[] = $method;
-                    continue;
-                }
-
-                $traitAlias = $traitImport->getAlias($method->name());
-                $virtualMethod = VirtualReflectionMethod::fromReflectionMethod($trait->methods()->get($traitAlias->originalName()))
-                    ->withName($traitAlias->newName())
-                    ->withVisibility($traitAlias->visiblity($method->visibility()));
-
-                $traitMethods[] = $virtualMethod;
-            }
-            $methods = $methods->merge(VirtualReflectionMethodCollection::fromReflectionMethods($traitMethods));
-        }
+        $traitImports = TraitImports::forClassDeclaration($this->node);
+        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
+        $methods = $methods->merge($traitMethods);
 
         if ($this->parent()) {
             $methods = $methods->merge(

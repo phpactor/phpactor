@@ -6,10 +6,13 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait as CoreReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -39,7 +42,11 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         $contextClass = $contextClass ?: $this;
-        return ReflectionMethodCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $contextClass);
+        $methods = ReflectionMethodCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $contextClass);
+        $traitImports = TraitImports::forTraitDeclaration($this->node);
+        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
+
+        return $methods->merge($traitMethods);
     }
 
     public function members(): ReflectionMemberCollection
@@ -84,6 +91,10 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
         );
     }
 
+    public function traits(): ReflectionTraitCollection
+    {
+        return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node);
+    }
     /**
      * @return TraitDeclaration
      */

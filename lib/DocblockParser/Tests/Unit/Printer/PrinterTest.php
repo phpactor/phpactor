@@ -4,7 +4,6 @@ namespace Phpactor\DocblockParser\Tests\Unit\Printer;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Parser;
 use Phpactor\DocblockParser\Printer\TestPrinter;
@@ -28,7 +27,6 @@ class PrinterTest extends TestCase
 
         $tokens = (new Lexer())->lex($parts[0]);
         $node = (new Parser())->parse($tokens);
-        dump(iterator_to_array($node->descendantElements(ParamTag::class)));
         $rendered = (new TestPrinter())->print($node);
 
         /**

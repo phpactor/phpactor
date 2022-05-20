@@ -1,0 +1,22 @@
+<?php
+
+trait TraitTwo {
+    public function onTraitTwo(): string {}
+    public function onTraitThree(): int {}
+}
+
+trait TraitOne {
+    use TraitTwo;
+
+    public function onTraitOne(): string {}
+}
+
+class One {
+    use TraitOne;
+}
+
+$one = new One();
+
+wrAssertType('string', $one->onTraitOne());
+wrAssertType('string', $one->onTraitTwo());
+wrAssertType('int', $one->onTraitThree());

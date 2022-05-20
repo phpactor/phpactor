@@ -5,9 +5,10 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get(string $name)
+ * @method ReflectionMethod first()
+ * @method ReflectionMethod last()
+ * @method ReflectionMethod get(string $name)
+ * @method ReflectionMethodCollection merge(ReflectionMethodCollection $collection)
  *
  * @extends ReflectionMemberCollection<ReflectionMethod>
  */
