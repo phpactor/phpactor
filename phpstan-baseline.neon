@@ -1981,11 +1981,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseLocalVariableCompletor.php
 
 		-
-			message: "#^Unsafe call to private method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseSignatureHelper\\:\\:isACallExpression\\(\\) through static\\:\\:\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseSignatureHelper.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
@@ -5621,11 +5616,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionMethodCollection.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 5
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionMethodCollection.php
-
-		-
 			message: "#^If condition is always true\\.$#"
 			count: 2
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionParameterCollection.php
@@ -5661,17 +5651,7 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionPropertyCollection.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ReflectionTraitCollection\\:\\:fromClassDeclaration\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionTraitCollection.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between false and true will always evaluate to false\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionTraitCollection.php
-
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/Collection/ReflectionTraitCollection.php
 
@@ -5703,11 +5683,6 @@ parameters:
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 4
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
-
-		-
-			message: "#^Parameter \\#1 \\$serviceLocator of static method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ReflectionMemberCollection\\:\\:empty\\(\\) expects Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ServiceLocator, Phpactor\\\\WorseReflection\\\\Core\\\\ServiceLocator given\\.$#"
-			count: 2
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
 
 		-
@@ -5746,11 +5721,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionTrait.php
 
 		-
-			message: "#^Parameter \\#3 \\$reflectionTrait of static method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\Collection\\\\ReflectionMethodCollection\\:\\:fromTraitDeclaration\\(\\) expects Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\AbstractReflectionClass, Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionTrait.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImport\\:\\:__construct\\(\\) has parameter \\$traitAliases with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImport.php
@@ -5781,27 +5751,7 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
 		-
-			message: "#^Class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports\\:\\:visiblity\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports\\:\\:\\$imports has no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
@@ -6166,11 +6116,6 @@ parameters:
 			path: lib/WorseReflection/Core/SourceCode.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:path\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
 			message: "#^Parameter \\#1 \\$source of class Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode constructor expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCode.php
@@ -6411,47 +6356,7 @@ parameters:
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:create\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:create\\(\\) has parameter \\$visibility with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:isPrivate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:isProtected\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:isPublic\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:private\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:protected\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:public\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:\\$visibility has no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Visibility.php
 
