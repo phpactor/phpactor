@@ -142,7 +142,7 @@ class ParsedDocblock implements DocBlock
         foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
             assert($propertyTag instanceof PropertyTag);
             $type = $this->typeConverter->convert($propertyTag->type);
-            $method = new VirtualReflectionProperty(
+            $property = new VirtualReflectionProperty(
                 $declaringClass->position(),
                 $declaringClass,
                 $declaringClass,
@@ -155,7 +155,7 @@ class ParsedDocblock implements DocBlock
                 $type,
                 new Deprecation(false),
             );
-            $properties[] = $method;
+            $properties[] = $property;
         }
 
         return VirtualReflectionPropertyCollection::fromReflectionProperties($properties);
