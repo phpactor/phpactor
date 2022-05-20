@@ -1,0 +1,43 @@
+/**
+ * @param array<
+ *     array{
+ *         suites?:array<
+ *             string,
+ *             array{
+ *                 contexts?:array<string,array<string>|string>
+ *             }
+ *          >
+ *     }
+ * > $config
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   GenericNode: = 
+    ArrayNode: = <
+    TypeList: = 
+     ArrayShapeNode: = {
+      ArrayKeyValueList: = 
+       ArrayKeyValueNode: = suites:
+        GenericNode: = 
+         ArrayNode: = <
+         TypeList: = 
+          ScalarNode: = string,
+          ArrayShapeNode: = {
+           ArrayKeyValueList: = 
+            ArrayKeyValueNode: = contexts:
+             GenericNode: = 
+              ArrayNode: = <
+              TypeList: = 
+               ScalarNode: = string,
+               UnionNode: = 
+                TypeList: = 
+                 GenericNode: = 
+                  ArrayNode: = <
+                  TypeList: = 
+                   ScalarNode: = string>|
+                 ScalarNode: = string>}>}>
+   VariableNode: = $config
+ */

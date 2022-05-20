@@ -301,11 +301,16 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->chomp();
+            $typeList = null;
             if ($this->tokens->if(Token::T_LABEL)) {
                 $typeList = $this->parseTypeList();
             }
 
-            if ($this->tokens->current->type !== Token::T_BRACKET_ANGLE_CLOSE) {
+            if (!$this->tokens->if(Token::T_BRACKET_ANGLE_CLOSE)) {
+                return null;
+            }
+
+            if (!$typeList) {
                 return null;
             }
 
@@ -507,7 +512,7 @@ final class Parser
             }
             $text[] = $this->tokens->chomp();
         }
-        
+
         if ($text) {
             return new TextNode($text);
         }
