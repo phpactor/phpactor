@@ -7,6 +7,7 @@ use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
+use Phpactor\DocblockParser\Ast\Type\NullableNode;
 use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
@@ -42,6 +43,7 @@ use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
+use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -98,6 +100,9 @@ class TypeConverter
         }
         if ($type instanceof NullNode) {
             return new NullType();
+        }
+        if ($type instanceof NullableNode) {
+            return $this->convertNullable($type);
         }
 
         if ($type instanceof CallableNode) {
@@ -332,5 +337,10 @@ class TypeConverter
         }
 
         return (new UnionType(...$types))->reduce();
+    }
+
+    private function convertNullable(NullableNode $type): Type
+    {
+        return new NullableType($this->convert($type->type));
     }
 }

@@ -471,7 +471,7 @@ final class Parser
         $tag = $this->tokens->chomp(Token::T_TAG);
         $type = null;
 
-        if ($this->tokens->if(Token::T_LABEL)) {
+        if ($this->ifType()) {
             $type = $this->parseTypes();
         }
 

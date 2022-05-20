@@ -238,6 +238,46 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         );
     }
 
+    public function testLocatesNullableMethod(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar {public function baz(){}}
+            // File: Barfoo.php
+            <?php class Barfoo{public function foobar(): ?Foobar}
+            EOT
+        , '<?php $bar = new Barfoo(); $bar->foobar()->baz<>();');
+
+        self::assertEquals(
+            $this->workspace->path('Foobar.php'),
+            $location->first()->location()->uri()->path()
+        );
+        self::assertEquals(
+            20,
+            $location->first()->location()->offset()->toInt()
+        );
+    }
+
+    public function testLocatesNullableProperty(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar {public $baz;}
+            // File: Barfoo.php
+            <?php class Barfoo{/** @var ?Foobar */public $foobar}
+            EOT
+        , '<?php $bar = new Barfoo(); $bar->foobar->baz<>;');
+
+        self::assertEquals(
+            $this->workspace->path('Foobar.php'),
+            $location->first()->location()->uri()->path()
+        );
+        self::assertEquals(
+            20,
+            $location->first()->location()->offset()->toInt()
+        );
+    }
+
     public function testLocatesCase(): void
     {
         if (!defined('T_ENUM')) {

@@ -142,6 +142,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             new ArrayType(new IntType(), new ArrayType(new StringType(), new BooleanType()))
         ];
 
+        yield 'nullable' => [
+            '/** @return ?string */',
+            '?string',
+        ];
+
         yield [
             '/** @return T */',
             'T',
