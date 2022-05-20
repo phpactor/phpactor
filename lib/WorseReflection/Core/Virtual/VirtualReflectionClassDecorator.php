@@ -92,6 +92,7 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
     {
         $members = $this->class->members();
         $members = $members->merge($this->virtualMethods());
+        $members = $members->merge($this->virtualProperties());
 
         assert($members instanceof ReflectionMemberCollection);
         return $members;

@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * @property Foobar $get
+ */
+class Bar
+{
+}
+
+$bar = new Bar();
+wrAssertType('Foobar', $bar->get);
