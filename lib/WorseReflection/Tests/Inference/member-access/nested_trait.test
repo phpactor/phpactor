@@ -2,6 +2,7 @@
 
 trait TraitTwo {
     public function onTraitTwo(): string {}
+    public function onTraitThree(): int {}
 }
 
 trait TraitOne {
@@ -18,3 +19,4 @@ $one = new One();
 
 wrAssertType('string', $one->onTraitOne());
 wrAssertType('string', $one->onTraitTwo());
+wrAssertType('int', $one->onTraitThree());

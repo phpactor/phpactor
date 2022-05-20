@@ -8,6 +8,7 @@ use IteratorAggregate;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Microsoft\PhpParser\TokenKind;
@@ -20,23 +21,17 @@ use Traversable;
 /**
  * @implements IteratorAggregate<string,TraitImport>
  */
-class TraitImports implements Countable, IteratorAggregate
+final class TraitImports implements Countable, IteratorAggregate
 {
     /**
      * @var array<string,TraitImport>
      */
-    private $imports = [];
-
-    public static function forClassDeclaration(ClassDeclaration $classDeclaration): self
-    {
-        $traitImports = [];
-        return new self($classDeclaration->classMembers->classMemberDeclarations);
-    }
+    private array $imports = [];
 
     /**
      * @param Node[] $declarations
      */
-    public function __construct(array $declarations)
+    private function __construct(array $declarations)
     {
         foreach ($declarations as $memberDeclaration) {
             if (false === $memberDeclaration instanceof TraitUseClause) {
@@ -106,6 +101,16 @@ class TraitImports implements Countable, IteratorAggregate
                 $this->imports[$traitName] = new TraitImport($traitName, $aliases);
             }
         }
+    }
+
+    public static function forClassDeclaration(ClassDeclaration $classDeclaration): self
+    {
+        return new self($classDeclaration->classMembers->classMemberDeclarations);
+    }
+
+    public static function forTraitDeclaration(TraitDeclaration $traitDeclaration): self
+    {
+        return new self($traitDeclaration->traitMembers->traitMemberDeclarations);
     }
 
     public function has(string $name): bool

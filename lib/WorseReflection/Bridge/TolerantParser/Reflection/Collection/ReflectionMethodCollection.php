@@ -12,7 +12,6 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\AbstractReflectionClass;
 
 /**
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get(string $name)
@@ -33,7 +32,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionClass, $method);
         }
 
-        return new static($serviceLocator, $items);
+        return new self($serviceLocator, $items);
     }
 
     public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $class, ReflectionClassLike $reflectionClass)
@@ -48,7 +47,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionClass, $method);
         }
 
-        return new static($serviceLocator, $items);
+        return new self($serviceLocator, $items);
     }
 
     public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, ReflectionClassLike $reflectionInterface): CoreReflectionMethodCollection
@@ -63,10 +62,10 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionInterface, $method);
         }
 
-        return new static($serviceLocator, $items);
+        return new self($serviceLocator, $items);
     }
 
-    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, AbstractReflectionClass $reflectionTrait): CoreReflectionMethodCollection
+    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionClassLike $contextClass): CoreReflectionMethodCollection
     {
         /** @var MethodDeclaration[] $methods */
         $methods = array_filter($trait->traitMembers->traitMemberDeclarations, function ($member) {
@@ -75,15 +74,15 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
 
         $items = [];
         foreach ($methods as $method) {
-            $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionTrait, $method);
+            $items[$method->getName()] = new ReflectionMethod($serviceLocator, $contextClass, $method);
         }
 
-        return new static($serviceLocator, $items);
+        return new self($serviceLocator, $items);
     }
 
     public static function fromReflectionMethods(ServiceLocator $serviceLocator, array $methods): CoreReflectionMethodCollection
     {
-        return new static($serviceLocator, $methods);
+        return new self($serviceLocator, $methods);
     }
 
     public function abstract(): CoreReflectionMethodCollection
