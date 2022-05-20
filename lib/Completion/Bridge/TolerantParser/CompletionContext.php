@@ -18,7 +18,11 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\StatementNode;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -142,8 +146,31 @@ class CompletionContext
             return true;
         }
 
-        if (!$nodeBeforeOffset->getFirstAncestor(ClassLike::class)) {
+        $classLike = $nodeBeforeOffset->getFirstAncestor(ClassLike::class);
+        if (!$classLike) {
             return false;
+        }
+        if ($classLike->getEndPosition() < $node->getStartPosition()) {
+            if ($classLike instanceof ClassDeclaration) {
+                if (!$classLike->classMembers->closeBrace instanceof MissingToken) {
+                    return false;
+                }
+            }
+            if ($classLike instanceof InterfaceDeclaration) {
+                if (!$classLike->interfaceMembers->closeBrace instanceof MissingToken) {
+                    return false;
+                }
+            }
+            if ($classLike instanceof TraitDeclaration) {
+                if (!$classLike->traitMembers->closeBrace instanceof MissingToken) {
+                    return false;
+                }
+            }
+            if ($classLike instanceof EnumDeclaration) {
+                if (!$classLike->enumMembers->closeBrace instanceof MissingToken) {
+                    return false;
+                }
+            }
         }
 
         if ($nodeBeforeOffset instanceof CompoundStatementNode && $node->getStartPosition() < $nodeBeforeOffset->getEndPosition()) {

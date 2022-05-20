@@ -126,6 +126,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private Foobles $<> }',
             false,
         ];
+        yield 'after class' => [
+            '<?php class Foo { private Foobles $foo; } $foo-><>',
+            false,
+        ];
     }
 
     /**
