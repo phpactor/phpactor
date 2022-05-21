@@ -112,7 +112,7 @@ class NodeUtil
         return false;
     }
 
-    public static function qualfiiedNameIs(?QualifiedName $qualifiedName, string $name): bool
+    public static function qualfiedNameIs(?QualifiedName $qualifiedName, string $name): bool
     {
         if (null === $qualifiedName) {
             return false;

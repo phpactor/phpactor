@@ -280,7 +280,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         // an instance of the given class
         $baseClause = $this->node->classBaseClause;
         if ($baseClause instanceof ClassBaseClause) {
-            if (NodeUtil::qualfiiedNameIs($baseClause->baseClass, $className->__toString())) {
+            if (NodeUtil::qualfiedNameIs($baseClause->baseClass, $className->__toString())) {
                 return true;
             }
         }
