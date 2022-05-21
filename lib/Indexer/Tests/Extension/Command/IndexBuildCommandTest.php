@@ -7,6 +7,10 @@ use Symfony\Component\Process\Process;
 
 class IndexBuildCommandTest extends IntegrationTestCase
 {
+    public function tearDown():void
+    {
+        $this->workspace()->reset();
+    }
     public function testRefreshIndex(): void
     {
         $this->initProject();
@@ -16,6 +20,8 @@ class IndexBuildCommandTest extends IntegrationTestCase
             'index:build',
         ], $this->workspace()->path());
         $process->mustRun();
+
         self::assertEquals(0, $process->getExitCode());
+        self::assertTrue($this->workspace()->exists('cache'));
     }
 }

@@ -16,20 +16,18 @@ class IndexCleanCommandTest extends IntegrationTestCase
     public function testCleanIndexWithAllInput(array $command, ?string $input): void
     {
         $this->initProject();
+        self::assertFalse($this->workspace()->exists('cache'));
 
         $process = new Process($command, $this->workspace()->path(), null, $input);
         $process->mustRun();
-
 
         $expectedOutput = <<<PHP
             +---+-----------+------+------------+
             | # | Directory | Size | Created at |
             +---+-----------+------+------------+
-            | 1 | cache     | 4096 | 0.0 days   |
-            | 2 | project   | 4096 | 0.0 days   |
-            | 3 | vendor    | 4096 | 0.0 days   |
+            | 1 | project   | 4096 | 0.0 days   |
+            | 2 | vendor    | 4096 | 0.0 days   |
             +---+-----------+------+------------+
-            Removing cache
             Removing project
             Removing vendor
 
