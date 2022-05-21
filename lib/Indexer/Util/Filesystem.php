@@ -35,4 +35,15 @@ class Filesystem
 
         rmdir($path);
     }
+
+    public static function formatSize(int $byteCount): string
+    {
+        if ($byteCount === 0) {
+            return '0';
+        }
+        $unitIndex = floor(log($byteCount, 1024));
+        $units = ['', 'K', 'M', 'G', 'T', 'P'];
+
+        return sprintf('%.2f %s', $byteCount / pow(1024, $unitIndex), $units[$unitIndex]);
+    }
 }

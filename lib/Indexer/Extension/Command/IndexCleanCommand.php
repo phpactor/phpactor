@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Extension\Command;
 use Exception;
 use InvalidArgumentException;
 use Phpactor\Indexer\Model\Index\IndexInfo;
+use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
@@ -117,11 +118,12 @@ class IndexCleanCommand extends Command
         $table = new Table($output);
         $table->setHeaders(['#' , 'Directory', 'Size', 'Created at']);
         foreach (array_values($indexList) as $i => $index) {
+            /** @var IndexInfo $index */
             $table->addRow([
                 $i + 1,
                 $index->directoryName(),
-                $index->size(),
-                $index->lastUpdated(),
+                PhpactorFilesystem::formatSize($index->size()),
+                sprintf('%.1f days', $index->lastUpdatedInDays()),
             ]);
         }
         $table->render();

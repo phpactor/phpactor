@@ -6,19 +6,21 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class IndexInfo
 {
+    private const SECONDS_IN_DAY = 3600 * 24;
+
     private string $absolutePath;
 
     private string $directoryName;
 
     private int $size;
 
-    private string $lastUpdated;
+    private float $lastUpdated;
 
     public function __construct(
         string $absolutePath,
         string $directoryName,
         int $size,
-        string $lastUpdated
+        float $lastUpdated
     ) {
         $this->directoryName = $directoryName;
         $this->size = $size;
@@ -32,7 +34,7 @@ class IndexInfo
             $fileInfo->getRealPath(),
             $fileInfo->getRelativePathname(),
             $fileInfo->getSize(),
-            sprintf('%.1f days', ((time() - $fileInfo->getMTime())/(3600*24)))
+            (time() - $fileInfo->getMTime()) / self::SECONDS_IN_DAY
         );
     }
 
@@ -51,7 +53,7 @@ class IndexInfo
         return $this->size;
     }
 
-    public function lastUpdated(): string
+    public function lastUpdatedInDays(): float
     {
         return $this->lastUpdated;
     }
