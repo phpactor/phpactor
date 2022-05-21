@@ -88,7 +88,11 @@ class WorseReflectionExtension implements Extension
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_PROVIDER)) as $serviceId) {
-                $builder->addMemberProvider($container->get($serviceId));
+                $memberProvider = $container->get($serviceId);
+                if (null === $memberProvider) {
+                    continue;
+                }
+                $builder->addMemberProvider($memberProvider);
             }
         
             $builder->withLogger(

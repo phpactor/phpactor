@@ -22,6 +22,7 @@ use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRange
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
+use Phpactor\Extension\PhpSpec\PhpSpecExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -152,6 +153,7 @@ class Phpactor
             LanguageServerPsalmExtension::class,
             BehatExtension::class,
             IndexerExtension::class,
+            PhpSpecExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
