@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
@@ -55,7 +56,7 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
         $virtualMethods = [];
         foreach ($subjectClass->methods() as $subjectMethod) {
             $method = VirtualReflectionMethod::fromReflectionMethod($subjectMethod);
-            $subjectType = new ClassType(ClassName::fromString(self::SUBJECT_CLASS));
+            $subjectType = TypeFactory::reflectedClass($serviceLocator->reflector(), self::SUBJECT_CLASS);
             $method = $method
                 ->withInferredType($method->inferredType()->addType($subjectType))
                 ->withType($subjectType)
