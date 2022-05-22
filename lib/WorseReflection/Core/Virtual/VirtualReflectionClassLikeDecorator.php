@@ -78,7 +78,7 @@ class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
         return $this->classLike->isClass();
     }
 
-    public function isConcrete()
+    public function isConcrete(): bool
     {
         return $this->classLike->isConcrete();
     }

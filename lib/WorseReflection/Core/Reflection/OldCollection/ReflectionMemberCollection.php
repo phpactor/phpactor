@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Visibility;
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember last()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember get(string $name)
- * @method ReflectionMemberCollection<T> merge(ReflectionMemberCollection $collection)
+ * @method $this merge(ReflectionMemberCollection $collection)
  *
  * @template T of ReflectionMember
  * @extends ReflectionCollection<T>

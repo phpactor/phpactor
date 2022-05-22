@@ -3,19 +3,20 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\ConstElement;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 
 /**
- * @method ReflectionConstant get()
- * @method ReflectionConstant first()
- * @method ReflectionConstant last()
+ * @method CoreReflectionConstant get()
+ * @method CoreReflectionConstant first()
+ * @method CoreReflectionConstant last()
  * @method ReflectionConstantCollection merge(ReflectionConstantCollection $collection)
  * @method ReflectionMethodCollection empty()
  */
@@ -43,9 +44,9 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
     }
 
     /**
-     * @param ReflectionConstant[] $constants
+     * @param CoreReflectionConstant[] $constants
      */
-    public static function fromReflectionConstants(ServiceLocator $serviceLocator, array $constants): self
+    public static function fromReflectionConstants(array $constants): self
     {
         return new self($constants);
     }

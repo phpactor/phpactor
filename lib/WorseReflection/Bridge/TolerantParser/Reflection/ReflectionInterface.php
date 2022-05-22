@@ -69,7 +69,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             }
         }
 
-        $parentConstants = ReflectionConstantCollection::fromReflectionConstants($this->serviceLocator, $parentConstants);
+        $parentConstants = ReflectionConstantCollection::fromReflectionConstants($parentConstants);
         $constants = ReflectionConstantCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this);
 
         return $parentConstants->merge($constants);

@@ -2,10 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait get(string $name)
+ * @method ReflectionTrait first()
+ * @method ReflectionTrait last()
+ * @method ReflectionTrait get(string $name)
+ * @extends ReflectionCollection<ReflectionTrait>
  */
 interface ReflectionTraitCollection extends ReflectionCollection
 {

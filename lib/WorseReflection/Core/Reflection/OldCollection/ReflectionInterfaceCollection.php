@@ -2,10 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
+
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface get()
+ * @method ReflectionInterface first()
+ * @method ReflectionInterface last()
+ * @method ReflectionInterface get()
+ * @extends ReflectionCollection<ReflectionInterface>
  */
 interface ReflectionInterfaceCollection extends ReflectionCollection
 {
