@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection;

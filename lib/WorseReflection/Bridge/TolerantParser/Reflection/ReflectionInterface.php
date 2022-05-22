@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;

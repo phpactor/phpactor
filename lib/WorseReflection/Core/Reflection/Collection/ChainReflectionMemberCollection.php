@@ -1,10 +1,12 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use AppendIterator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use RuntimeException;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Visibility;

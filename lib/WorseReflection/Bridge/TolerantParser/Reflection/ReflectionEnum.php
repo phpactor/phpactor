@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
