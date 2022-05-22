@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use IteratorAggregate;
 use Countable;
@@ -15,10 +14,9 @@ use Traversable;
 
 /**
  * @template T
- * @implements IteratorAggregate<T>
- * @implements ArrayAccess<array-key,T>
+ * @implements ReflectionCollection<T>
  */
-abstract class AbstractReflectionCollection implements IteratorAggregate, Countable, ArrayAccess
+abstract class AbstractReflectionCollection implements ReflectionCollection
 {
     /**
      * @var array<array-key,T>
@@ -58,14 +56,14 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
     /**
      * @return static
      */
-    public static function empty()
+    public static function empty(): self
     {
         return new static([]);
     }
 
     /**
      * @return static
-     * @param ReflectionCollection<T> $collection
+     * @param AbstractReflectionCollection<T> $collection
      */
     public function merge(ReflectionCollection $collection): self
     {

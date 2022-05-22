@@ -18,11 +18,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
@@ -45,9 +40,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     
     private SourceCode $sourceCode;
 
-    private ?CoreReflectionInterfaceCollection $interfaces = null;
+    private ?ReflectionInterfaceCollection $interfaces = null;
     
-    private ?CoreReflectionClass $parent = null;
+    private ?ReflectionClass $parent = null;
 
     /**
      * @var array<string,ReflectionMethodCollection>
@@ -83,6 +78,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function members(): ReflectionMemberCollection
     {
+        /** @phpstan-ignore-next-line Pretty sure this is a phpstan bug */
         return ChainReflectionMemberCollection::fromCollections([
             $this->constants(),
             $this->properties(),
@@ -90,7 +86,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         ]);
     }
 
-    public function constants(): CoreReflectionConstantCollection
+    public function constants(): ReflectionConstantCollection
     {
         $parentConstants = null;
         if ($this->parent()) {
@@ -110,7 +106,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $constants;
     }
 
-    public function parent(): ?CoreReflectionClass
+    public function parent(): ?ReflectionClass
     {
         if ($this->parent) {
             return $this->parent;
@@ -139,7 +135,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 $className,
             );
 
-            if (!$reflectedClass instanceof CoreReflectionClass) {
+            if (!$reflectedClass instanceof ReflectionClass) {
                 $this->serviceLocator->logger()->warning(sprintf(
                     'Class cannot extend interface. Class "%s" extends interface or trait "%s"',
                     $this->name(),
@@ -156,7 +152,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
     }
 
-    public function properties(ReflectionClassLike $contextClass = null): CoreReflectionPropertyCollection
+    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
         $properties = ReflectionPropertyCollection::empty();
         $contextClass = $contextClass ?: $this;
@@ -180,7 +176,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $properties;
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
+    public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
         $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
 
@@ -213,7 +209,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $methods;
     }
 
-    public function interfaces(): CoreReflectionInterfaceCollection
+    public function interfaces(): ReflectionInterfaceCollection
     {
         if ($this->interfaces) {
             return $this->interfaces;
@@ -236,9 +232,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     }
 
     /**
-     * @return CoreReflectionTraitCollection<ReflectionTrait>
+     * @return ReflectionTraitCollection<ReflectionTrait>
      */
-    public function traits(): CoreReflectionTraitCollection
+    public function traits(): ReflectionTraitCollection
     {
         $parentTraits = null;
 

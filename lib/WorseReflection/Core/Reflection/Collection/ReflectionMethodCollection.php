@@ -14,9 +14,9 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 
 /**
- * @extends ReflectionMemberCollection<CoreReflectionMethod>
+ * @extends HomogeneousReflectionMemberCollection<CoreReflectionMethod>
  */
-class ReflectionMethodCollection extends ReflectionMemberCollection
+class ReflectionMethodCollection extends HomogeneousReflectionMemberCollection
 {
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClassLike $reflectionClass): self
     {

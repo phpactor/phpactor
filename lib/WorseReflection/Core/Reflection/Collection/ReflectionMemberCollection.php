@@ -12,97 +12,45 @@ use Phpactor\WorseReflection\Core\Visibility;
  * @template T of ReflectionMember
  * @extends AbstractReflectionCollection<T>
  */
-class ReflectionMemberCollection extends AbstractReflectionCollection
+interface ReflectionMemberCollection extends ReflectionCollection
 {
     /**
-     * @param ReflectionMember[] $members
-     * @return CoreReflectionMemberCollection<ReflectionMember>
-     */
-    public static function fromMembers(array $members): CoreReflectionMemberCollection
-    {
-        return new self($members);
-    }
-
-    /**
-     * @return CoreReflectionMemberCollection<ReflectionMember>
+     * @return static
      * @param Visibility[] $visibilities
      */
-    public function byVisibilities(array $visibilities): CoreReflectionMemberCollection
-    {
-        $items = [];
-        foreach ($this as $key => $item) {
-            foreach ($visibilities as $visibility) {
-                if ($item->visibility() != $visibility) {
-                    continue;
-                }
+    public function byVisibilities(array $visibilities): ReflectionMemberCollection;
 
-                $items[$key] = $item;
-            }
-        }
+    /**
+     * @return static
+     */
+    public function belongingTo(ClassName $class): ReflectionMemberCollection;
 
-        return new static($items);
-    }
+    /**
+     * @return static
+     */
+    public function atOffset(int $offset): ReflectionMemberCollection;
 
-    public function belongingTo(ClassName $class): CoreReflectionMemberCollection
-    {
-        return new static(array_filter($this->items, function (ReflectionMember $item) use ($class) {
-            return $item->declaringClass()->name() == $class;
-        }));
-    }
+    /**
+     * @return static
+     */
+    public function byName(string $name): ReflectionMemberCollection;
 
-    public function atOffset(int $offset): CoreReflectionMemberCollection
-    {
-        return new static(array_filter($this->items, function (ReflectionMember $item) use ($offset) {
-            return $item->position()->start() <= $offset && $item->position()->end() >= $offset;
-        }));
-    }
+    /**
+     * @return static
+     */
+    public function virtual(): ReflectionMemberCollection;
 
-    public function byName(string $name): CoreReflectionMemberCollection
-    {
-        if ($this->has($name)) {
-            return new self([ $this->get($name) ]);
-        }
+    /**
+     * @return static
+     */
+    public function real(): ReflectionMemberCollection;
 
-        return new static([]);
-    }
+    public function methods(): ReflectionMethodCollection;
 
-    public function virtual(): CoreReflectionMemberCollection
-    {
-        return new static(array_filter($this->items, function (ReflectionMember $member) {
-            return true === $member->isVirtual();
-        }));
-    }
+    public function properties(): ReflectionPropertyCollection;
 
-    public function real(): CoreReflectionMemberCollection
-    {
-        return new self(array_filter($this->items, function (ReflectionMember $member) {
-            return false === $member->isVirtual();
-        }));
-    }
-
-    public function methods(): CoreReflectionMethodCollection
-    {
-        return new ReflectionMethodCollection(array_filter($this->items, function (ReflectionMember $member) {
-            return $member instanceof ReflectionMethod;
-        }));
-    }
-
-    public function properties(): CoreReflectionPropertyCollection
-    {
-        return new ReflectionPropertyCollection(array_filter($this->items, function (ReflectionMember $member) {
-            return $member instanceof ReflectionProperty;
-        }));
-    }
-
-    public function byMemberType(string $type): CoreReflectionMemberCollection
-    {
-        return new static(array_filter($this->items, function (ReflectionMember $member) use ($type) {
-            return $type === $member->memberType();
-        }));
-    }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionMemberCollection::class;
-    }
+    /**
+     * @return static
+     */
+    public function byMemberType(string $type): ReflectionMemberCollection;
 }

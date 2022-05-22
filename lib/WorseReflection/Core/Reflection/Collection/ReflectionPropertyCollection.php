@@ -21,9 +21,9 @@ use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 
 /**
- * @extends ReflectionMemberCollection<PhpactorReflectionProperty>
+ * @extends HomogeneousReflectionMemberCollection<PhpactorReflectionProperty>
  */
-final class ReflectionPropertyCollection extends ReflectionMemberCollection
+final class ReflectionPropertyCollection extends HomogeneousReflectionMemberCollection
 {
 
     /**

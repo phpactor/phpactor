@@ -11,9 +11,9 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 /**
- * @extends ReflectionMemberCollection<ReflectionEnumCase>
+ * @extends HomogeneousReflectionMemberCollection<ReflectionEnumCase>
  */
-final class ReflectionEnumCaseCollection extends ReflectionMemberCollection
+final class ReflectionEnumCaseCollection extends HomogeneousReflectionMemberCollection
 {
     public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enum, ReflectionEnum $reflectionEnum): self
     {
