@@ -24,7 +24,7 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection implemen
             $arguments[] = new ReflectionArgument($locator, $frame, $element);
         }
 
-        return new self($locator, $arguments);
+        return new self($arguments);
     }
 
     public function notPromoted(): CoreReflectionParameterCollection
@@ -34,7 +34,7 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection implemen
 
     public function promoted(): CoreReflectionParameterCollection
     {
-        return new self($this->serviceLocator, []);
+        return new self([]);
     }
 
     protected function collectionType(): string

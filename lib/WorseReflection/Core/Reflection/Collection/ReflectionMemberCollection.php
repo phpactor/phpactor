@@ -30,19 +30,19 @@ class ReflectionMemberCollection extends AbstractReflectionCollection implements
             }
         }
 
-        return new static($this->serviceLocator, $items);
+        return new static($items);
     }
 
     public function belongingTo(ClassName $class): CoreReflectionMemberCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $item) use ($class) {
+        return new self(array_filter($this->items, function (ReflectionMember $item) use ($class) {
             return $item->declaringClass()->name() == $class;
         }));
     }
 
     public function atOffset(int $offset): CoreReflectionMemberCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $item) use ($offset) {
+        return new self(array_filter($this->items, function (ReflectionMember $item) use ($offset) {
             return $item->position()->start() <= $offset && $item->position()->end() >= $offset;
         }));
     }
@@ -50,43 +50,43 @@ class ReflectionMemberCollection extends AbstractReflectionCollection implements
     public function byName(string $name): CoreReflectionMemberCollection
     {
         if ($this->has($name)) {
-            return new self($this->serviceLocator, [ $this->get($name) ]);
+            return new self([ $this->get($name) ]);
         }
 
-        return new self($this->serviceLocator, []);
+        return new self([]);
     }
 
     public function virtual(): CoreReflectionMemberCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $member) {
+        return new self(array_filter($this->items, function (ReflectionMember $member) {
             return true === $member->isVirtual();
         }));
     }
 
     public function real(): CoreReflectionMemberCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $member) {
+        return new self(array_filter($this->items, function (ReflectionMember $member) {
             return false === $member->isVirtual();
         }));
     }
 
     public function methods(): ReflectionMethodCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $member) {
+        return new self(array_filter($this->items, function (ReflectionMember $member) {
             return $member instanceof ReflectionMethod;
         }));
     }
 
     public function properties(): ReflectionPropertyCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (ReflectionMember $member) {
+        return new self(array_filter($this->items, function (ReflectionMember $member) {
             return $member instanceof ReflectionProperty;
         }));
     }
 
     public function byMemberType(string $type): CoreReflectionMemberCollection
     {
-        return new static($this->serviceLocator, array_filter($this->items, function (ReflectionMember $member) use ($type) {
+        return new static(array_filter($this->items, function (ReflectionMember $member) use ($type) {
             return $type === $member->memberType();
         }));
     }

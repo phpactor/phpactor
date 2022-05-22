@@ -33,7 +33,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionClass, $method);
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $class, ReflectionClassLike $reflectionClass)
@@ -48,7 +48,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionClass, $method);
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, ReflectionClassLike $reflectionInterface): CoreReflectionMethodCollection
@@ -63,7 +63,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionInterface, $method);
         }
 
-        return new self($serviceLocator, $items);
+        return new self( $items);
     }
 
     public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionClassLike $contextClass): CoreReflectionMethodCollection
@@ -78,17 +78,17 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $contextClass, $method);
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     public static function fromReflectionMethods(ServiceLocator $serviceLocator, array $methods): CoreReflectionMethodCollection
     {
-        return new self($serviceLocator, $methods);
+        return new self($methods);
     }
 
     public function abstract(): CoreReflectionMethodCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (CoreReflectionMethod $item) {
+        return new self(array_filter($this->items, function (CoreReflectionMethod $item) {
             return $item->isAbstract();
         }));
     }

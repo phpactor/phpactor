@@ -15,13 +15,10 @@ use ReturnTypeWillChange;
 
 abstract class AbstractReflectionCollection implements IteratorAggregate, Countable, ArrayAccess
 {
-    protected ServiceLocator $serviceLocator;
-    
     protected array $items = [];
 
-    protected function __construct(ServiceLocator $serviceLocator, array $items)
+    protected function __construct(array $items)
     {
-        $this->serviceLocator = $serviceLocator;
         $this->items = $items;
     }
 
@@ -37,12 +34,12 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
 
     public static function fromReflections(ServiceLocator $serviceLocator, array $reflections)
     {
-        return new static($serviceLocator, $reflections);
+        return new static($reflections);
     }
 
-    public static function empty(ServiceLocator $serviceLocator): self
+    public static function empty(): self
     {
-        return new static($serviceLocator, []);
+        return new static([]);
     }
 
     public function merge(ReflectionCollection $collection)
@@ -62,7 +59,7 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
             $items[$key] = $value;
         }
 
-        return new static($this->serviceLocator, $items);
+        return new static($items);
     }
 
     public function get(string $name)

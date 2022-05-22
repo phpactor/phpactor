@@ -69,12 +69,12 @@ class ReflectionClassCollection extends AbstractReflectionCollection implements 
             );
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public function concrete()
     {
-        return new self($this->serviceLocator, array_filter($this->items, function ($item) {
+        return new self(array_filter($this->items, function ($item) {
             return $item->isConcrete();
         }));
     }

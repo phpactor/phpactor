@@ -31,7 +31,7 @@ class ReflectionParameterCollection extends AbstractReflectionCollection impleme
         }
 
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public static function fromFunctionDeclaration(ServiceLocator $serviceLocator, FunctionDeclaration $functionDeclaration, ReflectionFunction $reflectionFunction)
@@ -45,19 +45,19 @@ class ReflectionParameterCollection extends AbstractReflectionCollection impleme
         }
 
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public function promoted(): PhpactorReflectionParameterCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (PhpactorReflectionParameter $parameter) {
+        return new self(array_filter($this->items, function (PhpactorReflectionParameter $parameter) {
             return $parameter->isPromoted();
         }));
     }
 
     public function notPromoted(): PhpactorReflectionParameterCollection
     {
-        return new self($this->serviceLocator, array_filter($this->items, function (PhpactorReflectionParameter $parameter) {
+        return new self(array_filter($this->items, function (PhpactorReflectionParameter $parameter) {
             return !$parameter->isPromoted();
         }));
     }

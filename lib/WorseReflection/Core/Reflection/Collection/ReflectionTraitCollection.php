@@ -37,7 +37,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection implements 
             }
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $traitDeclaration): self
@@ -57,7 +57,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection implements 
             }
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     protected function collectionType(): string

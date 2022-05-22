@@ -26,7 +26,7 @@ class ReflectionFunctionCollection extends AbstractReflectionCollection implemen
             $items[(string) $descendentNode->getNamespacedName()] = new ReflectionFunction($sourceCode, $serviceLocator, $descendentNode);
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 
     protected function collectionType(): string

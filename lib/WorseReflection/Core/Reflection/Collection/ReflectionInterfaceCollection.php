@@ -36,20 +36,20 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection impleme
     private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause)
     {
         if (null === $baseClause) {
-            return new self($serviceLocator, []);
+            return new self([]);
         }
 
         $items = [];
         $interfaceNameList = $baseClause->interfaceNameList;
 
         if (null === $interfaceNameList) {
-            return new self($serviceLocator, []);
+            return new self([]);
         }
 
         $children = $interfaceNameList->children;
 
         if (!$children) {
-            return new self($serviceLocator, []);
+            return new self([]);
         }
 
         foreach ($children as $name) {
@@ -66,6 +66,6 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection impleme
             }
         }
 
-        return new self($serviceLocator, $items);
+        return new self($items);
     }
 }

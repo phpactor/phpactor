@@ -38,12 +38,12 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
             }
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public static function fromReflectionConstants(ServiceLocator $serviceLocator, array $constants)
     {
-        return new static($serviceLocator, $constants);
+        return new static($constants);
     }
 
     public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, ReflectionInterface $reflectionInterface)
@@ -59,7 +59,7 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
                 $items[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionInterface, $member, $constElement);
             }
         }
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     protected function collectionType(): string

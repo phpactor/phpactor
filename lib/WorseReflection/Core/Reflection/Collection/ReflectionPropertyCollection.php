@@ -36,7 +36,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
         ReflectionClassLike $reflectionClass
     ): self {
         if (!$reflectionClass instanceof ReflectionClass) {
-            return new static($serviceLocator, []);
+            return new static([]);
         }
         $properties = [];
         foreach ($class->classMembers->classMemberDeclarations as $classMember) {
@@ -73,7 +73,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             $items[$property->getName()] = new ReflectionPromotedProperty($serviceLocator, $reflectionClass, $property);
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     /**
@@ -102,7 +102,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             }
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionTrait $reflectionTrait)
@@ -124,7 +124,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             }
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enum, ReflectionEnum $reflectionEnum)
@@ -146,7 +146,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             }
         }
 
-        return new static($serviceLocator, $items);
+        return new static($items);
     }
 
     protected function collectionType(): string
