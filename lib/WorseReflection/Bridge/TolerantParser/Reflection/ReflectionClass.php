@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
@@ -49,7 +49,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $methods = [];
 
-    private ?ReflectionClassCollection $ancestors = null;
+    private ?ReflectionClassLikeCollection $ancestors = null;
 
     public function __construct(
         ServiceLocator $serviceLocator,
@@ -317,7 +317,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         );
     }
 
-    public function ancestors(): ReflectionClassCollection
+    public function ancestors(): ReflectionClassLikeCollection
     {
         if ($this->ancestors) {
             return $this->ancestors;
@@ -336,7 +336,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $class = $parent;
         }
 
-        $this->ancestors = ReflectionClassCollection::fromReflections($ancestors);
+        $this->ancestors = ReflectionClassLikeCollection::fromReflections($ancestors);
         return $this->ancestors;
     }
 

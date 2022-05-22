@@ -40,4 +40,11 @@ interface ReflectionCollection extends IteratorAggregate, Countable
     public function last();
 
     public function has(string $name): bool;
+
+    /**
+     * @template M of T
+     * @param class-string<M> $fqn
+     * @return ReflectionCollection<M>
+     */
+    public function byMemberClass(string $fqn): ReflectionCollection;
 }

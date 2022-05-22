@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
@@ -20,9 +20,8 @@ interface SourceCodeReflector
      * Reflect all classes (or class-likes) in the given source code.
      *
      * @param SourceCode|string $sourceCode
-     * @return ReflectionClassCollection<ReflectionClass>
      */
-    public function reflectClassesIn($sourceCode): ReflectionClassCollection;
+    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection;
 
     /**
      * Reflect all functions in the given source code.

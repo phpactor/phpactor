@@ -120,13 +120,6 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         }));
     }
 
-    public function byMemberClass(string $fqn): ReflectionMemberCollection
-    {
-        return new static(array_filter($this->items, function (ReflectionMember $member) use ($fqn) {
-            return $member instanceof $fqn;
-        }));
-    }
-
     protected function collectionType(): string
     {
         return HomogeneousReflectionMemberCollection::class;

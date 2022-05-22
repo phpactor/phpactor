@@ -5,8 +5,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use InvalidArgumentException;
 use ArrayIterator;
-use BadMethodCallException;
-use ReturnTypeWillChange;
 use Traversable;
 
 /**
@@ -137,26 +135,12 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
         return new ArrayIterator($this->items);
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetGet($name)
-    {
-        return $this->get($name);
-    }
-
-    public function offsetSet($name, $value): void
-    {
-        throw new BadMethodCallException('Collections are immutable');
-    }
-
-    public function offsetUnset($name): void
-    {
-        throw new BadMethodCallException('Collections are immutable');
-    }
-
-    public function offsetExists($name): bool
-    {
-        return isset($this->items[$name]);
-    }
-
     abstract protected function collectionType(): string;
+
+    public function byMemberClass(string $fqn): ReflectionCollection
+    {
+        return new static(array_filter($this->items, function (object $member) use ($fqn) {
+            return $member instanceof $fqn;
+        }));
+    }
 }

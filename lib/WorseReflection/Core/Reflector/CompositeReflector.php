@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
 class CompositeReflector implements Reflector
@@ -59,7 +59,7 @@ class CompositeReflector implements Reflector
         return $this->classReflector->reflectClassLike($className);
     }
     
-    public function reflectClassesIn($sourceCode): ReflectionClassCollection
+    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
     {
         return $this->sourceCodeReflector->reflectClassesIn($sourceCode);
     }

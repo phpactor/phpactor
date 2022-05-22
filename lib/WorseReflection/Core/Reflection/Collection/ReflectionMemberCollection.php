@@ -50,12 +50,5 @@ interface ReflectionMemberCollection extends ReflectionCollection
     /**
      * @return static
      */
-    public function byMemberType(string $type): ReflectionMemberCollection;
-
-    /**
-     * @template M of ReflectionMember
-     * @param class-string<M> $fqn
-     * @return ReflectionMemberCollection<M>
-     */
-    public function byMemberClass(string $fqn): ReflectionMemberCollection;
+    public function byMemberType(string $type): ReflectionCollection;
 }
