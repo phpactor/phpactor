@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\WorseReflection\Formatter;
 
+use Generator;
 use Phpactor\Completion\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -14,13 +15,16 @@ class ConstantFormatterTest extends IntegrationTestCase
     {
         $constant = ReflectorBuilder::create()->build()->reflectClassesIn(
             $code
-        )->first()->constants()->first();
+        )->classes()->first()->constants()->first();
 
         self::assertTrue($this->formatter()->canFormat($constant));
         self::assertEquals($expected, $this->formatter()->format($constant));
     }
 
-    public function provideFormatConstant()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideFormatConstant(): Generator
     {
         yield 'string' => [
             '<?php namespace Bar {class Foobar {const BAR = "FOO";}}',

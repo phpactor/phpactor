@@ -214,14 +214,17 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
         return ReflectionPropertyCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionProperty::class)));
     }
 
-    public function byMemberClass(string $fqn): ReflectionMemberCollection
+    public function byMemberClass(string $fqn): ReflectionCollection
     {
-        $collections = [];
+        $items = [];
         foreach ($this->collections as $collection) {
-            $collections[] = $collection->byMemberClass($fqn);
+            foreach ($collection->byMemberClass($fqn) as $key => $reflection) {
+                $items[$key] = $reflection;
+            }
         }
 
-        return new static($collections);
+        /** @phpstan-ignore-next-line It's _fine_ */
+        return HomogeneousReflectionMemberCollection::fromReflections($items);
     }
     
     /**

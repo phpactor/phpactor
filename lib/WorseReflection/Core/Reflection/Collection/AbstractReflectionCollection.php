@@ -135,12 +135,12 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
         return new ArrayIterator($this->items);
     }
 
-    abstract protected function collectionType(): string;
-
     public function byMemberClass(string $fqn): ReflectionCollection
     {
         return new static(array_filter($this->items, function (object $member) use ($fqn) {
             return $member instanceof $fqn;
         }));
     }
+
+    abstract protected function collectionType(): string;
 }

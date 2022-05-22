@@ -103,14 +103,9 @@ class GenerateAccessorHandler extends AbstractHandler
         );
     }
 
-    /**
-     * @param string $source
-     *
-     * @return ReflectionClass
-     */
-    private function class($source)
+    private function class(string $source): ReflectionClass
     {
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassesIn($source)->classes();
 
         if ($classes->count() === 0) {
             throw new InvalidArgumentException(

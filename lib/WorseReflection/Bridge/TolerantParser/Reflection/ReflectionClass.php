@@ -11,13 +11,13 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
@@ -49,7 +49,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $methods = [];
 
-    private ?ReflectionClassLikeCollection $ancestors = null;
+    private ?ReflectionClassCollection $ancestors = null;
 
     public function __construct(
         ServiceLocator $serviceLocator,
@@ -317,7 +317,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         );
     }
 
-    public function ancestors(): ReflectionClassLikeCollection
+    public function ancestors(): ReflectionClassCollection
     {
         if ($this->ancestors) {
             return $this->ancestors;
@@ -336,7 +336,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $class = $parent;
         }
 
-        $this->ancestors = ReflectionClassLikeCollection::fromReflections($ancestors);
+        $this->ancestors = ReflectionClassCollection::fromReflections($ancestors);
         return $this->ancestors;
     }
 

@@ -120,7 +120,7 @@ class WorseGenerateAccessor implements GenerateAccessor
             return $classes->first();
         }
 
-        foreach ($this->reflector->reflectClassesIn($source) as $class) {
+        foreach ($classes as $class) {
             $position = $class->position();
 
             if ($position->start() <= $offset && $offset <= $position->end()) {
