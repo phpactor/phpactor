@@ -81,7 +81,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
         return new self($items);
     }
 
-    public static function fromReflectionMethods(ServiceLocator $serviceLocator, array $methods): CoreReflectionMethodCollection
+    public static function fromReflectionMethods(array $methods): CoreReflectionMethodCollection
     {
         return new self($methods);
     }

@@ -124,7 +124,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         }
 
         $contextClass = $contextClass ?: $this;
-        $parentMethods = ReflectionMethodCollection::fromReflectionMethods($this->serviceLocator, $parentMethods);
+        $parentMethods = ReflectionMethodCollection::fromReflectionMethods($parentMethods);
         $methods = ReflectionMethodCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $contextClass);
         $merged = $parentMethods->merge($methods);
         assert($merged instanceof ReflectionMethodCollection);
