@@ -4,9 +4,9 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection as CoreReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -17,6 +17,14 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
  */
 class ReflectionMemberCollection extends AbstractReflectionCollection implements CoreReflectionMemberCollection
 {
+    /**
+     * @param ReflectionMember[] $members
+     */
+    public static function fromMembers(array $members): CoreReflectionMemberCollection
+    {
+        return new self($members);
+    }
+
     public function byVisibilities(array $visibilities): CoreReflectionMemberCollection
     {
         $items = [];
@@ -70,16 +78,16 @@ class ReflectionMemberCollection extends AbstractReflectionCollection implements
         }));
     }
 
-    public function methods(): ReflectionMethodCollection
+    public function methods(): CoreReflectionMethodCollection
     {
-        return new self(array_filter($this->items, function (ReflectionMember $member) {
+        return new ReflectionMethodCollection(array_filter($this->items, function (ReflectionMember $member) {
             return $member instanceof ReflectionMethod;
         }));
     }
 
-    public function properties(): ReflectionPropertyCollection
+    public function properties(): CoreReflectionPropertyCollection
     {
-        return new self(array_filter($this->items, function (ReflectionMember $member) {
+        return new ReflectionPropertyCollection(array_filter($this->items, function (ReflectionMember $member) {
             return $member instanceof ReflectionProperty;
         }));
     }

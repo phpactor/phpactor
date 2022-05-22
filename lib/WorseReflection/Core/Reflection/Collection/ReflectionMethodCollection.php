@@ -81,9 +81,16 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
         return new self($items);
     }
 
+    /**
+     * @param ReflectionMethod[] $methods
+     */
     public static function fromReflectionMethods(array $methods): CoreReflectionMethodCollection
     {
-        return new self($methods);
+        $items = [];
+        foreach ($methods as $method) {
+            $items[$method->name()] = $method;
+        }
+        return new self($items);
     }
 
     public function abstract(): CoreReflectionMethodCollection
