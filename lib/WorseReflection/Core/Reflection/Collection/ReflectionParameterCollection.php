@@ -18,8 +18,21 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionParameter first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionParameter last()
  */
-class ReflectionParameterCollection extends AbstractReflectionCollection implements CoreReflectionParameterCollection
+final class ReflectionParameterCollection extends AbstractReflectionCollection implements CoreReflectionParameterCollection
 {
+    /**
+     * @param ReflectionParameter[] $reflectionParameters
+     */
+    public static function fromReflectionParameters(array $reflectionParameters): self
+    {
+        $parameters = [];
+        foreach ($reflectionParameters as $reflectionParameter) {
+            $parameters[$reflectionParameter->name()] = $reflectionParameter;
+        }
+
+        return new self($parameters);
+    }
+
     public static function fromMethodDeclaration(ServiceLocator $serviceLocator, MethodDeclaration $method, ReflectionMethod $reflectionMethod)
     {
         $items = [];

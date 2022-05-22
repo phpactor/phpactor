@@ -344,7 +344,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $class = $parent;
         }
 
-        $this->ancestors = TolerantReflectionClassCollection::fromReflections($this->serviceLocator, $ancestors);
+        $this->ancestors = TolerantReflectionClassCollection::fromReflections($ancestors);
         return $this->ancestors;
     }
 

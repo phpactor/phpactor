@@ -107,7 +107,6 @@ class ReflectionMemberCollectionTest extends TestCase
     private function create(array $members): ReflectionMemberCollection
     {
         return ReflectionMemberCollection::fromReflections(
-            $this->serviceLocator->reveal(),
             $members
         );
     }

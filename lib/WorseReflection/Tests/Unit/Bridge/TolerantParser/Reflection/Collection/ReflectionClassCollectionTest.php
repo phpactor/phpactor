@@ -37,7 +37,7 @@ class ReflectionClassCollectionTest extends TestCase
         $this->reflection2->isConcrete()->willReturn(true);
         $this->reflection3->isConcrete()->willReturn(false);
 
-        $collection = ReflectionClassCollection::fromReflections($this->serviceLocator->reveal(), [
+        $collection = ReflectionClassCollection::fromReflections([
             $this->reflection1->reveal(), $this->reflection2->reveal(), $this->reflection3->reveal()
         ]);
 
