@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
 {

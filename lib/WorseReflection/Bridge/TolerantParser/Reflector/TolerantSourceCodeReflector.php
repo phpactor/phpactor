@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset a
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection as CoreReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as CoreReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
 
 class TolerantSourceCodeReflector implements SourceCodeReflector

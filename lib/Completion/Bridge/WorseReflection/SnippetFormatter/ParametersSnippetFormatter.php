@@ -5,7 +5,7 @@ namespace Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\Util\Snippet\Placeholder;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 
 class ParametersSnippetFormatter implements Formatter

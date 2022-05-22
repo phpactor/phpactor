@@ -11,7 +11,7 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 
 /**
  * @method CoreReflectionConstant get()

@@ -9,7 +9,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection as CoreReflectionTraitCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
 
 /**
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait get()

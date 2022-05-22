@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Visibility;
 use Prophecy\PhpUnit\ProphecyTrait;

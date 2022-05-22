@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection as CoreReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection as CoreReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;

@@ -7,8 +7,8 @@ use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 

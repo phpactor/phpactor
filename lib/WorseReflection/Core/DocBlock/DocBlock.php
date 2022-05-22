@@ -3,8 +3,8 @@
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
 use Phpactor\WorseReflection\Core\Deprecation;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;

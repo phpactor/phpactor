@@ -6,7 +6,7 @@ use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnumCase as PhpactorReflectionEnumCase;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 /**

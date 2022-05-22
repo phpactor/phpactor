@@ -9,16 +9,16 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollecti
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionEnumCaseCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum as CoreReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum

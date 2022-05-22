@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
 class CompositeReflector implements Reflector
 {

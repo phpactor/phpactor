@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\SourceCode;
 
 interface SourceCodeReflector

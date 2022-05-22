@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection as CoreReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;

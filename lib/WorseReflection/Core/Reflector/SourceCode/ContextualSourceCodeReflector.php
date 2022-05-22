@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;

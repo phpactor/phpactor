@@ -18,11 +18,11 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection as CoreReflectionTraitCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
@@ -35,7 +35,7 @@ use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 
 class ReflectionClass extends AbstractReflectionClass implements CoreReflectionClass
 {

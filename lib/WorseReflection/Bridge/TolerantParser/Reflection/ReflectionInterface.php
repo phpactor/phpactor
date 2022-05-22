@@ -11,9 +11,9 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceColle
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -25,7 +25,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as CoreReflectionInterface;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 
 class ReflectionInterface extends AbstractReflectionClass implements CoreReflectionInterface
 {

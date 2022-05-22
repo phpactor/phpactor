@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
 

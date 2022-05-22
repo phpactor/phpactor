@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
 use Generator;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Tests\Assert\TrinaryAssert;

@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Visibility;
 

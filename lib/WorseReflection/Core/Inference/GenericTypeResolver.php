@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;

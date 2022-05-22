@@ -1,7 +1,8 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
