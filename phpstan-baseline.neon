@@ -2156,11 +2156,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\WorseReflection\\\\Formatter\\\\ConstantFormatterTest\\:\\:provideFormatConstant\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/WorseReflection/Formatter/ConstantFormatterTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\WorseReflection\\\\Formatter\\\\MethodFormatterTest\\:\\:provideFormatConstant\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/WorseReflection/Formatter/MethodFormatterTest.php
@@ -5376,11 +5371,6 @@ parameters:
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
 		-
-			message: "#^PHPDoc tag @implements contains generic type Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\ReflectionMemberProvider\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> but interface Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\ReflectionMemberProvider is not generic\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/MemberProvider/DocblockMemberProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\PsrLog\\\\ArrayLogger\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/PsrLog/ArrayLogger.php
@@ -5459,11 +5449,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionClass.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethodCall\\:\\:\\$node is unused\\.$#"
@@ -5759,71 +5744,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Position\\:\\:fromStartAndEnd\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Position.php
-
-		-
-			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:__construct\\(\\) has parameter \\$items with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:first\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:fromReflections\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:fromReflections\\(\\) has parameter \\$reflections with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:keys\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:last\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:merge\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:merge\\(\\) has parameter \\$collection with generic interface Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\OldCollection\\\\ReflectionCollection but does not specify its types\\: T$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:\\$items type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
