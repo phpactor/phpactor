@@ -13,10 +13,11 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterfac
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant get()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant last()
+ * @method ReflectionConstant get()
+ * @method ReflectionConstant first()
+ * @method ReflectionConstant last()
  * @method ReflectionConstantCollection merge(ReflectionConstantCollection $collection)
+ * @method ReflectionMethodCollection empty()
  */
 class ReflectionConstantCollection extends ReflectionMemberCollection implements CoreReflectionConstantCollection
 {

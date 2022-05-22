@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 /**
- * @method static ReflectionMemberCollection empty(ServiceLocator $serviceLocator)
+ * @method static ReflectionMemberCollection empty()
  */
 class ReflectionMemberCollection extends AbstractReflectionCollection implements CoreReflectionMemberCollection
 {

@@ -21,9 +21,10 @@ use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty get(string $name)
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionProperty last()
+ * @method ReflectionProperty get(string $name)
+ * @method ReflectionProperty first()
+ * @method ReflectionProperty last()
+ * @method static ReflectionPropertyCollection empty()
  */
 final class ReflectionPropertyCollection extends ReflectionMemberCollection implements CoreReflectionPropertyCollection
 {

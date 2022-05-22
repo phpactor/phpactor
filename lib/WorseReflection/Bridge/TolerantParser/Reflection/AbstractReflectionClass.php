@@ -100,7 +100,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
 
                 $traitMethods[] = $virtualMethod;
             }
-            $methods = $methods->merge(VirtualReflectionMethodCollection::fromReflectionMethods($traitMethods));
+            $methods = $methods->merge(ReflectionMethodCollection::fromReflectionMethods($traitMethods));
         }
 
         return $methods;

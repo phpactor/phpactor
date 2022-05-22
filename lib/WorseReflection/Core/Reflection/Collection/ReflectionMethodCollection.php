@@ -15,9 +15,10 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod get(string $name)
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMethod last()
+ * @method ReflectionMethod get(string $name)
+ * @method ReflectionMethod first()
+ * @method ReflectionMethod last()
+ * @method static ReflectionMethodCollection empty()
  */
 class ReflectionMethodCollection extends ReflectionMemberCollection implements CoreReflectionMethodCollection
 {
