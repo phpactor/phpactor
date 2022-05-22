@@ -1,7 +1,8 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection as CoreReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;

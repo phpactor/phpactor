@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\ConstElement;
 use Phpactor\WorseReflection\Core\ServiceLocator;

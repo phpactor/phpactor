@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Reflection\C
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Prophecy\PhpUnit\ProphecyTrait;
 
