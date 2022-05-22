@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection as CoreReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionClassCollection as CoreReflectionClassCollection;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\NamespacedNameInterface;

@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use IteratorAggregate;

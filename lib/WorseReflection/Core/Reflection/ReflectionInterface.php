@@ -3,8 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection;
 
 interface ReflectionInterface extends ReflectionClassLike
 {

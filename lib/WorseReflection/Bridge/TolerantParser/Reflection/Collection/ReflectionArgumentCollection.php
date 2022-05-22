@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection as CoreReflectionParameterCollection;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;

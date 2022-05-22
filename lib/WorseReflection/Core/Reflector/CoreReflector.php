@@ -21,8 +21,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection;
 
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
 {

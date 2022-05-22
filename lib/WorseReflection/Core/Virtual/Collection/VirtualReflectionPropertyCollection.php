@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
 
 class VirtualReflectionPropertyCollection extends VirtualReflectionMemberCollection implements ReflectionPropertyCollection
 {

@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Visibility;
 use Closure;
 

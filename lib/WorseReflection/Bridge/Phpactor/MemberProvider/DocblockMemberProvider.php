@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;

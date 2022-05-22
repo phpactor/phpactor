@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;

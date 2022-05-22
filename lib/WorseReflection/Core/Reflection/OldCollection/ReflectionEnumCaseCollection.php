@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 

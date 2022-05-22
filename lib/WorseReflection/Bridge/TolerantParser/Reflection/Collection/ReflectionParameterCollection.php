@@ -3,13 +3,13 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as PhpactorReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection as PhpactorReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as PhpactorReflectionParameter;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection as CoreReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**

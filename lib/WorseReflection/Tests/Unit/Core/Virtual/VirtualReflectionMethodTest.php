@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\NodeText;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;

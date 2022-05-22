@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 use AppendIterator;
 use Phpactor\WorseReflection\Core\ClassName;

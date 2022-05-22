@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection as CoreReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection as CoreReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;

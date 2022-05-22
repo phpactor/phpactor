@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 /**
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant first()

@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as CoreReflectionFunctionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionFunctionCollection as CoreReflectionFunctionCollection;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction;
 

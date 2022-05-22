@@ -4,7 +4,7 @@ namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection;
 
 class ParametersFormatter implements Formatter
 {

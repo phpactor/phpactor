@@ -1,6 +1,9 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
+
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
+
 
 /**
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface first()

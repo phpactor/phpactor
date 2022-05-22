@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Virtual\Collection;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionParameterCollection;
 use Prophecy\PhpUnit\ProphecyTrait;
 

@@ -1,8 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 
 /**

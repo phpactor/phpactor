@@ -1,10 +1,11 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Reflection\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Countable;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
 use Traversable;
 
 /**

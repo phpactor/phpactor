@@ -3,9 +3,9 @@
 namespace Phpactor\WorseReflection\Core\Virtual\Collection;
 
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
