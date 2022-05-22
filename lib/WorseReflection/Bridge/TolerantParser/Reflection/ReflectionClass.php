@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection as TolerantReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
@@ -55,7 +54,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $methods = [];
 
-    private ?TolerantReflectionClassCollection $ancestors = null;
+    private ?ReflectionClassCollection $ancestors = null;
 
     public function __construct(
         ServiceLocator $serviceLocator,
@@ -322,9 +321,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         );
     }
 
-    /**
-     * @return ReflectionClassCollection<ReflectionClass>
-     */
     public function ancestors(): ReflectionClassCollection
     {
         if ($this->ancestors) {
@@ -344,7 +340,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $class = $parent;
         }
 
-        $this->ancestors = TolerantReflectionClassCollection::fromReflections($ancestors);
+        $this->ancestors = ReflectionClassCollection::fromReflections($ancestors);
         return $this->ancestors;
     }
 
@@ -352,6 +348,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     {
         $modifier = $this->node->abstractOrFinalModifier;
 
+        /** @phpstan-ignore-next-line */
         if (!$modifier) {
             return false;
         }

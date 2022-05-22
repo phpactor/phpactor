@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodColle
  * @method ReflectionMethod first()
  * @method ReflectionMethod last()
  * @method static ReflectionMethodCollection empty()
+ * @extends ReflectionMemberCollection<CoreReflectionmethod>
  */
 class ReflectionMethodCollection extends ReflectionMemberCollection implements CoreReflectionMethodCollection
 {

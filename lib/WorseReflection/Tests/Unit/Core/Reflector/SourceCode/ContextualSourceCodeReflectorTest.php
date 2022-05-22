@@ -3,37 +3,33 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflector\SourceCode;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Reflector\SourceCode\ContextualSourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 
 class ContextualSourceCodeReflectorTest extends TestCase
 {
     use ProphecyTrait;
-    const TEST_SOURCE_CODE = 'hello';
-    const TEST_OFFSET = 666;
-    
-    private ObjectProphecy $innerReflector;
+    const TEST_SOURCE_CODE = '<?php echo "hello";';
+    const TEST_OFFSET = 1;
     
     private ContextualSourceCodeReflector $reflector;
-    
-    private ObjectProphecy $locator;
 
     private $code;
 
+    private TemporarySourceLocator $locator;
+
     public function setUp(): void
     {
-        $this->innerReflector = $this->prophesize(SourceCodeReflector::class);
-        $this->locator = $this->prophesize(TemporarySourceLocator::class);
+        $this->locator = new TemporarySourceLocator(ReflectorBuilder::create()->build());
 
         $this->reflector = new ContextualSourceCodeReflector(
-            $this->innerReflector->reveal(),
-            $this->locator->reveal()
+            ReflectorBuilder::create()->build(),
+            $this->locator
         );
 
         $this->code = SourceCode::fromString(self::TEST_SOURCE_CODE);
@@ -41,31 +37,18 @@ class ContextualSourceCodeReflectorTest extends TestCase
 
     public function testReflectsClassesIn(): void
     {
-        $this->locator->pushSourceCode($this->code)->shouldBeCalled();
-        $this->innerReflector->reflectClassesIn($this->code)->shouldBeCalled();
-
-        $this->reflector->reflectClassesIn(self::TEST_SOURCE_CODE);
+        self::assertEquals(2, $this->reflector->reflectClassesIn('<?php class One{} class Two{}')->count());
     }
 
     public function testReflectOffset(): void
     {
-        $this->locator->pushSourceCode($this->code)->shouldBeCalled();
-        $this->innerReflector->reflectOffset(
-            $this->code,
-            self::TEST_OFFSET
-        )->willReturn($this->prophesize(ReflectionOffset::class));
-
-        $this->reflector->reflectOffset(self::TEST_SOURCE_CODE, self::TEST_OFFSET);
+        $offset = $this->reflector->reflectOffset(self::TEST_SOURCE_CODE, self::TEST_OFFSET);
+        self::assertInstanceOf(ReflectionOffset::class, $offset);
     }
 
     public function testReflectMethodCall(): void
     {
-        $this->locator->pushSourceCode($this->code)->shouldBeCalled();
-        $this->innerReflector->reflectMethodCall(
-            $this->code,
-            self::TEST_OFFSET
-        )->willReturn($this->prophesize(ReflectionMethodCall::class));
-
-        $this->reflector->reflectMethodCall(self::TEST_SOURCE_CODE, self::TEST_OFFSET);
+        $call = $this->reflector->reflectMethodCall('<?php class One { function bar() {} } $f = new One();$f->bar();', 59);
+        self::assertInstanceOf(ReflectionMethodCall::class, $call);
     }
 }

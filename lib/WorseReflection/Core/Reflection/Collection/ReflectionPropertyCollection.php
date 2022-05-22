@@ -24,7 +24,7 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCol
  * @method ReflectionProperty get(string $name)
  * @method ReflectionProperty first()
  * @method ReflectionProperty last()
- * @method static ReflectionPropertyCollection empty()
+ * @extends ReflectionMemberCollection<PhpactorReflectionProperty>
  */
 final class ReflectionPropertyCollection extends ReflectionMemberCollection implements CoreReflectionPropertyCollection
 {

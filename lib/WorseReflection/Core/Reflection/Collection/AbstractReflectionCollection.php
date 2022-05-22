@@ -11,11 +11,23 @@ use InvalidArgumentException;
 use ArrayIterator;
 use BadMethodCallException;
 use ReturnTypeWillChange;
+use Traversable;
 
+/**
+ * @template T
+ * @implements IteratorAggregate<T>
+ * @implements ArrayAccess<array-key,T>
+ */
 abstract class AbstractReflectionCollection implements IteratorAggregate, Countable, ArrayAccess
 {
+    /**
+     * @var array<array-key,T>
+     */
     protected array $items = [];
 
+    /**
+     * @param array<array-key,T> $items
+     */
     final protected function __construct(array $items)
     {
         $this->items = $items;
@@ -26,22 +38,36 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return count($this->items);
     }
 
+    /**
+     * @return array-key[]
+     */
     public function keys(): array
     {
         return array_keys($this->items);
     }
 
-    public static function fromReflections(array $reflections)
+    /**
+     * @return static
+     * @param T[] $reflections
+     */
+    public static function fromReflections(array $reflections): self
     {
         return new static($reflections);
     }
 
-    public static function empty(): self
+    /**
+     * @return static
+     */
+    public static function empty()
     {
         return new static([]);
     }
 
-    public function merge(ReflectionCollection $collection)
+    /**
+     * @return static
+     * @param ReflectionCollection<T> $collection
+     */
+    public function merge(ReflectionCollection $collection): self
     {
         $type = $this->collectionType();
 
@@ -62,6 +88,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return new static($items);
     }
 
+    /**
+     * @return T
+     */
     public function get(string $name)
     {
         if (!isset($this->items[$name])) {
@@ -75,6 +104,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return $this->items[$name];
     }
 
+    /**
+     * @return T
+     */
     public function first()
     {
         if (empty($this->items)) {
@@ -86,6 +118,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return reset($this->items);
     }
 
+    /**
+     * @return T
+     */
     public function last()
     {
         if (empty($this->items)) {
@@ -102,7 +137,7 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return isset($this->items[$name]);
     }
 
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }

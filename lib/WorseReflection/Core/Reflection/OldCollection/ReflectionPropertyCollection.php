@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
  * @method ReflectionProperty first()
  * @method ReflectionProperty last()
  * @method ReflectionProperty get(string $name)
- * @method ReflectionPropertyCollection merge(ReflectionPropertyCollection $collection)
  *
  * @extends ReflectionMemberCollection<ReflectionProperty>
  */

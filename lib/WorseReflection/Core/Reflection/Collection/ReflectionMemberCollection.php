@@ -12,8 +12,9 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Visibility;
 
 /**
- * @method static ReflectionMemberCollection empty()
- * @implements CoreReflectionMemberCollection<ReflectionMember>
+ * @template T of ReflectionMember
+ * @implements CoreReflectionMemberCollection<T>
+ * @extends AbstractReflectionCollection<T>
  */
 class ReflectionMemberCollection extends AbstractReflectionCollection implements CoreReflectionMemberCollection
 {
