@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -12,11 +13,9 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameRe
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait get()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionTrait last()
+ * @extends AbstractReflectionCollection<ReflectionTrait>
  */
-class ReflectionTraitCollection extends AbstractReflectionCollection implements CoreReflectionTraitCollection
+class ReflectionTraitCollection extends AbstractReflectionCollection
 {
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
     {

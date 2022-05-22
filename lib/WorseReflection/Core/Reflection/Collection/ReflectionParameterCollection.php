@@ -13,12 +13,9 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterColle
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
- * @method ReflectionParameter get()
- * @method ReflectionParameter first()
- * @method ReflectionParameter last()
- * @method static ReflectionParameterCollection empty()
+ * @extends AbstractReflectionCollection<PhpactorReflectionParameter>
  */
-final class ReflectionParameterCollection extends AbstractReflectionCollection implements CoreReflectionParameterCollection
+final class ReflectionParameterCollection extends AbstractReflectionCollection
 {
     /**
      * @param ReflectionParameter[] $reflectionParameters

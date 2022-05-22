@@ -2,10 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection as CoreReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -13,10 +10,9 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 /**
  * @template T of ReflectionMember
- * @implements CoreReflectionMemberCollection<T>
  * @extends AbstractReflectionCollection<T>
  */
-class ReflectionMemberCollection extends AbstractReflectionCollection implements CoreReflectionMemberCollection
+class ReflectionMemberCollection extends AbstractReflectionCollection
 {
     /**
      * @param ReflectionMember[] $members

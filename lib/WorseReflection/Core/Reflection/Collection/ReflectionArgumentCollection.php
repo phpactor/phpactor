@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;
 
 /**
- * @extends AbstractReflectionCollection<ReflectionParameter>
+ * @extends AbstractReflectionCollection<PhpactorReflectionArgument>
  */
 class ReflectionArgumentCollection extends AbstractReflectionCollection
 {
@@ -25,18 +25,18 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
         return new self($arguments);
     }
 
-    public function notPromoted(): CoreReflectionParameterCollection
+    public function notPromoted(): self
     {
         return $this;
     }
 
-    public function promoted(): CoreReflectionParameterCollection
+    public function promoted(): self
     {
         return new self([]);
     }
 
     protected function collectionType(): string
     {
-        return CoreReflectionParameterCollection::class;
+        return ReflectionArgumentCollection::class;
     }
 }

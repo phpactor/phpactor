@@ -16,7 +16,7 @@ use Traversable;
  * @template T of ReflectionMemberCollection
  * @implements ReflectionMemberCollection<ReflectionMember>
  */
-class ChainReflectionMemberCollection implements ReflectionMemberCollection
+class ChainReflectionMemberCollection
 {
     /**
      * @var array<ReflectionMemberCollection<ReflectionMember>>

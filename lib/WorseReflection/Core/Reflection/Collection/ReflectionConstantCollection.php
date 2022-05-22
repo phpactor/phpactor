@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterfac
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 
 /**
- * @method ReflectionMethodCollection empty()
+ * @extends ReflectionMemberCollection<CoreReflectionConstant>
  */
 class ReflectionConstantCollection extends ReflectionMemberCollection
 {

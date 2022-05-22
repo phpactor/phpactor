@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -13,11 +14,9 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface get()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionInterface last()
+ * @extends AbstractReflectionCollection<ReflectionInterface>
  */
-class ReflectionInterfaceCollection extends AbstractReflectionCollection implements CoreReflectionInterfaceCollection
+class ReflectionInterfaceCollection extends AbstractReflectionCollection
 {
     public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface): self
     {

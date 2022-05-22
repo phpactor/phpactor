@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction as PhpactorReflectionFunction;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -10,7 +11,7 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction;
 
 /**
- * @method \Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction get()
+ * @extends AbstractReflectionCollection<PhpactorReflectionFunction>
  */
 class ReflectionFunctionCollection extends AbstractReflectionCollection
 {
