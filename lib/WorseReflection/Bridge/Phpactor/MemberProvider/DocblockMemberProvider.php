@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider;
 
+use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -15,8 +16,9 @@ class DocblockMemberProvider implements ReflectionMemberProvider
      */
     public function provideMembers(ServiceLocator $locator, ReflectionClassLike $class): ReflectionMemberCollection
     {
-        return ReflectionMemberCollection::empty()
-            ->merge(ReflectionMemberCollection::fromMembers(iterator_to_array($class->docblock()->methods($class))))
-            ->merge(ReflectionMemberCollection::fromMembers(iterator_to_array($class->docblock()->properties($class))));
+        return ChainReflectionMemberCollection::fromCollections([
+            $class->docblock()->methods($class),
+            $class->docblock()->properties($class),
+        ]);
     }
 }

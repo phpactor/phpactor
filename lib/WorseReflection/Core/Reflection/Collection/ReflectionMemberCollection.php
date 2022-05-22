@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 /**
  * @template T of ReflectionMember
- * @extends AbstractReflectionCollection<T>
+ * @extends ReflectionCollection<T>
  */
 interface ReflectionMemberCollection extends ReflectionCollection
 {
@@ -53,4 +53,11 @@ interface ReflectionMemberCollection extends ReflectionCollection
      * @return static
      */
     public function byMemberType(string $type): ReflectionMemberCollection;
+
+    /**
+     * @template M of ReflectionMember
+     * @param class-string<M> $fqn
+     * @return ReflectionMemberCollection<M>
+     */
+    public function byMemberClass(string $fqn): ReflectionMemberCollection;
 }

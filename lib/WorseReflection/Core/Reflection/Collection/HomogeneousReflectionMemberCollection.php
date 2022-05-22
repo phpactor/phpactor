@@ -11,8 +11,9 @@ use Phpactor\WorseReflection\Core\Visibility;
 /**
  * @template T of ReflectionMember
  * @extends AbstractReflectionCollection<T>
+ * @implements ReflectionMemberCollection<T>
  */
-class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
+class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection implements ReflectionMemberCollection
 {
     /**
      * @return static
@@ -124,19 +125,10 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         return HomogeneousReflectionMemberCollection::class;
     }
 
-    /**
-     * @return static
-     * @param array<ReflectionMemberCollection<ReflectionMember>> $collections
-     */
-    public static function fromCollections(array $collections): HomogeneousReflectionMemberCollection
+    public function byMemberClass(string $fqn): ReflectionMemberCollection
     {
-        $collection = self::empty();
-
-        $items = [];
-        foreach ($collections as $collection) {
-            $collection = $collection->mergeKeyed($collection->items);
-        }
-
-        return new static($items);
+        return new static(array_filter($this->items, function (ReflectionMember $member) use ($fqn) {
+            return $member instanceof $fqn;
+        }));
     }
 }
