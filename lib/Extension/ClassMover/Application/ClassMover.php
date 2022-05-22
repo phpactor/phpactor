@@ -111,7 +111,7 @@ class ClassMover
 
         $this->replaceThoseReferences($logger, $filesystem, $files);
         $logger->moving($srcPath, $destPath);
-        $filesystem->move($srcPath, $destPath);
+        //$filesystem->move($srcPath, $destPath);
     }
 
     private function directoryMap(Filesystem $filesystem, FilePath $srcPath, FilePath $destPath)
