@@ -2,15 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use IteratorAggregate;
 use Countable;
-use ArrayAccess;
-use InvalidArgumentException;
-use ArrayIterator;
-use BadMethodCallException;
-use ReturnTypeWillChange;
-use Traversable;
 
 /**
  * @template T

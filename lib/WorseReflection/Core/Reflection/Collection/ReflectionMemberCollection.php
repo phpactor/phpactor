@@ -4,8 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Visibility;
 
 /**
