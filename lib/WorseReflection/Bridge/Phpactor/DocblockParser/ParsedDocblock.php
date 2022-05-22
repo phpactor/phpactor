@@ -23,7 +23,9 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
@@ -136,7 +138,7 @@ class ParsedDocblock implements DocBlock
         return true;
     }
 
-    public function properties(ReflectionClassLike $declaringClass): ReflectionPropertyCollection
+    public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
         $properties = [];
         foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
@@ -158,10 +160,10 @@ class ParsedDocblock implements DocBlock
             $properties[] = $property;
         }
 
-        return VirtualReflectionPropertyCollection::fromReflectionProperties($properties);
+        return ReflectionPropertyCollection::fromReflectionProperties($properties);
     }
 
-    public function methods(ReflectionClassLike $declaringClass): ReflectionMethodCollection
+    public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
         $methods = [];
         foreach ($this->node->descendantElements(MethodTag::class) as $methodTag) {

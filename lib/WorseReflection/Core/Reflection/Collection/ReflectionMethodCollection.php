@@ -83,7 +83,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
     }
 
     /**
-     * @param ReflectionMethod[] $methods
+     * @param CoreReflectionMethod[] $methods
      */
     public static function fromReflectionMethods(array $methods): CoreReflectionMethodCollection
     {

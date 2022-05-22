@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -19,6 +20,7 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
 
 /**
  * @method ReflectionProperty get(string $name)
@@ -28,6 +30,20 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCol
  */
 final class ReflectionPropertyCollection extends ReflectionMemberCollection implements CoreReflectionPropertyCollection
 {
+
+    /**
+     * @param PhpactorReflectionProperty[] $properties
+     */
+    public static function fromReflectionProperties(array $properties): CoreReflectionPropertyCollection
+    {
+        $items = [];
+        foreach ($properties as $property) {
+            $items[$property->name()] = $property;
+        }
+
+        return new self($items);
+    }
+
     /**
      * @return static
      */

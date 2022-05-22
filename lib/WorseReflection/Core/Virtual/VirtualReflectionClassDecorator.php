@@ -4,12 +4,13 @@ namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -53,7 +54,7 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->parent();
     }
 
-    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
+    public function properties(ReflectionClassLike $contextClass = null): CoreReflectionPropertyCollection
     {
         $realProperties = $this->class->properties($contextClass ?: $this->class);
         $virtualProperties = $this->virtualProperties();
@@ -140,9 +141,9 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->isFinal();
     }
 
-    private function virtualProperties(): ReflectionPropertyCollection
+    private function virtualProperties(): CoreReflectionPropertyCollection
     {
-        $virtualProperties = VirtualReflectionPropertyCollection::fromReflectionProperties([]);
+        $virtualProperties = ReflectionPropertyCollection::empty();
         if ($parentClass = $this->parent()) {
             assert($parentClass instanceof VirtualReflectionClassDecorator);
             $virtualProperties = $virtualProperties->merge(
