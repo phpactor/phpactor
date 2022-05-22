@@ -86,6 +86,20 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         ]);
     }
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
+    public function ownMembers(ReflectionClassLike $contextClass = null): ReflectionMemberCollection
+    {
+        $contextClass = $contextClass ?: $this;
+        return ChainReflectionMemberCollection::fromCollections([
+            ReflectionConstantCollection::fromClassDeclaration($this->serviceLocator, $this->node, $this),
+            ReflectionPropertyCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass),
+            ReflectionPropertyCollection::fromClassDeclarationConstructorPropertyPromotion($this->serviceLocator, $this->node, $contextClass),
+            ReflectionMethodCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass),
+        ]);
+    }
+
     public function constants(): ReflectionConstantCollection
     {
         $parentConstants = null;
@@ -196,13 +210,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             );
         }
 
-        $methods = $methods->merge(
-            ReflectionMethodCollection::fromClassDeclaration(
-                $this->serviceLocator,
-                $this->node,
-                $contextClass
-            )
-        );
+        $methods = $methods->merge(ReflectionMethodCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass));
 
         $this->methods[$cacheKey] = $methods;
 

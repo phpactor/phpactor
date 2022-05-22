@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
-interface ReflectionClass extends ReflectionClassLike
+interface ReflectionClass extends ReflectionClassLike, HasMembers
 {
     public function isAbstract(): bool;
 

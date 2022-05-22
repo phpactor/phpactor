@@ -23,6 +23,7 @@ class ReflectionClassTest extends IntegrationTestCase
 
     /**
      * @dataProvider provideReflectionClass
+     * @dataProvider provideOwnMembers
      */
     public function testReflectClass(string $source, string $class, Closure $assertion): void
     {
@@ -30,6 +31,9 @@ class ReflectionClassTest extends IntegrationTestCase
         $assertion($class);
     }
 
+    /**
+     * @return Generator<string,array{string,string,Closure(<missing>): void}|array{string,string,Closure(Phpactor\WorseReflection\Core\Reflection\ReflectionClass): void}>
+     */
     public function provideReflectionClass(): Generator
     {
         yield 'It reflects an empty class' => [
@@ -1178,6 +1182,56 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertEquals('Foobar', $class->properties()->first()->inferredType()->__toString());
                 $this->assertEquals('barfoo', $class->properties()->last()->name());
                 $this->assertEquals('Barfoo', $class->properties()->last()->inferredType()->__toString());
+            }
+        ];
+    }
+
+    public function provideOwnMembers(): Generator
+    {
+        yield 'no own members' => [
+            <<<'EOT'
+                <?php
+
+                class Class2
+                {
+                    protected $bag = '';
+                    public function bar(): string {}
+                }
+
+                class Class1 extends Class2
+                {
+                }
+
+                EOT
+        ,
+            'Class1',
+            function (ReflectionClass $class): void {
+                $this->assertEquals(0, $class->ownMembers()->count());
+            }
+        ];
+
+        yield 'own members' => [
+            <<<'EOT'
+                <?php
+
+                class Class2
+                {
+                    protected $bag = '';
+                    public function bar(): string {}
+                }
+
+                class Class1 extends Class2
+                {
+                    const FOO = 'asd';
+                    private $bar = 'asd';
+                    public function baz() {}
+                }
+
+                EOT
+        ,
+            'Class1',
+            function (ReflectionClass $class): void {
+                $this->assertEquals(3, $class->ownMembers()->count());
             }
         ];
     }
