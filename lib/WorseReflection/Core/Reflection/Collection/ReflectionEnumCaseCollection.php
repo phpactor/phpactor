@@ -27,7 +27,7 @@ final class ReflectionEnumCaseCollection extends ReflectionMemberCollection impl
             $items[$enumCase->name()] = $enumCase;
         }
 
-        return new static($$items);
+        return new static($items);
     }
 
     protected function collectionType(): string
