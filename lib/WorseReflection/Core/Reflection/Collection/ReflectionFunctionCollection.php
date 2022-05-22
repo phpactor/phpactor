@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction
 /**
  * @method \Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction get()
  */
-class ReflectionFunctionCollection extends AbstractReflectionCollection implements CoreReflectionFunctionCollection
+class ReflectionFunctionCollection extends AbstractReflectionCollection
 {
     public static function fromNode(ServiceLocator $serviceLocator, SourceCode $sourceCode, SourceFileNode $node): self
     {
