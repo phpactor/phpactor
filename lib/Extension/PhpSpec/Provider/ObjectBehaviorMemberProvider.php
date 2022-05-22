@@ -8,11 +8,11 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
+use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
 
 class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
 {
@@ -53,6 +53,8 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
             return VirtualReflectionMethodCollection::fromMembers([]);
         }
 
+        $subjectType = TypeFactory::reflectedClass($serviceLocator->reflector(), self::SUBJECT_CLASS);
+
         $virtualMethods = [];
         foreach ($subjectClass->methods() as $subjectMethod) {
             if (false === $subjectMethod->visibility()->isPublic()) {
@@ -60,7 +62,6 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
             }
 
             $method = VirtualReflectionMethod::fromReflectionMethod($subjectMethod);
-            $subjectType = TypeFactory::reflectedClass($serviceLocator->reflector(), self::SUBJECT_CLASS);
             $method = $method
                 ->withInferredType($method->inferredType()->addType($subjectType))
                 ->withType($subjectType)
@@ -68,7 +69,21 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
             $virtualMethods[] = $method;
         }
 
-        return VirtualReflectionMemberCollection::fromMembers($virtualMethods);
+        $virtualProperties = [];
+        foreach ($subjectClass->properties() as $subjectProperty) {
+            if (false === $subjectProperty->visibility()->isPublic()) {
+                continue;
+            }
+
+            $property = VirtualReflectionProperty::fromReflectionProperty($subjectProperty);
+            $property = $property
+                ->withInferredType($property->inferredType()->addType($subjectType))
+                ->withType($subjectType)
+            ;
+            $virtualProperties[] = $property;
+        }
+
+        return VirtualReflectionMemberCollection::fromMembers(array_merge($virtualMethods, $virtualProperties));
     }
 
     /**

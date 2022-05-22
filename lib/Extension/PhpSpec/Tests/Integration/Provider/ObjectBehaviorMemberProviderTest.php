@@ -69,6 +69,7 @@ final class ObjectBehaviorMemberProviderTest extends TestCase
                 ['type' => 'method', 'name' => 'shouldBe'],
                 ['type' => 'method', 'name' => 'it_tests'],
                 ['type' => 'method', 'name' => 'company'],
+                ['type' => 'property', 'name' => 'id'],
             ]
         ];
 
@@ -144,6 +145,8 @@ final class ObjectBehaviorMemberProviderTest extends TestCase
 
                 final class Employee
                 {
+                    public int \$id = 1;
+
                     public function company(): Company
                     {
                         return new Company();
