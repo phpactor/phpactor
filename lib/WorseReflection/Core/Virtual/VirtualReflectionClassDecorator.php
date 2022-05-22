@@ -3,11 +3,12 @@
 namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\Position;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -98,9 +99,9 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $members;
     }
 
-    public function virtualMethods(): VirtualReflectionMethodCollection
+    public function virtualMethods(): CoreReflectionMethodCollection
     {
-        $virtualMethods = VirtualReflectionMethodCollection::fromReflectionMethods([]);
+        $virtualMethods = ReflectionMethodCollection::fromReflectionMethods([]);
         if ($parentClass = $this->parent()) {
             assert($parentClass instanceof VirtualReflectionClassDecorator);
             $virtualMethods = $virtualMethods->merge(
