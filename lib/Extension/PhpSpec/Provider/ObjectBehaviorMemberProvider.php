@@ -55,6 +55,10 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
 
         $virtualMethods = [];
         foreach ($subjectClass->methods() as $subjectMethod) {
+            if (false === $subjectMethod->visibility()->isPublic()) {
+                continue;
+            }
+
             $method = VirtualReflectionMethod::fromReflectionMethod($subjectMethod);
             $subjectType = TypeFactory::reflectedClass($serviceLocator->reflector(), self::SUBJECT_CLASS);
             $method = $method

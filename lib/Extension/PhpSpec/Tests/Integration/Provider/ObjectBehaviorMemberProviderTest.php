@@ -37,6 +37,7 @@ final class ObjectBehaviorMemberProviderTest extends TestCase
             ByteOffset::fromInt((int)$start)
         ));
 
+        $this->assertCount(count($expected), $suggestions);
         foreach ($expected as $index => $expectation) {
             $this->assertArraySubset($expectation, $suggestions[$index]->toArray());
         }
@@ -146,6 +147,10 @@ final class ObjectBehaviorMemberProviderTest extends TestCase
                     public function company(): Company
                     {
                         return new Company();
+                    }
+
+                    private function notVisible(): void
+                    {
                     }
                 }
 
