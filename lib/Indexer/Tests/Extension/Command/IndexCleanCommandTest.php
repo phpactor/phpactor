@@ -22,12 +22,14 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $process->mustRun();
 
         $expectedOutput = <<<PHP
-            +---+-----------+--------+------------+
-            | # | Directory | Size   | Created at |
-            +---+-----------+--------+------------+
-            | 1 | project   | 4.00 K | 0.0 days   |
-            | 2 | vendor    | 4.00 K | 0.0 days   |
-            +---+-----------+--------+------------+
+            +---+-----------+---------+---------------+
+            | # | Directory | Size    | Last modified |
+            +---+-----------+---------+---------------+
+            | 1 | project   | 4.62 K  | 0.0 days      |
+            | 2 | vendor    | 73.43 K | 0.0 days      |
+            +---+-----------+---------+---------------+
+            Total size: 78.06 K
+
             Removing project
             Removing vendor
 
@@ -105,12 +107,13 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $process->mustRun();
 
         $expectedOutput = <<<PHP
-            +---+-----------+--------+------------+
-            | # | Directory | Size   | Created at |
-            +---+-----------+--------+------------+
-            | 1 | project   | 4.00 K | 0.0 days   |
-            | 2 | vendor    | 4.00 K | 0.0 days   |
-            +---+-----------+--------+------------+
+            +---+-----------+---------+---------------+
+            | # | Directory | Size    | Last modified |
+            +---+-----------+---------+---------------+
+            | 1 | project   | 4.62 K  | 0.0 days      |
+            | 2 | vendor    | 73.43 K | 0.0 days      |
+            +---+-----------+---------+---------------+
+            Total size: 78.06 K
 
             PHP;
 

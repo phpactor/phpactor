@@ -46,4 +46,25 @@ class Filesystem
 
         return sprintf('%.2f %s', $byteCount / pow(1024, $unitIndex), $units[$unitIndex]);
     }
+
+    /**
+     * Returns the size of a path (recursively) and returns the size of the path in bytes.
+     */
+    public static function sizeOfPath(string $path): int
+    {
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        $size = 0;
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                $size += self::sizeOfPath((string)$file);
+            }
+            $size += $file->getSize();
+        }
+
+        return $size;
+    }
 }

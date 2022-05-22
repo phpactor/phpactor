@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Model\Index;
 
+use Phpactor\Indexer\Util\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 
 class IndexInfo
@@ -33,7 +34,7 @@ class IndexInfo
         return new self(
             $fileInfo->getRealPath(),
             $fileInfo->getRelativePathname(),
-            $fileInfo->getSize(),
+            Filesystem::sizeOfPath($fileInfo->getRealPath()),
             (time() - $fileInfo->getMTime()) / self::SECONDS_IN_DAY
         );
     }

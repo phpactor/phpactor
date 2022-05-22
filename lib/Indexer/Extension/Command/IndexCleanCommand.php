@@ -73,14 +73,18 @@ class IndexCleanCommand extends Command
             $answer = $this->getInteractiveAnswer($indicies, $input, $output);
         }
 
+        //dd($answer);
+        $output->writeln('');
+        $indiciesToDelete = [];
         if ($answer === null) {
-            foreach ($indicies as $index) {
-                $output->writeln(sprintf('Removing %s', $index->directoryName()));
-                $this->filesystem->remove($index->absolutePath());
-            }
+            $indiciesToDelete = $indicies;
         } else {
-            $fileInfo = array_values($indicies)[((int)$answer) - 1];
-            $this->filesystem->remove($fileInfo->absolutePath());
+            $indiciesToDelete = [array_values($indicies)[$answer]];
+        }
+
+        foreach ($indiciesToDelete as $index) {
+            $output->writeln(sprintf('<info>Removing %s</info>', $index->directoryName()));
+            $this->filesystem->remove($index->absolutePath());
         }
 
 
@@ -96,18 +100,17 @@ class IndexCleanCommand extends Command
             return null;
         }
 
-        if (is_numeric($argument)) {
-            return (int) $argument;
+        if (is_numeric($argument) && count($indexList) >= (int) $argument) {
+            return ((int) $argument) - 1;
         }
 
         foreach (array_values($indexList) as $i => $index) {
             if ($index->directoryName() === $argument) {
-                dump($i);
-                return $i + 1;
+                return $i;
             }
         }
 
-        throw new InvalidArgumentException('');
+        throw new InvalidArgumentException('Could not find index with argument "'. $argument. '" either use the id of the index or the name from the table above.');
     }
 
     /**
@@ -115,10 +118,12 @@ class IndexCleanCommand extends Command
      */
     private function renderIndexTable(array $indexList, OutputInterface $output): void
     {
+        $totalSize = 0;
         $table = new Table($output);
-        $table->setHeaders(['#' , 'Directory', 'Size', 'Created at']);
+        $table->setHeaders(['#' , 'Directory', 'Size', 'Last modified']);
         foreach (array_values($indexList) as $i => $index) {
             /** @var IndexInfo $index */
+            $totalSize += $index->size();
             $table->addRow([
                 $i + 1,
                 $index->directoryName(),
@@ -127,12 +132,14 @@ class IndexCleanCommand extends Command
             ]);
         }
         $table->render();
+
+        $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
     }
 
     /**
      * @param array<IndexInfo> $indicies
      */
-    private function getInteractiveAnswer(array $indicies, InputInterface $input, OutputInterface $output): ?string
+    private function getInteractiveAnswer(array $indicies, InputInterface $input, OutputInterface $output): ?int
     {
         $indexCount = count($indicies);
         $helper = new QuestionHelper();
@@ -141,21 +148,22 @@ class IndexCleanCommand extends Command
             $indexCount,
             self::CLEAN_ALL
         ));
-        $question->setValidator(function ($userInput) use ($indexCount) {
+        $question->setValidator(function (?string $userInput) use ($indexCount) {
             if ($userInput === self::CLEAN_ALL) {
                 return null;
             }
             if (!is_numeric($userInput)) {
                 throw new Exception('Please provide a number.');
             }
+
             $number = (int)$userInput;
-            if ($number <= 0 || $number > $indexCount) {
+            if ($number < 0 || $number > $indexCount) {
                 throw new Exception('Please provide a number between 1 and '.$indexCount);
             }
 
-            return $number;
+            return ((int) $number) - 1;
         });
-        $question->setMaxAttempts(null);
+
         return $helper->ask($input, $output, $question);
     }
 
