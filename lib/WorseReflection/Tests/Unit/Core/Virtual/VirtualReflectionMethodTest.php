@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\NodeText;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -23,7 +23,7 @@ class VirtualReflectionMethodTest extends VirtualReflectionMemberTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->parameters = $this->prophesize(ReflectionParameterCollection::class);
+        $this->parameters = ReflectionParameterCollection::empty();
         $this->body = NodeText::fromString('hello');
         $this->isAbstract = true;
         $this->isStatic = true;
@@ -45,7 +45,7 @@ class VirtualReflectionMethodTest extends VirtualReflectionMemberTestCase
             $this->visibility,
             $this->type,
             $this->type,
-            $this->parameters->reveal(),
+            $this->parameters,
             $this->body,
             $this->isAbstract,
             $this->isStatic,
@@ -55,7 +55,7 @@ class VirtualReflectionMethodTest extends VirtualReflectionMemberTestCase
 
     public function testParameters(): void
     {
-        $this->assertEquals($this->parameters->reveal(), $this->member()->parameters());
+        $this->assertEquals($this->parameters, $this->member()->parameters());
     }
 
     public function testBody(): void

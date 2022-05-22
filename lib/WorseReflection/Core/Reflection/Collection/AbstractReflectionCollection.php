@@ -32,6 +32,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return array_keys($this->items);
     }
 
+    /**
+     * @return static
+     */
     public static function fromReflections(array $reflections)
     {
         return new static($reflections);

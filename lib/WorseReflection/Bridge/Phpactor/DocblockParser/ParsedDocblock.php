@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -166,7 +167,7 @@ class ParsedDocblock implements DocBlock
         $methods = [];
         foreach ($this->node->descendantElements(MethodTag::class) as $methodTag) {
             assert($methodTag instanceof MethodTag);
-            $params = VirtualReflectionParameterCollection::empty();
+            $params = ReflectionParameterCollection::empty();
             $method = new VirtualReflectionMethod(
                 $declaringClass->position(),
                 $declaringClass,
@@ -233,7 +234,7 @@ class ParsedDocblock implements DocBlock
         return $implements;
     }
 
-    private function addParameters(VirtualReflectionMethod $method, VirtualReflectionParameterCollection $collection, ?ParameterList $parameterList): void
+    private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void
     {
         if (null === $parameterList) {
             return;

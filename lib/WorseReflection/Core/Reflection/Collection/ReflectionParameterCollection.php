@@ -75,6 +75,11 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection i
         }));
     }
 
+    public function add(PhpactorReflectionParameter $parameter): void
+    {
+        $this->items[$parameter->name()] = $parameter;
+    }
+
     protected function collectionType(): string
     {
         return CoreReflectionParameterCollection::class;
