@@ -7,14 +7,13 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnumCase as PhpactorReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant get()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionConstant last()
+ * @extends ReflectionMemberCollection<ReflectionEnumCase>
  */
-final class ReflectionEnumCaseCollection extends ReflectionMemberCollection implements PhpactorReflectionEnumCaseCollection
+final class ReflectionEnumCaseCollection extends ReflectionMemberCollection
 {
     public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enum, ReflectionEnum $reflectionEnum): self
     {

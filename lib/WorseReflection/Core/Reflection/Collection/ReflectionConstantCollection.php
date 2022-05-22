@@ -14,13 +14,9 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterfac
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 
 /**
- * @method CoreReflectionConstant get()
- * @method CoreReflectionConstant first()
- * @method CoreReflectionConstant last()
- * @method ReflectionConstantCollection merge(ReflectionConstantCollection $collection)
  * @method ReflectionMethodCollection empty()
  */
-class ReflectionConstantCollection extends ReflectionMemberCollection implements CoreReflectionConstantCollection
+class ReflectionConstantCollection extends ReflectionMemberCollection
 {
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClass $reflectionClass): CoreReflectionConstantCollection
     {

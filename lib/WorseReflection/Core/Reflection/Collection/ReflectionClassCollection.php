@@ -19,9 +19,6 @@ use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionClassDecorator;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass get(array-key $key)
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass last()
  * @extends AbstractReflectionCollection<PhpactorReflectionClass>
  */
 class ReflectionClassCollection extends AbstractReflectionCollection

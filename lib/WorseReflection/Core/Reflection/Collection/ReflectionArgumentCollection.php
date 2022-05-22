@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument
 /**
  * @extends AbstractReflectionCollection<ReflectionParameter>
  */
-class ReflectionArgumentCollection extends AbstractReflectionCollection implements CoreReflectionParameterCollection
+class ReflectionArgumentCollection extends AbstractReflectionCollection
 {
     public static function fromArgumentListAndFrame(ServiceLocator $locator, ArgumentExpressionList $list, Frame $frame): self
     {
