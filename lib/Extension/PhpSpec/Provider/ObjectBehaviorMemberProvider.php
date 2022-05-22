@@ -98,7 +98,7 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
         
             $virtualMethod = VirtualReflectionMethod::fromReflectionMethod($method);
             $virtualMethods[] = $virtualMethod
-                ->withInferredType($virtualMethod->inferredType()->addType($subjectType))
+                ->withInferredType(TypeFactory::intersection($virtualMethod->inferredType(), $subjectType))
                 ->withType($subjectType)
             ;
         }
@@ -119,7 +119,7 @@ class ObjectBehaviorMemberProvider implements ReflectionMemberProvider
         
             $virtualProperty = VirtualReflectionProperty::fromReflectionProperty($property);
             $virtualProperties[] = $virtualProperty
-                ->withInferredType($virtualProperty->inferredType()->addType($subjectType))
+                ->withInferredType(TypeFactory::intersection($virtualProperty->inferredType(), $subjectType))
                 ->withType($subjectType)
             ;
         }
