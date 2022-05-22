@@ -36,7 +36,6 @@ final class ObjectBehaviorMemberProviderTest extends TestCase
             TextDocumentBuilder::create($source)->language('php')->build(),
             ByteOffset::fromInt((int)$start)
         ));
-        dump($suggestions);
 
         foreach ($expected as $index => $expectation) {
             $this->assertArraySubset($expectation, $suggestions[$index]->toArray());
