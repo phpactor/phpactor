@@ -20,8 +20,10 @@ final class PhpSpecExtensionTest extends TestCase
 
     /**
      * @dataProvider provideParameterDefaultValue
+     *
+     * @param mixed $value
      */
-    public function testParameterDefaultValue(string $name, mixed $value): void
+    public function testParameterDefaultValue(string $name, $value): void
     {
         $schema = new Resolver();
         $this->sut->configure($schema);
