@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\SourceCode;

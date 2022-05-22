@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -22,7 +21,6 @@ class ReflectionTraitCollection extends AbstractReflectionCollection implements 
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
     {
         $items = [];
-        /** @var TraitUseClause $memberDeclaration */
         foreach ($class->classMembers->classMemberDeclarations as $memberDeclaration) {
             if (false === $memberDeclaration instanceof TraitUseClause) {
                 continue;

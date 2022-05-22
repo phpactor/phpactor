@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Countable;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
 use Traversable;
 
 /**
@@ -23,7 +22,7 @@ interface ReflectionCollection extends IteratorAggregate, Countable
 
     /**
      * @param ReflectionCollection<T> $collection
-     * @return ReflectionCollection<T>
+     * @return $this
      */
     public function merge(ReflectionCollection $collection);
 

@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection as CoreReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -10,21 +9,27 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCol
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
-use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\Visibility;
 
 /**
  * @method static ReflectionMemberCollection empty()
+ * @implements CoreReflectionMemberCollection<ReflectionMember>
  */
 class ReflectionMemberCollection extends AbstractReflectionCollection implements CoreReflectionMemberCollection
 {
     /**
      * @param ReflectionMember[] $members
+     * @return CoreReflectionMemberCollection<ReflectionMember>
      */
     public static function fromMembers(array $members): CoreReflectionMemberCollection
     {
         return new self($members);
     }
 
+    /**
+     * @return CoreReflectionMemberCollection<ReflectionMember>
+     * @param Visibility[] $visibilities
+     */
     public function byVisibilities(array $visibilities): CoreReflectionMemberCollection
     {
         $items = [];
@@ -43,14 +48,14 @@ class ReflectionMemberCollection extends AbstractReflectionCollection implements
 
     public function belongingTo(ClassName $class): CoreReflectionMemberCollection
     {
-        return new self(array_filter($this->items, function (ReflectionMember $item) use ($class) {
+        return new static(array_filter($this->items, function (ReflectionMember $item) use ($class) {
             return $item->declaringClass()->name() == $class;
         }));
     }
 
     public function atOffset(int $offset): CoreReflectionMemberCollection
     {
-        return new self(array_filter($this->items, function (ReflectionMember $item) use ($offset) {
+        return new static(array_filter($this->items, function (ReflectionMember $item) use ($offset) {
             return $item->position()->start() <= $offset && $item->position()->end() >= $offset;
         }));
     }
@@ -61,12 +66,12 @@ class ReflectionMemberCollection extends AbstractReflectionCollection implements
             return new self([ $this->get($name) ]);
         }
 
-        return new self([]);
+        return new static([]);
     }
 
     public function virtual(): CoreReflectionMemberCollection
     {
-        return new self(array_filter($this->items, function (ReflectionMember $member) {
+        return new static(array_filter($this->items, function (ReflectionMember $member) {
             return true === $member->isVirtual();
         }));
     }

@@ -11,8 +11,6 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Deprecation;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
 use function preg_replace;
 
 class PlainDocblock implements DocBlock

@@ -39,15 +39,18 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
             }
         }
 
-        return new static($items);
+        return new self($items);
     }
 
-    public static function fromReflectionConstants(ServiceLocator $serviceLocator, array $constants)
+    /**
+     * @param ReflectionConstant[] $constants
+     */
+    public static function fromReflectionConstants(ServiceLocator $serviceLocator, array $constants): self
     {
-        return new static($constants);
+        return new self($constants);
     }
 
-    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, ReflectionInterface $reflectionInterface)
+    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, ReflectionInterface $reflectionInterface): self
     {
         $items = [];
         foreach ($interface->interfaceMembers->interfaceMemberDeclarations as $member) {
@@ -60,7 +63,7 @@ class ReflectionConstantCollection extends ReflectionMemberCollection implements
                 $items[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionInterface, $member, $constElement);
             }
         }
-        return new static($items);
+        return new self($items);
     }
 
     protected function collectionType(): string

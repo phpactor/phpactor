@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -20,7 +19,6 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
 
 /**
  * @method ReflectionProperty get(string $name)
@@ -105,6 +103,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
 
         $items = [];
         foreach ($properties as $property) {
+            /** @phpstan-ignore-next-line Lies */
             foreach ($property->propertyElements as $propertyElement) {
                 foreach ($propertyElement as $variable) {
                     if ($variable instanceof AssignmentExpression) {
@@ -122,7 +121,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
         return new static($items);
     }
 
-    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionTrait $reflectionTrait)
+    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionTrait $reflectionTrait): self
     {
         /** @var PropertyDeclaration[] $properties */
         $properties = array_filter($trait->traitMembers->traitMemberDeclarations, function ($member) {
@@ -131,6 +130,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
 
         $items = [];
         foreach ($properties as $property) {
+            // @phpstan-ignore-next-line Lies
             foreach ($property->propertyElements as $propertyElement) {
                 foreach ($propertyElement as $variable) {
                     if (false === $variable instanceof Variable) {
@@ -141,10 +141,10 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             }
         }
 
-        return new static($items);
+        return new self($items);
     }
 
-    public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enum, ReflectionEnum $reflectionEnum)
+    public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enum, ReflectionEnum $reflectionEnum): self
     {
         /** @var PropertyDeclaration[] $properties */
         $properties = array_filter($enum->enumMembers->enumMemberDeclarations, function ($member) {
@@ -153,6 +153,9 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
 
         $items = [];
         foreach ($properties as $property) {
+            /**
+             * @phpstan-ignore-next-line Lies
+             */
             foreach ($property->propertyElements as $propertyElement) {
                 foreach ($propertyElement as $variable) {
                     if (false === $variable instanceof Variable) {
@@ -163,7 +166,7 @@ final class ReflectionPropertyCollection extends ReflectionMemberCollection impl
             }
         }
 
-        return new static($items);
+        return new self($items);
     }
 
     protected function collectionType(): string

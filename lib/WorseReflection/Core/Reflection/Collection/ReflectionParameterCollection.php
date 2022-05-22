@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCollection as PhpactorReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as PhpactorReflectionParameter;
@@ -14,9 +13,10 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionParameterCo
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionParameter get()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionParameter first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionParameter last()
+ * @method ReflectionParameter get()
+ * @method ReflectionParameter first()
+ * @method ReflectionParameter last()
+ * @method static ReflectionParameterCollection empty()
  */
 final class ReflectionParameterCollection extends AbstractReflectionCollection implements CoreReflectionParameterCollection
 {
@@ -33,10 +33,11 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection i
         return new self($parameters);
     }
 
-    public static function fromMethodDeclaration(ServiceLocator $serviceLocator, MethodDeclaration $method, ReflectionMethod $reflectionMethod)
+    public static function fromMethodDeclaration(ServiceLocator $serviceLocator, MethodDeclaration $method, ReflectionMethod $reflectionMethod): self
     {
         $items = [];
 
+        /** @phpstan-ignore-next-line */
         if ($method->parameters) {
             foreach ($method->parameters->getElements() as $parameter) {
                 $items[$parameter->getName()] = new ReflectionParameter($serviceLocator, $reflectionMethod, $parameter);
@@ -47,10 +48,13 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection i
         return new static($items);
     }
 
-    public static function fromFunctionDeclaration(ServiceLocator $serviceLocator, FunctionDeclaration $functionDeclaration, ReflectionFunction $reflectionFunction)
+    public static function fromFunctionDeclaration(ServiceLocator $serviceLocator, FunctionDeclaration $functionDeclaration, ReflectionFunction $reflectionFunction): self
     {
         $items = [];
 
+        /**
+         * @phpstan-ignore-next-line
+         */
         if ($functionDeclaration->parameters) {
             foreach ($functionDeclaration->parameters->getElements() as $parameter) {
                 $items[$parameter->getName()] = new ReflectionParameter($serviceLocator, $reflectionFunction, $parameter);

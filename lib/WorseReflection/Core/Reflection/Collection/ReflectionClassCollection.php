@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
@@ -15,7 +15,6 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionClassCollection as CoreReflectionClassCollection;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionClassDecorator;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
 
@@ -26,7 +25,7 @@ use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
  */
 class ReflectionClassCollection extends AbstractReflectionCollection implements CoreReflectionClassCollection
 {
-    public static function fromNode(ServiceLocator $serviceLocator, SourceCode $source, Node $node)
+    public static function fromNode(ServiceLocator $serviceLocator, SourceCode $source, Node $node): self
     {
         $items = [];
 
@@ -36,10 +35,6 @@ class ReflectionClassCollection extends AbstractReflectionCollection implements 
 
         foreach ($nodeCollection as $child) {
             if (false === $child instanceof ClassLike) {
-                continue;
-            }
-
-            if (false === $child instanceof NamespacedNameInterface) {
                 continue;
             }
 
@@ -62,17 +57,19 @@ class ReflectionClassCollection extends AbstractReflectionCollection implements 
                 continue;
             }
 
-            $items[(string) $child->getNamespacedName()] = new VirtualReflectionClassDecorator(
-                $serviceLocator,
-                new ReflectionClass($serviceLocator, $source, $child),
-                $serviceLocator->methodProviders()
-            );
+            if ($child instanceof ClassDeclaration) {
+                $items[(string) $child->getNamespacedName()] = new VirtualReflectionClassDecorator(
+                    $serviceLocator,
+                    new ReflectionClass($serviceLocator, $source, $child),
+                    $serviceLocator->methodProviders()
+                );
+            }
         }
 
-        return new static($items);
+        return new self($items);
     }
 
-    public function concrete()
+    public function concrete(): self
     {
         return new self(array_filter($this->items, function ($item) {
             return $item->isConcrete();

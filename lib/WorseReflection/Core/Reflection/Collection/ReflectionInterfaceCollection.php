@@ -2,8 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\ClassInterfaceClause;
+use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -18,12 +19,12 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionInterfaceCo
  */
 class ReflectionInterfaceCollection extends AbstractReflectionCollection implements CoreReflectionInterfaceCollection
 {
-    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface)
+    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface): self
     {
         return self::fromBaseClause($serviceLocator, $interface->interfaceBaseClause);
     }
 
-    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class)
+    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
     {
         return self::fromBaseClause($serviceLocator, $class->classInterfaceClause);
     }
@@ -33,9 +34,12 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection impleme
         return CoreReflectionInterfaceCollection::class;
     }
 
-    private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause)
+    /**
+     * @param mixed $baseClause
+     */
+    private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause): self
     {
-        if (null === $baseClause) {
+        if (!$baseClause instanceof ClassInterfaceClause && !$baseClause instanceof InterfaceBaseClause) {
             return new self([]);
         }
 

@@ -17,7 +17,7 @@ use Traversable;
 class ChainReflectionMemberCollection implements ReflectionMemberCollection
 {
     /**
-     * @var array<T>
+     * @var array<ReflectionMemberCollection<ReflectionMember>>
      */
     private array $collections = [];
 
@@ -71,8 +71,8 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
     }
 
     /**
-     * @return self<T>
-     * @param T $collection
+     * @param ReflectionMemberCollection<ReflectionMember> $collection
+     * @phpstan-ignore-next-line
      */
     public function merge(ReflectionCollection $collection): self
     {
@@ -231,7 +231,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
     }
 
     /**
-     * @param T $collection
+     * @param ReflectionMemberCollection<ReflectionMember> $collection
      */
     private function add(ReflectionMemberCollection $collection): void
     {

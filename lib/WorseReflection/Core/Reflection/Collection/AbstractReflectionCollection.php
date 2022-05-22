@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
-use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use IteratorAggregate;
 use Countable;
@@ -32,9 +31,6 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return array_keys($this->items);
     }
 
-    /**
-     * @return static
-     */
     public static function fromReflections(array $reflections)
     {
         return new static($reflections);
@@ -51,8 +47,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
 
         if (false === $collection instanceof $type) {
             throw new InvalidArgumentException(sprintf(
-                'Collection must be instance of "%s"',
-                static::class
+                'Collection must be instance of "%s" got "%s"',
+                $type,
+                get_class($collection),
             ));
         }
 

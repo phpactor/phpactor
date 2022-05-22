@@ -16,8 +16,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Visibility;
 
 class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorator implements ReflectionClass

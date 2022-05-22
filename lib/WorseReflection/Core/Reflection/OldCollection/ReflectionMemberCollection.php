@@ -3,16 +3,14 @@
 namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionCollection;
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Visibility;
 
 /**
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember first()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember last()
  * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionMember get(string $name)
- * @method ReflectionMemberCollection merge(ReflectionMemberCollection $collection)
- *
+ * @method ReflectionMemberCollection<T> merge(ReflectionMemberCollection $collection)
  *
  * @template T of ReflectionMember
  * @extends ReflectionCollection<T>
@@ -29,6 +27,7 @@ interface ReflectionMemberCollection extends ReflectionCollection
 
     /**
      * @return ReflectionMemberCollection<T>
+     * @param Visibility[] $visibilities
      */
     public function byVisibilities(array $visibilities): ReflectionMemberCollection;
 

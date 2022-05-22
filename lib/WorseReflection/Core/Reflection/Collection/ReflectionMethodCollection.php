@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
@@ -22,7 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodColle
  */
 class ReflectionMethodCollection extends ReflectionMemberCollection implements CoreReflectionMethodCollection
 {
-    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClassLike $reflectionClass)
+    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class, ReflectionClassLike $reflectionClass): self
     {
         /** @var MethodDeclaration[] $methods */
         $methods = array_filter($class->classMembers->classMemberDeclarations, function ($member) {
@@ -37,7 +36,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
         return new self($items);
     }
 
-    public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $class, ReflectionClassLike $reflectionClass)
+    public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $class, ReflectionClassLike $reflectionClass): self
     {
         /** @var MethodDeclaration[] $methods */
         $methods = array_filter($class->enumMembers->enumMemberDeclarations, function ($member) {
@@ -64,7 +63,7 @@ class ReflectionMethodCollection extends ReflectionMemberCollection implements C
             $items[$method->getName()] = new ReflectionMethod($serviceLocator, $reflectionInterface, $method);
         }
 
-        return new self( $items);
+        return new self($items);
     }
 
     public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $trait, ReflectionClassLike $contextClass): CoreReflectionMethodCollection

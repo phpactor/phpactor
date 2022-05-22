@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\OldCollection\ChainReflectionMember
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionTraitCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait as CoreReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -49,6 +50,9 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
         return $methods->merge($traitMethods);
     }
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
     public function members(): ReflectionMemberCollection
     {
         return ChainReflectionMemberCollection::fromCollections([

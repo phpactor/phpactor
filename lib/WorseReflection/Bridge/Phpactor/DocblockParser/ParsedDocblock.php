@@ -31,8 +31,6 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionParameter;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;

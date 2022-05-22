@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\OldCollection;
 
-use Phpactor\WorseReflection\Core\Reflection\OldCollection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 
 /**
