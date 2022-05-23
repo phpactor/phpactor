@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use Phpactor\Indexer\Model\Index\IndexInfo;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -79,7 +80,7 @@ class IndexCleanCommand extends Command
         if ($answer === null) {
             $indiciesToDelete = $indicies;
         } else {
-            $indiciesToDelete = [array_values($indicies)[$answer]];
+            $indiciesToDelete = [$indicies[$answer]];
         }
 
         foreach ($indiciesToDelete as $index) {
@@ -104,7 +105,7 @@ class IndexCleanCommand extends Command
             return ((int) $argument) - 1;
         }
 
-        foreach (array_values($indexList) as $i => $index) {
+        foreach ($indexList as $i => $index) {
             if ($index->directoryName() === $argument) {
                 return $i;
             }
@@ -118,10 +119,11 @@ class IndexCleanCommand extends Command
      */
     private function renderIndexTable(array $indexList, OutputInterface $output): void
     {
+        $progressbar = new ProgressBar($output, count($indexList));
         $totalSize = 0;
         $table = new Table($output);
         $table->setHeaders(['#' , 'Directory', 'Size', 'Last modified']);
-        foreach (array_values($indexList) as $i => $index) {
+        foreach ($indexList as $i => $index) {
             /** @var IndexInfo $index */
             $totalSize += $index->size();
             $table->addRow([
@@ -130,7 +132,10 @@ class IndexCleanCommand extends Command
                 PhpactorFilesystem::formatSize($index->size()),
                 sprintf('%.1f days', $index->lastUpdatedInDays()),
             ]);
+            $progressbar->advance();
         }
+        $progressbar->finish();
+        $output->writeln('');
         $table->render();
 
         $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
@@ -178,9 +183,9 @@ class IndexCleanCommand extends Command
         $finder->in([$this->indexDirectory]);
         $finder->sortByName();
         $finder->depth('==0');
-        return array_map(
+        return array_values(array_map(
             [IndexInfo::class, 'create'],
-            iterator_to_array($finder->getIterator())
-        );
+            iterator_to_array($finder)
+        ));
     }
 }

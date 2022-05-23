@@ -22,6 +22,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $process->mustRun();
 
         $expectedOutput = <<<PHP
+
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
@@ -107,6 +108,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $process->mustRun();
 
         $expectedOutput = <<<PHP
+
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
