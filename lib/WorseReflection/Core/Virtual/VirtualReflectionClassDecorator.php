@@ -141,6 +141,11 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->isFinal();
     }
 
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return $this->class->ownMembers();
+    }
+
     private function virtualProperties(): CoreReflectionPropertyCollection
     {
         $virtualProperties = ReflectionPropertyCollection::empty();
@@ -166,10 +171,5 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
 
         /** @var ReflectionPropertyCollection */
         return $virtualProperties;
-    }
-
-    public function ownMembers(): ReflectionMemberCollection
-    {
-        return $this->class->ownMembers();
     }
 }
