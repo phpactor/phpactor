@@ -10,8 +10,8 @@ function foo(AbstractFoo $foo) {
     assert($foo instanceof Foobar);
     wrAssertType('Foobar', $$foo);
 
-//    assert($foo instanceof Baz);
-//    wrAssertType('Foobar&Baz', $$foo);
+    assert($foo instanceof Baz);
+    wrAssertType('Foobar&Baz', $$foo);
 }
 
 
