@@ -41,7 +41,9 @@ class TypeCombinator
             }
         }
 
-        return TypeFactory::union(...$resolved)->reduce();
+        $t= TypeFactory::union(...$resolved)->reduce();
+
+        return $t;
     }
 
 

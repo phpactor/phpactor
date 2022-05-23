@@ -42,7 +42,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ReflectionInterfaceCollection $interfaces = null;
     
-    private ?ReflectionClass $parent = null;
+    private ?CoreReflectionClass $parent = null;
 
     /**
      * @var array<string,ReflectionMethodCollection>
@@ -106,7 +106,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $constants;
     }
 
-    public function parent(): ?ReflectionClass
+    public function parent(): ?CoreReflectionClass
     {
         if ($this->parent) {
             return $this->parent;
@@ -135,7 +135,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 $className,
             );
 
-            if (!$reflectedClass instanceof ReflectionClass) {
+            if (!$reflectedClass instanceof CoreReflectionClass) {
                 $this->serviceLocator->logger()->warning(sprintf(
                     'Class cannot extend interface. Class "%s" extends interface or trait "%s"',
                     $this->name(),
