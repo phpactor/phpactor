@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionParameterCollection as TolerantReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as TolerantReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction as CoreReflectionFunction;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Inference\Frame;

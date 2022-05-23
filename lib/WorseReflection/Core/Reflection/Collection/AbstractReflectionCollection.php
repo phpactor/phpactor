@@ -1,22 +1,26 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Virtual\Collection;
+namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionCollection;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
-use ReturnTypeWillChange;
-use RuntimeException;
-use IteratorAggregate;
-use Countable;
-use ArrayAccess;
 use ArrayIterator;
-use BadMethodCallException;
+use Traversable;
 
-abstract class AbstractReflectionCollection implements IteratorAggregate, Countable, ArrayAccess
+/**
+ * @template T
+ * @implements ReflectionCollection<T>
+ */
+abstract class AbstractReflectionCollection implements ReflectionCollection
 {
+    /**
+     * @var array<array-key,T>
+     */
     protected array $items = [];
 
-    protected function __construct(array $items)
+    /**
+     * @param array<array-key,T> $items
+     */
+    final protected function __construct(array $items)
     {
         $this->items = $items;
     }
@@ -26,23 +30,37 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return count($this->items);
     }
 
+    /**
+     * @return array-key[]
+     */
     public function keys(): array
     {
         return array_keys($this->items);
     }
 
-    public function merge(ReflectionCollection $collection): ReflectionCollection
+    /**
+     * @return static
+     * @param T[] $reflections
+     */
+    public static function fromReflections(array $reflections): self
     {
-        $collectionType = $this->collectionType();
+        return new static($reflections);
+    }
 
-        if (false === $collection instanceof $collectionType) {
-            throw new RuntimeException(sprintf(
-                'Collection must be instance of "%s", got "%s"',
-                $collectionType,
-                get_class($collection)
-            ));
-        }
+    /**
+     * @return static
+     */
+    public static function empty(): self
+    {
+        return new static([]);
+    }
 
+    /**
+     * @return static
+     * @param AbstractReflectionCollection<T> $collection
+     */
+    public function merge(ReflectionCollection $collection): self
+    {
         $items = $this->items;
 
         foreach ($collection as $key => $value) {
@@ -52,6 +70,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return new static($items);
     }
 
+    /**
+     * @return T
+     */
     public function get(string $name)
     {
         if (!isset($this->items[$name])) {
@@ -65,6 +86,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return $this->items[$name];
     }
 
+    /**
+     * @return T
+     */
     public function first()
     {
         if (empty($this->items)) {
@@ -76,6 +100,9 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return reset($this->items);
     }
 
+    /**
+     * @return T
+     */
     public function last()
     {
         if (empty($this->items)) {
@@ -83,6 +110,7 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
                 'Collection is empty, cannot get the last item'
             );
         }
+
         return end($this->items);
     }
 
@@ -91,31 +119,15 @@ abstract class AbstractReflectionCollection implements IteratorAggregate, Counta
         return isset($this->items[$name]);
     }
 
-    public function getIterator(): ArrayIterator
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetGet($name)
+    public function byMemberClass(string $fqn): ReflectionCollection
     {
-        return $this->get($name);
+        return new static(array_filter($this->items, function (object $member) use ($fqn) {
+            return $member instanceof $fqn;
+        }));
     }
-
-    public function offsetSet($name, $value): void
-    {
-        throw new BadMethodCallException('Collections are immutable');
-    }
-
-    public function offsetUnset($name): void
-    {
-        throw new BadMethodCallException('Collections are immutable');
-    }
-
-    public function offsetExists($name): bool
-    {
-        return isset($this->items[$name]);
-    }
-
-    abstract protected function collectionType(): string;
 }

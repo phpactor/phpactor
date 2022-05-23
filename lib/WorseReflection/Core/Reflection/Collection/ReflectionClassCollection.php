@@ -2,12 +2,17 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as PhpactorReflectionClass;
+
 /**
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass first()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass last()
- * @method \Phpactor\WorseReflection\Core\Reflection\ReflectionClass get(string $name)
+ * @extends AbstractReflectionCollection<PhpactorReflectionClass>
  */
-interface ReflectionClassCollection extends ReflectionCollection
+final class ReflectionClassCollection extends AbstractReflectionCollection
 {
-    public function concrete();
+    public function concrete(): self
+    {
+        return new static(array_filter($this->items, function ($item) {
+            return $item->isConcrete();
+        }));
+    }
 }

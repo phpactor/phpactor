@@ -57,7 +57,7 @@ class ReflectionInterfaceTest extends IntegrationTestCase
             function ($class): void {
                 $interfaces = $class->interfaces();
                 $this->assertCount(2, $interfaces);
-                $interface = $interfaces['Barfoo'];
+                $interface = $interfaces->get('Barfoo');
                 $this->assertInstanceOf(ReflectionInterface::class, $interface);
             },
         ];
@@ -82,7 +82,7 @@ class ReflectionInterfaceTest extends IntegrationTestCase
             function ($class): void {
                 $interfaces = $class->parents();
                 $this->assertCount(2, $interfaces);
-                $interface = $interfaces['Barfoo'];
+                $interface = $interfaces->get('Barfoo');
                 $this->assertInstanceOf(ReflectionInterface::class, $interface);
             },
         ];

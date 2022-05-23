@@ -4,18 +4,18 @@ namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Visibility;
 
 class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorator implements ReflectionClass
@@ -52,7 +52,7 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->parent();
     }
 
-    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
+    public function properties(ReflectionClassLike $contextClass = null): CoreReflectionPropertyCollection
     {
         $realProperties = $this->class->properties($contextClass ?: $this->class);
         $virtualProperties = $this->virtualProperties();
@@ -91,16 +91,18 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
     public function members(): ReflectionMemberCollection
     {
         $members = $this->class->members();
+        /** @phpstan-ignore-next-line */
         $members = $members->merge($this->virtualMethods());
+        /** @phpstan-ignore-next-line */
         $members = $members->merge($this->virtualProperties());
 
         assert($members instanceof ReflectionMemberCollection);
         return $members;
     }
 
-    public function virtualMethods(): VirtualReflectionMethodCollection
+    public function virtualMethods(): CoreReflectionMethodCollection
     {
-        $virtualMethods = VirtualReflectionMethodCollection::fromReflectionMethods([]);
+        $virtualMethods = ReflectionMethodCollection::fromReflectionMethods([]);
         if ($parentClass = $this->parent()) {
             assert($parentClass instanceof VirtualReflectionClassDecorator);
             $virtualMethods = $virtualMethods->merge(
@@ -139,9 +141,9 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->isFinal();
     }
 
-    private function virtualProperties(): ReflectionPropertyCollection
+    private function virtualProperties(): CoreReflectionPropertyCollection
     {
-        $virtualProperties = VirtualReflectionPropertyCollection::fromReflectionProperties([]);
+        $virtualProperties = ReflectionPropertyCollection::empty();
         if ($parentClass = $this->parent()) {
             assert($parentClass instanceof VirtualReflectionClassDecorator);
             $virtualProperties = $virtualProperties->merge(

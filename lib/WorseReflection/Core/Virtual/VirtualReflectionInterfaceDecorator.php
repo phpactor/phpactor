@@ -2,15 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Visibility;
 
 class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDecorator implements ReflectionInterface
@@ -42,7 +42,7 @@ class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDeco
         return $this->interface->parents();
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
+    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         $realMethods = $this->interface->methods($contextClass);
         $virtualMethods = $this->virtualMethods();
@@ -58,12 +58,13 @@ class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDeco
     public function members(): ReflectionMemberCollection
     {
         $members = $this->interface->members();
+        /** @phpstan-ignore-next-line */
         return $members->merge($this->virtualMethods());
     }
 
-    public function virtualMethods(): VirtualReflectionMethodCollection
+    public function virtualMethods(): CoreReflectionMethodCollection
     {
-        $virtualMethods = VirtualReflectionMethodCollection::fromReflectionMethods([]);
+        $virtualMethods = ReflectionMethodCollection::fromReflectionMethods([]);
 
         foreach ($this->parents() as $interface) {
             assert($interface instanceof VirtualReflectionInterfaceDecorator);

@@ -20,6 +20,9 @@ interface ReflectionClassLike extends ReflectionNode
 
     public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection;
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
     public function members(): ReflectionMemberCollection;
 
     public function sourceCode(): SourceCode;
@@ -34,7 +37,7 @@ interface ReflectionClassLike extends ReflectionNode
 
     public function isEnum(): bool;
 
-    public function isConcrete();
+    public function isConcrete(): bool;
 
     public function docblock(): DocBlock;
 

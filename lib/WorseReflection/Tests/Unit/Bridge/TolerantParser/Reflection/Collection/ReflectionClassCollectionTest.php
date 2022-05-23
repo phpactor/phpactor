@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Reflection\C
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -37,7 +37,7 @@ class ReflectionClassCollectionTest extends TestCase
         $this->reflection2->isConcrete()->willReturn(true);
         $this->reflection3->isConcrete()->willReturn(false);
 
-        $collection = ReflectionClassCollection::fromReflections($this->serviceLocator->reveal(), [
+        $collection = ReflectionClassLikeCollection::fromReflections([
             $this->reflection1->reveal(), $this->reflection2->reveal(), $this->reflection3->reveal()
         ]);
 

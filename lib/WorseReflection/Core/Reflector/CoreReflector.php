@@ -21,7 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
@@ -155,7 +155,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     /**
      * Reflect all classes (or class-likes) in the given source code.
      */
-    public function reflectClassesIn($sourceCode): ReflectionClassCollection
+    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
     {
         return $this->sourceReflector->reflectClassesIn($sourceCode);
     }

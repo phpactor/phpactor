@@ -6,9 +6,9 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionConstantCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
@@ -69,7 +69,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             }
         }
 
-        $parentConstants = ReflectionConstantCollection::fromReflectionConstants($this->serviceLocator, $parentConstants);
+        $parentConstants = ReflectionConstantCollection::fromReflectionConstants($parentConstants);
         $constants = ReflectionConstantCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this);
 
         return $parentConstants->merge($constants);
@@ -124,7 +124,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         }
 
         $contextClass = $contextClass ?: $this;
-        $parentMethods = ReflectionMethodCollection::fromReflectionMethods($this->serviceLocator, $parentMethods);
+        $parentMethods = ReflectionMethodCollection::fromReflectionMethods($parentMethods);
         $methods = ReflectionMethodCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $contextClass);
         $merged = $parentMethods->merge($methods);
         assert($merged instanceof ReflectionMethodCollection);

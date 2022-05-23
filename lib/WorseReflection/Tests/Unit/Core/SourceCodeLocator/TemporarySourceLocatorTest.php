@@ -7,8 +7,8 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
-use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class TemporarySourceLocatorTest extends TestCase
@@ -17,14 +17,13 @@ class TemporarySourceLocatorTest extends TestCase
     
     private TemporarySourceLocator $locator;
 
+    private Reflector $reflector;
+
     public function setUp(): void
     {
-        $this->reflector = $this->prophesize(SourceCodeReflector::class);
         $this->locator = new TemporarySourceLocator(
-            $this->reflector->reveal()
+            ReflectorBuilder::create()->build()
         );
-
-        $this->classCollection = $this->prophesize(ReflectionClassCollection::class);
     }
 
     public function testThrowsExceptionWhenClassNotFound(): void
@@ -33,12 +32,6 @@ class TemporarySourceLocatorTest extends TestCase
         $this->expectExceptionMessage('Class "Foobar" not found');
 
         $source = SourceCode::fromString('<?php class Boobar {}');
-
-        $this->reflector->reflectClassesIn($source)->willReturn(
-            $this->classCollection->reveal()
-        );
-        $this->classCollection->has('Foobar')->willReturn(false);
-
         $this->locator->pushSourceCode($source);
 
         $this->locator->locate(ClassName::fromString('Foobar'));
@@ -46,12 +39,7 @@ class TemporarySourceLocatorTest extends TestCase
 
     public function testReturnsSourceIfClassIsInTheSource(): void
     {
-        $code = 'class Foobar {}';
-
-        $this->reflector->reflectClassesIn($code)->willReturn(
-            $this->classCollection->reveal()
-        );
-        $this->classCollection->has('Foobar')->willReturn(true);
+        $code = '<?php class Foobar {}';
 
         $this->locator->pushSourceCode(SourceCode::fromString($code));
         $source = $this->locator->locate(ClassName::fromString('Foobar'));
@@ -60,16 +48,11 @@ class TemporarySourceLocatorTest extends TestCase
 
     public function testNewFilesOverridePreviousOnes(): void
     {
-        $code1 = 'class Foobar {}';
+        $code1 = '<?php class Foobar {}';
         $this->locator->pushSourceCode(SourceCode::fromPathAndString('foo.php', $code1));
 
-        $code2 = 'class Boobar {}';
+        $code2 = '<?php class Boobar {}';
         $this->locator->pushSourceCode(SourceCode::fromPathAndString('foo.php', $code2));
-
-        $this->reflector->reflectClassesIn(SourceCode::fromPathAndString('foo.php', $code2))->willReturn(
-            $this->classCollection->reveal()
-        );
-        $this->classCollection->has('Boobar')->willReturn(true);
 
         $source = $this->locator->locate(ClassName::fromString('Boobar'));
         $this->assertEquals($code2, (string) $source);

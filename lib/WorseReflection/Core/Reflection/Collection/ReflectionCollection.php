@@ -3,9 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Countable;
-use Traversable;
 
 /**
  * @template T
@@ -16,15 +14,15 @@ interface ReflectionCollection extends IteratorAggregate, Countable
     public function count(): int;
 
     /**
-     * @return array<string>
+     * @return array-key[]
      */
     public function keys(): array;
 
     /**
+     * @return static
      * @param ReflectionCollection<T> $collection
-     * @return ReflectionCollection<T>
      */
-    public function merge(ReflectionCollection $collection);
+    public function merge(ReflectionCollection $collection): self;
 
     /**
      * @return T
@@ -32,22 +30,21 @@ interface ReflectionCollection extends IteratorAggregate, Countable
     public function get(string $name);
 
     /**
-     * Return first item from the collection of throw an ItemNotFound exception.
-     *
      * @return T
-     * @throws ItemNotFound
      */
     public function first();
 
     /**
-     * Return last item from the collection of throw an ItemNotFound exception.
-     *
-     * @throws ItemNotFound
      * @return T
      */
     public function last();
 
     public function has(string $name): bool;
 
-    public function getIterator(): Traversable;
+    /**
+     * @template M of T
+     * @param class-string<M> $fqn
+     * @return ReflectionCollection<M>
+     */
+    public function byMemberClass(string $fqn): ReflectionCollection;
 }

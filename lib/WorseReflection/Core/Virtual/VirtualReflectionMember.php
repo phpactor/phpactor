@@ -35,8 +35,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
     
     private Type $type;
     
-    private Visibility $visiblity;
-    
     private Deprecation $deprecation;
 
     public function __construct(
@@ -62,7 +60,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
         $this->visibility = $visiblity;
         $this->inferredType = $inferredType;
         $this->type = $type;
-        $this->visiblity = $visiblity;
         $this->deprecation = $deprecation;
     }
 
@@ -76,6 +73,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $this->declaringClass;
     }
 
+    /**
+     * @return $this
+     */
     public function withDeclaringClass(ReflectionClassLike $contextClass): self
     {
         $new = clone $this;
@@ -83,6 +83,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $new;
     }
 
+    /**
+     * @return $this
+     */
     public function withVisibility(Visibility $visibility): self
     {
         $new = clone $this;
@@ -108,6 +111,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         );
     }
 
+    /**
+     * @return $this
+     */
     public function withName(string $name): self
     {
         $new = clone $this;
@@ -115,6 +121,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $new;
     }
 
+    /**
+     * @return $this
+     */
     public function withInferredType(Type $type): self
     {
         $new = clone $this;
@@ -123,6 +132,9 @@ abstract class VirtualReflectionMember implements ReflectionMember
         return $new;
     }
 
+    /**
+     * @return $this
+     */
     public function withType(Type $type): self
     {
         $new = clone $this;

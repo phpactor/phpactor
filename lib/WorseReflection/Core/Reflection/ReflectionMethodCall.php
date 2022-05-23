@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Position;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionArgumentCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 use Phpactor\WorseReflection\Core\Type;
 
 interface ReflectionMethodCall
