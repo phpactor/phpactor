@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
@@ -15,7 +15,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 
 abstract class AbstractReflectionClass extends AbstractReflectedNode implements ReflectionClassLike
@@ -77,7 +76,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         ReflectionClassLike $contextClass,
         ReflectionTraitCollection $traits
     ): PhpactorReflectionMethodCollection {
-        $methods = ReflectionMethodCollection::empty($this->serviceLocator());
+        $methods = ReflectionMethodCollection::empty();
 
         foreach ($traitImports as $traitImport) {
             try {
@@ -94,13 +93,14 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
                 }
 
                 $traitAlias = $traitImport->getAlias($method->name());
+
                 $virtualMethod = VirtualReflectionMethod::fromReflectionMethod($trait->methods()->get($traitAlias->originalName()))
                     ->withName($traitAlias->newName())
                     ->withVisibility($traitAlias->visiblity($method->visibility()));
 
                 $traitMethods[] = $virtualMethod;
             }
-            $methods = $methods->merge(VirtualReflectionMethodCollection::fromReflectionMethods($traitMethods));
+            $methods = $methods->merge(ReflectionMethodCollection::fromReflectionMethods($traitMethods));
         }
 
         return $methods;

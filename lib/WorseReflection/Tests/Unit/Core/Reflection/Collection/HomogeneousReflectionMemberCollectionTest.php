@@ -1,18 +1,19 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Reflection\Collection;
+namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflection\Collection;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\WorseReflection\Core\Reflection\Collection\HomogeneousReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
-class ReflectionMemberCollectionTest extends TestCase
+class HomogeneousReflectionMemberCollectionTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -26,13 +27,16 @@ class ReflectionMemberCollectionTest extends TestCase
      */
     private $member2;
 
+    /**
+     * @var ObjectProphecy|ReflectionMember
+     */
+    private ObjectProphecy $member3;
+
     public function setUp(): void
     {
         $this->member1 = $this->prophesize(ReflectionMember::class);
         $this->member2 = $this->prophesize(ReflectionMember::class);
         $this->member3 = $this->prophesize(ReflectionMember::class);
-
-        $this->serviceLocator = $this->prophesize(ServiceLocator::class);
     }
 
     public function testByVisibilities(): void
@@ -106,8 +110,7 @@ class ReflectionMemberCollectionTest extends TestCase
 
     private function create(array $members): ReflectionMemberCollection
     {
-        return ReflectionMemberCollection::fromReflections(
-            $this->serviceLocator->reveal(),
+        return HomogeneousReflectionMemberCollection::fromReflections(
             $members
         );
     }

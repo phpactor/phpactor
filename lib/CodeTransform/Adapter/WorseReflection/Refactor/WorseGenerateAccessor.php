@@ -108,7 +108,7 @@ class WorseGenerateAccessor implements GenerateAccessor
 
     private function class(string $source, int $offset): ReflectionClass
     {
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassesIn($source)->classes();
 
         if (0 === $classes->count()) {
             throw new InvalidArgumentException(
@@ -120,7 +120,7 @@ class WorseGenerateAccessor implements GenerateAccessor
             return $classes->first();
         }
 
-        foreach ($this->reflector->reflectClassesIn($source) as $class) {
+        foreach ($classes as $class) {
             $position = $class->position();
 
             if ($position->start() <= $offset && $offset <= $position->end()) {

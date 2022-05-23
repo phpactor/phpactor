@@ -4,13 +4,13 @@ namespace Phpactor\WorseReflection\Core\DocBlock;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Deprecation;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Virtual\Collection\VirtualReflectionPropertyCollection;
 use function preg_replace;
 
 class PlainDocblock implements DocBlock
@@ -81,14 +81,14 @@ class PlainDocblock implements DocBlock
         return $this->raw !== '';
     }
 
-    public function properties(ReflectionClassLike $declaringClass): ReflectionPropertyCollection
+    public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
-        return VirtualReflectionPropertyCollection::fromReflectionProperties([]);
+        return ReflectionPropertyCollection::empty();
     }
 
-    public function methods(ReflectionClassLike $declaringClass): ReflectionMethodCollection
+    public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
-        return VirtualReflectionMethodCollection::fromReflectionMethods([]);
+        return ReflectionMethodCollection::empty();
     }
 
     public function deprecation(): Deprecation

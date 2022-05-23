@@ -11,22 +11,17 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionConstantCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionPropertyCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionTraitCollection;
-
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\Collection\ReflectionClassCollection as TolerantReflectionClassCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
+
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
@@ -45,9 +40,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     
     private SourceCode $sourceCode;
 
-    /**
-     * @var ReflectionInterfaceCollection<ReflectionInterface>
-     */
     private ?ReflectionInterfaceCollection $interfaces = null;
     
     private ?CoreReflectionClass $parent = null;
@@ -57,7 +49,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $methods = [];
 
-    private ?TolerantReflectionClassCollection $ancestors = null;
+    private ?ReflectionClassCollection $ancestors = null;
 
     public function __construct(
         ServiceLocator $serviceLocator,
@@ -71,12 +63,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function isAbstract(): bool
     {
-        if (false === $this->node instanceof ClassDeclaration) {
-            return false;
-        }
-
         $modifier = $this->node->abstractOrFinalModifier;
 
+        /** @phpstan-ignore-next-line */
         if (!$modifier) {
             return false;
         }
@@ -84,8 +73,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $modifier->kind === TokenKind::AbstractKeyword;
     }
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
     public function members(): ReflectionMemberCollection
     {
+        /** @phpstan-ignore-next-line Pretty sure this is a phpstan bug */
         return ChainReflectionMemberCollection::fromCollections([
             $this->constants(),
             $this->properties(),
@@ -93,7 +86,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         ]);
     }
 
-    public function constants(): CoreReflectionConstantCollection
+    public function constants(): ReflectionConstantCollection
     {
         $parentConstants = null;
         if ($this->parent()) {
@@ -119,11 +112,13 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return $this->parent;
         }
 
+        /** @phpstan-ignore-next-line */
         if (!$this->node->classBaseClause) {
             return null;
         }
 
         // incomplete class
+        /** @phpstan-ignore-next-line */
         if (!$this->node->classBaseClause->baseClass) {
             return null;
         }
@@ -157,9 +152,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
     }
 
-    public function properties(ReflectionClassLike $contextClass = null): CoreReflectionPropertyCollection
+    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
-        $properties = ReflectionPropertyCollection::empty($this->serviceLocator);
+        $properties = ReflectionPropertyCollection::empty();
         $contextClass = $contextClass ?: $this;
 
         if ($this->traits()->count() > 0) {
@@ -181,7 +176,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $properties;
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
+    public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
         $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
 
@@ -190,7 +185,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
 
         $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::empty($this->serviceLocator);
+        $methods = ReflectionMethodCollection::empty();
         $traitImports = TraitImports::forClassDeclaration($this->node);
         $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
         $methods = $methods->merge($traitMethods);
@@ -214,7 +209,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $methods;
     }
 
-    public function interfaces(): CoreReflectionInterfaceCollection
+    public function interfaces(): ReflectionInterfaceCollection
     {
         if ($this->interfaces) {
             return $this->interfaces;
@@ -237,9 +232,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     }
 
     /**
-     * @return CoreReflectionTraitCollection<ReflectionTrait>
+     * @return ReflectionTraitCollection<ReflectionTrait>
      */
-    public function traits(): CoreReflectionTraitCollection
+    public function traits(): ReflectionTraitCollection
     {
         $parentTraits = null;
 
@@ -324,9 +319,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         );
     }
 
-    /**
-     * @return ReflectionClassCollection<ReflectionClass>
-     */
     public function ancestors(): ReflectionClassCollection
     {
         if ($this->ancestors) {
@@ -346,7 +338,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $class = $parent;
         }
 
-        $this->ancestors = TolerantReflectionClassCollection::fromReflections($this->serviceLocator, $ancestors);
+        $this->ancestors = ReflectionClassCollection::fromReflections($ancestors);
         return $this->ancestors;
     }
 
@@ -354,6 +346,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     {
         $modifier = $this->node->abstractOrFinalModifier;
 
+        /** @phpstan-ignore-next-line */
         if (!$modifier) {
             return false;
         }

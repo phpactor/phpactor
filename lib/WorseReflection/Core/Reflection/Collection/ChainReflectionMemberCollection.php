@@ -5,7 +5,8 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use AppendIterator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
-use RuntimeException;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Visibility;
 use Traversable;
@@ -14,17 +15,17 @@ use Traversable;
  * @template T of ReflectionMemberCollection
  * @implements ReflectionMemberCollection<ReflectionMember>
  */
-class ChainReflectionMemberCollection implements ReflectionMemberCollection
+final class ChainReflectionMemberCollection implements ReflectionMemberCollection
 {
     /**
-     * @var array<T>
+     * @var array<ReflectionMemberCollection<ReflectionMember>>
      */
     private array $collections = [];
 
     /**
      * @param array<T> $collections
      */
-    private function __construct(array $collections)
+    final private function __construct(array $collections)
     {
         foreach ($collections as $collection) {
             $this->add($collection);
@@ -37,7 +38,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
      */
     public static function fromCollections(array $collections): self
     {
-        return new self($collections);
+        return new static($collections);
     }
 
     /**
@@ -71,12 +72,12 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
     }
 
     /**
-     * @return self<T>
-     * @param T $collection
+     * @param ReflectionMemberCollection<ReflectionMember> $collection
+     * @phpstan-ignore-next-line
      */
     public function merge(ReflectionCollection $collection): self
     {
-        $new = new self($this->collections);
+        $new = new static($this->collections);
         $new->add($collection);
         return $new;
     }
@@ -150,7 +151,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->byVisibilities($visibilities);
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function belongingTo(ClassName $class): ReflectionMemberCollection
@@ -160,7 +161,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->belongingTo($class);
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function atOffset(int $offset): ReflectionMemberCollection
@@ -170,7 +171,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->atOffset($offset);
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function byName(string $name): ReflectionMemberCollection
@@ -180,7 +181,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->byName($name);
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function virtual(): ReflectionMemberCollection
@@ -190,7 +191,7 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->virtual();
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function real(): ReflectionMemberCollection
@@ -200,21 +201,30 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->real();
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     public function methods(): ReflectionMethodCollection
     {
-        throw new RuntimeException(
-            'Method not supported on chain member collection corrently'
-        );
+        return ReflectionMethodCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionMethod::class)));
     }
 
     public function properties(): ReflectionPropertyCollection
     {
-        throw new RuntimeException(
-            'Method not supported on chain member collection corrently'
-        );
+        return ReflectionPropertyCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionProperty::class)));
+    }
+
+    public function byMemberClass(string $fqn): ReflectionCollection
+    {
+        $items = [];
+        foreach ($this->collections as $collection) {
+            foreach ($collection->byMemberClass($fqn) as $key => $reflection) {
+                $items[$key] = $reflection;
+            }
+        }
+
+        /** @phpstan-ignore-next-line It's _fine_ */
+        return HomogeneousReflectionMemberCollection::fromReflections($items);
     }
     
     /**
@@ -227,11 +237,11 @@ class ChainReflectionMemberCollection implements ReflectionMemberCollection
             $collections[] = $collection->byMemberType($type);
         }
 
-        return new self($collections);
+        return new static($collections);
     }
 
     /**
-     * @param T $collection
+     * @param ReflectionMemberCollection<ReflectionMember> $collection
      */
     private function add(ReflectionMemberCollection $collection): void
     {
