@@ -62,9 +62,4 @@ class ReflectionConstantCollection extends HomogeneousReflectionMemberCollection
         }
         return new self($items);
     }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionConstantCollection::class;
-    }
 }

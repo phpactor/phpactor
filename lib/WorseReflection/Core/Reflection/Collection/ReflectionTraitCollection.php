@@ -10,7 +10,6 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as CoreReflectionTraitCollection;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionTrait>
@@ -55,10 +54,5 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
         }
 
         return new self($items);
-    }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionTraitCollection::class;
     }
 }

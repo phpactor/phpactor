@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnumCase as PhpactorReflectionEnumCase;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
@@ -27,10 +26,5 @@ final class ReflectionEnumCaseCollection extends HomogeneousReflectionMemberColl
         }
 
         return new static($items);
-    }
-
-    protected function collectionType(): string
-    {
-        return PhpactorReflectionEnumCaseCollection::class;
     }
 }

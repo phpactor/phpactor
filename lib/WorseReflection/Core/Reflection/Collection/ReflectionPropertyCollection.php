@@ -165,9 +165,4 @@ final class ReflectionPropertyCollection extends HomogeneousReflectionMemberColl
 
         return new self($items);
     }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionPropertyCollection::class;
-    }
 }

@@ -81,9 +81,4 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             return $item->isConcrete();
         }));
     }
-
-    protected function collectionType(): string
-    {
-        return ReflectionClassLikeCollection::class;
-    }
 }

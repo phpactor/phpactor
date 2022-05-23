@@ -15,9 +15,4 @@ final class ReflectionClassCollection extends AbstractReflectionCollection
             return $item->isConcrete();
         }));
     }
-
-    protected function collectionType(): string
-    {
-        return ReflectionClassCollection::class;
-    }
 }

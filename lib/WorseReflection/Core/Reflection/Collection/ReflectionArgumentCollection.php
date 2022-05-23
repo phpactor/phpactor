@@ -32,9 +32,4 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
     {
         return new self([]);
     }
-
-    protected function collectionType(): string
-    {
-        return ReflectionArgumentCollection::class;
-    }
 }

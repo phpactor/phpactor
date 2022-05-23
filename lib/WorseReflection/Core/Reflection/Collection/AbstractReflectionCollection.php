@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
-use InvalidArgumentException;
 use ArrayIterator;
 use Traversable;
 
@@ -62,16 +61,6 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
      */
     public function merge(ReflectionCollection $collection): self
     {
-        $type = $this->collectionType();
-
-        if (false === $collection instanceof $type) {
-            throw new InvalidArgumentException(sprintf(
-                'Collection must be instance of "%s" got "%s"',
-                $type,
-                get_class($collection),
-            ));
-        }
-
         $items = $this->items;
 
         foreach ($collection as $key => $value) {
@@ -141,6 +130,4 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
             return $member instanceof $fqn;
         }));
     }
-
-    abstract protected function collectionType(): string;
 }

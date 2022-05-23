@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction as PhpactorRefle
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as CoreReflectionFunctionCollection;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionFunction;
 
@@ -27,10 +26,5 @@ class ReflectionFunctionCollection extends AbstractReflectionCollection
         }
 
         return new self($items);
-    }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionFunctionCollection::class;
     }
 }

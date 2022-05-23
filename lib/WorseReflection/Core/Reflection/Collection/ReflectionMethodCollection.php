@@ -96,9 +96,4 @@ class ReflectionMethodCollection extends HomogeneousReflectionMemberCollection
             return $item->isAbstract();
         }));
     }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionMethodCollection::class;
-    }
 }

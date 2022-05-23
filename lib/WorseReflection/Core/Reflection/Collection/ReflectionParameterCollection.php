@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as PhpactorRefl
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
@@ -79,10 +78,5 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
     public function add(PhpactorReflectionParameter $parameter): void
     {
         $this->items[$parameter->name()] = $parameter;
-    }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionParameterCollection::class;
     }
 }

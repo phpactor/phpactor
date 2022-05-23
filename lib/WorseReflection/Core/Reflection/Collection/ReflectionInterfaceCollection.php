@@ -11,7 +11,6 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionInterface>
@@ -26,11 +25,6 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
     {
         return self::fromBaseClause($serviceLocator, $class->classInterfaceClause);
-    }
-
-    protected function collectionType(): string
-    {
-        return CoreReflectionInterfaceCollection::class;
     }
 
     /**
