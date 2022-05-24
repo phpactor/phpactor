@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\Variable as MicrosoftVariable;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -20,6 +21,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -66,14 +68,24 @@ class AddMissingProperties implements Transformer
         foreach ($classes as $class) {
             $classBuilder = $this->resolveClassBuilder($sourceBuilder, $class);
 
-            foreach ($this->missingPropertyNames($rootNode, $class) as [$memberName, $token, $expression]) {
+            foreach ($this->missingPropertyNames($rootNode, $class) as [$memberName, $token, $expression, $accessExpression]) {
                 assert($expression instanceof Node);
-                $offset = $this->reflector->reflectOffset($code->__toString(), $expression->getEndPosition());
+
+                $typeResolver = function (Node $node) use ($code) {
+                    $offset = $this->reflector->reflectOffset($code->__toString(), $node->getEndPosition());
+                    return $offset->symbolContext()->type();
+                };
+
                 $propertyBuilder = $classBuilder
                     ->property($memberName)
                     ->visibility('private');
 
-                $type = $offset->symbolContext()->type();
+                $type = $typeResolver($expression);
+
+                if ($accessExpression) {
+                    $type = new ArrayType($typeResolver($accessExpression), $type);
+                }
+
                 if ($type->isDefined()) {
                     foreach ($type->classNamedTypes() as $importClass) {
                         $sourceBuilder->use($importClass->name()->__toString());
@@ -81,6 +93,11 @@ class AddMissingProperties implements Transformer
                     $type = $type->toLocalType($class->scope());
                     $propertyBuilder->type($type->toPhpString());
                     $propertyBuilder->docType((string)$type->generalize());
+
+                    // if this was an array assignment initialize the array
+                    if ($accessExpression) {
+                        $propertyBuilder->defaultValue([]);
+                    }
                 }
             }
         }
@@ -108,7 +125,7 @@ class AddMissingProperties implements Transformer
 
         /** @var ReflectionClassLike $class */
         foreach ($classes as $class) {
-            foreach ($this->missingPropertyNames($rootNode, $class) as [$memberName, $token, $expression]) {
+            foreach ($this->missingPropertyNames($rootNode, $class) as [$memberName, $token, $expression, $accessExpression]) {
                 assert($token instanceof Token);
                 assert($expression instanceof Expression);
                 $diagnostics[] = new Diagnostic(
@@ -160,6 +177,12 @@ class AddMissingProperties implements Transformer
             }
 
             $memberAccess = $assignmentExpression->leftOperand;
+            $accessExpression = null;
+            if ($memberAccess instanceof SubscriptExpression) {
+                $accessExpression = $memberAccess->accessExpression;
+                $memberAccess = $memberAccess->postfixExpression;
+            }
+
             if (!$memberAccess instanceof MemberAccessExpression) {
                 continue;
             }
@@ -197,7 +220,7 @@ class AddMissingProperties implements Transformer
                 continue;
             }
 
-            yield [$memberName, $memberNameToken, $rightOperand];
+            yield [$memberName, $memberNameToken, $rightOperand, $accessExpression];
         }
     }
 }
