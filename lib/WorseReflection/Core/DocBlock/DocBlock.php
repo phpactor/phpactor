@@ -46,4 +46,9 @@ interface DocBlock
      * @return Type[]
      */
     public function implements(): array;
+
+    /**
+     * @return Type[]
+     */
+    public function mixins(): array;
 }
