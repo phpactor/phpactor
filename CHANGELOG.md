@@ -34,6 +34,7 @@ Bug fixes:
 
 Improvements:
 
+  - [ct] Add missing properties for array assignments #1640
   - [cmp] Provide variables from parent frame for anonymous use #1602
   - [ref] Increase reference finder timeout to 1 minute by default #1579
   - [cmp] Improved contextual completion
