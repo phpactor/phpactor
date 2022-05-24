@@ -74,7 +74,6 @@ class IndexCleanCommand extends Command
             $answer = $this->getInteractiveAnswer($indicies, $input, $output);
         }
 
-        //dd($answer);
         $output->writeln('');
         $indiciesToDelete = [];
         if ($answer === null) {

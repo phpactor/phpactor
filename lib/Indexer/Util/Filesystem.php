@@ -59,9 +59,6 @@ class Filesystem
 
         $size = 0;
         foreach ($files as $file) {
-            if ($file->isDir()) {
-                $size += self::sizeOfPath((string)$file);
-            }
             $size += $file->getSize();
         }
 

@@ -26,10 +26,10 @@ class IndexCleanCommandTest extends IntegrationTestCase
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
-            | 1 | project   | 4.62 K  | 0.0 days      |
-            | 2 | vendor    | 73.43 K | 0.0 days      |
+            | 1 | project   | 4.50 K  | 0.0 days      |
+            | 2 | vendor    | 38.92 K | 0.0 days      |
             +---+-----------+---------+---------------+
-            Total size: 78.06 K
+            Total size: 43.42 K
 
             Removing project
             Removing vendor
@@ -112,10 +112,10 @@ class IndexCleanCommandTest extends IntegrationTestCase
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
-            | 1 | project   | 4.62 K  | 0.0 days      |
-            | 2 | vendor    | 73.43 K | 0.0 days      |
+            | 1 | project   | 4.50 K  | 0.0 days      |
+            | 2 | vendor    | 38.92 K | 0.0 days      |
             +---+-----------+---------+---------------+
-            Total size: 78.06 K
+            Total size: 43.42 K
 
             PHP;
 
