@@ -176,12 +176,12 @@ class IndexCleanCommand extends Command
      */
     private function getIndicies(): array
     {
-        $finder = new Finder();
-        $finder->directories();
-        //$finder->files();
-        $finder->in([$this->indexDirectory]);
-        $finder->sortByName();
-        $finder->depth('==0');
+        $finder = (new Finder())
+           ->directories()
+           ->in([$this->indexDirectory])
+           ->sortByName()
+           ->depth('==0')
+       ;
         return array_values(array_map(
             [IndexInfo::class, 'create'],
             iterator_to_array($finder)

@@ -26,10 +26,10 @@ class IndexCleanCommandTest extends IntegrationTestCase
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
-            | 1 | project   | 4.50 K  | 0.0 days      |
-            | 2 | vendor    | 38.92 K | 0.0 days      |
+            | 1 | project   | \d\.\d{2} K  | 0.0 days      |
+            | 2 | vendor    | \d{2}\.\d{2} K | 0.0 days      |
             +---+-----------+---------+---------------+
-            Total size: 43.42 K
+            Total size: \d{2}\.\d{2} K
 
             Removing project
             Removing vendor
@@ -37,7 +37,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
             PHP;
 
         self::assertEquals(0, $process->getExitCode());
-        self::assertEquals($expectedOutput, $process->getOutput());
+        self::assertMatchesRegularExpression('/'.$expectedOutput.'/', $process->getOutput());
         self::assertFalse($this->workspace()->exists('project'));
         self::assertFalse($this->workspace()->exists('vendor'));
     }
@@ -112,14 +112,14 @@ class IndexCleanCommandTest extends IntegrationTestCase
             +---+-----------+---------+---------------+
             | # | Directory | Size    | Last modified |
             +---+-----------+---------+---------------+
-            | 1 | project   | 4.50 K  | 0.0 days      |
-            | 2 | vendor    | 38.92 K | 0.0 days      |
+            | 1 | project   | \d\.\d{2} K  | 0.0 days      |
+            | 2 | vendor    | \d{2}\.\d{2} K | 0.0 days      |
             +---+-----------+---------+---------------+
-            Total size: 43.42 K
+            Total size: \d{2}\.\d{2} K
 
             PHP;
 
-        self::assertEquals($expectedOutput, $process->getOutput());
+        self::assertMatchesRegularExpression('/'.$expectedOutput.'/', $process->getOutput());
         self::assertEquals(0, $process->getExitCode());
         self::assertTrue($this->workspace()->exists('project'));
         self::assertTrue($this->workspace()->exists('vendor'));
