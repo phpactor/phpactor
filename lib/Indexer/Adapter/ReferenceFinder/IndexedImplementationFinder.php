@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
@@ -132,8 +133,18 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 }
             }
 
+            if (!$record instanceof HasPath) {
+                continue;
+            }
+
+            $path = $record->filePath();
+
+            if (null === $path) {
+                continue;
+            }
+
             $locations[] = Location::fromPathAndOffset(
-                $record->filePath(),
+                $path,
                 $member->position()->start()
             );
         }

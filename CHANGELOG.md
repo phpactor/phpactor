@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [in] Fix exception when indexed file has no path #1643
   - [wr] Do not complete constants on class instance #1614
   - [wr] Include virtual properties in class members #1623
   - [wr] Fix false positive for virutal method not existing #1603
