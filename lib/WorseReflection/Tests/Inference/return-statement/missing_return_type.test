@@ -1,0 +1,10 @@
+<?php
+
+function foo() {
+    return bar();
+    wrReturnType('<missing>');
+}
+
+function bar()
+{
+}

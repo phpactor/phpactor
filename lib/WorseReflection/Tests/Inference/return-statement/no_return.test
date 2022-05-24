@@ -1,0 +1,9 @@
+<?php
+
+function foo() {
+    wrReturnType('void');
+}
+
+function bar()
+{
+}

@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\Core\Type\VoidType;
 
 abstract class Type
 {
@@ -57,6 +58,11 @@ abstract class Type
     public function isDefined(): bool
     {
         return !$this instanceof MissingType;
+    }
+
+    public function isVoid(): bool
+    {
+        return $this instanceof VoidType;
     }
 
     public function isClass(): bool
