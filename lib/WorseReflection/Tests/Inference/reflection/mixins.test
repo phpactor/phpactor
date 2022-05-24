@@ -1,0 +1,28 @@
+<?php
+
+class A
+{
+    public function doA(): string
+    {
+        return 'hello';
+    }
+}
+
+/**
+ * @mixin A
+ */
+class B
+{
+    public function doB(): void
+    {
+    }
+
+    public function __call($name, $arguments)
+    {
+        (new A())->$name(...$arguments);
+    }
+}
+
+$b = new B();
+wrAssertType('void', $b->doB());
+wrAssertType('string', $b->doA());
