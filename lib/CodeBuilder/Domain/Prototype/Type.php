@@ -16,7 +16,7 @@ final class Type extends Prototype
 
     public function __toString()
     {
-        return $this->type;
+        return $this->type ?? '';
     }
 
     public static function fromString(string $type): Type
