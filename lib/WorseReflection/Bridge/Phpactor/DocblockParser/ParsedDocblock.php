@@ -234,6 +234,16 @@ class ParsedDocblock implements DocBlock
         return $implements;
     }
 
+    public function mixins(): array
+    {
+        $mixins = [];
+        foreach ($this->node->descendantElements(MixinTag::class) as $mixinTag) {
+            assert($mixinTag instanceof MixinTag);
+            $mixins[] = $this->typeConverter->convert($mixinTag->class);
+        }
+        return $mixins;
+    }
+
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void
     {
         if (null === $parameterList) {
@@ -253,15 +263,5 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
-    }
-
-    public function mixins(): array
-    {
-        $mixins = [];
-        foreach ($this->node->descendantElements(MixinTag::class) as $mixinTag) {
-            assert($mixinTag instanceof MixinTag);
-            $mixins[] = $this->typeConverter->convert($mixinTag->class);
-        }
-        return $mixins;
     }
 }

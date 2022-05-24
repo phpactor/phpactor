@@ -76,6 +76,7 @@ Improvements:
 
 Features:
 
+  - [wr] Support for mixins #990
   - [rf] Support for constants, properties and promoted properties
   - [compl] Docblock completion
   - [wr] Support for intersection types
