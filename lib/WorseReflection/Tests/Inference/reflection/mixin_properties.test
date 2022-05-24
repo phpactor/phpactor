@@ -1,0 +1,16 @@
+<?php
+
+class A
+{
+    public string $foo;
+}
+
+/**
+ * @mixin A
+ */
+class B
+{
+}
+
+$b = new B();
+wrAssertType('string', $b->foo);

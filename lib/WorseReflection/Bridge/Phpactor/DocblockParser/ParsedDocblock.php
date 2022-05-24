@@ -8,6 +8,7 @@ use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
+use Phpactor\DocblockParser\Ast\Tag\MixinTag;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
@@ -252,5 +253,15 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
+    }
+
+    public function mixins(): array
+    {
+        $mixins = [];
+        foreach ($this->node->descendantElements(MixinTag::class) as $mixinTag) {
+            assert($mixinTag instanceof MixinTag);
+            $mixins[] = $this->typeConverter->convert($mixinTag->class);
+        }
+        return $mixins;
     }
 }

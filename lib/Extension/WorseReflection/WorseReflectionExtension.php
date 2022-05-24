@@ -6,6 +6,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -131,6 +132,9 @@ class WorseReflectionExtension implements Extension
     {
         $container->register('worse_reflection.member_provider.docblock', function (Container $container) {
             return new DocblockMemberProvider();
+        }, [ self::TAG_MEMBER_PROVIDER => []]);
+        $container->register('worse_reflection.member_provider.mixins', function (Container $container) {
+            return new MixinMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
     }
 }

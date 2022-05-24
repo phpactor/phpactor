@@ -1,0 +1,37 @@
+<?php
+
+class A
+{
+    public function doA(): string
+    {
+        return 'hello';
+    }
+}
+
+class C {
+    public function doC(): int
+    {
+        return 123;
+    }
+}
+
+/**
+ * @mixin A
+ * @mixin C
+ */
+class B
+{
+    public function doB(): void
+    {
+    }
+
+    public function __call($name, $arguments)
+    {
+        (new A())->$name(...$arguments);
+    }
+}
+
+$b = new B();
+wrAssertType('int', $b->doC());
+wrAssertType('void', $b->doB());
+wrAssertType('string', $b->doA());

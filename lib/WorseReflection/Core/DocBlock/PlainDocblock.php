@@ -110,4 +110,9 @@ class PlainDocblock implements DocBlock
     {
         return [];
     }
+
+    public function mixins(): array
+    {
+        return [];
+    }
 }
