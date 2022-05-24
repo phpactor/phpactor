@@ -1,0 +1,13 @@
+<?php
+
+function foo() {
+    if (rand(0, 1)) {
+        return 'string';
+    }
+    if (rand(0, 1)) {
+        return 5;
+    }
+
+    return null;
+    wrReturnType('"string"|5|null');
+}

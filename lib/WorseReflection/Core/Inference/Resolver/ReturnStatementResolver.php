@@ -25,7 +25,11 @@ class ReturnStatementResolver implements Resolver
         $context = $context->withType($type);
 
         if ($frame->returnType()->isDefined()) {
-            $frame->withReturnType($frame->returnType()->addType($type));
+            if ($frame->returnType()->isVoid()) {
+                $frame->withReturnType($type);
+            } else {
+                $frame->withReturnType($frame->returnType()->addType($type));
+            }
             return $context;
         }
 

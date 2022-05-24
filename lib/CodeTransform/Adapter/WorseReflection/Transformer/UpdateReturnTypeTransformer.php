@@ -12,7 +12,6 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateReturnTypeTransformer implements Transformer
@@ -115,9 +114,6 @@ class UpdateReturnTypeTransformer implements Transformer
     private function returnType(ReflectionMethod $method): Type
     {
         $returnType = $method->frame()->returnType();
-        if (!$returnType->isDefined()) {
-            return new VoidType();
-        }
         return $returnType;
     }
 }

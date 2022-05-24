@@ -143,6 +143,37 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+        yield 'do not add missing type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz()
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz(): void
+                    {
+                    }
+                }
+                EOT
+        ];
     }
 
     /**
