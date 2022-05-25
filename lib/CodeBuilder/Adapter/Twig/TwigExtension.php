@@ -2,30 +2,54 @@
 
 namespace Phpactor\CodeBuilder\Adapter\Twig;
 
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
+use Phpactor\CodeBuilder\Domain\Prototype\Type;
+use Phpactor\WorseReflection\Core\Type as PhpactorType;
 use Twig\TwigFilter;
 use Twig\Extension\AbstractExtension;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {
-    private TwigRenderer $generator;
-
     private TextFormat $textFormat;
 
-    public function __construct(TwigRenderer $generator, TextFormat $textFormat = null)
+    private WorseTypeRenderer $typeRenderer;
+
+    public function __construct(TextFormat $textFormat = null, WorseTypeRenderer $typeRenderer)
     {
-        $this->generator = $generator;
         $this->textFormat = $textFormat ?: new TextFormat('    ');
+        $this->typeRenderer = $typeRenderer;
     }
 
-    public function getFilters()
+    /**
+     * @return TwigFilter[]
+     */
+    public function getFilters(): array
     {
         return [
             new TwigFilter('indent', [ $this, 'indent' ]),
         ];
     }
 
-    public function indent(string $string, int $level = 0)
+    /**
+     * @return TwigFunction[]
+     */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('render_type', function (Type $type) {
+                $originalType = $type->originalType();
+                if ($originalType instanceof PhpactorType) {
+                    return $this->typeRenderer->render($originalType);
+                }
+                return $type->__toString();
+            }),
+        ];
+    }
+
+    
+    public function indent(string $string, int $level = 0): string
     {
         return $this->textFormat->indent($string, $level);
     }

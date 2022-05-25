@@ -23,9 +23,7 @@ final class Type extends Prototype
         $this->originalType = $originalType;
     }
 
-    /**
-     * @return string
-     */
+    
     public function __toString(): string
     {
         return $this->type ?? '';

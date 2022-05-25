@@ -2,6 +2,12 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer80;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer81;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer82;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRendererFactory;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Util\TextFormat;
@@ -319,9 +325,23 @@ class CodeTransformExtension implements Extension
                 'autoescape' => false,
             ]);
             $renderer = new TwigRenderer($twig);
-            $twig->addExtension(new TwigExtension($renderer, $container->get(TextFormat::class)));
+            $twig->addExtension(new TwigExtension(
+                $container->get(TextFormat::class),
+                $container->get(WorseTypeRenderer::class)
+            ));
 
             return $renderer;
+        });
+
+        $container->register(WorseTypeRenderer::class, function (Container $container) {
+            $version = $container->get(PhpVersionResolver::class);
+            assert($version instanceof PhpVersionResolver);
+            return (new WorseTypeRendererFactory([
+                '7.4' => new WorseTypeRenderer74(),
+                '8.0' => new WorseTypeRenderer80(),
+                '8.1' => new WorseTypeRenderer81(),
+                '8.2' => new WorseTypeRenderer82(),
+            ]))->rendererFor($version->resolve());
         });
 
         $container->register(TextFormat::class, function (Container $container) {
