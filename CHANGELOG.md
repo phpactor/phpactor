@@ -76,6 +76,7 @@ Improvements:
 
 Features:
 
+  - [cb] Render types based on PHP version #1655
   - [wr] Support `@property-read`
   - [wr] Support for mixins #990
   - [rf] Support for constants, properties and promoted properties
