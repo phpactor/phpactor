@@ -345,7 +345,7 @@ class WorseExtractMethod implements ExtractMethod
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
             $type = $variable->type();
             if ($type->isDefined()) {
-                $methodBuilder->returnType($type->short());
+                $methodBuilder->returnType($type->short(), $type);
                 foreach ($type->classNamedTypes() as $classType) {
                     $methodBuilder->end()->end()->use($classType->name()->full());
                 }
@@ -424,7 +424,7 @@ class WorseExtractMethod implements ExtractMethod
         $expressionType = $offset->symbolContext()->type();
 
         if ($expressionType->isDefined()) {
-            $methodBuilder->returnType($expressionType->short());
+            $methodBuilder->returnType($expressionType->short(), $expressionType);
         }
 
         foreach ($expressionType->classNamedTypes() as $classType) {

@@ -139,8 +139,8 @@ class WorseBuilderFactory implements BuilderFactory
                     $type = $type->valueType;
                 }
             }
-            $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
-            $parameterBuilder->type($typeName);
+            $type = $method->scope()->resolveLocalType($type);
+            $parameterBuilder->type($type->short(), $type);
         }
 
         if ($parameter->isVariadic()) {
@@ -165,21 +165,5 @@ class WorseBuilderFactory implements BuilderFactory
 
             $classBuilder->end()->use($type->name()->full());
         }
-    }
-
-    private function resolveTypeNameFromNameImports(Type $type, NameImports $imports): string
-    {
-        if ($type instanceof MissingType) {
-            return '';
-        }
-        $typeName = $type->short();
-
-        foreach ($imports as $alias => $import) {
-            if ($typeName == $import->head()) {
-                $typeName = $alias;
-            }
-        }
-
-        return $typeName;
     }
 }
