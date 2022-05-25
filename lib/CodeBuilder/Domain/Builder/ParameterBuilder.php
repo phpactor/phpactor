@@ -35,9 +35,12 @@ class ParameterBuilder extends AbstractBuilder
         return [];
     }
 
-    public function type(string $type): ParameterBuilder
+    /**
+     * @param mixed $originalType
+     */
+    public function type(string $type, $originalType = null): ParameterBuilder
     {
-        $this->type = Type::fromString($type);
+        $this->type = new Type($type, $originalType);
 
         return $this;
     }
