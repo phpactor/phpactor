@@ -13,14 +13,14 @@ class IndexInfo
 
     private string $directoryName;
 
-    private int $size;
+    private ?int $size;
 
     private float $lastUpdated;
 
     public function __construct(
         string $absolutePath,
         string $directoryName,
-        int $size,
+        ?int $size,
         float $lastUpdated
     ) {
         $this->directoryName = $directoryName;
@@ -34,7 +34,7 @@ class IndexInfo
         return new self(
             $fileInfo->getRealPath(),
             $fileInfo->getRelativePathname(),
-            Filesystem::sizeOfPath($fileInfo->getRealPath()),
+            null,
             (time() - $fileInfo->getMTime()) / self::SECONDS_IN_DAY
         );
     }
@@ -51,6 +51,11 @@ class IndexInfo
 
     public function size(): int
     {
+        if ($this->size) {
+            return $this->size;
+        }
+
+        $this->size = Filesystem::sizeOfPath($this->absolutePath());
         return $this->size;
     }
 
