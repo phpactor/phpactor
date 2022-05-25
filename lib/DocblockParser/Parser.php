@@ -98,6 +98,7 @@ final class Parser
                 return $this->parseMethod();
 
             case '@property':
+            case '@property-read':
                 return $this->parseProperty();
 
             case '@mixin':
