@@ -1,0 +1,10 @@
+/**
+ * @property-read string $foo
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  PropertyTag: = @property-read
+   ScalarNode: = string$foo
+ */
