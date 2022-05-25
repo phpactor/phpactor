@@ -1,5 +1,5 @@
 {% set renderedType = render_type(prototype.type) %}
-{% if prototype.docTypeAddsAdditionalInfo %}
+{% if prototype.docType != renderedType %}
 /**
  * @var {{ prototype.docType }}
  */
