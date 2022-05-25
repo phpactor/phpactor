@@ -113,6 +113,10 @@ class UpdateDocblockTransformer implements Transformer
                     continue;
                 }
 
+                if ($method->name() === '__construct') {
+                    continue;
+                }
+
                 // it's void
                 if (false === $actualReturnType->isDefined()) {
                     continue;

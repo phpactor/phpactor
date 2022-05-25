@@ -593,6 +593,21 @@ class UpdateDocblockTransformerTest extends WorseTestCase
             ]
         ];
 
+        yield 'ignore constructor' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function __construct()
+                    {
+                    }
+                }
+                EOT
+            ,
+            [
+            ]
+        ];
+
         yield 'missing return type corresponds to method return type' => [
             <<<'EOT'
                 <?php
