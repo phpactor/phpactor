@@ -40,9 +40,12 @@ class PropertyBuilder extends AbstractBuilder implements NamedBuilder
         return $this;
     }
 
-    public function type(string $type): PropertyBuilder
+    /**
+     * @param mixed $originalType
+     */
+    public function type(string $type, $originalType = null): PropertyBuilder
     {
-        $this->type = Type::fromString($type);
+        $this->type = new Type($type, $originalType);
 
         return $this;
     }

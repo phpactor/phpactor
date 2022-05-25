@@ -2,18 +2,20 @@
 
 namespace Phpactor\CodeBuilder\Adapter\Twig;
 
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer80;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\Error\LoaderError;
 
 final class TwigRenderer implements Renderer
 {
-    private $twig;
+    private Environment $twig;
 
-    private $templateNameResolver;
+    private TemplateNameResolver $templateNameResolver;
 
     public function __construct(
         Environment $twig = null,
@@ -44,18 +46,18 @@ final class TwigRenderer implements Renderer
         return Code::fromString(rtrim($code));
     }
 
-    private function createTwig()
+    private function createTwig(): Environment
     {
         $twig = new Environment(new FilesystemLoader(__DIR__ . '/../../../../templates/code'), [
             'strict_variables' => true,
             'autoescape' => false,
         ]);
-        $twig->addExtension(new TwigExtension($this));
+        $twig->addExtension(new TwigExtension(new TextFormat(), new WorseTypeRenderer80()));
 
         return $twig;
     }
 
-    private function twigRender(Prototype $prototype, string $templateName, string $variant = null)
+    private function twigRender(Prototype $prototype, string $templateName, string $variant = null): string
     {
         return $this->twig->render($templateName, [
             'prototype' => $prototype,

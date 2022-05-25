@@ -8,15 +8,33 @@ final class Type extends Prototype
 
     private bool $none = false;
 
-    public function __construct(string $type = null)
+    /**
+     * @var mixed
+     */
+    private $originalType;
+
+    /**
+     * @param mixed $originalType
+     */
+    public function __construct(string $type = null, $originalType = null)
     {
         parent::__construct();
         $this->type = $type;
+        $this->originalType = $originalType;
     }
 
-    public function __toString()
+    
+    public function __toString(): string
     {
         return $this->type ?? '';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function originalType()
+    {
+        return $this->originalType;
     }
 
     public static function fromString(string $type): Type

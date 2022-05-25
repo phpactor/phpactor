@@ -46,7 +46,7 @@ class UpdateReturnTypeTransformer implements Transformer
                 $builder->use($classType->name());
             }
 
-            $methodBuilder->returnType($localReplacement->reduce()->toPhpString());
+            $methodBuilder->returnType($localReplacement->reduce()->toPhpString(), $localReplacement->reduce());
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));

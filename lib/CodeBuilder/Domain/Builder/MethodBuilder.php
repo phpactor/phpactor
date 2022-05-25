@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
+use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
@@ -63,9 +64,12 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
         return $this;
     }
 
-    public function returnType(string $returnType): MethodBuilder
+    /**
+     * @param mixed $originalType
+     */
+    public function returnType(string $returnType, $originalType = null): MethodBuilder
     {
-        $this->returnType = ReturnType::fromString($returnType);
+        $this->returnType = new ReturnType(new Type($returnType, $originalType));
 
         return $this;
     }

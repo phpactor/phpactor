@@ -4,7 +4,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class ReturnType extends Prototype
 {
-    private $type;
+    private Type $type;
 
     public function __construct(Type $type)
     {
@@ -30,5 +30,10 @@ final class ReturnType extends Prototype
     public function notNone(): bool
     {
         return $this->type->notNone();
+    }
+
+    public function type(): Type
+    {
+        return $this->type;
     }
 }

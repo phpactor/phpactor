@@ -10,7 +10,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -21,7 +20,6 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
-use Phpactor\WorseReflection\Core\NameImports;
 
 class WorseBuilderFactory implements BuilderFactory
 {
@@ -98,7 +96,7 @@ class WorseBuilderFactory implements BuilderFactory
         $type = $property->inferredType();
         if (($type->isDefined())) {
             $this->importClassesForMemberType($classBuilder, $property->class()->name(), $type);
-            $propertyBuilder->type(($type->short()));
+            $propertyBuilder->type($type->short(), $type);
             $propertyBuilder->docType((string)$type);
         }
     }
@@ -112,7 +110,7 @@ class WorseBuilderFactory implements BuilderFactory
             $type = $method->returnType();
             $this->importClassesForMemberType($classBuilder, $method->class()->name(), $type);
             $typeName = $type->short();
-            $methodBuilder->returnType($typeName);
+            $methodBuilder->returnType($typeName, $type);
         }
 
         if ($method->isStatic()) {
@@ -139,8 +137,8 @@ class WorseBuilderFactory implements BuilderFactory
                     $type = $type->valueType;
                 }
             }
-            $typeName = $this->resolveTypeNameFromNameImports($type, $imports);
-            $parameterBuilder->type($typeName);
+            $type = $method->scope()->resolveLocalType($type);
+            $parameterBuilder->type($type->short(), $type);
         }
 
         if ($parameter->isVariadic()) {
@@ -165,21 +163,5 @@ class WorseBuilderFactory implements BuilderFactory
 
             $classBuilder->end()->use($type->name()->full());
         }
-    }
-
-    private function resolveTypeNameFromNameImports(Type $type, NameImports $imports): string
-    {
-        if ($type instanceof MissingType) {
-            return '';
-        }
-        $typeName = $type->short();
-
-        foreach ($imports as $alias => $import) {
-            if ($typeName == $import->head()) {
-                $typeName = $alias;
-            }
-        }
-
-        return $typeName;
     }
 }

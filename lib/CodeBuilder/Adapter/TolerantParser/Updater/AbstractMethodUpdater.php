@@ -176,7 +176,7 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $returnType = (string) $returnType;
+        $returnType = (string) $this->renderer->render($returnType->type());
 
         if (!$methodDeclaration->returnTypeList && trim($returnType)) {
             $edits->after($methodDeclaration->closeParen, ': ' . $returnType);
@@ -222,17 +222,17 @@ abstract class AbstractMethodUpdater
 
                 $parameterPrototype = $methodPrototype->parameters()->get($name);
 
-                $type = $parameterPrototype->type();
+                $type = (string)$this->renderer->render($parameterPrototype->type());
 
                 // adding a parameter type
-                if (null === $parameter->typeDeclarationList && $type->notNone()) {
+                if (null === $parameter->typeDeclarationList && $type) {
                     return false;
                 }
 
                 // if parameter has a different type
                 if (null !== $parameter->typeDeclarationList) {
                     $typeName = $parameter->typeDeclarationList->getText($methodDeclaration->getFileContents());
-                    if ($type->notNone() && (string) $type !== $typeName) {
+                    if ($type && (string) $type !== $typeName) {
                         return false;
                     }
                 }

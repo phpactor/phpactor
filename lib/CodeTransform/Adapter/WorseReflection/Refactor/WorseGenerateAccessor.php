@@ -84,7 +84,7 @@ class WorseGenerateAccessor implements GenerateAccessor
 
             $type = $reflectionProperty->inferredType();
             if ($type->isDefined()) {
-                $method->returnType($type->short());
+                $method->returnType($type->short(), $type);
             }
         }
 
