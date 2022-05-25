@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Adapter\Twig;
 
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer80;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
@@ -52,7 +53,7 @@ final class TwigRenderer implements Renderer
             'strict_variables' => true,
             'autoescape' => false,
         ]);
-        $twig->addExtension(new TwigExtension(new TextFormat(), new WorseTypeRenderer74()));
+        $twig->addExtension(new TwigExtension(new TextFormat(), new WorseTypeRenderer80()));
 
         return $twig;
     }

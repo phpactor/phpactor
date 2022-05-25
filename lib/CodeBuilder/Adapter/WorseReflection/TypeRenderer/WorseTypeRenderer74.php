@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -15,6 +16,9 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
 {
     public function render(Type $type): ?string
     {
+        if ($type instanceof NullableType) {
+            return '?' . $this->render($type->type);
+        }
         if ($type instanceof AggregateType) {
             return null;
         }
@@ -32,7 +36,7 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
         }
 
         if ($type instanceof ClassType) {
-            return $type->toPhpString();
+            return $type->short();
         }
 
         if ($type instanceof SelfType) {

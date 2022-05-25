@@ -343,7 +343,7 @@ class WorseExtractMethod implements ExtractMethod
             /** @var Variable $variable */
             $variable = reset($returnVariables);
             $methodBuilder->body()->line('return $' . $variable->name() . ';');
-            $type = $variable->type();
+            $type = $variable->type()->generalize()->reduce();
             if ($type->isDefined()) {
                 $methodBuilder->returnType($type->short(), $type);
                 foreach ($type->classNamedTypes() as $classType) {

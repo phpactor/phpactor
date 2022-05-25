@@ -14,14 +14,6 @@ class WorseTypeRenderer82 extends WorseTypeRenderer80
             return $type->toPhpString();
         }
 
-        if ($type instanceof BooleanLiteralType) {
-            if (false === $type->isTrue()) {
-                return 'false';
-            }
-
-            return 'true';
-        }
-
         return parent::render($type);
     }
 }

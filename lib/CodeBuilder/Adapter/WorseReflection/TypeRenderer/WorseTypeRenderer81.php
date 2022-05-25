@@ -11,12 +11,8 @@ class WorseTypeRenderer81 extends WorseTypeRenderer80
 {
     public function render(Type $type): ?string
     {
-        if ($type instanceof UnionType) {
-            return $type->toPhpString();
-        }
-
         if ($type instanceof IntersectionType) {
-            return $type->toPhpString();
+            return $type->short();
         }
 
         if ($type instanceof StaticType) {
