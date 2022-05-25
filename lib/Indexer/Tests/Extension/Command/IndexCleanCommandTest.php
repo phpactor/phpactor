@@ -90,18 +90,35 @@ class IndexCleanCommandTest extends IntegrationTestCase
         ];
     }
 
-    public function testCleanDoesNotRemoveIndexIfShellIsNotInteractive(): void
+    /**
+     * @dataProvider provideDoNotRemoveAnything
+     *
+     * @param array<string> $arguments
+     */
+    public function testCleanDoesNotRemoveIndexWithoutInput(array $arguments): void
     {
         $this->initProject();
 
-        $process = new Process(
-            [ self::CONSOLE_PATH, 'index:clean', '--no-interaction'],
-            $this->workspace()->path(),
-        );
+        $process = new Process($arguments, $this->workspace()->path(), null, null);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
         self::assertTrue($this->workspace()->exists('project'));
         self::assertTrue($this->workspace()->exists('vendor'));
+    }
+
+    /**
+     * @return array<string,array<int,array<int,string>>>
+     */
+    public function provideDoNotRemoveAnything(): array
+    {
+        return [
+            'it deletes nothing on empty input' => [
+                [ self::CONSOLE_PATH, 'index:clean'],
+            ],
+            'it deletes nothing on no interactive' => [
+                [ self::CONSOLE_PATH, 'index:clean', '--no-interaction'],
+            ],
+        ];
     }
 }

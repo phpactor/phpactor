@@ -144,17 +144,22 @@ class IndexCleanCommand extends Command
         $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
     }
 
-    
     private function getInteractiveAnswer(int $indexCount, InputInterface $input, OutputInterface $output): string
     {
-        $helper = new QuestionHelper();
-        $question = new Question(sprintf(
-            "Which index do you want to delete? (1 - %s, %s)\nIf you want to delete multiple indexes provide all of their names or numbers comma separated.\n",
-            $indexCount,
-            self::CLEAN_ALL
-        ));
+        $all= self::CLEAN_ALL;
 
-        return $helper->ask($input, $output, $question);
+        $question = new Question(
+            <<<QUESTION
+                Which index do you want to delete? (1 - $indexCount, $all)
+                If you want to delete multiple indexes provide all of their names or numbers comma separated.
+
+                Default: none
+                >
+                QUESTION,
+            ''
+        );
+
+        return (new QuestionHelper())->ask($input, $output, $question);
     }
 
     /**
