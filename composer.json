@@ -82,6 +82,10 @@
     "config": {
         "platform": {
             "php": "7.4.0"
+        },
+        "allow-plugins": {
+            "dantleech/what-changed": true,
+            "phpstan/extension-installer": true
         }
     },
     "autoload": {
