@@ -1,3 +1,4 @@
-{% if prototype.type.notNone %}{{ prototype.type }} {% endif %}
+{% set renderedType = render_type(prototype.type) %}
+{% if renderedType %}{{ renderedType }} {% endif %}
 {% if prototype.byReference %}&{% endif %}{% if prototype.isVariadic %}...{% endif %}{% if true %}${{ prototype.name }}{% endif %}
 {% if prototype.defaultValue.notNone %} = {{ prototype.defaultValue.export|raw }}{% endif %}
