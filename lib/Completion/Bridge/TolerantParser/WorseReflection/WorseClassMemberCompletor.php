@@ -104,13 +104,17 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
+        $isParent = $symbolContext->symbol()->name() === 'parent';
+        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
+
+
         $type = $type->classNamedTypes()->firstOrNull();
 
         if (!$type) {
             return;
         }
 
-        if ($static) {
+        if (!$isParent && $static) {
             yield Suggestion::createWithOptions('class', [
                 'type' => Suggestion::TYPE_CONSTANT,
                 'short_description' => $type->name(),
@@ -124,8 +128,6 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
-
         /** @var ReflectionMethod $method */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
@@ -135,7 +137,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
                 continue;
             }
 
-            if ($static && false === $method->isStatic()) {
+            if (!$isParent && $static && false === $method->isStatic()) {
                 continue;
             }
 

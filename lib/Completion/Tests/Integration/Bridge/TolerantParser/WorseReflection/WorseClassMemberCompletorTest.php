@@ -825,6 +825,34 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ],
             ],
         ];
+
+        yield 'parent::' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Bar {
+                    public function baz(): string {}
+                }
+
+                class Foobar extends Bar
+                {
+                    const FOOBAR = 'foobar';
+                    const BARFOO = 'barfoo';
+
+                    public function bar(): string {
+                        parent::<>
+                    }
+                }
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'baz',
+                    'short_description' => 'pub baz(): string',
+                    'snippet' => 'baz()'
+                ],
+            ],
+        ];
     }
 
     /**
