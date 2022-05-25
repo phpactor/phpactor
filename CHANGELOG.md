@@ -76,6 +76,7 @@ Improvements:
 
 Features:
 
+  - [cmp] (re?)support completion on parent:: #1643
   - [cb] Render types based on PHP version #1655
   - [wr] Support `@property-read`
   - [wr] Support for mixins #990
