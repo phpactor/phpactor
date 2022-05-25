@@ -91,7 +91,7 @@ class AddMissingProperties implements Transformer
                         $sourceBuilder->use($importClass->name()->__toString());
                     }
                     $type = $type->toLocalType($class->scope());
-                    $propertyBuilder->type($type->toPhpString());
+                    $propertyBuilder->type($type->toPhpString(), $type);
                     $propertyBuilder->docType((string)$type->generalize());
 
                     // if this was an array assignment initialize the array

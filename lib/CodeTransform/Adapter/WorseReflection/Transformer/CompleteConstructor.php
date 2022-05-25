@@ -68,7 +68,7 @@ class CompleteConstructor implements Transformer
                 $parameterType = $parameter->inferredType();
                 if ($parameterType->isDefined()) {
                     $parameterType = $parameterType->toLocalType($class->scope());
-                    $propertyBuilder->type($parameterType->toPhpString());
+                    $propertyBuilder->type($parameterType->toPhpString(), $parameterType);
                     $propertyBuilder->docType((string)$parameterType);
                 }
             }

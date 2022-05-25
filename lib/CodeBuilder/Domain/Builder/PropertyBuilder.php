@@ -7,6 +7,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Prototype\DefaultValue;
 use Phpactor\CodeBuilder\Domain\Prototype\Property;
+use Exception;
 
 class PropertyBuilder extends AbstractBuilder implements NamedBuilder
 {
