@@ -9,6 +9,7 @@ use Symfony\Component\Process\Process;
 class IndexCleanCommandTest extends IntegrationTestCase
 {
     private const CONSOLE_PATH = __DIR__ . '/../../bin/console';
+
     /**
      * @dataProvider provideAllIndexClean
      * @param array<string> $command
@@ -21,23 +22,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $process = new Process($command, $this->workspace()->path(), null, $input);
         $process->mustRun();
 
-        $expectedOutput = <<<PHP
-
-            +---+-----------+---------+---------------+
-            | # | Directory | Size    | Last modified |
-            +---+-----------+---------+---------------+
-            | 1 | project   | \d\.\d{2} K  | 0.0 days      |
-            | 2 | vendor    | \d{2}\.\d{2} K | 0.0 days      |
-            +---+-----------+---------+---------------+
-            Total size: \d{2}\.\d{2} K
-
-            Removing project
-            Removing vendor
-
-            PHP;
-
         self::assertEquals(0, $process->getExitCode());
-        self::assertMatchesRegularExpression('/'.$expectedOutput.'/', $process->getOutput());
         self::assertFalse($this->workspace()->exists('project'));
         self::assertFalse($this->workspace()->exists('vendor'));
     }
@@ -54,6 +39,14 @@ class IndexCleanCommandTest extends IntegrationTestCase
             ],
             'non-interactive version' => [
                 [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::CLEAN_ALL, '--no-interaction'],
+                null
+            ],
+            'cleaning index 1 and 2' => [
+                [self::CONSOLE_PATH, 'index:clean'],
+                '1,2'
+            ],
+            'cleaning index 1 and 2 non interactively' => [
+                [self::CONSOLE_PATH, 'index:clean', '1,2', '--no-interaction'],
                 null
             ]
 
@@ -107,19 +100,6 @@ class IndexCleanCommandTest extends IntegrationTestCase
         );
         $process->mustRun();
 
-        $expectedOutput = <<<PHP
-
-            +---+-----------+---------+---------------+
-            | # | Directory | Size    | Last modified |
-            +---+-----------+---------+---------------+
-            | 1 | project   | \d\.\d{2} K  | 0.0 days      |
-            | 2 | vendor    | \d{2}\.\d{2} K | 0.0 days      |
-            +---+-----------+---------+---------------+
-            Total size: \d{2}\.\d{2} K
-
-            PHP;
-
-        self::assertMatchesRegularExpression('/'.$expectedOutput.'/', $process->getOutput());
         self::assertEquals(0, $process->getExitCode());
         self::assertTrue($this->workspace()->exists('project'));
         self::assertTrue($this->workspace()->exists('vendor'));

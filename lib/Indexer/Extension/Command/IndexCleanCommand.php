@@ -2,8 +2,6 @@
 
 namespace Phpactor\Indexer\Extension\Command;
 
-use Exception;
-use InvalidArgumentException;
 use Phpactor\Indexer\Model\Index\IndexInfo;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use Symfony\Component\Console\Command\Command;
@@ -68,21 +66,14 @@ class IndexCleanCommand extends Command
             return 0;
         }
 
-        if ($argument !== null) {
-            $answer = $this->getAnswerFromArgument($indicies, $argument);
-        } else {
-            $answer = $this->getInteractiveAnswer($indicies, $input, $output);
+        $answer = $argument;
+        if ($answer === null) {
+            $answer = $this->getInteractiveAnswer(count($indicies), $input, $output);
         }
 
         $output->writeln('');
-        $indiciesToDelete = [];
-        if ($answer === null) {
-            $indiciesToDelete = $indicies;
-        } else {
-            $indiciesToDelete = [$indicies[$answer]];
-        }
 
-        foreach ($indiciesToDelete as $index) {
+        foreach ($this->getIndiciesToDelete($indicies, $answer) as $index) {
             $output->writeln(sprintf('<info>Removing %s</info>', $index->directoryName()));
             $this->filesystem->remove($index->absolutePath());
         }
@@ -92,25 +83,38 @@ class IndexCleanCommand extends Command
     }
 
     /**
-     * @param array<IndexInfo> $indexList
+     * @param array<IndexInfo> $indecies
+     *
+     * @return array<IndexInfo>
      */
-    private function getAnswerFromArgument(array $indexList, string $argument): ?int
+    private function getIndiciesToDelete(array $indecies, string $answer): array
     {
-        if ($argument === self::CLEAN_ALL) {
-            return null;
+        $indeciesToDelete = [];
+        if ($answer === self::CLEAN_ALL) {
+            return $indecies;
         }
 
-        if (is_numeric($argument) && count($indexList) >= (int) $argument) {
-            return ((int) $argument) - 1;
-        }
+        $indexCount = count($indecies);
+        foreach (explode(',', $answer) as $indexString) {
+            // Trying to find the index by number
+            if (is_numeric($indexString)) {
+                if ($indexCount >= (int) $indexString) {
+                    $indexToDelete = ((int) $indexString) - 1;
 
-        foreach ($indexList as $i => $index) {
-            if ($index->directoryName() === $argument) {
-                return $i;
+                    $indeciesToDelete[] = $indecies[$indexToDelete];
+                }
+            } else {
+                // Finding the index by name
+                foreach ($indecies as $index) {
+                    if ($index->directoryName() === $indexString) {
+                        $indeciesToDelete[] = $index;
+                        break;
+                    }
+                }
             }
         }
 
-        throw new InvalidArgumentException('Could not find index with argument "'. $argument. '" either use the id of the index or the name from the table above.');
+        return $indeciesToDelete;
     }
 
     /**
@@ -140,33 +144,15 @@ class IndexCleanCommand extends Command
         $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
     }
 
-    /**
-     * @param array<IndexInfo> $indicies
-     */
-    private function getInteractiveAnswer(array $indicies, InputInterface $input, OutputInterface $output): ?int
+    
+    private function getInteractiveAnswer(int $indexCount, InputInterface $input, OutputInterface $output): string
     {
-        $indexCount = count($indicies);
         $helper = new QuestionHelper();
         $question = new Question(sprintf(
-            "Which index do you want to delete? (1 - %s, %s)\n",
+            "Which index do you want to delete? (1 - %s, %s)\nIf you want to delete multiple indexes provide all of their names or numbers comma separated.\n",
             $indexCount,
             self::CLEAN_ALL
         ));
-        $question->setValidator(function (?string $userInput) use ($indexCount) {
-            if ($userInput === self::CLEAN_ALL) {
-                return null;
-            }
-            if (!is_numeric($userInput)) {
-                throw new Exception('Please provide a number.');
-            }
-
-            $number = (int)$userInput;
-            if ($number < 0 || $number > $indexCount) {
-                throw new Exception('Please provide a number between 1 and '.$indexCount);
-            }
-
-            return ((int) $number) - 1;
-        });
 
         return $helper->ask($input, $output, $question);
     }
