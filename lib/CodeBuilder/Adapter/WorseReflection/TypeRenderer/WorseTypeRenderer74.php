@@ -19,6 +19,7 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
         if ($type instanceof NullableType) {
             return '?' . $this->render($type->type);
         }
+
         if ($type instanceof AggregateType) {
             return null;
         }

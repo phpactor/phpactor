@@ -3,7 +3,6 @@
 namespace Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 
 class WorseTypeRenderer82 extends WorseTypeRenderer80

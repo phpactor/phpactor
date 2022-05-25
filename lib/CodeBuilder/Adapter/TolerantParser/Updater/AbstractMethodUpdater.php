@@ -176,7 +176,7 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $returnType = (string) $returnType;
+        $returnType = (string) $this->renderer->render($returnType->type());
 
         if (!$methodDeclaration->returnTypeList && trim($returnType)) {
             $edits->after($methodDeclaration->closeParen, ': ' . $returnType);

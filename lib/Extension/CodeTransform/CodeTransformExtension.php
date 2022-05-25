@@ -336,12 +336,13 @@ class CodeTransformExtension implements Extension
         $container->register(WorseTypeRenderer::class, function (Container $container) {
             $version = $container->get(PhpVersionResolver::class);
             assert($version instanceof PhpVersionResolver);
+            $version = $version->resolve();
             return (new WorseTypeRendererFactory([
                 '7.4' => new WorseTypeRenderer74(),
                 '8.0' => new WorseTypeRenderer80(),
                 '8.1' => new WorseTypeRenderer81(),
                 '8.2' => new WorseTypeRenderer82(),
-            ]))->rendererFor($version->resolve());
+            ]))->rendererFor($version);
         });
 
         $container->register(TextFormat::class, function (Container $container) {
