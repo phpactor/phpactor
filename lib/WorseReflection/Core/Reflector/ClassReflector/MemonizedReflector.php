@@ -104,7 +104,7 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         $closure = function () use ($closure) {
             try {
                 return $closure();
-            } catch  (NotFound $e) {
+            } catch (NotFound $e) {
                 return $e;
             }
         };

@@ -14,12 +14,12 @@ use Phpactor\WorseReflection\ReflectorBuilder;
  */
 abstract class BaseBenchCase
 {
-    private Reflector $reflector;
-
     /**
      * @var DiagnosticProvider[]
      */
     protected array $diagnosticProviders = [];
+
+    private Reflector $reflector;
 
     public function setUp(): void
     {

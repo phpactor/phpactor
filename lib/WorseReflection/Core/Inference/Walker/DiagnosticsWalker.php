@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -22,7 +23,7 @@ class DiagnosticsWalker implements Walker
     private array $providers;
 
     /**
-     * @param DiagnosticsProvider[] $providers
+     * @param DiagnosticProvider[] $providers
      */
     public function __construct(array $providers)
     {

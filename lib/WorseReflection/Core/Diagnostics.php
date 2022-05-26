@@ -7,6 +7,9 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @implements IteratorAggregate<Diagnostic>
+ */
 class Diagnostics implements IteratorAggregate, Countable
 {
     /**

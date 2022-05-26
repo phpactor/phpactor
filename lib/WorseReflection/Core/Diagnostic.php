@@ -41,4 +41,19 @@ class Diagnostic
     {
         return $this->message;
     }
+
+    public static function severityAsString(int $severity): string
+    {
+        switch ($severity) {
+            case self::HINT:
+                return 'HINT';
+            case self::ERROR:
+                return 'ERROR';
+            case self::WARNING:
+                return 'WARN';
+            case self::INFORMATION:
+                return 'INFO';
+        }
+        return 'unknown';
+    }
 }

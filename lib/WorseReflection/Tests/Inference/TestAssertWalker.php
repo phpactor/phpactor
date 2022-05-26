@@ -15,7 +15,6 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
-use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\TypeUtil;
@@ -195,7 +194,7 @@ class TestAssertWalker implements Walker
         ));
     }
 
-    private function assertDiagnostic(FrameResolver $resolver, Frame $frame, CallExpression $node)
+    private function assertDiagnostic(FrameResolver $resolver, Frame $frame, CallExpression $node): void
     {
         $diagnostics = $resolver->withoutWalker(self::class)->reflector()->diagnostics($node->getFileContents());
         $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);

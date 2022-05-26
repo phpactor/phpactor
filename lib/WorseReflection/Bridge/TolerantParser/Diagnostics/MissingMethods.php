@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class MissingMethods implements DiagnosticProvider
@@ -62,13 +61,14 @@ class MissingMethods implements DiagnosticProvider
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),
                     $memberName->getEndPosition()
-                ), sprintf(
+                ),
+                sprintf(
                     'Method "%s" does not exist on class "%s"',
                     $methodName,
                     $containerType->__toString()
-                ),Diagnostic::ERROR
+                ),
+                Diagnostic::ERROR
             );
         }
-
     }
 }

@@ -2,12 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
-use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
-use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
-
 
 /**
  * @Iterations(5)

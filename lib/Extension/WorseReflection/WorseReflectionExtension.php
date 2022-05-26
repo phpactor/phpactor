@@ -2,11 +2,14 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -63,6 +66,7 @@ class WorseReflectionExtension implements Extension
         $this->registerReflection($container);
         $this->registerSourceLocators($container);
         $this->registerMemberProviders($container);
+        $this->registerDiagnosticProviders($container);
     }
 
     private function registerReflection(ContainerBuilder $container): void
@@ -140,5 +144,12 @@ class WorseReflectionExtension implements Extension
         $container->register('worse_reflection.member_provider.mixins', function (Container $container) {
             return new MixinMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
+    }
+
+    private function registerDiagnosticProviders(ContainerBuilder $container): void
+    {
+        $container->register('worse_reflection.diagnostic.missing_method', function (Container $container) {
+            return new MissingMethods();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }

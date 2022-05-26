@@ -9,8 +9,6 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Core\Cache;
-use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
@@ -129,6 +127,35 @@ final class FrameResolver
         return null;
     }
 
+    public function resolver(): NodeContextResolver
+    {
+        return $this->nodeContextResolver;
+    }
+
+    public function withWalker(Walker $walker): self
+    {
+        $new = $this;
+        $new->globalWalkers[] = $walker;
+
+        return $new;
+    }
+
+    public function withoutWalker(string $className): self
+    {
+        $new = $this;
+        foreach ($this->globalWalkers as $walker) {
+            if (get_class($walker) === $className) {
+                continue;
+            }
+            $new->globalWalkers[] = $walker;
+        }
+        foreach ($this->nodeWalkers as $fqn => $walkers) {
+            $new->nodeWalkers[$fqn] = array_filter($walkers, fn (Walker $walker) => get_class($walker) !== $className);
+        }
+
+        return $new;
+    }
+
     private function resolveScopeNode(Node $node): Node
     {
         if ($node instanceof SourceFileNode) {
@@ -156,34 +183,5 @@ final class FrameResolver
         }
 
         return $scopeNode;
-    }
-
-    public function resolver(): NodeContextResolver
-    {
-        return $this->nodeContextResolver;
-    }
-
-    public function withWalker(Walker $walker): self
-    {
-        $new = $this;
-        $new->globalWalkers[] = $walker;
-
-        return $new;
-    }
-
-    public function withoutWalker(string $className): self
-    {
-        $new = $this;
-        foreach ($this->globalWalkers as $walker) {
-            if ($walker::class === $className) {
-                continue;
-            }
-            $new->globalWalkers[] = $walker;
-        }
-        foreach ($this->nodeWalkers as $fqn => $walkers) {
-            $new->nodeWalkers[$fqn] = array_filter($walkers, fn (Walker $walker) => $walker::class !== $className);
-        }
-
-        return $new;
     }
 }

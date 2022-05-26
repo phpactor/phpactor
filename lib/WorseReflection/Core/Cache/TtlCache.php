@@ -13,13 +13,13 @@ class TtlCache implements Cache
     private array $cache = [];
 
     /**
-     * @var array<string, int>
+     * @var array<string, float>
      */
     private array $expires = [];
     
     private float $lifetime;
 
-    private $lifetimeStart = null;
+    private ?float $lifetimeStart = null;
 
     /**
      * @var float $lifetime Lifetime in seconds
@@ -42,7 +42,7 @@ class TtlCache implements Cache
 
         $elapsed = $now - $this->lifetimeStart;
 
-        if ($elapsed >= $this->expires) {
+        if ($elapsed >= $this->lifetime) {
             $this->purgeExpired($now);
             $this->lifetimeStart = $now;
         }
@@ -59,7 +59,7 @@ class TtlCache implements Cache
         $this->expires = [];
     }
 
-    private function purgeExpired(string $now): void
+    private function purgeExpired(float $now): void
     {
         foreach ($this->expires as $key => $expires) {
             if ($expires > $now) {
