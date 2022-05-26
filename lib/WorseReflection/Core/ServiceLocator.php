@@ -111,12 +111,13 @@ class ServiceLocator
 
         $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
+            $cache,
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
                 new IncludeWalker($logger),
-            ], $frameWalkers)
+            ], $frameWalkers),
         );
         $this->methodProviders = $methodProviders;
         $this->diagnosticProviders = $diagnosticProviders;
