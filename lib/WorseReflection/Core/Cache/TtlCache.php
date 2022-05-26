@@ -19,7 +19,7 @@ class TtlCache implements Cache
     
     private float $lifetime;
 
-    private $ticker = 0;
+    private $lifetimeStart = null;
 
     /**
      * @var float $lifetime Lifetime in seconds
@@ -32,12 +32,21 @@ class TtlCache implements Cache
     public function getOrSet(string $key, Closure $setter)
     {
         $now = microtime(true);
+        if (null === $this->lifetimeStart) {
+            $this->lifetimeStart = $now;
+        }
 
         if (isset($this->cache[$key]) && $this->expires[$key] > $now) {
             return $this->cache[$key];
         }
 
-        $this->purgeExpired($now);
+        $elapsed = $now - $this->lifetimeStart;
+
+        if ($elapsed >= $this->expires) {
+            $this->purgeExpired($now);
+            $this->lifetimeStart = $now;
+        }
+
         $this->cache[$key] = $setter();
         $this->expires[$key] = microtime(true) + $this->lifetime;
 
