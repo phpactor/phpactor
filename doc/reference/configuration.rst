@@ -1088,7 +1088,13 @@ ConsoleExtension
 
 
 
+Verbosity level
+
+
 **Default**: ``32``
+
+
+**Allowed values**: 16, 32, 64, 128, 256
 
 
 .. _param_console.decorated:
@@ -1100,7 +1106,13 @@ ConsoleExtension
 
 
 
+Whether to decorate messages (null for auto-guessing)
+
+
 **Default**: ``null``
+
+
+**Allowed values**: true, false, null
 
 
 .. _WorseReferenceFinderExtension:

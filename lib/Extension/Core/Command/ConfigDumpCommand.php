@@ -64,7 +64,7 @@ class ConfigDumpCommand extends Command
             }
             $output->writeln(' ' .$candidate->path());
         }
-        
+
         $output->write(PHP_EOL);
         $output->writeln('<info>File path tokens:</info>');
         $output->write(PHP_EOL);
