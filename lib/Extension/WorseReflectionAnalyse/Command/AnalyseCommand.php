@@ -26,6 +26,7 @@ class AnalyseCommand extends Command
 
     public function configure(): void
     {
+        $this->setDescription('Experimental diagnostics for files in the given path');
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED, 'Path to analyse');
     }
 
