@@ -32,6 +32,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
+    const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
 
     
     public function configure(Resolver $schema): void
@@ -90,6 +91,9 @@ class WorseReflectionExtension implements Extension
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_PROVIDER)) as $serviceId) {
                 $builder->addMemberProvider($container->get($serviceId));
+            }
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_DIAGNOSTIC_PROVIDER)) as $serviceId) {
+                $builder->addDiagnosticProvider($container->get($serviceId));
             }
         
             $builder->withLogger(

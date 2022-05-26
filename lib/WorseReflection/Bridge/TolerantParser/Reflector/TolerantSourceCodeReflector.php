@@ -5,8 +5,11 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
@@ -24,7 +27,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
     private ServiceLocator $serviceLocator;
-    
     private Parser $parser;
 
     public function __construct(ServiceLocator $serviceLocator, Parser $parser)
@@ -52,6 +54,17 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $frame = $this->serviceLocator->frameBuilder()->build($node);
 
         return TolerantReflectionOffset::fromFrameAndSymbolContext($frame, $resolver->resolveNode($frame, $node));
+    }
+
+    public function diagnostics($sourceCode): Diagnostics
+    {
+        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $rootNode = $this->parseSourceCode($sourceCode);
+
+        $walker = $this->serviceLocator->newDiagnosticsWalker();
+        $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
+
+        return $walker->diagnostics();
     }
 
     /**
