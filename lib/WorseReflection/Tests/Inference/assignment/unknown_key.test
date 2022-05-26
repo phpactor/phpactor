@@ -1,0 +1,10 @@
+<?php
+
+
+$results = [];
+foreach ($this->analyser->analyse($input->getArgument(self::ARG_PATH)) as $file => $diagnostics) {
+    $results[$file] = 1234;
+}
+
+wrAssertType('array<<missing>,1234>', $results);
+
