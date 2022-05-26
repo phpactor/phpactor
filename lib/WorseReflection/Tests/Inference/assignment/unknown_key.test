@@ -6,5 +6,5 @@ foreach ($this->analyser->analyse($input->getArgument(self::ARG_PATH)) as $file 
     $results[$file] = 1234;
 }
 
-wrAssertType('array<string,int>', $results);
+wrAssertType('array<<missing>,1234>', $results);
 

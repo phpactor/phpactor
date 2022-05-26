@@ -27,6 +27,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
@@ -170,6 +171,11 @@ class AssignmentExpressionResolver implements Resolver
                     $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
 
                     if (!$accessType instanceof Literal) {
+                        $frame->locals()->add(
+                            $variable->withType(
+                                new ArrayType(TypeFactory::undefined(), $rightContext->type())
+                            )
+                        );
                         return;
                     }
 
@@ -209,7 +215,7 @@ class AssignmentExpressionResolver implements Resolver
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -223,18 +229,18 @@ class AssignmentExpressionResolver implements Resolver
             if (!$element instanceof ArrayElement) {
                 continue;
             }
-        
+
             $index++;
             $elementValue = $element->elementValue;
             if (!$elementValue instanceof Variable) {
                 continue;
             }
-        
+
             /** @phpstan-ignore-next-line */
             if (null === $elementValue || null === $elementValue->name) {
                 continue;
             }
-        
+
             $varName = NodeUtil::nameFromTokenOrNode($leftOperand, $elementValue->name);
 
             $variableContext = NodeContextFactory::create(
