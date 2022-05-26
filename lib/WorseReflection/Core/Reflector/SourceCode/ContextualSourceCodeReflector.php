@@ -71,6 +71,8 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function diagnostics($sourceCode): Diagnostics
     {
+        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $this->locator->pushSourceCode($sourceCode);
         return $this->innerReflector->diagnostics($sourceCode);
     }
 }
