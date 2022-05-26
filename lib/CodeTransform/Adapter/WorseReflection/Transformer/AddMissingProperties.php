@@ -21,10 +21,8 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -185,6 +183,7 @@ class AddMissingProperties implements Transformer
             $memberAccess = $assignmentExpression->leftOperand;
             $accessExpression = null;
             if ($memberAccess instanceof SubscriptExpression) {
+                /** @phpstan-ignore-next-line Access expression is NULL if list addition */
                 $accessExpression = $memberAccess->accessExpression ?: $memberAccess;
                 $memberAccess = $memberAccess->postfixExpression;
             }
