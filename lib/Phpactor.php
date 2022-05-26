@@ -22,6 +22,7 @@ use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRange
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
+use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -126,6 +127,7 @@ class Phpactor
             SourceCodeFilesystemExtension::class,
             WorseReflectionExtension::class,
             WorseReflectionExtraExtension::class,
+            WorseReflectionAnalyseExtension::class,
             FilePathResolverExtension::class,
             LoggingExtension::class,
             ComposerAutoloaderExtension::class,

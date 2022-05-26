@@ -7,6 +7,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -32,6 +33,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
+    const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
 
     
     public function configure(Resolver $schema): void
@@ -62,6 +64,7 @@ class WorseReflectionExtension implements Extension
         $this->registerReflection($container);
         $this->registerSourceLocators($container);
         $this->registerMemberProviders($container);
+        $this->registerDiagnosticProviders($container);
     }
 
     private function registerReflection(ContainerBuilder $container): void
@@ -90,6 +93,9 @@ class WorseReflectionExtension implements Extension
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_PROVIDER)) as $serviceId) {
                 $builder->addMemberProvider($container->get($serviceId));
+            }
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_DIAGNOSTIC_PROVIDER)) as $serviceId) {
+                $builder->addDiagnosticProvider($container->get($serviceId));
             }
         
             $builder->withLogger(
@@ -136,5 +142,12 @@ class WorseReflectionExtension implements Extension
         $container->register('worse_reflection.member_provider.mixins', function (Container $container) {
             return new MixinMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
+    }
+
+    private function registerDiagnosticProviders(ContainerBuilder $container): void
+    {
+        $container->register('worse_reflection.diagnostic.missing_method', function (Container $container) {
+            return new MissingMethods();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }

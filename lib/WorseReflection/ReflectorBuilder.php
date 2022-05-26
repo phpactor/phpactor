@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
+use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\Core\Logger;
@@ -55,6 +56,11 @@ final class ReflectorBuilder
     private float $cacheLifetime = 5.0;
     
     private ?Cache $cache = null;
+
+    /**
+     * @var DiagnosticProvider[]
+     */
+    private array $diagnosticProviders = [];
 
     /**
      * Create a new instance of the builder
@@ -114,6 +120,12 @@ final class ReflectorBuilder
         return $this;
     }
 
+    public function addDiagnosticProvider(DiagnosticProvider $provider): self
+    {
+        $this->diagnosticProviders[] = $provider;
+        return $this;
+    }
+
     /**
      * Build the reflector
      */
@@ -125,6 +137,7 @@ final class ReflectorBuilder
             $this->buildReflectorFactory(),
             $this->framewalkers,
             $this->memberProviders,
+            $this->diagnosticProviders,
             $this->buildCache(),
             $this->enableContextualSourceLocation
         ))->reflector();

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
 use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Bridge\Composer\ComposerSourceLocator;
+use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -13,6 +14,11 @@ use Phpactor\WorseReflection\ReflectorBuilder;
  */
 abstract class BaseBenchCase
 {
+    /**
+     * @var DiagnosticProvider[]
+     */
+    protected array $diagnosticProviders = [];
+
     private Reflector $reflector;
 
     public function setUp(): void
@@ -27,7 +33,11 @@ abstract class BaseBenchCase
             __DIR__ . '/../Cache',
         );
 
-        $this->reflector = ReflectorBuilder::create()
+        $builder = ReflectorBuilder::create();
+        foreach ($this->diagnosticProviders as $provider) {
+            $builder->addDiagnosticProvider($provider);
+        }
+        $this->reflector = $builder
             ->addLocator($composerLocator)
             ->addLocator($stubLocator)
             ->enableCache()

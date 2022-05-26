@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
@@ -40,57 +42,76 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
     
     public function reflectClass($className): ReflectionClass
     {
-        return $this->cache->getOrSet(self::CLASS_PREFIX.$className, function () use ($className) {
+        return $this->getOrSet(self::CLASS_PREFIX.$className, function () use ($className) {
             return $this->classReflector->reflectClass($className);
         });
     }
     
     public function reflectInterface($className): ReflectionInterface
     {
-        return $this->cache->getOrSet(self::INTERFACE_PREFIX.$className, function () use ($className) {
+        return $this->getOrSet(self::INTERFACE_PREFIX.$className, function () use ($className) {
             return $this->classReflector->reflectInterface($className);
         });
     }
     
     public function reflectTrait($className): ReflectionTrait
     {
-        return $this->cache->getOrSet(self::TRAIT_PREFIX.$className, function () use ($className) {
+        return $this->getOrSet(self::TRAIT_PREFIX.$className, function () use ($className) {
             return $this->classReflector->reflectTrait($className);
         });
     }
     
     public function reflectEnum($className): ReflectionEnum
     {
-        return $this->cache->getOrSet(self::ENUM_PREFIX.$className, function () use ($className) {
+        return $this->getOrSet(self::ENUM_PREFIX.$className, function () use ($className) {
             return $this->classReflector->reflectEnum($className);
         });
     }
     
     public function reflectClassLike($className): ReflectionClassLike
     {
-        return $this->cache->getOrSet(self::CLASS_LIKE_PREFIX.(string)$className, function () use ($className) {
+        return $this->getOrSet(self::CLASS_LIKE_PREFIX.(string)$className, function () use ($className) {
             return $this->classReflector->reflectClassLike($className);
         });
     }
 
     public function reflectFunction($name): ReflectionFunction
     {
-        return $this->cache->getOrSet(self::FUNC_PREFIX.$name, function () use ($name) {
+        return $this->getOrSet(self::FUNC_PREFIX.$name, function () use ($name) {
             return $this->functionReflector->reflectFunction($name);
         });
     }
     
     public function sourceCodeForFunction($name): SourceCode
     {
-        return $this->cache->getOrSet(self::FUNC_PREFIX.'source_code'.$name, function () use ($name) {
+        return $this->getOrSet(self::FUNC_PREFIX.'source_code'.$name, function () use ($name) {
             return $this->functionReflector->sourceCodeForFunction($name);
         });
     }
     
     public function sourceCodeForClassLike($name): SourceCode
     {
-        return $this->cache->getOrSet(self::CLASS_LIKE_PREFIX.'source_code'.$name, function () use ($name) {
+        return $this->getOrSet(self::CLASS_LIKE_PREFIX.'source_code'.$name, function () use ($name) {
             return $this->classReflector->sourceCodeForClassLike($name);
         });
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getOrSet(string $key, Closure $closure)
+    {
+        $closure = function () use ($closure) {
+            try {
+                return $closure();
+            } catch (NotFound $e) {
+                return $e;
+            }
+        };
+        $result = $this->cache->getOrSet($key, $closure);
+        if ($result instanceof NotFound) {
+            throw $result;
+        }
+        return $result;
     }
 }

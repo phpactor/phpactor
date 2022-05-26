@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
@@ -47,8 +48,14 @@ class ServiceLocator
     private Cache $cache;
 
     /**
-     * @param list<Walker> $frameWalkers
-     * @param list<ReflectionMemberProvider> $methodProviders
+     * @var DiagnosticProvider[]
+     */
+    private array $diagnosticProviders;
+
+    /**
+     * @param Walker[] $frameWalkers
+     * @param ReflectionMemberProvider[] $methodProviders
+     * @param DiagnosticProvider[] $diagnosticProviders
      */
     public function __construct(
         SourceCodeLocator $sourceLocator,
@@ -56,6 +63,7 @@ class ServiceLocator
         SourceCodeReflectorFactory $reflectorFactory,
         array $frameWalkers,
         array $methodProviders,
+        array $diagnosticProviders,
         Cache $cache,
         bool $enableContextualLocation = false
     ) {
@@ -103,7 +111,6 @@ class ServiceLocator
 
         $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
-            $cache,
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
@@ -112,6 +119,7 @@ class ServiceLocator
             ], $frameWalkers)
         );
         $this->methodProviders = $methodProviders;
+        $this->diagnosticProviders = $diagnosticProviders;
         $this->cache = $cache;
     }
 
@@ -162,5 +170,10 @@ class ServiceLocator
     public function cache(): Cache
     {
         return $this->cache;
+    }
+
+    public function newDiagnosticsWalker(): DiagnosticsWalker
+    {
+        return new DiagnosticsWalker($this->diagnosticProviders);
     }
 }

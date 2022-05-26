@@ -23,14 +23,19 @@ class IntegrationTestCase extends TestCase
         $this->logger = new ArrayLogger();
     }
 
-    public function createReflector(string $source): Reflector
+    public function createBuilder(string $source): ReflectorBuilder
     {
         return ReflectorBuilder::create()
             ->addSource($source)
             ->addMemberProvider(new DocblockMemberProvider())
             ->addMemberProvider(new MixinMemberProvider())
             ->addFrameWalker(new TestAssertWalker($this))
-            ->withLogger($this->logger())->build();
+            ->withLogger($this->logger());
+    }
+
+    public function createReflector(string $source): Reflector
+    {
+        return $this->createBuilder($source)->build();
     }
 
     public function createWorkspaceReflector(string $source): Reflector

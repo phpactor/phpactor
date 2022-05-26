@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -97,5 +98,10 @@ class CompositeReflector implements Reflector
     public function sourceCodeForFunction($name): SourceCode
     {
         return $this->functionReflector->sourceCodeForFunction($name);
+    }
+
+    public function diagnostics($sourceCode): Diagnostics
+    {
+        return $this->sourceCodeReflector->diagnostics($sourceCode);
     }
 }

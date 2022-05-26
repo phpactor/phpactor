@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -93,7 +94,14 @@ class ParameterResolver implements Resolver
             ));
         }
 
-        $reflectionClass = $reflector->reflectClassLike($class->getNamespacedName()->__toString());
+        try {
+            $reflectionClass = $reflector->reflectClassLike($class->getNamespacedName()->__toString());
+        } catch (NotFound $notFound) {
+            throw new CouldNotResolveNode(sprintf(
+                'Class "%s" not found',
+                $class->getNamespacedName()->__toString()
+            ), 0, $notFound);
+        }
 
         try {
             $reflectionMethod = $reflectionClass->methods()->get($method->getName());
