@@ -111,7 +111,6 @@ class ServiceLocator
 
         $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
-            $cache,
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),

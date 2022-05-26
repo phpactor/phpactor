@@ -18,8 +18,6 @@ final class FrameResolver
 {
     private NodeContextResolver $nodeContextResolver;
 
-    private Cache $cache;
-
     /**
      * @var Walker[]
      */
@@ -38,10 +36,8 @@ final class FrameResolver
         NodeContextResolver $nodeContextResolver,
         array $globalWalkers,
         array $nodeWalkers,
-        Cache $cache
     ) {
         $this->nodeContextResolver = $nodeContextResolver;
-        $this->cache = $cache;
         $this->globalWalkers = $globalWalkers;
         $this->nodeWalkers = $nodeWalkers;
     }
@@ -51,7 +47,6 @@ final class FrameResolver
      */
     public static function create(
         NodeContextResolver $nodeContextResolver,
-        Cache $cache,
         array $walkers = []
     ): self {
         $globalWalkers = [];
@@ -70,7 +65,7 @@ final class FrameResolver
             }
         }
 
-        return new self($nodeContextResolver, $globalWalkers, $nodeWalkers, $cache);
+        return new self($nodeContextResolver, $globalWalkers, $nodeWalkers);
     }
 
     public function build(Node $node): Frame
@@ -99,43 +94,39 @@ final class FrameResolver
 
     public function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
     {
-        $key = 'frame:'.spl_object_hash($targetNode);
+        if ($frame === null) {
+            $frame = new Frame($node->getNodeKindName());
+        }
 
-        return $this->cache->getOrSet($key, function () use ($node, $targetNode, $frame) {
-            if ($frame === null) {
-                $frame = new Frame($node->getNodeKindName());
-            }
+        foreach ($this->globalWalkers as $walker) {
+            $frame = $walker->walk($this, $frame, $node);
+        }
 
-            foreach ($this->globalWalkers as $walker) {
+        $nodeClass = get_class($node);
+
+        if (isset($this->nodeWalkers[$nodeClass])) {
+            foreach ($this->nodeWalkers[$nodeClass] as $walker) {
                 $frame = $walker->walk($this, $frame, $node);
             }
+        }
 
-            $nodeClass = get_class($node);
-
-            if (isset($this->nodeWalkers[$nodeClass])) {
-                foreach ($this->nodeWalkers[$nodeClass] as $walker) {
-                    $frame = $walker->walk($this, $frame, $node);
-                }
+        foreach ($node->getChildNodes() as $childNode) {
+            if ($found = $this->walkNode($childNode, $targetNode, $frame)) {
+                return $found;
             }
+        }
 
-            foreach ($node->getChildNodes() as $childNode) {
-                if ($found = $this->walkNode($childNode, $targetNode, $frame)) {
-                    return $found;
-                }
-            }
+        // if we found what we were looking for then return it
+        if ($node === $targetNode) {
+            return $frame;
+        }
 
-            // if we found what we were looking for then return it
-            if ($node === $targetNode) {
-                return $frame;
-            }
+        // we start with the source node and we finish with the source node.
+        if ($node instanceof SourceFileNode) {
+            return $frame;
+        }
 
-            // we start with the source node and we finish with the source node.
-            if ($node instanceof SourceFileNode) {
-                return $frame;
-            }
-
-            return null;
-        });
+        return null;
     }
 
     private function resolveScopeNode(Node $node): Node
