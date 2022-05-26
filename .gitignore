@@ -1,20 +1,27 @@
-/vendor
-/extensions
-/tests/Assets/Workspace
-/tests/Assets/Cache
-/cache
 /extensions
 /phpactor.schema.json
-/**/Tests/Workspace
-/lib/Completion/cache
-/lib/Test.php
-/lib/WorseReflection/Tests/Cache
 /lib/Extension/WorseReflection/stubs
+
+# Composer
+/vendor
+
+# Cache
+/tests/Assets/Cache
+/cache
+/lib/Completion/cache
+/lib/WorseReflection/Tests/Cache
+
+# Workspaces
+/tests/Assets/Workspace
+/**/Tests/Workspace
 
 # File frequently used for testing
 /lib/Test.php
 /.phpactor.yml
 /.phpactor/*
+
+# Logging
+/application.log
 
 # docs
 /doc/_build
