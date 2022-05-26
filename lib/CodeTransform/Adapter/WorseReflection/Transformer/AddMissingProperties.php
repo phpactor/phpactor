@@ -21,7 +21,10 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -83,7 +86,10 @@ class AddMissingProperties implements Transformer
                 $type = $typeResolver($expression);
 
                 if ($accessExpression) {
-                    $type = new ArrayType($typeResolver($accessExpression), $type);
+                    $type = new ArrayType(
+                        $accessExpression instanceof SubscriptExpression ? new ArrayKeyType() : $typeResolver($accessExpression),
+                        $type
+                    );
                 }
 
                 if ($type->isDefined()) {
@@ -179,7 +185,7 @@ class AddMissingProperties implements Transformer
             $memberAccess = $assignmentExpression->leftOperand;
             $accessExpression = null;
             if ($memberAccess instanceof SubscriptExpression) {
-                $accessExpression = $memberAccess->accessExpression;
+                $accessExpression = $memberAccess->accessExpression ?: $memberAccess;
                 $memberAccess = $memberAccess->postfixExpression;
             }
 

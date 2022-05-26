@@ -503,6 +503,45 @@ class AddMissingPropertiesTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'It adds missing property from array add' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function hello()
+                    {
+                        $this->bar[] = $this->bar();
+                    }
+
+                    public function bar(): string
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @var string[]
+                     */
+                    private $bar = [];
+
+                    public function hello()
+                    {
+                        $this->bar[] = $this->bar();
+                    }
+
+                    public function bar(): string
+                    {
+                    }
+                }
+                EOT
+        ];
+
         yield 'It imports classes' => [
             <<<'EOT'
                 <?php
