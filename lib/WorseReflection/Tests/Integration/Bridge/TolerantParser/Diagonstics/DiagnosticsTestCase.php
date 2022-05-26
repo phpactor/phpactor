@@ -14,7 +14,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
     public function testDiagnostic(string $path): void
     {
         $source = (string)file_get_contents($path);
-        $reflector = $this->createBuilder($source)->addDiagnosticProvider($this->provider())->build();
+        $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
 
         // the wrAssertType function in the source code will cause

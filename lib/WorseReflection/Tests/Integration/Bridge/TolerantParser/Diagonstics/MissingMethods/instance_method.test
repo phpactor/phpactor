@@ -6,4 +6,5 @@ class Foobar
 
 $f = new Foobar();
 $f->bar();
+
 wrAssertDiagnostics(1, ['MissingMethod']);

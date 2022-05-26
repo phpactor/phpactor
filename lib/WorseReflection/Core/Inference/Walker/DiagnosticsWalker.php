@@ -38,7 +38,7 @@ class DiagnosticsWalker implements Walker
     {
         $resolver = $resolver->resolver();
         foreach ($this->providers as $provider) {
-            foreach ($provider->provide($resolver, $node) as $diagnostic) {
+            foreach ($provider->provide($resolver, $frame, $node) as $diagnostic) {
                 $this->diagnostics[] = $diagnostic;
             }
         }

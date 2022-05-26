@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
@@ -202,19 +203,19 @@ class TestAssertWalker implements Walker
             throw new RuntimeException('Missing count argument for wrAssertDiagnostics');
         }
         $count = $args[0]->type();
-        if (!$count instanceof IntType) {
+        if (!$count instanceof IntLiteralType) {
             throw new RuntimeException(sprintf('Expected diagnostic count be int got "%s"', $count->__toString()));
         }
-        if ($count !== $diagnostics->count()) {
+        if ($count->value() !== $diagnostics->count()) {
             $this->testCase->fail(sprintf(
                 'Expected diagnostic count "%s" but got "%s"',
                 $count,
                 $diagnostics->count()
             ));
         }
+
         if (!isset($args[1])) {
             return;
         }
-
     }
 }
