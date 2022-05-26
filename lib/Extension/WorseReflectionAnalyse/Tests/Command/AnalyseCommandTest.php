@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\WorseReflection\Tests\Command;
+namespace Phpactor\Extension\WorseReflectionAnalyse\Tests\Command;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;

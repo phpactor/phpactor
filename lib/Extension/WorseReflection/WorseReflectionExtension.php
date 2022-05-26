@@ -2,11 +2,9 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
