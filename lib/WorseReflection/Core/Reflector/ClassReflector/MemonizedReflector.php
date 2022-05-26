@@ -96,7 +96,10 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         });
     }
 
-    private function getOrSet(string $key, Closure $closure): ReflectionClass
+    /**
+     * @return mixed
+     */
+    private function getOrSet(string $key, Closure $closure)
     {
         $closure = function () use ($closure) {
             try {
