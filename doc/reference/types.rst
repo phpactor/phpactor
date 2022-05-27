@@ -1,15 +1,16 @@
 Types
 =====
 
-This document provides alist of PHP types and docblock types and indicates if
-Phpactor supports them or not. For more information about these types see:
+This document provides a non-exhaustive list of PHP and docblock types and
+indicates if Phpactor supports them or not. For more information about these
+types see:
 
 - `Official PHP Documentation <https://www.php.net/manual/en/language.types.declarations.php>`_
 - `PHPStan Types <https://phpstan.org/writing-php-code/phpdoc-types>`_
 - `Psalm Types <https://psalm.dev/docs/annotating_code/typing_in_psalm/>`_
 
-PHP Types
----------
+Basic Types
+-----------
 
 .. table::
     :align: left
