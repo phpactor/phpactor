@@ -17,8 +17,8 @@ class ConsoleExtension implements Extension
     public const SERVICE_COMMAND_LOADER = 'console.command_loader';
     public const SERVICE_OUTPUT = 'console.output';
     public const SERVICE_INPUT = 'console.input';
-    private const CONSOLE_VERBOSITY = 'console.verbosity';
-    private const CONSOLE_DECORATED = 'console.decorated';
+    private const PARAM_VERBOSITY = 'console.verbosity';
+    private const PARAM_DECORATED = 'console.decorated';
 
 
     public function load(ContainerBuilder $container): void
@@ -41,8 +41,8 @@ class ConsoleExtension implements Extension
 
         $container->register(self::SERVICE_OUTPUT, function (Container $container) {
             return new ConsoleOutput(
-                $container->getParameter(self::CONSOLE_VERBOSITY),
-                $container->getParameter(self::CONSOLE_DECORATED)
+                $container->getParameter(self::PARAM_VERBOSITY),
+                $container->getParameter(self::PARAM_DECORATED)
             );
         });
 
@@ -55,22 +55,22 @@ class ConsoleExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::CONSOLE_VERBOSITY => OutputInterface::VERBOSITY_NORMAL,
-            self::CONSOLE_DECORATED => null,
+            self::PARAM_VERBOSITY => OutputInterface::VERBOSITY_NORMAL,
+            self::PARAM_DECORATED => null,
         ]);
         $schema->setDescriptions([
-            self::CONSOLE_VERBOSITY => 'Verbosity level',
-            self::CONSOLE_DECORATED => 'Whether to decorate messages (null for auto-guessing)',
+            self::PARAM_VERBOSITY => 'Verbosity level',
+            self::PARAM_DECORATED => 'Whether to decorate messages (null for auto-guessing)',
         ]);
         $schema->setEnums([
-            self::CONSOLE_VERBOSITY => [
+            self::PARAM_VERBOSITY => [
                 OutputInterface::VERBOSITY_QUIET,
                 OutputInterface::VERBOSITY_NORMAL,
                 OutputInterface::VERBOSITY_VERBOSE,
                 OutputInterface::VERBOSITY_VERY_VERBOSE,
                 OutputInterface::VERBOSITY_DEBUG,
             ],
-            self::CONSOLE_DECORATED => [
+            self::PARAM_DECORATED => [
                 true,
                 false,
                 null
