@@ -7,7 +7,6 @@ use Phpactor\Indexer\Model\IndexInfo;
 use Phpactor\Indexer\Model\IndexInfos;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use RuntimeException;
-use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -23,7 +22,7 @@ use Symfony\Component\Finder\Finder;
 class IndexCleanCommand extends Command
 {
     public const ARG_INDEX_NAME = 'name';
-    public const CLEAN_ALL = 'all';
+    public const OPT_CLEAN_ALL = 'all';
 
     private string $indexDirectory;
 
@@ -57,7 +56,7 @@ class IndexCleanCommand extends Command
             Listing the available indices and asking which ones should be removed
                 bin/console index:clean
 
-            DOCS, self::CLEAN_ALL));
+            DOCS, self::OPT_CLEAN_ALL));
         $this->addArgument(self::ARG_INDEX_NAME, InputArgument::OPTIONAL, 'Index to delete (either the name or the number from the listing)');
     }
 
@@ -134,7 +133,7 @@ class IndexCleanCommand extends Command
     private function getInteractiveAnswer(IndexInfos $infos, InputInterface $input, OutputInterface $output): ?IndexInfo
     {
         $question = new Question('Index to remove: ', null);
-        $question->setAutocompleterValues(array_merge($infos->offsets(),  $infos->names()));
+        $question->setAutocompleterValues(array_merge($infos->offsets(), $infos->names()));
         $result = (new QuestionHelper())->ask($input, $output, $question);
 
         if (!$result) {
