@@ -44,8 +44,8 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             return;
         }
 
-        self::assertInstanceOf(get_class($expected), get_class($docblock->returnType()));
-        self::assertEquals($expected->__toString(), $docblock->returnType());
+        self::assertInstanceOf(get_class($expected), $docblock->returnType());
+        self::assertEquals($expected->__toString(), $docblock->returnType()->__toString());
     }
 
     /**

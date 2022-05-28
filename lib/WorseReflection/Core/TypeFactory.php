@@ -420,8 +420,8 @@ class TypeFactory
         return self::floatLiteral((float)$value);
     }
 
-    public static function list(): ListType
+    public static function list(?Type $iterabletype = null): ArrayType
     {
-        return new ListType();
+        return new ArrayType(self::int(), $iterabletype ?: self::mixed());
     }
 }

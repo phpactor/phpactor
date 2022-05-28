@@ -158,6 +158,7 @@ class TypeConverter
 
     private function convertArray(ArrayNode $type): Type
     {
+        // todo: this should be mixed
         return new ArrayType(new ArrayKeyType(), new MissingType());
     }
 

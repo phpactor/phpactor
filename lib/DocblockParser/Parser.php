@@ -352,6 +352,9 @@ final class Parser
         if (strtolower($type->value) === 'array') {
             return new ArrayNode();
         }
+        if (strtolower($type->value) === 'list') {
+            return new ArrayNode();
+        }
         if (in_array($type->value, self::SCALAR_TYPES)) {
             return new ScalarNode($type);
         }
