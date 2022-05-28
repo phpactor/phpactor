@@ -22,7 +22,7 @@ Basic Types
     Boolean          ``bool``            ``*``      ✔
     Float            ``float``           ``*``      ✔
     Int              ``int``             ``*``      ✔
-    Resource         (internal type)     ``*``      ✘
+    Resource         (internal type)     ``*``      ✔
     String           ``string``          ``*``      ✔
     Self             ``self``            ``*``      ✔
     Parent           ``parent``          ``*``      🤷
@@ -68,6 +68,7 @@ Docblock Types
     Float Literal    ``1234.12``                     ✔ 
     String Literal   ``"hello"``                     ✔ 
     Parenthesized    ``(Foo&Bar)|object``            ✔ 
+    List             ``list<string>``                ✔ 
     ===============  ==============================  ========
 
 Integer Types

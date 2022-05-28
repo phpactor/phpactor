@@ -7,12 +7,12 @@ Docblock: =
  ElementList: = /**
  * 
   ParamTag: = @param
-   ListNode: = 
+   ListBracketsNode: = 
     ClassNode: = Foobar[]
    VariableNode: = $foobar
  * 
   ParamTag: = @param
-   ListNode: = 
+   ListBracketsNode: = 
     ScalarNode: = string[]
    VariableNode: = $strings
  */

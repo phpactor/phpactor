@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactor
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
@@ -42,7 +43,9 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             self::assertEquals($expected, $docblock->returnType()->__toString());
             return;
         }
-        self::assertEquals($expected, $docblock->returnType());
+
+        self::assertInstanceOf(get_class($expected), $docblock->returnType());
+        self::assertEquals($expected->__toString(), $docblock->returnType()->__toString());
     }
 
     /**
@@ -188,6 +191,16 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         yield 'literals' => [
             '/** @return null|"foo"|123|123.3 */',
             'null|"foo"|123|123.3',
+        ];
+
+        yield 'list' => [
+            '/** @return list */',
+            TypeFactory::list(),
+        ];
+
+        yield 'list with type' => [
+            '/** @return list<string> */',
+            TypeFactory::list(TypeFactory::string()),
         ];
     }
 

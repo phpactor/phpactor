@@ -322,6 +322,11 @@ class TypeFactory
         return new ArrayShapeType($typeMap);
     }
 
+    public static function list(?Type $iterabletype = null): ArrayType
+    {
+        return new ArrayType(self::int(), $iterabletype ?: self::mixed());
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {

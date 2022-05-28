@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
+use Phpactor\DocblockParser\Ast\Type\ListNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
@@ -19,7 +20,7 @@ use Phpactor\DocblockParser\Ast\Type\ArrayNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
-use Phpactor\DocblockParser\Ast\Type\ListNode;
+use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
 use Phpactor\DocblockParser\Ast\Type\NullNode;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\ThisNode;
@@ -40,6 +41,7 @@ use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
+use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
@@ -75,6 +77,9 @@ class TypeConverter
         }
         if ($type instanceof ListNode) {
             return $this->convertList($type);
+        }
+        if ($type instanceof ListBracketsNode) {
+            return $this->convertListBrackets($type);
         }
         if ($type instanceof ArrayNode) {
             return $this->convertArray($type);
@@ -158,7 +163,13 @@ class TypeConverter
 
     private function convertArray(ArrayNode $type): Type
     {
+        // use missing type so this is rendered as "array" and not "mixed[]"
         return new ArrayType(new ArrayKeyType(), new MissingType());
+    }
+
+    private function convertList(ListNode $type): Type
+    {
+        return new ListType(new MixedType());
     }
 
     private function convertUnion(UnionNode $union): Type
@@ -193,7 +204,17 @@ class TypeConverter
                     $this->convert($parameters[1]),
                 );
             }
-            return new MissingType();
+            return new ArrayType(new MissingType());
+        }
+
+        if ($type->type instanceof ListNode) {
+            $parameters = array_values(iterator_to_array($type->parameters()->types()));
+            if (count($parameters) === 1) {
+                return new ListType(
+                    $this->convert($parameters[0])
+                );
+            }
+            return new ListType(new MissingType());
         }
 
         $classType = $this->convert($type->type);
@@ -254,7 +275,7 @@ class TypeConverter
         return $resolved;
     }
 
-    private function convertList(ListNode $type): Type
+    private function convertListBrackets(ListBracketsNode $type): Type
     {
         return new ArrayType($this->convert($type->type));
     }

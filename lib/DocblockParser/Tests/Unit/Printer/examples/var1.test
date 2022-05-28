@@ -6,6 +6,6 @@ Docblock: =
  ElementList: = /**
  * 
   VarTag: = @var
-   ListNode: = 
+   ListBracketsNode: = 
     ScalarNode: = string[]
  */
