@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
@@ -77,6 +79,18 @@ class NodeContextFactory
                 'type' => $variable->type(),
                 'symbol_type' => Symbol::VARIABLE,
             ]
+        );
+    }
+
+    /**
+     * @param Node|Token $nodeOrToken
+     */
+    public static function forNode($nodeOrToken): NodeContext
+    {
+        return self::create(
+            $nodeOrToken instanceof Token ? (string)Token::getTokenKindNameFromValue($nodeOrToken->kind) : $nodeOrToken->getNodeKindName(),
+            $nodeOrToken->getStartPosition(),
+            $nodeOrToken->getEndPosition()
         );
     }
 

@@ -131,6 +131,12 @@ class TypeFactoryTest extends TestCase
             'class-string',
             'string',
         ];
+
+        yield 'list' => [
+            TypeFactory::fromString('class-string'),
+            'class-string',
+            'string',
+        ];
     }
 
     /**

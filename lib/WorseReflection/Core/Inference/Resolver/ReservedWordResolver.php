@@ -23,7 +23,7 @@ class ReservedWordResolver implements Resolver
 
         if ('null' === $word) {
             $type = TypeFactory::null();
-            $symbolType = Symbol::BOOLEAN;
+            $symbolType = Symbol::UNKNOWN;
             $containerType = NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node);
         }
 

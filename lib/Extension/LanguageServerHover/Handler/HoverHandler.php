@@ -48,6 +48,9 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
+    /**
+     * @return Promise<Hover|null>
+     */
     public function hover(
         TextDocumentIdentifier $textDocument,
         Position $position
@@ -60,10 +63,17 @@ class HoverHandler implements Handler, CanRegisterCapabilities
                 ->language('php')
                 ->build();
 
+            $char = substr($document, $offset->toInt(), 1);
+
+            // do not provide hover for whitespace
+            if (trim($char) == '') {
+                return null;
+            }
+
             $offsetReflection = $this->reflector->reflectOffset($document, $offset);
-            $symbolContext = $offsetReflection->symbolContext();
             $info = $this->infoFromReflecionOffset($offsetReflection);
             $string = new MarkupContent('markdown', $info);
+            $symbolContext = $offsetReflection->symbolContext();
             
             return new Hover($string, new Range(
                 PositionConverter::byteOffsetToPosition(
