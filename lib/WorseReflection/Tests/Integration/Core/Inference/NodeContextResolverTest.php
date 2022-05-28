@@ -277,7 +277,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 }
 
                 EOT
-            , [], ['type' => '<missing>', 'symbol_type' => '<unknown>', 'symbol_name' => '<unknown>']
+            , [], ['type' => '<missing>', 'symbol_type' => '<unknown>', 'symbol_name' => 'Parameter']
             ];
 
         yield 'It returns the FQN of a static call' => [
