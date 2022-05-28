@@ -10,7 +10,7 @@ use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
-use Phpactor\DocblockParser\Ast\Type\ListNode;
+use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
 use Prophecy\Doubler\Generator\Node\MethodNode;
@@ -110,7 +110,7 @@ class NodeTest extends NodeTestCase
         yield 'list' => [
             '@return Foo[]',
             function (ReturnTag $return): void {
-                self::assertInstanceOf(ListNode::class, $return->type);
+                self::assertInstanceOf(ListBracketsNode::class, $return->type);
             }
         ];
         yield 'generic' => [

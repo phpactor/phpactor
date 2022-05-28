@@ -19,7 +19,7 @@ use Phpactor\DocblockParser\Ast\Type\ArrayNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
-use Phpactor\DocblockParser\Ast\Type\ListNode;
+use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
 use Phpactor\DocblockParser\Ast\Type\NullNode;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\ThisNode;
@@ -73,7 +73,7 @@ class TypeConverter
         if ($type instanceof ScalarNode) {
             return $this->convertScalar($type->toString());
         }
-        if ($type instanceof ListNode) {
+        if ($type instanceof ListBracketsNode) {
             return $this->convertList($type);
         }
         if ($type instanceof ArrayNode) {
@@ -255,7 +255,7 @@ class TypeConverter
         return $resolved;
     }
 
-    private function convertList(ListNode $type): Type
+    private function convertList(ListBracketsNode $type): Type
     {
         return new ArrayType($this->convert($type->type));
     }

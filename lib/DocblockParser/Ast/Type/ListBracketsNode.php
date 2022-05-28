@@ -5,7 +5,7 @@ namespace Phpactor\DocblockParser\Ast\Type;
 use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Token;
 
-class ListNode extends TypeNode
+class ListBracketsNode extends TypeNode
 {
     protected const CHILD_NAMES = [
         'type',

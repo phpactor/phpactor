@@ -28,7 +28,7 @@ use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
-use Phpactor\DocblockParser\Ast\Type\ListNode;
+use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
@@ -297,7 +297,7 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_LIST) {
             $list = $this->tokens->chomp();
-            return new ListNode($this->createTypeFromToken($type), $list);
+            return new ListBracketsNode($this->createTypeFromToken($type), $list);
         }
 
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
