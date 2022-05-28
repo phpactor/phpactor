@@ -22,7 +22,7 @@ Basic Types
     Boolean          ``bool``            ``*``      ✔
     Float            ``float``           ``*``      ✔
     Int              ``int``             ``*``      ✔
-    Resource         (internal type)     ``*``      ✘
+    Resource         (internal type)     ``*``      ✔
     String           ``string``          ``*``      ✔
     Self             ``self``            ``*``      ✔
     Parent           ``parent``          ``*``      🤷
