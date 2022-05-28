@@ -29,6 +29,7 @@ use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
 use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
+use Phpactor\DocblockParser\Ast\Type\ListNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
@@ -353,7 +354,7 @@ final class Parser
             return new ArrayNode();
         }
         if (strtolower($type->value) === 'list') {
-            return new ArrayNode();
+            return new ListNode();
         }
         if (in_array($type->value, self::SCALAR_TYPES)) {
             return new ScalarNode($type);
