@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Indexer\Model\Index;
+namespace Phpactor\Indexer\Model;
 
 use Phpactor\Indexer\Util\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
@@ -56,7 +56,7 @@ class IndexInfo
         return $this->absolutePath;
     }
 
-    public function directoryName(): string
+    public function name(): string
     {
         return $this->directoryName;
     }
