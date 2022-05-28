@@ -9,7 +9,7 @@ Docblock: =
    GenericNode: = 
     ClassNode: = Foobar<
     TypeList: = 
-     ListNode: = 
+     ListBracketsNode: = 
       ClassNode: = Barfoo[]>
    VariableNode: = $foobar
  */

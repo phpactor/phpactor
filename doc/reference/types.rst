@@ -68,6 +68,7 @@ Docblock Types
     Float Literal    ``1234.12``                     ✔ 
     String Literal   ``"hello"``                     ✔ 
     Parenthesized    ``(Foo&Bar)|object``            ✔ 
+    List             ``list<string>``                ✔ 
     ===============  ==============================  ========
 
 Integer Types
