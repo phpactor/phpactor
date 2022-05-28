@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
@@ -96,5 +98,14 @@ class NodeContextFactory
         }
 
         return $context;
+    }
+
+    public static function forNode(Node $node): NodeContext
+    {
+        return self::create(
+            $node->getNodeKindName(),
+            $node->getStartPosition(),
+            $node->getEndPosition()
+        );
     }
 }
