@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Extension\Command;
 
 use Phpactor\Indexer\Model\Index\IndexInfo;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
+use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -17,8 +18,8 @@ use Symfony\Component\Finder\Finder;
 
 class IndexCleanCommand extends Command
 {
-    public const CLEAN_ALL = 'clean-all';
-    private const INDEX_TO_CLEAN = 'index-to-clean';
+    public const ARG_INDEX_NAME = 'name';
+    public const CLEAN_ALL = 'all';
 
     private string $indexDirectory;
 
@@ -53,7 +54,7 @@ class IndexCleanCommand extends Command
                 bin/console index:clean
 
             DOCS, self::CLEAN_ALL));
-        $this->addArgument(self::INDEX_TO_CLEAN, InputArgument::OPTIONAL, 'Index to delete (either the name or the number from the listing)');
+        $this->addArgument(self::ARG_INDEX_NAME, InputArgument::OPTIONAL, 'Index to delete (either the name or the number from the listing)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -61,7 +62,7 @@ class IndexCleanCommand extends Command
         $indicies = $this->getIndicies();
         $this->renderIndexTable($indicies, $output);
 
-        $argument = $input->getArgument(self::INDEX_TO_CLEAN);
+        $argument = $input->getArgument(self::ARG_INDEX_NAME);
         if ($argument === null && !$input->isInteractive()) {
             return 0;
         }
@@ -125,7 +126,7 @@ class IndexCleanCommand extends Command
         $progressbar = new ProgressBar($output, count($indexList));
         $totalSize = 0;
         $table = new Table($output);
-        $table->setHeaders(['#' , 'Directory', 'Size', 'Last modified']);
+        $table->setHeaders(['#' , 'Directory', 'Size', 'Age', 'Modified']);
         foreach ($indexList as $i => $index) {
             /** @var IndexInfo $index */
             $totalSize += $index->size();
@@ -133,7 +134,8 @@ class IndexCleanCommand extends Command
                 $i + 1,
                 $index->directoryName(),
                 PhpactorFilesystem::formatSize($index->size()),
-                sprintf('%.1f days', $index->lastUpdatedInDays()),
+                sprintf('%.1f days', $index->ageInDays()),
+                sprintf('%.1f days', $index->lastModifiedInDays()),
             ]);
             $progressbar->advance();
         }
@@ -174,7 +176,7 @@ class IndexCleanCommand extends Command
            ->depth('==0')
        ;
         return array_values(array_map(
-            [IndexInfo::class, 'create'],
+            fn (SplFileInfo $info) => IndexInfo::fromFromSplFileInfo($info),
             iterator_to_array($finder)
         ));
     }
