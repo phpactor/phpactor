@@ -2,8 +2,11 @@
 
 namespace Phpactor\Indexer\Extension\Command;
 
-use Phpactor\Indexer\Model\Index\IndexInfo;
+use Exception;
+use Phpactor\Indexer\Model\IndexInfo;
+use Phpactor\Indexer\Model\IndexInfos;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
+use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -11,6 +14,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
@@ -59,115 +63,92 @@ class IndexCleanCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $indicies = $this->getIndicies();
-        $this->renderIndexTable($indicies, $output);
+        if (!$output instanceof ConsoleOutput) {
+            throw new RuntimeException('Symfony');
+        }
 
-        $argument = $input->getArgument(self::ARG_INDEX_NAME);
-        if ($argument === null && !$input->isInteractive()) {
+        $indexName = $input->getArgument(self::ARG_INDEX_NAME);
+
+        if ($indexName === null && !$input->isInteractive()) {
             return 0;
         }
 
-        $answer = $argument;
-        if ($answer === null) {
-            $answer = $this->getInteractiveAnswer(count($indicies), $input, $output);
+
+        $section = $output->section();
+        $indicies = $this->getIndicies($section);
+        if ($indexName) {
+            $this->removeIndex($section, $indicies->get($indexName));
+            return 0;
         }
+        $removed = null;
+        $index = null;
+        $section->clear();
 
-        $output->writeln('');
-
-        foreach ($this->getIndiciesToDelete($indicies, $answer) as $index) {
-            $output->writeln(sprintf('<info>Removing %s</info>', $index->directoryName()));
-            $this->filesystem->remove($index->absolutePath());
+        while (true) {
+            $this->renderIndexTable($indicies, $section);
+            if ($removed && $index) {
+                $section->writeln(sprintf('<info>Removed index "%s"</>', $index->name()));
+            }
+            try {
+                // pass $output instead of $section because the interactive input
+                // is corrupted with he Section.
+                $index = $this->getInteractiveAnswer($indicies, $input, $output);
+            } catch (Exception $e) {
+                $section->clear();
+                $section->writeln(sprintf('<error>%s</>', $e->getMessage()));
+                continue;
+            }
+            if (!$index) {
+                break;
+            }
+            $this->removeIndex($output, $index);
+            $indicies = $indicies->remove($index);
+            $removed = $index;
+            $section->clear();
         }
-
 
         return 0;
     }
 
-    /**
-     * @param array<IndexInfo> $indecies
-     *
-     * @return array<IndexInfo>
-     */
-    private function getIndiciesToDelete(array $indecies, string $answer): array
+    private function renderIndexTable(IndexInfos $indexList, OutputInterface $output): void
     {
-        $indeciesToDelete = [];
-        if ($answer === self::CLEAN_ALL) {
-            return $indecies;
-        }
-
-        $indexCount = count($indecies);
-        foreach (explode(',', $answer) as $indexString) {
-            // Trying to find the index by number
-            if (is_numeric($indexString)) {
-                if ($indexCount >= (int) $indexString) {
-                    $indexToDelete = ((int) $indexString) - 1;
-
-                    $indeciesToDelete[] = $indecies[$indexToDelete];
-                }
-            } else {
-                // Finding the index by name
-                foreach ($indecies as $index) {
-                    if ($index->directoryName() === $indexString) {
-                        $indeciesToDelete[] = $index;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return $indeciesToDelete;
-    }
-
-    /**
-     * @param array<IndexInfo> $indexList
-     */
-    private function renderIndexTable(array $indexList, OutputInterface $output): void
-    {
-        $progressbar = new ProgressBar($output, count($indexList));
         $totalSize = 0;
         $table = new Table($output);
         $table->setHeaders(['#' , 'Directory', 'Size', 'Age', 'Modified']);
-        foreach ($indexList as $i => $index) {
-            /** @var IndexInfo $index */
+        $offset = 1;
+        foreach ($indexList as $index) {
             $totalSize += $index->size();
             $table->addRow([
-                $i + 1,
-                $index->directoryName(),
+                $offset++,
+                $index->name(),
                 PhpactorFilesystem::formatSize($index->size()),
                 sprintf('%.1f days', $index->ageInDays()),
                 sprintf('%.1f days', $index->lastModifiedInDays()),
             ]);
-            $progressbar->advance();
         }
-        $progressbar->finish();
-        $output->writeln('');
         $table->render();
 
         $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
     }
 
-    private function getInteractiveAnswer(int $indexCount, InputInterface $input, OutputInterface $output): string
+    private function getInteractiveAnswer(IndexInfos $infos, InputInterface $input, OutputInterface $output): ?IndexInfo
     {
-        $all= self::CLEAN_ALL;
+        $question = new Question('Index to remove: ', null);
+        $question->setAutocompleterValues(array_merge($infos->offsets(),  $infos->names()));
+        $result = (new QuestionHelper())->ask($input, $output, $question);
 
-        $question = new Question(
-            <<<QUESTION
-                Which index do you want to delete? (1 - $indexCount, $all)
-                If you want to delete multiple indexes provide all of their names or numbers comma separated.
+        if (!$result) {
+            return null;
+        }
 
-                Default: none
-                >
-                QUESTION,
-            ''
-        );
+        if (is_numeric($result)) {
+            return $infos->getByOffset((int)$result);
+        }
 
-        return (new QuestionHelper())->ask($input, $output, $question);
+        return $infos->get((string)$result);
     }
 
-    /**
-     * @return array<IndexInfo>
-     */
-    private function getIndicies(): array
+    private function getIndicies(OutputInterface $output): IndexInfos
     {
         $finder = (new Finder())
            ->directories()
@@ -175,9 +156,26 @@ class IndexCleanCommand extends Command
            ->sortByName()
            ->depth('==0')
        ;
-        return array_values(array_map(
-            fn (SplFileInfo $info) => IndexInfo::fromFromSplFileInfo($info),
-            iterator_to_array($finder)
-        ));
+        $fileInfos = iterator_to_array($finder);
+        $progress = new ProgressBar($output, count($fileInfos));
+
+        $indexes = [];
+        foreach ($fileInfos as $fileInfo) {
+            $info = IndexInfo::fromFromSplFileInfo($fileInfo);
+
+            // warmup the size
+            $info->size();
+            $indexes[] = $info;
+            $progress->advance();
+        }
+        $progress->finish();
+
+        return new IndexInfos($indexes);
+    }
+
+    private function removeIndex(OutputInterface $output, IndexInfo $index): void
+    {
+        $output->writeln(sprintf('<info>Removing %s</info>', $index->name()));
+        $this->filesystem->remove($index->absolutePath());
     }
 }
