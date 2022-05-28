@@ -37,6 +37,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
 use Phpactor\Indexer\Extension\Command\IndexBuildCommand;
+use Phpactor\Indexer\Extension\Command\IndexCleanCommand;
 use Phpactor\Indexer\Extension\Rpc\IndexHandler;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
@@ -46,6 +47,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Symfony\Component\Filesystem\Filesystem;
 use Webmozart\PathUtil\Path;
 
 class IndexerExtension implements Extension
@@ -67,7 +69,7 @@ class IndexerExtension implements Extension
     private const SERVICE_FILESYSTEM = 'indexer.filesystem';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -102,7 +104,7 @@ class IndexerExtension implements Extension
         ]);
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerCommands($container);
@@ -151,7 +153,16 @@ class IndexerExtension implements Extension
                 $container->get(Watcher::class)
             );
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:build']]);
-        
+
+        $container->register(IndexCleanCommand::class, function (Container $container) {
+            $indexPath = $container->get(
+                FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
+            )->resolve($container->getParameters()['indexer.index_path']);
+
+            $indexPath = dirname($indexPath);
+            return new IndexCleanCommand($indexPath, new Filesystem());
+        }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:clean']]);
+
         $container->register(IndexQueryCommand::class, function (Container $container) {
             return new IndexQueryCommand($container->get(QueryClient::class));
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:query']]);
@@ -217,7 +228,7 @@ class IndexerExtension implements Extension
                 return Path::join([$projectRoot, $pattern]);
             }, $container->getParameter(self::PARAM_INCLUDE_PATTERNS));
         });
-        
+
         $container->register(WorseRecordReferenceEnhancer::class, function (Container $container) {
             return new WorseRecordReferenceEnhancer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
