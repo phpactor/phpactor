@@ -67,7 +67,7 @@ class HoverHandlerTest extends HandlerTestCase
 
         yield 'unknown' => [
             '<?php <> $foo = "bar"',
-            '<unknown> <unknown>',
+            '<unknown> InlineHtml',
         ];
     }
 
@@ -134,7 +134,7 @@ class HoverHandlerTest extends HandlerTestCase
 
         yield 'unknown' => [
             '<?php <> $foo = "bar"',
-            '<unknown> <unknown>',
+            '<unknown> InlineHtml',
         ];
     }
 
