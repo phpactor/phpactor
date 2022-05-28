@@ -163,7 +163,7 @@ class TypeConverter
 
     private function convertArray(ArrayNode $type): Type
     {
-        // todo: this should be mixed
+        // use missing type so this is rendered as "array" and not "mixed[]"
         return new ArrayType(new ArrayKeyType(), new MissingType());
     }
 
