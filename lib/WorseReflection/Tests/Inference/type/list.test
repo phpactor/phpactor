@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @param list<string> $foo
+ */
+function listWithArgument(array $foo): void
+{
+    wrAssertType('array<int,string>', $foo);
+}
+
+/**
+ * @param list $foo
+ */
+function listWithoutArgument(array $foo): void
+{
+    wrAssertType('array<int,mixed>', $foo);
+}

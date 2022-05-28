@@ -22,7 +22,6 @@ use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
-use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NotType;
@@ -323,6 +322,11 @@ class TypeFactory
         return new ArrayShapeType($typeMap);
     }
 
+    public static function list(?Type $iterabletype = null): ArrayType
+    {
+        return new ArrayType(self::int(), $iterabletype ?: self::mixed());
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -418,10 +422,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function list(?Type $iterabletype = null): ArrayType
-    {
-        return new ArrayType(self::int(), $iterabletype ?: self::mixed());
     }
 }
