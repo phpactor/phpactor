@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Model\Index;
 
 use Phpactor\Indexer\Util\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
+use Webmozart\PathUtil\Path;
 
 class IndexInfo
 {
@@ -15,27 +16,38 @@ class IndexInfo
 
     private ?int $size;
 
-    private float $lastUpdated;
+    private float $createdAt;
+
+    private float $updatedAt;
 
     public function __construct(
         string $absolutePath,
         string $directoryName,
         ?int $size,
-        float $lastUpdated
+        float $createdAt,
+        float $updatedAt
     ) {
         $this->directoryName = $directoryName;
         $this->size = $size;
-        $this->lastUpdated = $lastUpdated;
+        $this->createdAt = $createdAt;
         $this->absolutePath = $absolutePath;
+        $this->updatedAt = $updatedAt;
     }
 
-    public static function create(SplFileInfo $fileInfo): self
+    public static function fromSplFileInfo(SplFileInfo $fileInfo): self
     {
         return new self(
             $fileInfo->getRealPath(),
             $fileInfo->getRelativePathname(),
             null,
-            (time() - $fileInfo->getMTime()) / self::SECONDS_IN_DAY
+            $fileInfo->getCTime(),
+            (function (SplFileInfo $info) {
+                $path = Path::join($info->getRealPath(), 'timestamp');
+                if (!file_exists($path)) {
+                    return $info->getMTime();
+                }
+                return (int)file_get_contents($path);
+            })($fileInfo)
         );
     }
 
@@ -59,8 +71,13 @@ class IndexInfo
         return $this->size;
     }
 
-    public function lastUpdatedInDays(): float
+    public function ageInDays(): float
     {
-        return $this->lastUpdated;
+        return (time() - $this->createdAt) / self::SECONDS_IN_DAY;
+    }
+
+    public function lastModifiedInDays(): float
+    {
+        return (time() - $this->updatedAt) / self::SECONDS_IN_DAY;
     }
 }

@@ -35,10 +35,10 @@ class IndexCleanCommandTest extends IntegrationTestCase
         return [
             'interactive version' => [
                 [ self::CONSOLE_PATH, 'index:clean'],
-                IndexCleanCommand::CLEAN_ALL
+                IndexCleanCommand::OPT_CLEAN_ALL
             ],
             'non-interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::CLEAN_ALL, '--no-interaction'],
+                [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::OPT_CLEAN_ALL, '--no-interaction'],
                 null
             ],
             'cleaning index 1 and 2' => [
