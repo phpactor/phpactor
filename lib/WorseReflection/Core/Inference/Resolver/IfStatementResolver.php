@@ -23,7 +23,7 @@ class IfStatementResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        $context = NodeContextFactory::create('if', $node->getStartPosition(), $node->getEndPosition());
+        $context = NodeContextFactory::forNode($node);
         assert($node instanceof IfStatementNode);
 
         if (null === $node->expression) {

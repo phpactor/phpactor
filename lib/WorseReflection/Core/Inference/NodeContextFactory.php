@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Statement\ForeachStatement;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
@@ -82,6 +82,18 @@ class NodeContextFactory
         );
     }
 
+    /**
+     * @param Node|Token $nodeOrToken
+     */
+    public static function forNode($nodeOrToken): NodeContext
+    {
+        return self::create(
+            $nodeOrToken instanceof Token ? (string)Token::getTokenKindNameFromValue($nodeOrToken->kind) : $nodeOrToken->getNodeKindName(),
+            $nodeOrToken->getStartPosition(),
+            $nodeOrToken->getEndPosition()
+        );
+    }
+
     private static function contextFromParameters(
         Symbol $symbol,
         Type $type = null,
@@ -98,14 +110,5 @@ class NodeContextFactory
         }
 
         return $context;
-    }
-
-    public static function forNode(Node $node): NodeContext
-    {
-        return self::create(
-            $node->getNodeKindName(),
-            $node->getStartPosition(),
-            $node->getEndPosition()
-        );
     }
 }

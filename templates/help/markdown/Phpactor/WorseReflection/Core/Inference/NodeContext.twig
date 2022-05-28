@@ -1,1 +1,1 @@
-`{{- render(object.type) -}}`
+{{ object.symbol.name }} {% if object.type.isDefined %}: `{{- render(object.type) -}}`{% endif %}

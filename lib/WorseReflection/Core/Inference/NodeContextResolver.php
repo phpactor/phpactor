@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Psr\Log\LoggerInterface;
@@ -49,13 +48,7 @@ class NodeContextResolver
         try {
             return $this->doResolveNodeWithCache($frame, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
-            return NodeContext::for(
-                Symbol::fromTypeNameAndPosition(
-                    Symbol::UNKNOWN,
-                    'unknown',
-                    Position::fromStartAndEnd($node->getStartPosition(), $node->getEndPosition())
-                )
-            )
+            return NodeContextFactory::forNode($node)
                 ->withIssue($couldNotResolveNode->getMessage());
         }
     }
