@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Deprecation;
+use Phpactor\WorseReflection\Core\TypeResolver;
 use function preg_replace;
 
 class PlainDocblock implements DocBlock
@@ -114,5 +115,10 @@ class PlainDocblock implements DocBlock
     public function mixins(): array
     {
         return [];
+    }
+
+    public function withTypeResolver(TypeResolver $classLikeTypeResolver): DocBlock
+    {
+        return $this;
     }
 }

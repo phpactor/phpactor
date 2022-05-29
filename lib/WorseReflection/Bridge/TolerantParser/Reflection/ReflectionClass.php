@@ -312,9 +312,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            new ClassLikeTypeResolver($this),
             $this->node()->getLeadingCommentAndWhitespaceText()
-        );
+        )->withTypeResolver(new ClassLikeTypeResolver($this));
     }
 
     public function ancestors(): ReflectionClassCollection

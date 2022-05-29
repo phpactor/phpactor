@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
-use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
@@ -332,11 +331,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create(new PassthroughTypeResolver(), $docblock);
+        return (new DocblockParserFactory($reflector))->create($docblock);
     }
 
     private function parseDocblockWithClass(Reflector $reflector, ReflectionClassLike $classLike, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create(new ClassLikeTypeResolver($classLike), $docblock);
+        return (new DocblockParserFactory($reflector))->create($docblock)->withTypeResolver(new ClassLikeTypeResolver($classLike));
     }
 }

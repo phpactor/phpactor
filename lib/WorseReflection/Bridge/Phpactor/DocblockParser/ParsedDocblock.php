@@ -32,6 +32,7 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
+use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionParameter;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
@@ -57,7 +58,7 @@ class ParsedDocblock implements DocBlock
             if ($methodTag->methodName() !== $methodName) {
                 continue;
             }
-            $this->typeConverter->convert($methodTag->type);
+            $this->convertType($methodTag->type);
         }
 
         return TypeFactory::undefined();
@@ -75,7 +76,7 @@ class ParsedDocblock implements DocBlock
             assert($varTag instanceof VarTag);
             $vars[] = new DocBlockVar(
                 $varTag->variable ? ltrim($varTag->name() ?? '', '$') : '',
-                $this->typeConverter->convert($varTag->type),
+                $this->convertType($varTag->type),
             );
         }
 
@@ -90,7 +91,7 @@ class ParsedDocblock implements DocBlock
             if (ltrim($paramTag->paramName(), '$') !== $paramName) {
                 continue;
             }
-            return $this->typeConverter->convert($paramTag->type);
+            return $this->convertType($paramTag->type);
         }
 
         return TypeFactory::undefined();
@@ -104,7 +105,7 @@ class ParsedDocblock implements DocBlock
             if (ltrim($propertyTag->propertyName(), '$') !== $propertyName) {
                 continue;
             }
-            return $this->typeConverter->convert($propertyTag->type);
+            return $this->convertType($propertyTag->type);
         }
 
         return TypeFactory::undefined();
@@ -121,7 +122,7 @@ class ParsedDocblock implements DocBlock
     {
         foreach ($this->node->descendantElements(ReturnTag::class) as $tag) {
             assert($tag instanceof ReturnTag);
-            return $this->typeConverter->convert($tag->type());
+            return $this->convertType($tag->type());
         }
 
         return TypeFactory::undefined();
@@ -142,7 +143,7 @@ class ParsedDocblock implements DocBlock
         $properties = [];
         foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
             assert($propertyTag instanceof PropertyTag);
-            $type = $this->typeConverter->convert($propertyTag->type);
+            $type = $this->convertType($propertyTag->type);
             $property = new VirtualReflectionProperty(
                 $declaringClass->position(),
                 $declaringClass,
@@ -177,8 +178,8 @@ class ParsedDocblock implements DocBlock
                 $this,
                 $declaringClass->scope(),
                 Visibility::public(),
-                $this->typeConverter->convert($methodTag->type),
-                $this->typeConverter->convert($methodTag->type),
+                $this->convertType($methodTag->type),
+                $this->convertType($methodTag->type),
                 $params,
                 NodeText::fromString(''),
                 false,
@@ -207,7 +208,7 @@ class ParsedDocblock implements DocBlock
         $map = [];
         foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
             assert($templateTag instanceof TemplateTag);
-            $map[$templateTag->placeholder()] = $this->typeConverter->convert($templateTag->type);
+            $map[$templateTag->placeholder()] = $this->convertType($templateTag->type);
         }
         return new TemplateMap($map);
     }
@@ -217,7 +218,7 @@ class ParsedDocblock implements DocBlock
         $extends = [];
         foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
             assert($extendsTag instanceof ExtendsTag);
-            $extends[] = $this->typeConverter->convert($extendsTag->type);
+            $extends[] = $this->convertType($extendsTag->type);
         }
         return $extends;
     }
@@ -228,7 +229,7 @@ class ParsedDocblock implements DocBlock
         foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
             assert($implementsTag instanceof ImplementsTag);
             $implements = array_merge($implements, array_map(function (TypeNode $type) {
-                return $this->typeConverter->convert($type);
+                return $this->convertType($type);
             }, $implementsTag->types()));
         }
         return $implements;
@@ -239,9 +240,14 @@ class ParsedDocblock implements DocBlock
         $mixins = [];
         foreach ($this->node->descendantElements(MixinTag::class) as $mixinTag) {
             assert($mixinTag instanceof MixinTag);
-            $mixins[] = $this->typeConverter->convert($mixinTag->class);
+            $mixins[] = $this->convertType($mixinTag->class);
         }
         return $mixins;
+    }
+
+    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
+    {
+        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
     }
 
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void
@@ -251,7 +257,7 @@ class ParsedDocblock implements DocBlock
         }
         foreach ($parameterList->parameters() as $parameterTag) {
             assert($parameterTag instanceof ParameterTag);
-            $type = $this->typeConverter->convert($parameterTag->type);
+            $type = $this->convertType($parameterTag->type);
             $collection->add(new VirtualReflectionParameter(
                 ltrim($parameterTag->parameterName() ?? '', '$'),
                 $method,
@@ -263,5 +269,10 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
+    }
+
+    private function convertType(?TypeNode $type): Type
+    {
+        return $this->typeConverter->convert($type);
     }
 }

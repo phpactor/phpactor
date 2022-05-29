@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Parser;
-use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Reflector;
 
 class DocblockParserFactory implements DocBlockFactory
@@ -40,7 +39,7 @@ class DocblockParserFactory implements DocBlockFactory
         $this->reflector = $reflector;
     }
 
-    public function create(TypeResolver $resolver, string $docblock): DocBlock
+    public function create(string $docblock): DocBlock
     {
         if (empty(trim($docblock))) {
             return new PlainDocblock();
@@ -59,7 +58,7 @@ class DocblockParserFactory implements DocBlockFactory
         assert($node instanceof ParserDocblock);
         return new ParsedDocblock(
             $node,
-            new TypeConverter($this->reflector, $resolver)
+            new TypeConverter($this->reflector)
         );
     }
 }

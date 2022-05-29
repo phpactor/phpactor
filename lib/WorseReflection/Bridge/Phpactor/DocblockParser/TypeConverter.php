@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -64,10 +65,15 @@ class TypeConverter
 
     private TypeResolver $resolver;
 
-    public function __construct(Reflector $reflector, TypeResolver $resolver)
+    public function __construct(Reflector $reflector, ?TypeResolver $resolver = null)
     {
         $this->reflector = $reflector;
-        $this->resolver = $resolver;
+        $this->resolver = $resolver ?: new PassthroughTypeResolver();
+    }
+
+    public function withTypeResolver(TypeResolver $typeResolver):self
+    {
+        return new self($this->reflector, $typeResolver);
     }
 
     public function convert(?TypeNode $type): Type
