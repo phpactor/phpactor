@@ -9,9 +9,27 @@ final class DiagnosticSeverity
     public const INFORMATION = 3;
     public const HINT = 4;
 
-    public static function severityAsString(int $severity): string
+    /**
+     * @var self::*
+     */
+    private $level;
+
+    /**
+     * @param self::* $level
+     */
+    private function __construct(int $level)
     {
-        switch ($severity) {
+        $this->level = $level;
+    }
+
+    public static function ERROR(): self
+    {
+        return new self(self::ERROR);
+    }
+
+    public function toString(): string
+    {
+        switch ($this->level) {
             case self::HINT:
                 return 'HINT';
             case self::ERROR:

@@ -4,12 +4,13 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
+use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class MissingMethodDiagnostic implements Diagnostic
 {
     private string $message;
 
-    private int $severity;
+    private DiagnosticSeverity $severity;
 
     private ByteOffsetRange $range;
 
@@ -20,7 +21,7 @@ class MissingMethodDiagnostic implements Diagnostic
     public function __construct(
         ByteOffsetRange $range,
         string $message,
-        int $severity,
+        DiagnosticSeverity $severity,
         string $classType,
         string $methodName,
     ) {
@@ -36,7 +37,7 @@ class MissingMethodDiagnostic implements Diagnostic
         return $this->range;
     }
 
-    public function severity(): int
+    public function severity(): DiagnosticSeverity
     {
         return $this->severity;
     }

@@ -8,18 +8,17 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @template T of Diagnostic
- * @implements IteratorAggregate<T>
+ * @implements IteratorAggregate<Diagnostic>
  */
 final class Diagnostics implements IteratorAggregate, Countable
 {
     /**
-     * @var T[]
+     * @var Diagnostic[]
      */
     private array $diagnostics;
 
     /**
-     * @param T[] $diagnostics
+     * @param Diagnostic[] $diagnostics
      */
     public function __construct(array $diagnostics)
     {
@@ -37,13 +36,10 @@ final class Diagnostics implements IteratorAggregate, Countable
     }
 
     /**
-     * @template C of Diagnostic
-     * @param class-string<C> $classFqn
-     * @return self<C>
+     * @param class-string $classFqn
      */
     public function byClass(string $classFqn): self
     {
-         // @phpstan-ignore-next-line
         return new self(array_filter($this->diagnostics, fn (Diagnostic $d) => $d instanceof $classFqn));
     }
 }
