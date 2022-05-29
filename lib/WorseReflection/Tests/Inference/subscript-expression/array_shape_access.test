@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @var array<string,string>
+ */
+$arr = ['hello' => 'world'];
+
+/** @return array{name: string, data: list<string>} */
+function data()
+{
+    // ...
+}
+
+
+$data = data();
+
+$list = $data['data'];
+wrAssertType('array<int,string>', $list);

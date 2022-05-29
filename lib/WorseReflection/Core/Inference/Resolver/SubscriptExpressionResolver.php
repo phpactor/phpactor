@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\Type\ArrayAccessType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -42,7 +42,7 @@ class SubscriptExpressionResolver implements Resolver
         $arrayLiteralType = $info->type();
         $info = $info->withType($type->valueType);
 
-        if (!$arrayLiteralType instanceof ArrayLiteral) {
+        if (!$arrayLiteralType instanceof ArrayAccessType) {
             $info = $info->withIssue(sprintf(
                 'Array value for symbol "%s" is not an array, is a "%s"',
                 (string) $info->symbol(),

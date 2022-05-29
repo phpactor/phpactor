@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
-class ArrayShapeType extends ArrayType implements Generalizable
+class ArrayShapeType extends ArrayType implements Generalizable, ArrayAccessType
 {
     /**
      * @var array<array-key,Type>
