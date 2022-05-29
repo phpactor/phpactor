@@ -43,7 +43,7 @@ class WorseMissingMethodFinderTest extends WorseTestCase
                 EOT
             , 0
         ];
-        yield 'missing method' => [
+        yield '1 missing method' => [
             <<<'EOT'
                 <?php
                 class foobar { public function bar() { $this->foo(); } }
