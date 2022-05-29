@@ -45,8 +45,6 @@ class ParsedDocblock implements DocBlock
 
     private TypeConverter $typeConverter;
 
-    private TypeResolver $typeResolver;
-
     public function __construct(ParserDocblock $node, TypeConverter $typeConverter)
     {
         $this->node = $node;
@@ -270,12 +268,11 @@ class ParsedDocblock implements DocBlock
 
     public function withTypeResolver(TypeResolver $typeResolver): DocBlock
     {
-        $this->typeResolver = $typeResolver;
-        return $this;
+        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
     }
 
     private function convertType(?TypeNode $type): Type
     {
-        return $this->typeConverter->withTypeResolver($this->typeResolver)->convert($type);
+        return $this->typeConverter->convert($type);
     }
 }
