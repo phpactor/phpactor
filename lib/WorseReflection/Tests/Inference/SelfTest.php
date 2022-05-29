@@ -13,7 +13,7 @@ class SelfTest extends IntegrationTestCase
     public function testSelf(string $path): void
     {
         $source = (string)file_get_contents($path);
-        $reflector = $this->createReflector($source);
+        $reflector = $this->createBuilder($source)->enableCache()->build();
         $reflector->reflectOffset($source, mb_strlen($source));
 
         // the wrAssertType function in the source code will cause
