@@ -20,14 +20,14 @@ class CachedParserFactory implements DocBlockFactory
         $this->innerFactory = $innerFactory;
     }
 
-    public function create(TypeResolver $resolver, string $docblock): DocBlock
+    public function create(string $docblock): DocBlock
     {
         if (!trim($docblock)) {
             return new PlainDocblock('');
         }
 
-        return $this->cache->getOrSet('docblock_' . $docblock, function () use ($resolver, $docblock) {
-            return $this->innerFactory->create($resolver, $docblock);
+        return $this->cache->getOrSet('docblock_' . $docblock, function () use ($docblock) {
+            return $this->innerFactory->create($docblock);
         });
     }
 }

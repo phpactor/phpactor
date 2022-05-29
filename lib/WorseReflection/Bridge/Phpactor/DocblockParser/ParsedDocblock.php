@@ -32,6 +32,7 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
+use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionParameter;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
@@ -43,6 +44,8 @@ class ParsedDocblock implements DocBlock
     private ParserDocblock $node;
 
     private TypeConverter $typeConverter;
+
+    private TypeResolver $typeResolver;
 
     public function __construct(ParserDocblock $node, TypeConverter $typeConverter)
     {
@@ -263,5 +266,11 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
+    }
+
+    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
+    {
+        $this->typeResolver = $typeResolver;
+        return $this;
     }
 }

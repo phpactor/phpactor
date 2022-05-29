@@ -9,10 +9,12 @@ use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
+use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -64,10 +66,10 @@ class TypeConverter
 
     private TypeResolver $resolver;
 
-    public function __construct(Reflector $reflector, TypeResolver $resolver)
+    public function __construct(Reflector $reflector, ?TypeResolver $resolver = null)
     {
         $this->reflector = $reflector;
-        $this->resolver = $resolver;
+        $this->resolver = $resolver ?: new PassthroughTypeResolver();
     }
 
     public function convert(?TypeNode $type): Type

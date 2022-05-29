@@ -54,9 +54,8 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
     public function docblock(): DocBlock
     {
         return $this->serviceLocator()->docblockFactory()->create(
-            new PhpactorMemberTypeResolver($this),
             $this->node()->getLeadingCommentAndWhitespaceText()
-        );
+        )->withTypeResolver(new PhpactorMemberTypeResolver($this));
     }
 
     public function visibility(): Visibility

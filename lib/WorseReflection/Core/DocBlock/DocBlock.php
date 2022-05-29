@@ -8,6 +8,8 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeResolver;
+use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 interface DocBlock
 {
@@ -51,4 +53,6 @@ interface DocBlock
      * @return Type[]
      */
     public function mixins(): array;
+
+    public function withTypeResolver(TypeResolver $classLikeTypeResolver): self;
 }
