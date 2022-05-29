@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
