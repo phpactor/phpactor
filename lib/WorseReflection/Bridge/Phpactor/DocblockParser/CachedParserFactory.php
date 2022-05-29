@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
-use Phpactor\WorseReflection\Core\TypeResolver;
 
 class CachedParserFactory implements DocBlockFactory
 {

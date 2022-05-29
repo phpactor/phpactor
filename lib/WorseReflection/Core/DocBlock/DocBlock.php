@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeResolver;
-use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 interface DocBlock
 {

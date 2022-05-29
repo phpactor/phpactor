@@ -245,6 +245,11 @@ class ParsedDocblock implements DocBlock
         return $mixins;
     }
 
+    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
+    {
+        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
+    }
+
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void
     {
         if (null === $parameterList) {
@@ -264,11 +269,6 @@ class ParsedDocblock implements DocBlock
                 $method->position()
             ));
         }
-    }
-
-    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
-    {
-        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
     }
 
     private function convertType(?TypeNode $type): Type

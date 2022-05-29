@@ -332,11 +332,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create(new PassthroughTypeResolver(), $docblock);
+        return (new DocblockParserFactory($reflector))->create($docblock);
     }
 
     private function parseDocblockWithClass(Reflector $reflector, ReflectionClassLike $classLike, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create(new ClassLikeTypeResolver($classLike), $docblock);
+        return (new DocblockParserFactory($reflector))->create($docblock)->withTypeResolver(new ClassLikeTypeResolver($classLike));
     }
 }

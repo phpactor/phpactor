@@ -9,7 +9,6 @@ use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
-use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
@@ -72,7 +71,7 @@ class TypeConverter
         $this->resolver = $resolver ?: new PassthroughTypeResolver();
     }
 
-    public function withTypeResolver(TypeResolver $typeResolver):self 
+    public function withTypeResolver(TypeResolver $typeResolver):self
     {
         return new self($this->reflector, $typeResolver);
     }

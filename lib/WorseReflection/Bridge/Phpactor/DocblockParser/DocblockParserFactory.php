@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Parser;
-use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Reflector;
 
 class DocblockParserFactory implements DocBlockFactory
