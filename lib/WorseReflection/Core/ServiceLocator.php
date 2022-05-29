@@ -101,6 +101,7 @@ class ServiceLocator
         $this->symbolContextResolver = new NodeContextResolver(
             $this->reflector,
             $this->logger,
+            $cache,
             (new DefaultResolverFactory(
                 $this->reflector,
                 $nameResolver
@@ -110,6 +111,7 @@ class ServiceLocator
 
         $this->frameBuilder = FrameResolver::create(
             $this->symbolContextResolver,
+            $cache,
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),

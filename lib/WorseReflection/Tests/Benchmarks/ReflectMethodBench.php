@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Tests\Benchmarks\Examples\MethodClass;
 
 /**
  * @Iterations(10)
- * @Revs(1)
+ * @Revs(30)
  * @OutputTimeUnit("milliseconds", precision=2)
  */
 class ReflectMethodBench extends BaseBenchCase
