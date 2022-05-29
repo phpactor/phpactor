@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
+use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\WorseReflection\Core\TypeResolver;
 
 class CachedParserFactory implements DocBlockFactory
@@ -21,6 +22,9 @@ class CachedParserFactory implements DocBlockFactory
 
     public function create(TypeResolver $resolver, string $docblock): DocBlock
     {
+        if (!trim($docblock)) {
+            return new PlainDocblock('');
+        }
         return $this->cache->getOrSet($docblock, function () use ($resolver, $docblock) {
             return $this->innerFactory->create($resolver, $docblock);
         });
