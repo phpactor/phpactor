@@ -25,7 +25,8 @@ class CachedParserFactory implements DocBlockFactory
         if (!trim($docblock)) {
             return new PlainDocblock('');
         }
-        return $this->cache->getOrSet($docblock, function () use ($resolver, $docblock) {
+
+        return $this->cache->getOrSet('docblock_' . $docblock, function () use ($resolver, $docblock) {
             return $this->innerFactory->create($resolver, $docblock);
         });
     }
