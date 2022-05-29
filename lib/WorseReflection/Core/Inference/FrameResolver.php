@@ -33,7 +33,7 @@ final class FrameResolver
     public function __construct(
         NodeContextResolver $nodeContextResolver,
         array $globalWalkers,
-        array $nodeWalkers,
+        array $nodeWalkers
     ) {
         $this->nodeContextResolver = $nodeContextResolver;
         $this->globalWalkers = $globalWalkers;

@@ -23,7 +23,7 @@ class MissingMethodDiagnostic implements Diagnostic
         string $message,
         DiagnosticSeverity $severity,
         string $classType,
-        string $methodName,
+        string $methodName
     ) {
         $this->message = $message;
         $this->severity = $severity;
