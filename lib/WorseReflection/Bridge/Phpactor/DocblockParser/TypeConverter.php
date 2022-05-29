@@ -72,6 +72,11 @@ class TypeConverter
         $this->resolver = $resolver ?: new PassthroughTypeResolver();
     }
 
+    public function withTypeResolver(TypeResolver $typeResolver):self 
+    {
+        return new self($this->reflector, $typeResolver);
+    }
+
     public function convert(?TypeNode $type): Type
     {
         if ($type instanceof ScalarNode) {
