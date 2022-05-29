@@ -15,4 +15,4 @@ function data()
 $data = data();
 
 $list = $data['data'];
-wrAssertType('list<string>', $list);
+wrAssertType('array<int,string>', $list);
