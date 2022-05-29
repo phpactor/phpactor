@@ -10,7 +10,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<Diagnostic>
  */
-final class Diagnostics implements IteratorAggregate, Countable
+class Diagnostics implements IteratorAggregate, Countable
 {
     /**
      * @var Diagnostic[]
@@ -33,13 +33,5 @@ final class Diagnostics implements IteratorAggregate, Countable
     public function count(): int
     {
         return count($this->diagnostics);
-    }
-
-    /**
-     * @param class-string $classFqn
-     */
-    public function byClass(string $classFqn): self
-    {
-        return new self(array_filter($this->diagnostics, fn (Diagnostic $d) => $d instanceof $classFqn));
     }
 }

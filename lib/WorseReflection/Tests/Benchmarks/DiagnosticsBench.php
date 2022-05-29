@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodsProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -17,7 +17,7 @@ class DiagnosticsBench
     public function init(): void
     {
         $this->reflector = ReflectorBuilder::create()
-            ->addDiagnosticProvider(new MissingMethodsProvider())
+            ->addDiagnosticProvider(new MissingMethods())
             ->enableContextualSourceLocation()
             ->enableCache()
             ->build();

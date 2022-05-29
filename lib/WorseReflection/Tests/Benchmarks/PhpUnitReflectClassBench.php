@@ -7,7 +7,8 @@ use Phpactor\WorseReflection\Core\ClassName;
 
 /**
  * @Iterations(5)
- * @Revs(1)
+ * @Revs(10)
+ * @Warmup(1)
  */
 class PhpUnitReflectClassBench extends BaseBenchCase
 {

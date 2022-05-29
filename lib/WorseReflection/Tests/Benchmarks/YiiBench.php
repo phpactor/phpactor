@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 /**
  * @Iterations(5)
  * @Revs(1)
+ * @Warmup(1)
  */
 class YiiBench extends BaseBenchCase
 {
