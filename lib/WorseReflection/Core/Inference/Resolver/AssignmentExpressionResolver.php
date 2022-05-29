@@ -25,8 +25,8 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\ArrayAccessType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
-use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -260,11 +260,7 @@ class AssignmentExpressionResolver implements Resolver
 
     private function offsetType(Type $type, int $index): Type
     {
-        if ($type instanceof ArrayShapeType) {
-            return $type->typeAtOffset($index);
-        }
-
-        if ($type instanceof ArrayLiteral) {
+        if ($type instanceof ArrayAccessType) {
             return $type->typeAtOffset($index);
         }
 

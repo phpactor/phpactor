@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
 
-class ArrayLiteral extends ArrayType implements Literal, Generalizable
+class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAccessType
 {
     /**
      * @var array<array-key,Type>
