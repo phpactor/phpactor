@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [wr] Inconsistent type resolution - removed node level cache #1673
   - [in] Fix exception when indexed file has no path #1643
   - [wr] Do not complete constants on class instance #1614
   - [wr] Include virtual properties in class members #1623

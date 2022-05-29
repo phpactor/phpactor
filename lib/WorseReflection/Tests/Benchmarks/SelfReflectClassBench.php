@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\ClassName;
 /**
  * @Iterations(5)
  * @Revs(10)
- * @Warmup(1)
  * @OutputTimeUnit("milliseconds", precision=2)
  * @Assert("mode(variant.time.avg) <= mode(baseline.time.avg) +/- 10%")
  * @Assert("mode(variant.mem.peak) <= mode(baseline.mem.peak) +/- 10%")
