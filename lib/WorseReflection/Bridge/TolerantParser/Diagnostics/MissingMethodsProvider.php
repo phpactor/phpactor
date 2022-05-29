@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
-class MissingMethods implements DiagnosticProvider
+class MissingMethodsProvider implements DiagnosticProvider
 {
     public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {

@@ -7,7 +7,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethods;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodsProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -147,7 +147,7 @@ class WorseReflectionExtension implements Extension
     private function registerDiagnosticProviders(ContainerBuilder $container): void
     {
         $container->register('worse_reflection.diagnostic.missing_method', function (Container $container) {
-            return new MissingMethods();
+            return new MissingMethodsProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }
