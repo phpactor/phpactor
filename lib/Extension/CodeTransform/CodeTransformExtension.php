@@ -291,8 +291,7 @@ class CodeTransformExtension implements Extension
         });
         $container->register(MissingMethodFinder::class, function (Container $container) {
             return new WorseMissingMethodFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
     }

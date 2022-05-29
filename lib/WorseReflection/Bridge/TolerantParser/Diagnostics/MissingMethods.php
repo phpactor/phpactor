@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -68,7 +67,7 @@ class MissingMethods implements DiagnosticProvider
                     $methodName,
                     $containerType->__toString()
                 ),
-                DiagnosticSeverity::ERROR,
+                DiagnosticSeverity::ERROR(),
                 $class->name()->__toString(),
                 $methodName
             );
