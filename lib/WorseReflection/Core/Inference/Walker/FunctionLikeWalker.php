@@ -38,7 +38,7 @@ class FunctionLikeWalker implements Walker
         ];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert(
             $node instanceof MethodDeclaration ||

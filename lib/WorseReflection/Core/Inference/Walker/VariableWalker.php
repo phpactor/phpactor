@@ -41,7 +41,7 @@ class VariableWalker implements Walker
         return [];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $scope = new ReflectionScope($resolver->reflector(), $node);
         $docblockType = $this->injectVariablesFromComment($scope, $frame, $node);

@@ -35,7 +35,7 @@ class DiagnosticsWalker implements Walker
         return [];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $resolver = $resolver->resolver();
         foreach ($this->providers as $provider) {
