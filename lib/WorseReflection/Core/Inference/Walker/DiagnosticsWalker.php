@@ -51,4 +51,9 @@ class DiagnosticsWalker implements Walker
     {
         return new Diagnostics($this->diagnostics);
     }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frme;
+    }
 }

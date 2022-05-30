@@ -41,4 +41,9 @@ class PassThroughWalker implements Walker
 
         return $frame;
     }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
 }

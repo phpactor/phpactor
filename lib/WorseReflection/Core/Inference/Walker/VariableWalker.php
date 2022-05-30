@@ -113,4 +113,9 @@ class VariableWalker implements Walker
 
         return TypeFactory::undefined();
     }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
 }

@@ -205,4 +205,9 @@ class FunctionLikeWalker implements Walker
             $frame->properties()->add(new Variable($property->name(), $property->position()->start(), $property->inferredType(), $classType));
         }
     }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
 }

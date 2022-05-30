@@ -20,4 +20,6 @@ interface Walker
     public function nodeFqns(): array;
 
     public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame;
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame;
 }

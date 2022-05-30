@@ -217,4 +217,9 @@ class TestAssertWalker implements Walker
             return;
         }
     }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
 }
