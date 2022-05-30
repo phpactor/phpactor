@@ -37,13 +37,6 @@ class DiagnosticsWalker implements Walker
 
     public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        $resolver = $resolver->resolver();
-        foreach ($this->providers as $provider) {
-            foreach ($provider->provide($resolver, $frame, $node) as $diagnostic) {
-                $this->diagnostics[] = $diagnostic;
-            }
-        }
-
         return $frame;
     }
 
@@ -54,6 +47,13 @@ class DiagnosticsWalker implements Walker
 
     public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
-        return $frme;
+        $resolver = $resolver->resolver();
+        foreach ($this->providers as $provider) {
+            foreach ($provider->provide($resolver, $frame, $node) as $diagnostic) {
+                $this->diagnostics[] = $diagnostic;
+            }
+        }
+
+        return $frame;
     }
 }

@@ -126,6 +126,11 @@ final class FrameResolver
             return $frame;
         }
 
+        foreach ($this->globalWalkers as $walker) {
+            $frame = $walker->exit($this, $frame, $node);
+        }
+
+
         return null;
     }
 
