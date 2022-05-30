@@ -12,9 +12,6 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockDiagnostic;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodDiagnostic;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformer implements Transformer

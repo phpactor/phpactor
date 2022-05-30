@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diago
 
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
 

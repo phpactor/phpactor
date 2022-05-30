@@ -81,6 +81,11 @@ class IncludeWalker implements Walker
         return $frame;
     }
 
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
     private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node): Frame
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
@@ -107,11 +112,6 @@ class IncludeWalker implements Walker
             return $frame;
         }
 
-        return $frame;
-    }
-
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
-    {
         return $frame;
     }
 }

@@ -71,6 +71,11 @@ class TestAssertWalker implements Walker
         return $frame;
     }
 
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
     private function assertType(FrameResolver $resolver, Frame $frame, Node $node): void
     {
         $list = $node->argumentExpressionList->getElements();
@@ -221,10 +226,5 @@ class TestAssertWalker implements Walker
         if (!isset($args[1])) {
             return;
         }
-    }
-
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
-    {
-        return $frame;
     }
 }

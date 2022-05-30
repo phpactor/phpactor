@@ -88,6 +88,11 @@ class VariableWalker implements Walker
         return $frame;
     }
 
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
     private function injectVariablesFromComment(PhpactorReflectionScope $scope, Frame $frame, Node $node): Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
@@ -112,10 +117,5 @@ class VariableWalker implements Walker
         }
 
         return TypeFactory::undefined();
-    }
-
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
-    {
-        return $frame;
     }
 }

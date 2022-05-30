@@ -4,7 +4,6 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Core\SourceCode;

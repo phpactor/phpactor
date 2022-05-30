@@ -56,6 +56,11 @@ class FunctionLikeWalker implements Walker
         return $frame;
     }
 
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
     /**
      * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
@@ -204,10 +209,5 @@ class FunctionLikeWalker implements Walker
             assert($property instanceof ReflectionProperty);
             $frame->properties()->add(new Variable($property->name(), $property->position()->start(), $property->inferredType(), $classType));
         }
-    }
-
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
-    {
-        return $frame;
     }
 }

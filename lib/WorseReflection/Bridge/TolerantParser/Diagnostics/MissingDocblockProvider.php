@@ -6,13 +6,11 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -69,7 +67,21 @@ class MissingDocblockProvider implements DiagnosticProvider
         }
 
         if ($actualReturnType->isClosure()) {
-            $methods[] = $method;
+            yield new MissingDocblockDiagnostic(
+                ByteOffsetRange::fromInts(
+                    $node->getStartPosition(),
+                    $node->getEndPosition()
+                ),
+                sprintf(
+                    'Method "%s" is missing docblock return type: %s',
+                    $methodName,
+                    $actualReturnType->__toString(),
+                ),
+                DiagnosticSeverity::WARNING(),
+                $class->name()->__toString(),
+                $methodName,
+                $actualReturnType->__toString(),
+            );
             return;
         }
 

@@ -47,6 +47,11 @@ class TestFrameWalker implements Walker
         return $frame;
     }
 
+    public function exit(FrameResolver $builder, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
     public function nodeFqns(): array
     {
         return [];
