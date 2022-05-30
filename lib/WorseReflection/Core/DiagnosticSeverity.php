@@ -27,6 +27,11 @@ final class DiagnosticSeverity
         return new self(self::ERROR);
     }
 
+    public static function WARNING(): self
+    {
+        return new self(self::WARNING);
+    }
+
     public function toString(): string
     {
         switch ($this->level) {

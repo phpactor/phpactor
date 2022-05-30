@@ -5,23 +5,19 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MissingDocblockProvider implements DiagnosticProvider
 {
-    private DocblockParserFactory $factory;
-
-    public function __construct(DocblockParserFactory $factory)
-    {
-        $this->factory = $factory;
-    }
-
     public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if (!$node instanceof MethodDeclaration) {
@@ -91,7 +87,19 @@ class MissingDocblockProvider implements DiagnosticProvider
             return;
         }
 
-        // otherwise, fix it
-        yield $method;
+        yield new MissingDocblockDiagnostic(
+            ByteOffsetRange::fromInts(
+                $node->getStartPosition(),
+                $node->getEndPosition()
+            ),
+            sprintf(
+                'Method "%s" does not exist on class "%s"',
+                $methodName,
+                $class->name()->__toString()
+            ),
+            DiagnosticSeverity::WARNING(),
+            $class->name()->__toString(),
+            $methodName
+        );
     }
 }
