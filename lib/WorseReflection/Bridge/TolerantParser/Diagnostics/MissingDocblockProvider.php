@@ -27,7 +27,7 @@ class MissingDocblockProvider implements DiagnosticProvider
         $declaration = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
         try {
-            $class = $resolver->reflector()->reflectClassLike($declaration->getNamespacedName());
+            $class = $resolver->reflector()->reflectClassLike($declaration->getNamespacedName()->__toString());
             $methodName = $node->name->getText($node->getFileContents());
             if (!is_string($methodName)) {
                 return;
@@ -39,7 +39,7 @@ class MissingDocblockProvider implements DiagnosticProvider
 
         $docblock = $method->docblock();
         $docblockType = $docblock->returnType();
-        $actualReturnType = $method->frame()->returnType()->generalize();
+        $actualReturnType = $frame->returnType()->generalize();
         $claimedReturnType = $method->inferredType();
         $phpReturnType = $method->type();
 
@@ -93,13 +93,14 @@ class MissingDocblockProvider implements DiagnosticProvider
                 $node->getEndPosition()
             ),
             sprintf(
-                'Method "%s" does not exist on class "%s"',
+                'Method "%s" is missing docblock return type: %s',
                 $methodName,
-                $class->name()->__toString()
+                $actualReturnType->__toString(),
             ),
             DiagnosticSeverity::WARNING(),
             $class->name()->__toString(),
-            $methodName
+            $methodName,
+            $actualReturnType->__toString(),
         );
     }
 }

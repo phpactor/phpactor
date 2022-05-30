@@ -11,6 +11,8 @@ use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodDiagnostic;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
@@ -35,11 +37,14 @@ class UpdateDocblockTransformer implements Transformer
 
     public function transform(SourceCode $code): TextEdits
     {
-        $methods = $this->methodsThatNeedFixing($code);
+        $missingMethods = $this->methodsThatNeedFixing($code);
         $builder = $this->builderFactory->fromSource($code);
 
         $class = null;
-        foreach ($methods as $method) {
+        foreach ($missingMethods as $method) {
+            $class = $this->reflector->reflectClass($method->classType());
+            $method = $class->methods()->get($method->methodName());
+
             $classBuilder = $builder->class($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
             $replacement = $method->frame()->returnType();
@@ -73,14 +78,14 @@ class UpdateDocblockTransformer implements Transformer
     {
         $diagnostics = [];
 
-        $methods = $this->methodsThatNeedFixing($code);
+        $missingDocblocks = $this->methodsThatNeedFixing($code);
 
-        foreach ($methods as $method) {
+        foreach ($missingDocblocks as $missingDocblock) {
             $diagnostics[] = new Diagnostic(
-                $method->nameRange(),
+                $missingDocblock->range(),
                 sprintf(
                     'Missing @return %s',
-                    $method->frame()->returnType()->toLocalType($method->scope())->generalize(),
+                    $missingDocblock->actualReturnType(),
                 ),
                 Diagnostic::WARNING
             );
@@ -91,66 +96,18 @@ class UpdateDocblockTransformer implements Transformer
     }
 
     /**
-     * @return array<int,ReflectionMethod>
+     * @return array<int,MissingDocblockDiagnostic>
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
-        $methods = [];
-        foreach ($this->reflector->reflectClassesIn($code->__toString()) as $class) {
-            foreach ($class->methods()->belongingTo($class->name()) as $method) {
-                $docblockType = $method->docblock()->returnType();
-                $actualReturnType = $method->frame()->returnType()->generalize();
-                $claimedReturnType = $method->inferredType();
-                $phpReturnType = $method->type();
+        $missingMethods = [];
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockDiagnostic::class);
 
-                // if there is already a docblock, ignore
-                if ($method->docblock()->isDefined()) {
-                    continue;
-                }
-
-                // do not try it for overriden methods
-                if ($method->original()->declaringClass()->name() != $class->name()) {
-                    continue;
-                }
-
-                if ($method->name() === '__construct') {
-                    continue;
-                }
-
-                // it's void
-                if (false === $actualReturnType->isDefined()) {
-                    continue;
-                }
-
-                if (
-                    $claimedReturnType->isDefined() && !$claimedReturnType->isClass() && !$claimedReturnType->isArray() && !$claimedReturnType->isClosure()
-                ) {
-                    continue;
-                }
-
-                if ($actualReturnType->isClosure()) {
-                    $methods[] = $method;
-                    continue;
-                }
-
-                if ($claimedReturnType->isClass() && !$actualReturnType instanceof GenericClassType) {
-                    continue;
-                }
-
-                if ($claimedReturnType->isArray() && $actualReturnType->isMixed()) {
-                    continue;
-                }
-
-                // the docblock matches the generalized return type
-                // it's OK
-                if ($claimedReturnType->equals($actualReturnType)) {
-                    continue;
-                }
-        
-                // otherwise, fix it
-                $methods[] = $method;
-            }
+        /** @var MissingDocblockDiagnostic $diagnostic */
+        foreach ($diagnostics as $diagnostic) {
+            $missingMethods[] = $diagnostic;
         }
-        return $methods;
+
+        return $missingMethods;
     }
 }

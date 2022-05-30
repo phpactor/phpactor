@@ -18,18 +18,22 @@ class MissingDocblockDiagnostic implements Diagnostic
 
     private string $methodName;
 
+    private string $actualReturnType;
+
     public function __construct(
         ByteOffsetRange $range,
         string $message,
         DiagnosticSeverity $severity,
         string $classType,
-        string $methodName
+        string $methodName,
+        string $actualReturnType,
     ) {
         $this->message = $message;
         $this->severity = $severity;
         $this->range = $range;
         $this->classType = $classType;
         $this->methodName = $methodName;
+        $this->actualReturnType = $actualReturnType;
     }
 
     public function range(): ByteOffsetRange
@@ -55,5 +59,10 @@ class MissingDocblockDiagnostic implements Diagnostic
     public function methodName(): string
     {
         return $this->methodName;
+    }
+
+    public function actualReturnType(): string
+    {
+        return $this->actualReturnType;
     }
 }
