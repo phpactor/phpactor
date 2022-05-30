@@ -1,0 +1,11 @@
+<?php
+
+class Foobar
+{
+    public function foo() {
+        return 'foobar';
+    }
+}
+
+wrAssertDiagnostics(1, ['MissingDocblock']);
+

@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -211,6 +212,10 @@ class TestAssertWalker implements Walker
                 $count,
                 $diagnostics->count()
             ));
+        }
+
+        foreach ($diagnostics as $diagnostic) {
+            $this->testCase->assertInstanceOf(Diagnostic::class, $diagnostic);
         }
 
         if (!isset($args[1])) {

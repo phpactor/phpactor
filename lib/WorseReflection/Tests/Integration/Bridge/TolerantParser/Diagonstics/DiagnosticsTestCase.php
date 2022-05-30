@@ -28,7 +28,11 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
     public function provideDiagnostic(): Generator
     {
         $shortName = substr(static::class, strrpos(__CLASS__, '\\') + 1, -4);
-        foreach ((array)glob(__DIR__ . '/' . $shortName . '/*.test') as $fname) {
+        $dir = __DIR__ . '/' . $shortName;
+        if (!file_exists($dir)) {
+            self::fail(sprintf('Diagnostic test dir "%s" does not exist', $dir));
+        }
+        foreach ((array)glob($dir . '/*.test') as $fname) {
             yield $shortName .' ' . basename((string)$fname) => [
                 $fname
             ];
