@@ -2,17 +2,18 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
-use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\WorseReflection\Core\Diagnostics;
 
 class MissingDocblockProviderTest extends DiagnosticsTestCase
 {
+    public function checkMissingDocblock(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+    }
     protected function provider(): DiagnosticProvider
     {
-        return new MissingDocblockProvider(
-            new DocblockParserFactory(ReflectorBuilder::create()->build())
-        );
+        return new MissingDocblockProvider();
     }
 }

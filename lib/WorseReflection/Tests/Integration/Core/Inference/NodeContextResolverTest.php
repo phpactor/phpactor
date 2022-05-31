@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
@@ -1158,6 +1159,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         $resolver = new NodeContextResolver(
             $reflector,
             $this->logger(),
+            new StaticCache(),
             (new DefaultResolverFactory($reflector, $nameResolver))->createResolvers(),
         );
 
