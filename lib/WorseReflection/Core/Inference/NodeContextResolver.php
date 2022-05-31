@@ -64,6 +64,11 @@ class NodeContextResolver
     }
 
     /**
+     * Cache node look ups. Note that resolvers do not know about their parents
+     * and will use the node resolver to fetch a parents context. This only
+     * work if there is a cache. The cache should only have a lifetime of the
+     * current operation.
+     *
      * @param Node|Token|MissingToken|array<MissingToken> $node
      */
     private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
