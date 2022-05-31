@@ -58,12 +58,15 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     public function diagnostics($sourceCode): Diagnostics
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
-        $rootNode = $this->parseSourceCode($sourceCode);
-
-        $walker = $this->serviceLocator->newDiagnosticsWalker();
-        $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
-
-        return $walker->diagnostics();
+        return $this->serviceLocator->cache()->getOrSet(
+            'diagnoistics__' . $sourceCode->__toString(),
+            function ()use ($sourceCode): Diagnostics  {
+                $rootNode = $this->parseSourceCode($sourceCode);
+                $walker = $this->serviceLocator->newDiagnosticsWalker();
+                $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
+                return $walker->diagnostics();
+            }
+        );
     }
 
     /**

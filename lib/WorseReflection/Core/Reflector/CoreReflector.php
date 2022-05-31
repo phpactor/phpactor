@@ -25,7 +25,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
-class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
+class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector, DiagnosticReflector
 {
     private SourceCodeReflector $sourceReflector;
     
