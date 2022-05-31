@@ -26,7 +26,7 @@ class MissingDocblockDiagnostic implements Diagnostic
         DiagnosticSeverity $severity,
         string $classType,
         string $methodName,
-        string $actualReturnType,
+        string $actualReturnType
     ) {
         $this->message = $message;
         $this->severity = $severity;
