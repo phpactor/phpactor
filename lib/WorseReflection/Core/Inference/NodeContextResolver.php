@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Reflector;
@@ -21,6 +22,8 @@ class NodeContextResolver
      * @var array<class-name,Resolver>
      */
     private array $resolverMap;
+
+    private Cache $cache;
     
     /**
      * @param array<class-name,Resolver> $resolverMap
@@ -28,11 +31,18 @@ class NodeContextResolver
     public function __construct(
         Reflector $reflector,
         LoggerInterface $logger,
+        Cache $cache,
         array $resolverMap = []
     ) {
         $this->logger = $logger;
         $this->reflector = $reflector;
         $this->resolverMap = $resolverMap;
+        $this->cache = $cache;
+    }
+
+    public function withCache(Cache $cache):self
+    {
+        return new self($this->reflector, $this->logger, $cache, $this->resolverMap);
     }
 
     /**
@@ -63,17 +73,21 @@ class NodeContextResolver
             return NodeContext::none();
         }
 
-        if (false === $node instanceof Node) {
-            throw new CouldNotResolveNode(sprintf(
-                'Non-node class passed to resolveNode, got "%s"',
-                get_class($node)
-            ));
-        }
+        $key = 'sc:'.spl_object_id($node);
 
-        $context = $this->doResolveNode($frame, $node);
-        $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+        return $this->cache->getOrSet($key, function () use ($frame, $node) {
+            if (false === $node instanceof Node) {
+                throw new CouldNotResolveNode(sprintf(
+                    'Non-node class passed to resolveNode, got "%s"',
+                    get_class($node)
+                ));
+            }
 
-        return $context;
+            $context = $this->doResolveNode($frame, $node);
+            $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+
+            return $context;
+        });
     }
 
     private function doResolveNode(Frame $frame, Node $node): NodeContext

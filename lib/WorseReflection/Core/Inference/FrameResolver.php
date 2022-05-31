@@ -92,8 +92,6 @@ final class FrameResolver
 
     public function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
     {
-        $key = 'frame:'.spl_object_hash($targetNode);
-
         if ($frame === null) {
             $frame = new Frame($node->getNodeKindName());
         }
@@ -129,7 +127,6 @@ final class FrameResolver
         foreach ($this->globalWalkers as $walker) {
             $frame = $walker->exit($this, $frame, $node);
         }
-
 
         return null;
     }

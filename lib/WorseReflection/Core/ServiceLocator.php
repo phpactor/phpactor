@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
@@ -34,10 +35,6 @@ class ServiceLocator
     
     private Reflector $reflector;
     
-    private FrameResolver $frameBuilder;
-    
-    private NodeContextResolver $symbolContextResolver;
-    
     private DocBlockFactory $docblockFactory;
 
     /**
@@ -51,6 +48,13 @@ class ServiceLocator
      * @var DiagnosticProvider[]
      */
     private array $diagnosticProviders;
+
+    /**
+     * @var Walker[]
+     */
+    private array $frameWalkers;
+
+    private NodeToTypeConverter $nameResolver;
 
     /**
      * @param Walker[] $frameWalkers
@@ -97,29 +101,12 @@ class ServiceLocator
         }
         $this->logger = $logger;
 
-        $nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
-        $this->symbolContextResolver = new NodeContextResolver(
-            $this->reflector,
-            $this->logger,
-            (new DefaultResolverFactory(
-                $this->reflector,
-                $nameResolver
-            ))->createResolvers(),
-        );
+        $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
 
-
-        $this->frameBuilder = FrameResolver::create(
-            $this->symbolContextResolver,
-            array_merge([
-                new FunctionLikeWalker(),
-                new PassThroughWalker(),
-                new VariableWalker($this->docblockFactory),
-                new IncludeWalker($logger),
-            ], $frameWalkers),
-        );
         $this->methodProviders = $methodProviders;
         $this->diagnosticProviders = $diagnosticProviders;
         $this->cache = $cache;
+        $this->frameWalkers = $frameWalkers;
     }
 
     public function reflector(): Reflector
@@ -142,20 +129,30 @@ class ServiceLocator
         return $this->docblockFactory;
     }
 
-    /**
-     * TODO: This is TolerantParser specific.
-     */
     public function symbolContextResolver(): NodeContextResolver
     {
-        return $this->symbolContextResolver;
+        return new NodeContextResolver(
+            $this->reflector,
+            $this->logger,
+            new StaticCache(),
+            (new DefaultResolverFactory(
+                $this->reflector,
+                $this->nameResolver
+            ))->createResolvers(),
+        );
     }
 
-    /**
-     * TODO: This is TolerantParser specific.
-     */
     public function frameBuilder(): FrameResolver
     {
-        return $this->frameBuilder;
+        return FrameResolver::create(
+            $this->symbolContextResolver(),
+            array_merge([
+                new FunctionLikeWalker(),
+                new PassThroughWalker(),
+                new VariableWalker($this->docblockFactory),
+                new IncludeWalker($this->logger),
+            ], $this->frameWalkers),
+        );
     }
 
     /**

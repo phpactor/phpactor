@@ -16,6 +16,13 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $source = (string)file_get_contents($path);
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
+        $diagnostics = $reflector->diagnostics($source);
+        $method = sprintf('check%s', substr(basename($path), 0, (int)strrpos(basename($path), '.')));
+        if (!method_exists($this, $method)) {
+            $this->fail(sprintf('Diagnostic test method "%s" does not exist for file "%s"', $method, $path));
+        }
+        $this->$method($diagnostics);
+
 
         // the wrAssertType function in the source code will cause
         // an exception to be thrown if it fails
