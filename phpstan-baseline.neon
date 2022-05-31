@@ -781,31 +781,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Util/NodeHelper.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigExtension\\:\\:indent\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigExtension\\:\\:\\$generator is never read, only written\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigRenderer\\:\\:createTwig\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigRenderer.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigRenderer\\:\\:twigRender\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigRenderer.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\Twig\\\\TwigRenderer\\:\\:\\$twig has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/Twig/TwigRenderer.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|Phpactor\\\\WorseReflection\\\\Reflector\\:\\:reflectClassesIn\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
@@ -1816,11 +1791,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseMissingMethodFinder\\:\\:find\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseMissingMethodFinderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinderTest\\:\\:provideReturnsUnresolableClass\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinderTest.php
@@ -1879,11 +1849,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:testOverrideMethod\\(\\) has parameter \\$methodName with no type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\AddMissingPropertiesTest\\:\\:provideCompleteConstructor\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Transformer/AddMissingPropertiesTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\CompleteConstructorTest\\:\\:provideCompleteConstructor\\(\\) has no return type specified\\.$#"
@@ -5527,26 +5492,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @var above a method has no effect\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Cache/TtlCache.php
-
-		-
-			message: "#^Parameter \\#1 \\$now of method Phpactor\\\\WorseReflection\\\\Core\\\\Cache\\\\TtlCache\\:\\:purgeExpired\\(\\) expects string, float given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Cache/TtlCache.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Cache\\\\TtlCache\\:\\:\\$expires \\(array\\<string, int\\>\\) does not accept array\\<string, float\\|int\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Cache/TtlCache.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Cache\\\\TtlCache\\:\\:\\$ticker has no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Cache/TtlCache.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Cache\\\\TtlCache\\:\\:\\$ticker is never read, only written\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Cache/TtlCache.php
 
