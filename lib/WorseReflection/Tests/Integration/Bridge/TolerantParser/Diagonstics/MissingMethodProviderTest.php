@@ -19,6 +19,12 @@ class MissingMethodProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
         self::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
     }
+
+    public function checkInlinedType(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new MissingMethodProvider();
