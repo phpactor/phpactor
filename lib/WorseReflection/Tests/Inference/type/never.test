@@ -1,0 +1,16 @@
+<?php
+
+$foobar = 'string';
+
+if (rand(0,1)) {
+    $foobar = 'baz';
+    never();
+}
+
+wrAssertType('never', never());
+wrAssertType('"string"', $foobar);
+
+function never(): never
+{
+    die('nope');
+}
