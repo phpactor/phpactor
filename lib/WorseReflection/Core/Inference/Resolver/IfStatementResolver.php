@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node\ElseIfClauseNode;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ExitIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\ThrowExpression;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
@@ -17,6 +18,7 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
+use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementResolver implements Resolver
@@ -68,7 +70,7 @@ class IfStatementResolver implements Resolver
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
         $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
-        $terminates = $this->branchTerminates($node);
+        $terminates = $this->branchTerminates($resolver, $frame, $node);
 
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
@@ -77,25 +79,26 @@ class IfStatementResolver implements Resolver
         }
 
         if (!$terminates) {
-            $frame->restoreToStateBefore($node->getStartPosition(), $end);
+            $frame->restoreToStateBefore($node->getStartPosition(), $end, true);
         }
 
         $context->typeAssertions()->negate();
 
         if ($terminates) {
+            $frame->restoreToStateBefore($node->getStartPosition(), $end, false);
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
         }
 
         if ($node instanceof IfStatementNode && $node->elseClause) {
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $node->elseClause->getStartPosition());
-            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition());
+            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition(), true);
         }
     }
 
     /**
      * @param IfStatementNode|ElseIfClauseNode $node
      */
-    private function branchTerminates($node): bool
+    private function branchTerminates(NodeContextResolver $resolver, Frame $frame, $node): bool
     {
         /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
@@ -113,6 +116,14 @@ class IfStatementResolver implements Resolver
                 if ($statement instanceof ExpressionStatement) {
                     if ($statement->expression instanceof ThrowExpression) {
                         return true;
+                    }
+
+                    if ($callExpression = $statement->getFirstDescendantNode(CallExpression::class)) {
+                        $context = $resolver->resolveNode($frame, $callExpression);
+
+                        if ($context->type() instanceof NeverType) {
+                            return true;
+                        }
                     }
                 }
 

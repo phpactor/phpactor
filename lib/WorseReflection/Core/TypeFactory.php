@@ -24,6 +24,7 @@ use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -327,6 +328,11 @@ class TypeFactory
         return new ArrayType(self::int(), $iterabletype ?: self::mixed());
     }
 
+    public static function never(): NeverType
+    {
+        return new NeverType();
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -396,6 +402,14 @@ class TypeFactory
 
         if ($type === '$this') {
             return new StaticType();
+        }
+
+        if ($type === 'never') {
+            return new NeverType();
+        }
+
+        if ($type === 'false') {
+            return new BooleanLiteralType(false);
         }
 
         return self::class(ClassName::fromString($type), $reflector);

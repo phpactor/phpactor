@@ -48,7 +48,7 @@ class FrameTest extends TestCase
      */
     public function testResetToStateBefore(Frame $frame, int $before, int $after, Frame $expected): void
     {
-        $frame->restoreToStateBefore($before, $after);
+        $frame->restoreToStateBefore($before, $after, true);
         self::assertEquals($expected, $frame);
     }
 
@@ -74,7 +74,7 @@ class FrameTest extends TestCase
                     new Variable('this', 10, TypeFactory::int()),
                     new Variable('foo', 20, TypeFactory::string()),
                 ]));
-                $frame->restoreToStateBefore(20, 30);
+                $frame->restoreToStateBefore(20, 30, true);
 
                 return $frame;
             })(),
