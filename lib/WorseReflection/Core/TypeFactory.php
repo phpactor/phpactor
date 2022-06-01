@@ -328,6 +328,11 @@ class TypeFactory
         return new ArrayType(self::int(), $iterabletype ?: self::mixed());
     }
 
+    public static function never(): NeverType
+    {
+        return new NeverType();
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -431,10 +436,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function never(): NeverType
-    {
-        return new NeverType();
     }
 }
