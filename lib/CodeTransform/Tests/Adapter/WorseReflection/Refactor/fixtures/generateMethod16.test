@@ -1,0 +1,37 @@
+// File: source
+<?php
+
+/**
+ * @template t
+ */
+class foo
+{
+}
+
+/**
+ * @param foo<bar> $foo
+ */
+function convert($foo): void
+{
+    return $foo-><>generate<>();
+}
+// File: expected
+<?php
+
+/**
+ * @template t
+ */
+class foo
+{
+    public function generate()
+    {
+    }
+}
+
+/**
+ * @param foo<bar> $foo
+ */
+function convert($foo): void
+{
+    return $foo->generate();
+}
