@@ -1,0 +1,30 @@
+<?php
+
+class Foobar 
+{
+    /**
+     * @return Generator<DateTime>
+     */
+    public function __invoke(): Generator
+    {
+        yield new DateTime();
+    }
+}
+
+class Baz
+{
+    private Foobar $foo;
+
+    public function __construct(Foobar $foo) {
+        $this->foo = $foo;
+    }
+
+    public function baz(): void {
+        $f = $this->foo;
+
+        foreach (($this->foo)() as $bar) {
+            wrAssertType('DateTime', $bar);
+        }
+    }
+}
+
