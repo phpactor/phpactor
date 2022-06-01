@@ -32,7 +32,10 @@ class CallExpressionResolver implements Resolver
     {
         $type = $resolver->resolveNode($frame, $variable)->type();
 
-        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+        if (
+            $type instanceof ReflectedClassType && 
+            $type->isInvokable()
+        ) {
             return NodeContextFactory::forNode($variable)
                 ->withType($type->invokeType());
         }
