@@ -201,6 +201,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return list<string> */',
             TypeFactory::list(TypeFactory::string()),
         ];
+
+        yield 'never' => [
+            '/** @return never */',
+            TypeFactory::never(),
+        ];
     }
 
     public function testClassConstant(): void

@@ -45,6 +45,7 @@ use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
@@ -244,6 +245,10 @@ class TypeConverter
     private function convertClass(ClassNode $typeNode): Type
     {
         $name = $typeNode->name()->toString();
+
+        if ($name === 'never') {
+            return new NeverType();
+        }
 
         if ($name === 'static') {
             return $this->resolver->resolve(new StaticType());

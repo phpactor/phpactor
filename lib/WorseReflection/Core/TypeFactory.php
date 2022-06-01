@@ -24,6 +24,7 @@ use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\Core\Type\NotType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
@@ -422,5 +423,10 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
+    }
+
+    public static function never(): NeverType
+    {
+        return new NeverType();
     }
 }
