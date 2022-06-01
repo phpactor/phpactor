@@ -30,6 +30,8 @@ class Frame
 
     private ?Type $returnType = null;
 
+    private $version = 1;
+
     public function __construct(
         string $name,
         LocalAssignments $locals = null,
@@ -112,17 +114,10 @@ class Frame
         return $this->name;
     }
 
-    public function withLocals(LocalAssignments $locals): self
-    {
-        $new = clone $this;
-        $new->locals = $locals;
-
-        return $new;
-    }
-
     public function withReturnType(Type $type): self
     {
         $this->returnType = $type;
+        $this->version++;
         return $this;
     }
 
@@ -200,5 +195,15 @@ class Frame
     public function returnType(): Type
     {
         return $this->returnType ?: new VoidType();
+    }
+
+    public function version(): string
+    {
+        return sprintf(
+            '%s-%s-%s',
+            $this->locals()->version(),
+            $this->properties()->version(),
+            $this->version
+        );
     }
 }
