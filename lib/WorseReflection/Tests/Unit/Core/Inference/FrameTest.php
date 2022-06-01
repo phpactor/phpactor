@@ -49,7 +49,7 @@ class FrameTest extends TestCase
     public function testResetToStateBefore(Frame $frame, int $before, int $after, Frame $expected): void
     {
         $frame->restoreToStateBefore($before, $after, true);
-        self::assertEquals($expected, $frame);
+        self::assertEquals($expected->__toString(), $frame->__toString());
     }
 
     public function provideResetToStateBefore(): Generator

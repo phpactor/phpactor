@@ -39,10 +39,10 @@ class UpdateDocblockTransformer implements Transformer
 
         $class = null;
         foreach ($missingMethods as $method) {
-            $class = $this->reflector->reflectClass($method->classType());
+            $class = $this->reflector->reflectClassLike($method->classType());
             $method = $class->methods()->get($method->methodName());
 
-            $classBuilder = $builder->class($method->class()->name()->short());
+            $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
             $replacement = $method->frame()->returnType();
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();

@@ -12,6 +12,8 @@ use ArrayIterator;
  */
 abstract class Assignments implements Countable, IteratorAggregate
 {
+    private int $version = 1;
+
     /**
      * @var array<string, Variable>-
      */
@@ -43,6 +45,7 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function add(Variable $variable): void
     {
+        $this->version++;
         $this->variables[$variable->key()] = $variable;
         $this->sort();
     }
@@ -154,6 +157,7 @@ abstract class Assignments implements Countable, IteratorAggregate
             if ($variable !== $existing) {
                 continue;
             }
+            $this->version++;
             $this->variables[$offset] = $replacement;
         }
     }
@@ -181,6 +185,11 @@ abstract class Assignments implements Countable, IteratorAggregate
         }
 
         return $last;
+    }
+
+    public function version(): int
+    {
+        return $this->version;
     }
 
     private function sort(): void

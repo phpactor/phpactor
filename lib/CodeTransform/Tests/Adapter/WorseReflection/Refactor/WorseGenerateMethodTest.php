@@ -71,6 +71,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'nullable parameter inference' => [
                 'generateMethod15.test',
             ],
+            'generic parameter inference' => [
+                'generateMethod16.test',
+            ],
         ];
     }
 

@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollec
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use RuntimeException;
 
@@ -60,15 +61,25 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
     public function class(): ReflectionClassLike
     {
         $info = $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
+        $containerType = $info->containerType();
 
-        if (!$info->containerType()->isDefined()) {
+        if (!$containerType instanceof ReflectedClassType) {
             throw new CouldNotResolveNode(sprintf(
                 'Class for member "%s" could not be determined',
                 $this->name()
             ));
         }
 
-        return $this->services->reflector()->reflectClassLike((string) $info->containerType());
+        $reflection = $containerType->reflectionOrNull();
+
+        if (null === $reflection) {
+            throw new CouldNotResolveNode(sprintf(
+                'Class for member "%s" could not be determined',
+                $this->name()
+            ));
+        }
+
+        return $reflection;
     }
 
     abstract public function isStatic(): bool;
