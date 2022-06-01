@@ -399,6 +399,10 @@ class TypeFactory
             return new StaticType();
         }
 
+        if ($type === 'never') {
+            return new NeverType();
+        }
+
         return self::class(ClassName::fromString($type), $reflector);
     }
 
