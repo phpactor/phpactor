@@ -1,0 +1,13 @@
+<?php
+
+class Foobar 
+{
+    public function __invoke(): string
+    {
+        return 'hi';
+    }
+}
+
+$f = new Foobar();
+wrAssertType('string', $f());
+

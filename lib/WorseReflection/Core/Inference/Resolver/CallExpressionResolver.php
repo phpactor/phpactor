@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CallExpressionResolver implements Resolver
@@ -30,6 +31,12 @@ class CallExpressionResolver implements Resolver
     private function reosolveCallable(NodeContextResolver $resolver, Frame $frame, Variable $variable): NodeContext
     {
         $type = $resolver->resolveNode($frame, $variable)->type();
+
+        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+            return NodeContextFactory::forNode($variable)
+                ->withType($type->invokeType());
+        }
+
         if (!$type instanceof CallableType) {
             return NodeContext::none();
         }

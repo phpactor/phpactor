@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
 class ReflectedClassType extends ClassType
@@ -32,6 +33,16 @@ class ReflectedClassType extends ClassType
     public function toPhpString(): string
     {
         return $this->__toString();
+    }
+
+    public function isInvokable(): bool
+    {
+        $reflection = $this->reflectionOrNull();
+        if (null === $reflection) {
+            return false;
+        }
+
+        return $reflection->methods()->has('__invoke');
     }
 
     /**
@@ -161,5 +172,19 @@ class ReflectedClassType extends ClassType
         }
 
         return new GenericClassType($this->reflector, $this->name(), $reflection->templateMap()->toArray());
+    }
+
+    public function invokeType(): Type
+    {
+        $reflection = $this->reflectionOrNull();
+        if (null === $reflection) {
+            return TypeFactory::undefined();
+        }
+
+        try {
+            return $reflection->methods()->get('__invoke')->inferredType();
+        } catch (NotFound $notFound) {
+            return TypeFactory::undefined();
+        }
     }
 }
