@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Helper;
 
 use Generator;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -20,7 +19,7 @@ class WorseMissingMethodFinderTest extends WorseTestCase
         $reflector = $this->reflectorForWorkspace($source);
         $document = TextDocumentBuilder::create($source)->build();
 
-        $methods = (new WorseMissingMethodFinder($reflector, new Parser()))->find($document, $offset);
+        $methods = (new WorseMissingMethodFinder($reflector))->find($document);
         self::assertCount($expectedCount, $methods);
     }
 
@@ -43,7 +42,7 @@ class WorseMissingMethodFinderTest extends WorseTestCase
                 EOT
             , 0
         ];
-        yield 'missing method' => [
+        yield '1 missing method' => [
             <<<'EOT'
                 <?php
                 class foobar { public function bar() { $this->foo(); } }

@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\WorseReflectionAnalyse\Command;
 
 use Phpactor\Extension\WorseReflectionAnalyse\Model\Analyser;
-use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -54,7 +53,7 @@ class AnalyseCommand extends Command
             foreach ($diagnostics as $diagnostic) {
                 $table->addRow([
                     sprintf('%s:%s', $diagnostic->range()->start()->toInt(), $diagnostic->range()->end()->toInt()),
-                    Diagnostic::severityAsString($diagnostic->severity()),
+                    $diagnostic->severity()->toString(),
                     $diagnostic->message(),
                 ]);
             }

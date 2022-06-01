@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\TypeUtil;
@@ -34,7 +33,7 @@ class TestAssertWalker implements Walker
         return [CallExpression::class];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof CallExpression);
         $name = $node->callableExpression->getText();
@@ -62,11 +61,12 @@ class TestAssertWalker implements Walker
             $this->assertSymbolName($resolver, $frame, $node);
             return $frame;
         }
-        if ($name === 'wrAssertDiagnostics') {
-            $this->assertDiagnostic($resolver, $frame, $node);
-            return $frame;
-        }
 
+        return $frame;
+    }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
         return $frame;
     }
 
@@ -192,29 +192,5 @@ class TestAssertWalker implements Walker
             $position->line + 1,
             $position->character + 1,
         ));
-    }
-
-    private function assertDiagnostic(FrameResolver $resolver, Frame $frame, CallExpression $node): void
-    {
-        $diagnostics = $resolver->withoutWalker(self::class)->reflector()->diagnostics($node->getFileContents());
-        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
-        if (!isset($args[0])) {
-            throw new RuntimeException('Missing count argument for wrAssertDiagnostics');
-        }
-        $count = $args[0]->type();
-        if (!$count instanceof IntLiteralType) {
-            throw new RuntimeException(sprintf('Expected diagnostic count be int got "%s"', $count->__toString()));
-        }
-        if ($count->value() !== $diagnostics->count()) {
-            $this->testCase->fail(sprintf(
-                'Expected diagnostic count "%s" but got "%s"',
-                $count,
-                $diagnostics->count()
-            ));
-        }
-
-        if (!isset($args[1])) {
-            return;
-        }
     }
 }

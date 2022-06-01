@@ -18,12 +18,12 @@ class NodeContextResolver
     
     private LoggerInterface $logger;
     
-    private Cache $cache;
-
     /**
      * @var array<class-name,Resolver>
      */
     private array $resolverMap;
+
+    private Cache $cache;
     
     /**
      * @param array<class-name,Resolver> $resolverMap
@@ -36,8 +36,13 @@ class NodeContextResolver
     ) {
         $this->logger = $logger;
         $this->reflector = $reflector;
-        $this->cache = $cache;
         $this->resolverMap = $resolverMap;
+        $this->cache = $cache;
+    }
+
+    public function withCache(Cache $cache):self
+    {
+        return new self($this->reflector, $this->logger, $cache, $this->resolverMap);
     }
 
     /**
@@ -59,6 +64,11 @@ class NodeContextResolver
     }
 
     /**
+     * Cache node look ups. Note that resolvers do not know about their parents
+     * and will use the node resolver to fetch a parents context. This only
+     * work if there is a cache. The cache should only have a lifetime of the
+     * current operation.
+     *
      * @param Node|Token|MissingToken|array<MissingToken> $node
      */
     private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
@@ -68,7 +78,7 @@ class NodeContextResolver
             return NodeContext::none();
         }
 
-        $key = 'sc:'.spl_object_hash($node);
+        $key = 'sc:'.spl_object_id($node);
 
         return $this->cache->getOrSet($key, function () use ($frame, $node) {
             if (false === $node instanceof Node) {

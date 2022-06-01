@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Tests\Benchmarks\Examples\PropertyClass;
 
 /**
  * @Iterations(10)
- * @Revs(30)
+ * @Revs(1)
  * @OutputTimeUnit("milliseconds", precision=2)
  * @Assert("mode(variant.time.avg) <= mode(baseline.time.avg) +/- 10%")
  */

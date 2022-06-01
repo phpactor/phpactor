@@ -291,8 +291,7 @@ class CodeTransformExtension implements Extension
         });
         $container->register(MissingMethodFinder::class, function (Container $container) {
             return new WorseMissingMethodFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         });
     }
@@ -416,7 +415,7 @@ class CodeTransformExtension implements Extension
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'fix_namespace_class_name' ]]);
 
-        $container->register('code_transform.transformer.add_missing_docblocks', function (Container $container) {
+        $container->register(UpdateDocblockTransformer::class, function (Container $container) {
             return new UpdateDocblockTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
@@ -425,7 +424,7 @@ class CodeTransformExtension implements Extension
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks' ]]);
 
-        $container->register('code_transform.transformer.add_missing_return_types', function (Container $container) {
+        $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),

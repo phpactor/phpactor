@@ -35,7 +35,17 @@ class DiagnosticsWalker implements Walker
         return [];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
+        return $frame;
+    }
+
+    public function diagnostics(): Diagnostics
+    {
+        return new Diagnostics($this->diagnostics);
+    }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $resolver = $resolver->resolver();
         foreach ($this->providers as $provider) {
@@ -45,10 +55,5 @@ class DiagnosticsWalker implements Walker
         }
 
         return $frame;
-    }
-
-    public function diagnostics(): Diagnostics
-    {
-        return new Diagnostics($this->diagnostics);
     }
 }

@@ -33,7 +33,7 @@ class TestExtension implements Extension
 
 class TestFrameWalker implements Walker
 {
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $builder, Frame $frame, Node $node): Frame
     {
         if ($frame->locals()->byName('test_variable')->count()) {
             return $frame;
@@ -44,6 +44,11 @@ class TestFrameWalker implements Walker
                 NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', Position::fromFullStartStartAndEnd(0, 1, 10)))
             )
         );
+        return $frame;
+    }
+
+    public function exit(FrameResolver $builder, Frame $frame, Node $node): Frame
+    {
         return $frame;
     }
 

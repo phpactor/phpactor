@@ -7,8 +7,9 @@ use Closure;
 interface Cache
 {
     /**
-     * @param Closure(): mixed $closure
-     * @return mixed
+     * @template T
+     * @param Closure(): T $closure
+     * @return T
      */
     public function getOrSet(string $key, Closure $closure);
 

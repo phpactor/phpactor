@@ -35,10 +35,15 @@ class PassThroughWalker implements Walker
         ];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         $resolver->resolveNode($frame, $node);
 
+        return $frame;
+    }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
         return $frame;
     }
 }

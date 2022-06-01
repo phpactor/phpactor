@@ -35,7 +35,7 @@ class IncludeWalker implements Walker
         return [ScriptInclusionExpression::class];
     }
 
-    public function walk(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
         assert($node instanceof ScriptInclusionExpression);
         $context = $resolver->resolveNode($frame, $node->expression);
@@ -78,6 +78,11 @@ class IncludeWalker implements Walker
 
         $frame->locals()->merge($includedFrame->locals());
 
+        return $frame;
+    }
+
+    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    {
         return $frame;
     }
 

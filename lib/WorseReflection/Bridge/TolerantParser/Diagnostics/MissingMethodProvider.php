@@ -9,14 +9,14 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
-class MissingMethods implements DiagnosticProvider
+class MissingMethodProvider implements DiagnosticProvider
 {
     public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
@@ -57,7 +57,7 @@ class MissingMethods implements DiagnosticProvider
         try {
             $name = $class->methods()->get($methodName);
         } catch (NotFound $notFound) {
-            yield new Diagnostic(
+            yield new MissingMethodDiagnostic(
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),
                     $memberName->getEndPosition()
@@ -67,7 +67,9 @@ class MissingMethods implements DiagnosticProvider
                     $methodName,
                     $containerType->__toString()
                 ),
-                Diagnostic::ERROR
+                DiagnosticSeverity::ERROR(),
+                $class->name()->__toString(),
+                $methodName
             );
         }
     }
