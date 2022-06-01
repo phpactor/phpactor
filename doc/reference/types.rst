@@ -25,9 +25,9 @@ Basic Types
     Resource         (internal type)     ``*``      ✔
     String           ``string``          ``*``      ✔
     Self             ``self``            ``*``      ✔
-    Parent           ``parent``          ``*``      🤷
-    Callable         ``callable``        ``*``      ✘
-    Iterable         ``iterable``        ``7.1``    ✘
+    Parent           ``parent``          ``*``      🤷 mostly
+    Callable         ``callable``        ``*``      ❓
+    Iterable         ``iterable``        ``7.1``    ❓ 
     Nullable         ``?Foor``           ``7.1``    ✔
     Object           ``object``          ``7.2``    ✔
     Union            ``Foo|Bar``         ``8.0``    ✔
@@ -47,7 +47,7 @@ Return Only Types
     Void             ``void``            ``7.4+``   ✔
     Static                               ``8.0``    ✔
     Never            ``never``           ``8.1+``   ✔
-    False            ``false``           ``8.2+``   ✘         Pseudo-type before 8.2
+    False            ``false``           ``8.2+``   ✔         Pseudo-type before 8.2
     Null             ``null``            ``8.2+``   ✔
     ==============   ==================  =========  ========  ========================
 
