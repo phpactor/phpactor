@@ -4,6 +4,7 @@ namespace Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
+use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 
 class WorseTypeRenderer81 extends WorseTypeRenderer80
@@ -15,6 +16,10 @@ class WorseTypeRenderer81 extends WorseTypeRenderer80
         }
 
         if ($type instanceof StaticType) {
+            return $type->toPhpString();
+        }
+
+        if ($type instanceof NeverType) {
             return $type->toPhpString();
         }
 
