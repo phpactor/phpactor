@@ -187,15 +187,15 @@ abstract class Assignments implements Countable, IteratorAggregate
         return $last;
     }
 
+    public function version(): int
+    {
+        return $this->version;
+    }
+
     private function sort(): void
     {
         uasort($this->variables, function (Variable $one, Variable $two) {
             return $one->offset() <=> $two->offset();
         });
-    }
-
-    public function version(): int
-    {
-        return $this->version;
     }
 }

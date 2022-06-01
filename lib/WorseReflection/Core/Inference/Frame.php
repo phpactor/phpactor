@@ -30,7 +30,7 @@ class Frame
 
     private ?Type $returnType = null;
 
-    private $version = 1;
+    private int $version = 1;
 
     public function __construct(
         string $name,
@@ -197,6 +197,10 @@ class Frame
         return $this->returnType ?: new VoidType();
     }
 
+    /**
+     * The version is incremented when the frame or one of it's components is
+     * modified and can be used for cache busting.
+     */
     public function version(): string
     {
         return sprintf(

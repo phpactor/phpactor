@@ -80,7 +80,6 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
         }
 
         return $reflection;
-
     }
 
     abstract public function isStatic(): bool;
