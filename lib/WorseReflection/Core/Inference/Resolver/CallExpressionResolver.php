@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -11,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -21,23 +23,16 @@ class CallExpressionResolver implements Resolver
         assert($node instanceof CallExpression);
         $resolvableNode = $node->callableExpression;
 
-        if ($resolvableNode instanceof Variable) {
-            return $this->reosolveCallable($resolver, $frame, $resolvableNode);
+        $context = $resolver->resolveNode($frame, $resolvableNode);
+        $type = $context->type();
+
+        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+            return NodeContextFactory::forNode($node)
+                ->withType($type->invokeType());
         }
 
-        return $resolver->resolveNode($frame, $resolvableNode);
-    }
-
-    private function reosolveCallable(NodeContextResolver $resolver, Frame $frame, Variable $variable): NodeContext
-    {
-        $type = $resolver->resolveNode($frame, $variable)->type();
-
-        if (
-            $type instanceof ReflectedClassType && 
-            $type->isInvokable()
-        ) {
-            return NodeContextFactory::forNode($variable)
-                ->withType($type->invokeType());
+        if (!$resolvableNode instanceof Variable) {
+            return $context;
         }
 
         if (!$type instanceof CallableType) {
@@ -45,9 +40,9 @@ class CallExpressionResolver implements Resolver
         }
 
         return NodeContextFactory::create(
-            NodeUtil::nameFromTokenOrNode($variable, $variable->name),
-            $variable->getStartPosition(),
-            $variable->getEndPosition(),
+            NodeUtil::nameFromTokenOrNode($resolvableNode, $resolvableNode->name),
+            $resolvableNode->getStartPosition(),
+            $resolvableNode->getEndPosition(),
             [
                 'type' => $type->returnType,
             ]

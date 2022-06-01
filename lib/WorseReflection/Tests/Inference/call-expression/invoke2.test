@@ -5,9 +5,9 @@ class Foobar
     /**
      * @return Generator<DateTime>
      */
-    public function __invoke(): string
+    public function __invoke(): Generator
     {
-        return 'hi';
+        yield new DateTime();
     }
 }
 
@@ -19,16 +19,12 @@ class Baz
         $this->foo = $foo;
     }
 
-    public function baz() {
+    public function baz(): void {
         $f = $this->foo;
-        wrAssertType('Generator<DateTime>', $f());
 
         foreach (($this->foo)() as $bar) {
             wrAssertType('DateTime', $bar);
         }
     }
 }
-
-$f = new Foobar();
-wrAssertType('Generator<DateTime>', $f());
 
