@@ -403,6 +403,10 @@ class TypeFactory
             return new NeverType();
         }
 
+        if ($type === 'false') {
+            return new BooleanLiteralType(false);
+        }
+
         return self::class(ClassName::fromString($type), $reflector);
     }
 

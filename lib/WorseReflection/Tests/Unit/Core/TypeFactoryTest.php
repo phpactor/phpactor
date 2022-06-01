@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use stdClass;
@@ -16,6 +17,12 @@ class TypeFactoryTest extends TestCase
     {
         self::assertEquals(new NeverType(), TypeFactory::fromString('never'));
     }
+
+    public function testFalse(): void
+    {
+        self::assertEquals(new BooleanLiteralType(false), TypeFactory::fromString('false'));
+    }
+
     /**
      * @testdox It should __toString the given type.
      * @dataProvider provideToString

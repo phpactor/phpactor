@@ -153,7 +153,7 @@ class Frame
         }
     }
 
-    public function restoreToStateBefore(int $before, int $after): void
+    public function restoreToStateBefore(int $before, int $after, bool $combine): void
     {
         $locals = [];
         // get most recent state of variables before offset
@@ -169,7 +169,7 @@ class Frame
 
                 // it was assigned in the if block so
                 // combine it with the previous variable
-                if ($extra->wasAssigned()) {
+                if ($combine && $extra->wasAssigned()) {
                     $this->locals()->add(
                         $locals[$extra->name()]->withOffset(
                             $after
