@@ -69,6 +69,9 @@ class UseStatementUpdater
 
             foreach ($node->getChildNodes() as $childNode) {
                 if ($childNode instanceof NamespaceUseDeclaration) {
+                    if (!$childNode->useClauses) {
+                        continue;
+                    }
                     foreach ($childNode->useClauses->getElements() as $useClause) {
                         assert($useClause instanceof NamespaceUseClause);
 
