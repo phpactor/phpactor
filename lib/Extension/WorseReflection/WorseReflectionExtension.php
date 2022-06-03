@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvid
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\WrongVarOrderProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -153,5 +154,8 @@ class WorseReflectionExtension implements Extension
         $container->register(MissingDocblockProvider::class, function (Container $container) {
             return new MissingDocblockProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(WrongVarOrderProvider::class, function (Container $container) {
+            return new WrongVarOrderProvider();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => [] ]);
     }
 }

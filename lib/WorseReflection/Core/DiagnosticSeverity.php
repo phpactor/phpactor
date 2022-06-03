@@ -22,6 +22,11 @@ final class DiagnosticSeverity
         $this->level = $level;
     }
 
+    public static function INFORMATION(): self
+    {
+        return new self(self::INFORMATION);
+    }
+
     public static function ERROR(): self
     {
         return new self(self::ERROR);
