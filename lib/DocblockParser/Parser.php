@@ -4,27 +4,31 @@ namespace Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
-use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
+use Phpactor\DocblockParser\Ast\Node;
+use Phpactor\DocblockParser\Ast\ParameterList;
+use Phpactor\DocblockParser\Ast\TagNode;
+use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
+use Phpactor\DocblockParser\Ast\Tag\InvertedVarTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
 use Phpactor\DocblockParser\Ast\Tag\MixinTag;
-use Phpactor\DocblockParser\Ast\ParameterList;
+use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
+use Phpactor\DocblockParser\Ast\Tag\VarTag;
 use Phpactor\DocblockParser\Ast\TextNode;
+use Phpactor\DocblockParser\Ast\Token;
+use Phpactor\DocblockParser\Ast\Tokens;
 use Phpactor\DocblockParser\Ast\TypeList;
+use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
-use Phpactor\DocblockParser\Ast\Node;
-use Phpactor\DocblockParser\Ast\Tag\ParamTag;
-use Phpactor\DocblockParser\Ast\TagNode;
-use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
@@ -42,10 +46,7 @@ use Phpactor\DocblockParser\Ast\Type\UnionNode;
 use Phpactor\DocblockParser\Ast\UnknownTag;
 use Phpactor\DocblockParser\Ast\ValueNode;
 use Phpactor\DocblockParser\Ast\Value\NullValue;
-use Phpactor\DocblockParser\Ast\Tag\VarTag;
 use Phpactor\DocblockParser\Ast\VariableNode;
-use Phpactor\DocblockParser\Ast\Token;
-use Phpactor\DocblockParser\Ast\Tokens;
 
 final class Parser
 {
@@ -143,14 +144,22 @@ final class Parser
     {
         $tag = $this->tokens->chomp(Token::T_TAG);
         $type = $variable = null;
+        $isInverted = false;
+
+        if ($this->tokens->ifNextIs(Token::T_VARIABLE)) {
+            $variable = $this->parseVariable();
+            $isInverted = true;
+        }
         if ($this->ifType()) {
             $type = $this->parseTypes();
         }
-        if ($this->tokens->ifNextIs(Token::T_VARIABLE)) {
+        if (!$variable && $this->tokens->ifNextIs(Token::T_VARIABLE)) {
             $variable = $this->parseVariable();
         }
 
-        return new VarTag($tag, $type, $variable);
+        return $isInverted
+            ? new InvertedVarTag($tag, $type, $variable)
+            : new VarTag($tag, $type, $variable);
     }
 
     private function parseMethod(): MethodTag

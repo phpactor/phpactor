@@ -1,7 +1,7 @@
-/** @var string $foobar */
+/** @var $foobar \DateTime */
 ---
 Docblock: = 
  ElementList: = /** 
-  VarTag: = @var
-   ScalarNode: = string
-   VariableNode: = $foobar */
+  InvertedVarTag: = @var
+   VariableNode: = $foobar
+   ClassNode: = \DateTime */
