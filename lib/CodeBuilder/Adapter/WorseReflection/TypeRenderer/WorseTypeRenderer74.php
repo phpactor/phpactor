@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
+use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
@@ -46,6 +47,10 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
 
         if ($type instanceof VoidType) {
             return $type->__toString();
+        }
+
+        if ($type instanceof CallableType) {
+            return $type->toPhpString();
         }
 
         return null;
