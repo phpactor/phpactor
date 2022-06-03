@@ -95,11 +95,9 @@ class WorseGenerateMethod implements GenerateMethod
         $reflectionClass = $methodCall->class();
         $builder = $this->factory->fromSource($reflectionClass->sourceCode());
 
-        if ($reflectionClass->isClass()) {
-            $classBuilder = $builder->class($reflectionClass->name()->short());
-        } else {
-            $classBuilder = $builder->interface($reflectionClass->name()->short());
-        }
+        $classBuilder = $reflectionClass->isClass() ?
+            $builder->class($reflectionClass->name()->short()) :
+            $builder->interface($reflectionClass->name()->short());
 
         $methodBuilder = $classBuilder->method($methodName);
         $methodBuilder->visibility((string) $visibility);
@@ -114,7 +112,7 @@ class WorseGenerateMethod implements GenerateMethod
             $argumentBuilder = $methodBuilder->parameter($argument->guessName());
 
             if ($type->isDefined()) {
-                $argumentBuilder->type($type->short());
+                $argumentBuilder->type($type->short(), $type);
 
                 foreach ($type->classNamedTypes() as $classType) {
                     $builder->use($classType->toPhpString());
