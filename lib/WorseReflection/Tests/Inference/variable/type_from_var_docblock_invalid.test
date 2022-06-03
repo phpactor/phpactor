@@ -1,0 +1,6 @@
+<?php
+
+/** @var $foo string */
+$foo;
+
+wrAssertType('string', $foo);
