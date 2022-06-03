@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-final class BooleanLiteralType extends BooleanType implements Literal, Generalizable
+class BooleanLiteralType extends BooleanType implements Literal, Generalizable
 {
     use LiteralTrait;
 
