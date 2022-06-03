@@ -3,10 +3,8 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\WorseReflection\TypeRenderer;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\StringType;
@@ -39,4 +37,3 @@ class WorseTypeRenderer74Test extends TypeRendererTestCase
         return new WorseTypeRenderer74();
     }
 }
-

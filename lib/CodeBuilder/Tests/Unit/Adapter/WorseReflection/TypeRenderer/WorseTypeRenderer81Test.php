@@ -3,17 +3,12 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\WorseReflection\TypeRenderer;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer81;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer82;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\StringType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class WorseTypeRenderer81Test extends TypeRendererTestCase
 {
@@ -44,4 +39,3 @@ class WorseTypeRenderer81Test extends TypeRendererTestCase
         //$this->foobar(file_get_contents('asd'));
     }
 }
-
