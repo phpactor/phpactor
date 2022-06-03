@@ -30,7 +30,7 @@ class foo {
         return $this->generate(stringOrFalse());
     }
 
-    public function generate(string $stringFalse)
+    private function generate(string|false $stringFalse): void
     {
     }
 }
