@@ -12,7 +12,7 @@ class WorseTypeRenderer81 extends WorseTypeRenderer80
     public function render(Type $type): ?string
     {
         if ($type instanceof IntersectionType) {
-            return $type->short();
+            return implode('|', array_map(fn (Type $t) => $this->render($t), $type->types));
         }
 
         if ($type instanceof StaticType) {

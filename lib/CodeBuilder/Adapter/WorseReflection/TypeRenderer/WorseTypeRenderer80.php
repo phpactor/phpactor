@@ -11,7 +11,7 @@ class WorseTypeRenderer80 extends WorseTypeRenderer74
     public function render(Type $type): ?string
     {
         if ($type instanceof UnionType) {
-            return $type->short();
+            return implode('|', array_map(fn (Type $t) => $this->render($t), $type->types));
         }
         if ($type instanceof MixedType) {
             return $type->toPhpString();
