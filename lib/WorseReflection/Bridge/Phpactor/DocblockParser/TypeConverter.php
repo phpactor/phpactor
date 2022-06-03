@@ -133,7 +133,6 @@ class TypeConverter
         if ($type instanceof LiteralFloatNode) {
             return $this->convertLiteralFloat($type);
         }
-
         if ($type instanceof ConstantNode) {
             return $this->convertConstant($type);
         }
@@ -324,7 +323,8 @@ class TypeConverter
 
     private function convertParenthesized(ParenthesizedType $type): Type
     {
-        return new PhpactorParenthesizedType($this->convert($type->node));
+        $innerType = $this->convert($type->node);
+        return new PhpactorParenthesizedType($innerType);
     }
 
     private function convertLiteralString(LiteralStringNode $type): Type
