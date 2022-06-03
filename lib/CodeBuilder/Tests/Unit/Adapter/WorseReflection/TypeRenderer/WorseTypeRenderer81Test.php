@@ -40,6 +40,8 @@ class WorseTypeRenderer81Test extends TypeRendererTestCase
     protected function createRenderer(): WorseTypeRenderer
     {
         return new WorseTypeRenderer81();
+
+        //$this->foobar(file_get_contents('asd'));
     }
 }
 
