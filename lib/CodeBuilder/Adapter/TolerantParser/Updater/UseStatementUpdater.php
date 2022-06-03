@@ -69,6 +69,7 @@ class UseStatementUpdater
 
             foreach ($node->getChildNodes() as $childNode) {
                 if ($childNode instanceof NamespaceUseDeclaration) {
+                    /** @phpstan-ignore-next-line */
                     if (!$childNode->useClauses) {
                         continue;
                     }
