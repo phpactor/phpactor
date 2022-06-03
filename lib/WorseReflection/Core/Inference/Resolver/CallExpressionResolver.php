@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -24,13 +25,18 @@ class CallExpressionResolver implements Resolver
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $type = $context->type();
 
-        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+        if ($resolvableNode instanceof ParenthesizedExpression && $type instanceof ReflectedClassType && $type->isInvokable()) {
             return NodeContextFactory::forNode($node)
                 ->withType($type->invokeType());
         }
 
         if (!$resolvableNode instanceof Variable) {
             return $context;
+        }
+
+        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+            return NodeContextFactory::forNode($node)
+                ->withType($type->invokeType());
         }
 
         if (!$type instanceof CallableType) {
