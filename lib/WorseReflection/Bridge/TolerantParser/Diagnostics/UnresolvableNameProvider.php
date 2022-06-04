@@ -67,7 +67,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             $resolvedName = $name->getNamespacedName();
         }
 
-        if (!is_string($resolvedName) && count($resolvedName->getNameParts()) == 0) {
+        if (count($resolvedName->getNameParts()) == 0) {
             return;
         }
 
@@ -89,7 +89,6 @@ class UnresolvableNameProvider implements DiagnosticProvider
             !$name->parent instanceof ScopedPropertyAccessExpression &&
             !$name->parent instanceof FunctionDeclaration &&
             !$name->parent instanceof MethodDeclaration &&
-            !$name->parent instanceof Expression &&
             !$name->parent instanceof Parameter &&
             !$name->parent instanceof Attribute
         ) {
@@ -109,6 +108,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
     private function forFunction(FunctionReflector $reflector, string $fqn, QualifiedName $name): Generator
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
+
         try {
             // see comment for appendUnresolvedClassName
             $source = $reflector->sourceCodeForFunction($fqn->__toString());
@@ -116,10 +116,13 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 throw new NotFound();
             }
         } catch (NotFound $notFound) {
-            yield UnresolvableNameDiagnostic::forFunction(
-                ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
-                $fqn->head()->__toString(),
-            );
+            $source = $reflector->sourceCodeForFunction($fqn->head()->__toString());
+            if (!$this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
+                yield UnresolvableNameDiagnostic::forFunction(
+                    ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
+                    $fqn->head()->__toString(),
+                );
+            }
         }
     }
 

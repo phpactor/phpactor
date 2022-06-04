@@ -129,7 +129,6 @@ class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
             !$name->parent instanceof ScopedPropertyAccessExpression &&
             !$name->parent instanceof FunctionDeclaration &&
             !$name->parent instanceof MethodDeclaration &&
-            !$name->parent instanceof Expression &&
             !$name->parent instanceof Parameter &&
             !$name->parent instanceof Attribute
         ) {

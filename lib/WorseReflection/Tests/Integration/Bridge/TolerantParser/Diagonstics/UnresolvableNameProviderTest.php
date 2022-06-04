@@ -35,4 +35,14 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
     {
         self::assertCount(0, $diagnostics);
     }
+
+    public function checkConstants(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    public function checkClassNameConstant(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+    }
 }
