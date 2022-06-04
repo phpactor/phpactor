@@ -12,7 +12,6 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
-use function Amp\delay;
 
 class WorseDiagnosticProvider implements DiagnosticsProvider
 {
@@ -35,13 +34,15 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
                 $lspDiagnostics[] = $lspDiagnostic;
-
-                // give time to other things
-                yield delay(1);
             }
 
             return $lspDiagnostics;
         });
+    }
+
+    public function name(): string
+    {
+        return 'worse';
     }
 
     private static function toLspSeverity(DiagnosticSeverity $diagnosticSeverity): int
@@ -55,10 +56,5 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         }
 
         return LanguageServerProtocolDiagnosticSeverity::INFORMATION;
-    }
-
-    public function name(): string
-    {
-        return 'worse';
     }
 }
