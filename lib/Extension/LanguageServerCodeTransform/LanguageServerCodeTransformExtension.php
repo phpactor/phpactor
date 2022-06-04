@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
@@ -43,7 +42,6 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LanguageServerCodeTransformExtension implements Extension
 {
-    public const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     public const PARAM_REPORT_NON_EXISTING_NAMES = 'language_server_code_transform.import_name.report_non_existing_names';
     
     public function load(ContainerBuilder $container): void
@@ -56,11 +54,9 @@ class LanguageServerCodeTransformExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_IMPORT_GLOBALS => false,
-            self::PARAM_REPORT_NON_EXISTING_NAMES => false,
+            self::PARAM_REPORT_NON_EXISTING_NAMES => true,
         ]);
         $schema->setDescriptions([
-            self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
             self::PARAM_REPORT_NON_EXISTING_NAMES => 'Show an error if a diagnostic name cannot be resolved - can produce false positives',
         ]);
     }
@@ -184,10 +180,8 @@ class LanguageServerCodeTransformExtension implements Extension
     {
         $container->register(CandidateFinder::class, function (Container $container) {
             return new CandidateFinder(
-                $container->get(UnresolvableClassNameFinder::class),
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(SearchClient::class),
-                $container->getParameter(self::PARAM_IMPORT_GLOBALS)
+                $container->get(SearchClient::class)
             );
         });
         $container->register(ImportNameProvider::class, function (Container $container) {

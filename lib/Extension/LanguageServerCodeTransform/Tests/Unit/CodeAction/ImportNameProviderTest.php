@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
@@ -30,7 +31,7 @@ class ImportNameProviderTest extends IntegrationTestCase
         $this->workspace()->loadManifest($manifest);
 
         $tester = $this->container([
-            LanguageServerCodeTransformExtension::PARAM_IMPORT_GLOBALS => $imprtGlobals,
+            WorseReflectionExtension::PARAM_IMPORT_GLOBALS => $imprtGlobals,
             LanguageServerCodeTransformExtension::PARAM_REPORT_NON_EXISTING_NAMES => true
         ])->get(LanguageServerBuilder::class)->tester(
             ProtocolFactory::initializeParams($this->workspace()->path())
@@ -100,17 +101,7 @@ class ImportNameProviderTest extends IntegrationTestCase
             , 0, 1
         ];
 
-        yield 'code action and diagnostic for missing global class name with import globals' => [
-            <<<'EOT'
-                // File: subject.php
-                <?php namespace Foobar; function foobar(): Generator { yield 12; }'
-                // File: Generator.php
-                <?php class Generator {}
-                EOT
-            , 1, 1, true
-        ];
-
-        yield 'code action and diagnostic for missing global class name without import globals' => [
+        yield 'code action and diagnostic for missing global class name' => [
             <<<'EOT'
                 // File: subject.php
                 <?php namespace Foobar; function foobar(): Generator { yield 12; }'

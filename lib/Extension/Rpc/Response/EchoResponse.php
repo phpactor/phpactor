@@ -13,7 +13,7 @@ class EchoResponse implements Response
         $this->message = $message;
     }
 
-    public static function fromMessage(string $message)
+    public static function fromMessage(string $message): self
     {
         return new self($message);
     }

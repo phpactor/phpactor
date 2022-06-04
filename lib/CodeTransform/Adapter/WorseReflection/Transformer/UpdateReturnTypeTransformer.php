@@ -60,6 +60,10 @@ class UpdateReturnTypeTransformer implements Transformer
 
         /** @var MissingReturnTypeDiagnostic $diagnostic */
         foreach ($wrDiagnostics as $diagnostic) {
+            if (!$diagnostic->returnType()->isDefined()) {
+                continue;
+            }
+
             $diagnostics[] = new Diagnostic(
                 $diagnostic->range(),
                 $diagnostic->message(),
@@ -80,6 +84,10 @@ class UpdateReturnTypeTransformer implements Transformer
         $methods = [];
         /** @var MissingReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {
+            if (!$diagnostic->returnType()->isDefined()) {
+                continue;
+            }
+
             $class = $this->reflector->reflectClassLike($diagnostic->classType());
             $methods[] = $class->methods()->get($diagnostic->methodName());
         }

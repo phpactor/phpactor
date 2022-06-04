@@ -75,7 +75,7 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             $method->nameRange(),
             $reflection->name()->__toString(),
             $methodName,
-            $returnType->generalize()
+            $returnType->generalize()->reduce()
         );
     }
 }

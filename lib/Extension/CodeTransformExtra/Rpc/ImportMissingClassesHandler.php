@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
-use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
@@ -11,6 +9,8 @@ use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
+use Phpactor\WorseReflection\Reflector;
 
 class ImportMissingClassesHandler implements Handler
 {
@@ -18,16 +18,16 @@ class ImportMissingClassesHandler implements Handler
     public const PARAM_SOURCE = 'source';
     public const PARAM_PATH = 'path';
 
-    private UnresolvableClassNameFinder $unresolvableClassNameFinder;
-
     private RequestHandler $handler;
+
+    private Reflector $reflector;
 
     public function __construct(
         RequestHandler $handler,
-        UnresolvableClassNameFinder $unresolvableClassNameFinder
+        Reflector $reflector
     ) {
-        $this->unresolvableClassNameFinder = $unresolvableClassNameFinder;
         $this->handler = $handler;
+        $this->reflector = $reflector;
     }
 
     public function configure(Resolver $resolver): void
@@ -44,15 +44,16 @@ class ImportMissingClassesHandler implements Handler
             $arguments[self::PARAM_SOURCE]
         )->language('php')->uri($arguments[self::PARAM_PATH])->build();
 
-        $unresolvedClasses = $this->unresolvableClassNameFinder->find($document)->onlyUniqueNames();
+        $diagnostics = $this->reflector->diagnostics($arguments[self::PARAM_SOURCE])->byClass(UnresolvableNameDiagnostic::class);
 
         $responses = [];
-        foreach ($unresolvedClasses as $unresolvedClass) {
-            assert($unresolvedClass instanceof NameWithByteOffset);
+        foreach ($diagnostics as $unresolvedClass) {
+            assert($unresolvedClass instanceof UnresolvableNameDiagnostic);
+
             $responses[] = $this->handler->handle(Request::fromNameAndParameters(ImportClassHandler::NAME, [
                 ImportClassHandler::PARAM_PATH => $arguments[self::PARAM_PATH],
                 ImportClassHandler::PARAM_SOURCE => $arguments[self::PARAM_SOURCE],
-                ImportClassHandler::PARAM_OFFSET => $unresolvedClass->byteOffset()->toInt() + 1
+                ImportClassHandler::PARAM_OFFSET => $unresolvedClass->range()->start()->toInt() + 1
             ]));
         }
 
