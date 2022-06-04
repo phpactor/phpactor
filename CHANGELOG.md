@@ -77,6 +77,8 @@ Improvements:
 
 Features:
 
+  - [wr] Added native WR single-pass diagnostics #1700
+  - [cmd] Index clean command #1691 @mamazu
   - [cmp] (re?)support completion on parent:: #1643
   - [cb] Render types based on PHP version #1655
   - [wr] Support `@property-read`
