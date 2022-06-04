@@ -774,6 +774,21 @@ WorseReflectionExtension
 ------------------------
 
 
+.. _param_language_server_code_transform.import_globals:
+
+
+``language_server_code_transform.import_globals``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Show hints for non-imported global classes and functions
+
+
+**Default**: ``false``
+
+
 .. _param_worse_reflection.enable_cache:
 
 
@@ -1482,21 +1497,6 @@ Paths in which to look for templates for hover information.
 
 LanguageServerCodeTransformExtension
 ------------------------------------
-
-
-.. _param_language_server_code_transform.import_globals:
-
-
-``language_server_code_transform.import_globals``
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-Show hints for non-imported global classes and functions
-
-
-**Default**: ``false``
 
 
 .. _param_language_server_code_transform.import_name.report_non_existing_names:

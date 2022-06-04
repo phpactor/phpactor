@@ -54,7 +54,7 @@ class LanguageServerCodeTransformExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_REPORT_NON_EXISTING_NAMES => false,
+            self::PARAM_REPORT_NON_EXISTING_NAMES => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_REPORT_NON_EXISTING_NAMES => 'Show an error if a diagnostic name cannot be resolved - can produce false positives',

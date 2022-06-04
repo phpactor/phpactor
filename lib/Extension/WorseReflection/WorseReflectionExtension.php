@@ -39,7 +39,6 @@ class WorseReflectionExtension implements Extension
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
-
     
     public function configure(Resolver $schema): void
     {

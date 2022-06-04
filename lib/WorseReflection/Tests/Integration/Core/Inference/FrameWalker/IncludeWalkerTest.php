@@ -18,7 +18,6 @@ class IncludeWalkerTest extends FrameWalkerTestCase
 
     public function provideWalk(): Generator
     {
-
         yield 'Require relative' => [
             <<<'EOT'
                 <?php
