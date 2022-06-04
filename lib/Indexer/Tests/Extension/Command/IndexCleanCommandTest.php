@@ -35,18 +35,18 @@ class IndexCleanCommandTest extends IntegrationTestCase
         return [
             'interactive version' => [
                 [ self::CONSOLE_PATH, 'index:clean'],
-                IndexCleanCommand::CLEAN_ALL
+                IndexCleanCommand::OPT_CLEAN_ALL
             ],
             'non-interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::CLEAN_ALL, '--no-interaction'],
+                [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::OPT_CLEAN_ALL, '--no-interaction'],
                 null
             ],
             'cleaning index 1 and 2' => [
                 [self::CONSOLE_PATH, 'index:clean'],
-                '1,2'
+                "1\n1"
             ],
-            'cleaning index 1 and 2 non interactively' => [
-                [self::CONSOLE_PATH, 'index:clean', '1,2', '--no-interaction'],
+            'cleaning multiple indexes non-interactive' => [
+                [self::CONSOLE_PATH, 'index:clean', 'project','vendor', '--no-interaction'],
                 null
             ]
 
@@ -80,7 +80,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
                 '1'
             ],
             'non-interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean', '1', '--no-interaction'],
+                [ self::CONSOLE_PATH, 'index:clean', 'project', '--no-interaction'],
                 null
             ],
             'non-interactive version with index name' => [
