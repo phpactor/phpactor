@@ -22,7 +22,7 @@ class CollectionResponse implements Response
         }
     }
 
-    public static function fromActions(array $actions)
+    public static function fromActions(array $actions): self
     {
         return new self($actions);
     }

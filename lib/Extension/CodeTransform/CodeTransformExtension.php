@@ -24,7 +24,6 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpres
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseUnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseInterestingOffsetFinder;
@@ -40,7 +39,6 @@ use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -233,12 +231,6 @@ class CodeTransformExtension implements Extension
 
         $container->register(ChangeVisiblity::class, function (Container $container) {
             return new TolerantChangeVisiblity();
-        });
-
-        $container->register(UnresolvableClassNameFinder::class, function (Container $container) {
-            return new WorseUnresolvableClassNameFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
-            );
         });
     }
 

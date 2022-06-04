@@ -774,6 +774,21 @@ WorseReflectionExtension
 ------------------------
 
 
+.. _param_language_server_code_transform.import_globals:
+
+
+``language_server_code_transform.import_globals``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Show hints for non-imported global classes and functions
+
+
+**Default**: ``false``
+
+
 .. _param_worse_reflection.enable_cache:
 
 
@@ -1484,21 +1499,6 @@ LanguageServerCodeTransformExtension
 ------------------------------------
 
 
-.. _param_language_server_code_transform.import_globals:
-
-
-``language_server_code_transform.import_globals``
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-Show hints for non-imported global classes and functions
-
-
-**Default**: ``false``
-
-
 .. _param_language_server_code_transform.import_name.report_non_existing_names:
 
 
@@ -1511,7 +1511,7 @@ Show hints for non-imported global classes and functions
 Show an error if a diagnostic name cannot be resolved - can produce false positives
 
 
-**Default**: ``false``
+**Default**: ``true``
 
 
 .. _LanguageServerPhpstanExtension:

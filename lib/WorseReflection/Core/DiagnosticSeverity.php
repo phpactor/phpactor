@@ -46,4 +46,14 @@ final class DiagnosticSeverity
         }
         return 'unknown';
     }
+
+    public function isError(): bool
+    {
+        return $this->level === self::ERROR;
+    }
+
+    public function isWarning(): bool
+    {
+        return $this->level === self::WARNING;
+    }
 }

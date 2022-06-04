@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CodeTransformExtra;
 
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
@@ -164,7 +163,7 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.rpc.handler.import_unresolvable_classes', function (Container $container) {
             return new ImportMissingClassesHandler(
                 $container->get(RpcExtension::SERVICE_REQUEST_HANDLER),
-                $container->get(UnresolvableClassNameFinder::class)
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ImportMissingClassesHandler::NAME] ]);
     }

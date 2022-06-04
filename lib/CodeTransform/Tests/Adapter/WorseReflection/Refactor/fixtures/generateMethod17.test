@@ -1,0 +1,36 @@
+// File: source
+<?php
+
+/**
+ * @return string|false
+ */
+function stringOrFalse()
+{
+}
+
+class foo {
+    function convert(): void
+    {
+        return $this-><>generate<>(stringOrFalse());
+    }
+}
+// File: expected
+<?php
+
+/**
+ * @return string|false
+ */
+function stringOrFalse()
+{
+}
+
+class foo {
+    function convert(): void
+    {
+        return $this->generate(stringOrFalse());
+    }
+
+    private function generate(string|false $stringFalse): void
+    {
+    }
+}

@@ -39,6 +39,7 @@ use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\ThisNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
+use Phpactor\DocblockParser\Ast\Type\UnsupportedNode;
 use Phpactor\DocblockParser\Ast\UnknownTag;
 use Phpactor\DocblockParser\Ast\ValueNode;
 use Phpactor\DocblockParser\Ast\Value\NullValue;
@@ -367,6 +368,9 @@ final class Parser
         }
         if ($type->type === Token::T_INTEGER) {
             return new LiteralIntegerNode($type);
+        }
+        if ($type->type !== Token::T_LABEL) {
+            return new UnsupportedNode($type);
         }
 
         $classNode = new ClassNode($type);

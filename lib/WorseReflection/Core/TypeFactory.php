@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GeneratorType;
@@ -409,7 +410,7 @@ class TypeFactory
         }
 
         if ($type === 'false') {
-            return new BooleanLiteralType(false);
+            return new FalseType();
         }
 
         return self::class(ClassName::fromString($type), $reflector);

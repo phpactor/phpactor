@@ -1,0 +1,7 @@
+<?php
+
+class Foobar {
+    public function baz(){ 
+        $this->bar = 'foo';
+    }
+}

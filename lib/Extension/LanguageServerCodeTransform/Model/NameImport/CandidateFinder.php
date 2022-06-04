@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport;
 
 use Generator;
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
@@ -11,41 +10,31 @@ use Phpactor\Indexer\Model\Record\HasFullyQualifiedName;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Reflector;
 
 class CandidateFinder
 {
-    private UnresolvableClassNameFinder $finder;
-
     private SearchClient $client;
 
     private bool $importGlobals;
 
-    private FunctionReflector $functionReflector;
+    private Reflector $reflector;
 
-    public function __construct(UnresolvableClassNameFinder $finder, FunctionReflector $functionReflector, SearchClient $client, bool $importGlobals = false)
+    public function __construct(Reflector $reflector, SearchClient $client)
     {
-        $this->finder = $finder;
         $this->client = $client;
-        $this->importGlobals = $importGlobals;
-        $this->functionReflector = $functionReflector;
+        $this->reflector = $reflector;
     }
 
     public function unresolved(TextDocumentItem $item): NameWithByteOffsets
     {
-        $names = $this->finder->find(
-            TextDocumentBuilder::create($item->text)->uri($item->uri)->language('php')->build()
-        );
-        return new NameWithByteOffsets(...array_filter(iterator_to_array($names), function (NameWithByteOffset $unresolvedName) {
-            if ($this->isUnresolvedGlobalFunction($unresolvedName)) {
-                if (false === $this->importGlobals) {
-                    return false;
-                }
-            }
-            return true;
-        }));
+        $diagnostics = $this->reflector->diagnostics($item->text)->byClass(UnresolvableNameDiagnostic::class);
+
+        return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic) {
+            return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start());
+        }, iterator_to_array($diagnostics)));
     }
 
     /**
@@ -107,7 +96,7 @@ class CandidateFinder
         }
 
         try {
-            $s = $this->functionReflector->sourceCodeForFunction(
+            $s = $this->reflector->sourceCodeForFunction(
                 $unresolvedName->name()->head()->__toString()
             );
             return true;

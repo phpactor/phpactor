@@ -1,49 +1,77 @@
 <?php
 
-namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Helper;
+namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
+use Closure;
 use Generator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseUnresolvableClassNameFinder;
-use Phpactor\CodeTransform\Domain\NameWithByteOffset;
-use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
-use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
-use Phpactor\Name\QualifiedName;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
+use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
-class WorseUnresolvableClassNameFinderTest extends WorseTestCase
+class UnresolvableNameProviderTest extends DiagnosticsTestCase
 {
+    public function checkUnresolvableName(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Class "Foobar" not found', $diagnostics->at(0)->message());
+    }
+
+    public function checkUnresolvableFunction(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
+    }
+
+    public function checkUnresolvableNamespacedFunction(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
+    }
+
+    public function checkReservedNames(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    public function checkConstants(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    public function checkClassNameConstant(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+    }
+
     /**
      * @dataProvider provideReturnsUnresolableFunctions
      * @dataProvider provideReturnsUnresolableClass
      * @dataProvider provideConstants
      */
-    public function testReturnsUnresolableClass(string $manifest, array $expectedNames): void
+    public function testReturnsUnresolableClass(string $manifest, ?Closure $assertion = null): void
     {
-        $this->workspace()->reset();
-        $this->workspace()->loadManifest($manifest);
-        $source = $this->workspace()->getContents('test.php');
-
-        $finder = new WorseUnresolvableClassNameFinder(
-            $this->reflectorForWorkspace()
-        );
-        $found = $finder->find(
-            TextDocumentBuilder::create($source)->build()
-        );
-        $this->assertEquals(new NameWithByteOffsets(...$expectedNames), $found);
+        $diagnostics = $this->diagnosticsFromManifest($manifest);
+        if (null === $assertion) {
+            self::assertCount(0, $diagnostics);
+            return;
+        }
+        $assertion($diagnostics);
     }
 
-    public function provideReturnsUnresolableClass()
+    /**
+     * @return Generator<string,array{string}|array{string,Closure(Phpactor\WorseReflection\Core\Diagnostics): void}|array{string,array}>
+     */
+    public function provideReturnsUnresolableClass(): Generator
     {
         yield 'no classes' => [
             <<<'EOT'
                 // File: test.php
                 <?
                 EOT
-            , []
         ];
 
         yield 'empty segment' => [
@@ -52,7 +80,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 <?php
                 $a = new \
                 EOT
-            , []
         ];
 
         yield 'resolvable class in method' => [
@@ -60,12 +87,9 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php class Foo { public function bar(Bar $bar) {} }
                 EOT
-            , [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Bar'),
-                    ByteOffset::fromInt(38)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+            }
         ];
         
         yield 'class imported in list' => [
@@ -75,8 +99,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: Bar.php
                 <?php namespace Bar; class Foo {}
                 EOT
-            , [
-            ]
         ];
 
         yield 'unresolvable class' => [
@@ -84,12 +106,10 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php new NotFound();
                 EOT
-            ,[
-                new NameWithByteOffset(
-                    QualifiedName::fromString('NotFound'),
-                    ByteOffset::fromInt(10)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "NotFound" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'namespaced unresolvable class' => [
@@ -97,12 +117,10 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php namespace Foo; new NotFound();
                 EOT
-            , [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Foo\\NotFound'),
-                    ByteOffset::fromInt(25)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "NotFound" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'multiple unresolvable classes' => [
@@ -116,17 +134,9 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 
                 new NotFound36();
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Bar\\NotFound'),
-                    ByteOffset::fromInt(12)
-                ),
-                new NameWithByteOffset(
-                    QualifiedName::fromString('NotFound36'),
-                    ByteOffset::fromInt(47)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(2, $diagnostics);
+            }
         ];
 
         yield 'interface not found' => [
@@ -136,13 +146,10 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 
                 class Bar implements Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(29)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'interface found' => [
@@ -157,8 +164,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 class Bar implements Sugar {}
                 EOT
             ,
-            [
-            ]
         ];
 
         yield 'interface not found but located source contains name' => [
@@ -172,13 +177,10 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 
                 class Bar implements Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(29)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'parent' => [
@@ -188,13 +190,9 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 
                 class Bar extends Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(26)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+            }
         ];
 
         yield 'unresolvable trait' => [
@@ -206,13 +204,9 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                     use Sugar;
                 }
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(28)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+            }
         ];
 
         yield 'resolvable trait' => [
@@ -229,66 +223,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            [
-            ]
-        ];
-
-        if (defined('T_ENUM')) {
-            yield 'unresolvable enum' => [
-                <<<'EOT'
-                    // File: test.php
-                    <?php 
-
-                    enum Bar extends Sugar {
-                    }
-                    EOT
-                ,
-                [
-                    new NameWithByteOffset(
-                        QualifiedName::fromString('Sugar'),
-                        ByteOffset::fromInt(25)
-                    ),
-                ]
-            ];
-
-            yield 'resolvable enum' => [
-                <<<'EOT'
-                    // File: Sugar.php
-                    <?php 
-
-                    enum Sugar {
-                    }
-                    // File: test.php
-                    <?php 
-
-                    enum Bar extends Sugar {
-                    }
-                    EOT
-                ,
-                [
-                ]
-            ];
-        }
-
-        yield 'filter duplicates' => [
-            <<<'EOT'
-                // File: test.php
-                <?php 
-
-                class Bar {
-                    use Sugar;
-                }
-                class Baz {
-                    use Sugar;
-                }
-                EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(28)
-                ),
-            ]
         ];
 
         yield 'method reutrn type' => [
@@ -302,13 +236,10 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                     public function foo(): Baz {}
                 }
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Foobar\\Baz'),
-                    ByteOffset::fromInt(69)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "Baz" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'resolvable fully qualified trait' => [
@@ -330,7 +261,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            []
         ];
 
         yield 'resolvable partially qualified trait' => [
@@ -354,7 +284,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            []
         ];
 
         yield 'resolvable unqualified trait' => [
@@ -378,7 +307,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            []
         ];
 
         yield 'resolvable alias trait' => [
@@ -402,7 +330,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            []
         ];
 
         yield 'external resolvable class' => [
@@ -421,8 +348,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 new Barfoo();
                 EOT
             ,
-            [
-            ]
         ];
 
         yield 'reserved names' => [
@@ -441,8 +366,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 }
                 EOT
             ,
-            [
-            ]
         ];
 
         if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
@@ -457,17 +380,17 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                     class Barfoo { 
                     }
                     EOT
-                ,
-                [
-                    new NameWithByteOffset(
-                        QualifiedName::fromString('Foobar\NotResolvable'),
-                        ByteOffset::fromInt(28)
-                    ),
-                ]
+                    ,  function (Diagnostics $diagnostics): void {
+                        self::assertCount(1, $diagnostics);
+                        self::assertEquals('Class "NotResolvable" not found', $diagnostics->at(0)->message());
+                    }
             ];
         }
     }
 
+    /**
+     * @return Generator<string,array{string}|array{string,Closure(Phpactor\WorseReflection\Core\Diagnostics): void}>
+     */
     public function provideReturnsUnresolableFunctions(): Generator
     {
         yield 'resolvable function' => [
@@ -475,8 +398,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php function bar() {} bar();
                 EOT
-            , [
-            ]
         ];
 
         yield 'unresolvable function' => [
@@ -484,13 +405,11 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php foo();
                 EOT
-            ,[
-                new NameWithByteOffset(
-                    QualifiedName::fromString('foo'),
-                    ByteOffset::fromInt(6),
-                    NameWithByteOffset::TYPE_FUNCTION
-                ),
-            ]
+            ,
+            function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Function "foo" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'namespaced unresolveable function' => [
@@ -498,13 +417,12 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php namespace Foobar; foo();
                 EOT
-            ,[
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Foobar\foo'),
-                    ByteOffset::fromInt(24),
-                    NameWithByteOffset::TYPE_FUNCTION
-                ),
-            ]
+            ,
+            function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Foobar\foo', $diagnostics->at(0)->name());
+                self::assertEquals(24, $diagnostics->at(0)->range()->start()->toInt());
+            }
         ];
 
         yield 'resolveable namespaced function' => [
@@ -512,8 +430,6 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php namespace Foobar; function foo() {} foo();
                 EOT
-            ,[
-            ]
         ];
 
         yield 'function imported in list' => [
@@ -523,11 +439,15 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: Bar.php
                 <?php namespace Bar; function foo() {}
                 EOT
-            , [
-            ]
+                , function (Diagnostics $diagnostics): void {
+                    self::assertCount(0, $diagnostics);
+                }
         ];
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideConstants(): Generator
     {
         yield 'global constant' => [
@@ -535,17 +455,16 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
                 // File: test.php
                 <?php namespace Foobar; INF;
                 EOT
-            ,[
-            ]
         ];
     }
 
     public function testSourceCanBeFoundButNoClassIsContainedInIt(): void
     {
-        $finder = new WorseUnresolvableClassNameFinder(
-            ReflectorBuilder::create()->addLocator(new StringSourceLocator(SourceCode::fromString('')))->build()
-        );
-        $found = $finder->find(
+        $reflector = ReflectorBuilder::create()->addDiagnosticProvider($this->provider())->addLocator(
+            new StringSourceLocator(SourceCode::fromString(''))
+        )->build();
+
+        $found = $reflector->diagnostics(
             TextDocumentBuilder::create('<?php Foobar::class;')->build()
         );
         self::assertCount(1, $found);
@@ -553,12 +472,17 @@ class WorseUnresolvableClassNameFinderTest extends WorseTestCase
 
     public function testSourceCanBeFoundButNoFunctionIsContainedInIt(): void
     {
-        $finder = new WorseUnresolvableClassNameFinder(
-            ReflectorBuilder::create()->addLocator(new StringSourceLocator(SourceCode::fromString('')))->build()
-        );
-        $found = $finder->find(
+        $reflector = ReflectorBuilder::create()->addDiagnosticProvider($this->provider())->addLocator(
+            new StringSourceLocator(SourceCode::fromString(''))
+        )->build();
+
+        $found = $reflector->diagnostics(
             TextDocumentBuilder::create('<?php barboo();')->build()
         );
         self::assertCount(1, $found);
+    }
+    protected function provider(): DiagnosticProvider
+    {
+        return new UnresolvableNameProvider(true);
     }
 }
