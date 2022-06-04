@@ -4,8 +4,10 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Reflector;
@@ -21,6 +23,8 @@ class WorseTestCase extends AdapterTestCase
         $builder->addMemberProvider(new DocblockMemberProvider());
         $builder->addDiagnosticProvider(new MissingMethodProvider());
         $builder->addDiagnosticProvider(new MissingDocblockProvider());
+        $builder->addDiagnosticProvider(new AssignmentToMissingPropertyProvider());
+        $builder->addDiagnosticProvider(new MissingReturnTypeProvider());
 
         foreach ((array)glob($this->workspace()->path('/*.php')) as $file) {
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);

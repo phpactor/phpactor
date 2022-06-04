@@ -1,0 +1,11 @@
+<?php
+
+class Foobar {
+    public function foo()
+    {
+        return foo();
+    }
+}
+
+function foo() {
+}
