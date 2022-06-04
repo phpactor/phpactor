@@ -225,37 +225,6 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
             ,
         ];
 
-        if (defined('T_ENUM')) {
-            yield 'unresolvable enum' => [
-                <<<'EOT'
-                    // File: test.php
-                    <?php 
-
-                    enum Bar extends Sugar {
-                    }
-                    EOT
-                ,  function (Diagnostics $diagnostics): void {
-                    self::assertCount(1, $diagnostics);
-                    self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
-                }
-            ];
-
-            yield 'resolvable enum' => [
-                <<<'EOT'
-                    // File: Sugar.php
-                    <?php 
-
-                    enum Sugar {
-                    }
-                    // File: test.php
-                    <?php 
-
-                    enum Bar extends Sugar {
-                    }
-                    EOT
-            ];
-        }
-
         yield 'method reutrn type' => [
             <<<'EOT'
                 // File: test.php
