@@ -165,9 +165,7 @@ class WorseReflectionExtension implements Extension
             return new MissingReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
-            return new UnresolvableNameProvider(
-                $container->getParameter(self::PARAM_IMPORT_GLOBALS)
-            );
+            return new UnresolvableNameProvider($container->getParameter(self::PARAM_IMPORT_GLOBALS));
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }
