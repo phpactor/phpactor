@@ -30,6 +30,9 @@ class ReflectionClassTest extends IntegrationTestCase
         $assertion($class);
     }
 
+    /**
+     * @return Generator<string,array{string,string,Closure(ReflectionClass): void}>
+     */
     public function provideReflectionClass(): Generator
     {
         yield 'It reflects an empty class' => [
@@ -359,7 +362,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 $this->assertTrue($class->methods()->has('four'));
                 $this->assertEquals(Visibility::private(), $class->methods()->get('two')->visibility());
                 $this->assertEquals(Visibility::protected(), $class->methods()->get('three')->visibility());
-                $this->assertFalse($class->methods()->belongingTo(ClassName::fromString(Class2::class))->has('two'));
+                $this->assertFalse($class->methods()->belongingTo(ClassName::fromString('Class2'))->has('two'));
                 $this->assertEquals('TraitOne', $class->methods()->get('two')->declaringClass()->name()->short());
             },
         ];
@@ -794,7 +797,10 @@ class ReflectionClassTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideVirtualMethods()
+    /**
+     * @return Generator<string,array{string,string,Closure(ReflectionClass): void}>
+     */
+    public function provideVirtualMethods(): Generator
     {
         yield 'virtual methods' => [
             <<<'EOT'
@@ -1057,7 +1063,10 @@ class ReflectionClassTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideVirtualProperties()
+    /**
+     * @return Generator<string,array{string,string,Closure(ReflectionClass): void}>
+     */
+    public function provideVirtualProperties(): Generator
     {
         yield 'virtual properties' => [
             <<<'EOT'
