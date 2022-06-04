@@ -32,6 +32,13 @@ use Reflector;
 
 class UnresolvableNameProvider implements DiagnosticProvider
 {
+    private bool $importGlobals;
+
+    public function __construct(bool $importGlobals)
+    {
+        $this->importGlobals = $importGlobals;
+    }
+
     public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if (!$node instanceof QualifiedName) {
@@ -116,13 +123,18 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 throw new NotFound();
             }
         } catch (NotFound $notFound) {
-            $source = $reflector->sourceCodeForFunction($fqn->head()->__toString());
-            if (!$this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
-                yield UnresolvableNameDiagnostic::forFunction(
-                    ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
-                    $fqn->head()->__toString(),
-                );
+            // if we are not importing globals then check the global namespace
+            if (false === $this->importGlobals) {
+                $source = $reflector->sourceCodeForFunction($fqn->head()->__toString());
+                if ($this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
+                    return;
+                }
             }
+
+            yield UnresolvableNameDiagnostic::forFunction(
+                ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
+                $fqn,
+            );
         }
     }
 
@@ -158,7 +170,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
         } catch (NotFound $notFound) {
             yield UnresolvableNameDiagnostic::forClass(
                 ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
-                $fqn->head()->__toString(),
+                $fqn,
             );
         }
     }

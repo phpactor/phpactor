@@ -10,7 +10,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 {
     protected function provider(): DiagnosticProvider
     {
-        return new UnresolvableNameProvider();
+        return new UnresolvableNameProvider(true);
     }
 
     public function checkUnresolvableName(Diagnostics $diagnostics): void

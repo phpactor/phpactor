@@ -100,17 +100,7 @@ class ImportNameProviderTest extends IntegrationTestCase
             , 0, 1
         ];
 
-        yield 'code action and diagnostic for missing global class name with import globals' => [
-            <<<'EOT'
-                // File: subject.php
-                <?php namespace Foobar; function foobar(): Generator { yield 12; }'
-                // File: Generator.php
-                <?php class Generator {}
-                EOT
-            , 1, 1, true
-        ];
-
-        yield 'code action and diagnostic for missing global class name without import globals' => [
+        yield 'code action and diagnostic for missing global class name' => [
             <<<'EOT'
                 // File: subject.php
                 <?php namespace Foobar; function foobar(): Generator { yield 12; }'

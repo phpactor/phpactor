@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
+use Phpactor\Name\Name;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
@@ -18,7 +19,7 @@ class UnresolvableNameDiagnostic implements Diagnostic
      */
     private string $type;
 
-    private string $name;
+    private Name $name;
 
     /**
      * @param self::TYPE_* $type
@@ -26,7 +27,7 @@ class UnresolvableNameDiagnostic implements Diagnostic
     private function __construct(
         ByteOffsetRange $range,
         string $type,
-        string $name
+        Name $name
     )
     {
         $this->range = $range;
@@ -34,12 +35,12 @@ class UnresolvableNameDiagnostic implements Diagnostic
         $this->name = $name;
     }
 
-    public static function forFunction(ByteOffsetRange $range, string $name): self
+    public static function forFunction(ByteOffsetRange $range, Name $name): self
     {
         return new self($range, self::TYPE_FUNCTION, $name);
     }
 
-    public static function forClass(ByteOffsetRange $range, string $name): self
+    public static function forClass(ByteOffsetRange $range, Name $name): self
     {
         return new self($range, self::TYPE_CLASS, $name);
     }
@@ -56,7 +57,7 @@ class UnresolvableNameDiagnostic implements Diagnostic
 
     public function message(): string
     {
-        return sprintf('%s "%s" not found', ucfirst($this->type), $this->name);
+        return sprintf('%s "%s" not found', ucfirst($this->type), $this->name->head()->__toString());
     }
 
     public function type(): string
@@ -64,7 +65,7 @@ class UnresolvableNameDiagnostic implements Diagnostic
         return $this->type;
     }
 
-    public function name(): string
+    public function name(): Name
     {
         return $this->name;
     }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -164,7 +165,9 @@ class WorseReflectionExtension implements Extension
             return new MissingReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
-            return new UnresolvableNameProvider();
+            return new UnresolvableNameProvider(
+                $container->getParameter(LanguageServerCodeTransformExtension::PARAM_IMPORT_GLOBALS)
+            );
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }
