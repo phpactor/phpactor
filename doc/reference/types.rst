@@ -45,7 +45,7 @@ Return Only Types
     Name             Example             PHP        Phpactor  Notes
     ==============   ==================  =========  ========  ========================
     Void             ``void``            ``7.4+``   ✔
-    Static                               ``8.0``    ✔
+    Static           ``static``          ``8.0``    ✔
     Never            ``never``           ``8.1+``   ✔
     False            ``false``           ``8.2+``   ✔         Pseudo-type before 8.2
     Null             ``null``            ``8.2+``   ✔
@@ -63,12 +63,15 @@ Docblock Types
     Array Key        ``array-key``                   ✔          
     Array Literal    ``array{string,int}``           ✔
     Array Shape      ``array{foo:string,baz:int}``   ✔
+    Class String     ``class-string<T>``             🤷
+    Closure          ``Closure(string, int): void``  ✔
+    Float Literal    ``1234.12``                     ✔ 
     Generics         ``Foobar<Barfoo>``              ✔ 
     Int Literal      ``1234``                        ✔ 
-    Float Literal    ``1234.12``                     ✔ 
-    String Literal   ``"hello"``                     ✔ 
-    Parenthesized    ``(Foo&Bar)|object``            ✔ 
     List             ``list<string>``                ✔ 
+    Parenthesized    ``(Foo&Bar)|object``            ✔ 
+    String Literal   ``"hello"``                     ✔ 
+    This             ``$this`` (same as ``static``)  ✔
     ===============  ==============================  ========
 
 Integer Types
