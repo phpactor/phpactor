@@ -30,4 +30,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
         self::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
     }
+
+    public function checkReservedNames(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
 }

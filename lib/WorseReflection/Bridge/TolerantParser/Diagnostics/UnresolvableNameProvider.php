@@ -15,6 +15,7 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\ResolvedName;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Name\FullyQualifiedName as PhpactorFullyQualifiedName;
 use Phpactor\Name\Name;
@@ -42,6 +43,13 @@ class UnresolvableNameProvider implements DiagnosticProvider
         // Tolerant parser does not resolve names for constructs that define symbol names or aliases
         $resolvedName = TolerantQualifiedNameResolver::getResolvedName($name);
 
+        // strange getResolvedName method returns a string if this is a
+        // reserved name (e.g. static, iterable). do not return these as
+        // "unresolved"
+        if ($resolvedName && !$resolvedName instanceof ResolvedName) {
+            return;
+        }
+
         // Parser returns "NULL" for unqualified namespaced function / constant
         // names, but will return the FQN for references...
         if (!$resolvedName && $name->parent instanceof CallExpression) {
@@ -59,7 +67,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             $resolvedName = $name->getNamespacedName();
         }
 
-        if (count($resolvedName->getNameParts()) == 0) {
+        if (!is_string($resolvedName) && count($resolvedName->getNameParts()) == 0) {
             return;
         }
 
@@ -90,8 +98,8 @@ class UnresolvableNameProvider implements DiagnosticProvider
 
         yield from $this->forClass(
             $resolver->reflector(),
-            $name->__toString(),
-            $name
+            $resolvedName,
+            $name,
         );
     }
 
@@ -133,6 +141,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
     private function forClass(ClassReflector $reflector, string $fqn, QualifiedName $name): Generator
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
+
         try {
             // we could reflect the class here but it's much more expensive
             // than simply locating the source, however locating the source
