@@ -24,7 +24,7 @@ class AssignmentToMissingPropertyDiagnostic implements Diagnostic
         string $classType,
         string $propertyName,
         Type $propertyType,
-        bool $isSubscriptAssignment,
+        bool $isSubscriptAssignment
     ) {
         $this->range = $range;
         $this->classType = $classType;
