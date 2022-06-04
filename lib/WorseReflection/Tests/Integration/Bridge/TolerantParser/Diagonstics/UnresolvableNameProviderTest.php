@@ -62,6 +62,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         $assertion($diagnostics);
     }
 
+    /**
+     * @return Generator<string,array{string}|array{string,Closure(Phpactor\WorseReflection\Core\Diagnostics): void}|array{string,array}>
+     */
     public function provideReturnsUnresolableClass(): Generator
     {
         yield 'no classes' => [
@@ -98,18 +101,15 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 EOT
         ];
 
-        return;
         yield 'unresolvable class' => [
             <<<'EOT'
                 // File: test.php
                 <?php new NotFound();
                 EOT
-            ,[
-                new NameWithByteOffset(
-                    QualifiedName::fromString('NotFound'),
-                    ByteOffset::fromInt(10)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "NotFound" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'namespaced unresolvable class' => [
@@ -117,12 +117,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 // File: test.php
                 <?php namespace Foo; new NotFound();
                 EOT
-            , [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Foo\\NotFound'),
-                    ByteOffset::fromInt(25)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "NotFound" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'multiple unresolvable classes' => [
@@ -136,17 +134,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 new NotFound36();
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Bar\\NotFound'),
-                    ByteOffset::fromInt(12)
-                ),
-                new NameWithByteOffset(
-                    QualifiedName::fromString('NotFound36'),
-                    ByteOffset::fromInt(47)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(2, $diagnostics);
+            }
         ];
 
         yield 'interface not found' => [
@@ -156,13 +146,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 class Bar implements Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(29)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'interface found' => [
@@ -177,8 +164,6 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 class Bar implements Sugar {}
                 EOT
             ,
-            [
-            ]
         ];
 
         yield 'interface not found but located source contains name' => [
@@ -192,13 +177,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 class Bar implements Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(29)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'parent' => [
@@ -208,13 +190,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 class Bar extends Sugar {}
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(26)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+            }
         ];
 
         yield 'unresolvable trait' => [
@@ -226,13 +204,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     use Sugar;
                 }
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(28)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+            }
         ];
 
         yield 'resolvable trait' => [
@@ -249,8 +223,6 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 }
                 EOT
             ,
-            [
-            ]
         ];
 
         if (defined('T_ENUM')) {
@@ -262,13 +234,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     enum Bar extends Sugar {
                     }
                     EOT
-                ,
-                [
-                    new NameWithByteOffset(
-                        QualifiedName::fromString('Sugar'),
-                        ByteOffset::fromInt(25)
-                    ),
-                ]
+                ,  function (Diagnostics $diagnostics): void {
+                    self::assertCount(1, $diagnostics);
+                    self::assertStringContainsString('Sugar', $diagnostics->at(0)->message());
+                }
             ];
 
             yield 'resolvable enum' => [
@@ -284,32 +253,8 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     enum Bar extends Sugar {
                     }
                     EOT
-                ,
-                [
-                ]
             ];
         }
-
-        yield 'filter duplicates' => [
-            <<<'EOT'
-                // File: test.php
-                <?php 
-
-                class Bar {
-                    use Sugar;
-                }
-                class Baz {
-                    use Sugar;
-                }
-                EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Sugar'),
-                    ByteOffset::fromInt(28)
-                ),
-            ]
-        ];
 
         yield 'method reutrn type' => [
             <<<'EOT'
@@ -322,13 +267,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     public function foo(): Baz {}
                 }
                 EOT
-            ,
-            [
-                new NameWithByteOffset(
-                    QualifiedName::fromString('Foobar\\Baz'),
-                    ByteOffset::fromInt(69)
-                ),
-            ]
+            ,  function (Diagnostics $diagnostics): void {
+                self::assertCount(1, $diagnostics);
+                self::assertEquals('Class "Baz" not found', $diagnostics->at(0)->message());
+            }
         ];
 
         yield 'resolvable fully qualified trait' => [
@@ -437,8 +379,6 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 new Barfoo();
                 EOT
             ,
-            [
-            ]
         ];
 
         yield 'reserved names' => [
@@ -457,8 +397,6 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 }
                 EOT
             ,
-            [
-            ]
         ];
 
         if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
@@ -473,17 +411,17 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     class Barfoo { 
                     }
                     EOT
-                ,
-                [
-                    new NameWithByteOffset(
-                        QualifiedName::fromString('Foobar\NotResolvable'),
-                        ByteOffset::fromInt(28)
-                    ),
-                ]
+                    ,  function (Diagnostics $diagnostics): void {
+                        self::assertCount(1, $diagnostics);
+                        self::assertEquals('Class "NotResolvable" not found', $diagnostics->at(0)->message());
+                    }
             ];
         }
     }
 
+    /**
+     * @return Generator<string,array{string}|array{string,Closure(Phpactor\WorseReflection\Core\Diagnostics): void}>
+     */
     public function provideReturnsUnresolableFunctions(): Generator
     {
         yield 'resolvable function' => [
@@ -538,6 +476,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         ];
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideConstants(): Generator
     {
         yield 'global constant' => [
