@@ -27,6 +27,9 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
+/**
+ * @deprecated Use the UnresolvableNameDiagnostic instead.
+ */
 class WorseUnresolvableClassNameFinder implements UnresolvableClassNameFinder
 {
     private Parser $parser;
